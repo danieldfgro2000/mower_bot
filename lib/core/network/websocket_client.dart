@@ -22,6 +22,11 @@ class WebSocketClient {
   final _controller = StreamController<Map<String, dynamic>>();
   Stream<Map<String, dynamic>> get messages => _controller.stream;
 
+  void send(Map<String, dynamic> message) {
+    // In a real implementation, this would send the message over the WebSocket
+    // For demo purposes, we just print it
+    print("Sending: $message");
+  }
   // For demo: simulate mower telemetry every 2 seconds
   void connectDummy(){
     double driftX = 0.0;
@@ -34,7 +39,8 @@ class WebSocketClient {
         "battery": 12.3,
         "heading": 180.0 + (timer.tick % 360),
         "encoderSpeed": 1.5,
-        "isMoving": timer.tick % 2 == 0,
+        "event": timer.tick % 5 == 0 ? "telemetry" : "lap_completed",
+        "isMoving": timer.tick % 20 == 0,
         "driftX": driftX,
         "driftY": driftY,
         "headingError": 0.1 * (timer.tick % 10),
