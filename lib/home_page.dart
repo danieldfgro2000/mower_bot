@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
+import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
 import 'package:mower_bot/features/paths/presentation/pages/paths_page.dart';
 
+import 'features/connection/presentation/pages/connection_page.dart';
 import 'features/control/presentation/pages/control_page.dart';
 import 'features/telemetry/presentation/widgets/telemetry_display.dart';
 
@@ -18,7 +22,12 @@ class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [ControlPage(), TelemetryPage(), PathsPage()];
+  final List<Widget> _pages = [
+    ConnectionPage(),
+    ControlPage(),
+    TelemetryPage(),
+    PathsPage(),
+  ];
 
   void _onNavTap(int index) {
     setState(() {
@@ -39,33 +48,56 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        physics: _currentIndex == 0
-            ? const NeverScrollableScrollPhysics()
-            : const AlwaysScrollableScrollPhysics(),
-        children: _pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onNavTap,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.control_camera),
-            label: 'Control',
+    return BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: PageView(
+            controller: _pageController,
+            onPageChanged: _onPageChanged,
+            physics: _currentIndex == 1
+                ? const NeverScrollableScrollPhysics()
+                : const AlwaysScrollableScrollPhysics(),
+            children: _pages,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.speed),
-            label: 'Telemetry',
+          bottomNavigationBar: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [NavigationBar(
+              selectedIndex: _currentIndex,
+              onDestinationSelected: _onNavTap,
+              destinations: const [
+                NavigationDestination(
+                  icon: Icon(Icons.wifi),
+                  label: 'Connection',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.control_camera),
+                  label: 'Control',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.speed),
+                  label: 'Telemetry',
+                ),
+                NavigationDestination(icon: Icon(Icons.map), label: 'Paths'),
+              ],
+            ),
+              switch (state) {
+                MowerConnectionState(status: ConnectionStatus.connected) => Text(
+                  'Mower Connected to ${state.ip}:${state.port}',
+                  textScaler: TextScaler.linear(1),
+                  style: TextStyle(color: Colors.green),
+                ),
+                MowerConnectionState(status: ConnectionStatus.connecting) =>
+                const Text('Connecting...'),
+                MowerConnectionState(status: ConnectionStatus.disconnected) =>
+                const Text('Disconnected', style: TextStyle(color: Colors.red),),
+                MowerConnectionState(status: ConnectionStatus.error) =>
+                const Text('Error'),
+              },
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Paths',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

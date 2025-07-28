@@ -7,6 +7,7 @@ import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
 import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 
+import 'features/connection/presentation/bloc/connection_bloc.dart';
 import 'features/control/presentation/bloc/control_bloc.dart';
 import 'features/paths/domain/usecases/stop_path.dart';
 import 'features/telemetry/presentation/bloc/telemetry_bloc.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<MowerConnectionBloc>(
+          create: (context) => MowerConnectionBloc(),
+        ),
         BlocProvider<TelemetryBloc>(
           create: (context) => TelemetryBloc(client.messages),
         ),
