@@ -20,3 +20,12 @@ class ConnectToMower extends MowerConnectionEvent {
 class DisconnectFromMower extends MowerConnectionEvent {}
 
 class CheckConnectionStatus extends MowerConnectionEvent {}
+
+class ConnectionChanged extends MowerConnectionEvent {
+  final bool isConnected;
+
+  const ConnectionChanged(this.isConnected);
+
+  @override
+  List<Object?> get props => [isConnected];
+}
