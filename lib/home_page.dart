@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mower_bot/features/paths/presentation/pages/paths_page.dart';
 
 import 'features/control/presentation/pages/control_page.dart';
 import 'features/telemetry/presentation/widgets/telemetry_display.dart';
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [ControlPage(), TelemetryPage()];
+  final List<Widget> _pages = [ControlPage(), TelemetryPage(), PathsPage()];
 
   void _onNavTap(int index) {
     setState(() {
@@ -58,6 +59,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.speed),
             label: 'Telemetry',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Paths',
           ),
         ],
       ),
