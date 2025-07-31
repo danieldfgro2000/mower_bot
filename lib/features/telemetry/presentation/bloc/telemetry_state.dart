@@ -8,28 +8,22 @@ abstract class TelemetryState extends Equatable {
 
 class TelemetryInitial extends TelemetryState {}
 
-class TelemetryDataState extends TelemetryState {
-  final TelemetryEntity telemetry;
-  final bool? loading;
-  final String? error;
+class TelemetryLoading extends TelemetryState {}
 
-  TelemetryDataState(this.telemetry, {this.loading, this.error});
+class TelemetryLoaded extends TelemetryState {
+  final TelemetryEntity telemetry;
+
+  TelemetryLoaded(this.telemetry);
 
   @override
-  List<Object?> get props => [telemetry, loading, error];
+  List<Object?> get props => [telemetry];
 }
 
-class TelemetryDriftState extends TelemetryState {
-  final double driftX;
-  final double driftY;
-  final double headingError;
+class TelemetryError extends TelemetryState {
+  final String error;
 
-  TelemetryDriftState({
-    required this.driftX,
-    required this.driftY,
-    required this.headingError,
-  });
+  TelemetryError(this.error);
 
   @override
-  List<Object?> get props => [driftX, driftY];
+  List<Object?> get props => [error];
 }

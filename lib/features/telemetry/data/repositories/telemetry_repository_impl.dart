@@ -1,9 +1,6 @@
 import 'package:mower_bot/features/telemetry/data/datasources/telemetry_remote_datasource.dart';
 import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
-
-abstract class TelemetryRepository {
-  Stream<TelemetryEntity> streamTelemetry();
-}
+import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 
 class TelemetryRepositoryImpl implements TelemetryRepository {
   final TelemetryRemoteDataSource remoteDataSource;
@@ -11,7 +8,7 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
   TelemetryRepositoryImpl(this.remoteDataSource);
 
   @override
-  Stream<TelemetryEntity> streamTelemetry() {
+  Stream<TelemetryEntity> getTelemetryStream() {
     return remoteDataSource.streamTelemetry();
   }
 }

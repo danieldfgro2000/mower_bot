@@ -1,53 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/get_telemetry_use_case.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_state.dart';
 
-import '../../domain/entities/telemetry_entity.dart';
 
 class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
-  final Stream<Map<String, dynamic>> telemetryStream;
+  final GetTelemetryUseCase telemetryStream;
+  StreamSubscription<TelemetryEntity>? _subscription;
 
   TelemetryBloc(this.telemetryStream) : super(TelemetryInitial()) {
-    telemetryStream.listen((data) {
-      add(TelemetryReceived(data));
-    });
+    on<StartTelemetry>(_onStartTelemetry);
+    on<TelemetryReceived>(_onTelemetryReceived);
+    on<StopTelemetry>(_onStopTelemetry);
+  }
 
-    on<StartTelemetryStream>(
-        (StartTelemetryStream event, Emitter<TelemetryState> emit) {
-      // This event can be used to trigger the telemetry stream if needed.
-      // Currently, the stream is already being listened to in the constructor.
+  void _onStartTelemetry(StartTelemetry event, Emitter<TelemetryState> emit) {
+    emit(TelemetryLoading());
+    _subscription = telemetryStream().listen(
+      (telemetryData) => add(TelemetryReceived(telemetryData)),
+      onError: (e) => emit(TelemetryError(e.toString())),
+    );
+  }
 
-    });
+  void _onStopTelemetry(StopTelemetry event, Emitter<TelemetryState> emit) {
+    _subscription?.cancel();
+    emit(TelemetryInitial());
+  }
 
-    on<TelemetryReceived>((event, emit) {
-      final json = event.data;
-      if (json['event'] == 'lap_completed') {
-        emit(
-          TelemetryDriftState(
-            driftX: json['driftX'] ?? 0.0,
-            driftY: json['driftY'] ?? 0.0,
-            headingError: json['headingError'] ?? 0.0,
-          ),
-        );
-      } else {
-        emit(
-          TelemetryDataState(
-            TelemetryEntity(
-              battery: json['battery']?.toDouble() ?? 0.0,
-              angle: json['angle']?.toDouble() ?? 0.0,
-              encoder: json['encoder']?.toDouble() ?? 0.0,
-              drive: json['drive'] ?? false,
-              start: json['start'] ?? false,
-              distance: json['distance']?.toDouble() ?? 0.0,
-              speed: json['speed']?.toDouble() ?? 0.0,
-              homed: json['homed'] ?? false,
-              driftX: json['driftX']?.toDouble() ?? 0.0,
-              driftY: json['driftY']?.toDouble() ?? 0.0,
-              headingError: json['headingError']?.toDouble() ?? 0.0,
-            ),
-          ),
-        );
-      }
-    });
+  void _onTelemetryReceived(TelemetryReceived event, Emitter<TelemetryState> emit) {
+    emit(TelemetryLoaded(event.telemetry));
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }

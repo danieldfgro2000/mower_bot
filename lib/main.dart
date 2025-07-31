@@ -7,6 +7,10 @@ import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
 import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
+import 'package:mower_bot/features/telemetry/data/datasources/telemetry_remote_datasource.dart';
+import 'package:mower_bot/features/telemetry/data/repositories/telemetry_repository_impl.dart';
+import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/get_telemetry_use_case.dart';
 
 import 'features/connection/domain/usecases/check_mower_status.dart';
 import 'features/connection/domain/usecases/connect_to_mower.dart';
@@ -23,11 +27,14 @@ void main() {
 
   final connectionRepository = MowerConnectionRepositoryImpl();
   final pathRepository = MockPathRepository();
+  final telemetryRemoteDataSource = TelemetryRemoteDataSourceImpl();
+  final telemetryRepository = TelemetryRepositoryImpl(telemetryRemoteDataSource);
 
   runApp(
     MyApp(
       client: client,
       connectionRepository: connectionRepository,
+      telemetryRepository: telemetryRepository,
       pathRepository: pathRepository,
     ),
   );
@@ -35,6 +42,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final MowerConnectionRepositoryImpl connectionRepository;
+  final TelemetryRepository telemetryRepository;
   final MockPathRepository pathRepository;
   final WebSocketClient client;
 
@@ -42,6 +50,7 @@ class MyApp extends StatelessWidget {
     super.key,
     required this.client,
     required this.connectionRepository,
+    required this.telemetryRepository,
     required this.pathRepository,
   });
 
@@ -59,7 +68,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider<TelemetryBloc>(
-          create: (context) => TelemetryBloc(client.messages),
+          create: (context) => TelemetryBloc(
+            GetTelemetryUseCase(telemetryRepository),
+          ),
         ),
         BlocProvider(
           create: (context) => ControlBloc((cmd) => client.send(cmd)),

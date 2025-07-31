@@ -1,26 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
 
 abstract class TelemetryEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class StartTelemetryStream extends TelemetryEvent {}
+class StartTelemetry extends TelemetryEvent {}
+
+class StopTelemetry extends TelemetryEvent {}
 
 class TelemetryReceived extends TelemetryEvent {
-  final Map<String, dynamic> data;
+  final TelemetryEntity telemetry;
 
-  TelemetryReceived(this.data);
-
-  @override
-  List<Object?> get props => [data];
-}
-
-class TelemetryError extends TelemetryEvent {
-  final String error;
-
-  TelemetryError(this.error);
+  TelemetryReceived(this.telemetry);
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [telemetry];
 }
