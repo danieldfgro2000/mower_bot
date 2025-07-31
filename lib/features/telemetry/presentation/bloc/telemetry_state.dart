@@ -10,11 +10,13 @@ class TelemetryInitial extends TelemetryState {}
 
 class TelemetryDataState extends TelemetryState {
   final TelemetryEntity telemetry;
+  final bool? loading;
+  final String? error;
 
-  TelemetryDataState(this.telemetry);
+  TelemetryDataState(this.telemetry, {this.loading, this.error});
 
   @override
-  List<Object?> get props => [telemetry];
+  List<Object?> get props => [telemetry, loading, error];
 }
 
 class TelemetryDriftState extends TelemetryState {

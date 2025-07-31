@@ -34,9 +34,9 @@ class _TelemetryPageState extends State<TelemetryPage> {
               children: [
                 if (state is TelemetryDataState) ... [
                   Text('Battery: ${state.telemetry.battery.toStringAsFixed(2)}%'),
-                  Text('Heading: ${state.telemetry.heading.toStringAsFixed(2)}°'),
-                  Text('Speed: ${state.telemetry.encoderSpeed.toStringAsFixed(2)} m/s'),
-                  Text('Moving: ${state.telemetry.isMoving ? "Yes" : "No"}'),
+                  Text('Heading: ${state.telemetry.angle.toStringAsFixed(2)}°'),
+                  Text('Speed: ${state.telemetry.speed.toStringAsFixed(2)} m/s'),
+                  Text('Moving: ${state.telemetry.drive ? "Yes" : "No"}'),
                 ]
                 else if (state is TelemetryDriftState) ... [
                   Text('Drift X: ${state.driftX.toStringAsFixed(2)}'),

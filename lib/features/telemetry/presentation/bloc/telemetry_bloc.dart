@@ -12,6 +12,13 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
       add(TelemetryReceived(data));
     });
 
+    on<StartTelemetryStream>(
+        (StartTelemetryStream event, Emitter<TelemetryState> emit) {
+      // This event can be used to trigger the telemetry stream if needed.
+      // Currently, the stream is already being listened to in the constructor.
+
+    });
+
     on<TelemetryReceived>((event, emit) {
       final json = event.data;
       if (json['event'] == 'lap_completed') {
@@ -27,9 +34,16 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
           TelemetryDataState(
             TelemetryEntity(
               battery: json['battery']?.toDouble() ?? 0.0,
-              heading: json['heading']?.toDouble() ?? 0.0,
-              encoderSpeed: json['encoderSpeed']?.toDouble() ?? 0.0,
-              isMoving: json['isMoving'] ?? false,
+              angle: json['angle']?.toDouble() ?? 0.0,
+              encoder: json['encoder']?.toDouble() ?? 0.0,
+              drive: json['drive'] ?? false,
+              start: json['start'] ?? false,
+              distance: json['distance']?.toDouble() ?? 0.0,
+              speed: json['speed']?.toDouble() ?? 0.0,
+              homed: json['homed'] ?? false,
+              driftX: json['driftX']?.toDouble() ?? 0.0,
+              driftY: json['driftY']?.toDouble() ?? 0.0,
+              headingError: json['headingError']?.toDouble() ?? 0.0,
             ),
           ),
         );

@@ -5,6 +5,8 @@ abstract class TelemetryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class StartTelemetryStream extends TelemetryEvent {}
+
 class TelemetryReceived extends TelemetryEvent {
   final Map<String, dynamic> data;
 
@@ -12,4 +14,13 @@ class TelemetryReceived extends TelemetryEvent {
 
   @override
   List<Object?> get props => [data];
+}
+
+class TelemetryError extends TelemetryEvent {
+  final String error;
+
+  TelemetryError(this.error);
+
+  @override
+  List<Object?> get props => [error];
 }
