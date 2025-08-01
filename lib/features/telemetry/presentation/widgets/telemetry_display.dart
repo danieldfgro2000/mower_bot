@@ -26,31 +26,31 @@ class _TelemetryPageState extends State<TelemetryPage> {
       appBar: AppBar(title: const Text('MowerBot Telemetry'),),
       body: BlocBuilder<TelemetryBloc, TelemetryState>(
           builder: (context, state) {
-          if (state is TelemetryLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is TelemetryLoaded) {
-            final t = state.telemetry;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Wheel Angle: ${t.wheelAngle.toStringAsFixed(2)}°'),
-                Text('Distance: ${t.distanceTraveled.toStringAsFixed(2)} m'),
-                Text('Speed: ${t.speed.toStringAsFixed(2)} m/s'),
-                Text('Drive Actuator: ${t.actuatorDrive ? "On" : "Off"}'),
-                Text('Start Actuator: ${t.actuatorStart ? "On" : "Off)"}'),
-              ],
-            );
-          } else if (state is TelemetryError) {
+            if (state is TelemetryLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is TelemetryLoaded) {
+              final t = state.telemetry;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Wheel Angle: ${t.wheelAngle.toStringAsFixed(2)}°'),
+                  Text('Distance: ${t.distanceTraveled.toStringAsFixed(2)} m'),
+                  Text('Speed: ${t.speed.toStringAsFixed(2)} m/s'),
+                  Text('Drive Actuator: ${t.actuatorDrive ? "On" : "Off"}'),
+                  Text('Start Actuator: ${t.actuatorStart ? "On" : "Off)"}'),
+                ],
+              );
+            } else if (state is TelemetryError) {
+              return Center(
+                child: Text('Error: ${state.error}',
+                    style: TextStyle(color: Colors.red)),
+              );
+            }
             return Center(
-              child: Text('Error: ${state.error}', style: TextStyle(color: Colors.red)),
+              child: Text('No telemetry data available',
+                  style: TextStyle(color: Colors.grey)),
             );
           }
-          return Center(
-            child: ElevatedButton(
-                onPressed: () => context.read<TelemetryBloc>()
-                    .add(StartTelemetry()),
-                child: const Text('Start Telemetry')),
-          );
             // return Column(
             //   mainAxisAlignment: MainAxisAlignment.start,
             //   children: [
@@ -68,7 +68,7 @@ class _TelemetryPageState extends State<TelemetryPage> {
             //     ],
             //   ],
             // );
-          }
+
       ),
     );
   }

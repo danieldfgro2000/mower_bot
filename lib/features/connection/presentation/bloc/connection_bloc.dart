@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
@@ -12,49 +14,71 @@ class MowerConnectionBloc
   final DisconnectMowerUseCase disconnectFromMowerUseCase;
   final CheckMowerStatusUseCase checkConnectionStatusUseCase;
   final Stream<bool> connectionStream;
+  final void Function(String url) onConnected;
 
   MowerConnectionBloc(
     this.connectToMowerUseCase,
     this.disconnectFromMowerUseCase,
     this.checkConnectionStatusUseCase,
     this.connectionStream,
-  ) : super(const MowerConnectionState()) {
-    on<ConnectToMower>((event, emit) async {
-      emit(
-        state.copyWith(
-          status: ConnectionStatus.connecting,
-          ip: event.ipAddress,
-          port: event.port,
-        ),
-      );
-      await connectToMowerUseCase(event.ipAddress, event.port);
-      // emit(state.copyWith(status: ConnectionStatus.connected));
-    });
-    on<DisconnectFromMower>((event, emit) async {
-      await disconnectFromMowerUseCase();
-      // emit(state.copyWith(status: ConnectionStatus.disconnected));
-    });
-    on<CheckConnectionStatus>((event, emit) async {
-      final connected = await checkConnectionStatusUseCase();
-      emit(
-        state.copyWith(
-          status: connected
-              ? ConnectionStatus.connected
-              : ConnectionStatus.disconnected,
-        ),
-      );
-    });
+      {
+    required this.onConnected,
+  }) : super(const MowerConnectionState()) {
+    on<ConnectToMower>(_onConnect);
+    on<DisconnectFromMower>(_onDisconnect);
+    on<CheckConnectionStatus>(_onCheckConnection);
+    on<ConnectionChanged>(_onConnectionChanged);
     connectionStream.listen((isConnected) {
       add(ConnectionChanged(isConnected));
     });
-    on<ConnectionChanged>((event, emit) {
-      emit(
-        state.copyWith(
-          status: event.isConnected
-              ? ConnectionStatus.connected
-              : ConnectionStatus.disconnected,
-        ),
-      );
-    });
+  }
+
+  FutureOr<void> _onConnectionChanged(event, emit) {
+    emit(
+      state.copyWith(
+        status: event.isConnected
+            ? ConnectionStatus.connected
+            : ConnectionStatus.disconnected,
+      ),
+    );
+  }
+
+  FutureOr<void> _onCheckConnection(event, emit) async {
+    final connected = await checkConnectionStatusUseCase();
+    emit(
+      state.copyWith(
+        status: connected
+            ? ConnectionStatus.connected
+            : ConnectionStatus.disconnected,
+      ),
+    );
+  }
+
+  FutureOr<void> _onDisconnect(event, emit) async =>
+    await disconnectFromMowerUseCase();
+    // emit(state.copyWith(status: ConnectionStatus.disconnected));
+
+
+  FutureOr<void> _onConnect(event, emit) async {
+    emit(
+      state.copyWith(
+        status: ConnectionStatus.connecting,
+        ip: event.ipAddress,
+        port: event.port,
+      ),
+    );
+    await connectToMowerUseCase(event.ipAddress, event.port);
+    final repo = connectToMowerUseCase.repository as MowerConnectionRepositoryImpl;
+    if (repo.ipAddress == null || repo.port == null) {
+      final wsURL = repo.telemetryUrl;
+      if (wsURL != null) {
+        onConnected(wsURL);
+      } else {
+        emit(state.copyWith(status: ConnectionStatus.error));
+        return;
+      }
+    }
+
+    // emit(state.copyWith(status: ConnectionStatus.connected));
   }
 }

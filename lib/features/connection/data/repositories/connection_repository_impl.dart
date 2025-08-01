@@ -4,12 +4,17 @@ import 'package:mower_bot/features/connection/domain/repositories/connection_rep
 
 class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   bool _isConnected = false;
+  String? _ipAddress;
+  int? _port;
+
   final _controller = StreamController<bool>.broadcast();
 
   @override
   Future<void> connect(String ipAddress, int port) async {
     await Future.delayed(Duration(seconds: 1)); // Simulate connection delay
     _isConnected = true; // Simulate successful connection
+    _ipAddress = ipAddress; // Store the IP address
+    _port = port; // Store the port
     _controller.add(_isConnected); // Notify listeners about the connection status
   }
 
@@ -17,6 +22,8 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   Future<void> disconnect() async {
     await Future.delayed(Duration(seconds: 1)); // Simulate disconnection delay
     _isConnected = false; // Simulate successful disconnection
+    _ipAddress = null; // Clear the stored IP address
+    _port = null; // Clear the stored port
     _controller.add(_isConnected); // Notify listeners about the disconnection status
   }
 
@@ -29,4 +36,12 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   Stream<bool> connectionChanges() {
     return _controller.stream; // Return the stream of connection status changes
   }
+
+  String? get ipAddress => _ipAddress; // Getter for IP address
+  int? get port => _port; // Getter for port
+
+  String? get telemetryUrl =>
+      (_ipAddress != null && _port != null)
+          ? 'ws://$_ipAddress:$_port'
+          : null; // Construct telemetry URL if IP and port are available
 }

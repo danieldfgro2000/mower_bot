@@ -6,7 +6,14 @@ abstract class TelemetryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class StartTelemetry extends TelemetryEvent {}
+class StartTelemetry extends TelemetryEvent {
+  final String wsUrl;
+
+  StartTelemetry({required this.wsUrl});
+
+  @override
+  List<Object?> get props => [wsUrl];
+}
 
 class StopTelemetry extends TelemetryEvent {}
 

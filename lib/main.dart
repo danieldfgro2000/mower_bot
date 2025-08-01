@@ -11,7 +11,9 @@ import 'package:mower_bot/features/telemetry/data/datasources/telemetry_remote_d
 import 'package:mower_bot/features/telemetry/data/repositories/telemetry_repository_impl.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/get_telemetry_use_case.dart';
+import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 
+import 'core/di/injection_container.dart';
 import 'features/connection/domain/usecases/check_mower_status.dart';
 import 'features/connection/domain/usecases/connect_to_mower.dart';
 import 'features/connection/domain/usecases/disconnect_mower.dart';
@@ -21,38 +23,14 @@ import 'features/paths/domain/usecases/stop_path.dart';
 import 'features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'home_page.dart';
 
-void main() {
-  final client = WebSocketClient();
-  client.connectDummy();
-
-  final connectionRepository = MowerConnectionRepositoryImpl();
-  final pathRepository = MockPathRepository();
-  final telemetryRemoteDataSource = TelemetryRemoteDataSourceImpl();
-  final telemetryRepository = TelemetryRepositoryImpl(telemetryRemoteDataSource);
-
-  runApp(
-    MyApp(
-      client: client,
-      connectionRepository: connectionRepository,
-      telemetryRepository: telemetryRepository,
-      pathRepository: pathRepository,
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final MowerConnectionRepositoryImpl connectionRepository;
-  final TelemetryRepository telemetryRepository;
-  final MockPathRepository pathRepository;
-  final WebSocketClient client;
-
-  const MyApp({
-    super.key,
-    required this.client,
-    required this.connectionRepository,
-    required this.telemetryRepository,
-    required this.pathRepository,
-  });
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -61,26 +39,24 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<MowerConnectionBloc>(
           create: (context) => MowerConnectionBloc(
-            ConnectToMowerUseCase(connectionRepository),
-            DisconnectMowerUseCase(connectionRepository),
-            CheckMowerStatusUseCase(connectionRepository),
-            connectionRepository.connectionChanges()
+            sl(), // ConnectToMowerUseCase
+            sl(), // DisconnectMowerUseCase
+            sl(), // CheckMowerStatusUseCase
+            sl<MowerConnectionRepositoryImpl>().connectionChanges(),
+            onConnected: (url) {
+              context.read<TelemetryBloc>().add(StartTelemetry(wsUrl: url));
+            },
           ),
         ),
-        BlocProvider<TelemetryBloc>(
-          create: (context) => TelemetryBloc(
-            GetTelemetryUseCase(telemetryRepository),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ControlBloc((cmd) => client.send(cmd)),
-        ),
+        BlocProvider<TelemetryBloc>(create: (context) => TelemetryBloc(sl())),
+        BlocProvider(create: (context) =>
+            ControlBloc((cmd) => sl<WebSocketClient>().send(cmd))),
         BlocProvider(
           create: (_) => PathBloc(
-            GetPathsUseCase(pathRepository),
-            PlayPathUseCase(pathRepository),
-            StopPathUseCase(pathRepository),
-            DeletePathUseCase(pathRepository),
+            sl(), // GetPathsUseCase
+            sl(), // PlayPathUseCase
+            sl(), // StopPathUseCase
+            sl(), // DeletePathUseCase
           ),
         ),
       ],

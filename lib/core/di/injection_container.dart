@@ -1,0 +1,41 @@
+import 'package:get_it/get_it.dart';
+import 'package:mower_bot/core/network/websocket_client.dart';
+import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
+import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
+import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
+import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
+import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
+import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
+import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
+import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
+import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
+import 'package:mower_bot/features/paths/domain/usecases/stop_path.dart';
+import 'package:mower_bot/features/telemetry/data/datasources/telemetry_remote_datasource.dart';
+import 'package:mower_bot/features/telemetry/data/repositories/telemetry_repository_impl.dart';
+import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/get_telemetry_use_case.dart';
+
+final sl = GetIt.instance;
+
+Future<void> initDependencies() async {
+  /// Core
+  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient()..connectDummy());
+
+  /// Connection
+  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
+  sl.registerLazySingleton<ConnectToMowerUseCase>(() => ConnectToMowerUseCase(sl()));
+  sl.registerLazySingleton<DisconnectMowerUseCase>(() => DisconnectMowerUseCase(sl()));
+  sl.registerLazySingleton<CheckMowerStatusUseCase>(() => CheckMowerStatusUseCase(sl()));
+
+  /// Paths
+  sl.registerLazySingleton<MockPathRepository>(() => MockPathRepository());
+  sl.registerLazySingleton<GetPathsUseCase>(() => GetPathsUseCase(sl()));
+  sl.registerLazySingleton<PlayPathUseCase>(() => PlayPathUseCase(sl()));
+  sl.registerLazySingleton<StopPathUseCase>(() => StopPathUseCase(sl()));
+  sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
+
+  /// Telemetry
+  sl.registerLazySingleton<TelemetryRemoteDataSource>(() => TelemetryRemoteDataSourceImpl());
+  sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));
+  sl.registerLazySingleton<GetTelemetryUseCase>(() => GetTelemetryUseCase(sl()));
+}
