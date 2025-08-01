@@ -1,9 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
-import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_state.dart';
 
 import 'drift_chart.dart';

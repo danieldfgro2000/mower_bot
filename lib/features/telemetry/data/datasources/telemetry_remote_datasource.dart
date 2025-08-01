@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:mower_bot/features/telemetry/data/models/telemetry_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -27,7 +28,7 @@ class WebSocketService {
   WebSocketService(this.url);
 
   WebSocketChannel connect() {
-    print('Connecting to WebSocket: $url');
+    if(kDebugMode) print('Connecting to WebSocket: $url');
     return WebSocketChannel.connect(Uri.parse(url));
   }
 }

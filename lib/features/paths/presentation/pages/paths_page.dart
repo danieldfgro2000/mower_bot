@@ -17,7 +17,6 @@ class PathsPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Saved paths')),
       body: BlocBuilder<PathBloc, PathState>(
         builder: (context, state) {
-          print('PathsPage: Current state: $state');
           switch (state) {
             case PathInitial():
               pathsBloc.add(FetchPaths());
