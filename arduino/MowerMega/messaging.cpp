@@ -2,6 +2,7 @@
 #include "steering.h"
 #include "wheel_telemetry.h"
 #include "actuators.h"
+#include "path_manager_global.h"
 #include <ArduinoJson.h>
 #include <Arduino.h>
 
@@ -38,6 +39,21 @@ void messagingHandleInput() {
   if(doc.containsKey("drive")) {
     bool drive = doc["drive"].as<bool>();
     actuatorDrive(drive);
+  }
+
+  if(doc.containsKey("path_start")) {
+      char *pathName = doc["path_start"].as<const char *>();
+      pathManager.startRecording(pathName);
+  }
+  if(doc.containsKey("path_stop")) pathManager.stopRecording();
+  if(doc.containsKey("path_list")) pathManager.listPaths();
+  if(doc.containsKey("path_play")) {
+      char *pathName = doc["path_play"].as<const char *>();
+      pathManager.playPath(pathName);
+  }
+  if(doc.containsKey("path_delete")) {
+      char *pathName = doc["path_delete"].as<const char *>();
+      pathManager.deletePath(pathName);
   }
 }
 
