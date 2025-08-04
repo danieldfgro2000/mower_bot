@@ -21,6 +21,6 @@ void serialLinkLoop() {
     return;
   }
   telemetryUpdateFromMega(telemetry);
-  websocketSend(telemetry);
+  connectionManager.sendMessage(telemetry);
   Serial.println("[TELEMETRY]" + telemetry);
 }

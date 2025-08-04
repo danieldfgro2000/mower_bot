@@ -1,4 +1,6 @@
 #include "telemetry_store.h"
+#include "websocket_server.h"
+
 
 static String lastTelemetry = "{}";
 
@@ -13,4 +15,10 @@ void telemetryUpdateFromMega(String json) {
 
 String telemetryGet() {
   return lastTelemetry;
+}
+
+void sendTelemetry() {
+  if(!connectionManager.sendMessage(lastTelemetry)) {
+    Serial.println("Telemetry not sent: no active WebSocket client");
+  }
 }
