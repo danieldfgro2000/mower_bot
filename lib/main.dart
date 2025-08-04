@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
             sl(), // ConnectToMowerUseCase
             sl(), // DisconnectMowerUseCase
             sl(), // CheckMowerStatusUseCase
+            sl(), // GetTelemetryUrlUseCase
             sl<MowerConnectionRepository>().connectionChanges(),
             telemetryBloc: TelemetryBloc(sl()),
           ),

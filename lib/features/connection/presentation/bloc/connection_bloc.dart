@@ -4,6 +4,7 @@ import 'package:mower_bot/features/connection/data/repositories/connection_repos
 import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
+import 'package:mower_bot/features/connection/domain/usecases/get_telemetry_url_usecase.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 
@@ -15,6 +16,7 @@ class MowerConnectionBloc
   final ConnectToMowerUseCase connectToMowerUseCase;
   final DisconnectMowerUseCase disconnectFromMowerUseCase;
   final CheckMowerStatusUseCase checkConnectionStatusUseCase;
+  final GetTelemetryUrlUseCase getTelemetryUrlUseCase;
   final Stream<bool> connectionStream;
   final TelemetryBloc telemetryBloc;
 
@@ -22,6 +24,7 @@ class MowerConnectionBloc
     this.connectToMowerUseCase,
     this.disconnectFromMowerUseCase,
     this.checkConnectionStatusUseCase,
+    this.getTelemetryUrlUseCase,
     this.connectionStream,
       {
     required this.telemetryBloc,
@@ -30,6 +33,7 @@ class MowerConnectionBloc
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
+
     connectionStream.listen((isConnected) {
       add(ConnectionChanged(isConnected));
     });
@@ -72,7 +76,7 @@ class MowerConnectionBloc
     await connectToMowerUseCase(event.ipAddress, event.port);
     final repo = connectToMowerUseCase.repository as MowerConnectionRepositoryImpl;
     if (repo.ipAddress != null || repo.port != null) {
-      final wsURL = repo.telemetryUrl;
+      final wsURL = await getTelemetryUrlUseCase.call();
       if (wsURL != null) {
         telemetryBloc.add(StartTelemetry(wsUrl: wsURL));
       } else {
