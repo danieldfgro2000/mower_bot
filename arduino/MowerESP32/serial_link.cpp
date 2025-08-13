@@ -10,17 +10,17 @@ void serialLinkInit() {
 void serialLinkLoop() {
   if(!Serial2.available()) return;
 
-  String telemetry = Serial2.readStringUntil('\n');
-  telemetry.trim();
+  String dataString = Serial2.readStringUntil('\n');
+  dataString.trim();
 
   StaticJsonDocument<256> doc;
-  DeserializationError err = deserializeJson(doc, telemetry);
+  DeserializationError err = deserializeJson(doc, dataString);
 
   if(err) {
     Serial.println("[ERR] Telemetry JSON parse failed");
     return;
   }
-  telemetryUpdateFromMega(telemetry);
-  connectionManager.sendMessage(telemetry);
+  telemetryUpdateFromMega(dataString);
+  connectionManager.sendMessage(dataString);
   Serial.println("[TELEMETRY]" + telemetry);
 }
