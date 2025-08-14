@@ -62,8 +62,6 @@ class MowerConnectionBloc
 
   FutureOr<void> _onDisconnect(event, emit) async =>
     await disconnectFromMowerUseCase();
-    // emit(state.copyWith(status: ConnectionStatus.disconnected));
-
 
   FutureOr<void> _onConnect(event, emit) async {
     emit(
@@ -84,7 +82,5 @@ class MowerConnectionBloc
         return;
       }
     }
-
-    // emit(state.copyWith(status: ConnectionStatus.connected));
   }
 }

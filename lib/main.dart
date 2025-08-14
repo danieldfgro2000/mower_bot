@@ -4,6 +4,7 @@ import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
+import 'package:mower_bot/mower_bloc_observer.dart';
 
 import 'core/di/injection_container.dart';
 import 'features/connection/domain/repositories/connection_repository.dart';
@@ -14,6 +15,7 @@ import 'home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MowerBlocObserver();
   await initDependencies();
   runApp(MyApp());
 }

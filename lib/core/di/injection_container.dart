@@ -20,10 +20,11 @@ final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
   /// Core
-  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient()..connectDummy());
+  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient());
+  sl.registerLazySingleton<IWebSocketClient>(() => sl<WebSocketClient>());
 
   /// Connection
-  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
+  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl(sl()));
   sl.registerLazySingleton<ConnectToMowerUseCase>(() => ConnectToMowerUseCase(sl()));
   sl.registerLazySingleton<DisconnectMowerUseCase>(() => DisconnectMowerUseCase(sl()));
   sl.registerLazySingleton<CheckMowerStatusUseCase>(() => CheckMowerStatusUseCase(sl()));
@@ -37,7 +38,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
 
   /// Telemetry
-  sl.registerLazySingleton<TelemetryRemoteDataSource>(() => TelemetryRemoteDataSourceImpl());
+  sl.registerLazySingleton<TelemetryRemoteDataSource>(() => TelemetryRemoteDataSourceImpl(sl()));
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));
   sl.registerLazySingleton<GetTelemetryUseCase>(() => GetTelemetryUseCase(sl()));
 }
