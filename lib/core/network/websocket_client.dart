@@ -1,51 +1,75 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart' as status;
 
 typedef MessageHandler = void Function(Map<String, dynamic> message);
 
-class WebSocketClient {
-  // WebSocketChannel? _channel;
-  // Stream<dynamic>? _stream;
-  //
-  // void connect(String uri) {
-  //   _channel = WebSocketChannel.connect(Uri.parse(uri));
-  //   _stream = _channel?.stream;
-  // }
-  //
-  // void send(Map<String, dynamic> message) {
-  //   _channel?.sink.add(message);
-  // }
-  //
-  // Stream<dynamic>? get messages => _stream;
-  // void disconnect() => _channel?.sink.close();
-  final _controller = StreamController<Map<String, dynamic>>();
+abstract class IWebSocketClient {
+  Stream<Map<String, dynamic>> get messages;
+  Future<void> connect(String uri);
+  Future<void> disconnect();
+  void send(Map<String, dynamic> message);
+  bool get isConnected;
+}
+
+class WebSocketClient implements IWebSocketClient {
+  WebSocketChannel? _channel;
+  late final  StreamController<Map<String, dynamic>> _controller;
+  bool _isConnected = false;
+
+  WebSocketClient() {
+    _controller = StreamController<Map<String, dynamic>>.broadcast();
+  }
+
+  @override
   Stream<Map<String, dynamic>> get messages => _controller.stream;
 
-  void send(Map<String, dynamic> message) {
-    // In a real implementation, this would send the message over the WebSocket
-    // For demo purposes, we just print it
-    print("Sending: $message");
-  }
-  // For demo: simulate mower telemetry every 2 seconds
-  void connectDummy(){
-    double driftX = 0.0;
-    double driftY = 0.0;
-    Timer.periodic(const Duration(seconds: 2), (timer) {
-      driftX += (0.05 - 01 * (timer.tick % 2));
-      driftY += 0.02;
+  @override
+  Future<void> connect(String uri) async {
+    try {
+      _channel = WebSocketChannel.connect(Uri.parse(uri));
+      _isConnected = true;
 
-      final data = {
-        "battery": 12.3,
-        "heading": 180.0 + (timer.tick % 360),
-        "encoderSpeed": 1.5,
-        "event": timer.tick % 5 == 0 ? "telemetry" : "lap_completed",
-        "isMoving": timer.tick % 20 == 0,
-        "driftX": driftX,
-        "driftY": driftY,
-        "headingError": 0.1 * (timer.tick % 10),
-      };
-      _controller.add(data);
-    });
+      _channel!.stream.listen(
+        (data) {
+          try {
+            final message = jsonDecode(data);
+            if (message is Map<String, dynamic>) {
+              _controller.add(message);
+            }
+          } catch (e) {
+            print("Error decoding message: $e");
+          }
+        }, onError: (error) {
+          _isConnected = false;
+          _controller.addError(error);
+      }, onDone: () {
+          _isConnected = false;
+        });
+    } catch (e) {
+      _isConnected = false;
+      _controller.addError(e);
+    }
   }
+
+  @override
+  void send(Map<String, dynamic> message) {
+    if(_isConnected && _channel != null) {
+      _channel!.sink.add(jsonEncode(message));
+    }
+  }
+
+  @override
+  Future<void> disconnect() async {
+    if (_channel != null) {
+      await _channel!.sink.close(status.normalClosure);
+      _isConnected = false;
+
+    }
+  }
+
+  @override
+  bool get isConnected => _isConnected;
 }
