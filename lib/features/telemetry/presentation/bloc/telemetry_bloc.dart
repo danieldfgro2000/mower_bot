@@ -21,7 +21,7 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     emit(TelemetryLoading());
     _subscription = telemetryStream(event.wsUrl).listen(
       (telemetryData) => add(TelemetryReceived(telemetryData)),
-      onError: (e) => emit(TelemetryError(e.toString())),
+      onError: (e) => TelemetryError(e.toString()),
     );
   }
 

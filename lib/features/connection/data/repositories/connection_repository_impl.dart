@@ -1,40 +1,50 @@
 import 'dart:async';
 
+import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 
 class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
-  String? _ipAddress;
-  int? _port;
+   final IWebSocketClient _webSocketClient;
 
-  final _controller = StreamController<bool>.broadcast();
+   String? _ipAddress;
+   int? _port;
+
+   final _controller = StreamController<bool>.broadcast();
+
+  MowerConnectionRepositoryImpl(this._webSocketClient);
 
   @override
   Future<void> connect(String ipAddress, int port) async {
-    await Future.delayed(Duration(seconds: 1)); // Simulate connection delay
-
-    _ipAddress = ipAddress; // Store the IP address
-    _port = port; // Store the port
-    _controller.add(true); // Notify listeners about the connection status
+    final url = 'ws://$ipAddress:$port';
+    try {
+      await  _webSocketClient.connect(url);
+      _ipAddress = ipAddress;
+      _port = port;
+      _controller.add(true);
+    } catch (e) {
+      _controller.add(false);
+      print('Connection failed: $e');
+      rethrow;
+    }
   }
 
   @override
   Future<void> disconnect() async {
-    await Future.delayed(Duration(seconds: 1)); // Simulate disconnection delay
+    await _webSocketClient.disconnect();
 
-    _ipAddress = null; // Clear the stored IP address
-    _port = null; // Clear the stored port
-    _controller.add(false); // Notify listeners about the disconnection status
+    _ipAddress = null;
+    _port = null;
+    _controller.add(false);
   }
 
   @override
   Future<bool> checkConnectionStatus() async {
-    return _ipAddress != null ; // Return the current connection status
+    return _webSocketClient.isConnected;
   }
 
   @override
-  Stream<bool> connectionChanges() {
-    return _controller.stream; // Return the stream of connection status changes
-  }
+  Stream<bool> connectionChanges() => _controller.stream;
+
 
   String? get ipAddress => _ipAddress; // Getter for IP address
   int? get port => _port; // Getter for port
@@ -43,7 +53,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   Future<String?> getTelemetryUrl() async {
     return (_ipAddress != null && _port != null)
         ? 'ws://$_ipAddress:$_port'
-        : null; // Construct telemetry URL if IP and port are available
+        : null;
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/telemetry/data/models/telemetry_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -9,15 +10,24 @@ abstract class TelemetryRemoteDataSource {
 }
 
 class TelemetryRemoteDataSourceImpl implements TelemetryRemoteDataSource {
-
-  TelemetryRemoteDataSourceImpl();
+  final IWebSocketClient _webSocketClient;
+  TelemetryRemoteDataSourceImpl(this._webSocketClient);
 
   @override
   Stream<TelemetryModel> streamTelemetry(String wsUrl) async* {
-    final channel = WebSocketService(wsUrl).connect();
-    await for (final message in channel.stream) {
-      final json = jsonDecode(message);
-      yield TelemetryModel.fromJson(json);
+    try {
+      await _webSocketClient.connect(wsUrl);
+      await for (final message in _webSocketClient.messages) {
+        try {
+          yield TelemetryModel.fromJson(message);
+        } catch (e) {
+          if (kDebugMode) print('Error parsing telemetry message: $e');
+          continue;
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) print('WebSocket connection error: $e');
+      yield* Stream.error(e);
     }
   }
 }
