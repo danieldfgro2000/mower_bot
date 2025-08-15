@@ -1,33 +1,38 @@
 #include <ESPAsyncWebServer.h>
 #include "network.h"
-#include "http_server.h"
 #include "serial_link.h"
 #include "telemetry_store.h"
 #include "websocket_server.h"
 #include "connection_manager.h"
 
-AsyncWebServer server(81);
-
-String lastTelemetry = "{}";
-
-extern ConnectionManager connectionManager;
+using namespace network;
 
 void setup() {
-  Serial.begin(115200); //For debugging
-  initWebSocket();
-  delay(10);
-  connectionManager.begin();
-  delay(10);
-  telemetryStoreInit();
-  delay(10);
-  serialLinkInit();
- 
-  Serial.println("[WS] WebSocket server started");
+    Serial.begin(115200);
+    delay(100);
 
+    network::NetworkConfig cfg{};
+
+    // WiFi mower credentials
+    cfg.ssid = "MOWER_BOT";
+    cfg.password = "mower1234";
+
+    // Optional static IP configuration (disable for DHCP)
+    cfg.staticIp.enabled = false;
+
+    cfg.staticIp.local = IPAddress(192, 168, 1, 60);
+    cfg.staticIp.gateway = IPAddress(192, 168, 1, 1);
+    cfg.staticIp.subnet = IPAddress(255, 255, 255, 0);
+    cfg.staticIp.dns1 = IPAddress(8, 8, 8, 8);
+    cfg.staticIp.dns2 = IPAddress(1, 1, 1, 1);
+
+    // WebSocket port
+    cfg.ws.port = 81; // Default Web
+
+    //  ---- Boot sequence ----
+    network::begin(cfg);
+    conn::begin();
 }
-
 void loop() {
-  serialLinkLoop();
-  delay(10);
-  ws.cleanupClients();
+    conn::loop();
 }

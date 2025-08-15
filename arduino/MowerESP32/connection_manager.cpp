@@ -1,34 +1,47 @@
 #include "connection_manager.h"
+#include "network.h"
+#include "websocket_server.h"
 
-ConnectionManager::ConnectionManager(AsyncWebSocket& socket)
-  : _socket(socket), _state(ClientConnectionState::Disconnected), _client(nullptr) {}
+namespace {
+    bool wsStarted = false;
+    bool lastConnected = false;
 
-void ConnectionManager::begin() {}
-
-void ConnectionManager::onClientConnected(AsyncWebSocketClient *client) {
-  _client = client;
-  _state = ClientConnectionState::Connected;
+    void maybePrintIp() {
+        auto ip = network::ip();
+        if(ip != IPAddress()) {
+            Serial.printf("[WS] IP: %s\n", ip.toString().c_str());
+        }
+    }
 }
 
-void ConnectionManager::onClientDisconnected(AsyncWebSocketClient *client) {
-  if(_client == client) {
-    _client == nullptr;
-    _state = ClientConnectionState::Disconnected;
-  }
-}
+namespace conn {
+    void begin() {
+        wsStarted = false;
+        lastConnected = false;
+    }
+    void loop() {
+        network::loop();
 
-bool ConnectionManager::sendMessage(const String& msg) {
-  if(_state == ClientConnectionState::Connected && _client) {
-    _client->text(msg);
-    return true;
-  }
-  return false;
-}
+        const bool connected = network::isConnected();
 
-bool ConnectionManager::isConnected() const {
-  return _state == ClientConnectionState::Connected;
-}
+        if(connected != lastConnected) {
+            maybePrintIp();
+        }
 
-ClientConnectionState ConnectionManager::state() const {
-  return _state;
+        lastConnected = connected;
+
+        if(connected) {
+            const uint16_t targetPort = network::webSocketPort();
+            if(!wsStarted || !ws::isRunning() || ws::currentPort() != network::webSocketPort()) {
+                ws::restart(network::webSocketPort());
+                wsStarted = true;
+            }
+        }
+
+        if(wsStarted) {
+            ws::loop();
+        } else {
+            Serial.println(F("[WS] WebSocket server not started."));
+        }
+    }
 }

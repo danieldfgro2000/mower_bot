@@ -18,7 +18,7 @@ String telemetryGet() {
 }
 
 void sendTelemetry() {
-  if(!connectionManager.sendMessage(lastTelemetry)) {
-    Serial.println("Telemetry not sent: no active WebSocket client");
-  }
+//  if(!connectionManager.sendMessage(lastTelemetry)) {
+//    Serial.println("Telemetry not sent: no active WebSocket client");
+//  }
 }

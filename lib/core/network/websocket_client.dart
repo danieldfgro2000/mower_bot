@@ -29,6 +29,7 @@ class WebSocketClient implements IWebSocketClient {
   @override
   Future<void> connect(String uri) async {
     try {
+      print("Connecting to WebSocket at $uri");
       _channel = WebSocketChannel.connect(Uri.parse(uri));
       _isConnected = true;
 
