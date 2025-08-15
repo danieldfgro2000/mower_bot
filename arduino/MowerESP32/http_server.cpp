@@ -10,7 +10,7 @@ void httpServerInit() {
 
   server.on("/command", HTTP_POST, [](AsyncWebServerRequest *request) {
     if (request->hasParam("body", true)) {
-      AsyncWebParameter* p = request->getParam("body", true);
+      const AsyncWebParameter* p = request->getParam("body", true);
       String jsonCommand = p->value();
       Serial2.println(jsonCommand); // Forward to Mega
       Serial.println("[CMD]" + jsonCommand);
