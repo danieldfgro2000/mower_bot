@@ -16,6 +16,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   @override
   Future<void> connect(String ipAddress, int port) async {
     final url = 'ws://$ipAddress:$port';
+    print('connecting to mower');
     try {
       await  _webSocketClient.connect(url);
       _ipAddress = ipAddress;

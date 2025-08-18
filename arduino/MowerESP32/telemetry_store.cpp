@@ -1,5 +1,4 @@
 #include "telemetry_store.h"
-#include "websocket_server.h"
 
 
 static String lastTelemetry = "{}";

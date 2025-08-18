@@ -1,38 +1,62 @@
-#include <ESPAsyncWebServer.h>
-#include "network.h"
-#include "serial_link.h"
-#include "telemetry_store.h"
-#include "websocket_server.h"
-#include "connection_manager.h"
+#include <wifi_adapter.h>
 
-using namespace network;
+#include <ws_server.h>
+#include <mega_serial.h>
+
+#include <router.h>
+#include <heartbeat.h>
+
+#include "secrets.h"
+#include "pins_esp32cam.h"
+
+using namespace Mower;
+
+WifiAdapter             g_net;
+WsServer                g_ws;
+MegaSerial              g_mega;
+Router                  g_router;
+Heartbeat               g_hb;
 
 void setup() {
     Serial.begin(115200);
-    delay(100);
+    delay(200);
 
-    network::NetworkConfig cfg{};
+    // 1) Bring up Wi-Fi (auto-reconnect handled internally)
+    g_net.onConnected([](){
 
-    // WiFi mower credentials
-    cfg.ssid = "MOWER_BOT";
-    cfg.password = "mower1234";
+    });
+    g_net.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
 
-    // Optional static IP configuration (disable for DHCP)
-    cfg.staticIp.enabled = false;
+    // 2) Serial bridge to Mega 2560 (pins from config/pins_esp32cam.h)
+    g_mega.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
 
-    cfg.staticIp.local = IPAddress(192, 168, 1, 60);
-    cfg.staticIp.gateway = IPAddress(192, 168, 1, 1);
-    cfg.staticIp.subnet = IPAddress(255, 255, 255, 0);
-    cfg.staticIp.dns1 = IPAddress(8, 8, 8, 8);
-    cfg.staticIp.dns2 = IPAddress(1, 1, 1, 1);
+    // 3) WebSocket server (for Flutter app)
+    g_ws.begin(81);
+    g_ws.onMessage([](const JsonDocument& doc, uint8_t clientId) {
+        // Forward command payloads to Mega as line-delimited JSON
+        if(doc["type"] == "command") {
+            String line;
+            serializeJson(doc, line);
+            g_mega.writeLine(line);
+        }
+    });
 
-    // WebSocket port
-    cfg.ws.port = 81; // Default Web
+    g_router.begin(&g_ws, &g_mega);
+    g_router.attachHeartbeat(&g_hb);
 
-    //  ---- Boot sequence ----
-    network::begin(cfg);
-    conn::begin();
+    g_hb.begin(&g_ws, &g_net);
 }
+
 void loop() {
-    conn::loop();
+    g_net.loop();
+    g_ws.loop();
+    g_router.loop();
+    g_hb.loop();
+
+    // Keep alive pings
+    static uint32_t lastPing = 0;
+    if (millis() - lastPing > 15000UL) {
+        lastPing = millis();
+        g_ws.pingAll();
+    }
 }

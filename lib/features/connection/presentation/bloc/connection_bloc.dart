@@ -71,7 +71,9 @@ class MowerConnectionBloc
         port: event.port,
       ),
     );
+
     await connectToMowerUseCase(event.ipAddress, event.port);
+
     final repo = connectToMowerUseCase.repository as MowerConnectionRepositoryImpl;
     if (repo.ipAddress != null || repo.port != null) {
       final wsURL = await getTelemetryUrlUseCase.call();
