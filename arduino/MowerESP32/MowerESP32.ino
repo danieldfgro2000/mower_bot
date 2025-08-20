@@ -25,6 +25,7 @@ void setup() {
     g_net.onConnected([](){
 
     });
+    Serial.printf("[NET] Connecting to Wi-Fi SSID: %s\n", MowerConfig::WIFI_SSID);
     g_net.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
 
     // 2) Serial bridge to Mega 2560 (pins from config/pins_esp32cam.h)
