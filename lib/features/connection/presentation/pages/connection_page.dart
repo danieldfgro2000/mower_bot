@@ -14,7 +14,7 @@ class ConnectionPage extends StatefulWidget {
 }
 
 class _ConnectionPageState extends State<ConnectionPage> {
-  final ipController = TextEditingController(text: '192.168.4.1');
+  final ipController = TextEditingController(text: '172.20.10.12');
   final portController = TextEditingController(text: '81');
 
   @override

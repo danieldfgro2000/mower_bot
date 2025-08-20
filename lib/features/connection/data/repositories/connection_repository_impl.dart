@@ -15,10 +15,14 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
 
   @override
   Future<void> connect(String ipAddress, int port) async {
-    final url = 'ws://$ipAddress:$port';
+    final uri = Uri(
+        scheme:'ws',
+        host: ipAddress,
+        port:port,
+        path:'/');
     print('connecting to mower');
     try {
-      await  _webSocketClient.connect(url);
+      await  _webSocketClient.connect(uri);
       _ipAddress = ipAddress;
       _port = port;
       _controller.add(true);
@@ -51,9 +55,13 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   int? get port => _port; // Getter for port
 
   @override
-  Future<String?> getTelemetryUrl() async {
+  Future<Uri?> getTelemetryUrl() async {
     return (_ipAddress != null && _port != null)
-        ? 'ws://$_ipAddress:$_port'
+        ? Uri(
+            scheme: 'ws',
+            host: _ipAddress,
+            port: port,
+            path: '/')
         : null;
   }
 

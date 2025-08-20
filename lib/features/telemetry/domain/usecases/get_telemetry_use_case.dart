@@ -7,5 +7,5 @@ class GetTelemetryUseCase {
 
   GetTelemetryUseCase(this.repository);
 
-  Stream<TelemetryEntity> call(String wsUrl) => repository.getTelemetryStream(wsUrl);
+  Stream<TelemetryEntity> call(Uri wsUrl) => repository.getTelemetryStream(wsUrl);
 }

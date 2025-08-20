@@ -8,7 +8,7 @@ typedef MessageHandler = void Function(Map<String, dynamic> message);
 
 abstract class IWebSocketClient {
   Stream<Map<String, dynamic>> get messages;
-  Future<void> connect(String uri);
+  Future<void> connect(Uri uri);
   Future<void> disconnect();
   void send(Map<String, dynamic> message);
   bool get isConnected;
@@ -27,10 +27,10 @@ class WebSocketClient implements IWebSocketClient {
   Stream<Map<String, dynamic>> get messages => _controller.stream;
 
   @override
-  Future<void> connect(String uri) async {
+  Future<void> connect(Uri uri) async {
     try {
       print("Connecting to WebSocket at $uri");
-      _channel = WebSocketChannel.connect(Uri.parse(uri));
+      _channel = WebSocketChannel.connect(uri);
       _isConnected = true;
 
       _channel!.stream.listen(

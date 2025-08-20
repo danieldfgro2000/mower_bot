@@ -7,7 +7,7 @@ abstract class TelemetryEvent extends Equatable {
 }
 
 class StartTelemetry extends TelemetryEvent {
-  final String wsUrl;
+  final Uri wsUrl;
 
   StartTelemetry({required this.wsUrl});
 

@@ -4,5 +4,5 @@ class GetTelemetryUrlUseCase {
   final MowerConnectionRepository _repository;
   GetTelemetryUrlUseCase(this._repository);
 
-  Future<String?> call() => _repository.getTelemetryUrl();
+  Future<Uri?> call() => _repository.getTelemetryUrl();
 }

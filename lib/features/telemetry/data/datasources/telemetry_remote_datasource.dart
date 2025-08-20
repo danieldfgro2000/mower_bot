@@ -6,7 +6,7 @@ import 'package:mower_bot/features/telemetry/data/models/telemetry_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 abstract class TelemetryRemoteDataSource {
-  Stream<TelemetryModel> streamTelemetry(String wsUrl);
+  Stream<TelemetryModel> streamTelemetry(Uri wsUrl);
 }
 
 class TelemetryRemoteDataSourceImpl implements TelemetryRemoteDataSource {
@@ -14,10 +14,11 @@ class TelemetryRemoteDataSourceImpl implements TelemetryRemoteDataSource {
   TelemetryRemoteDataSourceImpl(this._webSocketClient);
 
   @override
-  Stream<TelemetryModel> streamTelemetry(String wsUrl) async* {
+  Stream<TelemetryModel> streamTelemetry(Uri wsUrl) async* {
     try {
       await _webSocketClient.connect(wsUrl);
       await for (final message in _webSocketClient.messages) {
+        print('Received telemetry message: $message');
         try {
           yield TelemetryModel.fromJson(message);
         } catch (e) {

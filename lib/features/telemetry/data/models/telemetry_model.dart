@@ -18,4 +18,19 @@ class TelemetryModel extends TelemetryEntity {
       actuatorStart: json['actuatorStart'] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'wheelAngle': wheelAngle,
+      'distanceTraveled': distanceTraveled,
+      'speed': speed,
+      'actuatorDrive': actuatorDrive,
+      'actuatorStart': actuatorStart,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'TelemetryModel${toJson()}';
+  }
 }
