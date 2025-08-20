@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mower_bot/core/network/websocket_client.dart';
+import 'package:mower_bot/core/network/websocket_config.dart';
 import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
@@ -20,7 +21,8 @@ final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
   /// Core
-  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient());
+  sl.registerLazySingleton<WebSocketConfig>(() => WebSocketConfig());
+  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient(sl()));
   sl.registerLazySingleton<IWebSocketClient>(() => sl<WebSocketClient>());
 
   /// Connection
@@ -38,7 +40,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
 
   /// Telemetry
-  sl.registerLazySingleton<TelemetryRemoteDataSource>(() => TelemetryRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<TelemetryRemoteDataSource>(() => TelemetryRemoteDataSourceImpl(sl(), sl()));
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));
   sl.registerLazySingleton<GetTelemetryUseCase>(() => GetTelemetryUseCase(sl()));
 }

@@ -17,7 +17,7 @@ class MowerConnectionBloc
   final DisconnectMowerUseCase disconnectFromMowerUseCase;
   final CheckMowerStatusUseCase checkConnectionStatusUseCase;
   final GetTelemetryUrlUseCase getTelemetryUrlUseCase;
-  final Stream<bool> connectionStream;
+  final Stream<bool> wsConnectionStatusStream;
   final TelemetryBloc telemetryBloc;
 
   MowerConnectionBloc(
@@ -25,7 +25,7 @@ class MowerConnectionBloc
     this.disconnectFromMowerUseCase,
     this.checkConnectionStatusUseCase,
     this.getTelemetryUrlUseCase,
-    this.connectionStream,
+    this.wsConnectionStatusStream,
       {
     required this.telemetryBloc,
   }) : super(const MowerConnectionState()) {
@@ -34,7 +34,7 @@ class MowerConnectionBloc
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
 
-    connectionStream.listen((isConnected) {
+    wsConnectionStatusStream.listen((isConnected) {
       add(ConnectionChanged(isConnected));
     });
   }

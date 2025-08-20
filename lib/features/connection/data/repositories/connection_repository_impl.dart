@@ -9,7 +9,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
    String? _ipAddress;
    int? _port;
 
-   final _controller = StreamController<bool>.broadcast();
+   final _wsConnectionStatusController = StreamController<bool>.broadcast();
 
   MowerConnectionRepositoryImpl(this._webSocketClient);
 
@@ -25,9 +25,9 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
       await  _webSocketClient.connect(uri);
       _ipAddress = ipAddress;
       _port = port;
-      _controller.add(true);
+      _wsConnectionStatusController.add(true);
     } catch (e) {
-      _controller.add(false);
+      _wsConnectionStatusController.add(false);
       print('Connection failed: $e');
       rethrow;
     }
@@ -39,7 +39,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
 
     _ipAddress = null;
     _port = null;
-    _controller.add(false);
+    _wsConnectionStatusController.add(false);
   }
 
   @override
@@ -48,7 +48,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   }
 
   @override
-  Stream<bool> connectionChanges() => _controller.stream;
+  Stream<bool> connectionChanges() => _wsConnectionStatusController.stream;
 
 
   String? get ipAddress => _ipAddress; // Getter for IP address
@@ -66,5 +66,5 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   }
 
   @override
-  Stream<bool> get connectionStatusStream => _controller.stream; // Expose the connection status stream
+  Stream<bool> get connectionStatusStream => _wsConnectionStatusController.stream; // Expose the connection status stream
 }

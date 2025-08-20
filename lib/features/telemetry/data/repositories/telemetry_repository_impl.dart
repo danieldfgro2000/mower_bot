@@ -9,6 +9,6 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
 
   @override
   Stream<TelemetryEntity> getTelemetryStream(Uri wsUrl) {
-    return remoteDataSource.streamTelemetry(wsUrl);
+    return remoteDataSource.observeTelemetry();
   }
 }
