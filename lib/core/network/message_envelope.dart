@@ -38,7 +38,7 @@ class MessageEnvelope {
 
   factory MessageEnvelope.fromJson(Map<String, dynamic> json) {
     return MessageEnvelope(
-      topic: topicFromString(json['topic'] as String),
+      topic: topicFromString(json['topic'] as String? ?? ''),
       data: (json['data'] as Map?)?.cast<String, dynamic>() ?? const {},
     );
   }

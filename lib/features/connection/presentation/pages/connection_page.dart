@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
+
+import 'components/connection_button.dart';
+import 'components/connection_form.dart';
+import 'components/connection_status_tile.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
@@ -14,81 +19,70 @@ class ConnectionPage extends StatefulWidget {
 }
 
 class _ConnectionPageState extends State<ConnectionPage> {
-  final ipController = TextEditingController(text: '172.20.10.12');
-  final portController = TextEditingController(text: '81');
+  final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
-    final connectionStatus = context.watch<MowerConnectionBloc>().state.status;
-
+  }
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Connection'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ListTile(
-                  title: const Text('Status'),
-                  trailing: Text(
-                    state.status.name.toUpperCase(),
-                    style: TextStyle(
-                      color: state.status == ConnectionStatus.connected
-                          ? Colors.green
-                          : state.status == ConnectionStatus.error
-                          ? Colors.red
-                          : Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: ipController,
-                  decoration: const InputDecoration(
-                    labelText: 'Mower IP Address',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: portController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Port',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                ElevatedButton.icon(
-                  onPressed: () {
-                    final ip = ipController.text.trim();
-                    final port = int.tryParse(portController.text) ?? 81;
-                    connectionStatus == ConnectionStatus.connected
-                        ? context.read<MowerConnectionBloc>().add(DisconnectFromMower())
-                        : context.read<MowerConnectionBloc>().add(ConnectToMower(ip, port));
-                  },
-                  icon: Icon(
-                    connectionStatus == ConnectionStatus.connected
-                        ? Icons.wifi
-                        : Icons.wifi_off,
-                  ),
-                  label: Text(
-                      connectionStatus == ConnectionStatus.connected
-                          ? 'Disconnect'
-                          : 'Connect'
-                  ),
-                ),
-              ],
-            );
-          },
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<MowerConnectionBloc, MowerConnectionState>(
+              listenWhen: (prev, curr) => prev.status != curr.status,
+              listener: (context, state) {
+                switch (state.status) {
+                  case ConnectionStatus.connected:
+                    _showSnackBar(context, 'Connected to mower');
+                    break;
+                  case ConnectionStatus.disconnected:
+                    _showSnackBar(context, 'Disconnected from mower');
+                    break;
+                  case ConnectionStatus.connecting:
+                    _showSnackBar(context, 'Connecting to mower...');
+                    break;
+                  case ConnectionStatus.error:
+                    _showSnackBar(context, 'Error connecting to mower ');
+                    break;
+                }
+              },
+            ),
+          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const ConnectionStatusTile(),
+              const SizedBox(height: 16),
+              Expanded(child: ConnectionForm(formKey: _formKey)),
+              const SizedBox(height: 16),
+              ConnectionButton(formKey: _formKey),
+            ],
+            
+          ),
         ),
       ),
     );
   }
+}
+
+void _showSnackBar(
+  BuildContext context,
+  String message, {
+  bool isError = false,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: isError ? Colors.red : null,
+      duration: const Duration(seconds: 2),
+    ),
+  );
 }

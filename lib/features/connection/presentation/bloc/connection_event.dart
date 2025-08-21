@@ -7,6 +7,24 @@ abstract class MowerConnectionEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class ChangeIp extends MowerConnectionEvent {
+  final String ipAddress;
+
+  const ChangeIp(this.ipAddress);
+
+  @override
+  List<Object?> get props => [ipAddress];
+}
+
+class ChangePort extends MowerConnectionEvent {
+  final String port;
+
+  const ChangePort(this.port);
+
+  @override
+  List<Object?> get props => [port];
+}
+
 class ConnectToMower extends MowerConnectionEvent {
   final String ipAddress;
   final int port;

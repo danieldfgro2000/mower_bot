@@ -137,6 +137,7 @@ class WebSocketClient implements IWebSocketClient {
       _controller.addError(
         "Max reconnect attempts reached: ${_webSocketConfig.maxReconnectAttempts}",
       );
+      return;
     }
 
     final delay = _nextBackoff(
