@@ -21,7 +21,9 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
 
   void _onStartTelemetry(StartTelemetry event, Emitter<TelemetryState> emit) {
     emit(TelemetryLoading());
-    _startTelemetryStreamUseCase.call();
+    _startTelemetryStreamUseCase.call().onError((error, stackTrace) {
+      emit(TelemetryError(error.toString()));
+    });
     _observeTelemetrySubscription = _observeTelemetryStreamUseCase().listen(
       (telemetryData) => add(TelemetryReceived(telemetryData)),
       onError: (e) => TelemetryError(e.toString()),

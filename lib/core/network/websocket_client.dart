@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/network/websocket_config.dart';
@@ -38,8 +39,39 @@ class WebSocketClient implements IWebSocketClient {
   @override
   Stream<Map<String, dynamic>> get messages => _controller.stream;
 
+  Future<bool> _tcpProbe(String host, int port, {Duration? timeout}) async {
+    try {
+      final socket = await Socket.connect(
+        host,
+        port,
+        timeout: timeout ?? _webSocketConfig.reconnectMinDelay,
+      );
+      socket.destroy;
+      return true;
+    } catch (e) {
+      if (kDebugMode) print("TCP probe failed for $host:$port - $e");
+      return false;
+    }
+  }
+
   Future<void> _open(Uri uri) async {
     try {
+      // 1) Preflight reachability check
+      final host = uri.host;
+      final port = uri.port;
+      final isReachable = await _tcpProbe(host, port);
+
+      if (!isReachable) {
+        if (kDebugMode)
+          print("Cannot reach $host:$port. Aborting WebSocket connection.");
+        _controller.addError("Cannot reach $host:$port");
+        _isConnected = false;
+        _stopPing();
+        _maybeReconnect();
+        return;
+      }
+
+      // 2) Try to open the WebSocket connection (catch async throws)
       if (kDebugMode) print("WS: connecting to $uri");
       _channel = WebSocketChannel.connect(uri);
       _isConnected = true;
@@ -85,9 +117,9 @@ class WebSocketClient implements IWebSocketClient {
 
   void _startPing() {
     _pingTimer?.cancel();
-    if(_webSocketConfig.pingInterval.inMilliseconds <= 0) return;
+    if (_webSocketConfig.pingInterval.inMilliseconds <= 0) return;
     _pingTimer = Timer.periodic(_webSocketConfig.pingInterval, (_) {
-      if(_isConnected && _channel != null) {
+      if (_isConnected && _channel != null) {
         send(const {'type': 'ping'});
       }
     });
@@ -102,7 +134,9 @@ class WebSocketClient implements IWebSocketClient {
     if (_manuallyClosed || _lastUri == null) return;
     if (_reconnectAttempts >= _webSocketConfig.maxReconnectAttempts) {
       if (kDebugMode) print("Max reconnect attempts reached. Not reconnecting.");
-      return;
+      _controller.addError(
+        "Max reconnect attempts reached: ${_webSocketConfig.maxReconnectAttempts}",
+      );
     }
 
     final delay = _nextBackoff(
@@ -131,21 +165,24 @@ class WebSocketClient implements IWebSocketClient {
     });
   }
 
-  Duration _nextBackoff(Duration minDelay,
-      Duration maxDelay,
-      int attempt,) {
+  Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {
     final baseMs = minDelay.inMilliseconds * (1 << attempt);
     final capped = baseMs > maxDelay.inMilliseconds
         ? maxDelay.inMilliseconds
         : baseMs;
     final jitter = (capped * 0.2).toInt();
-    final actual = capped + (jitter == 0 ? 0 : (DateTime
-        .now()
-        .microsecond % (2 * jitter)) - jitter);
-    return Duration(milliseconds: actual.clamp(
-        minDelay.inMilliseconds, maxDelay.inMilliseconds));
+    final actual =
+        capped +
+        (jitter == 0
+            ? 0
+            : (DateTime.now().microsecond % (2 * jitter)) - jitter);
+    return Duration(
+      milliseconds: actual.clamp(
+        minDelay.inMilliseconds,
+        maxDelay.inMilliseconds,
+      ),
+    );
   }
-
 
   @override
   Future<void> connect(Uri uri) async {

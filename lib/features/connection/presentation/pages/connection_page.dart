@@ -20,6 +20,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
   @override
   Widget build(BuildContext context) {
     context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
+    final connectionStatus = context.watch<MowerConnectionBloc>().state.status;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Connection'), centerTitle: true),
       body: Padding(
@@ -38,9 +40,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
                       color: state.status == ConnectionStatus.connected
                           ? Colors.green
                           : state.status == ConnectionStatus.error
-                              ? Colors.red
-                              : Colors.grey,
-                      fontWeight: FontWeight.bold
+                          ? Colors.red
+                          : Colors.grey,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -62,28 +64,26 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                if(state.status == ConnectionStatus.disconnected)
-                  ElevatedButton.icon(
-                    onPressed: (){
-                      final ip = ipController.text.trim();
-                      final port = int.tryParse(portController.text) ?? 81;
-                      context.read<MowerConnectionBloc>().add(
-                        ConnectToMower(ip, port),
-                      );
-                    },
-                    icon: const Icon(Icons.wifi),
-                    label: const Text('Connect'),
+
+                ElevatedButton.icon(
+                  onPressed: () {
+                    final ip = ipController.text.trim();
+                    final port = int.tryParse(portController.text) ?? 81;
+                    connectionStatus == ConnectionStatus.connected
+                        ? context.read<MowerConnectionBloc>().add(DisconnectFromMower())
+                        : context.read<MowerConnectionBloc>().add(ConnectToMower(ip, port));
+                  },
+                  icon: Icon(
+                    connectionStatus == ConnectionStatus.connected
+                        ? Icons.wifi
+                        : Icons.wifi_off,
                   ),
-                if(state.status == ConnectionStatus.connected)
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      context.read<MowerConnectionBloc>().add(DisconnectFromMower());
-                    },
-                    icon: const Icon(Icons.wifi_off),
-                    label: const Text('Disconnect'),
+                  label: Text(
+                      connectionStatus == ConnectionStatus.connected
+                          ? 'Disconnect'
+                          : 'Connect'
                   ),
-                if(state.status == ConnectionStatus.connecting)
-                  const Center(child: CircularProgressIndicator()),
+                ),
               ],
             );
           },
