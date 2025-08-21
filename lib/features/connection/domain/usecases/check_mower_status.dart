@@ -2,9 +2,8 @@ import 'package:mower_bot/features/connection/domain/repositories/connection_rep
 
 class CheckMowerStatusUseCase {
   final MowerConnectionRepository _connectionRepository;
+
   CheckMowerStatusUseCase(this._connectionRepository);
 
-  Future<bool> call() async {
-    return _connectionRepository.checkConnectionStatus();
-  }
+  Future<bool> call() async => _connectionRepository.isConnected;
 }

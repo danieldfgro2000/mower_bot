@@ -101,8 +101,7 @@ class WebSocketClient implements IWebSocketClient {
   void _maybeReconnect() {
     if (_manuallyClosed || _lastUri == null) return;
     if (_reconnectAttempts >= _webSocketConfig.maxReconnectAttempts) {
-      if (kDebugMode) print(
-          "Max reconnect attempts reached. Not reconnecting.");
+      if (kDebugMode) print("Max reconnect attempts reached. Not reconnecting.");
       return;
     }
 

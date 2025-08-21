@@ -19,6 +19,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
     return Scaffold(
       appBar: AppBar(title: const Text('Connection'), centerTitle: true),
       body: Padding(

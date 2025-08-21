@@ -6,7 +6,6 @@ import 'package:mower_bot/features/connection/domain/repositories/connection_rep
 import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
-import 'package:mower_bot/features/connection/domain/usecases/get_telemetry_url_usecase.dart';
 import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
@@ -30,7 +29,6 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<ConnectToMowerUseCase>(() => ConnectToMowerUseCase(sl()));
   sl.registerLazySingleton<DisconnectMowerUseCase>(() => DisconnectMowerUseCase(sl()));
   sl.registerLazySingleton<CheckMowerStatusUseCase>(() => CheckMowerStatusUseCase(sl()));
-  sl.registerLazySingleton<GetTelemetryUrlUseCase>(() => GetTelemetryUrlUseCase(sl()));
 
   /// Paths
   sl.registerLazySingleton<MockPathRepository>(() => MockPathRepository());
