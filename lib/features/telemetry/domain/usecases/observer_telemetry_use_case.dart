@@ -1,12 +1,11 @@
-import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
-import 'package:mower_bot/features/telemetry/data/datasources/telemetry_remote_datasource.dart';
-import 'package:mower_bot/features/telemetry/data/models/telemetry_model.dart';
+import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
+import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 
 class ObserverTelemetryUseCase {
-  final TelemetryRemoteDataSource _repository;
+  final TelemetryRepository _repository;
   ObserverTelemetryUseCase(this._repository);
 
-  Stream<TelemetryModel> call() {
+  Stream<TelemetryEntity> call() {
     return _repository.observeTelemetry();
   }
 }

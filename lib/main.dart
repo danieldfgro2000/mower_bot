@@ -35,10 +35,10 @@ class MyApp extends StatelessWidget {
             sl(), // CheckMowerStatusUseCase
             sl(), // GetTelemetryUrlUseCase
             sl<MowerConnectionRepository>().connectionChanges(),
-            telemetryBloc: TelemetryBloc(sl()),
+            telemetryBloc: TelemetryBloc(sl(), sl()),
           ),
         ),
-        BlocProvider<TelemetryBloc>(create: (context) => TelemetryBloc(sl())),
+        BlocProvider<TelemetryBloc>(create: (context) => TelemetryBloc(sl(), sl())),
         BlocProvider(create: (context) =>
             ControlBloc((cmd) => sl<WebSocketClient>().send(cmd))),
         BlocProvider(

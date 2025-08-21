@@ -30,7 +30,6 @@ class TelemetryEntity {
 class TelemetryMapper {
   static TelemetryEntity fromData(Map<String, dynamic> data) {
     double _toD(dynamic v) => (v is num) ? v.toDouble() : 0.0;
-    int _toI(dynamic v) => (v is int) ? v : 0;
     return TelemetryEntity(
       wheelAngle: _toD(data['wheelAngle']),
       distanceTraveled: _toD(data['distanceTraveled']),
