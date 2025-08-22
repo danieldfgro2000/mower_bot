@@ -27,3 +27,18 @@ class TelemetryError extends TelemetryState {
   @override
   List<Object?> get props => [error];
 }
+
+class MegaTelemetryStatus extends TelemetryState {
+  final bool received;
+  final int ageMs;
+  final bool ok;
+
+  MegaTelemetryStatus({
+    required this.received,
+    required this.ageMs,
+    required this.ok,
+  });
+
+  @override
+  List<Object?> get props => [received, ageMs, ok];
+}

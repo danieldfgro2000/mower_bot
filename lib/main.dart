@@ -25,16 +25,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<TelemetryBloc>(
+          create: (context) => TelemetryBloc(sl(), sl(), sl()),
+        ),
         BlocProvider<MowerConnectionBloc>(
           create: (context) => MowerConnectionBloc(
             sl(), // ConnectToMowerUseCase
             sl(), // DisconnectMowerUseCase
             sl(), // CheckMowerStatusUseCase
-            TelemetryBloc(sl(), sl()),
+            context.read<TelemetryBloc>(), // TelemetryBloc
             sl(),
           ),
         ),
-        BlocProvider<TelemetryBloc>(create: (context) => TelemetryBloc(sl(), sl())),
         BlocProvider(create: (context) =>
             ControlBloc((cmd) => sl<WebSocketClient>().send(cmd))),
         BlocProvider(

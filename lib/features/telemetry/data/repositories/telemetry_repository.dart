@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:mower_bot/core/network/message_envelope.dart';
 import 'package:mower_bot/core/network/websocket_client.dart';
+import 'package:mower_bot/features/connection/domain/entity/mower_status_entity.dart';
 import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 
 class TelemetryRepositoryImpl implements TelemetryRepository {
   final IWebSocketClient _webSocketClient;
-  late final StreamController<TelemetryEntity> _telemetryCtrl;
+  late final StreamController<TelemetryEntity> _telemetryDataCtrl;
+  late final StreamController<MowerStatusEntity> _telemetryStatusCtrl;
 
   TelemetryRepositoryImpl(this._webSocketClient) {
-    _telemetryCtrl = StreamController<TelemetryEntity>.broadcast();
+    _telemetryDataCtrl = StreamController<TelemetryEntity>.broadcast();
+    _telemetryStatusCtrl = StreamController<MowerStatusEntity>.broadcast();
   }
 
   @override
@@ -26,12 +29,24 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
     _webSocketClient.messages.listen((raw) {
       final envelope = MessageEnvelope.fromJson(raw);
 
-      if(envelope.topic == MessageTopic.telemetry) {
-        _telemetryCtrl.add(TelemetryMapper.fromData(envelope.data));
+        // print('Received telemetry data envelope: ${envelope.data}');
+
+      switch (envelope.topic) {
+        case MessageTopic.telemetry:
+          _telemetryDataCtrl.add(TelemetryMapper.fromData(envelope.data));
+          break;
+        case MessageTopic.status:
+          _telemetryStatusCtrl.add(MowerStatusMapper.fromData(envelope.data['telemetry'] ?? {}));
+          break;
+        default:
+          break;
       }
     });
   }
 
   @override
-  Stream<TelemetryEntity> observeTelemetry() => _telemetryCtrl.stream;
+  Stream<TelemetryEntity> observeTelemetry() => _telemetryDataCtrl.stream;
+
+  @override
+  Stream<MowerStatusEntity> observeTelemetryStatus() => _telemetryStatusCtrl.stream;
 }

@@ -6,7 +6,7 @@ import 'package:mower_bot/features/paths/presentation/pages/paths_page.dart';
 
 import 'features/connection/presentation/pages/connection_page.dart';
 import 'features/control/presentation/pages/control_page.dart';
-import 'features/telemetry/presentation/widgets/telemetry_display.dart';
+import 'features/telemetry/presentation/widgets/telemetry_page.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';

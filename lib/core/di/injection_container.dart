@@ -13,6 +13,7 @@ import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/stop_path.dart';
 import 'package:mower_bot/features/telemetry/data/repositories/telemetry_repository.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/start_telemetry_stream_use_case.dart';
 
@@ -40,5 +41,6 @@ Future<void> initDependencies() async {
   /// Telemetry
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));
   sl.registerLazySingleton<ObserverTelemetryUseCase>(() => ObserverTelemetryUseCase(sl()));
+  sl.registerLazySingleton<ObserverTelemetryStatusUseCase>(() => ObserverTelemetryStatusUseCase(sl()));
   sl.registerLazySingleton<StartTelemetryStreamUseCase>(() => StartTelemetryStreamUseCase(sl()));
 }
