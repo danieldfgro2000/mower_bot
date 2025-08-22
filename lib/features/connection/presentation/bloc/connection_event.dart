@@ -47,3 +47,12 @@ class ConnectionChanged extends MowerConnectionEvent {
   @override
   List<Object?> get props => [isConnected];
 }
+
+class ConnectionError extends MowerConnectionEvent {
+  final String? error;
+
+  const ConnectionError(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

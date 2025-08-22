@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
             sl(), // DisconnectMowerUseCase
             sl(), // CheckMowerStatusUseCase
             TelemetryBloc(sl(), sl()),
+            sl(),
           ),
         ),
         BlocProvider<TelemetryBloc>(create: (context) => TelemetryBloc(sl(), sl())),

@@ -46,7 +46,7 @@ class WebSocketClient implements IWebSocketClient {
         port,
         timeout: timeout ?? _webSocketConfig.reconnectMinDelay,
       );
-      socket.destroy;
+      socket.destroy();
       return true;
     } catch (e) {
       if (kDebugMode) print("TCP probe failed for $host:$port - $e");
@@ -62,13 +62,12 @@ class WebSocketClient implements IWebSocketClient {
       final isReachable = await _tcpProbe(host, port);
 
       if (!isReachable) {
-        if (kDebugMode)
-          print("Cannot reach $host:$port. Aborting WebSocket connection.");
+        final err = SocketException("Cannot reach $host:$port. Aborting WebSocket connection.");
+        if (kDebugMode) print(err);
         _controller.addError("Cannot reach $host:$port");
         _isConnected = false;
-        _stopPing();
-        _maybeReconnect();
-        return;
+        stopPing();
+        throw err;
       }
 
       // 2) Try to open the WebSocket connection (catch async throws)
@@ -77,7 +76,7 @@ class WebSocketClient implements IWebSocketClient {
       _isConnected = true;
       _reconnectAttempts = 0;
 
-      _startPing();
+      startPing();
 
       _channel!.stream.listen(
         (data) {
@@ -94,28 +93,25 @@ class WebSocketClient implements IWebSocketClient {
         },
         onError: (error) {
           _isConnected = false;
-          _stopPing();
+          stopPing();
           _controller.addError(error);
-          _maybeReconnect();
         },
         onDone: () {
           _isConnected = false;
-          _stopPing();
-          if (!_manuallyClosed) {
-            _maybeReconnect();
-          }
+          stopPing();
+          if (!_manuallyClosed) _maybeReconnect();
         },
         cancelOnError: true,
       );
     } catch (e) {
       _isConnected = false;
-      _stopPing();
+      stopPing();
       _controller.addError(e);
-      _maybeReconnect();
+      rethrow;
     }
   }
 
-  void _startPing() {
+  void startPing() {
     _pingTimer?.cancel();
     if (_webSocketConfig.pingInterval.inMilliseconds <= 0) return;
     _pingTimer = Timer.periodic(_webSocketConfig.pingInterval, (_) {
@@ -125,7 +121,7 @@ class WebSocketClient implements IWebSocketClient {
     });
   }
 
-  void _stopPing() {
+  void stopPing() {
     _pingTimer?.cancel();
     _pingTimer = null;
   }
@@ -201,6 +197,8 @@ class WebSocketClient implements IWebSocketClient {
 
   @override
   Future<void> disconnect() async {
+    _manuallyClosed = true;
+    stopPing();
     if (_channel != null) {
       await _channel!.sink.close(status.normalClosure);
       _isConnected = false;
