@@ -5,6 +5,7 @@ enum MessageTopic {
   pathList,
   pathEvent,
   heartbeat,
+  camera,
   unknown,
 }
 
@@ -22,6 +23,8 @@ MessageTopic topicFromString(String topic) {
       return MessageTopic.pathEvent;
     case 'heartbeat':
       return MessageTopic.heartbeat;
+    case 'camera':
+      return MessageTopic.camera;
     default:
       return MessageTopic.unknown;
   }

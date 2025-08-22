@@ -6,6 +6,9 @@ import 'package:mower_bot/features/connection/domain/repositories/connection_rep
 import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
+import 'package:mower_bot/features/control/data/repositories/control_repository_impl.dart';
+import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
+import 'package:mower_bot/features/control/domain/usecases/observer_video_frames_use_case.dart';
 import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
@@ -37,6 +40,10 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<PlayPathUseCase>(() => PlayPathUseCase(sl()));
   sl.registerLazySingleton<StopPathUseCase>(() => StopPathUseCase(sl()));
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
+
+  /// Control
+  sl.registerLazySingleton<ControlRepository>(() => ControlRepositoryImpl(sl()));
+  sl.registerLazySingleton<ObserverVideoFramesUseCase>(() => ObserverVideoFramesUseCase(sl()));
 
   /// Telemetry
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));

@@ -58,49 +58,69 @@ class _HomePageState extends State<HomePage> {
                 : const AlwaysScrollableScrollPhysics(),
             children: _pages,
           ),
-          bottomNavigationBar: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [NavigationBar(
-              selectedIndex: _currentIndex,
-              onDestinationSelected: _onNavTap,
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(Icons.wifi),
-                  label: 'Connection',
+          bottomNavigationBar: OrientationBuilder(
+            builder: (context, orientation) {
+              final isPortrait = orientation == Orientation.portrait;
+              return SafeArea(
+                top: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    if (isPortrait)
+                      NavigationBar(
+                        selectedIndex: _currentIndex,
+                        onDestinationSelected: _onNavTap,
+                        destinations: const [
+                          NavigationDestination(
+                            icon: Icon(Icons.wifi),
+                            label: 'Connection',
+                          ),
+                          NavigationDestination(
+                            icon: Icon(Icons.control_camera),
+                            label: 'Control',
+                          ),
+                          NavigationDestination(
+                            icon: Icon(Icons.speed),
+                            label: 'Telemetry',
+                          ),
+                          NavigationDestination(
+                            icon: Icon(Icons.map),
+                            label: 'Paths',
+                          ),
+                        ],
+                      ),
+                    _connectionStatus(state),
+                  ],
                 ),
-                NavigationDestination(
-                  icon: Icon(Icons.control_camera),
-                  label: 'Control',
-                ),
-                NavigationDestination(
-                  icon: Icon(Icons.speed),
-                  label: 'Telemetry',
-                ),
-                NavigationDestination(icon: Icon(Icons.map), label: 'Paths'),
-              ],
-            ),
-              switch (state) {
-                MowerConnectionState(status: ConnectionStatus.connected) => Text(
-                  'Mower Connected to ${state.ip}:${state.port}',
-                  textScaler: TextScaler.linear(1),
-                  style: TextStyle(color: Colors.green),
-                ),
-                MowerConnectionState(status: ConnectionStatus.connecting) =>
-                const Text('Connecting...'),
-                MowerConnectionState(status: ConnectionStatus.disconnected) =>
-                const Text('Disconnected', style: TextStyle(color: Colors.red),),
-                MowerConnectionState(status: ConnectionStatus.error) =>
-                Text(
-                    style: (TextStyle(color: Colors.red)),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    state.error ?? "Error"),
-              },
-            ],
+              );
+            },
           ),
         );
       },
     );
+  }
+
+  Text _connectionStatus(MowerConnectionState state) {
+    return switch (state) {
+      MowerConnectionState(status: ConnectionStatus.connected) => Text(
+        'Mower Connected to ${state.ip}:${state.port}',
+        textScaler: TextScaler.linear(1),
+        style: TextStyle(color: Colors.green),
+      ),
+      MowerConnectionState(status: ConnectionStatus.connecting) => const Text(
+        'Connecting...',
+      ),
+      MowerConnectionState(status: ConnectionStatus.disconnected) => const Text(
+        'Disconnected',
+        style: TextStyle(color: Colors.red),
+      ),
+      MowerConnectionState(status: ConnectionStatus.error) => Text(
+        style: (TextStyle(color: Colors.red)),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        state.error ?? "Error",
+      ),
+    };
   }
 }

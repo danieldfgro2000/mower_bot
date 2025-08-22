@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 abstract class ControlEvent {}
 
 class DriveCommand extends ControlEvent {
@@ -21,3 +23,19 @@ class StopRecord extends ControlEvent {
 }
 
 class EmergencyStop extends ControlEvent {}
+
+class StartVideoStream extends ControlEvent {}
+
+class StopVideoStream extends ControlEvent {}
+
+class VideoFrameReceived extends ControlEvent {
+  final Uint8List frame;
+
+  VideoFrameReceived(this.frame);
+}
+
+class VideoStreamError extends ControlEvent {
+  final String error;
+
+  VideoStreamError(this.error);
+}
