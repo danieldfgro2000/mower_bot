@@ -48,11 +48,18 @@ class _ConnectionPageState extends State<ConnectionPage> {
                     _showSnackBar(context, 'Connecting to mower...');
                     break;
                   case ConnectionStatus.error:
-                    _showSnackBar(context, 'Error connecting to mower ');
                     break;
                 }
               },
             ),
+            BlocListener<MowerConnectionBloc, MowerConnectionState>(
+              listenWhen: (p, c) => p.error  != c.error,
+              listener: (context, state) {
+                String? err = state.error;
+                if (err == null || err.isEmpty) return;
+                _showSnackBar(context, state.error!, isError: true);
+              },
+            )
           ],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

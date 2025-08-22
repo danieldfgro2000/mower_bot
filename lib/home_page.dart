@@ -91,7 +91,11 @@ class _HomePageState extends State<HomePage> {
                 MowerConnectionState(status: ConnectionStatus.disconnected) =>
                 const Text('Disconnected', style: TextStyle(color: Colors.red),),
                 MowerConnectionState(status: ConnectionStatus.error) =>
-                const Text('Error'),
+                Text(
+                    style: (TextStyle(color: Colors.red)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    state.error ?? "Error"),
               },
             ],
           ),

@@ -29,6 +29,7 @@ class MowerConnectionBloc
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
+    on<ConnectionError>(_onConnectionError);
   }
 
   FutureOr<void> _onConnect(event, emit) async {
@@ -73,6 +74,14 @@ class MowerConnectionBloc
             ? ConnectionStatus.connected
             : ConnectionStatus.disconnected,
       ),
+    );
+  }
+
+  void _onConnectionError(event, emit) async {
+    emit(
+      state.copyWith(
+        error: event.error
+      )
     );
   }
 }
