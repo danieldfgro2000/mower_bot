@@ -53,9 +53,9 @@ void setup() {
     g_camera = new CameraSetup(pins);
 
     CameraOpts opts;
-    opts.xclk_hz = 10000000;
-    opts.frame_size = FRAMESIZE_QVGA;
-    opts.jpeg_quality = 50;
+    opts.xclk_hz = 20000000;
+    opts.frame_size = FRAMESIZE_VGA;
+    opts.jpeg_quality = 20;
     opts.fb_count = 2;
     opts.prefer_psram = true;
     opts.pixformat = PIXFORMAT_JPEG;
@@ -66,7 +66,7 @@ void setup() {
     g_net.onConnected([](){
         Serial.println("[NET] WiFi connected... Starting [WS]");
         g_ws.begin(81);
-        g_video.begin(8);
+        g_video.begin(15);
     });
     g_net.onDisconnected([](int reason){
         Serial.printf("[NET] WiFi disconnected, reason: %d\n", reason);
