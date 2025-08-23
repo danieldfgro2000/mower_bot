@@ -17,6 +17,7 @@ abstract class IWebSocketClient {
   void send(Map<String, dynamic> message);
 
   Stream<Map<String, dynamic>> get messages;
+  Stream<Uint8List> get binary;
 
   bool get isConnected;
 }
@@ -24,8 +25,8 @@ abstract class IWebSocketClient {
 class WebSocketClient implements IWebSocketClient {
   final WebSocketConfig _webSocketConfig;
   WebSocketChannel? _channel;
-  late final StreamController<Map<String, dynamic>> _controller;
-  bool _isConnected = false;
+  late final StreamController<Map<String, dynamic>> _jsonStringController;
+  late final StreamController<Uint8List> _binaryController;
 
   Timer? _pingTimer;
   Uri? _lastUri;
@@ -33,11 +34,12 @@ class WebSocketClient implements IWebSocketClient {
   bool _manuallyClosed = false;
 
   WebSocketClient(this._webSocketConfig) {
-    _controller = StreamController<Map<String, dynamic>>.broadcast();
+    _jsonStringController = StreamController<Map<String, dynamic>>.broadcast();
+    _binaryController = StreamController<Uint8List>.broadcast();
   }
 
   @override
-  Stream<Map<String, dynamic>> get messages => _controller.stream;
+  Stream<Map<String, dynamic>> get messages => _jsonStringController.stream;
 
   Future<bool> _tcpProbe(String host, int port, {Duration? timeout}) async {
     try {
@@ -64,8 +66,7 @@ class WebSocketClient implements IWebSocketClient {
       if (!isReachable) {
         final err = SocketException("Cannot reach $host:$port. Aborting WebSocket connection.");
         if (kDebugMode) print(err);
-        _controller.addError("Cannot reach $host:$port");
-        _isConnected = false;
+        _jsonStringController.addError("Cannot reach $host:$port");
         stopPing();
         throw err;
       }
@@ -73,7 +74,6 @@ class WebSocketClient implements IWebSocketClient {
       // 2) Try to open the WebSocket connection (catch async throws)
       if (kDebugMode) print("WS: connecting to $uri");
       _channel = WebSocketChannel.connect(uri);
-      _isConnected = true;
       _reconnectAttempts = 0;
 
       startPing();
@@ -81,9 +81,21 @@ class WebSocketClient implements IWebSocketClient {
       _channel!.stream.listen(
         (data) {
           try {
-            final message = jsonDecode(data);
-            if (message is Map<String, dynamic>) {
-              _controller.add(message);
+            switch (data) {
+              case String(): {
+                final message = jsonDecode(data);
+                if (message is Map<String, dynamic>) {
+                  _jsonStringController.add(message);
+                }
+              }
+              case List<int>(): {
+                _binaryController.add(Uint8List.fromList(data));
+              }
+              default: {
+                if (kDebugMode) {
+                  print("Received unsupported data type: ${data.runtimeType}");
+                }
+              }
             }
           } catch (e) {
             if (kDebugMode) {
@@ -92,21 +104,18 @@ class WebSocketClient implements IWebSocketClient {
           }
         },
         onError: (error) {
-          _isConnected = false;
           stopPing();
-          _controller.addError(error);
+          _jsonStringController.addError(error);
         },
         onDone: () {
-          _isConnected = false;
           stopPing();
           if (!_manuallyClosed) _maybeReconnect();
         },
         cancelOnError: true,
       );
     } catch (e) {
-      _isConnected = false;
       stopPing();
-      _controller.addError(e);
+      _jsonStringController.addError(e);
       rethrow;
     }
   }
@@ -115,7 +124,7 @@ class WebSocketClient implements IWebSocketClient {
     _pingTimer?.cancel();
     if (_webSocketConfig.pingInterval.inMilliseconds <= 0) return;
     _pingTimer = Timer.periodic(_webSocketConfig.pingInterval, (_) {
-      if (_isConnected && _channel != null) {
+      if (_channel != null) {
         send(const {'type': 'ping'});
       }
     });
@@ -130,7 +139,7 @@ class WebSocketClient implements IWebSocketClient {
     if (_manuallyClosed || _lastUri == null) return;
     if (_reconnectAttempts >= _webSocketConfig.maxReconnectAttempts) {
       if (kDebugMode) print("Max reconnect attempts reached. Not reconnecting.");
-      _controller.addError(
+      _jsonStringController.addError(
         "Max reconnect attempts reached: ${_webSocketConfig.maxReconnectAttempts}",
       );
       return;
@@ -151,7 +160,7 @@ class WebSocketClient implements IWebSocketClient {
         print("WS: Attempting to reconnect to $_lastUri");
       }
       try {
-        if (!_manuallyClosed && !_isConnected) {
+        if (!_manuallyClosed && _channel == null) {
           await _open(_lastUri!);
         }
       } catch (e) {
@@ -190,10 +199,13 @@ class WebSocketClient implements IWebSocketClient {
 
   @override
   void send(Map<String, dynamic> message) {
-    if (_isConnected && _channel != null) {
+    if (_channel != null) {
       _channel!.sink.add(jsonEncode(message));
     }
   }
+  
+  @override
+  Stream<Uint8List> get binary => _binaryController.stream;
 
   @override
   Future<void> disconnect() async {
@@ -201,10 +213,9 @@ class WebSocketClient implements IWebSocketClient {
     stopPing();
     if (_channel != null) {
       await _channel!.sink.close(status.normalClosure);
-      _isConnected = false;
     }
   }
 
   @override
-  bool get isConnected => _isConnected;
+  bool get isConnected => _channel != null;
 }

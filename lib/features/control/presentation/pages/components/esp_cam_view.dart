@@ -6,12 +6,31 @@ import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
 
-class EspMjpegView extends StatelessWidget {
+class EspMjpegView extends StatefulWidget {
+
   const EspMjpegView({super.key});
 
   @override
+  State<EspMjpegView> createState() => _EspMjpegViewState();
+}
+
+class _EspMjpegViewState extends State<EspMjpegView> {
+  late final ControlBloc _controlBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _controlBloc = context.read<ControlBloc>();
+    _controlBloc.add(StartVideoStream());
+  }
+
+  @override
+  void dispose() {
+    _controlBloc.add(StopVideoStream());
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    context.read<ControlBloc>().add(StartVideoStream());
     return BlocBuilder<ControlBloc, ControlState>(
       builder: (context, state) {
         return switch (state) {
@@ -43,6 +62,9 @@ class RunVideoStream extends StatelessWidget {
           snapshot.data!,
           gaplessPlayback: true,
           fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Center(child: Text('Error loading video frame, error: $error, stackTrace: $stackTrace'));
+          },
         );
       },
     );

@@ -46,7 +46,10 @@ class _ControlPageState extends State<ControlPage>
         builder: (context, constraints) {
           return Stack(
             children: [
-              EspMjpegView(),
+              Positioned.fill(
+                  top:0,
+                  left: 0,
+                  child:  EspMjpegView()),
               if (isRecording) _recordingBanner(context),
               _recordButton(controlBloc, context),
               Positioned.fill(

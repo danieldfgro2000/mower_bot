@@ -32,7 +32,7 @@ static const char* reset_reason_str(esp_reset_reason_t r) {
 WifiAdapter             g_net;
 WsServer                g_ws;
 WsVideo                 g_video(g_ws);
-static CameraSetup*            g_camera = nullptr;
+static CameraSetup*     g_camera = nullptr;
 MegaSerial              g_mega;
 Router                  g_router;
 Heartbeat               g_hb;
@@ -44,55 +44,44 @@ void setup() {
     Serial.printf("[BOOT] Reset reason: %d (%s)\n", reason, reset_reason_str(reason));
     Serial.flush();
 
-    // 1) Bring up Wi-Fi (auto-reconnect handled internally)
-    g_net.onConnected([](){
+    CameraPins pins {
+            PWDN_GPIO_NUM, RESET_GPIO_NUM,
+            XCLK_GPIO_NUM, SIOD_GPIO_NUM, SIOC_GPIO_NUM,
+            Y2_GPIO_NUM, Y3_GPIO_NUM, Y4_GPIO_NUM, Y5_GPIO_NUM, Y6_GPIO_NUM, Y7_GPIO_NUM, Y8_GPIO_NUM, Y9_GPIO_NUM,
+            VSYNC_GPIO_NUM, HREF_GPIO_NUM, PCLK_GPIO_NUM,
+    };
+    g_camera = new CameraSetup(pins);
 
-    });
+    CameraOpts opts;
+    opts.xclk_hz = 10000000;
+    opts.frame_size = FRAMESIZE_QVGA;
+    opts.jpeg_quality = 50;
+    opts.fb_count = 2;
+    opts.prefer_psram = true;
+    opts.pixformat = PIXFORMAT_JPEG;
+
+
+    // 1) Bring up Wi-Fi (auto-reconnect handled internally)
     Serial.printf("[NET] Connecting to Wi-Fi SSID: %s\n", MowerConfig::WIFI_SSID);
+    g_net.onConnected([](){
+        Serial.println("[NET] WiFi connected... Starting [WS]");
+        g_ws.begin(81);
+        g_video.begin(8);
+    });
+    g_net.onDisconnected([](int reason){
+        Serial.printf("[NET] WiFi disconnected, reason: %d\n", reason);
+        g_ws.stop();
+        g_video.stopAll();
+    });
+    if (g_camera->begin(opts) != ESP_OK) {
+        Serial.println("[VIDEO] Camera init failed - video disabled");
+    }
     g_net.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
 
     // 2) Serial bridge to Mega 2560 (pins from config/pins_esp32cam.h)
     g_mega.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
 
     // 3) WebSocket server (for Flutter app)
-    CameraPins pins {
-            PWDN_GPIO_NUM,
-            RESET_GPIO_NUM,
-
-            XCLK_GPIO_NUM,
-
-            SIOD_GPIO_NUM,
-            SIOC_GPIO_NUM,
-
-            Y2_GPIO_NUM,
-            Y3_GPIO_NUM,
-            Y4_GPIO_NUM,
-            Y5_GPIO_NUM,
-            Y6_GPIO_NUM,
-            Y7_GPIO_NUM,
-            Y8_GPIO_NUM,
-            Y9_GPIO_NUM,
-
-            VSYNC_GPIO_NUM,
-            HREF_GPIO_NUM,
-            PCLK_GPIO_NUM,
-    };
-    g_camera = new CameraSetup(pins);
-
-    CameraOpts opts;
-    opts.xclk_hz = 20000000;
-    opts.frame_size = FRAMESIZE_VGA;
-    opts.jpeg_quality = 12;
-    opts.fb_count = 2;
-    opts.prefer_psram = true;
-    opts.pixformat = PIXFORMAT_JPEG;
-
-    if (g_camera->begin(opts) != ESP_OK) {
-        Serial.println("[VIDEO] Camera init failed - video disabled");
-    }
-
-    g_ws.begin(81);
-    g_video.begin(8); // Default 8 FPS
     g_ws.onMessage([](const JsonDocument& doc, uint8_t clientId) {
         // Forward command payloads to Mega as line-delimited JSON
         if(doc["type"] == "command") {
@@ -100,7 +89,7 @@ void setup() {
             serializeJson(doc, line);
             g_mega.writeLine(line);
         }
-        if(strcmp(doc["topic"] | "", "video") == 0) {
+        if(strcmp(doc["topic"] | "", "camera") == 0) {
             g_video.handleMessage(doc, clientId);
         }
     });

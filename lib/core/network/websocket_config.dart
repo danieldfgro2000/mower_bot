@@ -9,7 +9,7 @@ class WebSocketConfig {
 
   const WebSocketConfig({
     this.pingInterval = const Duration(seconds: 30),
-    this.reconnectMinDelay = const Duration(seconds: 1),
+    this.reconnectMinDelay = const Duration(seconds: 5),
     this.reconnectMaxDelay = const Duration(seconds: 10),
     this.maxReconnectAttempts = 5,
   });
