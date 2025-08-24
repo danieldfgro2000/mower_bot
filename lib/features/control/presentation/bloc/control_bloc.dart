@@ -41,7 +41,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   Future<void> _onStartVideoStream(event, emit) async {
-    await _startVideoStreamUseCase(50);
+    await _startVideoStreamUseCase(15);
     _videoStreamSubscription = _observerVideoFramesUseCase().listen((frame) {
       final bytes = Uint8List.fromList(frame);
       final ok = bytes.length > 3 && bytes[0] == 0xFF && bytes[1] == 0xD8;
