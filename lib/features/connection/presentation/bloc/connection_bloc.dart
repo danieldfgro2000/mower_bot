@@ -24,36 +24,40 @@ class MowerConnectionBloc
     this.disconnectFromMowerUseCase,
     this.checkConnectionStatusUseCase,
     this.telemetryBloc,
-    this.repo
+    this.repo,
   ) : super(const MowerConnectionState()) {
+    on<ChangePort>(_onChangePort);
+    on<ChangeIp>(_onChangeIp);
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionError>(_onConnectionError);
   }
 
+  void _onChangePort(event, emit) {
+    final port = int.tryParse(event.port);
+    if (port != null && port > 0 && port < 65536) {
+      emit(state.copyWith(port: port));
+    } else {
+      emit(state.copyWith(port: 81));
+    }
+  }
+
+  void _onChangeIp(event, emit) {
+    emit(state.copyWith(ip: event.ipAddress));
+  }
+
   FutureOr<void> _onConnect(event, emit) async {
-    emit(
-      state.copyWith(
-        status: ConnectionStatus.connecting,
-        ip: event.ipAddress,
-        port: event.port,
-      ),
-    );
+    emit(state.copyWith(status: ConnectionStatus.connecting));
 
     try {
-      await connectToMowerUseCase(event.ipAddress, event.port);
+      await connectToMowerUseCase(state.ip ?? '172.20.10.12'  , state.port ?? 81);
       await _errSub?.cancel();
       _errSub = repo.errors().listen((e) => add(ConnectionError(e.toString())));
       emit(state.copyWith(status: ConnectionStatus.connected));
       telemetryBloc.add(StartTelemetry());
     } catch (e) {
-      emit(
-        state.copyWith(
-          status: ConnectionStatus.error,
-          error: e.toString()
-        ),
-      );
+      emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
       return;
     }
   }
@@ -61,9 +65,7 @@ class MowerConnectionBloc
   FutureOr<void> _onDisconnect(event, emit) async {
     await _errSub?.cancel();
     await disconnectFromMowerUseCase();
-    emit(state.copyWith(
-      status: ConnectionStatus.disconnected,
-    ));
+    emit(state.copyWith(status: ConnectionStatus.disconnected));
   }
 
   FutureOr<void> _onCheckConnection(event, emit) async {
@@ -78,10 +80,6 @@ class MowerConnectionBloc
   }
 
   void _onConnectionError(event, emit) async {
-    emit(
-      state.copyWith(
-        error: event.error
-      )
-    );
+    emit(state.copyWith(error: event.error));
   }
 }
