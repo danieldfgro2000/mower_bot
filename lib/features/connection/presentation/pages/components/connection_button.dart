@@ -43,6 +43,6 @@ class _ConnectionButtonState extends State<ConnectionButton> {
     final event = context.read<MowerConnectionBloc>().add;
     isConnected
       ? event(DisconnectFromMower())
-      : event(ConnectToMower(ip, port));
+      : event(ConnectToMower());
   }
 }
