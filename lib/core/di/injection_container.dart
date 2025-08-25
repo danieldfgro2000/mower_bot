@@ -27,7 +27,7 @@ final sl = GetIt.instance;
 Future<void> initDependencies() async {
   /// Core
   sl.registerLazySingleton<WebSocketConfig>(() => WebSocketConfig());
-  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient(sl()));
+  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient());
   sl.registerLazySingleton<IWebSocketClient>(() => sl<WebSocketClient>());
 
   /// Connection
