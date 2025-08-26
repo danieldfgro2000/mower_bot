@@ -14,7 +14,6 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final ObserverVideoFramesUseCase _observerVideoFramesUseCase;
   final StartVideoStreamUseCase _startVideoStreamUseCase;
   final StopVideoStreamUseCase _stopVideoStreamUseCase;
-  StreamSubscription<Uint8List>? _videoStreamSubscription;
 
   ControlBloc(
     this.sendCommand,
@@ -23,7 +22,6 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     this._stopVideoStreamUseCase,
   ) : super(ControlStateInitial()) {
     on<StartVideoStream>(_onStartVideoStream);
-    on<VideoFrameReceived>(_onVideoFrameReceived);
     on<StopVideoStream>(_onStopVideoStream);
     on<DriveCommand>((event, emit) {
       sendCommand({
@@ -41,21 +39,14 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   Future<void> _onStartVideoStream(event, emit) async {
-    await _startVideoStreamUseCase(15);
-    _videoStreamSubscription = _observerVideoFramesUseCase().listen((frame) {
-      final bytes = Uint8List.fromList(frame);
-      final ok = bytes.length > 3 && bytes[0] == 0xFF && bytes[1] == 0xD8;
-      if (ok) add(VideoFrameReceived(frame));
-    }, onError: (e) => VideoStreamError(e));
-  }
-
-  void _onVideoFrameReceived(VideoFrameReceived event, emit) {
-    emit(ControlStateStatus(videoFrames: _observerVideoFramesUseCase()));
+    await _startVideoStreamUseCase(25);
+    final frames  = _observerVideoFramesUseCase()
+        .where((bytes) => bytes.length > 2 && bytes[0] == 0xff && bytes[1] == 0xd8);
+    emit(ControlStateStatus(videoFrames: frames));
   }
 
   Future<void> _onStopVideoStream(event, emit) async {
     await _stopVideoStreamUseCase();
-    _videoStreamSubscription?.cancel();
-    _videoStreamSubscription = null;
+    emit(ControlStateInitial());
   }
 }

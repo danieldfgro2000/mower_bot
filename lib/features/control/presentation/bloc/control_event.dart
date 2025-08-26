@@ -28,12 +28,6 @@ class StartVideoStream extends ControlEvent {}
 
 class StopVideoStream extends ControlEvent {}
 
-class VideoFrameReceived extends ControlEvent {
-  final Uint8List frame;
-
-  VideoFrameReceived(this.frame);
-}
-
 class VideoStreamError extends ControlEvent {
   final String error;
 

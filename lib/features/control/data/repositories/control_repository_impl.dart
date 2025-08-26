@@ -43,6 +43,8 @@ class ControlRepositoryImpl implements ControlRepository {
 
     await _binarySubscription?.cancel();
     await _jsonStringSubscription?.cancel();
+    _binarySubscription = null;
+    _jsonStringSubscription = null;
   }
 
   void _videoCmdSend(String cmd, {int? fps}) {

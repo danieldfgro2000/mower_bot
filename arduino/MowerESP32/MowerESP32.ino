@@ -15,6 +15,13 @@
 #  warning "PSRAM not enabled. Enable PSRAM in Tools > PSRAM: Enabled (camera needs it)."
 #endif
 
+#define TRACE_LOOP(LABEL, CALL) do {    \
+ uint32_t _t0 = millis();   \
+ CALL;  \
+ uint32_t _dt = millis() - _t0; \
+ if (_dt > 1000) Serial.printf("[LOOP] %s %u ms\n", LABEL, _dt); \
+} while(0)
+
 using namespace Mower;
 
 static const char* reset_reason_str(esp_reset_reason_t r) {
@@ -54,9 +61,9 @@ void setup() {
 
     CameraOpts opts;
     opts.xclk_hz = 20000000;
-    opts.frame_size = FRAMESIZE_VGA;
-    opts.jpeg_quality = 20;
-    opts.fb_count = 2;
+    opts.frame_size = FRAMESIZE_CIF;
+    opts.jpeg_quality = 50;
+    opts.fb_count = 1;
     opts.prefer_psram = true;
     opts.pixformat = PIXFORMAT_JPEG;
 
@@ -101,16 +108,9 @@ void setup() {
 }
 
 void loop() {
-    g_net.loop();
-    g_ws.loop();
-    g_video.loop();
-    g_router.loop();
-    g_hb.loop();
-
-    // Keep alive pings
-    static uint32_t lastPing = 0;
-    if (millis() - lastPing > 15000UL) {
-        lastPing = millis();
-        g_ws.pingAll();
-    }
+    TRACE_LOOP("net", g_net.loop());
+    TRACE_LOOP("ws", g_ws.loop());
+    TRACE_LOOP("router", g_router.loop());
+    TRACE_LOOP("hb", g_hb.loop());
+    TRACE_LOOP("video", g_video.loop());
 }

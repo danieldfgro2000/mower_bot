@@ -21,6 +21,7 @@ class NetworkHelpers {
   bool _isOpen = false;
   bool _manuallyClosed = false;
   int _reconnectAttempts = 0;
+  Uri? _lastUri;
 
   NetworkHelpers({WebSocketConfig? config}) : cfg = config ?? WebSocketConfig();
 
@@ -29,7 +30,7 @@ class NetworkHelpers {
   bool get isOpen => _isOpen && _webSocketChannel != null;
 
   Future<void> openWebsocketChannel(
-    Uri uri, {
+  { Uri? uri,
     JsonHandler? onJson,
     BinaryHandler? onBinary,
     ErrorHandler? onError,
@@ -37,13 +38,24 @@ class NetworkHelpers {
   }) async {
     _manuallyClosed = false;
 
-    final host  = uri.host;
-    final port  = uri.hasPort && uri.port > 0 ? uri.port : (uri.scheme == 'wss' ? 443 : 80);
+    _lastUri = uri ?? _lastUri;
+    uri ??= _lastUri;
+    final host = uri?.host;
+    final port = uri?.hasPort == true
+        ? uri?.port
+        : (uri!.scheme == 'wss' ? 443 : 80);
+    if (host == null || port == null) return;
 
-    final isReachable = await tcpProbe(host, port, timeout: cfg.connectProbeTimeout);
+    final isReachable = await tcpProbe(
+      host,
+      port,
+      timeout: cfg.connectProbeTimeout,
+    );
 
     if (!isReachable) {
-      final err = SocketException("Cannot reach $host:$port. Aborting WebSocket connection.",);
+      final err = SocketException(
+        "Cannot reach $host:$port. Aborting WebSocket connection.",
+      );
       if (kDebugMode) print(err);
       onError?.call(err.toString());
       _markClosed(onConnectionChanged);
@@ -65,20 +77,18 @@ class NetworkHelpers {
           try {
             switch (data) {
               case String():
-                {
-                  final message = jsonDecode(data);
-                  if (message is JsonMap) onJson?.call(message);
-                }
+                final message = jsonDecode(data);
+                if (message is JsonMap) onJson?.call(message);
+                break;
               case List<int>():
-                onBinary?.call(Uint8List.fromList(data));
+                final out = handleBinary(Uint8List.fromList(data));
+                if (out != null) onBinary?.call(out);
+                break;
               default:
-                {
-                  if (kDebugMode) {
-                    print(
-                      "Received unsupported data type: ${data.runtimeType}",
-                    );
-                  }
+                if (kDebugMode) {
+                  print("Received unsupported data type: ${data.runtimeType}");
                 }
+                break;
             }
           } catch (e) {
             if (kDebugMode) {
@@ -90,7 +100,8 @@ class NetworkHelpers {
           _handleStreamClosure(onConnectionChanged, onError);
         },
         onDone: () {
-          if (kDebugMode) print("WS: onDone:: connection closed by remote or locally");
+          if (kDebugMode)
+            print("WS: onDone:: connection closed by remote or locally");
           _handleStreamClosure(onConnectionChanged, onError);
         },
         cancelOnError: true,
@@ -118,8 +129,11 @@ class NetworkHelpers {
 
   Future<bool> tcpProbe(String host, int port, {Duration? timeout}) async {
     try {
-      final socket = await Socket
-          .connect(host, port, timeout: timeout ?? cfg.reconnectMinDelay);
+      final socket = await Socket.connect(
+        host,
+        port,
+        timeout: timeout ?? cfg.reconnectMinDelay,
+      );
       socket.destroy();
       return true;
     } catch (e) {
@@ -129,18 +143,25 @@ class NetworkHelpers {
   }
 
   void _handleStreamClosure(
-      ConnectionChanged? onConnectionChanged,
-      ErrorHandler? onError,
-      ) {
+    ConnectionChanged? onConnectionChanged,
+    ErrorHandler? onError,
+  ) {
     _markClosed(onConnectionChanged);
     if (_manuallyClosed || !cfg.autoReconnect) {
-      if (kDebugMode) print("WS: Not reconnecting (manually closed: $_manuallyClosed,  autoReconnect: ${cfg.autoReconnect})");
+      if (kDebugMode)
+        print(
+          "WS: Not reconnecting (manually closed: $_manuallyClosed,  autoReconnect: ${cfg.autoReconnect})",
+        );
       return;
     }
 
     if (_reconnectAttempts >= cfg.maxReconnectAttempts) {
-      if (kDebugMode) print("WS: Max reconnect attempts reached. Not reconnecting.");
-      onError?.call("Max reconnect attempts reached: ${cfg.maxReconnectAttempts}");
+      if (kDebugMode) {
+        print("WS: Max reconnect attempts reached. Not reconnecting.");
+      }
+      onError?.call(
+        "Max reconnect attempts reached: ${cfg.maxReconnectAttempts}",
+      );
       return;
     }
 
@@ -150,7 +171,13 @@ class NetworkHelpers {
       _reconnectAttempts,
     );
     _reconnectAttempts++;
-    if (kDebugMode) print("WS: Reconnecting in ${delay.inSeconds} seconds... (attempt $_reconnectAttempts/${cfg.maxReconnectAttempts})");
+    if (kDebugMode) {
+      print("WS: Reconnecting in ${delay.inSeconds} seconds... (attempt $_reconnectAttempts/${cfg.maxReconnectAttempts})");
+    }
+    maybeReconnect(
+        onReconnect: () => openWebsocketChannel(),
+        onError: () => onError?.call("Reconnection failed")
+    );
   }
 
   void _markClosed(ConnectionChanged? onConnectionChanged) {
@@ -209,4 +236,81 @@ class NetworkHelpers {
   }
 
   void dispose() => closeWebSocketChannel(manuallyClosed: true);
+}
+
+class VidHeader {
+  static const size = 24; // 4+4+8+4+2+2
+  final int magic, seq, payloadLen, fpsTarget, flags;
+  final int captureUs;
+
+  VidHeader({
+    required this.magic,
+    required this.seq,
+    required this.captureUs,
+    required this.payloadLen,
+    required this.fpsTarget,
+    required this.flags,
+  });
+
+  static VidHeader parse(Uint8List data) {
+    final bd = ByteData.sublistView(data, 0, size);
+    final magic = bd.getUint32(0, Endian.little);
+    final seq = bd.getUint32(4, Endian.little);
+    final capLo = bd.getUint32(8, Endian.little);
+    final capHi = bd.getUint32(12, Endian.little);
+    final captureUs = (capHi << 32) | capLo;
+    final len = bd.getUint32(16, Endian.little);
+    final fps = bd.getUint16(20, Endian.little);
+    final flags = bd.getUint16(22, Endian.little);
+    return VidHeader(
+      magic: magic,
+      seq: seq,
+      captureUs: captureUs,
+      payloadLen: len,
+      fpsTarget: fps,
+      flags: flags,
+    );
+  }
+}
+
+class RxStats {
+  int rxThisSec = 0, rxFps = 0;
+  int lastSecMs = 0;
+  int? lastArrivalMs;
+  int? lastSeq;
+}
+
+final stats = RxStats();
+
+Uint8List? handleBinary(Uint8List msg) {
+  final now = DateTime.now().millisecondsSinceEpoch;
+
+  stats.rxThisSec++;
+  stats.lastSecMs = (stats.lastSecMs == 0) ? now : stats.lastSecMs;
+  if (now - stats.lastSecMs >= 1000) {
+    stats.rxFps = stats.rxThisSec;
+    stats.rxThisSec = 0;
+    stats.lastSecMs = now;
+    debugPrint('[VIDEO] RX FPS: ${stats.rxFps}');
+  }
+
+  // interval arrival Dt
+  if (stats.lastArrivalMs != null) {
+    debugPrint('[VIDEO] Arrival Dt: ${now - stats.lastArrivalMs!} ms');
+  }
+  stats.lastArrivalMs = now;
+
+  // parse header
+  if (msg.length >= VidHeader.size) {
+    final hdr = VidHeader.parse(msg);
+    if (hdr.magic == 0x30444956) {
+      if (stats.lastSeq != null && hdr.seq != stats.lastSeq! + 1) {
+        debugPrint('[VIDEO] DROPPED: prev=${stats.lastSeq} curr=${hdr.seq}');
+      }
+      stats.lastSeq = hdr.seq;
+      final jpeg = msg.sublist(VidHeader.size, VidHeader.size + hdr.payloadLen);
+      return jpeg;
+    }
+  }
+  return null;
 }

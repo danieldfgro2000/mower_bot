@@ -41,7 +41,7 @@ class WebSocketClient implements IWebSocketClient {
     if (isConnected) return;
 
     await _helpers.openWebsocketChannel(
-      uri,
+      uri: uri,
       onJson: (msg) => _jsonStringController.add(msg),
       onBinary: (data) => _binaryController.add(data),
       onError: (e, [st]) => _jsonStringController.addError(e, st),
