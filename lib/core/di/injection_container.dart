@@ -27,11 +27,14 @@ final sl = GetIt.instance;
 Future<void> initDependencies() async {
   /// Core
   sl.registerLazySingleton<WebSocketConfig>(() => WebSocketConfig());
-  sl.registerLazySingleton<WebSocketClient>(() => WebSocketClient());
-  sl.registerLazySingleton<IWebSocketClient>(() => sl<WebSocketClient>());
+  sl.registerLazySingleton<ControlWebSocketClient>(() => ControlWebSocketClient());
+  sl.registerLazySingleton<VideoWebSocketClient>(() => VideoWebSocketClient());
+  sl.registerLazySingleton<IWebSocketClient>(() => sl<ControlWebSocketClient>());
+  sl.registerLazySingleton<IWebSocketClient>(() => sl<ControlWebSocketClient>(), instanceName: 'ctrl');
+  sl.registerLazySingleton<IWebSocketClient>(() => sl<VideoWebSocketClient>(), instanceName: 'video');
 
   /// Connection
-  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl(sl()));
+  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
   sl.registerLazySingleton<ConnectToMowerUseCase>(() => ConnectToMowerUseCase(sl()));
   sl.registerLazySingleton<DisconnectMowerUseCase>(() => DisconnectMowerUseCase(sl()));
   sl.registerLazySingleton<CheckMowerStatusUseCase>(() => CheckMowerStatusUseCase(sl()));
@@ -44,7 +47,10 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
 
   /// Control
-  sl.registerLazySingleton<ControlRepository>(() => ControlRepositoryImpl(sl()));
+  sl.registerFactory<ControlRepository>(() => ControlRepositoryImpl(
+    controlWebSocketClient: sl<IWebSocketClient>(instanceName: 'ctrl'),
+    videoWebSocketClient: sl<IWebSocketClient>(instanceName: 'video'),
+  ));
   sl.registerLazySingleton<ObserverVideoFramesUseCase>(() => ObserverVideoFramesUseCase(sl()));
   sl.registerLazySingleton<StartVideoStreamUseCase>(() => StartVideoStreamUseCase(sl()));
   sl.registerLazySingleton<StopVideoStreamUseCase>(() => StopVideoStreamUseCase(sl()));

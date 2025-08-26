@@ -23,7 +23,7 @@ class _ConnectionFormState extends State<ConnectionForm> {
   void initState() {
     super.initState();
     final s = context.read<MowerConnectionBloc>().state;
-    ipController = TextEditingController(text: s.ip ?? '172.20.10.12');
+    ipController = TextEditingController(text: s.ip ?? '192.168.100.112');
     portController = TextEditingController(text: s.port?.toString() ?? '81');
   }
 

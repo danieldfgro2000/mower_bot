@@ -51,7 +51,7 @@ class MowerConnectionBloc
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
     try {
-      await connectToMowerUseCase(state.ip ?? '172.20.10.12'  , state.port ?? 81);
+      await connectToMowerUseCase(state.ip ?? '192.168.100.112'  , state.port ?? 81);
       await _errSub?.cancel();
       _errSub = repo.errors().listen((e) => add(ConnectionError(e.toString())));
       emit(state.copyWith(status: ConnectionStatus.connected));

@@ -26,7 +26,7 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
     if(!isConnected) {
       throw Exception('WebSocket is not connected');
     }
-    _webSocketClient.messages.listen((raw) {
+    _webSocketClient.messages?.listen((raw) {
       final envelope = MessageEnvelope.fromJson(raw);
 
         // print('Received telemetry data envelope: ${envelope.data}');

@@ -1,7 +1,8 @@
 #include <wifi_adapter.h>
 
-#include <ws_server.h>
-#include <ws_video.h>
+#include <ws_server.h>      // control WS (JSON) on port 81
+#include <ws_video_async.h> // Async video WS on port 82
+//#include <ws_video.h>
 #include <ws_video_setup.h>
 #include <mega_serial.h>
 
@@ -38,7 +39,8 @@ static const char* reset_reason_str(esp_reset_reason_t r) {
 
 WifiAdapter             g_net;
 WsServer                g_ws;
-WsVideo                 g_video(g_ws);
+WsVideoAsync            g_video_async(82, "/video");
+//WsVideo                 g_video(g_ws);
 static CameraSetup*     g_camera = nullptr;
 MegaSerial              g_mega;
 Router                  g_router;
@@ -61,9 +63,9 @@ void setup() {
 
     CameraOpts opts;
     opts.xclk_hz = 20000000;
-    opts.frame_size = FRAMESIZE_CIF;
-    opts.jpeg_quality = 50;
-    opts.fb_count = 1;
+    opts.frame_size = FRAMESIZE_VGA;
+    opts.jpeg_quality = 40;
+    opts.fb_count = 2;
     opts.prefer_psram = true;
     opts.pixformat = PIXFORMAT_JPEG;
 
@@ -73,12 +75,12 @@ void setup() {
     g_net.onConnected([](){
         Serial.println("[NET] WiFi connected... Starting [WS]");
         g_ws.begin(81);
-        g_video.begin(15);
+        g_video_async.begin(25);
     });
     g_net.onDisconnected([](int reason){
         Serial.printf("[NET] WiFi disconnected, reason: %d\n", reason);
+        g_video_async.stop();
         g_ws.stop();
-        g_video.stopAll();
     });
     if (g_camera->begin(opts) != ESP_OK) {
         Serial.println("[VIDEO] Camera init failed - video disabled");
@@ -97,7 +99,26 @@ void setup() {
             g_mega.writeLine(line);
         }
         if(strcmp(doc["topic"] | "", "camera") == 0) {
-            g_video.handleMessage(doc, clientId);
+            const char* cmd = doc["data"]["cmd"] | "";
+            if(strcmp(cmd, "start") == 0) {
+                uint8_t reqFps = doc["data"]["fps"] | 15;
+                g_video_async.start(reqFps);
+                DynamicJsonDocument ack(128);
+                ack["topic"] = "camera";
+                ack["event"] = "started";
+                ack["fps"] = reqFps;
+                String out;
+                serializeJson(ack, out);
+                g_ws.sendTXT(clientId, out);
+            } else if(strcmp(cmd, "stop") == 0) {
+                g_video_async.stop();
+                DynamicJsonDocument ack(96);
+                ack["topic"] = "camera";
+                ack["event"] = "stopped";
+                String out;
+                serializeJson(ack, out);
+                g_ws.sendTXT(clientId, out);
+            }
         }
     });
 
@@ -105,6 +126,8 @@ void setup() {
     g_router.attachHeartbeat(&g_hb);
 
     g_hb.begin(&g_ws, &g_net);
+    g_hb.setVideoStreamingProvider([&]() { return g_video_async.isStreaming(); });
+    g_hb.setIntervals(5000, 15000, 30000);
 }
 
 void loop() {
@@ -112,5 +135,4 @@ void loop() {
     TRACE_LOOP("ws", g_ws.loop());
     TRACE_LOOP("router", g_router.loop());
     TRACE_LOOP("hb", g_hb.loop());
-    TRACE_LOOP("video", g_video.loop());
 }
