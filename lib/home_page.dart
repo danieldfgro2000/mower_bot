@@ -90,7 +90,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                    _connectionStatus(state),
+                    BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
+                      buildWhen: (p, n) => p.status != n.status,
+                      builder: (context, state) {
+                        return _connectionStatus(state);
+                      }
+                    ),
                   ],
                 ),
               );

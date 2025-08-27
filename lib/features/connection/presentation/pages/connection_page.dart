@@ -26,6 +26,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
     super.initState();
     context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
   }
+
+  @override
+  void didChangeDependencies() {
+    context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
