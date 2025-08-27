@@ -1,6 +1,24 @@
 import 'dart:typed_data';
 
-abstract class ControlEvent {}
+import 'package:equatable/equatable.dart';
+
+abstract class ControlEvent extends Equatable {
+  const ControlEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckConnectionStatus extends ControlEvent {}
+
+class ConnectionChanged extends ControlEvent {
+  final bool? isVideoWsConnected;
+
+  const ConnectionChanged({this.isVideoWsConnected});
+
+  @override
+  List<Object?> get props => [isVideoWsConnected];
+}
 
 class DriveCommand extends ControlEvent {
   final double steering;

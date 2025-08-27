@@ -33,12 +33,12 @@ class _EspMjpegViewState extends State<EspMjpegView> {
   Widget build(BuildContext context) {
     return BlocBuilder<ControlBloc, ControlState>(
       builder: (context, state) {
-        return switch (state) {
-          ControlStateInitial() => const Center(child: Text('No video stream')),
-          ControlStateStatus(:final videoFrames) => RunVideoStream(
-            frames: videoFrames,
-          ),
-          _ => const Center(child: Text('No video stream')),
+        if (state.videoFrames is! Stream<Uint8List>) {
+          return const Center(child: Text('No video stream'));
+        }
+        return switch (state.videoFrames) {
+           null => Center(child: Text('No video stream')),
+          Stream<Uint8List>() => RunVideoStream(frames: state.videoFrames!),
         };
       },
     );

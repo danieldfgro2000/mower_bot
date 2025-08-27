@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(create: (context) =>
-            ControlBloc((cmd) => sl<ControlWebSocketClient>().send(cmd), sl(), sl(), sl())),
+            ControlBloc((cmd) => sl<ControlWebSocketClient>().send(cmd), sl(), sl(), sl(), sl())),
         BlocProvider(
           create: (_) => PathBloc(
             sl(), // GetPathsUseCase

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/control/domain/usecases/observer_video_frames_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/start_video_stream_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/stop_video_stream_use_case.dart';
@@ -14,13 +15,18 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final ObserverVideoFramesUseCase _observerVideoFramesUseCase;
   final StartVideoStreamUseCase _startVideoStreamUseCase;
   final StopVideoStreamUseCase _stopVideoStreamUseCase;
+  final MowerConnectionRepository repo;
+  StreamSubscription? _videoWsConnectedSub;
 
   ControlBloc(
     this.sendCommand,
     this._observerVideoFramesUseCase,
     this._startVideoStreamUseCase,
     this._stopVideoStreamUseCase,
-  ) : super(ControlStateInitial()) {
+    this.repo,
+  ) : super(ControlState().initial()) {
+    on<CheckConnectionStatus>(_onCheckConnectionStatus);
+    on<ConnectionChanged>(_onConnectionChanged);
     on<StartVideoStream>(_onStartVideoStream);
     on<StopVideoStream>(_onStopVideoStream);
     on<DriveCommand>((event, emit) {
@@ -38,15 +44,32 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     on<EmergencyStop>((event, emit) => sendCommand({"cmd": "emergency_stop"}));
   }
 
+  void _onCheckConnectionStatus(event, emit) {
+    _videoWsConnectedSub = repo.videoWsConnected().listen((isConnected) {
+      add(ConnectionChanged(isVideoWsConnected: isConnected));
+    });
+  }
+
+  void _onConnectionChanged(event, emit) {
+    emit(state.copyWith(isVideoWsConnected: event.isVideoWsConnected));
+    if(event.isVideoWsConnected == true) {
+      add(StartVideoStream());
+    } else if(event.isVideoWsConnected == false) {
+      add(StopVideoStream());
+    }
+  }
+
   Future<void> _onStartVideoStream(event, emit) async {
     await _startVideoStreamUseCase(25);
     final frames  = _observerVideoFramesUseCase()
         .where((bytes) => bytes.length > 2 && bytes[0] == 0xff && bytes[1] == 0xd8);
-    emit(ControlStateStatus(videoFrames: frames));
+    frames.listen((bytes) {
+    });
+    emit(state.copyWith(videoFrames: frames));
   }
 
   Future<void> _onStopVideoStream(event, emit) async {
     await _stopVideoStreamUseCase();
-    emit(ControlStateInitial());
+    emit(ControlState().initial());
   }
 }

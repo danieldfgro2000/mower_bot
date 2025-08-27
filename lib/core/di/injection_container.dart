@@ -47,7 +47,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
 
   /// Control
-  sl.registerFactory<ControlRepository>(() => ControlRepositoryImpl(
+  sl.registerLazySingleton<ControlRepository>(() => ControlRepositoryImpl(
     controlWebSocketClient: sl<IWebSocketClient>(instanceName: 'ctrl'),
     videoWebSocketClient: sl<IWebSocketClient>(instanceName: 'video'),
   ));
