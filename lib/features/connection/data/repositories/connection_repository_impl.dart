@@ -5,31 +5,66 @@ import 'package:mower_bot/core/di/injection_container.dart';
 import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 
+enum MowerWsPort {
+  ctrl(81),
+  video(82);
+
+  final int port;
+  const MowerWsPort(this.port);
+}
+
 class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   final IWebSocketClient _ctrlWSClient = sl<IWebSocketClient>(instanceName: 'ctrl');
   final IWebSocketClient _videoWSClient = sl<IWebSocketClient>(instanceName: 'video');
 
   @override
-  Stream<Map<String, dynamic>>? messages() => _ctrlWSClient.messages;
-
-  final _errorCtrl = StreamController<Object>.broadcast();
-  StreamSubscription? _sub;
+  Stream<Map<String, dynamic>>? jsonStream() => _ctrlWSClient.messages;
 
   @override
-  Future<void> connect(String ipAddress, int port) async {
-    final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: port, path: '/');
-    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: 82, path: '/video');
+  Stream<Uint8List>? videoStream() => _videoWSClient.binary;
+
+  final _errorCtrl = StreamController<Object>.broadcast();
+  final _errorVideo = StreamController<Object>.broadcast();
+  StreamSubscription? _ctrlErrSub;
+  StreamSubscription? _videoErrSub;
+
+  @override
+  Future<void> connectCtrlWs(String ipAddress) async {
+    final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.ctrl.port, path: '/');
 
     try {
       _ctrlWSClient.setEndpoint(ctrlUri);
-      _videoWSClient.setEndpoint(videoUri);
+      
       await _ctrlWSClient.connect();
-      await Future.delayed(const Duration(milliseconds: 300));
-      await _videoWSClient.connect();
-      await _sub?.cancel();
-      _sub = _ctrlWSClient.messages?.listen(
+     
+      await _ctrlErrSub?.cancel();
+
+      _ctrlErrSub = _ctrlWSClient.messages?.listen(
         (_) {},
-        onError: (e, st) => _errorCtrl.add(e),
+        onError: (e, st) => _errorCtrl.add(st),
+      );
+
+    } catch (e) {
+      if (kDebugMode) print('Connection failed: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> connectVideoWs(String ipAddress) async {
+    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.video.port, path: '/video');
+
+    try {
+      _videoWSClient.setEndpoint(videoUri);
+
+      await _videoWSClient.connect();
+
+      await _ctrlErrSub?.cancel();
+      await _videoErrSub?.cancel();
+
+      _videoErrSub = _videoWSClient.binary?.listen(
+        (_) {},
+        onError: (e, st) => _errorCtrl.add(st),
       );
     } catch (e) {
       if (kDebugMode) print('Connection failed: $e');
@@ -38,14 +73,28 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   }
 
   @override
-  Future<void> disconnect() async {
-    await _sub?.cancel();
+  Future<void> disconnectCtrlWs() async {
+    await _ctrlErrSub?.cancel();
     await _ctrlWSClient.disconnect();
   }
 
   @override
-  bool get isConnected => _ctrlWSClient.isConnected;
+  Future<void> disconnectVideoWs() async {
+    await _videoErrSub?.cancel();
+    await _videoWSClient.disconnect();
+  }
+
 
   @override
-  Stream<Object> errors() => _errorCtrl.stream;
+  bool get isCtrlWsConnected => _ctrlWSClient.isConnected;
+
+  @override
+  bool get isVideoWsConnected => _videoWSClient.isConnected;
+
+
+  @override
+  Stream<Object> ctrlWsErr() => _errorCtrl.stream;
+
+  @override
+  Stream<Object> videoWsErr() => _errorVideo.stream;
 }

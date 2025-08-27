@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
-import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
-import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
-import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
+import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';
+import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws_use_case.dart';
+import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 
@@ -12,9 +12,9 @@ import 'connection_state.dart';
 
 class MowerConnectionBloc
     extends Bloc<MowerConnectionEvent, MowerConnectionState> {
-  final ConnectToMowerUseCase connectToMowerUseCase;
-  final DisconnectMowerUseCase disconnectFromMowerUseCase;
-  final CheckMowerStatusUseCase checkConnectionStatusUseCase;
+  final ConnectToCtrlWsUseCase connectToMowerUseCase;
+  final DisconnectCtrlWsUseCase disconnectFromMowerUseCase;
+  final CheckCtrlWsConnectedUseCase checkConnectionStatusUseCase;
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
   StreamSubscription? _errSub;
@@ -53,7 +53,7 @@ class MowerConnectionBloc
     try {
       await connectToMowerUseCase(state.ip ?? '192.168.100.112'  , state.port ?? 81);
       await _errSub?.cancel();
-      _errSub = repo.errors().listen((e) => add(ConnectionError(e.toString())));
+      _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
       emit(state.copyWith(status: ConnectionStatus.connected));
       telemetryBloc.add(StartTelemetry());
     } catch (e) {

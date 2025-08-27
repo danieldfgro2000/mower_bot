@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/network/websocket_config.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
 
 typedef JsonMap = Map<String, dynamic>;
@@ -13,26 +12,38 @@ typedef BinaryHandler = void Function(Uint8List data);
 typedef ErrorHandler = void Function(String error, [StackTrace? stackTrace]);
 typedef ConnectionChanged = void Function(bool isOpen);
 
-class NetworkHelpers {
-  late final WebSocketConfig cfg;
+enum WsPayloadMode { jsonOnly, binaryOnly, jsonAndBinary }
+
+class WebSocketAdapter {
+  WebSocketAdapter({WebSocketConfig? config})
+    : cfg = config ?? WebSocketConfig();
+
+  final WebSocketConfig cfg;
 
   IOWebSocketChannel? _webSocketChannel;
   StreamSubscription? _sub;
+
+  Uri? _lastUri;
   bool _isOpen = false;
   bool _manuallyClosed = false;
   int _reconnectAttempts = 0;
-  Uri? _lastUri;
 
-  NetworkHelpers({WebSocketConfig? config}) : cfg = config ?? WebSocketConfig();
+  final _jsonCtrl = StreamController<JsonMap>.broadcast();
+  final _binaryCtrl = StreamController<Uint8List>.broadcast();
 
-  IOWebSocketChannel? get webSocketChannel => _webSocketChannel;
+  Stream<JsonMap> get json => _jsonCtrl.stream;
+
+  Stream<Uint8List> get binary => _binaryCtrl.stream;
 
   bool get isOpen => _isOpen && _webSocketChannel != null;
 
-  Future<void> openWebsocketChannel(
-  { Uri? uri,
-    JsonHandler? onJson,
-    BinaryHandler? onBinary,
+  Uri? get endpoint => _lastUri;
+
+  IOWebSocketChannel? get webSocketChannel => _webSocketChannel;
+
+  Future<void> openWebsocketChannel({
+    Uri? uri,
+    WsPayloadMode mode = WsPayloadMode.jsonAndBinary,
     ErrorHandler? onError,
     ConnectionChanged? onConnectionChanged,
   }) async {
@@ -44,7 +55,12 @@ class NetworkHelpers {
     final port = uri?.hasPort == true
         ? uri?.port
         : (uri!.scheme == 'wss' ? 443 : 80);
-    if (host == null || port == null) return;
+
+    if (host == null || port == null) {
+      _notifyClosed(onConnectionChanged);
+      onError?.call("WebSocketAdapter: endpoint is not set");
+      throw StateError("WebSocketAdapter: endpoint is not set");
+    }
 
     final isReachable = await tcpProbe(
       host,
@@ -58,7 +74,7 @@ class NetworkHelpers {
       );
       if (kDebugMode) print(err);
       onError?.call(err.toString());
-      _markClosed(onConnectionChanged);
+      _notifyClosed(onConnectionChanged);
       throw err;
     }
 
@@ -66,8 +82,8 @@ class NetworkHelpers {
       if (kDebugMode) print("WS: connecting to $uri");
       final socket = await WebSocket.connect(uri.toString());
       socket.pingInterval = cfg.pingInterval;
-      _webSocketChannel = IOWebSocketChannel(socket);
 
+      _webSocketChannel = IOWebSocketChannel(socket);
       _isOpen = true;
       _reconnectAttempts = 0;
       onConnectionChanged?.call(true);
@@ -77,12 +93,14 @@ class NetworkHelpers {
           try {
             switch (data) {
               case String():
+                if (mode == WsPayloadMode.binaryOnly) return;
                 final message = jsonDecode(data);
-                if (message is JsonMap) onJson?.call(message);
+                if (message is JsonMap) _jsonCtrl.add(message);
                 break;
               case List<int>():
+                if (mode == WsPayloadMode.jsonOnly) return;
                 final out = handleBinary(Uint8List.fromList(data));
-                if (out != null) onBinary?.call(out);
+                if (out != null) _binaryCtrl.add(out);
                 break;
               default:
                 if (kDebugMode) {
@@ -90,25 +108,25 @@ class NetworkHelpers {
                 }
                 break;
             }
-          } catch (e) {
+          } catch (e, st) {
+            onError?.call("Error decoding message: $e", st);
             if (kDebugMode) {
               print("Error decoding message: $e");
             }
           }
         },
-        onError: (error) {
-          _handleStreamClosure(onConnectionChanged, onError);
-        },
+        onError: (error) => _onStreamClosed(onConnectionChanged, onError),
         onDone: () {
-          if (kDebugMode)
+          if (kDebugMode) {
             print("WS: onDone:: connection closed by remote or locally");
-          _handleStreamClosure(onConnectionChanged, onError);
+          }
+          _onStreamClosed(onConnectionChanged, onError);
         },
         cancelOnError: true,
       );
     } catch (e, st) {
       onError?.call(e.toString(), st);
-      _markClosed(onConnectionChanged);
+      _notifyClosed(onConnectionChanged);
       rethrow;
     }
   }
@@ -119,7 +137,13 @@ class NetworkHelpers {
     ch.sink.add(text);
   }
 
-  Future<void> closeWebSocketChannel({bool manuallyClosed = false}) async {
+  void sendBytes(Uint8List data) {
+    final ch = _webSocketChannel;
+    if (ch == null) return;
+    ch.sink.add(data);
+  }
+
+  Future<void> close({bool manuallyClosed = false}) async {
     _manuallyClosed = manuallyClosed || manuallyClosed;
     _webSocketChannel?.sink.close(WebSocketStatus.normalClosure);
     await _sub?.cancel();
@@ -142,16 +166,19 @@ class NetworkHelpers {
     }
   }
 
-  void _handleStreamClosure(
+  void _onStreamClosed(
     ConnectionChanged? onConnectionChanged,
     ErrorHandler? onError,
   ) {
-    _markClosed(onConnectionChanged);
+    _notifyClosed(onConnectionChanged);
     if (_manuallyClosed || !cfg.autoReconnect) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
-          "WS: Not reconnecting (manually closed: $_manuallyClosed,  autoReconnect: ${cfg.autoReconnect})",
+          "WS: Not reconnecting ("
+          "manually closed: $_manuallyClosed,  "
+          "autoReconnect: ${cfg.autoReconnect})",
         );
+      }
       return;
     }
 
@@ -172,15 +199,17 @@ class NetworkHelpers {
     );
     _reconnectAttempts++;
     if (kDebugMode) {
-      print("WS: Reconnecting in ${delay.inSeconds} seconds... (attempt $_reconnectAttempts/${cfg.maxReconnectAttempts})");
+      print(
+        "WS: Reconnecting in ${delay.inSeconds} seconds... (attempt $_reconnectAttempts/${cfg.maxReconnectAttempts})",
+      );
     }
     maybeReconnect(
-        onReconnect: () => openWebsocketChannel(),
-        onError: () => onError?.call("Reconnection failed")
+      onReconnect: () => openWebsocketChannel(),
+      onError: () => onError?.call("Reconnection failed"),
     );
   }
 
-  void _markClosed(ConnectionChanged? onConnectionChanged) {
+  void _notifyClosed(ConnectionChanged? onConnectionChanged) {
     _isOpen = false;
     onConnectionChanged?.call(false);
     _sub?.cancel();
@@ -235,7 +264,11 @@ class NetworkHelpers {
     );
   }
 
-  void dispose() => closeWebSocketChannel(manuallyClosed: true);
+  Future<void> dispose() async {
+    await close(manuallyClosed: true);
+    await _jsonCtrl.close();
+    await _binaryCtrl.close();
+  }
 }
 
 class VidHeader {

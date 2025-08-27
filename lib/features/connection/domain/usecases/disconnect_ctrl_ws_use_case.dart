@@ -1,11 +1,11 @@
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 
-class DisconnectMowerUseCase {
+class DisconnectCtrlWsUseCase {
   final MowerConnectionRepository _connectionRepository;
 
-  DisconnectMowerUseCase(this._connectionRepository);
+  DisconnectCtrlWsUseCase(this._connectionRepository);
 
   Future<void> call() async {
-    await _connectionRepository.disconnect();
+    await _connectionRepository.disconnectCtrlWs();
   }
 }

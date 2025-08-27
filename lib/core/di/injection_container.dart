@@ -3,9 +3,9 @@ import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/core/network/websocket_config.dart';
 import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
-import 'package:mower_bot/features/connection/domain/usecases/check_mower_status.dart';
-import 'package:mower_bot/features/connection/domain/usecases/connect_to_mower.dart';
-import 'package:mower_bot/features/connection/domain/usecases/disconnect_mower.dart';
+import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';
+import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws_use_case.dart';
+import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/control/data/repositories/control_repository_impl.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 import 'package:mower_bot/features/control/domain/usecases/observer_video_frames_use_case.dart';
@@ -35,9 +35,9 @@ Future<void> initDependencies() async {
 
   /// Connection
   sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
-  sl.registerLazySingleton<ConnectToMowerUseCase>(() => ConnectToMowerUseCase(sl()));
-  sl.registerLazySingleton<DisconnectMowerUseCase>(() => DisconnectMowerUseCase(sl()));
-  sl.registerLazySingleton<CheckMowerStatusUseCase>(() => CheckMowerStatusUseCase(sl()));
+  sl.registerLazySingleton<ConnectToCtrlWsUseCase>(() => ConnectToCtrlWsUseCase(sl()));
+  sl.registerLazySingleton<DisconnectCtrlWsUseCase>(() => DisconnectCtrlWsUseCase(sl()));
+  sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
 
   /// Paths
   sl.registerLazySingleton<MockPathRepository>(() => MockPathRepository());

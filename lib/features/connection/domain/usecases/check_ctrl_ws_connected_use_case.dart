@@ -1,9 +1,9 @@
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 
-class CheckMowerStatusUseCase {
+class CheckCtrlWsConnectedUseCase {
   final MowerConnectionRepository _connectionRepository;
 
-  CheckMowerStatusUseCase(this._connectionRepository);
+  CheckCtrlWsConnectedUseCase(this._connectionRepository);
 
-  Future<bool> call() async => _connectionRepository.isConnected;
+  bool call() => _connectionRepository.isCtrlWsConnected;
 }

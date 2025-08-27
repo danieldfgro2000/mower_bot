@@ -91,7 +91,7 @@ class ControlRepositoryImpl implements ControlRepository {
     });
 
     await _binarySubscription?.cancel();
-    _binarySubscription = _videoWebSocketClient.binary.listen(
+    _binarySubscription = _videoWebSocketClient.binary?.listen(
           (bytes) {
         if (!_videoStreamCtrl.isClosed) _videoStreamCtrl.add(bytes);
       },
