@@ -4,5 +4,6 @@ abstract class ControlRepository {
   Future<void> startVideoStream(int fps);
   Future<void> stopVideoStream();
   Stream<Uint8List> get videFrames;
-  bool get isConnected;
+  bool get isCtrlWsConnected;
+  bool get isVideoWsConnected;
 }

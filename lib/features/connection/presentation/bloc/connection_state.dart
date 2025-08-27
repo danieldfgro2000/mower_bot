@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 enum ConnectionStatus {
   disconnected,
   connecting,
-  connected,
+  ctrlWsConnected,
+  videoWsConnected,
   error
 }
 

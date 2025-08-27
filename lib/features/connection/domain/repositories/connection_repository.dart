@@ -6,6 +6,8 @@ abstract class MowerConnectionRepository {
   Stream<Uint8List>? videoStream();
   Stream<Object> ctrlWsErr();
   Stream<Object> videoWsErr();
+  Stream<bool> ctrlWsConnected();
+  Stream<bool> videoWsConnected();
   Future<void> connectCtrlWs(String ipAddress);
   Future<void> connectVideoWs(String ipAddress);
   Future<void> disconnectCtrlWs();

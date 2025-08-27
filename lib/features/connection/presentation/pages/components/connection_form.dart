@@ -70,7 +70,7 @@ class _ConnectionFormState extends State<ConnectionForm> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: _validatePort,
             enabled: !isBusy,
-            onChanged: (port) => bloc.add(ChangePort(port)),
+            onChanged: (port) {},
           ),
           const SizedBox(height: 16),
         ],

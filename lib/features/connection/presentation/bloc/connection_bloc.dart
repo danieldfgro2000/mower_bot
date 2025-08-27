@@ -12,35 +12,28 @@ import 'connection_state.dart';
 
 class MowerConnectionBloc
     extends Bloc<MowerConnectionEvent, MowerConnectionState> {
-  final ConnectToCtrlWsUseCase connectToMowerUseCase;
-  final DisconnectCtrlWsUseCase disconnectFromMowerUseCase;
-  final CheckCtrlWsConnectedUseCase checkConnectionStatusUseCase;
+  final ConnectToCtrlWsUseCase connectToCtrlWsUseCase;
+  final DisconnectCtrlWsUseCase disconnectCtrlWsUseCase;
+  final CheckCtrlWsConnectedUseCase checkCtrlWsConnectedUseCase;
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
   StreamSubscription? _errSub;
+  StreamSubscription? _ctrlWsConnectedSub;
+  StreamSubscription? _videoWsConnectedSub;
 
   MowerConnectionBloc(
-    this.connectToMowerUseCase,
-    this.disconnectFromMowerUseCase,
-    this.checkConnectionStatusUseCase,
+    this.connectToCtrlWsUseCase,
+    this.disconnectCtrlWsUseCase,
+    this.checkCtrlWsConnectedUseCase,
     this.telemetryBloc,
     this.repo,
   ) : super(const MowerConnectionState()) {
-    on<ChangePort>(_onChangePort);
     on<ChangeIp>(_onChangeIp);
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
+    on<ConnectionChanged>(_onConnectionChanged);
     on<ConnectionError>(_onConnectionError);
-  }
-
-  void _onChangePort(event, emit) {
-    final port = int.tryParse(event.port);
-    if (port != null && port > 0 && port < 65536) {
-      emit(state.copyWith(port: port));
-    } else {
-      emit(state.copyWith(port: 81));
-    }
   }
 
   void _onChangeIp(event, emit) {
@@ -51,10 +44,10 @@ class MowerConnectionBloc
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
     try {
-      await connectToMowerUseCase(state.ip ?? '192.168.100.112'  , state.port ?? 81);
+      await connectToCtrlWsUseCase(state.ip ?? '192.168.100.112');
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
-      emit(state.copyWith(status: ConnectionStatus.connected));
+      emit(state.copyWith(status: ConnectionStatus.ctrlWsConnected));
       telemetryBloc.add(StartTelemetry());
     } catch (e) {
       emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
@@ -64,19 +57,27 @@ class MowerConnectionBloc
 
   FutureOr<void> _onDisconnect(event, emit) async {
     await _errSub?.cancel();
-    await disconnectFromMowerUseCase();
+    await disconnectCtrlWsUseCase();
     emit(state.copyWith(status: ConnectionStatus.disconnected));
   }
 
-  FutureOr<void> _onCheckConnection(event, emit) async {
-    final connected = await checkConnectionStatusUseCase();
-    emit(
-      state.copyWith(
-        status: connected
-            ? ConnectionStatus.connected
-            : ConnectionStatus.disconnected,
-      ),
-    );
+  void _onCheckConnection(event, emit) async {
+    _ctrlWsConnectedSub = repo.ctrlWsConnected().listen((isConnected) {
+      add(ConnectionChanged(isCtrlWsConnected: isConnected));
+    });
+    _videoWsConnectedSub = repo.videoWsConnected().listen((isConnected) {
+      add(ConnectionChanged(isVideoWsConnected: isConnected));
+    });
+  }
+
+  void _onConnectionChanged(event, emit) async {
+    emit(state.copyWith(
+      status: event.isCtrlWsConnected == true
+        ? ConnectionStatus.ctrlWsConnected
+        : event.isVideoWsConnected == true
+          ? ConnectionStatus.videoWsConnected
+          : ConnectionStatus.disconnected,
+    ));
   }
 
   void _onConnectionError(event, emit) async {

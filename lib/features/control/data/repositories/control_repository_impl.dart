@@ -13,28 +13,28 @@ class ControlRepositoryImpl implements ControlRepository {
   
   late final StreamController<Uint8List> _videoStreamCtrl;
   StreamSubscription<Uint8List>? _binarySubscription;
-  StreamSubscription<Map<String, dynamic>>? _jsonStringSubscription;
 
   ControlRepositoryImpl({
     required IWebSocketClient controlWebSocketClient,
     required IWebSocketClient videoWebSocketClient,
-  })
-      :_videoWebSocketClient = videoWebSocketClient,
-        _controlWebSocketClient = controlWebSocketClient {
+  }) : _videoWebSocketClient = videoWebSocketClient,
+       _controlWebSocketClient = controlWebSocketClient {
     _videoStreamCtrl = StreamController<Uint8List>.broadcast();
   }
 
   @override
-  bool get isConnected => _controlWebSocketClient.isConnected;
+  bool get isVideoWsConnected => _videoWebSocketClient.isConnected;
+
+  @override
+  bool get isCtrlWsConnected => _controlWebSocketClient.isConnected;
+
 
   @override
   Stream<Uint8List> get videFrames => _videoStreamCtrl.stream;
 
   @override
   Future<void> startVideoStream(int fps) async {
-    if(!_controlWebSocketClient.isConnected) {
-      await _controlWebSocketClient.connect();
-    }
+
     if(!_videoWebSocketClient.isConnected) {
       await _videoWebSocketClient.connect();
     }
@@ -46,7 +46,7 @@ class ControlRepositoryImpl implements ControlRepository {
 
   @override
   Future<void> stopVideoStream() async {
-    if (!isConnected) {
+    if (!isVideoWsConnected) {
       debugPrint('[WebSocket] is not connected');
       return;
     }
@@ -55,14 +55,6 @@ class ControlRepositoryImpl implements ControlRepository {
 
     await _detachListeners();
   }
-
-  Future<void> _detachListeners() async {
-    await _binarySubscription?.cancel();
-    await _jsonStringSubscription?.cancel();
-    _binarySubscription = null;
-    _jsonStringSubscription = null;
-  }
-
   void _videoCmdSend(String cmd, {int? fps}) {
     _controlWebSocketClient.send(
       MessageEnvelope(
@@ -72,23 +64,12 @@ class ControlRepositoryImpl implements ControlRepository {
     );
   }
 
+  Future<void> _detachListeners() async {
+    await _binarySubscription?.cancel();
+    _binarySubscription = null;
+  }
+
   Future<void> _webSocketListenMessage() async {
-    await _jsonStringSubscription?.cancel();
-    _jsonStringSubscription = _controlWebSocketClient.messages?.listen((jsonString) {
-      try {
-        final envelope = MessageEnvelope.fromJson(jsonString);
-        switch (envelope.topic) {
-          case MessageTopic.camera:
-            debugPrint('Received camera message: ${envelope.data}');
-            break;
-          default:
-            break;
-        }
-      } catch (e) {
-        debugPrint('Error parsing message envelope: $e');
-        return;
-      }
-    });
 
     await _binarySubscription?.cancel();
     _binarySubscription = _videoWebSocketClient.binary?.listen(
@@ -97,12 +78,5 @@ class ControlRepositoryImpl implements ControlRepository {
       },
       onError: (e, st) => debugPrint('[WebSocket] binary stream error: $e\n$st'),
     );
-  }
-
-  Future <void> dispose() async {
-    await _detachListeners();
-    _controlWebSocketClient.disconnect();
-    _videoWebSocketClient.disconnect();
-    if (!_videoStreamCtrl.isClosed) _videoStreamCtrl.close();
   }
 }

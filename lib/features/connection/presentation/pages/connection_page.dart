@@ -28,11 +28,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
-    super.didChangeDependencies();
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Connection'), centerTitle: true),
@@ -44,11 +39,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
               listenWhen: (prev, curr) => prev.status != curr.status,
               listener: (context, state) {
                 switch (state.status) {
-                  case ConnectionStatus.connected:
-                    _showSnackBar(context, 'Connected to mower');
+                  case ConnectionStatus.ctrlWsConnected:
+                    _showSnackBar(context, 'Connected to control websocket');
+                    break;
+                  case ConnectionStatus.videoWsConnected:
+                    _showSnackBar(context, 'Connected to video websocket');
                     break;
                   case ConnectionStatus.disconnected:
-                    _showSnackBar(context, 'Disconnected from mower');
+                    _showSnackBar(context, 'Disconnected');
                     break;
                   case ConnectionStatus.connecting:
                     _showSnackBar(context, 'Connecting to mower...');

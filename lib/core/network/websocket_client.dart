@@ -67,7 +67,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
       },
       onConnectionChanged: (open) {
         if (kDebugMode) {
-          print("WS: connection is ${open ? "open" : "closed"}");
+          print("WS${payloadMode.name}: connection is ${open ? "open" : "closed"}");
         }
       }
     );

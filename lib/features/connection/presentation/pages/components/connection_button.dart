@@ -26,7 +26,7 @@ class _ConnectionButtonState extends State<ConnectionButton> {
       buildWhen: (p, n) => p.status != n.status || p.ip != n.ip || p.port != n.port,
       builder: (context, state) {
         isBusy = state.status == ConnectionStatus.connecting;
-        isConnected = state.status == ConnectionStatus.connected;
+        isConnected = state.status == ConnectionStatus.ctrlWsConnected;
         return ElevatedButton.icon(
           onPressed: isBusy
             ? null

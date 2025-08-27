@@ -16,7 +16,8 @@ class ConnectionStatusTile extends StatelessWidget {
       selector: (s) => s.status,
       builder: (context, status) {
         final color = switch (status) {
-          ConnectionStatus.connected => Colors.green,
+          ConnectionStatus.ctrlWsConnected => Colors.green,
+          ConnectionStatus.videoWsConnected => Colors.blue,
           ConnectionStatus.connecting => Colors.orange,
           ConnectionStatus.disconnected => Colors.red,
           ConnectionStatus.error => Colors.redAccent,

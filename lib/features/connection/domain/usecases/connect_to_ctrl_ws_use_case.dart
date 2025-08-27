@@ -4,7 +4,7 @@ class ConnectToCtrlWsUseCase {
   final MowerConnectionRepository repository;
   ConnectToCtrlWsUseCase(this.repository);
 
-  Future<void> call(String ipAddress, int port) async {
+  Future<void> call(String ipAddress) async {
     return repository.connectCtrlWs(ipAddress);
   }
 }

@@ -16,15 +16,6 @@ class ChangeIp extends MowerConnectionEvent {
   List<Object?> get props => [ipAddress];
 }
 
-class ChangePort extends MowerConnectionEvent {
-  final String port;
-
-  const ChangePort(this.port);
-
-  @override
-  List<Object?> get props => [port];
-}
-
 class ConnectToMower extends MowerConnectionEvent {}
 
 class DisconnectFromMower extends MowerConnectionEvent {}
@@ -32,12 +23,13 @@ class DisconnectFromMower extends MowerConnectionEvent {}
 class CheckConnectionStatus extends MowerConnectionEvent {}
 
 class ConnectionChanged extends MowerConnectionEvent {
-  final bool isConnected;
+  final bool? isCtrlWsConnected;
+  final bool? isVideoWsConnected;
 
-  const ConnectionChanged(this.isConnected);
+  const ConnectionChanged({this.isCtrlWsConnected, this.isVideoWsConnected});
 
   @override
-  List<Object?> get props => [isConnected];
+  List<Object?> get props => [isCtrlWsConnected, isVideoWsConnected];
 }
 
 class ConnectionError extends MowerConnectionEvent {

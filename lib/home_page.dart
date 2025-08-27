@@ -108,10 +108,15 @@ class _HomePageState extends State<HomePage> {
 
   Text _connectionStatus(MowerConnectionState state) {
     return switch (state) {
-      MowerConnectionState(status: ConnectionStatus.connected) => Text(
-        'Mower Connected to ${state.ip}:${state.port}',
+      MowerConnectionState(status: ConnectionStatus.ctrlWsConnected) => Text(
+        'Control websocket Connected',
         textScaler: TextScaler.linear(1),
         style: TextStyle(color: Colors.green),
+      ),
+      MowerConnectionState(status: ConnectionStatus.videoWsConnected) => Text(
+        'Video websocket Connected',
+        textScaler: TextScaler.linear(1),
+        style: TextStyle(color: Colors.blue),
       ),
       MowerConnectionState(status: ConnectionStatus.connecting) => const Text(
         'Connecting...',

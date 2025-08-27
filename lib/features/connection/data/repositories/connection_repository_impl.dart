@@ -31,12 +31,13 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   @override
   Future<void> connectCtrlWs(String ipAddress) async {
     final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.ctrl.port, path: '/');
+    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.video.port, path: '/video');
 
     try {
       _ctrlWSClient.setEndpoint(ctrlUri);
-      
+      _videoWSClient.setEndpoint(videoUri);
+
       await _ctrlWSClient.connect();
-     
       await _ctrlErrSub?.cancel();
 
       _ctrlErrSub = _ctrlWSClient.messages?.listen(
@@ -52,14 +53,8 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
 
   @override
   Future<void> connectVideoWs(String ipAddress) async {
-    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.video.port, path: '/video');
-
     try {
-      _videoWSClient.setEndpoint(videoUri);
-
       await _videoWSClient.connect();
-
-      await _ctrlErrSub?.cancel();
       await _videoErrSub?.cancel();
 
       _videoErrSub = _videoWSClient.binary?.listen(
@@ -97,4 +92,16 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
 
   @override
   Stream<Object> videoWsErr() => _errorVideo.stream;
+
+  @override
+  Stream<bool> ctrlWsConnected() =>
+      Stream.periodic(
+          const Duration(seconds: 1), (_) =>
+      isCtrlWsConnected).distinct();
+
+  @override
+  Stream<bool> videoWsConnected() =>
+      Stream.periodic(
+          const Duration(seconds: 1), (_) =>
+      isVideoWsConnected).distinct();
 }

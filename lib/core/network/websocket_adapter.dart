@@ -69,11 +69,9 @@ class WebSocketAdapter {
     );
 
     if (!isReachable) {
-      final err = SocketException(
-        "Cannot reach $host:$port. Aborting WebSocket connection.",
-      );
+      final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
       if (kDebugMode) print(err);
-      onError?.call(err.toString());
+      onError?.call(err);
       _notifyClosed(onConnectionChanged);
       throw err;
     }
