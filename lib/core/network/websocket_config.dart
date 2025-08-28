@@ -10,10 +10,10 @@ class WebSocketConfig {
   final int maxReconnectAttempts;
 
   const WebSocketConfig({
-    this.pingInterval = const Duration(seconds: 30),
-    this.connectProbeTimeout = const Duration(seconds: 3),
-    this.reconnectMinDelay = const Duration(seconds: 5),
-    this.reconnectMaxDelay = const Duration(seconds: 10),
+    this.pingInterval = const Duration(seconds: 10),
+    this.connectProbeTimeout = const Duration(seconds: 10),
+    this.reconnectMinDelay = const Duration(milliseconds: 100),
+    this.reconnectMaxDelay = const Duration(milliseconds: 300),
     this.autoReconnect = true,
     this.maxReconnectAttempts = 5,
   });
