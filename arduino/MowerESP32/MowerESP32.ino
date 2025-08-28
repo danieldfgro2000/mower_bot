@@ -1,138 +1,92 @@
+#include <esp32_debug.h>
 #include <wifi_adapter.h>
-
+#include <esp32_debug.h>
 #include <ws_server.h>      // control WS (JSON) on port 81
-#include <ws_video_async.h> // Async video WS on port 82
-//#include <ws_video.h>
-#include <ws_video_setup.h>
+#include <ws_async_video.h> // Async video WS on port 82
+#include <camera_setup.h>
 #include <mega_serial.h>
 
-#include <router.h>
+#include <esp_mega_router.h>
 #include <heartbeat.h>
 
 #include "secrets.h"
 #include "pins_esp32cam.h"
 
-#if !defined(BOARD_HAS_PSRAM)
-#  warning "PSRAM not enabled. Enable PSRAM in Tools > PSRAM: Enabled (camera needs it)."
-#endif
-
-#define TRACE_LOOP(LABEL, CALL) do {    \
- uint32_t _t0 = millis();   \
- CALL;  \
- uint32_t _dt = millis() - _t0; \
- if (_dt > 1000) Serial.printf("[LOOP] %s %u ms\n", LABEL, _dt); \
-} while(0)
-
 using namespace Mower;
 
-static const char* reset_reason_str(esp_reset_reason_t r) {
-    switch (r) {
-        case ESP_RST_POWERON:   return "POWERON";
-        case ESP_RST_SW:        return "SW";
-        case ESP_RST_PANIC:     return "PANIC";
-        case ESP_RST_BROWNOUT:  return "BROWNOUT";
-        case ESP_RST_WDT:       return "WDT";
-        case ESP_RST_DEEPSLEEP: return "DEEPSLEEP";
-        default:                return "OTHER";
-    }
-}
-
-WifiAdapter             g_net;
-WsServer                g_ws;
-WsVideoAsync            g_video_async(82, "/video");
-//WsVideo                 g_video(g_ws);
-static CameraSetup*     g_camera = nullptr;
-MegaSerial              g_mega;
-Router                  g_router;
-Heartbeat               g_hb;
+WifiAdapter             wifiAdapter;
+WsServer                wsServer;
+WsAsyncVideo            wsAsyncVideo(82, "/video");
+CameraSetup             cameraSetup;
+MegaSerial              megaSerial;
+ESPMegaRouter           espMegaRouter;
+Heartbeat               heartbeat;
 
 void setup() {
     Serial.begin(115200);
     delay(200);
-    esp_reset_reason_t reason = esp_reset_reason();
-    Serial.printf("[BOOT] Reset reason: %d (%s)\n", reason, reset_reason_str(reason));
-    Serial.flush();
+    log_err(esp_reset_reason(), "BOOT");
 
-    CameraPins pins {
-            PWDN_GPIO_NUM, RESET_GPIO_NUM,
-            XCLK_GPIO_NUM, SIOD_GPIO_NUM, SIOC_GPIO_NUM,
-            Y2_GPIO_NUM, Y3_GPIO_NUM, Y4_GPIO_NUM, Y5_GPIO_NUM, Y6_GPIO_NUM, Y7_GPIO_NUM, Y8_GPIO_NUM, Y9_GPIO_NUM,
-            VSYNC_GPIO_NUM, HREF_GPIO_NUM, PCLK_GPIO_NUM,
-    };
-    g_camera = new CameraSetup(pins);
+    wifiAdapter.onConnected([](){
+        wsServer.begin(81);
 
-    CameraOpts opts;
-    opts.xclk_hz = 20000000;
-    opts.frame_size = FRAMESIZE_VGA;
-    opts.jpeg_quality = 40;
-    opts.fb_count = 2;
-    opts.prefer_psram = true;
-    opts.pixformat = PIXFORMAT_JPEG;
-
-
-    // 1) Bring up Wi-Fi (auto-reconnect handled internally)
-    Serial.printf("[NET] Connecting to Wi-Fi SSID: %s\n", MowerConfig::WIFI_SSID);
-    g_net.onConnected([](){
-        Serial.println("[NET] WiFi connected... Starting [WS]");
-        g_ws.begin(81);
-        g_video_async.begin(25);
+        if (cameraSetup.begin() != ESP_OK) {
+            Serial.println("[VIDEO] Camera init failed - video disabled");
+        } else {
+            wsAsyncVideo.begin(25);
+        }
     });
-    g_net.onDisconnected([](int reason){
-        Serial.printf("[NET] WiFi disconnected, reason: %d\n", reason);
-        g_video_async.stop();
-        g_ws.stop();
+    wifiAdapter.onDisconnected([](int reason){
+        wsAsyncVideo.stop();
+        wsServer.stop();
     });
-    if (g_camera->begin(opts) != ESP_OK) {
-        Serial.println("[VIDEO] Camera init failed - video disabled");
-    }
-    g_net.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
+    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
+    delay(100);
 
-    // 2) Serial bridge to Mega 2560 (pins from config/pins_esp32cam.h)
-    g_mega.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
-
-    // 3) WebSocket server (for Flutter app)
-    g_ws.onMessage([](const JsonDocument& doc, uint8_t clientId) {
-        // Forward command payloads to Mega as line-delimited JSON
-        if(doc["type"] == "command") {
+    wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
+        if(doc["topic"] == "mega_cmd") {
             String line;
             serializeJson(doc, line);
-            g_mega.writeLine(line);
+            megaSerial.writeLine(line);
         }
+
         if(strcmp(doc["topic"] | "", "camera") == 0) {
             const char* cmd = doc["data"]["cmd"] | "";
             if(strcmp(cmd, "start") == 0) {
                 uint8_t reqFps = doc["data"]["fps"] | 15;
-                g_video_async.start(reqFps);
+                wsAsyncVideo.start(reqFps);
                 DynamicJsonDocument ack(128);
                 ack["topic"] = "camera";
                 ack["event"] = "started";
                 ack["fps"] = reqFps;
                 String out;
                 serializeJson(ack, out);
-                g_ws.sendTXT(clientId, out);
+                wsServer.sendTXT(clientId, out);
             } else if(strcmp(cmd, "stop") == 0) {
-                g_video_async.stop();
+                wsAsyncVideo.stop();
                 DynamicJsonDocument ack(96);
                 ack["topic"] = "camera";
                 ack["event"] = "stopped";
                 String out;
                 serializeJson(ack, out);
-                g_ws.sendTXT(clientId, out);
+                wsServer.sendTXT(clientId, out);
             }
         }
     });
 
-    g_router.begin(&g_ws, &g_mega);
-    g_router.attachHeartbeat(&g_hb);
+    megaSerial.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
 
-    g_hb.begin(&g_ws, &g_net);
-    g_hb.setVideoStreamingProvider([&]() { return g_video_async.isStreaming(); });
-    g_hb.setIntervals(5000, 15000, 30000);
+    espMegaRouter.begin(&wsServer, &megaSerial);
+    espMegaRouter.attachHeartbeat(&heartbeat);
+
+    heartbeat.begin(&wsServer, &wifiAdapter);
+    heartbeat.setVideoStreamingProvider([&]() { return wsAsyncVideo.isStreaming(); });
+    heartbeat.setIntervals(5000, 15000, 30000);
 }
 
 void loop() {
-    TRACE_LOOP("net", g_net.loop());
-    TRACE_LOOP("ws", g_ws.loop());
-    TRACE_LOOP("router", g_router.loop());
-    TRACE_LOOP("hb", g_hb.loop());
+    TRACE_LOOP("wifi", wifiAdapter.loop());
+    TRACE_LOOP("ws", wsServer.loop());
+    TRACE_LOOP("router", espMegaRouter.loop());
+    TRACE_LOOP("hb", heartbeat.loop());
 }
