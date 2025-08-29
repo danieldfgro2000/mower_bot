@@ -44,7 +44,10 @@ class MowerConnectionBloc
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
     try {
-      await connectToCtrlWsUseCase(state.ip ?? '192.168.100.112');
+      if(state.ip == null || state.ip!.isEmpty) {
+        throw Exception('IP address is required');
+      }
+      await connectToCtrlWsUseCase(state.ip!);
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
       emit(state.copyWith(status: ConnectionStatus.ctrlWsConnected));

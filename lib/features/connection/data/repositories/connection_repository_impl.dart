@@ -31,7 +31,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   @override
   Future<void> connectCtrlWs(String ipAddress) async {
     final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.ctrl.port, path: '/');
-    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.video.port, path: '/video');
+    final videoUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.ctrl.port, path: '/');
 
     try {
       _ctrlWSClient.setEndpoint(ctrlUri);
