@@ -107,20 +107,22 @@ class WebSocketAdapter {
                 break;
             }
           } catch (e, st) {
-            onError?.call("Error decoding message: $e", st);
             if (kDebugMode) {
               print("Error decoding message: $e");
             }
           }
         },
-        onError: (error) => _onStreamClosed(onConnectionChanged, onError),
+        onError: (error) {
+          if (kDebugMode) print("WS: onError: $error");
+          _onStreamClosed(onConnectionChanged, onError);
+        },
         onDone: () {
           if (kDebugMode) {
             print("WS: onDone:: connection closed by remote or locally");
           }
           _onStreamClosed(onConnectionChanged, onError);
         },
-        cancelOnError: true,
+        cancelOnError: false,
       );
     } catch (e, st) {
       onError?.call(e.toString(), st);
@@ -314,34 +316,45 @@ class RxStats {
 final stats = RxStats();
 
 Uint8List? handleBinary(Uint8List msg) {
-  final now = DateTime.now().millisecondsSinceEpoch;
+  try {
+    final now = DateTime.now().millisecondsSinceEpoch;
 
-  stats.rxThisSec++;
-  stats.lastSecMs = (stats.lastSecMs == 0) ? now : stats.lastSecMs;
-  if (now - stats.lastSecMs >= 1000) {
-    stats.rxFps = stats.rxThisSec;
-    stats.rxThisSec = 0;
-    stats.lastSecMs = now;
-    debugPrint('[VIDEO] RX FPS: ${stats.rxFps}');
-  }
-
-  // interval arrival Dt
-  if (stats.lastArrivalMs != null) {
-    debugPrint('[VIDEO] Arrival Dt: ${now - stats.lastArrivalMs!} ms');
-  }
-  stats.lastArrivalMs = now;
-
-  // parse header
-  if (msg.length >= VidHeader.size) {
-    final hdr = VidHeader.parse(msg);
-    if (hdr.magic == 0x30444956) {
-      if (stats.lastSeq != null && hdr.seq != stats.lastSeq! + 1) {
-        debugPrint('[VIDEO] DROPPED: prev=${stats.lastSeq} curr=${hdr.seq}');
-      }
-      stats.lastSeq = hdr.seq;
-      final jpeg = msg.sublist(VidHeader.size, VidHeader.size + hdr.payloadLen);
-      return jpeg;
+    stats.rxThisSec++;
+    stats.lastSecMs = (stats.lastSecMs == 0) ? now : stats.lastSecMs;
+    if (now - stats.lastSecMs >= 1000) {
+      stats.rxFps = stats.rxThisSec;
+      stats.rxThisSec = 0;
+      stats.lastSecMs = now;
+      debugPrint('[VIDEO] RX FPS: ${stats.rxFps}');
     }
+
+    // interval arrival Dt
+    if (stats.lastArrivalMs != null) {
+      debugPrint('[VIDEO] Arrival Dt: ${now - stats.lastArrivalMs!} ms');
+    }
+    stats.lastArrivalMs = now;
+
+    if(msg.length < VidHeader.size) {
+      debugPrint('[VIDEO] Message too short: ${msg.length} bytes, expected at least ${VidHeader.size}, got ${msg.length - VidHeader.size} bytes of payload');
+      return null;
+    }
+
+    // parse header
+    if (msg.length >= VidHeader.size) {
+      final hdr = VidHeader.parse(msg);
+      if (hdr.magic == 0x30444956) {
+        if (stats.lastSeq != null && hdr.seq != stats.lastSeq! + 1) {
+          debugPrint('[VIDEO] DROPPED: prev=${stats.lastSeq} curr=${hdr.seq}');
+        }
+        stats.lastSeq = hdr.seq;
+        final jpeg = msg.sublist(
+            VidHeader.size, VidHeader.size + hdr.payloadLen);
+        return jpeg;
+      }
+    }
+  } catch (e, st) {
+    debugPrint('[VIDEO] Error handling binary message: $e, stacktrace: $st');
+    return null;
   }
   return null;
 }
