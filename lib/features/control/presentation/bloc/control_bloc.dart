@@ -17,6 +17,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final StopVideoStreamUseCase _stopVideoStreamUseCase;
   final MowerConnectionRepository repo;
   StreamSubscription? _videoWsConnectedSub;
+  static const String _kMjpegUrl = 'http://172.20.10.12:8082/';
 
   ControlBloc(
     this.sendCommand,
@@ -60,16 +61,26 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   Future<void> _onStartVideoStream(event, emit) async {
-    await _startVideoStreamUseCase(25);
-    final frames  = _observerVideoFramesUseCase()
-        .where((bytes) => bytes.length > 2 && bytes[0] == 0xff && bytes[1] == 0xd8);
-    frames.listen((bytes) {
-    });
-    emit(state.copyWith(videoFrames: frames));
+    // await _startVideoStreamUseCase(25);
+    // final frames  = _observerVideoFramesUseCase()
+    //     .where((bytes) => bytes.length > 2 && bytes[0] == 0xff && bytes[1] == 0xd8);
+    // frames.listen((bytes) {
+    // });
+    // emit(state.copyWith(videoFrames: frames));
+
+    emit(state.copyWith(
+      isVideoEnabled: true,
+      mjpegUrl: _kMjpegUrl,
+    ));
   }
 
   Future<void> _onStopVideoStream(event, emit) async {
-    await _stopVideoStreamUseCase();
-    emit(ControlState().initial());
+    // await _stopVideoStreamUseCase();
+    // emit(ControlState().initial());
+
+    emit(state.copyWith(
+      isVideoEnabled: false,
+      mjpegUrl: null,
+    ));
   }
 }

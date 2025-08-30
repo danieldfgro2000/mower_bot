@@ -49,7 +49,7 @@ class _ControlPageState extends State<ControlPage>
               Positioned.fill(
                   top:0,
                   left: 0,
-                  child:  EspMjpegView()),
+                  child:  EspMjpegWebView()),
               if (isRecording) _recordingBanner(context),
               _recordButton(controlBloc, context),
               Positioned.fill(

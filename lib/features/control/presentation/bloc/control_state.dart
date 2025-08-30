@@ -10,6 +10,8 @@ class ControlState extends Equatable {
   final String? recordedFilePath;
   final String? errorMessage;
   final Stream<Uint8List>? videoFrames;
+  final String? mjpegUrl;
+  final bool? isVideoEnabled;
 
   const ControlState({
     this.isConnected,
@@ -19,6 +21,8 @@ class ControlState extends Equatable {
     this.recordedFilePath,
     this.errorMessage,
     this.videoFrames,
+    this.mjpegUrl,
+    this.isVideoEnabled,
   });
 
   ControlState initial() {
@@ -30,6 +34,8 @@ class ControlState extends Equatable {
       recordedFilePath: null,
       errorMessage: null,
       videoFrames: null,
+        mjpegUrl: 'http://172.20.10.12:8080/?action=stream',
+      isVideoEnabled: false,
     );
   }
 
@@ -42,6 +48,8 @@ class ControlState extends Equatable {
     recordedFilePath,
     errorMessage,
     videoFrames,
+    mjpegUrl,
+    isVideoEnabled,
   ];
 
   ControlState copyWith({
@@ -52,6 +60,8 @@ class ControlState extends Equatable {
     String? recordedFilePath,
     String? errorMessage,
     Stream<Uint8List>? videoFrames,
+    String? mjpegUrl,
+    bool? isVideoEnabled,
   }) {
     return ControlState(
       isConnected: isConnected ?? this.isConnected,
@@ -61,6 +71,8 @@ class ControlState extends Equatable {
       recordedFilePath: recordedFilePath ?? this.recordedFilePath,
       errorMessage: errorMessage ?? this.errorMessage,
       videoFrames: videoFrames ?? this.videoFrames,
+      mjpegUrl: mjpegUrl ?? this.mjpegUrl,
+      isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
     );
   }
 }
