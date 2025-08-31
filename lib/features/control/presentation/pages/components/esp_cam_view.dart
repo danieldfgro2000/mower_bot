@@ -19,7 +19,7 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
   InAppWebViewController? _controller;
   late final ControlBloc _bloc;
 
-  // Minimal HTML shell: no crossorigin, no query params, gentle reconnect.
+  // Minimal shell for /stream only
   static const _htmlTemplate = r'''
 <!DOCTYPE html>
 <html>
@@ -49,19 +49,17 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
   function start(){
     if(!url) return;
     setStatus('connecting…');
-    // Assign the URL directly (no cache-busting, no crossorigin)
-    img.src = url;
+    img.src = url; // must be the /stream endpoint
   }
 
   img.addEventListener('load', function(){ setStatus(''); });
 
   img.addEventListener('error', function(){
-    // If socket breaks (e.g., server restarts), retry after a short delay
     setStatus('reconnecting…');
-    setTimeout(start, 200);
+    setTimeout(start, 300);
   });
 
-  // Some Android WebViews may stall on long-lived sockets; nudge periodically.
+  // Nudge some Android WebViews
   setInterval(function(){
     if(!url) return;
     const cur = img.src;
@@ -70,17 +68,14 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
     img.src = cur;
   }, 15000);
 
-  // Called from Flutter to set/update the stream URL.
   window.setMjpegUrl = function(u){
     url = u || '';
     start();
   };
 
-  // If page becomes visible again, ensure the image is pointed at the URL.
   document.addEventListener('visibilitychange', function(){
     if(document.visibilityState === 'visible' && url){
-      const cur = img.src;
-      if(!cur){ img.src = url; }
+      if(!img.src){ img.src = url; }
     }
   });
 })();
@@ -106,13 +101,18 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Nudge the page to reconnect when returning to foreground.
     if (state == AppLifecycleState.resumed && _controller != null) {
+      // Re-apply last URL if we were using the /stream shell
       _controller!.evaluateJavascript(
           source: 'if(window.setMjpegUrl && window._lastUrl){ window.setMjpegUrl(window._lastUrl); }'
       );
     }
     super.didChangeAppLifecycleState(state);
+  }
+
+  bool _looksLikeStreamUrl(String u) {
+    final lower = u.toLowerCase();
+    return lower.contains('/stream'); // covers /stream and /stream?...
   }
 
   @override
@@ -121,13 +121,46 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
       buildWhen: (prev, next) =>
       prev.mjpegUrl != next.mjpegUrl || prev.isVideoEnabled != next.isVideoEnabled,
       builder: (context, state) {
-        if (!(state.isVideoEnabled==true) || (state.mjpegUrl == null || state.mjpegUrl!.isEmpty)) {
+        final mjpegUrl = state.mjpegUrl;
+
+        if (state.isVideoEnabled != true || mjpegUrl == null || mjpegUrl.isEmpty) {
           return const Center(child: Text('No video stream'));
         }
 
-        final mjpegUrl = state.mjpegUrl!;
+        final isStreamOnly = _looksLikeStreamUrl(mjpegUrl);
+
+        if (!isStreamOnly) {
+          // Load the ESP32-CAM CameraWebServer HTML as the MAIN PAGE to avoid ORB.
+          return SafeArea(
+            child: InAppWebView(
+              initialSettings: InAppWebViewSettings(
+                javaScriptEnabled: true,
+                domStorageEnabled: true,
+                mediaPlaybackRequiresUserGesture: false,
+                allowsInlineMediaPlayback: true,
+                supportZoom: true,
+                transparentBackground: true,
+                clearCache: false,
+                disableContextMenu: true,
+                mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
+                useWideViewPort: true,
+                javaScriptCanOpenWindowsAutomatically: false,
+                // Optional, but helps with modern JS in that page:
+                userAgent:
+                'Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Mobile Safari/537.36',
+              ),
+              initialUrlRequest: URLRequest(url: WebUri(mjpegUrl)),
+              onWebViewCreated: (c) => _controller = c,
+              onLoadError: (c, url, code, msg) {
+                // The ESP might reboot or Wi-Fi could flap; the page has its own retry logic.
+              },
+              onReceivedError: (c, req, err) {},
+            ),
+          );
+        }
+
+        // Stream-only mode via <img src=".../stream">
         return InAppWebView(
-          // Keep settings simple & robust for MJPEG
           initialSettings: InAppWebViewSettings(
             javaScriptEnabled: true,
             mediaPlaybackRequiresUserGesture: false,
@@ -136,27 +169,21 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
             transparentBackground: true,
             clearCache: false,
             disableContextMenu: true,
-            // Allow http content inside https page (Android)
             mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
           ),
           initialData: InAppWebViewInitialData(data: _htmlTemplate),
           onWebViewCreated: (controller) async {
             _controller = controller;
             await controller.evaluateJavascript(
-                source: "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
+                source:
+                "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
             );
           },
           onLoadStop: (controller, _) async {
-            // Re-apply after reloads
             await controller.evaluateJavascript(
-                source: "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
+                source:
+                "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
             );
-          },
-          onReceivedHttpError: (controller, request, errorResponse) async {
-            // Optional: Kinda noisy; leave empty or add logging if needed.
-          },
-          onReceivedError: (controller, request, error) async {
-            // Optional: Also noisy on flaky Wi-Fi; HTML handles reconnection.
           },
         );
       },
@@ -164,7 +191,6 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
   }
 
   String _jsString(String value) {
-    // Escape backslashes and single quotes for safe JS string literal
     final escaped = value.replaceAll(r'\', r'\\').replaceAll("'", r"\'");
     return "'$escaped'";
   }

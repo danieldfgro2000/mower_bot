@@ -17,7 +17,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final StopVideoStreamUseCase _stopVideoStreamUseCase;
   final MowerConnectionRepository repo;
   StreamSubscription? _videoWsConnectedSub;
-  static const String _kMjpegUrl = 'http://172.20.10.12:8082/';
+  static const String _kMjpegUrl = 'http://10.127.98.175';
 
   ControlBloc(
     this.sendCommand,
