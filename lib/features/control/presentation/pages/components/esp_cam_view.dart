@@ -103,27 +103,17 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
     super.didChangeAppLifecycleState(state);
   }
 
-  bool _looksLikeStreamUrl(String u) {
-    final lower = u.toLowerCase();
-    return lower.contains('/stream'); // covers /stream and /stream?...
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ControlBloc, ControlState>(
       buildWhen: (prev, next) =>
-      prev.videoStreamUrl != next.videoStreamUrl || prev.isVideoEnabled != next.isVideoEnabled,
+      prev.videoStreamUrl != next.videoStreamUrl,
       builder: (context, state) {
         final videoStreamUrl = state.videoStreamUrl;
 
-        if (state.isVideoEnabled != true || videoStreamUrl == null || videoStreamUrl.isEmpty) {
+        if (videoStreamUrl == null || videoStreamUrl.isEmpty) {
           return const Center(child: Text('No video stream'));
         }
-
-        final isStreamOnly = _looksLikeStreamUrl(videoStreamUrl);
-
-        if (!isStreamOnly) {
-          // Load the ESP32-CAM CameraWebServer HTML as the MAIN PAGE to avoid ORB.
           return SafeArea(
             child: InAppWebView(
               initialSettings: InAppWebViewSettings(
@@ -138,53 +128,14 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
                 mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
                 useWideViewPort: true,
                 javaScriptCanOpenWindowsAutomatically: false,
-                // Optional, but helps with modern JS in that page:
-                userAgent:
-                'Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Mobile Safari/537.36',
               ),
               initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
               onWebViewCreated: (c) => _controller = c,
-              onLoadError: (c, url, code, msg) {
-                // The ESP might reboot or Wi-Fi could flap; the page has its own retry logic.
-              },
               onReceivedError: (c, req, err) {},
             ),
           );
         }
 
-        // Stream-only mode via <img src=".../stream">
-        return InAppWebView(
-          initialSettings: InAppWebViewSettings(
-            javaScriptEnabled: true,
-            mediaPlaybackRequiresUserGesture: false,
-            allowsInlineMediaPlayback: true,
-            supportZoom: false,
-            transparentBackground: true,
-            clearCache: false,
-            disableContextMenu: true,
-            mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
-          ),
-          initialData: InAppWebViewInitialData(data: _htmlTemplate),
-          onWebViewCreated: (controller) async {
-            _controller = controller;
-            await controller.evaluateJavascript(
-                source:
-                "window._lastUrl = ${_jsString(videoStreamUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
-            );
-          },
-          onLoadStop: (controller, _) async {
-            await controller.evaluateJavascript(
-                source:
-                "window._lastUrl = ${_jsString(videoStreamUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
-            );
-          },
-        );
-      },
     );
-  }
-
-  String _jsString(String value) {
-    final escaped = value.replaceAll(r'\', r'\\').replaceAll("'", r"\'");
-    return "'$escaped'";
   }
 }

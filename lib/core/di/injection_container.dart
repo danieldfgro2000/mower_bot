@@ -8,6 +8,8 @@ import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/control/data/repositories/control_repository_impl.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
+import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
+import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
@@ -48,6 +50,8 @@ Future<void> initDependencies() async {
     controlWebSocketClient: sl<IWebSocketClient>(instanceName: 'ctrl'),
     binaryWebSocketClient: sl<IWebSocketClient>(instanceName: 'binary'),
   ));
+  sl.registerLazySingleton<GetVideoStreamUrlUseCase>(() => GetVideoStreamUrlUseCase(sl()));
+  sl.registerLazySingleton<SendDriveCommandUseCase>(() => SendDriveCommandUseCase(sl()));
 
   /// Telemetry
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));
