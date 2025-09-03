@@ -44,11 +44,11 @@ class TelemetryEntity {
 
 class TelemetryMapper {
   static TelemetryEntity fromData(Map<String, dynamic> data) {
-    double _toD(dynamic v) => (v is num) ? v.toDouble() : 0.0;
+    double toD(dynamic v) => (v is num) ? v.toDouble() : 0.0;
     return TelemetryEntity(
-      wheelAngle: _toD(data['wheelAngle']),
-      distanceTraveled: _toD(data['distanceTraveled']),
-      speed: _toD(data['speed']),
+      wheelAngle: toD(data['wheelAngle']),
+      distanceTraveled: toD(data['distanceTraveled']),
+      speed: toD(data['speed']),
       actuatorDrive: data['actuatorDrive'] ?? false,
       actuatorStart: data['actuatorStart'] ?? false,
     );

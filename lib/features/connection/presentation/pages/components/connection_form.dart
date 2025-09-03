@@ -15,7 +15,6 @@ class ConnectionForm extends StatefulWidget {
 }
 
 class _ConnectionFormState extends State<ConnectionForm> {
-  final _formKey = GlobalKey<FormState>();
   late final TextEditingController ipController;
   late final TextEditingController portController;
 

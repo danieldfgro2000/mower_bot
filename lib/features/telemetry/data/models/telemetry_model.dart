@@ -19,6 +19,7 @@ class TelemetryModel extends TelemetryEntity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'wheelAngle': wheelAngle,

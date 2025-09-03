@@ -1,5 +1,4 @@
 
-import 'dart:typed_data';
 
 abstract class MowerConnectionRepository {
   Stream<Map<String, dynamic>>? jsonStream();

@@ -18,7 +18,6 @@ class MowerConnectionBloc
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
   StreamSubscription? _errSub;
-  StreamSubscription? _ctrlWsConnectedSub;
 
   MowerConnectionBloc(
     this.connectToCtrlWsUseCase,
@@ -64,9 +63,6 @@ class MowerConnectionBloc
   }
 
   void _onCheckConnection(event, emit) async {
-    _ctrlWsConnectedSub = repo.ctrlWsConnected().listen((isConnected) {
-      add(ConnectionChanged(isCtrlWsConnected: isConnected));
-    });
   }
 
   void _onConnectionChanged(event, emit) async {

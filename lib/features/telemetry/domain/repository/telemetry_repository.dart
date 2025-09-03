@@ -1,4 +1,3 @@
-import 'package:mower_bot/features/connection/domain/entity/mower_connection_entity.dart';
 import 'package:mower_bot/features/connection/domain/entity/mower_status_entity.dart';
 import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
 

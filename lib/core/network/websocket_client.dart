@@ -44,7 +44,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
     if (uri != null) _endpoint = uri;
     final ep = _endpoint;
     if (ep == null) {
-      throw StateError('${this.runtimeType}: endpoint is not set');
+      throw StateError('$runtimeType: endpoint is not set');
     }
 
     if (isConnected) return;

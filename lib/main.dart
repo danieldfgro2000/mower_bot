@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 import 'package:mower_bot/mower_bloc_observer.dart';
 

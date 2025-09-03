@@ -108,7 +108,7 @@ class WebSocketAdapter {
             }
           } catch (e, st) {
             if (kDebugMode) {
-              print("Error decoding message: $e");
+              print("Error decoding message: $e, stacktrace: $st");
             }
           }
         },
