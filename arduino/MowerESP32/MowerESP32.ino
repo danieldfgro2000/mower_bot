@@ -1,3 +1,4 @@
+#include "esp_camera.h"
 #include <mower_esp.h>
 
 #include "secrets.h"
@@ -7,37 +8,33 @@ using namespace Mower;
 
 WifiAdapter   wifiAdapter;
 WsServer      wsServer;
-MjpegStream   mjpegStream;
-MjpegServer   mjpegServer(mjpegStream, 8082);
 CameraSetup   cameraSetup;
 MegaSerial    megaSerial;
 ESPMegaRouter espMegaRouter;
 Heartbeat     heartbeat;
 
+void startCameraServer();
+
 void setup() {
     Serial.begin(115200);
+    Serial.setDebugOutput(true);
     delay(200);
+
     log_err(esp_reset_reason(), "BOOT");
 
     wifiAdapter.onConnected([](){
-        wsServer.begin(81);
-
-        if (cameraSetup.begin() != ESP_OK) {
-            Serial.println("[VIDEO] Camera init failed - video disabled");
-        } else {
-            mjpegStream.setTargetFps(10);     // start conservative (10fps)
-            mjpegServer.setSingleClient(true);
-            mjpegServer.begin();
-        }
+        wsServer.begin(85);
+        (cameraSetup.begin() == ESP_OK)
+            ? (void)startCameraServer()
+            : (void)Serial.println("[VIDEO] Camera init failed - video disabled");
     });
 
     wifiAdapter.onDisconnected([](int reason){
         wsServer.stop();
-        mjpegServer.end(); // ✅ ensure stream task stops on disconnect
     });
 
-//    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
-    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
+    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
+//    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
     delay(100);
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
