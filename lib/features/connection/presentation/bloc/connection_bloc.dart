@@ -19,7 +19,6 @@ class MowerConnectionBloc
   final MowerConnectionRepository repo;
   StreamSubscription? _errSub;
   StreamSubscription? _ctrlWsConnectedSub;
-  StreamSubscription? _videoWsConnectedSub;
 
   MowerConnectionBloc(
     this.connectToCtrlWsUseCase,
@@ -67,9 +66,6 @@ class MowerConnectionBloc
   void _onCheckConnection(event, emit) async {
     _ctrlWsConnectedSub = repo.ctrlWsConnected().listen((isConnected) {
       add(ConnectionChanged(isCtrlWsConnected: isConnected));
-    });
-    _videoWsConnectedSub = repo.videoWsConnected().listen((isConnected) {
-      add(ConnectionChanged(isVideoWsConnected: isConnected));
     });
   }
 

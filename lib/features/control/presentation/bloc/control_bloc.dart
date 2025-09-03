@@ -2,85 +2,42 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
-import 'package:mower_bot/features/control/domain/usecases/observer_video_frames_use_case.dart';
-import 'package:mower_bot/features/control/domain/usecases/start_video_stream_use_case.dart';
-import 'package:mower_bot/features/control/domain/usecases/stop_video_stream_use_case.dart';
+import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
+import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 
 import 'control_state.dart';
 
 class ControlBloc extends Bloc<ControlEvent, ControlState> {
-  final Function(Map<String, dynamic>) sendCommand;
-  final ObserverVideoFramesUseCase _observerVideoFramesUseCase;
-  final StartVideoStreamUseCase _startVideoStreamUseCase;
-  final StopVideoStreamUseCase _stopVideoStreamUseCase;
-  final MowerConnectionRepository repo;
-  StreamSubscription? _videoWsConnectedSub;
-  static const String _kMjpegUrl = 'http://172.20.10.12';
+  final SendDriveCommandUseCase sendCommand;
+  final GetVideoStreamUrlUseCase getVideoStreamUrl;
 
-  ControlBloc(
-    this.sendCommand,
-    this._observerVideoFramesUseCase,
-    this._startVideoStreamUseCase,
-    this._stopVideoStreamUseCase,
-    this.repo,
-  ) : super(ControlState().initial()) {
-    on<CheckConnectionStatus>(_onCheckConnectionStatus);
-    on<ConnectionChanged>(_onConnectionChanged);
-    on<StartVideoStream>(_onStartVideoStream);
-    on<StopVideoStream>(_onStopVideoStream);
-    on<DriveCommand>((event, emit) {
-      sendCommand({
-        "cmd": "drive",
-        "steering": event.steering,
-        "isMoving": event.isMoving,
-      });
-    });
-    on<StartRecord>((event, emit) => sendCommand({"cmd": "start_record"}));
-    on<StopRecord>(
-      (event, emit) =>
-          sendCommand({"cmd": "stop_record", "fileName": event.fileName}),
-    );
-    on<EmergencyStop>((event, emit) => sendCommand({"cmd": "emergency_stop"}));
+  ControlBloc(this.sendCommand, this.getVideoStreamUrl)
+    : super(ControlState().initial()) {
+    on<GetVideoStreamUrl>(_onGetVideoStreamUrl);
+    on<DriveCommand>(_onDriveCommand);
+    on<StartRecord>(_onStartRecord);
+    on<StopRecord>(_onStopRecord);
+    on<EmergencyStop>(_onEmergencyStop);
   }
 
-  void _onCheckConnectionStatus(event, emit) {
-    _videoWsConnectedSub = repo.videoWsConnected().listen((isConnected) {
-      add(ConnectionChanged(isVideoWsConnected: isConnected));
+  FutureOr<void> _onGetVideoStreamUrl(event, emit) =>
+      emit(state.copyWith(videoStreamUrl: getVideoStreamUrl()));
+
+  FutureOr<void> _onDriveCommand(event, emit) {
+    sendCommand({
+      "cmd": "drive",
+      "steering": event.steering,
+      "isMoving": event.isMoving,
     });
   }
 
-  void _onConnectionChanged(event, emit) {
-    emit(state.copyWith(isVideoWsConnected: event.isVideoWsConnected));
-    if(event.isVideoWsConnected == true) {
-      add(StartVideoStream());
-    } else if(event.isVideoWsConnected == false) {
-      add(StopVideoStream());
-    }
-  }
+  FutureOr<void> _onStartRecord(event, emit) =>
+      sendCommand({"cmd": "start_record"});
 
-  Future<void> _onStartVideoStream(event, emit) async {
-    // await _startVideoStreamUseCase(25);
-    // final frames  = _observerVideoFramesUseCase()
-    //     .where((bytes) => bytes.length > 2 && bytes[0] == 0xff && bytes[1] == 0xd8);
-    // frames.listen((bytes) {
-    // });
-    // emit(state.copyWith(videoFrames: frames));
+  FutureOr<void> _onStopRecord(event, emit) =>
+      sendCommand({"cmd": "stop_record", "fileName": event.fileName});
 
-    emit(state.copyWith(
-      isVideoEnabled: true,
-      mjpegUrl: _kMjpegUrl,
-    ));
-  }
-
-  Future<void> _onStopVideoStream(event, emit) async {
-    // await _stopVideoStreamUseCase();
-    // emit(ControlState().initial());
-
-    emit(state.copyWith(
-      isVideoEnabled: false,
-      mjpegUrl: null,
-    ));
-  }
+  FutureOr<void> _onEmergencyStop(event, emit) =>
+      sendCommand({"cmd": "emergency_stop"});
 }

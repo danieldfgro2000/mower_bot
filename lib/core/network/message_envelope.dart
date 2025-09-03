@@ -1,4 +1,5 @@
 enum MessageTopic {
+  drive,
   status,
   telemetry,
   controlAck,
@@ -11,6 +12,8 @@ enum MessageTopic {
 
 MessageTopic topicFromString(String topic) {
   switch (topic) {
+    case 'drive':
+      return MessageTopic.drive;
     case 'status':
       return MessageTopic.status;
     case 'telemetry':

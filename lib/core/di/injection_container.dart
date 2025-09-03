@@ -8,9 +8,6 @@ import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/control/data/repositories/control_repository_impl.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
-import 'package:mower_bot/features/control/domain/usecases/observer_video_frames_use_case.dart';
-import 'package:mower_bot/features/control/domain/usecases/start_video_stream_use_case.dart';
-import 'package:mower_bot/features/control/domain/usecases/stop_video_stream_use_case.dart';
 import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
@@ -28,10 +25,10 @@ Future<void> initDependencies() async {
   /// Core
   sl.registerLazySingleton<WebSocketConfig>(() => WebSocketConfig());
   sl.registerLazySingleton<ControlWebSocketClient>(() => ControlWebSocketClient());
-  sl.registerLazySingleton<VideoWebSocketClient>(() => VideoWebSocketClient());
+  sl.registerLazySingleton<BinaryWebSocketClient>(() => BinaryWebSocketClient());
   sl.registerLazySingleton<IWebSocketClient>(() => sl<ControlWebSocketClient>());
   sl.registerLazySingleton<IWebSocketClient>(() => sl<ControlWebSocketClient>(), instanceName: 'ctrl');
-  sl.registerLazySingleton<IWebSocketClient>(() => sl<VideoWebSocketClient>(), instanceName: 'video');
+  sl.registerLazySingleton<IWebSocketClient>(() => sl<BinaryWebSocketClient>(), instanceName: 'binary');
 
   /// Connection
   sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
@@ -49,11 +46,8 @@ Future<void> initDependencies() async {
   /// Control
   sl.registerLazySingleton<ControlRepository>(() => ControlRepositoryImpl(
     controlWebSocketClient: sl<IWebSocketClient>(instanceName: 'ctrl'),
-    videoWebSocketClient: sl<IWebSocketClient>(instanceName: 'video'),
+    binaryWebSocketClient: sl<IWebSocketClient>(instanceName: 'binary'),
   ));
-  sl.registerLazySingleton<ObserverVideoFramesUseCase>(() => ObserverVideoFramesUseCase(sl()));
-  sl.registerLazySingleton<StartVideoStreamUseCase>(() => StartVideoStreamUseCase(sl()));
-  sl.registerLazySingleton<StopVideoStreamUseCase>(() => StopVideoStreamUseCase(sl()));
 
   /// Telemetry
   sl.registerLazySingleton<TelemetryRepository>(() => TelemetryRepositoryImpl(sl()));

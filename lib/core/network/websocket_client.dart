@@ -18,10 +18,7 @@ abstract class IWebSocketClient {
 
   void dispose();
 
-  Stream<Uint8List>? get binary;
-
   Stream<Map<String, dynamic>>? get messages;
-
   bool get isConnected;
 }
 
@@ -35,7 +32,6 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   Uri? _endpoint;
 
   final StreamController<JsonMap> _jsonCtrl = StreamController<JsonMap>.broadcast();
-  final StreamController<Uint8List> _binaryCtrl = StreamController<Uint8List>.broadcast();
 
   @override
   Uri? get endpoint => _endpoint;
@@ -56,15 +52,11 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
     // Bridge adapter streams to client-specific controllers
     // Subscribers can attach before or after connect.
     _websocketAdapter.json.listen(_jsonCtrl.add, onError: _jsonCtrl.addError);
-    _websocketAdapter.binary.listen(_binaryCtrl.add, onError: _binaryCtrl.addError);
 
     await _websocketAdapter.openWebsocketChannel(
       uri: ep,
       mode: payloadMode,
-      onError: (e, [st]) {
-        _jsonCtrl.addError(e, st);
-        _binaryCtrl.addError(e, st);
-      },
+      onError: (e, [st]) { _jsonCtrl.addError(e, st); },
       onConnectionChanged: (open) {
         if (kDebugMode) {
           print("WS${payloadMode.name}: connection is ${open ? "open" : "closed"}");
@@ -80,7 +72,6 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   @override
   void dispose() {
     if (!_jsonCtrl.isClosed) _jsonCtrl.close();
-    if (!_binaryCtrl.isClosed) _binaryCtrl.close();
     _websocketAdapter.dispose();
   }
 
@@ -101,27 +92,16 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   @override
   Stream<JsonMap>? get messages => _jsonCtrl.stream;
 
-  @override
-  Stream<Uint8List> get binary => _binaryCtrl.stream;
 }
 
 class ControlWebSocketClient extends BaseWebSocketClient {
   ControlWebSocketClient({WebSocketAdapter? adapter})
       : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonOnly);
-
 }
 
-class VideoWebSocketClient extends BaseWebSocketClient {
-  VideoWebSocketClient({WebSocketAdapter? adapter})
-      : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.binaryOnly);
+class BinaryWebSocketClient extends BaseWebSocketClient {
+  BinaryWebSocketClient({WebSocketAdapter? adapter})
+      : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonAndBinary);
 
-  @override
-  void send(JsonMap message) {
-    if (kDebugMode) {
-      print("ControlWebSocketClient does not support sending JSON messages.");
-    }
-  }
-
-  @override
-  Stream<JsonMap>? get messages => null;
+  Stream<Uint8List>? get binary => _websocketAdapter.binary;
 }

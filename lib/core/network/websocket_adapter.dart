@@ -271,41 +271,6 @@ class WebSocketAdapter {
   }
 }
 
-class VidHeader {
-  static const size = 24; // 4+4+8+4+2+2
-  final int magic, seq, payloadLen, fpsTarget, flags;
-  final int captureUs;
-
-  VidHeader({
-    required this.magic,
-    required this.seq,
-    required this.captureUs,
-    required this.payloadLen,
-    required this.fpsTarget,
-    required this.flags,
-  });
-
-  static VidHeader parse(Uint8List data) {
-    final bd = ByteData.sublistView(data, 0, size);
-    final magic = bd.getUint32(0, Endian.little);
-    final seq = bd.getUint32(4, Endian.little);
-    final capLo = bd.getUint32(8, Endian.little);
-    final capHi = bd.getUint32(12, Endian.little);
-    final captureUs = (capHi << 32) | capLo;
-    final len = bd.getUint32(16, Endian.little);
-    final fps = bd.getUint16(20, Endian.little);
-    final flags = bd.getUint16(22, Endian.little);
-    return VidHeader(
-      magic: magic,
-      seq: seq,
-      captureUs: captureUs,
-      payloadLen: len,
-      fpsTarget: fps,
-      flags: flags,
-    );
-  }
-}
-
 class RxStats {
   int rxThisSec = 0, rxFps = 0;
   int lastSecMs = 0;
@@ -334,24 +299,6 @@ Uint8List? handleBinary(Uint8List msg) {
     }
     stats.lastArrivalMs = now;
 
-    if(msg.length < VidHeader.size) {
-      debugPrint('[VIDEO] Message too short: ${msg.length} bytes, expected at least ${VidHeader.size}, got ${msg.length - VidHeader.size} bytes of payload');
-      return null;
-    }
-
-    // parse header
-    if (msg.length >= VidHeader.size) {
-      final hdr = VidHeader.parse(msg);
-      if (hdr.magic == 0x30444956) {
-        if (stats.lastSeq != null && hdr.seq != stats.lastSeq! + 1) {
-          debugPrint('[VIDEO] DROPPED: prev=${stats.lastSeq} curr=${hdr.seq}');
-        }
-        stats.lastSeq = hdr.seq;
-        final jpeg = msg.sublist(
-            VidHeader.size, VidHeader.size + hdr.payloadLen);
-        return jpeg;
-      }
-    }
   } catch (e, st) {
     debugPrint('[VIDEO] Error handling binary message: $e, stacktrace: $st');
     return null;

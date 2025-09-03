@@ -89,14 +89,7 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _bloc = context.read<ControlBloc>();
-    _bloc.add(StartVideoStream());
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _bloc.add(StopVideoStream());
-    super.dispose();
+    _bloc.add(GetVideoStreamUrl());
   }
 
   @override
@@ -119,15 +112,15 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
   Widget build(BuildContext context) {
     return BlocBuilder<ControlBloc, ControlState>(
       buildWhen: (prev, next) =>
-      prev.mjpegUrl != next.mjpegUrl || prev.isVideoEnabled != next.isVideoEnabled,
+      prev.videoStreamUrl != next.videoStreamUrl || prev.isVideoEnabled != next.isVideoEnabled,
       builder: (context, state) {
-        final mjpegUrl = state.mjpegUrl;
+        final videoStreamUrl = state.videoStreamUrl;
 
-        if (state.isVideoEnabled != true || mjpegUrl == null || mjpegUrl.isEmpty) {
+        if (state.isVideoEnabled != true || videoStreamUrl == null || videoStreamUrl.isEmpty) {
           return const Center(child: Text('No video stream'));
         }
 
-        final isStreamOnly = _looksLikeStreamUrl(mjpegUrl);
+        final isStreamOnly = _looksLikeStreamUrl(videoStreamUrl);
 
         if (!isStreamOnly) {
           // Load the ESP32-CAM CameraWebServer HTML as the MAIN PAGE to avoid ORB.
@@ -149,7 +142,7 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
                 userAgent:
                 'Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Mobile Safari/537.36',
               ),
-              initialUrlRequest: URLRequest(url: WebUri(mjpegUrl)),
+              initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
               onWebViewCreated: (c) => _controller = c,
               onLoadError: (c, url, code, msg) {
                 // The ESP might reboot or Wi-Fi could flap; the page has its own retry logic.
@@ -176,13 +169,13 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
             _controller = controller;
             await controller.evaluateJavascript(
                 source:
-                "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
+                "window._lastUrl = ${_jsString(videoStreamUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
             );
           },
           onLoadStop: (controller, _) async {
             await controller.evaluateJavascript(
                 source:
-                "window._lastUrl = ${_jsString(mjpegUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
+                "window._lastUrl = ${_jsString(videoStreamUrl)}; if (window.setMjpegUrl) window.setMjpegUrl(window._lastUrl);"
             );
           },
         );

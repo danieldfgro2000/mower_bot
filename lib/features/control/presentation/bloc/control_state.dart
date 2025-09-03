@@ -5,37 +5,31 @@ import 'package:equatable/equatable.dart';
 class ControlState extends Equatable {
   final bool? isConnected;
   final bool? isRecording;
-  final bool? isStreaming;
+  final bool? isVideoEnabled;
   final bool? isVideoWsConnected;
+  final String? videoStreamUrl;
   final String? recordedFilePath;
   final String? errorMessage;
-  final Stream<Uint8List>? videoFrames;
-  final String? mjpegUrl;
-  final bool? isVideoEnabled;
 
   const ControlState({
     this.isConnected,
     this.isRecording,
-    this.isStreaming,
+    this.isVideoEnabled,
     this.isVideoWsConnected,
+    this.videoStreamUrl,
     this.recordedFilePath,
     this.errorMessage,
-    this.videoFrames,
-    this.mjpegUrl,
-    this.isVideoEnabled,
   });
 
   ControlState initial() {
     return const ControlState(
       isConnected: false,
       isRecording: false,
-      isStreaming: false,
+      isVideoEnabled: false,
       isVideoWsConnected: false,
+      videoStreamUrl: null,
       recordedFilePath: null,
       errorMessage: null,
-      videoFrames: null,
-        mjpegUrl: 'http://172.20.10.12:8080/?action=stream',
-      isVideoEnabled: false,
     );
   }
 
@@ -43,36 +37,30 @@ class ControlState extends Equatable {
   List<Object?> get props => [
     isConnected,
     isRecording,
-    isStreaming,
+    isVideoEnabled,
     isVideoWsConnected,
+    videoStreamUrl,
     recordedFilePath,
     errorMessage,
-    videoFrames,
-    mjpegUrl,
-    isVideoEnabled,
   ];
 
   ControlState copyWith({
     bool? isConnected,
     bool? isRecording,
-    bool? isStreaming,
+    bool? isVideoEnabled,
     bool? isVideoWsConnected,
+    String? videoStreamUrl,
     String? recordedFilePath,
     String? errorMessage,
-    Stream<Uint8List>? videoFrames,
-    String? mjpegUrl,
-    bool? isVideoEnabled,
   }) {
     return ControlState(
       isConnected: isConnected ?? this.isConnected,
       isRecording: isRecording ?? this.isRecording,
-      isStreaming: isStreaming ?? this.isStreaming,
+      isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
       isVideoWsConnected: isVideoWsConnected ?? this.isVideoWsConnected,
+      videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
       recordedFilePath: recordedFilePath ?? this.recordedFilePath,
       errorMessage: errorMessage ?? this.errorMessage,
-      videoFrames: videoFrames ?? this.videoFrames,
-      mjpegUrl: mjpegUrl ?? this.mjpegUrl,
-      isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
     );
   }
 }

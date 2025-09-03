@@ -1,9 +1,6 @@
-import 'dart:typed_data';
 
 abstract class ControlRepository {
-  Future<void> startVideoStream(int fps);
-  Future<void> stopVideoStream();
-  Stream<Uint8List> get videFrames;
+  String? get videoStreamUrl;
   bool get isCtrlWsConnected;
-  bool get isVideoWsConnected;
+  Future<void> sendDriveCommand(Map<String, dynamic> command);
 }
