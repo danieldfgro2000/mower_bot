@@ -10,6 +10,7 @@ import 'control_state.dart';
 class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final SendDriveCommandUseCase sendCommand;
   final GetVideoStreamUrlUseCase getVideoStreamUrl;
+  DateTime? _lastDriveCommandTime;
 
   ControlBloc(this.sendCommand, this.getVideoStreamUrl)
     : super(ControlState().initial()) {
@@ -24,6 +25,8 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       emit(state.copyWith(videoStreamUrl: getVideoStreamUrl()));
 
   FutureOr<void> _onDriveCommand(event, emit) {
+    final now = DateTime.now();
+    if (now.difference(_lastDriveCommandTime ?? DateTime(0)).inMilliseconds < 100) return null;
     sendCommand({
       "cmd": "drive",
       "steering": event.steering,

@@ -2,15 +2,25 @@
 #include "steering.h"
 #include "wheel_telemetry.h"
 #include "actuators.h"
-#include "path_manager_global.h"
 #include <ArduinoJson.h>
 #include <Arduino.h>
 
 static unsigned long lastSend = 0;
 
-void messagingInit() {
-  Serial.begin(115200); // For debugging
-  Serial1.begin(115200); // ESP32 link
+static const char* commandTypeName(CommandType c) {
+    switch (c) {
+        case CMD_STEER: return "CMD_STEER";
+        case CMD_START: return "CMD_START";
+        case CMD_DRIVE: return "CMD_DRIVE";
+        default: return "CMD_UNKNOWN";
+    }
+}
+
+CommandType parseCommandKey(const JsonDocument& doc) {
+    if (doc["mega"]["command"] == "steer") return CMD_STEER;
+    if (doc["mega"]["command"] == "start") return CMD_START;
+    if (doc["mega"]["command"] == "drive") return CMD_DRIVE;
+    return CMD_UNKNOWN;
 }
 
 void messagingHandleInput() {
@@ -27,88 +37,34 @@ void messagingHandleInput() {
     return;
   }
 
-  CommandType cmd = parseComandKey(doc);
+  CommandType cmd = parseCommandKey(doc);
 
   switch (cmd) {
       case CMD_STEER:
-          steeringSetAngle(doc["steer"].as<float>());
+          steeringSetAngle(doc["mega"]["steer"].as<float>());
           break;
       case CMD_START:
-          actuatorStart(doc["start"].as<bool>());
+          actuatorStart(doc["mega"]["start"].as<bool>());
           break;
       case CMD_DRIVE:
-          actuatorDrive(doc["drive"].as<bool>());
-          break;
-      case CMD_PATH_RECORDING_START:
-            if(doc.containsKey("path_name")) {
-                const char *pathName = doc["path_name"].as<const char *>();
-                pathManager.startRecording(pathName);
-            } else {
-                Serial.println("Error: 'path_name' key is missing in path_recording_start command.");
-            }
-          pathManager.startRecording();
-          break;
-      case CMD_PATH_RECORDING_STOP:
-          pathManager.stopRecording();
-          break;
-      case CMD_PATH_LIST:
-          pathManager.listPaths();
-          break;
-      case CMD_PATH_PLAY:
-            if(doc.containsKey("path_name")) {
-                const char *pathName = doc["path_name"].as<const char *>();
-                pathManager.playPath(pathName);
-            } else {
-                Serial.println("Error: 'path_name' key is missing in path_play command.");
-            }
-      case CMD_PATH_DELETE:
-            if(doc.containsKey("path_name")) {
-                const char *pathName = doc["path_name"].as<const char *>();
-                pathManager.deletePath(pathName);
-            } else {
-                Serial.println("Error: 'path_name' key is missing in path_delete command.");
-            }
+          actuatorDrive(doc["mega"]["drive"].as<bool>());
           break;
       default:
-            Serial.println("Unknown command received. %s", cmd);
+            Serial.print("Unknown command received\n");
             break;
   }
 }
-
-enum CommandType {
-    CMD_UNKNOWN,
-    CMD_STEER,
-    CMD_START,
-    CMD_DRIVE,
-    CMD_PATH_RECORDING_START,
-    CMD_PATH_RECORDING_STOP,
-    CMD_PATH_LIST,
-    CMD_PATH_PLAY,
-    CMD_PATH_DELETE
-};
-
-CommandType parseComandKey(const JsonDocument& doc) {
-
-    if(command == "steer") return CMD_STEER;
-    if(command == "start") return CMD_START;
-    if(command == "drive") return CMD_DRIVE;
-    if(command == "path_recording_start") return CMD_PATH_RECORDING_START;
-    if(command == "path_recording_stop") return CMD_PATH_RECORDING_STOP;
-    if(command == "path_list") return CMD_PATH_LIST;
-    if(command == "path_play") return CMD_PATH_PLAY;
-    if(command == "path_delete") return CMD_PATH_DELETE;
-  return CMD_UNKNOWN;
 
 void messagingSendTelemetry() {
   if(millis() - lastSend < 200) return;
   lastSend = millis();
 
   StaticJsonDocument<256> doc;
-  doc["angle"] = steeringGetCommandedAngle();
-  doc["encoder"] = steeringGetActualAngle();
-  doc["distance"] = wheelGetDistance();
-  doc["speed"] = wheelGetSpeed();
-  doc["homed"] = steeringIsHomed();
+  doc["mega"]["angle"] = steeringGetCommandedAngle();
+  doc["mega"]["encoder"] = steeringGetActualAngle();
+  doc["mega"]["distance"] = wheelGetDistance();
+  doc["mega"]["speed"] = wheelGetSpeed();
+  doc["mega"]["homed"] = steeringIsHomed();
 
   String json;
   serializeJson(doc, json);

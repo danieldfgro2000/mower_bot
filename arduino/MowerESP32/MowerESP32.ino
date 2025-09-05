@@ -38,14 +38,13 @@ void setup() {
     delay(100);
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
-        Serial.printf("[WS] Msg from client %u: ", clientId);
-        if (doc["topic"] == "mega_cmd") {
-            String line; serializeJson(doc, line);
-            megaSerial.writeLine(line);
-        }
-        if (doc["topic"] == "camera") {
-            Serial.println("[WS] Camera command");
-        }
+        Serial.printf("[WS] Msg from Flutter data:");
+        String jsonStr;
+        serializeJson(doc, jsonStr);
+        Serial.println(jsonStr);
+
+        String line; serializeJson(doc, line);
+        megaSerial.writeLine(line);
     });
 
     megaSerial.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
