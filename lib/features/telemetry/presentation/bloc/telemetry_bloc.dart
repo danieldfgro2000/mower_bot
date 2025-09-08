@@ -41,11 +41,11 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     _observeTelemetryStatusSubscription = _observeTelemetryStatusUseCase().listen(
       (status) => add(
         MegaTelemetryStatusUpdated(
-          received: status.telemetry.received,
-          ageMs: (status.telemetry.ageMs  ?? -1) > 0
-              ? (status.telemetry.ageMs! / 60000).toInt()
+          received: status.telemetryAge.received,
+          ageMs: (status.telemetryAge.ageMs  ?? -1) > 0
+              ? (status.telemetryAge.ageMs! / 60000).toInt()
               : -1,
-          ok: status.telemetry.ok,
+          ok: status.telemetryAge.ok,
         ),
       ),
       onError: (e) => TelemetryError(e.toString()),

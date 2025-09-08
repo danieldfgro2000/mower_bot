@@ -1,3 +1,5 @@
+import 'package:mower_bot/features/connection/domain/model/telemetry_age_model.dart';
+
 class TelemetryAgeDTO {
   final bool received;
   final int? ageMs;
@@ -29,4 +31,12 @@ class TelemetryAgeDTO {
   String toString() {
     return 'TelemetryAgeDTO${toJson()}';
   }
+}
+
+extension TelemetryAgeDTOx on TelemetryAgeDTO {
+   TelemetryAgeModel toDomain() => TelemetryAgeModel(
+        received: received,
+        ageMs: ageMs,
+        ok: ok,
+   );
 }

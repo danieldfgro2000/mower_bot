@@ -8,13 +8,13 @@ class MowerStatusDTO {
   final int uptimeMs;
   final WiFiInfoDTO wifi;
   final WsInfoDTO ws;
-  final TelemetryAgeDTO telemetry;
+  final TelemetryAgeDTO telemetryAge;
 
   const MowerStatusDTO({
     required this.uptimeMs,
     required this.wifi,
     required this.ws,
-    required this.telemetry,
+    required this.telemetryAge,
   });
 
   factory MowerStatusDTO.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class MowerStatusDTO {
       uptimeMs: json['uptimeMs'] ?? 0,
       wifi: WiFiInfoDTO.fromJson(json['wifi'] ?? const {}),
       ws: WsInfoDTO.fromJson(json['ws'] ?? const {}),
-      telemetry: TelemetryAgeDTO.fromJson(json['telemetry'] ?? const {}),
+      telemetryAge: TelemetryAgeDTO.fromJson(json['telemetry'] ?? const {}),
     );
   }
 
@@ -31,9 +31,19 @@ class MowerStatusDTO {
       'uptimeMs': uptimeMs,
       'wifi': wifi.toJson(),
       'ws': ws.toJson(),
-      'telemetry': telemetry.toJson(),
+      'telemetry': telemetryAge.toJson(),
     };
   }
+  
+}
+
+extension MowerStatusDTOx on MowerStatusDTO {
+  MowerStatusModel toDomain() => MowerStatusModel(
+    uptimeMs: uptimeMs,
+    wifi: wifi.toDomain(),
+    ws: ws.toDomain(),
+    telemetryAge: telemetryAge.toDomain(),
+  );
 }
 
 class MowerStatusMapper {
@@ -42,7 +52,7 @@ class MowerStatusMapper {
       uptimeMs: data['uptimeMs'] ?? 0,
       wifi: data['wifi'] ?? const {},
       ws: data['ws'] ?? const {},
-      telemetry: data['telemetry'] ?? const {},
+      telemetryAge: data['telemetry'] ?? const {},
     );
   }
 }
