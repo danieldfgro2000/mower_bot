@@ -1,10 +1,12 @@
-class MowerConnectionEntity {
+import 'package:equatable/equatable.dart';
+
+class MowerConnectionModel  extends Equatable{
   final String name;
   final String ipAddress;
   final int port;
   final bool isConnected;
 
-  MowerConnectionEntity({
+  const MowerConnectionModel({
     required this.name,
     required this.ipAddress,
     required this.port,
@@ -12,7 +14,5 @@ class MowerConnectionEntity {
   });
 
   @override
-  String toString() {
-    return 'MowerConnectionEntity(name: $name, ipAddress: $ipAddress, port: $port, isConnected: $isConnected)';
-  }
+  List<Object?> get props => [name, ipAddress, port, isConnected];
 }

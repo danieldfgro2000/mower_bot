@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
+import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 
 abstract class TelemetryEvent extends Equatable {
   @override
@@ -11,7 +11,7 @@ class StartTelemetry extends TelemetryEvent {}
 class StopTelemetry extends TelemetryEvent {}
 
 class TelemetryReceived extends TelemetryEvent {
-  final TelemetryEntity telemetry;
+  final TelemetryDataModel telemetry;
 
   TelemetryReceived(this.telemetry);
 

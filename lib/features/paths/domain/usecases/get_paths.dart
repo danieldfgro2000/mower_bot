@@ -1,4 +1,4 @@
-import 'package:mower_bot/features/paths/data/repositories/path_repository_impl.dart';
+import 'package:mower_bot/core/data/repo/path_repository_impl.dart';
 
 class GetPathsUseCase {
   final PathRepository repository;

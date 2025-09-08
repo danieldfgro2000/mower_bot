@@ -1,14 +1,14 @@
 
+import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 
-
-class TelemetryEntity {
+class TelemetryDataDTO {
   final double wheelAngle;
   final double distanceTraveled;
   final double speed;
   final bool actuatorDrive;
   final bool actuatorStart;
 
-  const TelemetryEntity({
+  const TelemetryDataDTO({
     required this.wheelAngle,
     required this.distanceTraveled,
     required this.speed,
@@ -16,8 +16,8 @@ class TelemetryEntity {
     required this.actuatorStart,
   });
 
-  factory TelemetryEntity.fromJson(Map<String, dynamic> json) {
-    return TelemetryEntity(
+  factory TelemetryDataDTO.fromJson(Map<String, dynamic> json) {
+    return TelemetryDataDTO(
       wheelAngle: (json['wheelAngle'] as num?)?.toDouble() ?? 0.0,
       distanceTraveled: (json['distanceTraveled'] as num?)?.toDouble() ?? 0.0,
       speed: (json['speed'] as num?)?.toDouble() ?? 0.0,
@@ -43,9 +43,9 @@ class TelemetryEntity {
 }
 
 class TelemetryMapper {
-  static TelemetryEntity fromData(Map<String, dynamic> data) {
+  static TelemetryDataModel fromData(Map<String, dynamic> data) {
     double toD(dynamic v) => (v is num) ? v.toDouble() : 0.0;
-    return TelemetryEntity(
+    return TelemetryDataModel(
       wheelAngle: toD(data['wheelAngle']),
       distanceTraveled: toD(data['distanceTraveled']),
       speed: toD(data['speed']),
@@ -54,4 +54,3 @@ class TelemetryMapper {
     );
   }
 }
-

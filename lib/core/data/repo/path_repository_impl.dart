@@ -1,4 +1,5 @@
-import 'package:mower_bot/features/paths/domain/entities/path_entity.dart';
+
+import 'package:mower_bot/features/paths/domain/model/path_model.dart';
 
 abstract class PathRepository {
   Future<List<String>> fetchPaths();
@@ -8,10 +9,10 @@ abstract class PathRepository {
 }
 
 class MockPathRepository implements PathRepository {
-  final List<PathEntity> _mockPaths = [
-    PathEntity(id: "01", name: "Front Yard"),
-    PathEntity(id: "02", name: "Back Yard"),
-    PathEntity(id: "03", name: "Side Walk"),
+  final List<PathModel> _mockPaths = [
+    PathModel(id: "01", name: "Front Yard"),
+    PathModel(id: "02", name: "Back Yard"),
+    PathModel(id: "03", name: "Side Walk"),
   ];
   
   @override
