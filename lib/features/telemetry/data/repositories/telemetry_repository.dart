@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:mower_bot/core/network/message_envelope.dart';
-import 'package:mower_bot/core/network/websocket_client.dart';
+import 'package:mower_bot/core/data/network/message_envelope.dart';
+import 'package:mower_bot/core/data/network/websocket_client.dart';
 import 'package:mower_bot/features/connection/domain/entity/mower_status_entity.dart';
 import 'package:mower_bot/features/telemetry/domain/entities/telemetry_entity.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';

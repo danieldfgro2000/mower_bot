@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:mower_bot/core/data/network/websocket_client.dart';
 import 'package:mower_bot/core/di/injection_container.dart';
-import 'package:mower_bot/core/network/websocket_client.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 
 enum MowerWsPort {

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:mower_bot/core/network/websocket_adapter.dart';
+import 'package:mower_bot/core/data/network/websocket_adapter.dart';
 
 typedef MessageHandler = void Function(Map<String, dynamic> message);
 typedef JsonMap = Map<String, dynamic>;

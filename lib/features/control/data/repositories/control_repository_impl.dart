@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mower_bot/core/network/message_envelope.dart';
-import 'package:mower_bot/core/network/websocket_client.dart';
+import 'package:mower_bot/core/data/network/message_envelope.dart';
+import 'package:mower_bot/core/data/network/websocket_client.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 
 class ControlRepositoryImpl implements ControlRepository {

@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:mower_bot/core/network/websocket_client.dart';
-import 'package:mower_bot/core/network/websocket_config.dart';
+import 'package:mower_bot/core/data/network/websocket_client.dart';
+import 'package:mower_bot/core/data/network/websocket_config.dart';
 import 'package:mower_bot/features/connection/data/repositories/connection_repository_impl.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';

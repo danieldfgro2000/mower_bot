@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:mower_bot/core/network/websocket_config.dart';
+import 'package:mower_bot/core/data/network/websocket_config.dart';
 import 'package:web_socket_channel/io.dart';
 
 typedef JsonMap = Map<String, dynamic>;
