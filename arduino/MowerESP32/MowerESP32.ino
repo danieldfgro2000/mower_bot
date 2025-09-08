@@ -33,12 +33,12 @@ void setup() {
         wsServer.stop();
     });
 
-    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
-//    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
+//    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
+    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
     delay(100);
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
-        Serial.printf("[WS] Msg from Flutter data:");
+//        Serial.printf("[WS] Msg from Flutter data:");
         String jsonStr;
         serializeJson(doc, jsonStr);
         Serial.println(jsonStr);

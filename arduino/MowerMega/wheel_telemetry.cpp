@@ -3,7 +3,7 @@
 
 const int wheelEncA = 22;
 const int wheelEncB = 23;
-const float wheelDiameter = 0.15; //cm
+const float wheelDiameter = 15.0; //cm
 const int wheelPPR = 600; // pulses per revolution
 
 volatile long wheelCount = 0;

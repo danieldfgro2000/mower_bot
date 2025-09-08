@@ -89,9 +89,20 @@ void steeringHome() {
     if (homed) return;
     static unsigned long lastDotTime = 0;
     unsigned long now = millis();
-    if (now - lastDotTime >= 1000) {
+    static unsigned long homeTime = 0;
+    if (now - lastDotTime > 1000) {
         Serial.print(".");
         lastDotTime = now;
+    }
+    // TEMP (until optical installed)
+
+    if (now - homeTime >= 5000) {
+        homeTime = now;
+        stepper.stop();
+        stepper.setCurrentPosition(0);
+        homed = true;
+        Serial.println();
+        Serial.print("[STEERING] Steering homed to zero\n");
     }
     stepper.setSpeed(500);
     stepper.runSpeed();
