@@ -6,6 +6,26 @@
 #include <Arduino.h>
 #include "security_watchdog.h"
 
+static void dbgPrintRaw_(const String& s) {
+    Serial.print(F("RAW(")); Serial.print(s.length()); Serial.print(F("): "));
+    Serial.println(s); // shows the exact line
+
+    // also dump HEX to catch hidden chars like \r, \t, or non-ASCII
+//    Serial.print(F("HEX: "));
+//    for (size_t i = 0; i < s.length(); ++i) {
+//        uint8_t b = static_cast<uint8_t>(s[i]);
+//        if (b < 16) Serial.print('0');
+//        Serial.print(b, HEX); Serial.print(' ');
+//    }
+//    Serial.println();
+}
+
+static void dbgPrintJson_(const JsonDocument& d) {
+    // pretty is optional; use serializeJson(d, Serial) if you prefer compact
+    serializeJsonPretty(d, Serial);
+    Serial.println();
+}
+
 static unsigned long lastSend = 0;
 
 static const char* commandTypeName(CommandType c) {
@@ -30,13 +50,20 @@ void messagingHandleInput() {
   String input = Serial1.readStringUntil('\n');
   if(input.length() == 0) return;
   input.trim();
-  StaticJsonDocument<256> doc;
 
+//  dbgPrintRaw_(input);
+
+  StaticJsonDocument<512> doc;
   DeserializationError err = deserializeJson(doc, input);
   if(err) {
-    Serial.println("JSON parse failed.");
-    return;
+      Serial.print(F("JSON parse failed: "));
+      Serial.println(err.c_str());
+      Serial.print(F("Doc capacity: ")); Serial.print(doc.capacity());
+      Serial.print(F(" bytes, used: ")); Serial.println(doc.memoryUsage());
+      return;
   }
+
+//  dbgPrintJson_(doc);
 
   if (doc.containsKey("sys") && doc["sys"].containsKey("hb")) {
       uint32_t t = doc["sys"]["hb"].as<uint32_t>();

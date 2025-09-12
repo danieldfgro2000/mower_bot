@@ -17,7 +17,7 @@ void startCameraServer();
 
 void setup() {
     Serial.begin(115200);
-    Serial.setDebugOutput(true);
+//    Serial.setDebugOutput(true);
     delay(200);
 
     log_err(esp_reset_reason(), "BOOT");
@@ -52,7 +52,7 @@ void setup() {
     espMegaRouter.begin(&wsServer, &megaSerial);
     espMegaRouter.attachHeartbeat(&heartbeat);
 
-    heartbeat.begin(&wsServer, &wifiAdapter);
+    heartbeat.begin(&wsServer, &wifiAdapter, &megaSerial);
     heartbeat.setIntervals(5000, 15000, 30000);
     heartbeat.setDownLinkInterval(1000);
 }
