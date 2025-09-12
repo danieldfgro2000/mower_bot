@@ -4,6 +4,7 @@
 #include "actuators.h"
 #include <ArduinoJson.h>
 #include <Arduino.h>
+#include "security_watchdog.h"
 
 static unsigned long lastSend = 0;
 
@@ -35,6 +36,12 @@ void messagingHandleInput() {
   if(err) {
     Serial.println("JSON parse failed.");
     return;
+  }
+
+  if (doc.containsKey("sys") && doc["sys"].containsKey("hb")) {
+      uint32_t t = doc["sys"]["hb"].as<uint32_t>();
+      securityWatchdogOnEspKeepAlive(t);
+      return;
   }
 
   CommandType cmd = parseCommandKey(doc);

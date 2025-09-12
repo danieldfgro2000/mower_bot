@@ -50,9 +50,9 @@ class MowerStatusMapper {
   static MowerStatusModel fromData(Map<String, dynamic> data) {
     return MowerStatusModel(
       uptimeMs: data['uptimeMs'] ?? 0,
-      wifi: data['wifi'] ?? const {},
-      ws: data['ws'] ?? const {},
-      telemetryAge: data['telemetry'] ?? const {},
+      wifi: WiFiInfoDTO.fromJson(data['wifi'] ?? const {}).toDomain(),
+      ws: WsInfoDTO.fromJson(data['ws'] ?? const {}).toDomain(),
+      telemetryAge: TelemetryAgeDTO.fromJson(data['telemetry'] ?? const {}).toDomain(),
     );
   }
 }

@@ -31,7 +31,7 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
     _webSocketClient.messages?.listen((raw) {
       final envelope = MessageEnvelope.fromJson(raw);
 
-        // print('Received telemetry data envelope: ${envelope.data}');
+        print('Received telemetry data envelope: ${envelope.data}');
 
       switch (envelope.topic) {
         case MessageTopic.telemetry:

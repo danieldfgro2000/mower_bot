@@ -5,9 +5,9 @@
 
 // ---- Stepper Driver Pins ----
 
-const int dirPin = 2;
+const int dirPin = 4;
 const int stepPin = 3;
-const int enPin = 4;
+const int enPin = 2;
 
 const int opticalPin = 6;
 

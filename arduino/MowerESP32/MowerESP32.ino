@@ -33,8 +33,8 @@ void setup() {
         wsServer.stop();
     });
 
-//    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
-    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
+    wifiAdapter.begin(MowerConfig::WIFI_SSID, MowerConfig::WIFI_PASSWORD);
+//    wifiAdapter.beginAP(MowerConfig::AP_SSID, MowerConfig::AP_PASSWORD, 11, false, 4);
     delay(100);
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
@@ -54,6 +54,7 @@ void setup() {
 
     heartbeat.begin(&wsServer, &wifiAdapter);
     heartbeat.setIntervals(5000, 15000, 30000);
+    heartbeat.setDownLinkInterval(1000);
 }
 
 void loop() {

@@ -2,6 +2,7 @@
 #include "wheel_telemetry.h"
 #include "actuators.h"
 #include "messaging.h"
+#include "security_watchdog.h"
 
 void setup() {
     Serial.begin(115200);
@@ -12,6 +13,7 @@ void setup() {
     Serial.println();
     Serial.println("############### SYSTEM STARTING ###############");
 
+    securityWatchdogInit();
     wheelTelemetryInit();
     actuatorsInit();
 
@@ -24,6 +26,7 @@ void loop() {
         return;
     }
 
+    securityWatchdogUpdate();
     messagingHandleInput();
     steeringUpdate();
     wheelTelemetryUpdate();
