@@ -13,12 +13,18 @@ class CheckConnectionStatus extends ControlEvent {}
 class GetVideoStreamUrl extends ControlEvent {}
 
 class DriveCommand extends ControlEvent {
-  final double steering;
   final bool isMoving;
 
   const DriveCommand({
-    required this.steering,
     required this.isMoving,
+  });
+}
+
+class SteerCommand extends ControlEvent {
+  final double angle;
+
+  const SteerCommand({
+    required this.angle,
   });
 }
 

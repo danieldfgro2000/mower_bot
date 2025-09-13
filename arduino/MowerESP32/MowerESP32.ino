@@ -17,16 +17,13 @@ void startCameraServer();
 
 void setup() {
     Serial.begin(115200);
-//    Serial.setDebugOutput(true);
     delay(200);
 
     log_err(esp_reset_reason(), "BOOT");
 
     wifiAdapter.onConnected([](){
         wsServer.begin(85);
-        (cameraSetup.begin() == ESP_OK)
-            ? (void)startCameraServer()
-            : (void)Serial.println("[VIDEO] Camera init failed - video disabled");
+        if (cameraSetup.begin() == ESP_OK) startCameraServer();
     });
 
     wifiAdapter.onDisconnected([](int reason){
@@ -38,23 +35,17 @@ void setup() {
     delay(100);
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t clientId) {
-//        Serial.printf("[WS] Msg from Flutter data:");
-        String jsonStr;
-        serializeJson(doc, jsonStr);
-        Serial.println(jsonStr);
-
-        String line; serializeJson(doc, line);
+        String line;
+        serializeJson(doc, line);
         megaSerial.writeLine(line);
     });
 
-    megaSerial.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX);
+    megaSerial.begin(115200, ESP32CAM_MEGASERIAL_RX, ESP32CAM_MEGASERIAL_TX, Serial);
 
     espMegaRouter.begin(&wsServer, &megaSerial);
     espMegaRouter.attachHeartbeat(&heartbeat);
 
     heartbeat.begin(&wsServer, &wifiAdapter, &megaSerial);
-    heartbeat.setIntervals(5000, 15000, 30000);
-    heartbeat.setDownLinkInterval(1000);
 }
 
 void loop() {

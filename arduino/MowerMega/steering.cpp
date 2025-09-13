@@ -130,6 +130,8 @@ void steeringUpdate() {
 }
 
 void steeringSetAngle(float angle) {
+    Serial.print("[STEERING] New target angle: ");
+    Serial.println(angle);
     targetAngle = constrain(angle, -45.0, 45.0);
     newTarget = true;
 }

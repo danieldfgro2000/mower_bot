@@ -11,11 +11,13 @@ void actuatorsInit() {
 }
 
 void actuatorStart(bool state) {
-    Serial.println("[ACTUATOR] Start");
+    Serial.print("[ACTUATOR] Start");
+    Serial.println(state ? " ON" : " OFF");
   digitalWrite(startActuatorPin, state ? HIGH : LOW);
 }
 
 void actuatorDrive(bool state) {
-    Serial.println("[ACTUATOR] Drive");
+    Serial.print("[ACTUATOR] Drive");
+    Serial.println(state ? " ON" : " OFF");
   digitalWrite(driveActuatorPin, state ? HIGH : LOW);
 }

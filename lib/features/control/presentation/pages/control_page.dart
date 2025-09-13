@@ -108,7 +108,7 @@ class _ControlPageState extends State<ControlPage>
           onPressed: () {
             setState(() => isMoving = !isMoving);
             controlBloc.add(
-              DriveCommand(steering: steering, isMoving: isMoving),
+              DriveCommand(isMoving: isMoving),
             );
           },
         ),
@@ -121,7 +121,7 @@ class _ControlPageState extends State<ControlPage>
               listener: (details) {
                 steering = details.x * 30;
                 controlBloc.add(
-                  DriveCommand(steering: steering, isMoving: isMoving),
+                  SteerCommand(angle: steering),
                 );
               },
             ),

@@ -38,9 +38,9 @@ static const char* commandTypeName(CommandType c) {
 }
 
 CommandType parseCommandKey(const JsonDocument& doc) {
-    if (doc["mega"]["command"] == "steer") return CMD_STEER;
-    if (doc["mega"]["command"] == "start") return CMD_START;
-    if (doc["mega"]["command"] == "drive") return CMD_DRIVE;
+    if (doc["data"]["mega"]["command"] == "steer") return CMD_STEER;
+    if (doc["data"]["mega"]["command"] == "start") return CMD_START;
+    if (doc["data"]["mega"]["command"] == "drive") return CMD_DRIVE;
     return CMD_UNKNOWN;
 }
 
@@ -51,14 +51,14 @@ void messagingHandleInput() {
   if(input.length() == 0) return;
   input.trim();
 
-//  dbgPrintRaw_(input);
 
-  StaticJsonDocument<512> doc;
-  DeserializationError err = deserializeJson(doc, input);
-  if(err) {
-      Serial.print(F("JSON parse failed: "));
-      Serial.println(err.c_str());
-      Serial.print(F("Doc capacity: ")); Serial.print(doc.capacity());
+    StaticJsonDocument<512> doc;
+    DeserializationError err = deserializeJson(doc, input);
+    if(err) {
+        Serial.print(F("JSON parse failed: "));
+        Serial.println(err.c_str());
+        dbgPrintRaw_(input);
+        Serial.print(F("Doc capacity: ")); Serial.print(doc.capacity());
       Serial.print(F(" bytes, used: ")); Serial.println(doc.memoryUsage());
       return;
   }
@@ -75,22 +75,23 @@ void messagingHandleInput() {
 
   switch (cmd) {
       case CMD_STEER:
-          steeringSetAngle(doc["mega"]["steer"].as<float>());
+          steeringSetAngle(doc["data"]["mega"]["angle"].as<float>());
           break;
       case CMD_START:
-          actuatorStart(doc["mega"]["start"].as<bool>());
+          actuatorStart(doc["data"]["mega"]["start"].as<bool>());
           break;
       case CMD_DRIVE:
-          actuatorDrive(doc["mega"]["drive"].as<bool>());
+          actuatorDrive(doc["data"]["mega"]["isMoving"].as<bool>());
           break;
       default:
+            dbgPrintJson_(doc);
             Serial.print("Unknown command received\n");
             break;
   }
 }
 
 void messagingSendTelemetry() {
-  if(millis() - lastSend < 200) return;
+  if(millis() - lastSend < 5000) return;
   lastSend = millis();
 
   StaticJsonDocument<256> doc;
@@ -103,4 +104,5 @@ void messagingSendTelemetry() {
   String json;
   serializeJson(doc, json);
   Serial1.println(json);
+//  Serial.println("[MEGA] Sending telemetry: " + json);
 }

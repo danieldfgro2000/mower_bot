@@ -16,6 +16,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     : super(ControlState().initial()) {
     on<GetVideoStreamUrl>(_onGetVideoStreamUrl);
     on<DriveCommand>(_onDriveCommand);
+    on<SteerCommand>(_onSteerCommand);
     on<StartRecord>(_onStartRecord);
     on<StopRecord>(_onStopRecord);
     on<EmergencyStop>(_onEmergencyStop);
@@ -25,12 +26,22 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       emit(state.copyWith(videoStreamUrl: getVideoStreamUrl()));
 
   FutureOr<void> _onDriveCommand(event, emit) {
+    sendCommand({
+      "mega": {
+        "command": "drive",
+        "isMoving": event.isMoving
+      }
+    });
+  }
+
+  FutureOr<void> _onSteerCommand(event, emit) {
     final now = DateTime.now();
     if (now.difference(_lastDriveCommandTime ?? DateTime(0)).inMilliseconds < 100) return null;
     sendCommand({
-      "cmd": "drive",
-      "steering": event.steering,
-      "isMoving": event.isMoving,
+      "mega": {
+        "command": "steer",
+        "angle": event.angle
+      }
     });
   }
 
