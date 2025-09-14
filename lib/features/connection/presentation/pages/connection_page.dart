@@ -50,6 +50,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   case ConnectionStatus.connecting:
                     _showSnackBar(context, 'Connecting to mower...');
                     break;
+                  case ConnectionStatus.hostUnreachable:
+                    _showSnackBar(context, 'Host unreachable', isError: true);
+                    break;
                   case ConnectionStatus.error:
                     break;
                 }

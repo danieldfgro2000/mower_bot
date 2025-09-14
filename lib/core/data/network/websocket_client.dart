@@ -10,17 +10,21 @@ typedef JsonMap = Map<String, dynamic>;
 
 abstract class IWebSocketClient {
   Uri? get endpoint;
+
   void setEndpoint(Uri uri);
 
   Future<void> connect();
+
   Future<void> disconnect();
 
   void send(Map<String, dynamic> message);
 
   void dispose();
 
-  Stream<Map<String, dynamic>>? get messages;
-  Stream<ConnectionStatus>? get connectionChanged;
+  Stream<Map<String, dynamic>> get messages;
+
+  Stream<ConnectionStatus> get connectionChanged;
+
   bool get isConnected;
 }
 
@@ -28,13 +32,17 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   final WebSocketAdapter _websocketAdapter;
   final WsPayloadMode payloadMode;
 
-  BaseWebSocketClient(this._websocketAdapter,
-      { this.payloadMode = WsPayloadMode.jsonAndBinary });
+  BaseWebSocketClient(
+    this._websocketAdapter, {
+    this.payloadMode = WsPayloadMode.jsonAndBinary,
+  });
 
   Uri? _endpoint;
 
-  final StreamController<JsonMap> _jsonCtrl = StreamController<JsonMap>.broadcast();
-  final StreamController<ConnectionStatus> _connectionChanges = StreamController<ConnectionStatus>.broadcast();
+  final _jsonCtrl = StreamController<JsonMap>.broadcast();
+  final _connectionChanges = StreamController<ConnectionStatus>.broadcast();
+
+  StreamSubscription<JsonMap>? _jsonSub;
 
   @override
   Uri? get endpoint => _endpoint;
@@ -47,13 +55,27 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
     if (isConnected) return;
     if (_endpoint == null) throw StateError('$runtimeType: endpoint is not set');
 
-    _websocketAdapter.json.listen(_jsonCtrl.add, onError: _jsonCtrl.addError);
+    _jsonSub ??= _websocketAdapter.json.listen(
+      _jsonCtrl.add,
+      onError: _jsonCtrl.addError,
+    );
 
     await _websocketAdapter.openWebsocketChannel(
       uri: _endpoint,
       mode: payloadMode,
-      onError: (e, [st]) { _jsonCtrl.addError(e, st); },
-      onConnectionChanged: _connectionChanges.add
+      onError: (e, [st]) => _jsonCtrl.addError(e, st),
+      onConnectionChanged: _connectionChanges.add,
+      onReconnect: _onReconnect,
+    );
+  }
+
+  void _onReconnect() async {
+    await _websocketAdapter.openWebsocketChannel(
+      uri: _endpoint,
+      mode: payloadMode,
+      onError: (e, [st]) => _jsonCtrl.addError(e, st),
+      onConnectionChanged: _connectionChanges.add,
+      onReconnect: () {},
     );
   }
 
@@ -63,7 +85,10 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 
   @override
   void dispose() {
-    if (!_jsonCtrl.isClosed) _jsonCtrl.close();
+    _jsonSub?.cancel();
+    _jsonSub = null;
+    _jsonCtrl.close();
+    _connectionChanges.close();
     _websocketAdapter.dispose();
   }
 
@@ -74,7 +99,9 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   void send(JsonMap message) {
     if (!isConnected) {
       if (kDebugMode) {
-        print("WS[${runtimeType.toString()}]: send attempted while not connected, cannot send message: $message");
+        print(
+          "WS[${runtimeType.toString()}]: send attempted while not connected, cannot send message: $message",
+        );
       }
       return;
     }
@@ -82,7 +109,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   }
 
   @override
-  Stream<JsonMap>? get messages => _jsonCtrl.stream;
+  Stream<JsonMap> get messages => _jsonCtrl.stream;
 
   @override
   Stream<ConnectionStatus> get connectionChanged => _connectionChanges.stream;
@@ -90,12 +117,15 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 
 class ControlWebSocketClient extends BaseWebSocketClient {
   ControlWebSocketClient({WebSocketAdapter? adapter})
-      : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonOnly);
+    : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonOnly);
 }
 
 class BinaryWebSocketClient extends BaseWebSocketClient {
   BinaryWebSocketClient({WebSocketAdapter? adapter})
-      : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonAndBinary);
+    : super(
+        adapter ?? WebSocketAdapter(),
+        payloadMode: WsPayloadMode.jsonAndBinary,
+      );
 
   Stream<Uint8List>? get binary => _websocketAdapter.binary;
 }

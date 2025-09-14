@@ -125,6 +125,10 @@ class _HomePageState extends State<HomePage> {
         'Disconnected',
         style: TextStyle(color: Colors.red),
       ),
+      MowerConnectionState(status: ConnectionStatus.hostUnreachable) => const Text(
+        'Host unreachable',
+        style: TextStyle(color: Colors.red),
+      ),
       MowerConnectionState(status: ConnectionStatus.error) => Text(
         style: (TextStyle(color: Colors.red)),
         maxLines: 1,

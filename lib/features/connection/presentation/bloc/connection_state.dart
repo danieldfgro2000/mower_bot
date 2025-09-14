@@ -5,6 +5,7 @@ enum ConnectionStatus {
   connecting,
   ctrlWsConnected,
   videoWsConnected,
+  hostUnreachable,
   error
 }
 

@@ -40,30 +40,31 @@ class WebSocketAdapter {
     WsPayloadMode mode = WsPayloadMode.jsonAndBinary,
     ErrorHandler? onError,
     ConnectionChanged? onConnectionChanged,
+    required VoidCallback onReconnect,
   }) async {
     _manuallyClosed = false;
 
     _lastUri = uri ?? _lastUri;
     uri ??= _lastUri;
     final host = uri?.host;
-    final port = uri?.hasPort == true
-        ? uri?.port
-        : (uri?.scheme == 'wss' ? 443 : 80);
+    final port = uri?.port;
 
     if (host == null || port == null) {
-      _notifyClosed(onConnectionChanged);
+      _notifyClosed();
+      onConnectionChanged?.call(ConnectionStatus.disconnected);
       onError?.call("WebSocketAdapter: endpoint is not set");
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
-    final isReachable = await tcpProbe(host, port);
+    final isReachable = await _tcpProbe(host, port);
 
     if (!isReachable) {
       final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
       if (kDebugMode) print(err);
+      _notifyClosed();
+      onConnectionChanged?.call(ConnectionStatus.hostUnreachable);
       onError?.call(err);
-      _notifyClosed(onConnectionChanged);
-      throw err;
+      return;
     }
 
     try {
@@ -90,35 +91,35 @@ class WebSocketAdapter {
                 break;
               case List<int>():
                 if (mode == WsPayloadMode.jsonOnly) return;
-                final out = handleBinary(Uint8List.fromList(data));
+                final bytes = Uint8List.fromList(data);
+                final out = handleBinary(bytes);
                 if (out != null) _binaryCtrl.add(out);
                 break;
               default:
                 if (kDebugMode) {
-                  print("Received unsupported data type: ${data.runtimeType}");
+                  print("[WS] Unsupported data type: ${data.runtimeType}");
                 }
                 break;
             }
           } catch (e, st) {
-            if (kDebugMode) {
-              print("Error decoding message: $e, stacktrace: $st");
-            }
+            if (kDebugMode) print("Error decoding message: $e, stacktrace: $st");
+            onError?.call("Error decoding message: $e", st);
           }
         },
         onError: (error) {
           if (kDebugMode) print("[WS] onError: $error");
-          _onStreamClosed(onConnectionChanged, onError);
+          _onStreamClosed(onReconnect, onConnectionChanged, onError);
         },
         onDone: () {
           if (kDebugMode) print("[WS] onDone:: connection closed by remote");
-          _onStreamClosed(onConnectionChanged, onError);
+          _onStreamClosed(onReconnect, onConnectionChanged, onError);
         },
         cancelOnError: false,
       );
     } catch (e, st) {
-      onError?.call(e.toString(), st);
-      _notifyClosed(onConnectionChanged);
-      rethrow;
+      onError?.call("Message decode error: $e", st);
+      _notifyClosed();
+      onConnectionChanged?.call(ConnectionStatus.error);
     }
   }
 
@@ -141,7 +142,7 @@ class WebSocketAdapter {
     _isOpen = false;
   }
 
-  Future<bool> tcpProbe(String host, int port) async {
+  Future<bool> _tcpProbe(String host, int port) async {
     try {
       final socket = await Socket.connect(host, port, timeout:  wscfg.timeout3sec);
       socket.destroy();
@@ -153,10 +154,13 @@ class WebSocketAdapter {
   }
 
   void _onStreamClosed(
+    VoidCallback onReconnect,
     ConnectionChanged? onConnectionChanged,
     ErrorHandler? onError,
   ) {
-    _notifyClosed(onConnectionChanged);
+    _notifyClosed();
+    onConnectionChanged?.call(ConnectionStatus.disconnected);
+
     if (_manuallyClosed) {
       if (kDebugMode) print("[WS] manually closed: $_manuallyClosed)");
       return;
@@ -174,41 +178,20 @@ class WebSocketAdapter {
       _reconnectAttempts,
     );
     _reconnectAttempts++;
+
     if (kDebugMode) {
       print(
-        "WS: Reconnecting in ${delay.inMilliseconds} millis... (attempt $_reconnectAttempts/${wscfg.max5attempts})"
+        "WS: Reconnecting in ${delay.inMilliseconds} millis... "
+            "(attempt $_reconnectAttempts/${wscfg.max5attempts})"
       );
     }
-    maybeReconnect(
-      onReconnect:  openWebsocketChannel,
-      onError: () => onError?.call("Reconnection failed"),
-    );
-  }
 
-  void _notifyClosed(ConnectionChanged? onConnectionChanged) {
-    _isOpen = false;
-    onConnectionChanged?.call(ConnectionStatus.disconnected);
-    _webSocketChannel = null;
-  }
-
-  void maybeReconnect({
-    required VoidCallback onReconnect,
-    required VoidCallback onError,
-  }) {
-    if (_reconnectAttempts >= wscfg.max5attempts) {
-      if (kDebugMode) print("Max attempts reached. Not reconnecting.");
-
-      onError();
-      return;
-    }
-
-    final delay = _nextBackoff(
-      wscfg.retry100millis,
-      wscfg.retry300millis,
-      _reconnectAttempts,
-    );
-    _reconnectAttempts++;
     Future.delayed(delay, onReconnect);
+  }
+
+  void _notifyClosed() {
+    _isOpen = false;
+    _webSocketChannel = null;
   }
 
   Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {
@@ -265,7 +248,7 @@ Uint8List? handleBinary(Uint8List msg) {
       debugPrint('[VIDEO] Arrival Dt: ${now - stats.lastArrivalMs!} ms');
     }
     stats.lastArrivalMs = now;
-
+    return msg;
   } catch (e, st) {
     debugPrint('[VIDEO] Error handling binary message: $e, stacktrace: $st');
     return null;

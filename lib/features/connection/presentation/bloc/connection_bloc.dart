@@ -49,8 +49,7 @@ class MowerConnectionBloc
       await connectToCtrlWsUseCase(state.ip!);
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
-      emit(state.copyWith(status: ConnectionStatus.ctrlWsConnected));
-      _connectionStatusSub?.cancel();
+      await _connectionStatusSub?.cancel();
       _connectionStatusSub = repo.ctrlWsConnected()?.listen(
         (connectionStatus) {
           add(ConnectionChanged(connectionStatus: connectionStatus));
