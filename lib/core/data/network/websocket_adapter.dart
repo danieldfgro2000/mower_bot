@@ -38,8 +38,8 @@ class WebSocketAdapter {
   Future<void> openWebsocketChannel({
     Uri? uri,
     WsPayloadMode mode = WsPayloadMode.jsonAndBinary,
-    ErrorHandler? onError,
-    ConnectionChanged? onConnectionChanged,
+    required ErrorHandler onError,
+    required ConnectionChanged onConnectionChanged,
     required VoidCallback onReconnect,
   }) async {
     _manuallyClosed = false;
@@ -51,8 +51,8 @@ class WebSocketAdapter {
 
     if (host == null || port == null) {
       _notifyClosed();
-      onConnectionChanged?.call(ConnectionStatus.disconnected);
-      onError?.call("WebSocketAdapter: endpoint is not set");
+      onConnectionChanged(ConnectionStatus.disconnected);
+      onError("WebSocketAdapter: endpoint is not set");
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
@@ -62,14 +62,14 @@ class WebSocketAdapter {
       final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
       if (kDebugMode) print(err);
       _notifyClosed();
-      onConnectionChanged?.call(ConnectionStatus.hostUnreachable);
-      onError?.call(err);
+      onConnectionChanged(ConnectionStatus.hostUnreachable);
+      onError(err);
       return;
     }
 
     try {
       if (kDebugMode) print("WS: connecting to $uri");
-      onConnectionChanged?.call(ConnectionStatus.connecting);
+      onConnectionChanged(ConnectionStatus.connecting);
       final socket = await WebSocket.connect(uri.toString());
       socket.pingInterval = wscfg.ping3sec;
 
@@ -77,7 +77,7 @@ class WebSocketAdapter {
       if (_webSocketChannel != null) {
         _isOpen = true;
         _reconnectAttempts = 0;
-        onConnectionChanged?.call(ConnectionStatus.ctrlWsConnected);
+        onConnectionChanged(ConnectionStatus.ctrlWsConnected);
       }
 
       _webSocketChannel?.stream.listen(
@@ -103,7 +103,7 @@ class WebSocketAdapter {
             }
           } catch (e, st) {
             if (kDebugMode) print("Error decoding message: $e, stacktrace: $st");
-            onError?.call("Error decoding message: $e", st);
+            onError("Error decoding message: $e", st);
           }
         },
         onError: (error) {
@@ -117,9 +117,9 @@ class WebSocketAdapter {
         cancelOnError: false,
       );
     } catch (e, st) {
-      onError?.call("Message decode error: $e", st);
+      onError("Message decode error: $e", st);
       _notifyClosed();
-      onConnectionChanged?.call(ConnectionStatus.error);
+      onConnectionChanged(ConnectionStatus.error);
     }
   }
 
@@ -243,7 +243,6 @@ Uint8List? handleBinary(Uint8List msg) {
       debugPrint('[VIDEO] RX FPS: ${stats.rxFps}');
     }
 
-    // interval arrival Dt
     if (stats.lastArrivalMs != null) {
       debugPrint('[VIDEO] Arrival Dt: ${now - stats.lastArrivalMs!} ms');
     }
@@ -253,5 +252,4 @@ Uint8List? handleBinary(Uint8List msg) {
     debugPrint('[VIDEO] Error handling binary message: $e, stacktrace: $st');
     return null;
   }
-  return null;
 }

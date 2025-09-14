@@ -30,12 +30,12 @@ abstract class IWebSocketClient {
 
 abstract class BaseWebSocketClient implements IWebSocketClient {
   final WebSocketAdapter _websocketAdapter;
-  final WsPayloadMode payloadMode;
+  final WsPayloadMode _payloadMode;
 
   BaseWebSocketClient(
     this._websocketAdapter, {
-    this.payloadMode = WsPayloadMode.jsonAndBinary,
-  });
+    WsPayloadMode payloadMode = WsPayloadMode.jsonAndBinary,
+  }) : _payloadMode = payloadMode;
 
   Uri? _endpoint;
 
@@ -62,20 +62,10 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 
     await _websocketAdapter.openWebsocketChannel(
       uri: _endpoint,
-      mode: payloadMode,
-      onError: (e, [st]) => _jsonCtrl.addError(e, st),
+      mode: _payloadMode,
+      onError: _jsonCtrl.addError,
       onConnectionChanged: _connectionChanges.add,
-      onReconnect: _onReconnect,
-    );
-  }
-
-  void _onReconnect() async {
-    await _websocketAdapter.openWebsocketChannel(
-      uri: _endpoint,
-      mode: payloadMode,
-      onError: (e, [st]) => _jsonCtrl.addError(e, st),
-      onConnectionChanged: _connectionChanges.add,
-      onReconnect: () {},
+      onReconnect: connect,
     );
   }
 
