@@ -4,20 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
+import 'package:stream_transform/stream_transform.dart' as st;
 
 import 'control_state.dart';
 
 class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final SendDriveCommandUseCase sendCommand;
   final GetVideoStreamUrlUseCase getVideoStreamUrl;
-  DateTime? _lastSteerCommandTime;
+
+  EventTransformer<SteerCommand> debounceSteer() =>
+    (events, mapper) => events
+        .debounce(Duration(milliseconds: 100))
+        .switchMap(mapper);
 
   ControlBloc(this.sendCommand, this.getVideoStreamUrl)
     : super(ControlState().initial()) {
     on<GetVideoStreamUrl>(_onGetVideoStreamUrl);
     on<DriveCommand>(_onDriveCommand);
     on<RunCommand>(_onRunCommand);
-    on<SteerCommand>(_onSteerCommand);
+    on<SteerCommand>(_onSteerCommand, transformer: debounceSteer());
     on<StartRecord>(_onStartRecord);
     on<StopRecord>(_onStopRecord);
     on<EmergencyStop>(_onEmergencyStop);
@@ -35,7 +40,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       }
     });
     wasSent
-      ? emit(state.copyWith(isMowerMoving: event.isMoving))
+      ? emit(state.copyWith(isMowerMoving: event.isMoving, errorMessage: ''))
       : emit(state.copyWith(errorMessage: "Failed to send drive command(Disconnected)"));
   }
 
@@ -47,13 +52,11 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       }
     });
     wasSent
-      ? emit(state.copyWith(isMowerRunning: event.isRunning))
+      ? emit(state.copyWith(isMowerRunning: event.isRunning, errorMessage: ''))
       : emit(state.copyWith(errorMessage: "Failed to send run command(Disconnected)"));
   }
 
   FutureOr<void> _onSteerCommand(event, emit) async{
-    final now = DateTime.now();
-    if (now.difference(_lastSteerCommandTime ?? DateTime(0)).inMilliseconds < 100) return null;
     final wasSent = await sendCommand({
       "mega": {
         "command": "steer",
@@ -62,8 +65,8 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     });
 
     wasSent
-      ? _lastSteerCommandTime = now
-     : emit(state.copyWith(errorMessage: "Failed to send steer command"));
+      ? emit(state.copyWith(errorMessage: ''))
+      : emit(state.copyWith(errorMessage: "Failed to send steer command"));
   }
 
   FutureOr<void> _onStartRecord(event, emit) async {

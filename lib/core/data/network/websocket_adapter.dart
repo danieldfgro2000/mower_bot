@@ -16,7 +16,8 @@ typedef ConnectionChanged = void Function(ConnectionStatus connStatus);
 enum WsPayloadMode { jsonOnly, binaryOnly, jsonAndBinary }
 
 class WebSocketAdapter {
-  WebSocketAdapter({WebSocketConfig? config}) : wscfg = config ?? WebSocketConfig();
+  WebSocketAdapter({WebSocketConfig? config})
+    : wscfg = config ?? WebSocketConfig();
 
   final WebSocketConfig wscfg;
 
@@ -27,10 +28,12 @@ class WebSocketAdapter {
   bool _manuallyClosed = false;
 
   int _reconnectAttempts = 0;
-  
+
   final _jsonCtrl = StreamController<JsonMap>.broadcast();
   final _binaryCtrl = StreamController<Uint8List>.broadcast();
+
   Stream<JsonMap> get json => _jsonCtrl.stream;
+
   Stream<Uint8List> get binary => _binaryCtrl.stream;
 
   bool get isOpen => _isOpen && _webSocketChannel != null;
@@ -64,6 +67,7 @@ class WebSocketAdapter {
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.hostUnreachable);
       onError(err);
+      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
       return;
     }
 
@@ -74,11 +78,10 @@ class WebSocketAdapter {
       socket.pingInterval = wscfg.ping3sec;
 
       _webSocketChannel = IOWebSocketChannel(socket);
-      if (_webSocketChannel != null) {
-        _isOpen = true;
-        _reconnectAttempts = 0;
-        onConnectionChanged(ConnectionStatus.ctrlWsConnected);
-      }
+
+      _isOpen = true;
+      _reconnectAttempts = 0;
+      onConnectionChanged(ConnectionStatus.ctrlWsConnected);
 
       _webSocketChannel?.stream.listen(
         (data) {
@@ -102,7 +105,8 @@ class WebSocketAdapter {
                 break;
             }
           } catch (e, st) {
-            if (kDebugMode) print("Error decoding message: $e, stacktrace: $st");
+            if (kDebugMode)
+              print("Error decoding message: $e, stacktrace: $st");
             onError("Error decoding message: $e", st);
           }
         },
@@ -120,6 +124,8 @@ class WebSocketAdapter {
       onError("Message decode error: $e", st);
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.error);
+      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      return;
     }
   }
 
@@ -144,7 +150,11 @@ class WebSocketAdapter {
 
   Future<bool> _tcpProbe(String host, int port) async {
     try {
-      final socket = await Socket.connect(host, port, timeout:  wscfg.timeout3sec);
+      final socket = await Socket.connect(
+        host,
+        port,
+        timeout: wscfg.timeout3sec,
+      );
       socket.destroy();
       return true;
     } catch (e) {
@@ -155,12 +165,26 @@ class WebSocketAdapter {
 
   void _onStreamClosed(
     VoidCallback onReconnect,
-    ConnectionChanged? onConnectionChanged,
-    ErrorHandler? onError,
+    ConnectionChanged onConnectionChanged,
+    ErrorHandler onError,
   ) {
     _notifyClosed();
-    onConnectionChanged?.call(ConnectionStatus.disconnected);
+    onConnectionChanged(ConnectionStatus.disconnected);
+    if (!_manuallyClosed) {
+      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+    }
+  }
 
+  void _notifyClosed() {
+    _isOpen = false;
+    _webSocketChannel = null;
+  }
+
+  void _scheduleReconnect(
+    VoidCallback onReconnect,
+    ConnectionChanged onConnectionChanged,
+    ErrorHandler onError,
+  ) {
     if (_manuallyClosed) {
       if (kDebugMode) print("[WS] manually closed: $_manuallyClosed)");
       return;
@@ -182,16 +206,11 @@ class WebSocketAdapter {
     if (kDebugMode) {
       print(
         "WS: Reconnecting in ${delay.inMilliseconds} millis... "
-            "(attempt $_reconnectAttempts/${wscfg.max5attempts})"
+        "(attempt $_reconnectAttempts/${wscfg.max5attempts})",
       );
     }
 
     Future.delayed(delay, onReconnect);
-  }
-
-  void _notifyClosed() {
-    _isOpen = false;
-    _webSocketChannel = null;
   }
 
   Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {
