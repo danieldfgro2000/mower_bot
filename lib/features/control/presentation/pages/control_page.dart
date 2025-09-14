@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
+import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
 
 import 'components/esp_cam_view.dart';
 
@@ -17,9 +18,6 @@ class ControlPage extends StatefulWidget {
 
 class _ControlPageState extends State<ControlPage>
     with SingleTickerProviderStateMixin {
-  double steering = 0;
-  bool isMoving = false;
-  bool isRecording = false;
   late AnimationController _blinkController;
 
   @override
@@ -38,63 +36,102 @@ class _ControlPageState extends State<ControlPage>
   }
 
   @override
-  Widget build(BuildContext context) {
-    final controlBloc = context.read<ControlBloc>();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<ControlBloc>().add(ClearError());
+  }
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Stack(
-            children: [
-              Positioned.fill(
-                  top:0,
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ControlBloc, ControlState>(
+      builder: (context, state) => Scaffold(
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
+                if (state.isRecording == true)
+                  _recordingBanner(context),
+                _recordButton(context),
+                Positioned.fill(
+                  top: 0,
                   left: 0,
-                  child:  EspMjpegWebView()),
-              if (isRecording) _recordingBanner(context),
-              _recordButton(controlBloc, context),
-              Positioned.fill(
-                top: 0,
-                left: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Spacer(),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          _driveUnit(controlBloc),
-                          Spacer(),
-                          IconButton(
-                            iconSize: 120.0,
-                            splashColor: Colors.red.shade500,
-                            icon: Icon(
-                              Icons.stop_circle_rounded,
-                              color: isMoving ? Colors.red : Colors.grey,
-                            ),
-                            onPressed: () {
-                              setState(() => isMoving = false);
-                              controlBloc.add(EmergencyStop());
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Spacer(),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            _driveUnit(context),
+                            Spacer(),
+                            _engineUnit(context),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+                if (state.errorMessage != null)
+                  Positioned.fill(
+                    top: 100,
+                    left: 0,
+                    child: IgnorePointer(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          state.errorMessage!,
+                          style: const TextStyle(color: Colors.red, fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
-  Column _driveUnit(ControlBloc controlBloc) {
+  Column _engineUnit(BuildContext context) {
+    final isRunning = context.select((ControlBloc b) => b.state.isMowerRunning == true);
+    final isMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
+    return Column(
+      children: [
+        IconButton(
+          iconSize: 50.0,
+          splashColor: Colors.blue.shade500,
+          icon: Icon(
+            Icons.motorcycle_rounded,
+            color: isRunning ? Colors.green : Colors.grey,
+          ),
+          onPressed: () =>
+            context.read<ControlBloc>().add(
+              RunCommand(isRunning: !isRunning),
+            ),
+        ),
+        IconButton(
+          iconSize: 150.0,
+          splashColor: Colors.red.shade500,
+          icon: Icon(
+            Icons.emergency,
+            color: isMoving || isRunning ? Colors.red : Colors.grey,
+          ),
+          onPressed: () => context.read<ControlBloc>().add(EmergencyStop()),
+        ),
+      ],
+    );
+  }
+
+  Column _driveUnit(BuildContext context) {
+    final isMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
+    final controlBloc = context.read<ControlBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,25 +142,18 @@ class _ControlPageState extends State<ControlPage>
             color: isMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,
           ),
-          onPressed: () {
-            setState(() => isMoving = !isMoving);
-            controlBloc.add(
-              DriveCommand(isMoving: isMoving),
-            );
-          },
+          onPressed: () => controlBloc.add(
+            DriveCommand(isMoving: !controlBloc.state.isMowerMoving!),
+          ),
         ),
         SizedBox(
-          height: 100.0,
-          width: 100.0,
+          height: 150.0,
+          width: 150.0,
           child: Center(
             child: Joystick(
               mode: JoystickMode.horizontal,
-              listener: (details) {
-                steering = details.x * 30;
-                controlBloc.add(
-                  SteerCommand(angle: steering),
-                );
-              },
+              listener: (details) =>
+                  controlBloc.add(SteerCommand(angle: details.x * 45)),
             ),
           ),
         ),
@@ -131,7 +161,9 @@ class _ControlPageState extends State<ControlPage>
     );
   }
 
-  Positioned _recordButton(ControlBloc controlBloc, BuildContext context) {
+  Positioned _recordButton(BuildContext context) {
+    final controlBloc = context.read<ControlBloc>();
+    final isRecording = context.select((ControlBloc b) => b.state.isRecording == true);
     return Positioned(
       top: 40,
       right: 20,
@@ -139,20 +171,14 @@ class _ControlPageState extends State<ControlPage>
         tooltip: "Record Path",
         isSelected: isRecording,
         onPressed: () async => isRecording
-            ? {
-                setState(() => isRecording = false),
-                controlBloc.add(
-                  StopRecord(
-                    fileName:
-                        await _askPathName(context) ??
-                        'path_${DateTime.now().millisecondsSinceEpoch}.txt',
-                  ),
+            ? controlBloc.add(
+                StopRecord(
+                  fileName:
+                      await _askPathName(context) ??
+                      'path_${DateTime.now().millisecondsSinceEpoch}.txt',
                 ),
-              }
-            : {
-                setState(() => isRecording = true),
-                controlBloc.add(StartRecord()),
-              },
+              )
+            : controlBloc.add(StartRecord()),
         icon: isRecording
             ? FadeTransition(
                 opacity: _blinkController,

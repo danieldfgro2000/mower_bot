@@ -33,6 +33,7 @@ static const char* commandTypeName(CommandType c) {
         case CMD_STEER: return "CMD_STEER";
         case CMD_START: return "CMD_START";
         case CMD_DRIVE: return "CMD_DRIVE";
+        case CMD_EMERGENCY_STOP: return "CMD_EMERGENCY_STOP";
         default: return "CMD_UNKNOWN";
     }
 }
@@ -41,6 +42,7 @@ CommandType parseCommandKey(const JsonDocument& doc) {
     if (doc["data"]["mega"]["command"] == "steer") return CMD_STEER;
     if (doc["data"]["mega"]["command"] == "start") return CMD_START;
     if (doc["data"]["mega"]["command"] == "drive") return CMD_DRIVE;
+    if (doc["data"]["mega"]["command"] == "emergency_stop") return CMD_EMERGENCY_STOP;
     return CMD_UNKNOWN;
 }
 
@@ -82,6 +84,11 @@ void messagingHandleInput() {
           break;
       case CMD_DRIVE:
           actuatorDrive(doc["data"]["mega"]["isMoving"].as<bool>());
+          break;
+      case CMD_EMERGENCY_STOP:
+          actuatorDrive(false);
+          actuatorStart(false);
+          steeringSetAngle(0.0);
           break;
       default:
             dbgPrintJson_(doc);

@@ -18,6 +18,20 @@ class DriveCommand extends ControlEvent {
   const DriveCommand({
     required this.isMoving,
   });
+
+  @override
+  List<Object?> get props => [isMoving];
+}
+
+class RunCommand extends ControlEvent {
+  final bool isRunning;
+
+  const RunCommand({
+    required this.isRunning,
+  });
+
+  @override
+  List<Object?> get props => [isRunning];
 }
 
 class SteerCommand extends ControlEvent {
@@ -26,6 +40,9 @@ class SteerCommand extends ControlEvent {
   const SteerCommand({
     required this.angle,
   });
+
+  @override
+  List<Object?> get props => [angle];
 }
 
 class StartRecord extends ControlEvent {}
@@ -39,3 +56,5 @@ class StopRecord extends ControlEvent {
 }
 
 class EmergencyStop extends ControlEvent {}
+
+class ClearError extends ControlEvent {}

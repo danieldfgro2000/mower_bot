@@ -5,7 +5,8 @@ class SendDriveCommandUseCase {
 
   SendDriveCommandUseCase(this.repository);
 
-  Future<void> call(Map<String, dynamic> command) async {
-    await repository.sendDriveCommand(command);
+  Future<bool> call(Map<String, dynamic> command) async {
+    if (repository.isCtrlWsConnected) await repository.sendDriveCommand(command);
+    return repository.isCtrlWsConnected;
   }
 }

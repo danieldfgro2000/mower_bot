@@ -10,7 +10,8 @@ enum CommandType {
     CMD_PATH_RECORDING_STOP,
     CMD_PATH_LIST,
     CMD_PATH_PLAY,
-    CMD_PATH_DELETE
+    CMD_PATH_DELETE,
+    CMD_EMERGENCY_STOP,
 };
 
 CommandType parseCommandKey(const JsonDocument& doc);

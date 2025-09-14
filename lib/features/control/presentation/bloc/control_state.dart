@@ -5,7 +5,8 @@ class ControlState extends Equatable {
   final bool? isConnected;
   final bool? isRecording;
   final bool? isVideoEnabled;
-  final bool? isVideoWsConnected;
+  final bool? isMowerMoving;
+  final bool? isMowerRunning;
   final String? videoStreamUrl;
   final String? recordedFilePath;
   final String? errorMessage;
@@ -14,7 +15,8 @@ class ControlState extends Equatable {
     this.isConnected,
     this.isRecording,
     this.isVideoEnabled,
-    this.isVideoWsConnected,
+    this.isMowerMoving,
+    this.isMowerRunning,
     this.videoStreamUrl,
     this.recordedFilePath,
     this.errorMessage,
@@ -25,7 +27,8 @@ class ControlState extends Equatable {
       isConnected: false,
       isRecording: false,
       isVideoEnabled: false,
-      isVideoWsConnected: false,
+      isMowerMoving: false,
+      isMowerRunning: false,
       videoStreamUrl: null,
       recordedFilePath: null,
       errorMessage: null,
@@ -37,7 +40,8 @@ class ControlState extends Equatable {
     isConnected,
     isRecording,
     isVideoEnabled,
-    isVideoWsConnected,
+    isMowerMoving,
+    isMowerRunning,
     videoStreamUrl,
     recordedFilePath,
     errorMessage,
@@ -48,6 +52,8 @@ class ControlState extends Equatable {
     bool? isRecording,
     bool? isVideoEnabled,
     bool? isVideoWsConnected,
+    bool? isMowerMoving,
+    bool? isMowerRunning,
     String? videoStreamUrl,
     String? recordedFilePath,
     String? errorMessage,
@@ -56,7 +62,8 @@ class ControlState extends Equatable {
       isConnected: isConnected ?? this.isConnected,
       isRecording: isRecording ?? this.isRecording,
       isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
-      isVideoWsConnected: isVideoWsConnected ?? this.isVideoWsConnected,
+      isMowerMoving: isMowerMoving ?? this.isMowerMoving,
+      isMowerRunning: isMowerRunning ?? this.isMowerRunning,
       videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
       recordedFilePath: recordedFilePath ?? this.recordedFilePath,
       errorMessage: errorMessage ?? this.errorMessage,
