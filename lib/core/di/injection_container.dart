@@ -7,7 +7,7 @@ import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_conn
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/core/data/repo/control_repository_impl.dart';
-import 'package:mower_bot/features/connection/domain/usecases/stream_ctrl_ws_connected_use_case.dart';
+import 'package:mower_bot/features/connection/domain/usecases/stream_connection_status_use_case.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
@@ -38,7 +38,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<ConnectToCtrlWsUseCase>(() => ConnectToCtrlWsUseCase(sl()));
   sl.registerLazySingleton<DisconnectCtrlWsUseCase>(() => DisconnectCtrlWsUseCase(sl()));
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
-  sl.registerLazySingleton<StreamCtrlWsConnectedUseCase>(() => StreamCtrlWsConnectedUseCase(sl()));
+  sl.registerLazySingleton<StreamConnectionStatusUseCase>(() => StreamConnectionStatusUseCase(sl()));
 
   /// Paths
   sl.registerLazySingleton<MockPathRepository>(() => MockPathRepository());

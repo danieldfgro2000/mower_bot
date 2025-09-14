@@ -52,9 +52,9 @@ class MowerConnectionBloc
       emit(state.copyWith(status: ConnectionStatus.ctrlWsConnected));
       _connectionStatusSub?.cancel();
       _connectionStatusSub = repo.ctrlWsConnected()?.listen(
-        (isConnected) {
-          add(ConnectionChanged(isCtrlWsConnected: isConnected));
-          isConnected
+        (connectionStatus) {
+          add(ConnectionChanged(connectionStatus: connectionStatus));
+          connectionStatus == ConnectionStatus.ctrlWsConnected
             ? telemetryBloc.add(StartTelemetry())
             : telemetryBloc.add(StopTelemetry());
         },
@@ -84,17 +84,9 @@ class MowerConnectionBloc
     }
   }
 
-  void _onConnectionChanged(event, emit) async {
-    emit(state.copyWith(
-      status: event.isCtrlWsConnected == true
-        ? ConnectionStatus.ctrlWsConnected
-        : event.isVideoWsConnected == true
-          ? ConnectionStatus.videoWsConnected
-          : ConnectionStatus.disconnected,
-    ));
-  }
+  void _onConnectionChanged(event, emit) =>
+    emit(state.copyWith(status: event.connectionStatus));
 
-  void _onConnectionError(event, emit) async {
+  void _onConnectionError(event, emit) =>
     emit(state.copyWith(error: event.error));
-  }
 }

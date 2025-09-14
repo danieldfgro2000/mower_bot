@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/data/network/websocket_adapter.dart';
+import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
 
 typedef MessageHandler = void Function(Map<String, dynamic> message);
 typedef JsonMap = Map<String, dynamic>;
@@ -19,7 +20,7 @@ abstract class IWebSocketClient {
   void dispose();
 
   Stream<Map<String, dynamic>>? get messages;
-  Stream<bool>? get connectionChanged;
+  Stream<ConnectionStatus>? get connectionChanged;
   bool get isConnected;
 }
 
@@ -33,7 +34,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   Uri? _endpoint;
 
   final StreamController<JsonMap> _jsonCtrl = StreamController<JsonMap>.broadcast();
-  final StreamController<bool> _connectionChanges = StreamController<bool>.broadcast();
+  final StreamController<ConnectionStatus> _connectionChanges = StreamController<ConnectionStatus>.broadcast();
 
   @override
   Uri? get endpoint => _endpoint;
@@ -82,9 +83,9 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 
   @override
   Stream<JsonMap>? get messages => _jsonCtrl.stream;
-  
+
   @override
-  Stream<bool> get connectionChanged => _connectionChanges.stream;
+  Stream<ConnectionStatus> get connectionChanged => _connectionChanges.stream;
 }
 
 class ControlWebSocketClient extends BaseWebSocketClient {

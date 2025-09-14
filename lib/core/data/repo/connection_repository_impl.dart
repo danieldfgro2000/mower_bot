@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/data/network/websocket_client.dart';
 import 'package:mower_bot/core/di/injection_container.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
+import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
 
 enum MowerWsPort {
   ctrl(85),
@@ -56,5 +57,5 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   Stream<Object> ctrlWsErr() => _errorCtrl.stream;
 
   @override
-  Stream<bool>? ctrlWsConnected() =>  _ctrlWSClient.connectionChanged;
+  Stream<ConnectionStatus>? ctrlWsConnected() =>  _ctrlWSClient.connectionChanged;
 }
