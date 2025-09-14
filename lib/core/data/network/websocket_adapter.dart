@@ -15,31 +15,25 @@ typedef ConnectionChanged = void Function(bool isOpen);
 enum WsPayloadMode { jsonOnly, binaryOnly, jsonAndBinary }
 
 class WebSocketAdapter {
-  WebSocketAdapter({WebSocketConfig? config})
-    : cfg = config ?? WebSocketConfig();
+  WebSocketAdapter({WebSocketConfig? config}) : cfg = config ?? WebSocketConfig();
 
   final WebSocketConfig cfg;
 
   IOWebSocketChannel? _webSocketChannel;
-  StreamSubscription? _sub;
 
   Uri? _lastUri;
   bool _isOpen = false;
   bool _manuallyClosed = false;
+
   int _reconnectAttempts = 0;
-
   final _jsonCtrl = StreamController<JsonMap>.broadcast();
-  final _binaryCtrl = StreamController<Uint8List>.broadcast();
 
+  final _binaryCtrl = StreamController<Uint8List>.broadcast();
   Stream<JsonMap> get json => _jsonCtrl.stream;
 
   Stream<Uint8List> get binary => _binaryCtrl.stream;
 
   bool get isOpen => _isOpen && _webSocketChannel != null;
-
-  Uri? get endpoint => _lastUri;
-
-  IOWebSocketChannel? get webSocketChannel => _webSocketChannel;
 
   Future<void> openWebsocketChannel({
     Uri? uri,
@@ -62,11 +56,7 @@ class WebSocketAdapter {
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
-    final isReachable = await tcpProbe(
-      host,
-      port,
-      timeout: cfg.connectProbeTimeout,
-    );
+    final isReachable = await tcpProbe(host, port);
 
     if (!isReachable) {
       final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
@@ -79,14 +69,14 @@ class WebSocketAdapter {
     try {
       if (kDebugMode) print("WS: connecting to $uri");
       final socket = await WebSocket.connect(uri.toString());
-      socket.pingInterval = cfg.pingInterval;
+      socket.pingInterval = cfg.ping3sec;
 
       _webSocketChannel = IOWebSocketChannel(socket);
       _isOpen = true;
       _reconnectAttempts = 0;
       onConnectionChanged?.call(true);
 
-      _sub = webSocketChannel!.stream.listen(
+      _webSocketChannel?.stream.listen(
         (data) {
           try {
             switch (data) {
@@ -146,18 +136,13 @@ class WebSocketAdapter {
   Future<void> close({bool manuallyClosed = false}) async {
     _manuallyClosed = manuallyClosed || manuallyClosed;
     _webSocketChannel?.sink.close(WebSocketStatus.normalClosure);
-    await _sub?.cancel();
     _webSocketChannel = null;
     _isOpen = false;
   }
 
-  Future<bool> tcpProbe(String host, int port, {Duration? timeout}) async {
+  Future<bool> tcpProbe(String host, int port) async {
     try {
-      final socket = await Socket.connect(
-        host,
-        port,
-        timeout: timeout ?? cfg.reconnectMinDelay,
-      );
+      final socket = await Socket.connect(host, port, timeout:  cfg.timeout3sec);
       socket.destroy();
       return true;
     } catch (e) {
@@ -171,40 +156,33 @@ class WebSocketAdapter {
     ErrorHandler? onError,
   ) {
     _notifyClosed(onConnectionChanged);
-    if (_manuallyClosed || !cfg.autoReconnect) {
-      if (kDebugMode) {
-        print(
-          "WS: Not reconnecting ("
-          "manually closed: $_manuallyClosed,  "
-          "autoReconnect: ${cfg.autoReconnect})",
-        );
-      }
+    if (_manuallyClosed) {
+      if (kDebugMode) print("[WS]: manually closed: $_manuallyClosed)");
       return;
     }
 
-    if (_reconnectAttempts >= cfg.maxReconnectAttempts) {
-      if (kDebugMode) {
-        print("WS: Max reconnect attempts reached. Not reconnecting.");
-      }
+    if (_reconnectAttempts >= cfg.max5attempts) {
+      if (kDebugMode) print("[WS]: Max attempts reached. Not reconnecting.");
+
       onError?.call(
-        "Max reconnect attempts reached: ${cfg.maxReconnectAttempts}",
+        "Max reconnect attempts reached: ${cfg.max5attempts}",
       );
       return;
     }
 
     final delay = _nextBackoff(
-      cfg.reconnectMinDelay,
-      cfg.reconnectMaxDelay,
+      cfg.retry100millis,
+      cfg.retry300millis,
       _reconnectAttempts,
     );
     _reconnectAttempts++;
     if (kDebugMode) {
       print(
-        "WS: Reconnecting in ${delay.inSeconds} seconds... (attempt $_reconnectAttempts/${cfg.maxReconnectAttempts})",
+        "WS: Reconnecting in ${delay.inMilliseconds} millis... (attempt $_reconnectAttempts/${cfg.max5attempts})",
       );
     }
     maybeReconnect(
-      onReconnect: () => openWebsocketChannel(),
+      onReconnect:  openWebsocketChannel,
       onError: () => onError?.call("Reconnection failed"),
     );
   }
@@ -212,8 +190,6 @@ class WebSocketAdapter {
   void _notifyClosed(ConnectionChanged? onConnectionChanged) {
     _isOpen = false;
     onConnectionChanged?.call(false);
-    _sub?.cancel();
-    _sub = null;
     _webSocketChannel = null;
   }
 
@@ -221,27 +197,20 @@ class WebSocketAdapter {
     required VoidCallback onReconnect,
     required VoidCallback onError,
   }) {
-    if (_reconnectAttempts >= cfg.maxReconnectAttempts) {
-      if (kDebugMode) {
-        print("Max reconnect attempts reached. Not reconnecting.");
-      }
+    if (_reconnectAttempts >= cfg.max5attempts) {
+      if (kDebugMode) print("Max attempts reached. Not reconnecting.");
+
       onError();
       return;
     }
 
     final delay = _nextBackoff(
-      cfg.reconnectMinDelay,
-      cfg.reconnectMaxDelay,
+      cfg.retry100millis,
+      cfg.retry300millis,
       _reconnectAttempts,
     );
     _reconnectAttempts++;
-
-    if (kDebugMode) print("WS: Reconnecting in ${delay.inSeconds} seconds...");
-
-    Future.delayed(delay, () async {
-      if (kDebugMode) print("WS: Attempting to reconnect");
-      onReconnect();
-    });
+    Future.delayed(delay, onReconnect);
   }
 
   Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {

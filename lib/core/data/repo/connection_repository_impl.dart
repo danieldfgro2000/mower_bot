@@ -56,8 +56,5 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   Stream<Object> ctrlWsErr() => _errorCtrl.stream;
 
   @override
-  Stream<bool> ctrlWsConnected() =>
-      Stream.periodic(
-          const Duration(seconds: 1), (_) =>
-      isCtrlWsConnected).distinct();
+  Stream<bool>? ctrlWsConnected() =>  _ctrlWSClient.connectionChanged;
 }

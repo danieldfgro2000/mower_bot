@@ -18,6 +18,7 @@ class MowerConnectionBloc
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
   StreamSubscription? _errSub;
+  StreamSubscription? _connectionStatusSub;
 
   MowerConnectionBloc(
     this.connectToCtrlWsUseCase,
@@ -49,7 +50,15 @@ class MowerConnectionBloc
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
       emit(state.copyWith(status: ConnectionStatus.ctrlWsConnected));
-      telemetryBloc.add(StartTelemetry());
+      _connectionStatusSub?.cancel();
+      _connectionStatusSub = repo.ctrlWsConnected()?.listen(
+        (isConnected) {
+          add(ConnectionChanged(isCtrlWsConnected: isConnected));
+          isConnected
+            ? telemetryBloc.add(StartTelemetry())
+            : telemetryBloc.add(StopTelemetry());
+        },
+      );
     } catch (e) {
       emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
       return;
@@ -63,6 +72,16 @@ class MowerConnectionBloc
   }
 
   void _onCheckConnection(event, emit) async {
+    try {
+      final isConnected = checkCtrlWsConnectedUseCase();
+      emit(state.copyWith(
+        status: isConnected
+          ? ConnectionStatus.ctrlWsConnected
+          : ConnectionStatus.disconnected,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
+    }
   }
 
   void _onConnectionChanged(event, emit) async {

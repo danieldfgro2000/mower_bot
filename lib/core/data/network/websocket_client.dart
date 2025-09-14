@@ -11,7 +11,7 @@ abstract class IWebSocketClient {
   Uri? get endpoint;
   void setEndpoint(Uri uri);
 
-  Future<void> connect({Uri uri});
+  Future<void> connect();
   Future<void> disconnect();
 
   void send(Map<String, dynamic> message);
@@ -19,6 +19,7 @@ abstract class IWebSocketClient {
   void dispose();
 
   Stream<Map<String, dynamic>>? get messages;
+  Stream<bool>? get connectionChanged;
   bool get isConnected;
 }
 
@@ -32,6 +33,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   Uri? _endpoint;
 
   final StreamController<JsonMap> _jsonCtrl = StreamController<JsonMap>.broadcast();
+  final StreamController<bool> _connectionChanges = StreamController<bool>.broadcast();
 
   @override
   Uri? get endpoint => _endpoint;
@@ -40,28 +42,17 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   void setEndpoint(Uri uri) => _endpoint = uri;
 
   @override
-  Future<void> connect({Uri? uri}) async {
-    if (uri != null) _endpoint = uri;
-    final ep = _endpoint;
-    if (ep == null) {
-      throw StateError('$runtimeType: endpoint is not set');
-    }
-
+  Future<void> connect() async {
     if (isConnected) return;
+    if (_endpoint == null) throw StateError('$runtimeType: endpoint is not set');
 
-    // Bridge adapter streams to client-specific controllers
-    // Subscribers can attach before or after connect.
     _websocketAdapter.json.listen(_jsonCtrl.add, onError: _jsonCtrl.addError);
 
     await _websocketAdapter.openWebsocketChannel(
-      uri: ep,
+      uri: _endpoint,
       mode: payloadMode,
       onError: (e, [st]) { _jsonCtrl.addError(e, st); },
-      onConnectionChanged: (open) {
-        if (kDebugMode) {
-          print("WS${payloadMode.name}: connection is ${open ? "open" : "closed"}");
-        }
-      }
+      onConnectionChanged: _connectionChanges.add
     );
   }
 
@@ -91,7 +82,9 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 
   @override
   Stream<JsonMap>? get messages => _jsonCtrl.stream;
-
+  
+  @override
+  Stream<bool> get connectionChanged => _connectionChanges.stream;
 }
 
 class ControlWebSocketClient extends BaseWebSocketClient {
