@@ -20,11 +20,22 @@ const int encoderPinB = 21;
 TMC2209Stepper driver(&Serial2, R_SENSE, 0b00);
 
 // ---- Steering Config ----
-static const uint16_t MICROSTEPS = 16;
+static const uint16_t MICROSTEPS = 4;
 const float stepsPerRevolution = 200.0 * MICROSTEPS;
 const float steeringRange = 90.0;
 const float encoderPPR = 600.0;
-const float gearRatio = 5.0;
+const float gearRatio = 50.0;
+
+static inline long wheelDegToSteps(float deg) {
+    // motor steps = wheel_deg * gear_ratio * steps_per_rev / 360
+    const float s = (deg * gearRatio * stepsPerRevolution) / 360.0f;
+    return (long)(s + (s >= 0 ? 0.5f : -0.5f)); // round to nearest
+}
+
+static inline float stepsToWheelDeg(long steps) {
+    // wheel_deg = motor_steps * 360 / (gear_ratio * steps_per_rev)
+    return (steps * 360.0f) / (gearRatio * stepsPerRevolution);
+}
 
 AccelStepper stepper(AccelStepper::DRIVER, stepPin, dirPin);
 
@@ -53,8 +64,8 @@ void steeringInit() {
     stepper.setEnablePin(enPin);
     stepper.setPinsInverted(false, false, true); // invert enable pin
     stepper.setMinPulseWidth(4);
-    stepper.setMaxSpeed(1000);
-    stepper.setAcceleration(500);
+    stepper.setMaxSpeed(4000);
+    stepper.setAcceleration(2500);
 
     // --- TMC2209 Setup (UART) ---
     Serial2.begin(115200);
@@ -122,7 +133,7 @@ void steeringHome() {
 
 void steeringUpdate() {
     if (newTarget) {
-        long steps = (targetAngle * stepsPerRevolution) / steeringRange;
+        const long steps = wheelDegToSteps(targetAngle);
         stepper.moveTo(steps);
         newTarget = false;
     }
@@ -130,18 +141,18 @@ void steeringUpdate() {
 }
 
 void steeringSetAngle(float angle) {
+    targetAngle = constrain(angle, -45.0f, 45.0f);
     Serial.print("[STEERING] New target angle: ");
-    Serial.println(angle);
-    targetAngle = constrain(angle, -45.0, 45.0);
+    Serial.println(targetAngle);
     newTarget = true;
 }
 
 float steeringGetCommandedAngle() {
-    return (stepper.targetPosition() * steeringRange) / stepsPerRevolution;
+    return stepsToWheelDeg(stepper.targetPosition());
 }
 
 float steeringGetActualAngle() {
-    return (encoderCount * 360) / (encoderPPR * gearRatio);
+    return (encoderCount * 360.0f) / (encoderPPR * gearRatio);
 }
 
 bool steeringIsHomed() { return homed; }
