@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
@@ -20,9 +22,11 @@ class _ControlPageState extends State<ControlPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _blinkController;
 
+
   @override
   void initState() {
     super.initState();
+    context.read<ControlBloc>().add(StartTelemetryStream());
     _blinkController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -146,17 +150,7 @@ class _ControlPageState extends State<ControlPage>
             DriveCommand(isMoving: !controlBloc.state.isMowerMoving!),
           ),
         ),
-        SizedBox(
-          height: 150.0,
-          width: 150.0,
-          child: Center(
-            child: Joystick(
-              mode: JoystickMode.horizontal,
-              listener: (details) =>
-                  controlBloc.add(SteerCommand(angle: details.x * 45)),
-            ),
-          ),
-        ),
+        JoystickWithTrackingDot(),
       ],
     );
   }
@@ -225,6 +219,63 @@ class _ControlPageState extends State<ControlPage>
             child: const Text('Save'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class JoystickWithTrackingDot extends StatefulWidget {
+  const JoystickWithTrackingDot({
+    super.key
+  });
+
+  @override
+  State<JoystickWithTrackingDot> createState() => _JoystickWithTrackingDotState();
+}
+
+class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
+  final double _joystickSize = 150.0;
+  final double _angleTrackingDotRadius = 10.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: _joystickSize,
+      height: _joystickSize,
+      child: BlocSelector<ControlBloc, ControlState, double>(
+        selector: (s) => s.telemetryData?.wheelAngle ?? 0.0,
+        builder: (context, angleDeg) {
+          final r = (_joystickSize / 2) + _angleTrackingDotRadius;
+          final rad = angleDeg * math.pi / 180.0;
+          final theta = math.pi / 2 - rad;
+          final dx = r * math.cos(theta);
+          final dy = - r * math.sin(theta);
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              Joystick(
+                mode: JoystickMode.horizontal,
+                listener: (details) =>
+                    context.read<ControlBloc>()
+                        .add(SteerCommand(angle: details.x * 45)),
+              ),
+              IgnorePointer(
+                child: Transform.translate(
+                  offset: Offset(dx, dy),
+                  child: Container(
+                    width: _angleTrackingDotRadius * 2,
+                    height: _angleTrackingDotRadius * 2,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    )
+                  ),
+                ),
+              )
+            ]
+          );
+        }
       ),
     );
   }

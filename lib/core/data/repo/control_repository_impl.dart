@@ -33,7 +33,7 @@ class ControlRepositoryImpl implements ControlRepository {
       topic: MessageTopic.drive,
       data: command,
     );
-    debugPrint('Sending drive command: ${envelope.toJson()}');
+    // debugPrint('Sending drive command: ${envelope.toJson()}');
     _controlWebSocketClient.send(envelope.toJson());
   }
 }

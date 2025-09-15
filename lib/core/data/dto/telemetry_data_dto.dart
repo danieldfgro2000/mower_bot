@@ -50,9 +50,10 @@ class TelemetryMapper {
   static TelemetryDataModel fromData(Map<String, dynamic> data) {
     double toD(dynamic v) => (v is num) ? v.toDouble() : 0.0;
     return TelemetryDataModel(
-      wheelAngle: toD(data['angle']),
+      wheelAngle: toD(data['stepperAngle']),
+      opticalAngle: toD(data['actualAngleFromOptic']),
       speed: toD(data['speed']),
-      distanceTraveled: toD(data['distance']),
+      distanceTraveled: toD(data['distanceTraveled']),
       actuatorDrive: data['actuatorDrive'] ?? false,
       actuatorStart: data['actuatorStart'] ?? false,
     );

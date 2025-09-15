@@ -85,7 +85,7 @@ class WebSocketAdapter {
 
       _webSocketChannel?.stream.listen(
         (data) {
-          print("[WS] Data: ${data is String ?  data : data is List<int> ? 'Binary data of length ${data.length}' : 'Unknown data type'}");
+          // print("[WS] Data: ${data is String ?  data : data is List<int> ? 'Binary data of length ${data.length}' : 'Unknown data type'}");
           try {
             switch (data) {
               case String():

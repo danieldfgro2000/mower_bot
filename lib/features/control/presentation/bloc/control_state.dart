@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 
 class ControlState extends Equatable {
   final bool? isConnected;
@@ -10,6 +11,7 @@ class ControlState extends Equatable {
   final String? videoStreamUrl;
   final String? recordedFilePath;
   final String? errorMessage;
+  final TelemetryDataModel? telemetryData;
 
   const ControlState({
     this.isConnected,
@@ -20,6 +22,7 @@ class ControlState extends Equatable {
     this.videoStreamUrl,
     this.recordedFilePath,
     this.errorMessage,
+    this.telemetryData,
   });
 
   ControlState initial() {
@@ -32,6 +35,7 @@ class ControlState extends Equatable {
       videoStreamUrl: null,
       recordedFilePath: null,
       errorMessage: null,
+      telemetryData: null
     );
   }
 
@@ -45,6 +49,7 @@ class ControlState extends Equatable {
     videoStreamUrl,
     recordedFilePath,
     errorMessage,
+    telemetryData
   ];
 
   ControlState copyWith({
@@ -57,6 +62,7 @@ class ControlState extends Equatable {
     String? videoStreamUrl,
     String? recordedFilePath,
     String? errorMessage,
+    TelemetryDataModel? telemetryData,
   }) {
     return ControlState(
       isConnected: isConnected ?? this.isConnected,
@@ -67,6 +73,7 @@ class ControlState extends Equatable {
       videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
       recordedFilePath: recordedFilePath ?? this.recordedFilePath,
       errorMessage: errorMessage ?? this.errorMessage,
+      telemetryData: telemetryData ?? this.telemetryData,
     );
   }
 }

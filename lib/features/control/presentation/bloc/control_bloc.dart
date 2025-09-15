@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
+import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:stream_transform/stream_transform.dart' as st;
 
 import 'control_state.dart';
@@ -11,14 +13,17 @@ import 'control_state.dart';
 class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final SendDriveCommandUseCase sendCommand;
   final GetVideoStreamUrlUseCase getVideoStreamUrl;
+  final ObserverTelemetryUseCase observeTelemetryUseCase;
 
   EventTransformer<SteerCommand> debounceSteer() =>
     (events, mapper) => events
         .debounce(Duration(milliseconds: 100))
         .switchMap(mapper);
 
-  ControlBloc(this.sendCommand, this.getVideoStreamUrl)
+  ControlBloc(this.sendCommand, this.getVideoStreamUrl, this.observeTelemetryUseCase)
     : super(ControlState().initial()) {
+    on<StartTelemetryStream>(_onStartTelemetryStream);
+    on<TelemetryDataReceived>(_onTelemetryDataReceived);
     on<GetVideoStreamUrl>(_onGetVideoStreamUrl);
     on<DriveCommand>(_onDriveCommand);
     on<RunCommand>(_onRunCommand);
@@ -27,6 +32,21 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     on<StopRecord>(_onStopRecord);
     on<EmergencyStop>(_onEmergencyStop);
     on<ClearError>(_onClearError);
+  }
+
+  FutureOr<void> _onStartTelemetryStream(event, emit) {
+    observeTelemetryUseCase().listen(
+      (telemetryData) => add(TelemetryDataReceived(telemetryData)),
+      onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
+    );
+  }
+
+  FutureOr<void> _onTelemetryDataReceived(event, emit) {
+    final telemetryData = event.telemetryData;
+    emit(state.copyWith(telemetryData: telemetryData));
+    if (telemetryData.actuatorDrive == false) {
+      emit(state.copyWith(isMowerMoving: false));
+    }
   }
 
   FutureOr<void> _onGetVideoStreamUrl(event, emit) =>
@@ -65,7 +85,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     });
 
     wasSent
-      ? emit(state.copyWith(errorMessage: ''))
+      ? emit(state.copyWith(errorMessage: 'sent'))
       : emit(state.copyWith(errorMessage: "Failed to send steer command"));
   }
 

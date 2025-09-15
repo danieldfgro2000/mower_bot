@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 
 abstract class ControlEvent extends Equatable {
   const ControlEvent();
@@ -11,6 +12,17 @@ abstract class ControlEvent extends Equatable {
 class CheckConnectionStatus extends ControlEvent {}
 
 class GetVideoStreamUrl extends ControlEvent {}
+
+class StartTelemetryStream extends ControlEvent {}
+
+class TelemetryDataReceived extends ControlEvent {
+  final TelemetryDataModel telemetryData;
+
+  const TelemetryDataReceived(this.telemetryData);
+
+  @override
+  List<Object?> get props => [telemetryData];
+}
 
 class DriveCommand extends ControlEvent {
   final bool isMoving;

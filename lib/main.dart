@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(create: (context) =>
-            ControlBloc(sl(), sl())),
+            ControlBloc(sl(), sl(), sl())),
         BlocProvider(
           create: (_) => PathBloc(
             sl(), // GetPathsUseCase

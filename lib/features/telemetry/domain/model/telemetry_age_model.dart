@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class TelemetryDataModel extends Equatable{
+class TelemetryAgeModel extends Equatable{
   final bool received;
   final int ageMs;
   final bool ok;
 
-  const TelemetryDataModel({
+  const TelemetryAgeModel({
     required this.received,
     required this.ageMs,
     required this.ok,
