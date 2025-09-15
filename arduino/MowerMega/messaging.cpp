@@ -101,12 +101,13 @@ void messagingSendTelemetry() {
   if(millis() - lastSend < 1000) return;
   lastSend = millis();
 
-  StaticJsonDocument<256> doc;
-  doc["mega"]["angle"] = steeringGetCommandedAngle();
-  doc["mega"]["encoder"] = steeringGetActualAngle();
-  doc["mega"]["distance"] = wheelGetDistance();
-  doc["mega"]["speed"] = wheelGetSpeed();
-  doc["mega"]["homed"] = steeringIsHomed();
+  StaticJsonDocument<384> doc;
+  doc["topic"] = "telemetry";
+  doc["data"]["mega"]["angle"] = steeringGetCommandedAngle();
+  doc["data"]["mega"]["encoder"] = steeringGetActualAngle();
+  doc["data"]["mega"]["distance"] = wheelGetDistance();
+  doc["data"]["mega"]["speed"] = wheelGetSpeed();
+  doc["data"]["mega"]["homed"] = steeringIsHomed();
 
   String json;
   serializeJson(doc, json);
