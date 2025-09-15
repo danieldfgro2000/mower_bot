@@ -15,6 +15,8 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final GetVideoStreamUrlUseCase getVideoStreamUrl;
   final ObserverTelemetryUseCase observeTelemetryUseCase;
 
+  StreamSubscription? _telemetrySubscription;
+
   EventTransformer<SteerCommand> debounceSteer() =>
     (events, mapper) => events
         .debounce(Duration(milliseconds: 100))
@@ -35,6 +37,9 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   FutureOr<void> _onStartTelemetryStream(event, emit) {
+    print('Starting telemetry stream...');
+    _telemetrySubscription?.cancel();
+    _telemetrySubscription =
     observeTelemetryUseCase().listen(
       (telemetryData) => add(TelemetryDataReceived(telemetryData)),
       onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
@@ -42,6 +47,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   FutureOr<void> _onTelemetryDataReceived(event, emit) {
+    print('Telemetry data received: ${event.telemetryData}');
     final telemetryData = event.telemetryData;
     emit(state.copyWith(telemetryData: telemetryData));
     if (telemetryData.actuatorDrive == false) {
@@ -85,7 +91,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     });
 
     wasSent
-      ? emit(state.copyWith(errorMessage: 'sent'))
+      ? emit(state.copyWith(errorMessage: ''))
       : emit(state.copyWith(errorMessage: "Failed to send steer command"));
   }
 
@@ -117,4 +123,10 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
 
   FutureOr<void> _onClearError(event, emit) =>
       emit(state.copyWith(errorMessage: ''));
+
+  @override
+  Future<void> close() {
+    _telemetrySubscription?.cancel();
+    return super.close();
+  }
 }
