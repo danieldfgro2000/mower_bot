@@ -103,12 +103,12 @@ void messagingSendTelemetry() {
 
   StaticJsonDocument<384> doc;
   doc["topic"] = "telemetry";
-  doc["data"]["mega"]["angle"] = steeringGetCommandedAngle();
-  doc["data"]["mega"]["encoder"] = steeringGetActualAngle();
-  doc["data"]["mega"]["distance"] = wheelGetDistance();
-  doc["data"]["mega"]["speed"] = wheelGetSpeed();
-  doc["data"]["mega"]["homed"] = steeringIsHomed();
-
+  doc["data"]["stepperAngle"] = steeringGetCommandedAngle();
+  doc["data"]["actualAngleFromOptic"] = steeringGetActualAngle();
+  doc["data"]["distanceTraveled"] = wheelGetDistance();
+  doc["data"]["speed"] = wheelGetSpeed();
+  doc["data"]["actuatorDrive"] = actuatorIsDriving();
+  doc["data"]["actuatorStart"] = actuatorIsStarted();
   String json;
   serializeJson(doc, json);
   Serial1.println(json);

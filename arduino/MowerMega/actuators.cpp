@@ -21,3 +21,11 @@ void actuatorDrive(bool state) {
     Serial.println(state ? " ON" : " OFF");
   digitalWrite(driveActuatorPin, state ? HIGH : LOW);
 }
+
+bool actuatorIsDriving() {
+  return digitalRead(driveActuatorPin) == HIGH;
+}
+
+bool actuatorIsStarted() {
+  return digitalRead(startActuatorPin) == HIGH;
+}
