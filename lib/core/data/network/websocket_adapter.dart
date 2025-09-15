@@ -192,7 +192,7 @@ class WebSocketAdapter {
 
     if (_reconnectAttempts >= wscfg.max5attempts) {
       if (kDebugMode) print("[WS]: Max attempts reached. Not reconnecting.");
-      onError?.call("Max reconnect attempts reached: ${wscfg.max5attempts}");
+      onError("Max reconnect attempts reached: ${wscfg.max5attempts}");
       return;
     }
 

@@ -2,7 +2,6 @@ import 'package:mower_bot/core/data/dto/telemetry_age_dto.dart';
 import 'package:mower_bot/core/data/dto/wifi_info_dto.dart';
 import 'package:mower_bot/core/data/dto/ws_info_dto.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
-import 'package:mower_bot/features/connection/domain/model/wifi_info_model.dart';
 
 class MowerStatusDTO {
   final int uptimeMs;

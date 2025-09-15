@@ -33,7 +33,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
       await _ctrlWSClient.connect();
       await _ctrlErrSub?.cancel();
 
-      _ctrlErrSub = _ctrlWSClient.messages?.listen(
+      _ctrlErrSub = _ctrlWSClient.messages.listen(
         (_) {},
         onError: (e, st) => _errorCtrl.add(st),
       );
