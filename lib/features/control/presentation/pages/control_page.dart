@@ -47,84 +47,101 @@ class _ControlPageState extends State<ControlPage>
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return BlocBuilder<ControlBloc, ControlState>(
-      builder: (context, state) => Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return Stack(
-              children: [
-                Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
-                if (state.isRecording == true)
-                  _recordingBanner(context),
-                _recordButton(context),
-                Positioned.fill(
-                  top: 0,
-                  left: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Spacer(),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            _driveUnit(context, screenWidth),
-                            Spacer(),
-                            _engineUnit(context, screenWidth),
-                          ],
-                        ),
-                      ],
-                    ),
+    return Stack(
+      children: [
+        Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
+
+        BlocSelector<ControlBloc, ControlState, bool>(
+          selector: (s) => s.isRecording == true,
+          builder: (context, isRecording) =>
+              isRecording
+                  ? _recordingBanner(context)
+                  : const SizedBox.shrink(),
+        ),
+
+        _recordButton(context),
+
+        BlocBuilder<ControlBloc, ControlState>(
+          builder: (context, state) => Positioned.fill(
+            top: 0,
+            left: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Spacer(),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      _driveUnit(context, screenWidth),
+                      Spacer(),
+                      _engineUnit(context, screenWidth),
+                    ],
                   ),
-                ),
-                if (state.errorMessage != null)
-                  Positioned.fill(
-                    top: 100,
-                    left: 0,
-                    child: IgnorePointer(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Text(
-                          state.errorMessage!,
-                          style: const TextStyle(color: Colors.red, fontSize: 25, fontWeight: FontWeight.bold),
+                ],
+              ),
+            ),
+          ),
+        ),
+
+        BlocSelector<ControlBloc, ControlState, String?>(
+          selector: (s) => s.errorMessage,
+          builder: (context, errorMessage) =>
+              errorMessage == null || errorMessage.isEmpty
+              ? const SizedBox.shrink()
+              : Positioned.fill(
+                  top: 100,
+                  left: 0,
+                  child: IgnorePointer(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-              ],
-            );
-          },
+                ),
         ),
-      ),
+      ],
     );
   }
 
   Column _engineUnit(BuildContext context, double screenWidth) {
-    final isRunning = context.select((ControlBloc b) => b.state.isMowerRunning == true);
-    final isMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
+    final isRunning = context.select(
+      (ControlBloc b) => b.state.isMowerRunning == true,
+    );
+    final isMoving = context.select(
+      (ControlBloc b) => b.state.isMowerMoving == true,
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
+          visualDensity: VisualDensity.compact,
           iconSize: screenWidth * 0.1,
           splashColor: Colors.blue.shade500,
           icon: Icon(
             Icons.motorcycle_rounded,
             color: isRunning ? Colors.green : Colors.grey,
           ),
-          onPressed: () =>
-            context.read<ControlBloc>().add(
-              RunCommand(isRunning: !isRunning),
-            ),
+          onPressed: () => context.read<ControlBloc>().add(
+            RunCommand(isRunning: !isRunning),
+          ),
         ),
         IconButton(
           iconSize: screenWidth * 0.2,
           splashColor: Colors.red.shade500,
+          visualDensity: VisualDensity.compact,
           icon: Icon(
             Icons.emergency,
             color: isMoving || isRunning ? Colors.red : Colors.grey,
@@ -136,7 +153,9 @@ class _ControlPageState extends State<ControlPage>
   }
 
   Column _driveUnit(BuildContext context, double screenWidth) {
-    final isMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
+    final isMoving = context.select(
+      (ControlBloc b) => b.state.isMowerMoving == true,
+    );
     final controlBloc = context.read<ControlBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -152,14 +171,19 @@ class _ControlPageState extends State<ControlPage>
             DriveCommand(isMoving: !controlBloc.state.isMowerMoving!),
           ),
         ),
-        JoystickWithTrackingDot(screenWidth: screenWidth,),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: JoystickWithTrackingDot(screenWidth: screenWidth),
+        ),
       ],
     );
   }
 
   Positioned _recordButton(BuildContext context) {
     final controlBloc = context.read<ControlBloc>();
-    final isRecording = context.select((ControlBloc b) => b.state.isRecording == true);
+    final isRecording = context.select(
+      (ControlBloc b) => b.state.isRecording == true,
+    );
     return Positioned(
       top: 40,
       right: 20,
@@ -217,11 +241,10 @@ class _ControlPageState extends State<ControlPage>
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () =>
-                Navigator.pop(context,
-                  controller.text.trim().isEmpty
-                    ? null
-                    : controller.text.trim(),),
+            onPressed: () => Navigator.pop(
+              context,
+              controller.text.trim().isEmpty ? null : controller.text.trim(),
+            ),
             child: const Text('Save'),
           ),
         ],
@@ -232,17 +255,15 @@ class _ControlPageState extends State<ControlPage>
 
 class JoystickWithTrackingDot extends StatefulWidget {
   final double screenWidth;
-  const JoystickWithTrackingDot({
-    super.key,
-    required this.screenWidth,
-  });
+
+  const JoystickWithTrackingDot({super.key, required this.screenWidth});
 
   @override
-  State<JoystickWithTrackingDot> createState() => _JoystickWithTrackingDotState();
+  State<JoystickWithTrackingDot> createState() =>
+      _JoystickWithTrackingDotState();
 }
 
 class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
-
   @override
   Widget build(BuildContext context) {
     final joystickSize = widget.screenWidth / 6;
@@ -258,15 +279,15 @@ class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
           final rad = angleDeg * math.pi / 180.0;
           final theta = math.pi / 2 - rad;
           final dx = r * math.cos(theta);
-          final dy = - r * math.sin(theta);
+          final dy = -r * math.sin(theta);
           return Stack(
             alignment: Alignment.center,
             children: [
               Joystick(
                 mode: JoystickMode.horizontal,
-                listener: (details) =>
-                    context.read<ControlBloc>()
-                        .add(SteerCommand(angle: details.x * 45)),
+                listener: (details) => context.read<ControlBloc>().add(
+                  SteerCommand(angle: details.x * 45),
+                ),
               ),
               IgnorePointer(
                 child: Transform.translate(
@@ -278,13 +299,13 @@ class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
                       color: Colors.blue,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2),
-                    )
+                    ),
                   ),
                 ),
-              )
-            ]
+              ),
+            ],
           );
-        }
+        },
       ),
     );
   }
