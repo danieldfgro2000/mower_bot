@@ -4,13 +4,13 @@ class MowerBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    print('📥 Event: ${bloc.runtimeType} -> $event');
+    // print('📥 Event: ${bloc.runtimeType} -> $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print('🔄 Transition: ${bloc.runtimeType} -> $transition');
+    // print('🔄 Transition: ${bloc.runtimeType} -> $transition');
   }
 
   @override
@@ -22,6 +22,6 @@ class MowerBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    print('📦 Change: ${bloc.runtimeType} -> $change');
+    print('📦 Change: ${bloc.runtimeType} -> ${change.nextState}');
   }
 }

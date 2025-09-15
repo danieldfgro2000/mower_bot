@@ -85,6 +85,7 @@ class WebSocketAdapter {
 
       _webSocketChannel?.stream.listen(
         (data) {
+          print("[WS] Data: ${data is String ?  data : data is List<int> ? 'Binary data of length ${data.length}' : 'Unknown data type'}");
           try {
             switch (data) {
               case String():
@@ -105,8 +106,7 @@ class WebSocketAdapter {
                 break;
             }
           } catch (e, st) {
-            if (kDebugMode)
-              print("Error decoding message: $e, stacktrace: $st");
+            if (kDebugMode) print("Error decoding message: $e, stacktrace: $st");
             onError("Error decoding message: $e", st);
           }
         },

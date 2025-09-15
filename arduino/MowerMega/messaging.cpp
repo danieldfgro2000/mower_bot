@@ -98,7 +98,7 @@ void messagingHandleInput() {
 }
 
 void messagingSendTelemetry() {
-  if(millis() - lastSend < 5000) return;
+  if(millis() - lastSend < 1000) return;
   lastSend = millis();
 
   StaticJsonDocument<256> doc;

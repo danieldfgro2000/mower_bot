@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ConnectionStatus {
+enum ConnectionStatus{
   disconnected,
   connecting,
   ctrlWsConnected,
