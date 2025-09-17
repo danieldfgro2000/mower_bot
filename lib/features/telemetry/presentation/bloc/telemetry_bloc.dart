@@ -22,7 +22,6 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     this._observeTelemetryStreamUseCase,
     this._observeTelemetryStatusUseCase,
   ) : super(TelemetryInitial()) {
-    debugPrint('TelemetryBloc actor -> ${identityHashCode(this)}');
     on<StartTelemetry>(_onStartTelemetry);
     on<TelemetryReceived>(_onTelemetryReceived);
     on<StopTelemetry>(_onStopTelemetry);

@@ -16,7 +16,6 @@ class ConnectionForm extends StatefulWidget {
 
 class _ConnectionFormState extends State<ConnectionForm> {
   late final TextEditingController ipController;
-  late final TextEditingController portController;
 
   @override
   void initState() {
@@ -24,7 +23,6 @@ class _ConnectionFormState extends State<ConnectionForm> {
     final bloc = context.read<MowerConnectionBloc>();
     final s = bloc.state;
     ipController = TextEditingController(text: s.ip ?? '192.168.100.114');
-    portController = TextEditingController(text: s.port?.toString() ?? '81');
     bloc.add(ChangeIp(ipController.text));
   }
 
@@ -32,7 +30,6 @@ class _ConnectionFormState extends State<ConnectionForm> {
   void dispose() {
     super.dispose();
     ipController.dispose();
-    portController.dispose();
   }
 
   @override
@@ -60,20 +57,6 @@ class _ConnectionFormState extends State<ConnectionForm> {
             enabled: !isBusy,
             onChanged: (ip) => bloc.add(ChangeIp(ip)),
           ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: portController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Port',
-              border: OutlineInputBorder(),
-            ),
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            validator: _validatePort,
-            enabled: !isBusy,
-            onChanged: (port) {},
-          ),
-          const SizedBox(height: 16),
         ],
       ),
     );
@@ -87,17 +70,5 @@ String? _validateIp(String? v) {
   }
   final ipv4 = RegExp(r'^(\d{1,3}\.){3}\d{1,3}$');
   if (!ipv4.hasMatch(s)) return 'Invalid IP Address format';
-  return null;
-}
-
-String? _validatePort(String? v) {
-  final s = (v ?? '').trim();
-  if (s.isEmpty) {
-    return 'Port cannot be empty';
-  }
-  final port = int.tryParse(s);
-  if (port == null || port < 1 || port > 65535) {
-    return 'Port must be a number between 1 and 65535';
-  }
   return null;
 }

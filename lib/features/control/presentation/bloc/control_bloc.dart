@@ -5,7 +5,6 @@ import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
-import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:stream_transform/stream_transform.dart' as st;
 
 import 'control_state.dart';

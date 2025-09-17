@@ -35,30 +35,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
         child: MultiBlocListener(
           listeners: [
             BlocListener<MowerConnectionBloc, MowerConnectionState>(
-              listenWhen: (prev, curr) => prev.status != curr.status,
-              listener: (context, state) {
-                switch (state.status) {
-                  case ConnectionStatus.ctrlWsConnected:
-                    _showSnackBar(context, 'Connected to control websocket');
-                    break;
-                  case ConnectionStatus.videoWsConnected:
-                    _showSnackBar(context, 'Connected to video websocket');
-                    break;
-                  case ConnectionStatus.disconnected:
-                    _showSnackBar(context, 'Disconnected');
-                    break;
-                  case ConnectionStatus.connecting:
-                    _showSnackBar(context, 'Connecting to mower...');
-                    break;
-                  case ConnectionStatus.hostUnreachable:
-                    _showSnackBar(context, 'Host unreachable', isError: true);
-                    break;
-                  case ConnectionStatus.error:
-                    break;
-                }
-              },
-            ),
-            BlocListener<MowerConnectionBloc, MowerConnectionState>(
               listenWhen: (p, c) => p.error  != c.error,
               listener: (context, state) {
                 String? err = state.error;
@@ -69,10 +45,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
           ],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const ConnectionStatusTile(),
-              const SizedBox(height: 16),
               Expanded(child: ConnectionForm(formKey: _formKey)),
               const SizedBox(height: 16),
               ConnectionButton(formKey: _formKey),
