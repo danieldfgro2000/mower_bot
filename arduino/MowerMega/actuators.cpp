@@ -1,8 +1,8 @@
 #include "actuators.h"
 #include <Arduino.h>
 
-const int startActuatorPin = 30;
-const int driveActuatorPin = 31;
+const int startActuatorPin = 11;
+const int driveActuatorPin = 12;
 
 void actuatorsInit() {
     Serial.println("[ACTUATORS] Init\n");

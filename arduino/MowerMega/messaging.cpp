@@ -104,7 +104,7 @@ void messagingSendTelemetry() {
   StaticJsonDocument<384> doc;
   doc["topic"] = "telemetry";
   doc["data"]["stepperAngle"] = steeringGetCommandedAngle();
-  doc["data"]["actualAngleFromOptic"] = steeringGetActualAngle();
+  doc["data"]["actualAngleFromOptic"] = wheelGetAngle();
   doc["data"]["distanceTraveled"] = wheelGetDistance();
   doc["data"]["speed"] = wheelGetSpeed();
   doc["data"]["actuatorDrive"] = actuatorIsDriving();

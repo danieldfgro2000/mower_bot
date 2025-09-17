@@ -49,10 +49,11 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   FutureOr<void> _onTelemetryDataReceived(event, emit) {
     print('Telemetry data received: ${event.telemetryData}');
     final telemetryData = event.telemetryData;
-    emit(state.copyWith(telemetryData: telemetryData));
-    if (telemetryData.actuatorDrive == false) {
-      emit(state.copyWith(isMowerMoving: false));
-    }
+    emit(state.copyWith(
+        telemetryData: telemetryData,
+        isMowerMoving: telemetryData.actuatorDrive,
+        isMowerRunning: telemetryData.actuatorStart,
+    ));
   }
 
   FutureOr<void> _onGetVideoStreamUrl(event, emit) =>

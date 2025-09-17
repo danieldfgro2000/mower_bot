@@ -1,42 +1,52 @@
 #include "wheel_telemetry.h"
 #include <Arduino.h>
 
-const int wheelEncA = 22;
-const int wheelEncB = 23;
+const int distEnc = 2;
+const int turnEnc = 3;
 const float wheelDiameter = 15.0; //cm
-const int wheelPPR = 600; // pulses per revolution
+const int wheelPPR = 100; // pulses per revolution
+const int anglePPR = 60;
 
-volatile long wheelCount = 0;
+volatile long distCount = 0;
+volatile long turnCount = 0;
 unsigned long lastUpdate = 0;
 float wheelSpeed = 0.0;
 
-void wheelISR() {
-  int b = digitalRead(wheelEncB);
-  wheelCount += (b == HIGH) ? 1 : -1;
+void distISR() {
+  distCount ++;
+}
+
+void turnISR() {
+  turnCount ++;
 }
 
 void wheelTelemetryInit() {
-  pinMode(wheelEncA, INPUT_PULLUP);
-  pinMode(wheelEncB, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(wheelEncA), wheelISR, RISING);
-  wheelCount = 0;
+  pinMode(distEnc, INPUT_PULLUP);
+  pinMode(turnEnc, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(distEnc), distISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(turnEnc), turnISR, RISING);
+
+  distCount = 0;
+  turnCount = 0;
 }
 
 void wheelTelemetryUpdate() {
   unsigned long now = millis();
-  static long lastCount = 0;
+  static long lastDistCount = 0;
+  static long lastTurnCount = 0;
 
   if (now - lastUpdate >= 200) {
-    long delta  = wheelCount - lastCount;
+    long delta  = distCount - lastDistCount;
     float revs  = (float)delta / wheelPPR;
     wheelSpeed = (revs * (wheelDiameter * PI)) / ((now - lastUpdate) / 1000.0);
-    lastCount = wheelCount;
+    lastDistCount = distCount;
     lastUpdate = now;
   }
 }
 
 float wheelGetDistance() {
-  float revs = (float)wheelCount / wheelPPR;
+  float revs = (float)distCount / wheelPPR;
   return revs * (wheelDiameter * PI);
 }
 
@@ -44,6 +54,15 @@ float wheelGetSpeed() {
   return wheelSpeed; 
 }
 
+float wheelGetAngle() {
+    // this should always be between 0 and 360
+    float revs = (float)turnCount / anglePPR;
+    float angle = revs * 360.0f;
+    angle = fmod(angle, 360.0f);
+    return angle;
+}
+
 void wheelReset() {
-  wheelCount = 0;
+  distCount = 0;
+  turnCount = 0;
 }

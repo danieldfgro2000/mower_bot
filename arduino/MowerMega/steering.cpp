@@ -3,64 +3,55 @@
 #include <AccelStepper.h>
 #include <TMCStepper.h>
 
-// ---- Stepper Driver Pins ----
+// ===========================
+// ----- Driver Pins (MEGA)
+// ===========================
+const int enPin = 5;
+const int stepPin = 6;
+const int dirPin = 7;
 
-const int dirPin = 4;
-const int stepPin = 3;
-const int enPin = 2;
-
-const int opticalPin = 6;
-
-// ---- Encoder Pins ----
-const int encoderPinA = 20;
-const int encoderPinB = 21;
-
-// --- TMC2209 UART on MEGA Serial2 ----
-#define R_SENSE 0.11f // Match to your driver
+// ===========================
+// ----- TMC2209 (UART on Serial2)
+// ===========================
+ #define R_SENSE 0.11f
 TMC2209Stepper driver(&Serial2, R_SENSE, 0b00);
 
-// ---- Steering Config ----
+// ===========================
+// ----- Steering Config
+// ===========================
 static const uint16_t MICROSTEPS = 4;
-const float stepsPerRevolution = 200.0 * MICROSTEPS;
-const float steeringRange = 90.0;
-const float encoderPPR = 600.0;
-const float gearRatio = 50.0;
+const float stepsPerRevolution = 200.0f * MICROSTEPS;
+const float steeringRange = 90.0f;
+const float gearRatio = 50.0f;
 
+// ===========================
+// ----- Helpers
+// ===========================
 static inline long wheelDegToSteps(float deg) {
-    // motor steps = wheel_deg * gear_ratio * steps_per_rev / 360
     const float s = (deg * gearRatio * stepsPerRevolution) / 360.0f;
     return (long)(s + (s >= 0 ? 0.5f : -0.5f)); // round to nearest
 }
 
 static inline float stepsToWheelDeg(long steps) {
-    // wheel_deg = motor_steps * 360 / (gear_ratio * steps_per_rev)
     return (steps * 360.0f) / (gearRatio * stepsPerRevolution);
 }
 
 AccelStepper stepper(AccelStepper::DRIVER, stepPin, dirPin);
 
+// ===========================
 // ---- State ----
+// ===========================
 volatile long encoderCount = 0;
 bool homed = false;
 int lowCount = 0;
-float targetAngle = 0.0;
+float targetAngle = 0.0f;
 bool newTarget = false;
-
-void encoderISR() {
-    int b = digitalRead(encoderPinB);
-    encoderCount += (b == HIGH) ? 1 : -1;
-}
 
 void steeringInit() {
     pinMode(enPin, OUTPUT);
     digitalWrite(enPin, HIGH); // keep disabled until driver is configured
 
-    pinMode(opticalPin, INPUT_PULLUP);
-    pinMode(encoderPinA, INPUT_PULLUP);
-    pinMode(encoderPinB, INPUT_PULLUP);
-
-    attachInterrupt(digitalPinToInterrupt(encoderPinA), encoderISR, RISING);
-
+    // Stepper driver  (AccelStepper)
     stepper.setEnablePin(enPin);
     stepper.setPinsInverted(false, false, true); // invert enable pin
     stepper.setMinPulseWidth(4);
@@ -118,14 +109,13 @@ void steeringHome() {
     stepper.setSpeed(500);
     stepper.runSpeed();
 
-    if (digitalRead(opticalPin) == LOW) lowCount++;
-    else lowCount = 0;
+//    if (digitalRead(turnEnc) == LOW) lowCount++;
+//    else lowCount = 0;
 
     // Double low for zero notch
     if (lowCount >= 2) {
         stepper.stop();
         stepper.setCurrentPosition(0);
-        encoderCount = 0;
         homed = true;
         Serial.print("[STEERING] Steering homed to zero\n");
     }
@@ -149,10 +139,6 @@ void steeringSetAngle(float angle) {
 
 float steeringGetCommandedAngle() {
     return stepsToWheelDeg(stepper.targetPosition());
-}
-
-float steeringGetActualAngle() {
-    return (encoderCount * 360.0f) / (encoderPPR * gearRatio);
 }
 
 bool steeringIsHomed() { return homed; }
