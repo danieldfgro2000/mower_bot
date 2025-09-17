@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/core/error/error.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';
 import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws_use_case.dart';
@@ -17,6 +18,9 @@ class MowerConnectionBloc
   final CheckCtrlWsConnectedUseCase checkCtrlWsConnectedUseCase;
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
+  final ExceptionHandler _exceptionHandler = ExceptionHandler();
+  final ErrorMapper _errorMapper = ErrorMapper();
+
   StreamSubscription? _errSub;
   StreamSubscription? _connectionStatusSub;
 
@@ -42,13 +46,19 @@ class MowerConnectionBloc
   FutureOr<void> _onConnect(event, emit) async {
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
-    try {
+    final result = await _exceptionHandler.safeExecute(() async {
       if(state.ip == null || state.ip!.isEmpty) {
-        throw Exception('IP address is required');
+        throw ValidationException.required('IP Address');
       }
+
       await connectToCtrlWsUseCase(state.ip!);
       await _errSub?.cancel();
-      _errSub = repo.ctrlWsErr().listen((e) => add(ConnectionError(e.toString())));
+
+      _errSub = repo.ctrlWsErr().listen((exception) {
+        final userMessage = _errorMapper.mapExceptionToMessage(exception);
+        add(ConnectionError(userMessage));
+      });
+
       await _connectionStatusSub?.cancel();
       _connectionStatusSub = repo.ctrlWsConnected()?.listen(
         (connectionStatus) {
@@ -58,28 +68,43 @@ class MowerConnectionBloc
             : telemetryBloc.add(StopTelemetry());
         },
       );
-    } catch (e) {
-      emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
-      return;
+    });
+
+    if (result == null) {
+      // Error occurred and was handled by safeExecute
+      final lastException = _exceptionHandler.exceptions.take(1);
+      await for (final exception in lastException) {
+        final userMessage = _errorMapper.mapExceptionToMessage(exception);
+        emit(state.copyWith(status: ConnectionStatus.error, error: userMessage));
+        break;
+      }
     }
   }
 
   FutureOr<void> _onDisconnect(event, emit) async {
-    await _errSub?.cancel();
-    await disconnectCtrlWsUseCase();
+    await _exceptionHandler.safeExecute(() async {
+      await _errSub?.cancel();
+      await _connectionStatusSub?.cancel();
+      await disconnectCtrlWsUseCase();
+    });
     emit(state.copyWith(status: ConnectionStatus.disconnected));
   }
 
   void _onCheckConnection(event, emit) async {
-    try {
+    final result = _exceptionHandler.safeExecuteSync(() {
       final isConnected = checkCtrlWsConnectedUseCase();
+      return isConnected
+        ? ConnectionStatus.ctrlWsConnected
+        : ConnectionStatus.disconnected;
+    });
+
+    if (result != null) {
+      emit(state.copyWith(status: result));
+    } else {
       emit(state.copyWith(
-        status: isConnected
-          ? ConnectionStatus.ctrlWsConnected
-          : ConnectionStatus.disconnected,
+        status: ConnectionStatus.error,
+        error: 'Failed to check connection status'
       ));
-    } catch (e) {
-      emit(state.copyWith(status: ConnectionStatus.error, error: e.toString()));
     }
   }
 
@@ -88,4 +113,12 @@ class MowerConnectionBloc
 
   void _onConnectionError(event, emit) =>
     emit(state.copyWith(error: event.error));
+
+  @override
+  Future<void> close() async {
+    await _errSub?.cancel();
+    await _connectionStatusSub?.cancel();
+    _exceptionHandler.dispose();
+    return super.close();
+  }
 }
