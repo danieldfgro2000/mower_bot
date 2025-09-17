@@ -24,19 +24,35 @@ class MowerConnectionBloc
   StreamSubscription? _errSub;
   StreamSubscription? _connectionStatusSub;
 
-  MowerConnectionBloc(
-    this.connectToCtrlWsUseCase,
-    this.disconnectCtrlWsUseCase,
-    this.checkCtrlWsConnectedUseCase,
-    this.telemetryBloc,
-    this.repo,
-  ) : super(const MowerConnectionState()) {
+  MowerConnectionBloc(this.connectToCtrlWsUseCase,
+      this.disconnectCtrlWsUseCase,
+      this.checkCtrlWsConnectedUseCase,
+      this.telemetryBloc,
+      this.repo,) : super(const MowerConnectionState()) {
     on<ChangeIp>(_onChangeIp);
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
     on<ConnectionError>(_onConnectionError);
+
+    // Initialize connection status listener on startup
+    _initializeConnectionStatus();
+  }
+
+  void _initializeConnectionStatus() {
+    // Check current connection status
+    add(CheckConnectionStatus());
+
+    // Set up connection status listener immediately - this is crucial for status updates
+    _connectionStatusSub = repo.ctrlWsConnected()?.listen(
+          (connectionStatus) {
+        add(ConnectionChanged(connectionStatus: connectionStatus));
+        connectionStatus == ConnectionStatus.ctrlWsConnected
+            ? telemetryBloc.add(StartTelemetry())
+            : telemetryBloc.add(StopTelemetry());
+      },
+    );
   }
 
   void _onChangeIp(event, emit) {
@@ -47,27 +63,18 @@ class MowerConnectionBloc
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
     final result = await _exceptionHandler.safeExecute(() async {
-      if(state.ip == null || state.ip!.isEmpty) {
+      if (state.ip == null || state.ip!.isEmpty) {
         throw ValidationException.required('IP Address');
       }
 
       await connectToCtrlWsUseCase(state.ip!);
-      await _errSub?.cancel();
 
+      // Set up error listener
+      await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((exception) {
         final userMessage = _errorMapper.mapExceptionToMessage(exception);
         add(ConnectionError(userMessage));
       });
-
-      await _connectionStatusSub?.cancel();
-      _connectionStatusSub = repo.ctrlWsConnected()?.listen(
-        (connectionStatus) {
-          add(ConnectionChanged(connectionStatus: connectionStatus));
-          connectionStatus == ConnectionStatus.ctrlWsConnected
-            ? telemetryBloc.add(StartTelemetry())
-            : telemetryBloc.add(StopTelemetry());
-        },
-      );
     });
 
     if (result == null) {
@@ -75,7 +82,8 @@ class MowerConnectionBloc
       final lastException = _exceptionHandler.exceptions.take(1);
       await for (final exception in lastException) {
         final userMessage = _errorMapper.mapExceptionToMessage(exception);
-        emit(state.copyWith(status: ConnectionStatus.error, error: userMessage));
+        emit(
+            state.copyWith(status: ConnectionStatus.error, error: userMessage));
         break;
       }
     }
@@ -91,34 +99,28 @@ class MowerConnectionBloc
   }
 
   void _onCheckConnection(event, emit) async {
-    final result = _exceptionHandler.safeExecuteSync(() {
+    _exceptionHandler.safeExecuteSync(() {
       final isConnected = checkCtrlWsConnectedUseCase();
       return isConnected
-        ? ConnectionStatus.ctrlWsConnected
-        : ConnectionStatus.disconnected;
+          ? ConnectionStatus.ctrlWsConnected
+          : ConnectionStatus.disconnected;
     });
-
-    if (result != null) {
-      emit(state.copyWith(status: result));
-    } else {
-      emit(state.copyWith(
-        status: ConnectionStatus.error,
-        error: 'Failed to check connection status'
-      ));
-    }
   }
 
-  void _onConnectionChanged(event, emit) =>
-    emit(state.copyWith(status: event.connectionStatus));
+  FutureOr<void> _onConnectionChanged(event, emit) {
+    emit(state.copyWith(status: event.connectionStatus, error: ''));
+  }
 
-  void _onConnectionError(event, emit) =>
-    emit(state.copyWith(error: event.error));
+  FutureOr<void> _onConnectionError(event, emit) {
+    emit(state.copyWith(
+        status: ConnectionStatus.error, error: event.errorMessage));
+  }
+
 
   @override
   Future<void> close() async {
     await _errSub?.cancel();
     await _connectionStatusSub?.cancel();
-    _exceptionHandler.dispose();
-    return super.close();
+    super.close();
   }
 }

@@ -47,28 +47,50 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
         if (videoStreamUrl == null || videoStreamUrl.isEmpty) {
           return const Center(child: Text('No video stream'));
         }
-          return SafeArea(
-            child: InAppWebView(
-              initialSettings: InAppWebViewSettings(
-                javaScriptEnabled: true,
-                domStorageEnabled: true,
-                mediaPlaybackRequiresUserGesture: false,
-                allowsInlineMediaPlayback: true,
-                supportZoom: true,
-                transparentBackground: true,
-                clearCache: false,
-                disableContextMenu: true,
-                mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
-                useWideViewPort: true,
-                javaScriptCanOpenWindowsAutomatically: false,
-              ),
-              initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
-              onWebViewCreated: (c) => _controller = c,
-              onReceivedError: (c, req, err) {},
-            ),
-          );
-        }
 
+        return SafeArea(
+          child: InAppWebView(
+            initialSettings: InAppWebViewSettings(
+              javaScriptEnabled: true,
+              domStorageEnabled: true,
+              mediaPlaybackRequiresUserGesture: false,
+              allowsInlineMediaPlayback: true,
+              supportZoom: true,
+              transparentBackground: true,
+              clearCache: false,
+              disableContextMenu: true,
+              mixedContentMode: MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
+              useWideViewPort: true,
+              javaScriptCanOpenWindowsAutomatically: false,
+            ),
+            initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
+            onWebViewCreated: (c) => _controller = c,
+            onLoadStop: (controller, url) async {
+              // Hide toggle menu and start video stream after page loads
+              await controller.evaluateJavascript(source: '''
+              // Start video stream
+              const startBtn = document.querySelector('#toggle-stream');
+              if (startBtn && startBtn.textContent.toLowerCase().includes('start')) {
+                   startBtn.click();
+              }
+              
+              // Toggle settings OFF if menu is open
+              const settingsMenu = document.querySelector('#menu');
+              const toggleBtn = document.querySelector('#nav-toggle');
+              if (settingsMenu !== 'none') {
+                  toggleBtn.click();
+              }
+              ''');
+            },
+            onReceivedError: (c, req, err) {},
+          ),
+        );
+      },
     );
   }
-}
+    @override
+    void dispose() {
+      WidgetsBinding.instance.removeObserver(this);
+      super.dispose();
+    }
+  }
