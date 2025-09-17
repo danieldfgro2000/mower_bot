@@ -6,7 +6,6 @@ import 'package:mower_bot/features/connection/presentation/bloc/connection_state
 
 import 'components/connection_button.dart';
 import 'components/connection_form.dart';
-import 'components/connection_status_tile.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';

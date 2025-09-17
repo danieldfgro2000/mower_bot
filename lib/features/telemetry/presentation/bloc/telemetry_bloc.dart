@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
