@@ -22,7 +22,7 @@ TMC2209Stepper driver(&Serial2, R_SENSE, 0b00);
 static const uint16_t MICROSTEPS = 4;
 const float stepsPerRevolution = 200.0f * MICROSTEPS;
 const float steeringRange = 90.0f;
-const float gearRatio = 50.0f;
+const float gearRatio = 5.0f;
 
 // ===========================
 // ----- Helpers
@@ -55,8 +55,8 @@ void steeringInit() {
     stepper.setEnablePin(enPin);
     stepper.setPinsInverted(false, false, true); // invert enable pin
     stepper.setMinPulseWidth(4);
-    stepper.setMaxSpeed(4000);
-    stepper.setAcceleration(2500);
+    stepper.setMaxSpeed(500);
+    stepper.setAcceleration(300);
 
     // --- TMC2209 Setup (UART) ---
     Serial2.begin(115200);
@@ -98,7 +98,7 @@ void steeringHome() {
     }
     // TEMP (until optical installed)
 
-    if (now - homeTime >= 5000) {
+    if (now - homeTime >= 4000) {
         homeTime = now;
         stepper.stop();
         stepper.setCurrentPosition(0);
@@ -106,24 +106,11 @@ void steeringHome() {
         Serial.println();
         Serial.print("[STEERING] Steering homed to zero\n");
     }
-    stepper.setSpeed(500);
-    stepper.runSpeed();
-
-//    if (digitalRead(turnEnc) == LOW) lowCount++;
-//    else lowCount = 0;
-
-    // Double low for zero notch
-    if (lowCount >= 2) {
-        stepper.stop();
-        stepper.setCurrentPosition(0);
-        homed = true;
-        Serial.print("[STEERING] Steering homed to zero\n");
-    }
 }
 
 void steeringUpdate() {
     if (newTarget) {
-        const long steps = wheelDegToSteps(targetAngle);
+        const long steps = - wheelDegToSteps(targetAngle);
         stepper.moveTo(steps);
         newTarget = false;
     }
