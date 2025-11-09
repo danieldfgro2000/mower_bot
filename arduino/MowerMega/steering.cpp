@@ -46,6 +46,8 @@ bool homed = false;
 int lowCount = 0;
 float targetAngle = 0.0f;
 bool newTarget = false;
+float leftLimit = 0.0f;
+float rightLimit = 0.0f;
 
 void steeringInit() {
     pinMode(enPin, OUTPUT);
@@ -96,7 +98,21 @@ void steeringHome() {
         Serial.print(".");
         lastDotTime = now;
     }
-    // TEMP (until optical installed)
+
+    // Sweep left then right for 2 seconds - should hit the limit
+    if (now - homeTime < 2000) {
+        stepper.setSpeed(-500);
+        stepper.runSpeed();
+        // read stepper position as left limit
+        leftLimit = stepper.currentPosition();
+        Serial.print(leftLimit);
+    } else {
+        stepper.setSpeed(500);
+        stepper.runSpeed();
+        rightLimit = stepper.currentPosition();
+        Serial.print(rightLimit);
+    }
+
 
     if (now - homeTime >= 4000) {
         homeTime = now;
@@ -125,7 +141,7 @@ void steeringSetAngle(float angle) {
 }
 
 float steeringGetCommandedAngle() {
-    return stepsToWheelDeg(stepper.targetPosition());
+    return - stepsToWheelDeg(stepper.targetPosition());
 }
 
 bool steeringIsHomed() { return homed; }
