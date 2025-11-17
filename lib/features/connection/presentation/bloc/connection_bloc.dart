@@ -45,14 +45,20 @@ class MowerConnectionBloc
     // Check current connection status
     add(CheckConnectionStatus());
 
-    // Set up connection status listener immediately - this is crucial for status updates
-    _connectionStatusSub = repo.ctrlWsConnected()?.listen(
+    // Tear down any stale subscription and re-subscribe for fresh updates
+    _connectionStatusSub ??= repo.ctrlWsConnected()?.listen(
           (connectionStatus) {
         add(ConnectionChanged(connectionStatus: connectionStatus));
         connectionStatus == ConnectionStatus.ctrlWsConnected
             ? telemetryBloc.add(StartTelemetry())
             : telemetryBloc.add(StopTelemetry());
       },
+      onDone: () {
+        // Stream closed by repo, reset so a future call will re-subscribe
+        _connectionStatusSub = null;
+        add(CheckConnectionStatus());
+      },
+      cancelOnError: false,
     );
   }
 
@@ -67,12 +73,20 @@ class MowerConnectionBloc
   FutureOr<void> _onConnect(event, emit) async {
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
+    // Recreate the connection status listener to avoid being stuck with a completed/closed sub
+    await _connectionStatusSub?.cancel();
+    _connectionStatusSub = null;
+    _initializeConnectionStatus();
+
     final result = await _exceptionHandler.safeExecute(() async {
       if (state.ip == null || state.ip!.isEmpty) {
         throw ValidationException.required('IP Address');
       }
 
       await connectToCtrlWsUseCase(state.ip!);
+
+      // After initiating the connection, double-check current status
+      add(CheckConnectionStatus());
 
       // Set up error listener
       await _errSub?.cancel();
@@ -97,7 +111,7 @@ class MowerConnectionBloc
   FutureOr<void> _onDisconnect(event, emit) async {
     await _exceptionHandler.safeExecute(() async {
       await _errSub?.cancel();
-      await _connectionStatusSub?.cancel();
+      // Keep the connection status subscription alive so future connects update status correctly
       await disconnectCtrlWsUseCase();
     });
     emit(state.copyWith(status: ConnectionStatus.disconnected));
@@ -106,9 +120,10 @@ class MowerConnectionBloc
   void _onCheckConnection(event, emit) async {
     _exceptionHandler.safeExecuteSync(() {
       final isConnected = checkCtrlWsConnectedUseCase();
-      return isConnected
+      final status = isConnected
           ? ConnectionStatus.ctrlWsConnected
           : ConnectionStatus.disconnected;
+      emit(state.copyWith(status: status));
     });
   }
 

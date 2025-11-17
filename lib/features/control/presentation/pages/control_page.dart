@@ -158,15 +158,7 @@ class _ControlPageState extends State<ControlPage>
           height: 100.0,
           width: 100.0,
           child: Center(
-            child: Joystick(
-              mode: JoystickMode.horizontal,
-              listener: (details) {
-                steering = details.x * 30;
-                final currentMoving = ctx.read<ControlBloc>().state.isMowerMoving == true;
-                controlBloc.add(SteerCommand(angle: steering));
-                controlBloc.add(DriveCommand(isMoving: currentMoving));
-              },
-            ),
+            child: JoystickWithTrackingDot(screenWidth: screenWidth),
           ),
         ),
       ],
