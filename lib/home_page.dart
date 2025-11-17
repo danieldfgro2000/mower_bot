@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.wifi_rounded),
-                  title: const Text('Connection'),
+                  title: const Text('Setup'),
                   selected: _currentIndex == 0,
                   onTap: () {
                     Navigator.pop(context);
@@ -81,14 +81,24 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.wifi_off),
+                  leading: state.status == ConnectionStatus.ctrlWsConnected
+                      ? const Icon(Icons.link)
+                      : const Icon(Icons.link_off),
                   title: const Text('Connect'),
                   onTap: () {
                     Navigator.pop(context);
                     context.read<MowerConnectionBloc>().add(ConnectToMower());
                   },
                 ),
-
+                ListTile(
+                  leading: const Icon(Icons.control_camera),
+                  title: const Text('Control'),
+                  selected: _currentIndex == 1,
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onNavTap(1);
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.map),
                   title: const Text('Paths'),

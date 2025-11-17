@@ -51,14 +51,14 @@ class _ControlPageState extends State<ControlPage>
     const double controlsHeight = 72 + 16 + 100; // arrow + spacing + joystick/stop
 
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (ctx, constraints) { // use ctx instead of context
         final screenWidth = constraints.maxWidth; // for dynamic sizing
         return Stack(
           children: [
             Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
-            if (context.select((ControlBloc b) => b.state.isRecording == true))
-              _recordingBanner(context),
-            _recordButton(context),
+            if (ctx.select((ControlBloc b) => b.state.isRecording == true))
+              _recordingBanner(ctx),
+            _recordButton(ctx),
             Positioned.fill(
               top: 0,
               left: 0,
@@ -74,7 +74,7 @@ class _ControlPageState extends State<ControlPage>
                         height: controlsHeight,
                         child: Align(
                           alignment: Alignment.bottomLeft,
-                          child: _driveUnit(context, screenWidth), // pass context & screenWidth
+                          child: _driveUnit(ctx, screenWidth),
                         ),
                       ),
                       const Spacer(),
@@ -82,7 +82,7 @@ class _ControlPageState extends State<ControlPage>
                         height: controlsHeight,
                         child: Align(
                           alignment: Alignment.bottomRight,
-                          child: _stopButton(controlBloc),
+                          child: _stopButton(ctx, controlBloc),
                         ),
                       ),
                     ],
@@ -96,8 +96,8 @@ class _ControlPageState extends State<ControlPage>
     );
   }
 
-  Widget _stopButton(ControlBloc controlBloc) {
-    final isMowerMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
+  Widget _stopButton(BuildContext ctx, ControlBloc controlBloc) {
+    final isMowerMoving = ctx.select((ControlBloc b) => b.state.isMowerMoving == true);
     return IconButton(
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints.tightFor(width: 100, height: 100),
@@ -113,11 +113,11 @@ class _ControlPageState extends State<ControlPage>
     );
   }
 
-  Column _driveUnit(BuildContext context, double screenWidth) {
-    final isMowerMoving = context.select(
+  Column _driveUnit(BuildContext ctx, double screenWidth) {
+    final isMowerMoving = ctx.select(
       (ControlBloc b) => b.state.isMowerMoving == true,
     );
-    final controlBloc = context.read<ControlBloc>();
+    final controlBloc = ctx.read<ControlBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -133,7 +133,7 @@ class _ControlPageState extends State<ControlPage>
           onPressed: () {
             final next = !isMowerMoving;
             controlBloc.add(DriveCommand(isMoving: next));
-            controlBloc.add(SteerCommand(angle: steering)); // keep last steering when starting movement
+            controlBloc.add(SteerCommand(angle: steering));
           },
         ),
         const SizedBox(height: 16),
@@ -145,7 +145,7 @@ class _ControlPageState extends State<ControlPage>
               mode: JoystickMode.horizontal,
               listener: (details) {
                 steering = details.x * 30;
-                final currentMoving = context.read<ControlBloc>().state.isMowerMoving == true;
+                final currentMoving = ctx.read<ControlBloc>().state.isMowerMoving == true;
                 controlBloc.add(SteerCommand(angle: steering));
                 controlBloc.add(DriveCommand(isMoving: currentMoving));
               },
