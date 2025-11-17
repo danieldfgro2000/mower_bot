@@ -6,6 +6,25 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
+flutter_launcher_icons:
+  image_path: "launch_mower_bot_g.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "launch_mower_bot_g.png"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "launch_mower_bot_g.png"
+  color_dark: "#000000"
+  image_dark: "launch_mower_bot_g.png"
+  android_12:
+    image: "launch_mower_bot_g.png"
+    icon_background_color: "#FFFFFF"
+    image_dark: "launch_mower_bot_g.png"
+    icon_background_color_dark: "#000000"
+  fullscreen: true
+
 environment:
   sdk: ^3.8.1
 
@@ -32,13 +51,9 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.6.0
   json_serializable: ^6.10.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
 
-
-# The following section is specific to Flutter projects.
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -47,9 +62,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - launch_mower_bot_g.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
