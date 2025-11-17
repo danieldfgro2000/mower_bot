@@ -90,6 +90,24 @@ class _ControlPageState extends State<ControlPage>
                 ),
               ),
             ),
+            ctx.select((ControlBloc b) => (b.state.errorMessage != null && b.state.errorMessage!.isNotEmpty))
+                ? Positioned(
+                    bottom: controlsHeight + 20,
+                    left: 20,
+                    right: 20,
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        ctx.select((ControlBloc b) => b.state.errorMessage ?? ''),
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         );
       },
@@ -125,7 +143,7 @@ class _ControlPageState extends State<ControlPage>
         IconButton(
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints.tightFor(width: 72, height: 72),
-          iconSize: screenWidth * 0.15,
+          iconSize: screenWidth * 0.1,
           icon: Icon(
             color: isMowerMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,

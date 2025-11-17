@@ -67,7 +67,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     });
     wasSent
       ? emit(state.copyWith(isMowerMoving: event.isMoving, errorMessage: ''))
-      : emit(state.copyWith(errorMessage: "Failed to send drive command(Disconnected)"));
+      : emit(state.copyWith(errorMessage: "Drive failed 🔗🚫"));
   }
 
   FutureOr<void> _onRunCommand(event, emit) async {
@@ -79,7 +79,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     });
     wasSent
       ? emit(state.copyWith(isMowerRunning: event.isRunning, errorMessage: ''))
-      : emit(state.copyWith(errorMessage: "Failed to send run command(Disconnected)"));
+      : emit(state.copyWith(errorMessage: "Failed to run command 🔗🚫"));
   }
 
   FutureOr<void> _onSteerCommand(event, emit) async{
@@ -92,21 +92,21 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
 
     wasSent
       ? emit(state.copyWith(errorMessage: ''))
-      : emit(state.copyWith(errorMessage: "Failed to send steer command"));
+      : emit(state.copyWith(errorMessage: "Steer failed 🔗🚫"));
   }
 
   FutureOr<void> _onStartRecord(event, emit) async {
     final wasSent = await sendCommand({"cmd": "start_record"});
     wasSent
       ? emit(state.copyWith(isRecording: true, recordedFilePath: null))
-      : emit(state.copyWith(errorMessage: "Failed to start recording (Disconnected)"));
+      : emit(state.copyWith(errorMessage: "Recording failed 🔗🚫"));
   }
 
   FutureOr<void> _onStopRecord(event, emit) async {
     final wasSent = await sendCommand({"cmd": "stop_record", "fileName": event.fileName});
     wasSent
       ? emit(state.copyWith(isRecording: false, recordedFilePath: event.fileName))
-      : emit(state.copyWith(errorMessage: "Failed to stop recording(Disconnected)"));
+      : emit(state.copyWith(errorMessage: "Recording failed 🔗🚫"));
   }
 
   FutureOr<void> _onEmergencyStop(event, emit) async {
@@ -118,7 +118,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
 
     wasSent
       ? emit(state.copyWith(isMowerMoving: false, isMowerRunning: false))
-      : emit(state.copyWith(errorMessage: "Failed to send emergency stop command (Disconnected)"));
+      : emit(state.copyWith(errorMessage: "Emergency Stop failed 🔗🚫"));
   }
 
   FutureOr<void> _onClearError(event, emit) =>
