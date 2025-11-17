@@ -70,20 +70,15 @@ class _ControlPageState extends State<ControlPage>
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(
-                        height: controlsHeight,
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: _driveUnit(ctx, screenWidth),
-                        ),
+                      // Removed fixed height to allow minimal intrinsic height
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: _driveUnit(ctx, screenWidth),
                       ),
                       const Spacer(),
-                      SizedBox(
-                        height: controlsHeight,
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: _stopButton(ctx, controlBloc),
-                        ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: _stopButton(ctx, controlBloc),
                       ),
                     ],
                   ),
@@ -136,14 +131,24 @@ class _ControlPageState extends State<ControlPage>
       (ControlBloc b) => b.state.isMowerMoving == true,
     );
     final controlBloc = ctx.read<ControlBloc>();
+
+    // Compact control sizes to minimize vertical height
+    final arrowBtnSize = math.min(64.0, screenWidth * 0.1);
+    final arrowIconSize = math.min(50.0, screenWidth * 0.1);
+    final joystickSize = math.min(100.0, screenWidth * 0.3);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
           padding: EdgeInsets.zero,
-          constraints: const BoxConstraints.tightFor(width: 72, height: 72),
-          iconSize: screenWidth * 0.1,
+          constraints: BoxConstraints.tightFor(
+            width: arrowBtnSize,
+            height: arrowBtnSize,
+          ),
+          iconSize: arrowIconSize,
           icon: Icon(
             color: isMowerMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,
@@ -154,13 +159,8 @@ class _ControlPageState extends State<ControlPage>
             controlBloc.add(SteerCommand(angle: steering));
           },
         ),
-        SizedBox(
-          height: 100.0,
-          width: 100.0,
-          child: Center(
-            child: JoystickWithTrackingDot(screenWidth: screenWidth),
-          ),
-        ),
+        // Use a compact joystick with minimal footprint
+        JoystickWithTrackingDot(size: joystickSize),
       ],
     );
   }
@@ -245,9 +245,9 @@ class _ControlPageState extends State<ControlPage>
 }
 
 class JoystickWithTrackingDot extends StatefulWidget {
-  final double screenWidth;
+  final double size;
 
-  const JoystickWithTrackingDot({super.key, required this.screenWidth});
+  const JoystickWithTrackingDot({super.key, required this.size});
 
   @override
   State<JoystickWithTrackingDot> createState() =>
@@ -257,16 +257,15 @@ class JoystickWithTrackingDot extends StatefulWidget {
 class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
   @override
   Widget build(BuildContext context) {
-    final joystickSize = widget.screenWidth / 6;
-    final angleTrackingDotRadius = widget.screenWidth / 60;
+    final joystickSize = widget.size;
+    final angleTrackingDotRadius = joystickSize * 0.06;
     return SizedBox(
       width: joystickSize,
       height: joystickSize,
       child: BlocSelector<ControlBloc, ControlState, double>(
         selector: (s) => s.telemetryData?.wheelAngle ?? 0.0,
         builder: (context, angleDeg) {
-          print("Redraw angle tracking dot: $angleDeg");
-          final r = (joystickSize / 2) + angleTrackingDotRadius;
+          final r = (joystickSize * 0.4) + angleTrackingDotRadius;
           final rad = angleDeg * math.pi / 180.0;
           final theta = math.pi / 2 - rad;
           final dx = r * math.cos(theta);
