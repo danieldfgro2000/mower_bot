@@ -39,7 +39,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
 
   /// Paths
-  sl.registerLazySingleton<MockPathRepository>(() => MockPathRepository());
+  sl.registerLazySingleton<PathRepository>(() => MockPathRepository());
   sl.registerLazySingleton<GetPathsUseCase>(() => GetPathsUseCase(sl()));
   sl.registerLazySingleton<PlayPathUseCase>(() => PlayPathUseCase(sl()));
   sl.registerLazySingleton<StopPathUseCase>(() => StopPathUseCase(sl()));
