@@ -74,11 +74,19 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
                    startBtn.click();
               }
               
-              // Toggle settings OFF if menu is open
+              // Ensure V-Flip is ON by default
+              const vflip = document.querySelector('#vflip');
+              if (vflip && !vflip.checked) {
+                   // click triggers the default-action change listener
+                   vflip.click();
+              }
+              
+              // Close settings panel if it's open
               const settingsMenu = document.querySelector('#menu');
               const toggleBtn = document.querySelector('#nav-toggle');
-              if (settingsMenu !== 'none') {
-                  toggleBtn.click();
+              if (settingsMenu && toggleBtn) {
+                   const isVisible = getComputedStyle(settingsMenu).display !== 'none';
+                   if (isVisible) toggleBtn.click();
               }
               ''');
             },
