@@ -40,66 +40,77 @@ class _ControlPageState extends State<ControlPage>
   @override
   Widget build(BuildContext context) {
     final controlBloc = context.read<ControlBloc>();
+    const double controlsHeight = 72 + 16 + 100; // arrow + spacing + joystick/stop
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Stack(
-            children: [
-              Positioned.fill(
-                  top:0,
-                  left: 0,
-                  child:  EspMjpegWebView()),
-              if (isRecording) _recordingBanner(context),
-              _recordButton(controlBloc, context),
-              Positioned.fill(
-                top: 0,
-                left: 0,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          children: [
+            Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
+            if (isRecording) _recordingBanner(context),
+            _recordButton(controlBloc, context),
+            Positioned.fill(
+              top: 0,
+              left: 0,
+              child: Align(
+                alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Spacer(),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          _driveUnit(controlBloc),
-                          Spacer(),
-                          IconButton(
-                            iconSize: 120.0,
-                            splashColor: Colors.red.shade500,
-                            icon: Icon(
-                              Icons.stop_circle_rounded,
-                              color: isMoving ? Colors.red : Colors.grey,
-                            ),
-                            onPressed: () {
-                              setState(() => isMoving = false);
-                              controlBloc.add(EmergencyStop());
-                            },
-                          ),
-                        ],
+                      SizedBox(
+                        height: controlsHeight,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: _driveUnit(controlBloc),
+                        ),
+                      ),
+                      const Spacer(),
+                      SizedBox(
+                        height: controlsHeight,
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: _stopButton(controlBloc),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _stopButton(ControlBloc controlBloc) {
+    return IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints.tightFor(width: 100, height: 100),
+      iconSize: 100.0,
+      splashColor: Colors.red.shade500,
+      icon: Icon(
+        Icons.stop_circle_rounded,
+        color: isMoving ? Colors.red : Colors.grey,
       ),
+      onPressed: () {
+        setState(() => isMoving = false);
+        controlBloc.add(EmergencyStop());
+      },
     );
   }
 
   Column _driveUnit(ControlBloc controlBloc) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints.tightFor(width: 72, height: 72),
           iconSize: 72.0,
           icon: Icon(
             color: isMoving ? Colors.green : Colors.grey,
@@ -112,6 +123,7 @@ class _ControlPageState extends State<ControlPage>
             );
           },
         ),
+        const SizedBox(height: 16),
         SizedBox(
           height: 100.0,
           width: 100.0,
@@ -133,33 +145,37 @@ class _ControlPageState extends State<ControlPage>
 
   Positioned _recordButton(ControlBloc controlBloc, BuildContext context) {
     return Positioned(
-      top: 40,
-      right: 20,
-      child: IconButton(
-        tooltip: "Record Path",
-        isSelected: isRecording,
-        onPressed: () async => isRecording
-            ? {
-                setState(() => isRecording = false),
-                controlBloc.add(
-                  StopRecord(
-                    fileName:
-                        await _askPathName(context) ??
-                        'path_${DateTime.now().millisecondsSinceEpoch}.txt',
-                  ),
-                ),
-              }
-            : {
-                setState(() => isRecording = true),
-                controlBloc.add(StartRecord()),
-              },
-        icon: isRecording
-            ? FadeTransition(
-                opacity: _blinkController,
-                child: const Icon(Icons.fiber_manual_record, color: Colors.red),
-              )
-            : const Icon(Icons.fiber_manual_record, color: Colors.grey),
-        iconSize: 48.0,
+      top: 0,
+      right: 0,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 4, right: 4), // match HomePage menu button top padding
+          child: IconButton(
+            tooltip: "Record Path",
+            isSelected: isRecording,
+            onPressed: () async => isRecording
+                ? {
+                    setState(() => isRecording = false),
+                    controlBloc.add(
+                      StopRecord(
+                        fileName: await _askPathName(context) ??
+                            'path_${DateTime.now().millisecondsSinceEpoch}.txt',
+                      ),
+                    ),
+                  }
+                : {
+                    setState(() => isRecording = true),
+                    controlBloc.add(StartRecord()),
+                  },
+            icon: isRecording
+                ? FadeTransition(
+                    opacity: _blinkController,
+                    child: const Icon(Icons.fiber_manual_record, color: Colors.red),
+                  )
+                : const Icon(Icons.fiber_manual_record, color: Colors.grey),
+            iconSize: 48.0,
+          ),
+        ),
       ),
     );
   }

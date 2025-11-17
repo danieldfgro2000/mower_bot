@@ -16,6 +16,15 @@ class ChangeIp extends MowerConnectionEvent {
   List<Object?> get props => [ipAddress];
 }
 
+class ChangePort extends MowerConnectionEvent {
+  final int port;
+
+  const ChangePort(this.port);
+
+  @override
+  List<Object?> get props => [port];
+}
+
 class ConnectToMower extends MowerConnectionEvent {}
 
 class DisconnectFromMower extends MowerConnectionEvent {}

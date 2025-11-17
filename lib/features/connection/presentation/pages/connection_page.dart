@@ -28,9 +28,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Connection'), centerTitle: true),
-      body: Padding(
+    return  Padding(
         padding: const EdgeInsets.all(16.0),
         child: MultiBlocListener(
           listeners: [
@@ -77,7 +75,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
             
           ),
         ),
-      ),
     );
   }
 }

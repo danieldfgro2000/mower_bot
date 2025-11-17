@@ -27,6 +27,7 @@ class MowerConnectionBloc
     this.repo,
   ) : super(const MowerConnectionState()) {
     on<ChangeIp>(_onChangeIp);
+    on<ChangePort>(_onChangePort);
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
@@ -36,6 +37,10 @@ class MowerConnectionBloc
 
   void _onChangeIp(event, emit) {
     emit(state.copyWith(ip: event.ipAddress));
+  }
+
+  void _onChangePort(event, emit) {
+    emit(state.copyWith(port: event.port));
   }
 
   FutureOr<void> _onConnect(event, emit) async {
