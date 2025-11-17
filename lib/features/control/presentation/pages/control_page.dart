@@ -1,8 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
+import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
 
 import 'components/esp_cam_view.dart';
 
@@ -17,9 +20,7 @@ class ControlPage extends StatefulWidget {
 
 class _ControlPageState extends State<ControlPage>
     with SingleTickerProviderStateMixin {
-  double steering = 0;
-  bool isMoving = false;
-  bool isRecording = false;
+  double steering = 0; // retain steering value locally
   late AnimationController _blinkController;
 
   @override
@@ -51,11 +52,13 @@ class _ControlPageState extends State<ControlPage>
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final screenWidth = constraints.maxWidth; // for dynamic sizing
         return Stack(
           children: [
             Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
-            if (isRecording) _recordingBanner(context),
-            _recordButton(controlBloc, context),
+            if (context.select((ControlBloc b) => b.state.isRecording == true))
+              _recordingBanner(context),
+            _recordButton(context),
             Positioned.fill(
               top: 0,
               left: 0,
@@ -71,7 +74,7 @@ class _ControlPageState extends State<ControlPage>
                         height: controlsHeight,
                         child: Align(
                           alignment: Alignment.bottomLeft,
-                          child: _driveUnit(controlBloc),
+                          child: _driveUnit(context, screenWidth), // pass context & screenWidth
                         ),
                       ),
                       const Spacer(),
@@ -94,6 +97,7 @@ class _ControlPageState extends State<ControlPage>
   }
 
   Widget _stopButton(ControlBloc controlBloc) {
+    final isMowerMoving = context.select((ControlBloc b) => b.state.isMowerMoving == true);
     return IconButton(
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints.tightFor(width: 100, height: 100),
@@ -101,17 +105,16 @@ class _ControlPageState extends State<ControlPage>
       splashColor: Colors.red.shade500,
       icon: Icon(
         Icons.stop_circle_rounded,
-        color: isMoving ? Colors.red : Colors.grey,
+        color: isMowerMoving ? Colors.red : Colors.grey,
       ),
       onPressed: () {
-        setState(() => isMoving = false);
         controlBloc.add(EmergencyStop());
       },
     );
   }
 
   Column _driveUnit(BuildContext context, double screenWidth) {
-    final isMoving = context.select(
+    final isMowerMoving = context.select(
       (ControlBloc b) => b.state.isMowerMoving == true,
     );
     final controlBloc = context.read<ControlBloc>();
@@ -124,14 +127,13 @@ class _ControlPageState extends State<ControlPage>
           constraints: const BoxConstraints.tightFor(width: 72, height: 72),
           iconSize: screenWidth * 0.1,
           icon: Icon(
-            color: isMoving ? Colors.green : Colors.grey,
+            color: isMowerMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,
           ),
           onPressed: () {
-            setState(() => isMoving = !isMoving);
-            controlBloc.add(
-              DriveCommand(steering: steering, isMoving: isMoving),
-            );
+            final next = !isMowerMoving;
+            controlBloc.add(DriveCommand(isMoving: next));
+            controlBloc.add(SteerCommand(angle: steering)); // keep last steering when starting movement
           },
         ),
         const SizedBox(height: 16),
@@ -143,9 +145,9 @@ class _ControlPageState extends State<ControlPage>
               mode: JoystickMode.horizontal,
               listener: (details) {
                 steering = details.x * 30;
-                controlBloc.add(
-                  DriveCommand(steering: steering, isMoving: isMoving),
-                );
+                final currentMoving = context.read<ControlBloc>().state.isMowerMoving == true;
+                controlBloc.add(SteerCommand(angle: steering));
+                controlBloc.add(DriveCommand(isMoving: currentMoving));
               },
             ),
           ),
@@ -164,24 +166,19 @@ class _ControlPageState extends State<ControlPage>
       right: 0,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 4, right: 4), // match HomePage menu button top padding
+          padding: const EdgeInsets.only(top: 4, right: 4),
           child: IconButton(
             tooltip: "Record Path",
             isSelected: isRecording,
-            onPressed: () async => isRecording
-                ? {
-                    setState(() => isRecording = false),
-                    controlBloc.add(
-                      StopRecord(
-                        fileName: await _askPathName(context) ??
-                            'path_${DateTime.now().millisecondsSinceEpoch}.txt',
-                      ),
-                    ),
-                  }
-                : {
-                    setState(() => isRecording = true),
-                    controlBloc.add(StartRecord()),
-                  },
+            onPressed: () async {
+              if (isRecording) {
+                final fileName = await _askPathName(context) ??
+                    'path_${DateTime.now().millisecondsSinceEpoch}.txt';
+                controlBloc.add(StopRecord(fileName: fileName));
+              } else {
+                controlBloc.add(StartRecord());
+              }
+            },
             icon: isRecording
                 ? FadeTransition(
                     opacity: _blinkController,

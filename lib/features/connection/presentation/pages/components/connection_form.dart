@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
@@ -23,13 +24,17 @@ class _ConnectionFormState extends State<ConnectionForm> {
     final bloc = context.read<MowerConnectionBloc>();
     final s = bloc.state;
     ipController = TextEditingController(text: s.ip ?? '192.168.100.114');
+    portController = TextEditingController(text: (s.port?.toString() ?? '81'));
     bloc.add(ChangeIp(ipController.text));
+    final initialPort = int.tryParse(portController.text);
+    if (initialPort != null) bloc.add(ChangePort(initialPort));
   }
 
   @override
   void dispose() {
-    super.dispose();
     ipController.dispose();
+    portController.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,5 +102,14 @@ String? _validateIp(String? v) {
   }
   final ipv4 = RegExp(r'^(\d{1,3}\.){3}\d{1,3}$');
   if (!ipv4.hasMatch(s)) return 'Invalid IP Address format';
+  return null;
+}
+
+String? _validatePort(String? v) {
+  final s = (v ?? '').trim();
+  if (s.isEmpty) return 'Port cannot be empty';
+  final p = int.tryParse(s);
+  if (p == null) return 'Port must be numeric';
+  if (p < 1 || p > 65535) return 'Port must be 1-65535';
   return null;
 }
