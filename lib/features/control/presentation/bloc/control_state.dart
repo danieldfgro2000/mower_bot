@@ -1,8 +1,8 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
+import '../../../../core/diffable_state.dart';
 
-class ControlState extends Equatable {
+class ControlState extends Equatable implements DiffableState {
   final bool? isConnected;
   final bool? isRecording;
   final bool? isVideoEnabled;
@@ -76,4 +76,18 @@ class ControlState extends Equatable {
       telemetryData: telemetryData ?? this.telemetryData,
     );
   }
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+    'isConnected': isConnected,
+    'isRecording': isRecording,
+    'isVideoEnabled': isVideoEnabled,
+    'isMowerMoving': isMowerMoving,
+    'isMowerRunning': isMowerRunning,
+    'videoStreamUrl': videoStreamUrl,
+    'recordedFilePath': recordedFilePath,
+    'errorMessage': errorMessage,
+    'telemetry.wheelAngle': telemetryData?.wheelAngle,
+    'telemetry.speed': telemetryData?.speed,
+  };
 }

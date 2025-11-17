@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/diffable_state.dart';
 
 class MowerBlocObserver extends BlocObserver {
   @override
@@ -22,6 +23,17 @@ class MowerBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    print('📦 Change: ${bloc.runtimeType} -> ${change.nextState}');
+    final prev = change.currentState;
+    final next = change.nextState;
+    if (prev is DiffableState && next is DiffableState) {
+      final diffs = StateDiffUtil.diff(prev, next);
+      if (diffs.isEmpty) {
+        print('📦 ${bloc.runtimeType} state change: (no field changes)');
+      } else {
+        print('📦 ${bloc.runtimeType} state change:\n  ${diffs.join('\n  ')}');
+      }
+    } else if (prev != next) {
+      print('📦 ${bloc.runtimeType} state object changed');
+    }
   }
 }

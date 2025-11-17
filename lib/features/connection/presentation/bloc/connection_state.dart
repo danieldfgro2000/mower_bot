@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../../core/diffable_state.dart';
 
 enum ConnectionStatus{
   disconnected,
@@ -9,7 +10,7 @@ enum ConnectionStatus{
   error
 }
 
-class MowerConnectionState extends Equatable {
+class MowerConnectionState extends Equatable implements DiffableState {
   final ConnectionStatus status;
   final String? ip;
   final int? port;
@@ -38,4 +39,12 @@ class MowerConnectionState extends Equatable {
 
   @override
   List<Object?> get props => [status, ip, port, error];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+    'status': status,
+    'ip': ip,
+    'port': port,
+    'error': error,
+  };
 }
