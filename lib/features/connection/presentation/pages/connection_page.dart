@@ -28,9 +28,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-        padding: const EdgeInsets.symmetric(
-            vertical: 30,
-            horizontal: 16.0),
+      padding: const EdgeInsets.only(
+          top: 50,
+          left: 16.0,
+          right: 16.0),
         child: MultiBlocListener(
           listeners: [
             BlocListener<MowerConnectionBloc, MowerConnectionState>(

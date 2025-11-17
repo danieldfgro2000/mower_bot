@@ -125,7 +125,7 @@ class _ControlPageState extends State<ControlPage>
         IconButton(
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints.tightFor(width: 72, height: 72),
-          iconSize: screenWidth * 0.1,
+          iconSize: screenWidth * 0.15,
           icon: Icon(
             color: isMowerMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,
@@ -136,7 +136,6 @@ class _ControlPageState extends State<ControlPage>
             controlBloc.add(SteerCommand(angle: steering));
           },
         ),
-        const SizedBox(height: 16),
         SizedBox(
           height: 100.0,
           width: 100.0,
