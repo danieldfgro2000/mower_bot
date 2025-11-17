@@ -38,6 +38,13 @@ class _ControlPageState extends State<ControlPage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<ControlBloc>().add(StartTelemetryStream());
+    context.read<ControlBloc>().add(ClearError());
+  }
+
+  @override
   Widget build(BuildContext context) {
     final controlBloc = context.read<ControlBloc>();
     const double controlsHeight = 72 + 16 + 100; // arrow + spacing + joystick/stop
@@ -103,7 +110,11 @@ class _ControlPageState extends State<ControlPage>
     );
   }
 
-  Column _driveUnit(ControlBloc controlBloc) {
+  Column _driveUnit(BuildContext context, double screenWidth) {
+    final isMoving = context.select(
+      (ControlBloc b) => b.state.isMowerMoving == true,
+    );
+    final controlBloc = context.read<ControlBloc>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -111,7 +122,7 @@ class _ControlPageState extends State<ControlPage>
         IconButton(
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints.tightFor(width: 72, height: 72),
-          iconSize: 72.0,
+          iconSize: screenWidth * 0.1,
           icon: Icon(
             color: isMoving ? Colors.green : Colors.grey,
             Icons.keyboard_double_arrow_up_sharp,
@@ -143,7 +154,11 @@ class _ControlPageState extends State<ControlPage>
     );
   }
 
-  Positioned _recordButton(ControlBloc controlBloc, BuildContext context) {
+  Positioned _recordButton(BuildContext context) {
+    final controlBloc = context.read<ControlBloc>();
+    final isRecording = context.select(
+      (ControlBloc b) => b.state.isRecording == true,
+    );
     return Positioned(
       top: 0,
       right: 0,
@@ -211,10 +226,71 @@ class _ControlPageState extends State<ControlPage>
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
+            onPressed: () => Navigator.pop(
+              context,
+              controller.text.trim().isEmpty ? null : controller.text.trim(),
+            ),
             child: const Text('Save'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class JoystickWithTrackingDot extends StatefulWidget {
+  final double screenWidth;
+
+  const JoystickWithTrackingDot({super.key, required this.screenWidth});
+
+  @override
+  State<JoystickWithTrackingDot> createState() =>
+      _JoystickWithTrackingDotState();
+}
+
+class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
+  @override
+  Widget build(BuildContext context) {
+    final joystickSize = widget.screenWidth / 6;
+    final angleTrackingDotRadius = widget.screenWidth / 60;
+    return SizedBox(
+      width: joystickSize,
+      height: joystickSize,
+      child: BlocSelector<ControlBloc, ControlState, double>(
+        selector: (s) => s.telemetryData?.wheelAngle ?? 0.0,
+        builder: (context, angleDeg) {
+          print("Redraw angle tracking dot: $angleDeg");
+          final r = (joystickSize / 2) + angleTrackingDotRadius;
+          final rad = angleDeg * math.pi / 180.0;
+          final theta = math.pi / 2 - rad;
+          final dx = r * math.cos(theta);
+          final dy = -r * math.sin(theta);
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              Joystick(
+                mode: JoystickMode.horizontal,
+                listener: (details) => context.read<ControlBloc>().add(
+                  SteerCommand(angle: details.x * 45),
+                ),
+              ),
+              IgnorePointer(
+                child: Transform.translate(
+                  offset: Offset(dx, dy),
+                  child: Container(
+                    width: angleTrackingDotRadius * 2,
+                    height: angleTrackingDotRadius * 2,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

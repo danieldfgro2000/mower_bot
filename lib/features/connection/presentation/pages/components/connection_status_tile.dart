@@ -20,6 +20,7 @@ class ConnectionStatusTile extends StatelessWidget {
           ConnectionStatus.videoWsConnected => Colors.blue,
           ConnectionStatus.connecting => Colors.orange,
           ConnectionStatus.disconnected => Colors.red,
+          ConnectionStatus.hostUnreachable => Colors.redAccent,
           ConnectionStatus.error => Colors.redAccent,
         };
         return ListTile(

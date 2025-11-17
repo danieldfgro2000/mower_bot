@@ -1,8 +1,8 @@
 #include "actuators.h"
 #include <Arduino.h>
 
-const int startActuatorPin = 30;
-const int driveActuatorPin = 31;
+const int startActuatorPin = 11;
+const int driveActuatorPin = 12;
 
 void actuatorsInit() {
     Serial.println("[ACTUATORS] Init\n");
@@ -11,11 +11,21 @@ void actuatorsInit() {
 }
 
 void actuatorStart(bool state) {
-    Serial.println("[ACTUATOR] Start");
+    Serial.print("[ACTUATOR] Start");
+    Serial.println(state ? " ON" : " OFF");
   digitalWrite(startActuatorPin, state ? HIGH : LOW);
 }
 
 void actuatorDrive(bool state) {
-    Serial.println("[ACTUATOR] Drive");
+    Serial.print("[ACTUATOR] Drive");
+    Serial.println(state ? " ON" : " OFF");
   digitalWrite(driveActuatorPin, state ? HIGH : LOW);
+}
+
+bool actuatorIsDriving() {
+  return digitalRead(driveActuatorPin) == HIGH;
+}
+
+bool actuatorIsStarted() {
+  return digitalRead(startActuatorPin) == HIGH;
 }

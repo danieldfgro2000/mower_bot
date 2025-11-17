@@ -1,3 +1,5 @@
+import 'package:mower_bot/features/connection/domain/model/ws_info_model.dart';
+
 class WsInfoDTO {
   final int clients;
 
@@ -19,4 +21,10 @@ class WsInfoDTO {
   String toString() {
     return 'WsInfoDTO${toJson()}';
   }
+}
+
+extension WsInfoDTOx on WsInfoDTO {
+  WsInfoModel toDomain() => WsInfoModel(
+        clients: clients,
+      );
 }

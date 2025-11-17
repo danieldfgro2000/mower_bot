@@ -1,3 +1,5 @@
+import 'package:mower_bot/features/connection/domain/model/wifi_info_model.dart';
+
 class WiFiInfoDTO {
   final bool connected;
   final String ip;
@@ -25,4 +27,11 @@ class WiFiInfoDTO {
   String toString() {
     return 'WiFiInfoDTO${toJson()}';
   }
+}
+
+extension WiFiInfoDTOx on WiFiInfoDTO {
+  WiFiInfoModel toDomain() => WiFiInfoModel(
+        connected: connected,
+        ip: ip,
+      );
 }

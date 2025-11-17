@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'connection_state.dart';
+
 abstract class MowerConnectionEvent extends Equatable {
   const MowerConnectionEvent();
 
@@ -32,13 +34,12 @@ class DisconnectFromMower extends MowerConnectionEvent {}
 class CheckConnectionStatus extends MowerConnectionEvent {}
 
 class ConnectionChanged extends MowerConnectionEvent {
-  final bool? isCtrlWsConnected;
-  final bool? isVideoWsConnected;
+  final ConnectionStatus connectionStatus;
 
-  const ConnectionChanged({this.isCtrlWsConnected, this.isVideoWsConnected});
+  const ConnectionChanged({required this.connectionStatus});
 
   @override
-  List<Object?> get props => [isCtrlWsConnected, isVideoWsConnected];
+  List<Object?> get props => [connectionStatus];
 }
 
 class ConnectionError extends MowerConnectionEvent {

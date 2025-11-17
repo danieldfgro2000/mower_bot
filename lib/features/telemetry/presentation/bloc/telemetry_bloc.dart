@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
@@ -22,7 +21,6 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     this._observeTelemetryStreamUseCase,
     this._observeTelemetryStatusUseCase,
   ) : super(TelemetryInitial()) {
-    debugPrint('TelemetryBloc actor -> ${identityHashCode(this)}');
     on<StartTelemetry>(_onStartTelemetry);
     on<TelemetryReceived>(_onTelemetryReceived);
     on<StopTelemetry>(_onStopTelemetry);
@@ -41,11 +39,11 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     _observeTelemetryStatusSubscription = _observeTelemetryStatusUseCase().listen(
       (status) => add(
         MegaTelemetryStatusUpdated(
-          received: status.telemetry.received,
-          ageMs: (status.telemetry.ageMs  ?? -1) > 0
-              ? (status.telemetry.ageMs! / 60000).toInt()
+          received: status.telemetryAge.received,
+          ageMs: (status.telemetryAge.ageMs  ?? -1) > 0
+              ? (status.telemetryAge.ageMs! / 60000).toInt()
               : -1,
-          ok: status.telemetry.ok,
+          ok: status.telemetryAge.ok,
         ),
       ),
       onError: (e) => TelemetryError(e.toString()),
