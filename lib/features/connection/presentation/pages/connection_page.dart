@@ -27,33 +27,43 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.only(
-          top: 50,
-          left: 16.0,
-          right: 16.0),
-        child: MultiBlocListener(
-          listeners: [
-            BlocListener<MowerConnectionBloc, MowerConnectionState>(
-              listenWhen: (p, c) => p.error  != c.error,
-              listener: (context, state) {
-                String? err = state.error;
-                if (err == null || err.isEmpty) return;
-                _showSnackBar(context, state.error!, isError: true);
-              },
-            )
-          ],
-          child: Column(
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenOrientation = MediaQuery.of(context).orientation;
+    return  MultiBlocListener(
+      listeners: [
+        BlocListener<MowerConnectionBloc, MowerConnectionState>(
+          listenWhen: (p, c) => p.error  != c.error,
+          listener: (context, state) {
+            String? err = state.error;
+            if (err == null || err.isEmpty) return;
+            _showSnackBar(context, state.error!, isError: true);
+          },
+        )
+      ],
+      child: SafeArea(
+          minimum: EdgeInsets.symmetric(horizontal: 20),
+          maintainBottomViewPadding: true,
+          child: screenOrientation == Orientation.portrait
+              ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(child: ConnectionForm(formKey: _formKey)),
-              const SizedBox(height: 16),
+              ConnectionForm(formKey: _formKey),
+              SizedBox(height: screenHeight / 4),
               ConnectionButton(formKey: _formKey),
             ],
-            
-          ),
-        ),
+          )
+              : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(flex: 1, child: ConnectionForm(formKey: _formKey)),
+                Flexible(child: SizedBox(width: 20)),
+                Flexible(flex: 1, child: ConnectionButton(formKey: _formKey)),
+                Flexible(child: SizedBox(width: 20)),
+              ]
+          )
+      ),
     );
   }
 }

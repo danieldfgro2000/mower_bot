@@ -48,45 +48,42 @@ class _ConnectionFormState extends State<ConnectionForm> {
       key: widget.formKey,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.zero,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    controller: ipController,
-                    decoration: const InputDecoration(
-                      labelText: 'Mower IP Address',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.url,
-                    validator: _validateIp,
-                    autofillHints: const [AutofillHints.url],
-                    enabled: !isBusy,
-                    onChanged: (ip) => bloc.add(ChangeIp(ip)),
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: ipController,
+                  decoration: const InputDecoration(
+                    labelText: 'Mower IP Address',
+                    border: OutlineInputBorder(),
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: portController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Port',
-                      border: OutlineInputBorder(),
-                    ),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: _validatePort,
-                    enabled: !isBusy,
-                    onChanged: (port) {
-                      final p = int.tryParse(port);
-                      if (p != null) bloc.add(ChangePort(p));
-                    },
+                  keyboardType: TextInputType.number,
+                  validator: _validateIp,
+                  autofillHints: const [AutofillHints.url],
+                  enabled: !isBusy,
+                  onChanged: (ip) => bloc.add(ChangeIp(ip)),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: portController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Port',
+                    border: OutlineInputBorder(),
                   ),
-                  const SizedBox(height: 16),
-                ],
-              ),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  validator: _validatePort,
+                  enabled: !isBusy,
+                  onChanged: (port) {
+                    final p = int.tryParse(port);
+                    if (p != null) bloc.add(ChangePort(p));
+                  },
+                ),
+                const SizedBox(height: 16),
+              ],
             ),
           );
         },

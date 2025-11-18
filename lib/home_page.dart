@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                   left: 0,
                   child: SafeArea(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 4, top: 4),
+                      padding: const EdgeInsets.only(left: 16, top: 16),
                       child: Material(
                         elevation: 2,
                         shape: const CircleBorder(),
