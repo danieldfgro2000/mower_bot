@@ -75,8 +75,7 @@ bool newTarget = false;
 // limits stored in steps relative to zero after homing
 long leftLimit = 0;
 long rightLimit = 0;
-// Manual center calibration offset (in steps). Positive shifts logical center.
-static long centerOffsetSteps = 900; // user adjustable after homing
+static float zeroAngleOffsetDeg = 0.0f; // manual zero definition applied post-homing
 
 void steeringInit() {
     pinMode(enPin, OUTPUT);
@@ -328,9 +327,6 @@ void steeringHome() {
                 leftLimit = minStop - center;
                 rightLimit = maxStop - center;
 
-                // Reset any prior calibration offset (optional: keep? choose reset for clarity)
-                centerOffsetSteps = 0;
-
                 homed = true;
                 state = HS_INIT; // reset for any future homing attempts
 
@@ -338,8 +334,6 @@ void steeringHome() {
                 Serial.print(leftLimit);
                 Serial.print(" / ");
                 Serial.println(rightLimit);
-                Serial.print("[STEERING] Center calibration offset steps: ");
-                Serial.println(centerOffsetSteps);
             }
             break;
         }
@@ -352,10 +346,8 @@ void steeringSetHomingNoPulseMs(unsigned long ms) {
 
 void steeringUpdate() {
     if (newTarget) {
-        const long steps = - wheelDegToSteps(targetAngle);
-        // Apply manual center calibration offset after homing
-        long adjusted = steps + (homed ? centerOffsetSteps : 0);
-        // Optional: clamp to discovered limits if homed
+        const long steps = - wheelDegToSteps(targetAngle); // target angle to steps (no calibration offset)
+        long adjusted = steps;
         if (homed) {
             long clamped = constrain(adjusted, leftLimit, rightLimit);
             stepper.moveTo(clamped);
@@ -367,52 +359,36 @@ void steeringUpdate() {
     stepper.run();
 }
 
+void steeringSetZeroAngleDeg(float angleDeg) {
+    // angleDeg represents the current physical angle that should become logical 0.
+    // Store offset so subsequent physical queries shift accordingly.
+    zeroAngleOffsetDeg = -angleDeg; // if current physical is X, offset = -X to make reported 0.
+    Serial.print("[STEERING] Zero angle set. Offset deg: ");
+    Serial.println(zeroAngleOffsetDeg);
+}
+
 void steeringSetAngle(float angle) {
-    // keep commanded angle within expected steering range
-    targetAngle = constrain(angle, -45.0f, 45.0f);
+    // angle is logical command relative to defined zero (after optional zeroAngleOffsetDeg)
+    float physicalTarget = angle - zeroAngleOffsetDeg; // convert logical to physical reference frame
+    targetAngle = constrain(physicalTarget, -45.0f, 45.0f);
     Serial.print("[STEERING] New target angle: ");
-    Serial.println(targetAngle);
+    Serial.println(angle);
     newTarget = true;
 }
 
 float steeringGetCommandedAngle() {
-    // Return the logical commanded angle (without calibration offset influence)
-    return - stepsToWheelDeg(stepper.targetPosition() - (homed ? centerOffsetSteps : 0));
+    // Return commanded logical angle
+    return targetAngle + zeroAngleOffsetDeg;
 }
 
-// Physical angle considering calibration offset and current position (may differ while moving)
 float steeringGetPhysicalAngle() {
-    return - stepsToWheelDeg(stepper.currentPosition() - (homed ? centerOffsetSteps : 0));
+    // Physical angle derived directly from step position (midpoint == 0 deg)
+    return - stepsToWheelDeg(stepper.currentPosition()) + zeroAngleOffsetDeg;
 }
 
-// Set center calibration offset in degrees. Positive shifts logical center by given deg.
-void steeringSetCenterOffsetDeg(float deg) {
-    if (!homed) return; // only after homing
-    centerOffsetSteps = wheelDegToSteps(deg);
-    Serial.print("[STEERING][CAL] New center offset deg: ");
-    Serial.print(deg);
-    Serial.print(" steps: ");
-    Serial.println(centerOffsetSteps);
-}
-float steeringGetCenterOffsetDeg() {
-    return stepsToWheelDeg(centerOffsetSteps);
-}
-
-// Convenience: apply observed physical error when commanding zero. If wheel physically points +errDeg
-// (i.e., to the right) when we command 0, we want to shift center left, so subtract error.
-void steeringApplyObservedZeroErrorDeg(float errDeg) {
-    if (!homed) return;
-    // errDeg is physical angle when commanding 0. We want future commanded 0 to yield 0 physical => offset -= errDeg
-    centerOffsetSteps -= wheelDegToSteps(errDeg);
-    Serial.print("[STEERING][CAL] Applied zero error deg: ");
-    Serial.print(errDeg);
-    Serial.print(" resulting offset deg: ");
-    Serial.println(steeringGetCenterOffsetDeg());
-}
-
-// Reset calibration offset to zero (re-center logically on midpoint discovered during homing)
-void steeringResetCenterCalibration() {
-    centerOffsetSteps = 0;
-    Serial.print("[STEERING][CAL] Center calibration reset. Offset steps: 0\n");
-}
+// Limit / homed queries remain same
 bool steeringIsHomed() { return homed; }
+long steeringGetLimitLeftSteps() { return leftLimit; }
+long steeringGetLimitRightSteps() { return rightLimit; }
+float steeringGetLimitLeftDeg() { return stepsToWheelDeg(leftLimit); }
+float steeringGetLimitRightDeg() { return stepsToWheelDeg(rightLimit); }
