@@ -7,3 +7,4 @@ void steeringUpdate();
 void steeringSetAngle(float angle);
 float steeringGetCommandedAngle();
 bool steeringIsHomed();
+void steeringSetHomingNoPulseMs(unsigned long ms);
