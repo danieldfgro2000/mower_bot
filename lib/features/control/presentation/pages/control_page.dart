@@ -172,7 +172,7 @@ class _ControlPageState extends State<ControlPage>
       (ControlBloc b) => b.state.isRecording == true,
     );
     return Positioned(
-      top: 0,
+      top: 20,
       right: 0,
       child: SafeArea(
         child: Padding(

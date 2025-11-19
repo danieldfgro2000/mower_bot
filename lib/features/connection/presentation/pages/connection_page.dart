@@ -40,13 +40,18 @@ class _ConnectionPageState extends State<ConnectionPage> {
         )
       ],
       child: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          minimum: EdgeInsets.all(16.0),
           maintainBottomViewPadding: true,
           child: screenOrientation == Orientation.portrait
               ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(child: ConnectionForm(formKey: _formKey)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: ConnectionForm(formKey: _formKey),
+                ),
+              ),
               const SizedBox(height: 16),
               ConnectionButton(formKey: _formKey),
             ],

@@ -13,9 +13,7 @@ class PathsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pathsBloc = context.read<PathBloc>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('Saved paths')),
-      body: BlocBuilder<PathBloc, PathState>(
+    return BlocBuilder<PathBloc, PathState>(
         builder: (context, state) {
           switch (state) {
             case PathInitial():
@@ -63,7 +61,6 @@ class PathsPage extends StatelessWidget {
           }
           return const SizedBox.shrink();
         },
-      ),
     );
   }
 }
