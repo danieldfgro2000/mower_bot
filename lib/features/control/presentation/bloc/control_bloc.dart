@@ -36,7 +36,6 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   FutureOr<void> _onStartTelemetryStream(event, emit) {
-    print('Starting telemetry stream...');
     _telemetrySubscription?.cancel();
     _telemetrySubscription =
     observeTelemetryUseCase().listen(
@@ -46,7 +45,6 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   }
 
   FutureOr<void> _onTelemetryDataReceived(event, emit) {
-    print('Telemetry data received: ${event.telemetryData}');
     final telemetryData = event.telemetryData;
     emit(state.copyWith(
         telemetryData: telemetryData,

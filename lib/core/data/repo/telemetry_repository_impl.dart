@@ -24,7 +24,6 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
 
   @override
   Future<void> startTelemetry() async {
-    print('Starting telemetry stream... is connected: $isConnected');
     if(!isConnected) {
       throw Exception('WebSocket is not connected');
     }

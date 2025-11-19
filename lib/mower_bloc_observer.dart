@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/diffable_state.dart';
 
@@ -16,7 +17,9 @@ class MowerBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('❌ Error in ${bloc.runtimeType}: $error');
+    if (kDebugMode) {
+      print('❌ Error in ${bloc.runtimeType}: $error');
+    }
     super.onError(bloc, error, stackTrace);
   }
 
@@ -28,12 +31,18 @@ class MowerBlocObserver extends BlocObserver {
     if (prev is DiffableState && next is DiffableState) {
       final diffs = StateDiffUtil.diff(prev, next);
       if (diffs.isEmpty) {
-        print('📦 ${bloc.runtimeType} state change: (no field changes)');
+        if (kDebugMode) {
+          print('📦 ${bloc.runtimeType} state change: (no field changes)');
+        }
       } else {
-        print('📦 ${bloc.runtimeType} state change:\n  ${diffs.join('\n  ')}');
+        if (kDebugMode) {
+          print('📦 ${bloc.runtimeType} state change:\n  ${diffs.join('\n  ')}');
+        }
       }
     } else if (prev != next) {
-      print('📦 ${bloc.runtimeType} state object changed');
+      if (kDebugMode) {
+        print('📦 ${bloc.runtimeType} state object changed');
+      }
     }
   }
 }

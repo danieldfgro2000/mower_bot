@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/error/app_exception.dart';
 
 /// A result wrapper that encapsulates success or failure states
@@ -101,7 +102,9 @@ sealed class Result<T> {
         action((this as Failure<T>).exception);
       } catch (error, _) {
         // Log the callback error but don't change the original failure
-        print('Failure callback error: $error');
+        if (kDebugMode) {
+          print('Failure callback error: $error');
+        }
       }
     }
     return this;
