@@ -21,34 +21,20 @@ class MowerApp extends StatelessWidget {
   const MowerApp({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-    AppProviders(
-      child: MaterialApp(
-        title: 'Mower App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal)
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<TelemetryBloc>.value(value: sl<TelemetryBloc>()),
+          BlocProvider<MowerConnectionBloc>(create: (_) => sl<MowerConnectionBloc>()),
+          BlocProvider<ControlBloc>(create: (_) => sl<ControlBloc>()),
+          BlocProvider<PathBloc>(create: (_) => sl<PathBloc>()),
+        ],
+        child: MaterialApp(
+          title: 'Mower App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal)
+          ),
+          home: const HomePage(),
         ),
-        home: const HomePage(),
-      ),
-    );
-}
-
-class AppProviders extends StatelessWidget {
-  final Widget child;
-  const AppProviders({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        // TelemetryBloc is a singleton; use value to prevent Provider disposing it
-        BlocProvider<TelemetryBloc>.value(value: sl<TelemetryBloc>()),
-        BlocProvider<MowerConnectionBloc>(create: (_) => sl<MowerConnectionBloc>()),
-        BlocProvider<ControlBloc>(create: (_) => sl<ControlBloc>()),
-        BlocProvider<PathBloc>(create: (_) => sl<PathBloc>()),
-      ],
-      child: child,
-    );
-  }
+      );
 }

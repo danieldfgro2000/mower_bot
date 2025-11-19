@@ -55,7 +55,9 @@ void _registerCore() {
 }
 
 void _registerConnection() {
-  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl());
+  sl.registerLazySingleton<MowerConnectionRepository>(() => MowerConnectionRepositoryImpl(
+        sl<IWebSocketClient>(instanceName: 'ctrl'),
+      ));
   sl.registerLazySingleton<ConnectToCtrlWsUseCase>(() => ConnectToCtrlWsUseCase(sl()));
   sl.registerLazySingleton<DisconnectCtrlWsUseCase>(() => DisconnectCtrlWsUseCase(sl()));
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/data/network/websocket_client.dart';
-import 'package:mower_bot/core/di/injection_container.dart';
 import 'package:mower_bot/core/error/error.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
@@ -15,8 +14,11 @@ enum MowerWsPort {
 }
 
 class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
-  final IWebSocketClient _ctrlWSClient = sl<IWebSocketClient>(instanceName: 'ctrl');
+  // Inject dependencies via constructor to avoid service locator usage inside implementation
+  final IWebSocketClient _ctrlWSClient;
   final ExceptionHandler _exceptionHandler = ExceptionHandler();
+
+  MowerConnectionRepositoryImpl(this._ctrlWSClient);
 
   @override
   Stream<Map<String, dynamic>>? jsonStream() => _ctrlWSClient.messages;

@@ -27,7 +27,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     final screenOrientation = MediaQuery.of(context).orientation;
     return  MultiBlocListener(
       listeners: [
@@ -41,15 +40,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
         )
       ],
       child: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 20),
+          minimum: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           maintainBottomViewPadding: true,
           child: screenOrientation == Orientation.portrait
               ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ConnectionForm(formKey: _formKey),
-              SizedBox(height: screenHeight / 4),
+              Expanded(child: ConnectionForm(formKey: _formKey)),
+              const SizedBox(height: 16),
               ConnectionButton(formKey: _formKey),
             ],
           )
