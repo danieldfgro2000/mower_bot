@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/core/error/app_exception.dart';
 import 'package:mower_bot/core/error/error.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';
@@ -95,7 +96,7 @@ class MowerConnectionBloc
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((exception) {
         final userMessage = _errorMapper.mapExceptionToMessage(exception);
-        add(ConnectionError(userMessage));
+        add(ConnectionError(exception));
       });
     });
 
@@ -135,8 +136,19 @@ class MowerConnectionBloc
   }
 
   FutureOr<void> _onConnectionError(event, emit) {
-    emit(state.copyWith(
-        status: ConnectionStatus.error, error: event.errorMessage));
+    final exception = event.exception as AppException;
+    final userMessage = _errorMapper.mapExceptionToMessage(exception);
+    ConnectionStatus status;
+    if (exception is NetworkException && exception.code == 'HOST_UNREACHABLE') {
+      status = ConnectionStatus.hostUnreachable;
+    } else if (exception is NetworkException && exception.code == 'CONNECTION_FAILED') {
+      status = ConnectionStatus.error; // could add a distinct status later
+    } else if (exception is NetworkException && exception.code == 'TIMEOUT') {
+      status = ConnectionStatus.error;
+    } else {
+      status = ConnectionStatus.error;
+    }
+    emit(state.copyWith(status: status, error: userMessage));
   }
 
 

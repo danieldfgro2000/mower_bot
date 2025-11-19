@@ -189,34 +189,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   Text _connectionStatus(MowerConnectionState state) {
-    return switch (state) {
-      MowerConnectionState(connectionStatus: ConnectionStatus.ctrlWsConnected) => Text(
-        'Control websocket Connected',
+    final msgStyle = const TextStyle(fontSize: 12);
+    return switch (state.connectionStatus) {
+      ConnectionStatus.ctrlWsConnected => Text(
+        'Connected to mower (control)',
         textScaler: TextScaler.linear(1),
-        style: const TextStyle(color: Colors.green),
+        style: msgStyle.copyWith(color: Colors.green),
       ),
-      MowerConnectionState(connectionStatus: ConnectionStatus.videoWsConnected) => Text(
-        'Video websocket Connected',
+      ConnectionStatus.videoWsConnected => Text(
+        'Video stream connected',
         textScaler: TextScaler.linear(1),
-        style: const TextStyle(color: Colors.blue),
+        style: msgStyle.copyWith(color: Colors.blue),
       ),
-      MowerConnectionState(connectionStatus: ConnectionStatus.connecting) => const Text(
+      ConnectionStatus.connecting => const Text(
         'Connecting...',
+        style: TextStyle(color: Colors.orange),
       ),
-      MowerConnectionState(connectionStatus: ConnectionStatus.disconnected) => const Text(
+      ConnectionStatus.disconnected => const Text(
         'Disconnected',
         style: TextStyle(color: Colors.red),
       ),
-      MowerConnectionState(connectionStatus: ConnectionStatus.hostUnreachable) => const Text(
-        'Host unreachable',
-        style: TextStyle(color: Colors.red),
-      ),
-      MowerConnectionState(connectionStatus: ConnectionStatus.error) => Text(
-        style: const TextStyle(color: Colors.red),
+      ConnectionStatus.hostUnreachable => Text(
+        (state.error?.isNotEmpty == true)
+            ? 'Host unreachable: ${_short(state.error!)}'
+            : 'Host unreachable',
+        style: msgStyle.copyWith(color: Colors.red),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        state.error ?? 'Error',
+      ),
+      ConnectionStatus.error => Text(
+        state.error?.isNotEmpty == true ? _short(state.error!) : 'Error',
+        style: msgStyle.copyWith(color: Colors.red),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     };
   }
+
+  String _short(String s) => s.length > 48 ? s.substring(0, 45) + '...' : s;
 }

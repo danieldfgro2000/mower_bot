@@ -43,7 +43,15 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
       _ctrlErrSub = _ctrlWSClient.messages.listen(
         (_) {},
         onError: (e, st) {
-          final appException = _exceptionHandler.handleException(e, st);
+          final host = _ctrlWSClient.endpoint?.host ?? ipAddress;
+          AppException appException;
+          if (e is String && e.startsWith('Cannot reach')) {
+            appException = NetworkException.hostUnreachable(host, e);
+          } else if (e is String && e.contains('Max reconnect attempts')) {
+            appException = NetworkException.connectionFailed(host, port, e);
+          } else {
+            appException = _exceptionHandler.handleException(e, st);
+          }
           _errorCtrl.add(appException);
         },
       );

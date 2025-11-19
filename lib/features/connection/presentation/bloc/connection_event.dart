@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mower_bot/core/error/app_exception.dart';
 
 import 'connection_state.dart';
 
@@ -43,10 +44,10 @@ class ConnectionChanged extends MowerConnectionEvent {
 }
 
 class ConnectionError extends MowerConnectionEvent {
-  final String? error;
+  final AppException exception;
 
-  const ConnectionError(this.error);
+  const ConnectionError(this.exception);
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [exception];
 }
