@@ -25,36 +25,39 @@ class PathsPage extends StatelessWidget {
               if (state.paths.isEmpty) {
                 return const Center(child: Text('No saved paths'));
               }
-              return ListView.builder(
-                itemCount: state.paths.length,
-                itemBuilder: (context, index) {
-                  final name = state.paths[index];
-                  final isActive = state.activePath == name;
-                  return Card(
-                    child: ListTile(
-                      title: Text(name),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () => pathsBloc.add(PlayPath(name)),
-                            icon: Icon(isActive? Icons.pause : Icons.play_arrow),
-                          ),
-                          if(isActive)
+              return Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: ListView.builder(
+                  itemCount: state.paths.length,
+                  itemBuilder: (context, index) {
+                    final name = state.paths[index];
+                    final isActive = state.activePath == name;
+                    return Card(
+                      child: ListTile(
+                        title: Text(name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             IconButton(
-                              onPressed: () => pathsBloc.add(StopPath(name)),
-                              icon: Icon(Icons.stop),
+                              onPressed: () => pathsBloc.add(PlayPath(name)),
+                              icon: Icon(isActive? Icons.pause : Icons.play_arrow),
                             ),
-                          IconButton(
-                            onPressed: () =>
-                                _confirmDelete(context, name, pathsBloc),
-                            icon: Icon(Icons.delete),
-                          ),
-                        ],
+                            if(isActive)
+                              IconButton(
+                                onPressed: () => pathsBloc.add(StopPath(name)),
+                                icon: Icon(Icons.stop),
+                              ),
+                            IconButton(
+                              onPressed: () =>
+                                  _confirmDelete(context, name, pathsBloc),
+                              icon: Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             case PathError():
               return Center(child: Text('Error: ${state.message}'));

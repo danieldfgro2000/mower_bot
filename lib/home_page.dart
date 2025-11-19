@@ -114,6 +114,14 @@ class _HomePageState extends State<HomePage> {
             ),
             body: Stack(
               children: [
+                PageView(
+                  controller: _pageController,
+                  onPageChanged: _onPageChanged,
+                  physics: _currentIndex == 1
+                      ? const NeverScrollableScrollPhysics()
+                      : const AlwaysScrollableScrollPhysics(),
+                  children: _pages,
+                ),
                 Positioned(
                   top: 0,
                   right: 20,
@@ -125,14 +133,6 @@ class _HomePageState extends State<HomePage> {
                       return _connectionStatus(state);
                     },
                   ),),
-                PageView(
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  physics: _currentIndex == 1
-                      ? const NeverScrollableScrollPhysics()
-                      : const AlwaysScrollableScrollPhysics(),
-                  children: _pages,
-                ),
                 if (orientation == Orientation.landscape)
                   Positioned(
                     top: 0,
@@ -163,7 +163,6 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-          
                       if (isPortrait)
                         BottomNavigationBar(
                           elevation: 3,
