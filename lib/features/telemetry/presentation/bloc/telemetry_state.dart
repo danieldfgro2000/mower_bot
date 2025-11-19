@@ -1,7 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
+import 'package:mower_bot/core/diffable_state.dart';
 
-abstract class TelemetryState extends Equatable {
+abstract class TelemetryState extends Equatable implements DiffableState {
+  // Provide a minimal diff map including the runtime type so type transitions are visible
+  @override
+  Map<String, dynamic> toDiffMap() => {'_type': runtimeType.toString()};
+
   @override
   List<Object?> get props => [];
 }
@@ -17,6 +22,17 @@ class TelemetryLoaded extends TelemetryState {
 
   @override
   List<Object?> get props => [telemetry];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+        ...super.toDiffMap(),
+        'wheelAngle': telemetry.wheelAngle,
+        'opticalAngle': telemetry.opticalAngle,
+        'distanceTraveled': telemetry.distanceTraveled,
+        'speed': telemetry.speed,
+        'actuatorDrive': telemetry.actuatorDrive,
+        'actuatorStart': telemetry.actuatorStart,
+      };
 }
 
 class TelemetryError extends TelemetryState {
@@ -26,6 +42,12 @@ class TelemetryError extends TelemetryState {
 
   @override
   List<Object?> get props => [error];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+        ...super.toDiffMap(),
+        'error': error,
+      };
 }
 
 class MegaTelemetryStatus extends TelemetryState {
@@ -41,4 +63,12 @@ class MegaTelemetryStatus extends TelemetryState {
 
   @override
   List<Object?> get props => [received, ageMs, ok];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+        ...super.toDiffMap(),
+        'received': received,
+        'ageMs': ageMs,
+        'ok': ok,
+      };
 }

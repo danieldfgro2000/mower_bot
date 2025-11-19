@@ -29,14 +29,26 @@ class MowerBlocObserver extends BlocObserver {
     final prev = change.currentState;
     final next = change.nextState;
     if (prev is DiffableState && next is DiffableState) {
+      final prevType = prev.runtimeType.toString();
+      final nextType = next.runtimeType.toString();
       final diffs = StateDiffUtil.diff(prev, next);
-      if (diffs.isEmpty) {
+
+      // Filter out internal _type change when runtime type didn't change
+      final filtered = (prevType == nextType)
+          ? diffs.where((d) => !d.startsWith('_type: ')).toList()
+          : diffs;
+
+      if (filtered.isEmpty) {
         if (kDebugMode) {
-          print('📦 ${bloc.runtimeType} state change: (no field changes)');
+          if (prevType != nextType) {
+            print('📦 ${bloc.runtimeType} state type: $prevType -> $nextType (no other field changes)');
+          } else {
+            print('📦 ${bloc.runtimeType} state change: (no field changes)');
+          }
         }
       } else {
         if (kDebugMode) {
-          print('📦 ${bloc.runtimeType} state change:\n  ${diffs.join('\n  ')}');
+          print('📦 ${bloc.runtimeType} state change:\n  ${filtered.join('\n  ')}');
         }
       }
     } else if (prev != next) {
