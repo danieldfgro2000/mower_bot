@@ -38,7 +38,7 @@ class _SafeJoystickState extends State<SafeJoystick> {
       child: Joystick(
         mode: widget.mode,
         listener: (details) {
-          if (!_ready || details == null) return;
+          if (!_ready) return;
           try {
             final rawX = (details.x as num).toDouble();
             final rawY = (details.y as num).toDouble();
