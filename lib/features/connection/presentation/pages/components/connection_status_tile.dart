@@ -13,7 +13,7 @@ class ConnectionStatusTile extends StatelessWidget {
       MowerConnectionState,
       ConnectionStatus
     >(
-      selector: (s) => s.status,
+      selector: (s) => s.connectionStatus,
       builder: (context, status) {
         final color = switch (status) {
           ConnectionStatus.ctrlWsConnected => Colors.green,

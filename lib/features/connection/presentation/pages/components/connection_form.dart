@@ -24,7 +24,7 @@ class _ConnectionFormState extends State<ConnectionForm> {
     final bloc = context.read<MowerConnectionBloc>();
     final s = bloc.state;
     ipController = TextEditingController(text: s.ip ?? '192.168.100.114');
-    portController = TextEditingController(text: (s.port?.toString() ?? '81'));
+    portController = TextEditingController(text: (s.port?.toString() ?? '85'));
     bloc.add(ChangeIp(ipController.text));
     final initialPort = int.tryParse(portController.text);
     if (initialPort != null) bloc.add(ChangePort(initialPort));
@@ -42,7 +42,7 @@ class _ConnectionFormState extends State<ConnectionForm> {
     final bloc = context.read<MowerConnectionBloc>();
     final isBusy = context.select(
       (MowerConnectionBloc bloc) =>
-          bloc.state.status == ConnectionStatus.connecting,
+          bloc.state.connectionStatus == ConnectionStatus.connecting,
     );
     return Form(
       key: widget.formKey,

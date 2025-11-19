@@ -6,7 +6,7 @@ abstract class MowerConnectionRepository {
   Stream<Map<String, dynamic>>? jsonStream();
   Stream<AppException> ctrlWsErr();
   Stream<ConnectionStatus>? ctrlWsConnected();
-  Future<void> connectCtrlWs(String ipAddress);
+  Future<void> connectCtrlWs(String ipAddress, int port);
   Future<void> disconnectCtrlWs();
   bool get isCtrlWsConnected;
 }

@@ -15,18 +15,18 @@ class ConnectionButton extends StatefulWidget {
 class _ConnectionButtonState extends State<ConnectionButton> {
   bool isBusy = false;
   bool isConnected = false;
-  String ip = '172.20.10.12';
-  int port = 81;
 
   @override
   Widget build(BuildContext context) {
 
 
     return BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-      buildWhen: (p, n) => p.status != n.status || p.ip != n.ip || p.port != n.port,
+      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus ||
+          p.ip != n.ip ||
+          p.port != n.port,
       builder: (context, state) {
-        isBusy = state.status == ConnectionStatus.connecting;
-        isConnected = state.status == ConnectionStatus.ctrlWsConnected;
+        isBusy = state.connectionStatus == ConnectionStatus.connecting;
+        isConnected = state.connectionStatus == ConnectionStatus.ctrlWsConnected;
         return ElevatedButton.icon(
           onPressed: isBusy
             ? null

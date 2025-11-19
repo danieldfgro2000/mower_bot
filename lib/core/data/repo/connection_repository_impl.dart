@@ -25,12 +25,12 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
   StreamSubscription? _ctrlErrSub;
 
   @override
-  Future<void> connectCtrlWs(String ipAddress) async {
+  Future<void> connectCtrlWs(String ipAddress, int port) async {
     if (ipAddress.isEmpty) {
       throw ValidationException.required('IP Address');
     }
 
-    final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: MowerWsPort.ctrl.port, path: '/');
+    final ctrlUri = Uri(scheme: 'ws', host: ipAddress, port: port, path: '/');
 
     try {
       _ctrlWSClient.setEndpoint(ctrlUri);

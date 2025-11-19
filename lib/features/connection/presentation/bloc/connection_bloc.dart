@@ -82,8 +82,11 @@ class MowerConnectionBloc
       if (state.ip == null || state.ip!.isEmpty) {
         throw ValidationException.required('IP Address');
       }
+      if (state.port == null || state.port! <= 0) {
+        throw ValidationException.required('Port');
+      }
 
-      await connectToCtrlWsUseCase(state.ip!);
+      await connectToCtrlWsUseCase(state.ip!, state.port!);
 
       // After initiating the connection, double-check current status
       add(CheckConnectionStatus());

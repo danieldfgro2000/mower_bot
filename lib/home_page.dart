@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  leading: state.status == ConnectionStatus.ctrlWsConnected
+                  leading: state.connectionStatus == ConnectionStatus.ctrlWsConnected
                       ? const Icon(Icons.link)
                       : const Icon(Icons.link_off),
                   title: const Text('Connect'),
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-                      buildWhen: (p, n) => p.status != n.status,
+                      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus,
                       builder: (context, state) {
                         return _connectionStatus(state);
                       },
@@ -190,28 +190,28 @@ class _HomePageState extends State<HomePage> {
 
   Text _connectionStatus(MowerConnectionState state) {
     return switch (state) {
-      MowerConnectionState(status: ConnectionStatus.ctrlWsConnected) => Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.ctrlWsConnected) => Text(
         'Control websocket Connected',
         textScaler: TextScaler.linear(1),
         style: const TextStyle(color: Colors.green),
       ),
-      MowerConnectionState(status: ConnectionStatus.videoWsConnected) => Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.videoWsConnected) => Text(
         'Video websocket Connected',
         textScaler: TextScaler.linear(1),
         style: const TextStyle(color: Colors.blue),
       ),
-      MowerConnectionState(status: ConnectionStatus.connecting) => const Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.connecting) => const Text(
         'Connecting...',
       ),
-      MowerConnectionState(status: ConnectionStatus.disconnected) => const Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.disconnected) => const Text(
         'Disconnected',
         style: TextStyle(color: Colors.red),
       ),
-      MowerConnectionState(status: ConnectionStatus.hostUnreachable) => const Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.hostUnreachable) => const Text(
         'Host unreachable',
         style: TextStyle(color: Colors.red),
       ),
-      MowerConnectionState(status: ConnectionStatus.error) => Text(
+      MowerConnectionState(connectionStatus: ConnectionStatus.error) => Text(
         style: const TextStyle(color: Colors.red),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

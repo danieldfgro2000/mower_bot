@@ -11,13 +11,13 @@ enum ConnectionStatus{
 }
 
 class MowerConnectionState extends Equatable implements DiffableState {
-  final ConnectionStatus status;
+  final ConnectionStatus connectionStatus;
   final String? ip;
   final int? port;
   final String? error;
 
   const MowerConnectionState({
-    this.status = ConnectionStatus.disconnected,
+    this.connectionStatus = ConnectionStatus.disconnected,
     this.ip,
     this.port,
     this.error
@@ -30,7 +30,7 @@ class MowerConnectionState extends Equatable implements DiffableState {
     String? error,
   }) {
     return MowerConnectionState(
-      status: status ?? this.status,
+      connectionStatus: status ?? this.connectionStatus,
       ip: ip ?? this.ip,
       port: port ?? this.port,
       error: error ?? this.error,
@@ -38,11 +38,11 @@ class MowerConnectionState extends Equatable implements DiffableState {
   }
 
   @override
-  List<Object?> get props => [status, ip, port, error];
+  List<Object?> get props => [connectionStatus, ip, port, error];
 
   @override
   Map<String, dynamic> toDiffMap() => {
-    'status': status,
+    'status': connectionStatus,
     'ip': ip,
     'port': port,
     'error': error,
