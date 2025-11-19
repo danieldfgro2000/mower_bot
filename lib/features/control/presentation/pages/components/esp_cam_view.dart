@@ -1,4 +1,5 @@
 // lib/features/control/presentation/widgets/esp_mjpeg_webview.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -18,43 +19,6 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
     with WidgetsBindingObserver {
   InAppWebViewController? _controller;
   late final ControlBloc _bloc;
-
-  // Build a small HTML shell that displays the MJPEG stream directly
-  String _buildFallbackStreamHtml(String baseUrl) {
-    final streamUrl = '$baseUrl/stream';
-    final vflipUrl = '$baseUrl/control?var=vflip&val=1';
-    return '''
-<!doctype html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<style>
-  html, body { margin:0; padding:0; height:100%; background:#000; }
-  #wrap { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
-  #stream { max-width:100%; max-height:100%; }
-</style>
-<script>
-  (function(){
-    try {
-      // Fire-and-forget V-Flip ON
-      fetch('$vflipUrl').catch(function(){});
-    } catch(e) {}
-    function start(){
-      var img = document.getElementById('stream');
-      if (img) img.src = '$streamUrl';
-    }
-    document.addEventListener('DOMContentLoaded', start);
-  })();
-</script>
-</head>
-<body>
-  <div id="wrap">
-    <img id="stream" alt="stream" />
-  </div>
-</body>
-</html>
-''';
-  }
 
   @override
   void initState() {
@@ -103,7 +67,6 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
             initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
             onWebViewCreated: (c) => _controller = c,
             onLoadStop: (controller, url) async {
-              // Hide toggle menu and start video stream after page loads
               await controller.evaluateJavascript(source: '''
               (function(){
                 try {
@@ -115,10 +78,10 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
                   
                   // Ensure V-Flip is ON by default
                   const vflip = document.querySelector('#vflip');
-                  if (vflip && !vflip.checked) {
+                  //if (vflip && !vflip.checked) {
                        // click triggers the default-action change listener
                        vflip.click();
-                  }
+                  //}
                   
                   // Close settings panel if it's open
                   const settingsMenu = document.querySelector('#menu');
@@ -134,13 +97,9 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
               ''');
             },
             onReceivedError: (controller, request, error) async {
-              // If the main index fails to decode (common with compressed index pages),
-              // fall back to a simple HTML that embeds the MJPEG stream directly.
-              final baseUrl = context.read<ControlBloc>().state.videoStreamUrl;
-              final desc = (error.description ?? '').toString();
-              if (baseUrl != null && baseUrl.isNotEmpty && desc.contains('ERR_CONTENT_DECODING_FAILED')) {
-                final html = _buildFallbackStreamHtml(baseUrl);
-                await controller.loadData(data: html, mimeType: 'text/html', encoding: 'utf-8', baseUrl: WebUri(baseUrl));
+              final desc = (error.description).toString();
+              if (kDebugMode) {
+                print('WebView error: $desc');
               }
             },
           ),

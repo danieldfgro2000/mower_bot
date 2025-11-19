@@ -42,6 +42,6 @@ class StateDiffUtil {
     if (v == null) return 'null';
     final s = v.toString();
     if (s.length <= max) return s;
-    return s.substring(0, max) + '…';
+    return '${s.substring(0, max)}…';
   }
 }
