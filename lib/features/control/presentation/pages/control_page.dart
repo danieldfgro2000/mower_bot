@@ -6,6 +6,7 @@ import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
+import 'package:mower_bot/features/control/presentation/widgets/joystick_safe_wrapper.dart';
 
 import 'components/esp_cam_view.dart';
 
@@ -273,11 +274,14 @@ class _JoystickWithTrackingDotState extends State<JoystickWithTrackingDot> {
           return Stack(
             alignment: Alignment.center,
             children: [
-              Joystick(
+              SafeJoystick(
+                size: joystickSize,
                 mode: JoystickMode.horizontal,
-                listener: (details) => context.read<ControlBloc>().add(
-                  SteerCommand(angle: details.x * 45),
-                ),
+                onChanged: (x, y) {
+                  context.read<ControlBloc>().add(
+                    SteerCommand(angle: x * 45),
+                  );
+                },
               ),
               IgnorePointer(
                 child: Transform.translate(
