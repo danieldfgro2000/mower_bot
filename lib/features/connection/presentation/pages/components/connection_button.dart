@@ -32,7 +32,10 @@ class _ConnectionButtonState extends State<ConnectionButton> {
             ? null
             :_handleOnPressed,
           icon: Icon(isConnected ? Icons.wifi : Icons.wifi_off),
-          label: Text(isConnected ? 'Disconnect' : 'Connect'),
+          label: Text(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+              isConnected ? 'Disconnect' : 'Connect'),
         );
       });
   }

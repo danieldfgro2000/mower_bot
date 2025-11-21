@@ -139,16 +139,10 @@ class _HomePageState extends State<HomePage> {
                     left: 0,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, top: 16),
-                      child: Material(
-                        elevation: 2,
-                        shape: const CircleBorder(),
-                        clipBehavior: Clip.antiAlias,
-                        color: Colors.black45,
-                        child: IconButton(
-                          tooltip: 'Menu',
-                          icon: const Icon(Icons.menu, color: Colors.white),
-                          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-                        ),
+                      child: IconButton(
+                        tooltip: 'Menu',
+                        icon: const Icon(Icons.menu),
+                        onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                       ),
                     ),
                   ),

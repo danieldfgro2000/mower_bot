@@ -60,8 +60,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 1, child: ConnectionForm(formKey: _formKey)),
-                Flexible(child: SizedBox(width: 20)),
+                Flexible(flex: 2, child: ConnectionForm(formKey: _formKey)),
+                SizedBox(width: 20),
                 Flexible(flex: 1, child: ConnectionButton(formKey: _formKey)),
                 Flexible(child: SizedBox(width: 20)),
               ]
