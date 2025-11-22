@@ -26,8 +26,8 @@ const float steeringRange = 90.0f;
 const float gearRatio = 5.0f;
 
 // Homing params
-static const long HOMING_SPEED_STEPS = 400;       // steps/s, sign controlled per direction
-static unsigned long g_homingNoPulseMs = 400; // inactivity threshold (user-adjustable)
+static const long HOMING_SPEED_STEPS = 1000;       // steps/s, sign controlled per direction
+static unsigned long g_homingNoPulseMs = 180; // inactivity threshold (user-adjustable)
 
 // ===========================
 // ----- Helpers
@@ -121,6 +121,8 @@ void steeringHome() {
 
     enum HomingState { HS_INIT, HS_SEEK_NEG, HS_SEEK_POS, HS_CENTERING };
     static HomingState state = HS_INIT;
+
+    static long correctionCenterSteps = 500;
 
     static long lastTurnCount = 0;
     static unsigned long lastPulseAt = 0;
@@ -268,7 +270,7 @@ void steeringHome() {
                     }
 
                     // Move to center between the two measured stops
-                    long center = minStop + span / 2;
+                    long center = correctionCenterSteps + minStop + span / 2;
 
                     stepper.moveTo(center);
                     state = HS_CENTERING;
@@ -303,7 +305,7 @@ void steeringHome() {
                     state = HS_INIT;
                     break;
                 }
-                long center = minStop + span / 2;
+                long center = correctionCenterSteps + minStop + span / 2;
                 stepper.moveTo(center);
                 state = HS_CENTERING;
                 Serial.print("[STEERING] Homing: move to center steps: ");
