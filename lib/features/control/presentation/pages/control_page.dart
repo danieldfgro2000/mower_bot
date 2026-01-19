@@ -128,9 +128,7 @@ class _ControlPageState extends State<ControlPage>
   }
 
   Column _driveUnit(BuildContext ctx, double screenWidth) {
-    final isMowerMoving = ctx.select(
-      (ControlBloc b) => b.state.isMowerMoving == true,
-    );
+    final isMowerMoving = ctx.select((ControlBloc b) => b.state.isMowerMoving == true,);
     final controlBloc = ctx.read<ControlBloc>();
 
     // Compact control sizes to minimize vertical height
