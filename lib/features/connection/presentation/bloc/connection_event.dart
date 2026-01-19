@@ -77,3 +77,24 @@ class ConnectionError extends MowerConnectionEvent {
   @override
   List<Object?> get props => [exception];
 }
+
+/// Internal-only events (used by [MowerConnectionBloc]) to safely bridge async
+/// callbacks (Timer/Stream) back into the Bloc event loop.
+///
+/// Keep these in this file so they can be registered via `on<T>()`.
+class WifiScanDetectedAp extends MowerConnectionEvent {
+  const WifiScanDetectedAp();
+}
+
+class WifiScanTimedOut extends MowerConnectionEvent {
+  const WifiScanTimedOut();
+}
+
+class WifiScanFailed extends MowerConnectionEvent {
+  final String message;
+
+  const WifiScanFailed(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}

@@ -8,7 +8,8 @@ import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:wifi_scan/wifi_scan.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import 'package:mower_bot/core/platform/platform_permissions.dart';
 
 import 'connection_event.dart';
 import 'connection_state.dart';
@@ -30,11 +31,16 @@ class MowerConnectionBloc
   StreamSubscription<List<WiFiAccessPoint>>? _wifiScanSub;
   Timer? _wifiScanTimeout;
 
-  MowerConnectionBloc(this.connectToCtrlWsUseCase,
-      this.disconnectCtrlWsUseCase,
-      this.checkCtrlWsConnectedUseCase,
-      this.telemetryBloc,
-      this.repo,) : super(const MowerConnectionState()) {
+  // Internal events to safely emit from async sources (Timer/Stream).
+  // (handled via WifiScanDetectedAp/WifiScanTimedOut/WifiScanFailed events)
+
+  MowerConnectionBloc(
+    this.connectToCtrlWsUseCase,
+    this.disconnectCtrlWsUseCase,
+    this.checkCtrlWsConnectedUseCase,
+    this.telemetryBloc,
+    this.repo,
+  ) : super(const MowerConnectionState()) {
     on<ChangeIp>(_onChangeIp);
     on<ChangePort>(_onChangePort);
     on<ChangeWiFiMode>(_onChangeWiFiMode);
@@ -45,6 +51,9 @@ class MowerConnectionBloc
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
     on<ConnectionError>(_onConnectionError);
+    on<WifiScanDetectedAp>(_onWifiScanDetectedAp);
+    on<WifiScanTimedOut>(_onWifiScanTimedOut);
+    on<WifiScanFailed>(_onWifiScanFailed);
 
     // Initialize connection status listener on startup
     _initializeConnectionStatus();
@@ -102,6 +111,31 @@ class MowerConnectionBloc
     emit(state.copyWith(wifiMode: nextMode, ip: nextIp, error: ''));
   }
 
+  FutureOr<void> _onWifiScanDetectedAp(WifiScanDetectedAp event, Emitter<MowerConnectionState> emit) {
+    emit(state.copyWith(
+      wifiScanStatus: WifiScanStatus.completed,
+      wifiMode: ESP32WiFiMode.ap,
+      error: '',
+    ));
+    add(const ChangeWiFiMode(ESP32WiFiMode.ap));
+  }
+
+  FutureOr<void> _onWifiScanTimedOut(WifiScanTimedOut event, Emitter<MowerConnectionState> emit) {
+    emit(state.copyWith(
+      wifiScanStatus: WifiScanStatus.timeout,
+      wifiMode: ESP32WiFiMode.client,
+    ));
+    add(const ChangeWiFiMode(ESP32WiFiMode.client));
+  }
+
+  FutureOr<void> _onWifiScanFailed(WifiScanFailed event, Emitter<MowerConnectionState> emit) {
+    emit(state.copyWith(
+      wifiScanStatus: WifiScanStatus.failed,
+      wifiMode: ESP32WiFiMode.client,
+      error: event.message,
+    ));
+  }
+
   Future<void> _onAutoDetectWifiMode(
     AutoDetectWifiMode event,
     Emitter<MowerConnectionState> emit,
@@ -114,26 +148,12 @@ class MowerConnectionBloc
 
     emit(state.copyWith(wifiScanStatus: WifiScanStatus.scanning, error: ''));
 
-    // Android requires location permission (and location services enabled) to read SSIDs.
-    final locationStatus = await Permission.locationWhenInUse.request();
-    if (!locationStatus.isGranted) {
+    final readinessError = await PlatformPermissions.ensureWifiScanReady();
+    if (readinessError != null) {
       emit(state.copyWith(
         wifiScanStatus: WifiScanStatus.failed,
         wifiMode: ESP32WiFiMode.client,
-        error: locationStatus.isPermanentlyDenied
-            ? 'Location permission permanently denied. Please enable it in settings to scan Wi‑Fi.'
-            : 'Location permission denied. Cannot scan Wi‑Fi.',
-      ));
-      return;
-    }
-
-    // If Wi‑Fi scan isn't supported/authorized, fall back to client mode.
-    final can = await WiFiScan.instance.canGetScannedResults();
-    if (can != CanGetScannedResults.yes) {
-      emit(state.copyWith(
-        wifiScanStatus: WifiScanStatus.failed,
-        wifiMode: ESP32WiFiMode.client,
-        error: 'Wi‑Fi scan not available (${can.name}). Make sure Location is ON.',
+        error: readinessError,
       ));
       return;
     }
@@ -156,23 +176,13 @@ class MowerConnectionBloc
       _wifiScanTimeout = null;
       _wifiScanSub?.cancel();
       _wifiScanSub = null;
-      emit(state.copyWith(
-        wifiScanStatus: WifiScanStatus.completed,
-        wifiMode: ESP32WiFiMode.ap,
-        error: '',
-      ));
-      // Update default IP for AP.
-      add(const ChangeWiFiMode(ESP32WiFiMode.ap));
+      add(const WifiScanDetectedAp());
     }
 
     void finishAsClientTimeout() {
       _wifiScanSub?.cancel();
       _wifiScanSub = null;
-      emit(state.copyWith(
-        wifiScanStatus: WifiScanStatus.timeout,
-        wifiMode: ESP32WiFiMode.client,
-      ));
-      add(const ChangeWiFiMode(ESP32WiFiMode.client));
+      add(const WifiScanTimedOut());
     }
 
     // Poll results during the timeout window.
@@ -185,11 +195,7 @@ class MowerConnectionBloc
       });
       if (found) finishAsAp();
     }, onError: (e, st) {
-      emit(state.copyWith(
-        wifiScanStatus: WifiScanStatus.failed,
-        wifiMode: ESP32WiFiMode.client,
-        error: 'Wi‑Fi scan error: $e',
-      ));
+      add(WifiScanFailed('Wi‑Fi scan error: $e'));
     });
 
     _wifiScanTimeout = Timer(event.timeout, finishAsClientTimeout);

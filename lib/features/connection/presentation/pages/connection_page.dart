@@ -63,6 +63,20 @@ class _ConnectionPageState extends State<ConnectionPage> {
               );
             }
 
+            // Scan failed: show guidance + quick actions on Android.
+            if (Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.failed) {
+              final err = (state.error ?? '').toLowerCase();
+              final locationOff = err.contains('location services are off');
+
+              return _WifiScanFailed(
+                message: state.error ?? 'Wi‑Fi scan failed.',
+                onOpenLocationSettings: locationOff ? () => PlatformSettings.openLocationSettings() : null,
+                onOpenWifiSettings: () => PlatformSettings.openWifiSettings(),
+                onRetry: () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower')),
+                onContinue: () => context.read<MowerConnectionBloc>().add(const ChangeWiFiMode(ESP32WiFiMode.client)),
+              );
+            }
+
             final isApMode = state.wifiMode == ESP32WiFiMode.ap;
 
             final header = _ConnectionModeHeader(
@@ -82,6 +96,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const SizedBox(height: 24),
                   header,
                   const SizedBox(height: 24),
                   const Text(
@@ -104,6 +119,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      const SizedBox(height: 24),
                       header,
                       Expanded(
                         child: Padding(
@@ -163,6 +179,76 @@ class _WifiScanLoading extends StatelessWidget {
             label: const Text('Open Wi‑Fi Settings'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _WifiScanFailed extends StatelessWidget {
+  final String message;
+  final VoidCallback? onOpenLocationSettings;
+  final VoidCallback onOpenWifiSettings;
+  final VoidCallback onRetry;
+  final VoidCallback onContinue;
+
+  const _WifiScanFailed({
+    required this.message,
+    required this.onOpenLocationSettings,
+    required this.onOpenWifiSettings,
+    required this.onRetry,
+    required this.onContinue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 520),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Can\'t scan Wi‑Fi networks',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 12),
+                Text(message),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    if (onOpenLocationSettings != null)
+                      FilledButton.icon(
+                        onPressed: onOpenLocationSettings,
+                        icon: const Icon(Icons.location_on),
+                        label: const Text('Turn on Location'),
+                      ),
+                    OutlinedButton.icon(
+                      onPressed: onOpenWifiSettings,
+                      icon: const Icon(Icons.wifi),
+                      label: const Text('Open Wi‑Fi'),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: onRetry,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Retry'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: onContinue,
+                  child: const Text('Continue without scan'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

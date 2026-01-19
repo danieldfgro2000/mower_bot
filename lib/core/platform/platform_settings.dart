@@ -57,4 +57,28 @@ class PlatformSettings {
       AppSettings.openAppSettings();
     } catch (_) {}
   }
+
+  static Future<void> openLocationSettings() async {
+    if (Platform.isAndroid) {
+      try {
+        await _channel.invokeMethod<void>('openLocationSettings');
+        return;
+      } catch (_) {
+        // fall through
+      }
+      try {
+        AppSettings.openAppSettings(type: AppSettingsType.location);
+        return;
+      } catch (_) {}
+      try {
+        AppSettings.openAppSettings();
+      } catch (_) {}
+      return;
+    }
+
+    // Other platforms: best-effort.
+    try {
+      AppSettings.openAppSettings();
+    } catch (_) {}
+  }
 }

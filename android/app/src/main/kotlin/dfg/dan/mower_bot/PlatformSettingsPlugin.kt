@@ -45,6 +45,21 @@ class PlatformSettingsPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
           result.error("failed", e.message, null)
         }
       }
+      "openLocationSettings" -> {
+        val act = activity
+        if (act == null) {
+          result.error("no_activity", "No foreground activity", null)
+          return
+        }
+
+        try {
+          val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+          act.startActivity(intent)
+          result.success(null)
+        } catch (e: Exception) {
+          result.error("failed", e.message, null)
+        }
+      }
       else -> result.notImplemented()
     }
   }
