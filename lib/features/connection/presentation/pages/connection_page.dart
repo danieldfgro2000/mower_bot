@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/core/platform/platform_settings.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
@@ -59,11 +59,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             // Loading screen while scanning for the mower AP SSID.
             if (Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.scanning) {
               return _WifiScanLoading(
-                onOpenWifiSettings: () {
-                  try {
-                    AppSettings.openAppSettings(type: AppSettingsType.wifi);
-                  } catch (_) {}
-                },
+                onOpenWifiSettings: () => PlatformSettings.openWifiSettings(),
               );
             }
 
@@ -74,13 +70,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               onModeChanged: (mode) {
                 context.read<MowerConnectionBloc>().add(ChangeWiFiMode(mode));
               },
-              onOpenWifiSettings: isApMode
-                  ? () {
-                      try {
-                        AppSettings.openAppSettings(type: AppSettingsType.wifi);
-                      } catch (_) {}
-                    }
-                  : null,
+              onOpenWifiSettings: isApMode ? () => PlatformSettings.openWifiSettings() : null,
               onRetryScan: Platform.isAndroid
                   ? () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
                   : null,
@@ -99,11 +89,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
-                    onPressed: () {
-                      try {
-                        AppSettings.openAppSettings(type: AppSettingsType.wifi);
-                      } catch (_) {}
-                    },
+                    onPressed: () => PlatformSettings.openWifiSettings(),
                     icon: const Icon(Icons.wifi),
                     label: const Text('Open Wi‑Fi Settings'),
                   ),
