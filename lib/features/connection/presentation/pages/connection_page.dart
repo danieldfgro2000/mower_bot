@@ -171,7 +171,7 @@ class _WifiScanLoading extends StatelessWidget {
         children: [
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
-          const Text('Scanning Wi‑Fi for mower network (up to 30s)...'),
+          const Text('Scanning Wi‑Fi for MowerBot network (up to 30s)...'),
           const SizedBox(height: 16),
           TextButton.icon(
             onPressed: onOpenWifiSettings,
