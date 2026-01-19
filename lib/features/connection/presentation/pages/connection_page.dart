@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +27,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
     super.initState();
     final bloc = context.read<MowerConnectionBloc>();
     bloc.add(CheckConnectionStatus());
-    bloc.add(const AutoDetectWifiMode(ssidPrefix: 'mower'));
+
+    // Wi‑Fi SSID scanning is not generally available on iOS.
+    // Only auto-detect on Android; iOS users can toggle AP/Client manually.
+    if (Platform.isAndroid) {
+      bloc.add(const AutoDetectWifiMode(ssidPrefix: 'mower'));
+    }
   }
 
   @override
@@ -50,7 +57,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           buildWhen: (p, n) => p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
           builder: (context, state) {
             // Loading screen while scanning for the mower AP SSID.
-            if (state.wifiScanStatus == WifiScanStatus.scanning) {
+            if (Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.scanning) {
               return _WifiScanLoading(
                 onOpenWifiSettings: () {
                   try {
@@ -74,7 +81,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
                       } catch (_) {}
                     }
                   : null,
-              onRetryScan: () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower')),
+              onRetryScan: Platform.isAndroid
+                  ? () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
+                  : null,
               scanStatus: state.wifiScanStatus,
             );
 
@@ -177,7 +186,7 @@ class _ConnectionModeHeader extends StatelessWidget {
   final ESP32WiFiMode wifiMode;
   final ValueChanged<ESP32WiFiMode> onModeChanged;
   final VoidCallback? onOpenWifiSettings;
-  final VoidCallback onRetryScan;
+  final VoidCallback? onRetryScan;
   final WifiScanStatus scanStatus;
 
   const _ConnectionModeHeader({

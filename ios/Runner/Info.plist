@@ -24,6 +24,13 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
+	<!-- Location usage descriptions (required if location permission is ever requested). -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses location permission to scan for the mower Wi‑Fi network during setup.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses location permission to scan for the mower Wi‑Fi network during setup.</string>
+
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
