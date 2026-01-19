@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
@@ -22,16 +23,19 @@ class _ConnectionPageState extends State<ConnectionPage> {
   @override
   void initState() {
     super.initState();
-    context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
+    final bloc = context.read<MowerConnectionBloc>();
+    bloc.add(CheckConnectionStatus());
+    bloc.add(const AutoDetectWifiMode(ssidPrefix: 'mower'));
   }
 
   @override
   Widget build(BuildContext context) {
     final screenOrientation = MediaQuery.of(context).orientation;
-    return  MultiBlocListener(
+
+    return MultiBlocListener(
       listeners: [
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
-          listenWhen: (p, c) => p.error  != c.error,
+          listenWhen: (p, c) => p.error != c.error,
           listener: (context, state) {
             String? err = state.error;
             if (err == null || err.isEmpty) return;
@@ -40,33 +44,187 @@ class _ConnectionPageState extends State<ConnectionPage> {
         )
       ],
       child: SafeArea(
-          minimum: EdgeInsets.all(16.0),
-          maintainBottomViewPadding: true,
-          child: screenOrientation == Orientation.portrait
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: ConnectionForm(formKey: _formKey),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ConnectionButton(formKey: _formKey),
-            ],
-          )
-              : Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(flex: 2, child: ConnectionForm(formKey: _formKey)),
-                SizedBox(width: 20),
-                Flexible(flex: 1, child: ConnectionButton(formKey: _formKey)),
-                Flexible(child: SizedBox(width: 20)),
-              ]
-          )
+        minimum: const EdgeInsets.all(16.0),
+        maintainBottomViewPadding: true,
+        child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
+          buildWhen: (p, n) => p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
+          builder: (context, state) {
+            // Loading screen while scanning for the mower AP SSID.
+            if (state.wifiScanStatus == WifiScanStatus.scanning) {
+              return _WifiScanLoading(
+                onOpenWifiSettings: () {
+                  try {
+                    AppSettings.openAppSettings(type: AppSettingsType.wifi);
+                  } catch (_) {}
+                },
+              );
+            }
+
+            final isApMode = state.wifiMode == ESP32WiFiMode.ap;
+
+            final header = _ConnectionModeHeader(
+              wifiMode: state.wifiMode,
+              onModeChanged: (mode) {
+                context.read<MowerConnectionBloc>().add(ChangeWiFiMode(mode));
+              },
+              onOpenWifiSettings: isApMode
+                  ? () {
+                      try {
+                        AppSettings.openAppSettings(type: AppSettingsType.wifi);
+                      } catch (_) {}
+                    }
+                  : null,
+              onRetryScan: () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower')),
+              scanStatus: state.wifiScanStatus,
+            );
+
+            if (isApMode) {
+              // AP mode: no form; only guide user to pick the mower Wi‑Fi network.
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  header,
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Mower network detected (AP mode).\n\n1) Open Wi‑Fi settings\n2) Connect to the mower network\n3) Come back and tap Connect',
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      try {
+                        AppSettings.openAppSettings(type: AppSettingsType.wifi);
+                      } catch (_) {}
+                    },
+                    icon: const Icon(Icons.wifi),
+                    label: const Text('Open Wi‑Fi Settings'),
+                  ),
+                  const SizedBox(height: 16),
+                  ConnectionButton(formKey: _formKey),
+                ],
+              );
+            }
+
+            // Client/standalone mode: keep existing UI, just add the header.
+            return screenOrientation == Orientation.portrait
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      header,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: ConnectionForm(formKey: _formKey),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ConnectionButton(formKey: _formKey),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            header,
+                            const SizedBox(height: 12),
+                            Expanded(child: ConnectionForm(formKey: _formKey)),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Flexible(flex: 1, child: ConnectionButton(formKey: _formKey)),
+                      const Flexible(child: SizedBox(width: 20)),
+                    ],
+                  );
+          },
+        ),
       ),
+    );
+  }
+}
+
+class _WifiScanLoading extends StatelessWidget {
+  final VoidCallback onOpenWifiSettings;
+
+  const _WifiScanLoading({required this.onOpenWifiSettings});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          const Text('Scanning Wi‑Fi for mower network (up to 30s)...'),
+          const SizedBox(height: 16),
+          TextButton.icon(
+            onPressed: onOpenWifiSettings,
+            icon: const Icon(Icons.wifi),
+            label: const Text('Open Wi‑Fi Settings'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConnectionModeHeader extends StatelessWidget {
+  final ESP32WiFiMode wifiMode;
+  final ValueChanged<ESP32WiFiMode> onModeChanged;
+  final VoidCallback? onOpenWifiSettings;
+  final VoidCallback onRetryScan;
+  final WifiScanStatus scanStatus;
+
+  const _ConnectionModeHeader({
+    required this.wifiMode,
+    required this.onModeChanged,
+    required this.onOpenWifiSettings,
+    required this.onRetryScan,
+    required this.scanStatus,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: SegmentedButton<ESP32WiFiMode>(
+            segments: const [
+              ButtonSegment(
+                value: ESP32WiFiMode.client,
+                label: Text('Client'),
+                icon: Icon(Icons.router),
+              ),
+              ButtonSegment(
+                value: ESP32WiFiMode.ap,
+                label: Text('AP'),
+                icon: Icon(Icons.wifi_tethering),
+              ),
+            ],
+            selected: {wifiMode},
+            onSelectionChanged: (selection) {
+              if (selection.isEmpty) return;
+              onModeChanged(selection.first);
+            },
+          ),
+        ),
+        const SizedBox(width: 12),
+        IconButton(
+          tooltip: 'Retry AP detection',
+          onPressed: onRetryScan,
+          icon: const Icon(Icons.refresh),
+        ),
+        IconButton(
+          tooltip: 'Open Wi‑Fi settings',
+          onPressed: onOpenWifiSettings,
+          icon: const Icon(Icons.settings),
+        ),
+      ],
     );
   }
 }

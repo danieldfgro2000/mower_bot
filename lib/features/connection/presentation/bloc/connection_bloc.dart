@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mower_bot/core/error/app_exception.dart';
 import 'package:mower_bot/core/error/error.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
 import 'package:mower_bot/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart';
@@ -8,6 +7,8 @@ import 'package:mower_bot/features/connection/domain/usecases/connect_to_ctrl_ws
 import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
+import 'package:wifi_scan/wifi_scan.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'connection_event.dart';
 import 'connection_state.dart';
@@ -25,6 +26,10 @@ class MowerConnectionBloc
   StreamSubscription? _errSub;
   StreamSubscription? _connectionStatusSub;
 
+  // Auto-detect scan control
+  StreamSubscription<List<WiFiAccessPoint>>? _wifiScanSub;
+  Timer? _wifiScanTimeout;
+
   MowerConnectionBloc(this.connectToCtrlWsUseCase,
       this.disconnectCtrlWsUseCase,
       this.checkCtrlWsConnectedUseCase,
@@ -32,6 +37,9 @@ class MowerConnectionBloc
       this.repo,) : super(const MowerConnectionState()) {
     on<ChangeIp>(_onChangeIp);
     on<ChangePort>(_onChangePort);
+    on<ChangeWiFiMode>(_onChangeWiFiMode);
+    on<AutoDetectWifiMode>(_onAutoDetectWifiMode);
+    on<RetryAutoDetectWifiMode>((event, emit) => add(const AutoDetectWifiMode()));
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
@@ -71,6 +79,122 @@ class MowerConnectionBloc
     emit(state.copyWith(port: event.port));
   }
 
+  void _onChangeWiFiMode(ChangeWiFiMode event, Emitter<MowerConnectionState> emit) {
+    // Keep it simple: flip mode + set a sensible default IP if none was set yet
+    // (or if current IP matches the other mode's common default).
+    const clientDefaultIp = '192.168.100.114';
+    const apDefaultIp = '192.168.4.1';
+
+    final nextMode = event.mode;
+    final currentIp = (state.ip ?? '').trim();
+
+    String? nextIp = state.ip;
+    if (nextMode == ESP32WiFiMode.ap) {
+      if (currentIp.isEmpty || currentIp == clientDefaultIp) {
+        nextIp = apDefaultIp;
+      }
+    } else {
+      if (currentIp.isEmpty || currentIp == apDefaultIp) {
+        nextIp = clientDefaultIp;
+      }
+    }
+
+    emit(state.copyWith(wifiMode: nextMode, ip: nextIp, error: ''));
+  }
+
+  Future<void> _onAutoDetectWifiMode(
+    AutoDetectWifiMode event,
+    Emitter<MowerConnectionState> emit,
+  ) async {
+    // Cancel any previous scan attempt.
+    await _wifiScanSub?.cancel();
+    _wifiScanSub = null;
+    _wifiScanTimeout?.cancel();
+    _wifiScanTimeout = null;
+
+    emit(state.copyWith(wifiScanStatus: WifiScanStatus.scanning, error: ''));
+
+    // Android requires location permission (and location services enabled) to read SSIDs.
+    final locationStatus = await Permission.locationWhenInUse.request();
+    if (!locationStatus.isGranted) {
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.failed,
+        wifiMode: ESP32WiFiMode.client,
+        error: locationStatus.isPermanentlyDenied
+            ? 'Location permission permanently denied. Please enable it in settings to scan Wi‑Fi.'
+            : 'Location permission denied. Cannot scan Wi‑Fi.',
+      ));
+      return;
+    }
+
+    // If Wi‑Fi scan isn't supported/authorized, fall back to client mode.
+    final can = await WiFiScan.instance.canGetScannedResults();
+    if (can != CanGetScannedResults.yes) {
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.failed,
+        wifiMode: ESP32WiFiMode.client,
+        error: 'Wi‑Fi scan not available (${can.name}). Make sure Location is ON.',
+      ));
+      return;
+    }
+
+    // Start scanning if possible.
+    final scanStart = await WiFiScan.instance.startScan();
+    if (!scanStart) {
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.failed,
+        wifiMode: ESP32WiFiMode.client,
+        error: 'Failed to start Wi‑Fi scan. Make sure Wi‑Fi and Location are enabled.',
+      ));
+      return;
+    }
+
+    final ssidPrefixLower = event.ssidPrefix.toLowerCase();
+
+    void finishAsAp() {
+      _wifiScanTimeout?.cancel();
+      _wifiScanTimeout = null;
+      _wifiScanSub?.cancel();
+      _wifiScanSub = null;
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.completed,
+        wifiMode: ESP32WiFiMode.ap,
+        error: '',
+      ));
+      // Update default IP for AP.
+      add(const ChangeWiFiMode(ESP32WiFiMode.ap));
+    }
+
+    void finishAsClientTimeout() {
+      _wifiScanSub?.cancel();
+      _wifiScanSub = null;
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.timeout,
+        wifiMode: ESP32WiFiMode.client,
+      ));
+      add(const ChangeWiFiMode(ESP32WiFiMode.client));
+    }
+
+    // Poll results during the timeout window.
+    _wifiScanSub = Stream.periodic(const Duration(seconds: 2))
+        .asyncMap((_) => WiFiScan.instance.getScannedResults())
+        .listen((results) {
+      final found = results.any((ap) {
+        final ssid = (ap.ssid).toLowerCase();
+        return ssid.isNotEmpty && ssid.startsWith(ssidPrefixLower);
+      });
+      if (found) finishAsAp();
+    }, onError: (e, st) {
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.failed,
+        wifiMode: ESP32WiFiMode.client,
+        error: 'Wi‑Fi scan error: $e',
+      ));
+    });
+
+    _wifiScanTimeout = Timer(event.timeout, finishAsClientTimeout);
+  }
+
   FutureOr<void> _onConnect(event, emit) async {
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
@@ -95,7 +219,6 @@ class MowerConnectionBloc
       // Set up error listener
       await _errSub?.cancel();
       _errSub = repo.ctrlWsErr().listen((exception) {
-        final userMessage = _errorMapper.mapExceptionToMessage(exception);
         add(ConnectionError(exception));
       });
     });
@@ -154,6 +277,8 @@ class MowerConnectionBloc
 
   @override
   Future<void> close() async {
+    await _wifiScanSub?.cancel();
+    _wifiScanTimeout?.cancel();
     await _errSub?.cancel();
     await _connectionStatusSub?.cancel();
     super.close();
