@@ -15,6 +15,9 @@ class ConnectionForm extends StatefulWidget {
 }
 
 class _ConnectionFormState extends State<ConnectionForm> {
+  static const _clientDefaultIp = '192.168.100.114';
+  static const _apDefaultIp = '192.168.4.1';
+
   late final TextEditingController ipController;
   late final TextEditingController portController;
 
@@ -23,7 +26,10 @@ class _ConnectionFormState extends State<ConnectionForm> {
     super.initState();
     final bloc = context.read<MowerConnectionBloc>();
     final s = bloc.state;
-    ipController = TextEditingController(text: s.ip ?? '192.168.100.114');
+
+    final defaultIp = s.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
+
+    ipController = TextEditingController(text: s.ip ?? defaultIp);
     portController = TextEditingController(text: (s.port?.toString() ?? '85'));
     bloc.add(ChangeIp(ipController.text));
     final initialPort = int.tryParse(portController.text);
@@ -44,52 +50,67 @@ class _ConnectionFormState extends State<ConnectionForm> {
       (MowerConnectionBloc bloc) =>
           bloc.state.connectionStatus == ConnectionStatus.connecting,
     );
-    return Form(
-      key: widget.formKey,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    controller: ipController,
-                    decoration: const InputDecoration(
-                      labelText: 'Mower IP Address',
-                      border: OutlineInputBorder(),
+
+    return BlocListener<MowerConnectionBloc, MowerConnectionState>(
+      listenWhen: (p, n) => p.wifiMode != n.wifiMode,
+      listener: (context, state) {
+        // If user didn't customize the IP (or it matches the other mode's default), swap it.
+        final currentText = ipController.text.trim();
+        final nextDefault = state.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
+        final otherDefault = state.wifiMode == ESP32WiFiMode.ap ? _clientDefaultIp : _apDefaultIp;
+
+        if (currentText.isEmpty || currentText == otherDefault || currentText == _clientDefaultIp || currentText == _apDefaultIp) {
+          ipController.text = nextDefault;
+          bloc.add(ChangeIp(nextDefault));
+        }
+      },
+      child: Form(
+        key: widget.formKey,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: constraints.maxHeight),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      controller: ipController,
+                      decoration: const InputDecoration(
+                        labelText: 'Mower IP Address',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: _validateIp,
+                      autofillHints: const [AutofillHints.url],
+                      enabled: !isBusy,
+                      onChanged: (ip) => bloc.add(ChangeIp(ip)),
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: _validateIp,
-                    autofillHints: const [AutofillHints.url],
-                    enabled: !isBusy,
-                    onChanged: (ip) => bloc.add(ChangeIp(ip)),
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: portController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Port',
-                      border: OutlineInputBorder(),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: portController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Port',
+                        border: OutlineInputBorder(),
+                      ),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      validator: _validatePort,
+                      enabled: !isBusy,
+                      onChanged: (port) {
+                        final p = int.tryParse(port);
+                        if (p != null) bloc.add(ChangePort(p));
+                      },
                     ),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: _validatePort,
-                    enabled: !isBusy,
-                    onChanged: (port) {
-                      final p = int.tryParse(port);
-                      if (p != null) bloc.add(ChangePort(p));
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                ],
+                    const SizedBox(height: 16),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

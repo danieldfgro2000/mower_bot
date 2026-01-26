@@ -64,7 +64,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       }
     });
     wasSent
-      ? emit(state.copyWith(isMowerMoving: event.isMoving, errorMessage: ''))
+      ? emit(state.copyWith(errorMessage: ''))
       : emit(state.copyWith(errorMessage: "Drive failed 🔗🚫"));
   }
 

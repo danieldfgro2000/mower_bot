@@ -28,6 +28,32 @@ class ChangePort extends MowerConnectionEvent {
   List<Object?> get props => [port];
 }
 
+class ChangeWiFiMode extends MowerConnectionEvent {
+  final ESP32WiFiMode mode;
+
+  const ChangeWiFiMode(this.mode);
+
+  @override
+  List<Object?> get props => [mode];
+}
+
+class AutoDetectWifiMode extends MowerConnectionEvent {
+  final String ssidPrefix;
+  final Duration timeout;
+
+  const AutoDetectWifiMode({
+    this.ssidPrefix = 'Mower',
+    this.timeout = const Duration(seconds: 30),
+  });
+
+  @override
+  List<Object?> get props => [ssidPrefix, timeout];
+}
+
+class RetryAutoDetectWifiMode extends MowerConnectionEvent {
+  const RetryAutoDetectWifiMode();
+}
+
 class ConnectToMower extends MowerConnectionEvent {}
 
 class DisconnectFromMower extends MowerConnectionEvent {}
@@ -50,4 +76,25 @@ class ConnectionError extends MowerConnectionEvent {
 
   @override
   List<Object?> get props => [exception];
+}
+
+/// Internal-only events (used by [MowerConnectionBloc]) to safely bridge async
+/// callbacks (Timer/Stream) back into the Bloc event loop.
+///
+/// Keep these in this file so they can be registered via `on<T>()`.
+class WifiScanDetectedAp extends MowerConnectionEvent {
+  const WifiScanDetectedAp();
+}
+
+class WifiScanTimedOut extends MowerConnectionEvent {
+  const WifiScanTimedOut();
+}
+
+class WifiScanFailed extends MowerConnectionEvent {
+  final String message;
+
+  const WifiScanFailed(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
@@ -128,9 +127,7 @@ class _ControlPageState extends State<ControlPage>
   }
 
   Column _driveUnit(BuildContext ctx, double screenWidth) {
-    final isMowerMoving = ctx.select(
-      (ControlBloc b) => b.state.isMowerMoving == true,
-    );
+    final isMowerMoving = ctx.select((ControlBloc b) => b.state.isMowerMoving == true,);
     final controlBloc = ctx.read<ControlBloc>();
 
     // Compact control sizes to minimize vertical height
