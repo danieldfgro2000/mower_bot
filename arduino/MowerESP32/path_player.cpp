@@ -1,7 +1,9 @@
 #include "path_player.h"
-#include <mower_esp.h> // for log_i/log_e and MegaSerial definition
+#include <mower_esp.h>
 
-extern MegaSerial megaSerial; // defined in main sketch
+using namespace Mower;
+
+extern MegaSerial megaSerial;
 
 bool PathPlayer::play(const String& name) {
     if (_playing) return false;
