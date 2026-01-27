@@ -20,6 +20,10 @@ class _ConnectionFormState extends State<ConnectionForm> {
 
   late final TextEditingController ipController;
   late final TextEditingController portController;
+  late final TextEditingController apSsidController;
+  late final TextEditingController apPasswordController;
+
+  bool _showApPassword = false;
 
   @override
   void initState() {
@@ -31,15 +35,25 @@ class _ConnectionFormState extends State<ConnectionForm> {
 
     ipController = TextEditingController(text: s.ip ?? defaultIp);
     portController = TextEditingController(text: (s.port?.toString() ?? '85'));
+
+    apSsidController = TextEditingController(text: s.apSsid);
+    apPasswordController = TextEditingController(text: s.apPassword);
+
     bloc.add(ChangeIp(ipController.text));
     final initialPort = int.tryParse(portController.text);
     if (initialPort != null) bloc.add(ChangePort(initialPort));
+
+    // Ensure defaults are present in bloc state (so auto-join can use them).
+    bloc.add(ChangeApSsid(apSsidController.text));
+    bloc.add(ChangeApPassword(apPasswordController.text));
   }
 
   @override
   void dispose() {
     ipController.dispose();
     portController.dispose();
+    apSsidController.dispose();
+    apPasswordController.dispose();
     super.dispose();
   }
 
@@ -47,14 +61,15 @@ class _ConnectionFormState extends State<ConnectionForm> {
   Widget build(BuildContext context) {
     final bloc = context.read<MowerConnectionBloc>();
     final isBusy = context.select(
-      (MowerConnectionBloc bloc) =>
-          bloc.state.connectionStatus == ConnectionStatus.connecting,
+      (MowerConnectionBloc bloc) => bloc.state.connectionStatus == ConnectionStatus.connecting,
     );
+
+    final wifiMode = context.select((MowerConnectionBloc b) => b.state.wifiMode);
 
     return BlocListener<MowerConnectionBloc, MowerConnectionState>(
       listenWhen: (p, n) => p.wifiMode != n.wifiMode,
       listener: (context, state) {
-        // If user didn't customize the IP (or it matches the other mode's default), swap it.
+        // Swap IP defaults when switching modes (only if user didn't customize it).
         final currentText = ipController.text.trim();
         final nextDefault = state.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
         final otherDefault = state.wifiMode == ESP32WiFiMode.ap ? _clientDefaultIp : _apDefaultIp;
@@ -66,50 +81,81 @@ class _ConnectionFormState extends State<ConnectionForm> {
       },
       child: Form(
         key: widget.formKey,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: constraints.maxHeight),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      controller: ipController,
-                      decoration: const InputDecoration(
-                        labelText: 'Mower IP Address',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: _validateIp,
-                      autofillHints: const [AutofillHints.url],
-                      enabled: !isBusy,
-                      onChanged: (ip) => bloc.add(ChangeIp(ip)),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: portController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Port',
-                        border: OutlineInputBorder(),
-                      ),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      validator: _validatePort,
-                      enabled: !isBusy,
-                      onChanged: (port) {
-                        final p = int.tryParse(port);
-                        if (p != null) bloc.add(ChangePort(p));
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // AP mode: user configures mower SSID/password (Android will try to auto-join).
+            if (wifiMode == ESP32WiFiMode.ap) ...[
+              TextFormField(
+                controller: apSsidController,
+                decoration: const InputDecoration(
+                  labelText: 'Mower Wi‑Fi SSID',
+                  border: OutlineInputBorder(),
                 ),
+                enabled: !isBusy,
+                onChanged: (v) => bloc.add(ChangeApSsid(v)),
               ),
-            );
-          },
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: apPasswordController,
+                decoration: InputDecoration(
+                  labelText: 'Mower Wi‑Fi Password',
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    tooltip: _showApPassword ? 'Hide password' : 'Show password',
+                    onPressed: isBusy
+                        ? null
+                        : () {
+                            setState(() {
+                              _showApPassword = !_showApPassword;
+                            });
+                          },
+                    icon: Icon(
+                      _showApPassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
+                ),
+                enabled: !isBusy,
+                obscureText: !_showApPassword,
+                onChanged: (v) => bloc.add(ChangeApPassword(v)),
+              ),
+              const SizedBox(height: 16),
+            ],
+
+            // IP/Port are only meaningful in Client mode (AP mode uses the standard 192.168.4.1:85).
+            if (wifiMode == ESP32WiFiMode.client) ...[
+              TextFormField(
+                controller: ipController,
+                decoration: const InputDecoration(
+                  labelText: 'Mower IP Address',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                validator: _validateIp,
+                autofillHints: const [AutofillHints.url],
+                enabled: !isBusy,
+                onChanged: (ip) => bloc.add(ChangeIp(ip)),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: portController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Port',
+                  border: OutlineInputBorder(),
+                ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: _validatePort,
+                enabled: !isBusy,
+                onChanged: (port) {
+                  final p = int.tryParse(port);
+                  if (p != null) bloc.add(ChangePort(p));
+                },
+              ),
+              const SizedBox(height: 16),
+            ],
+          ],
         ),
       ),
     );

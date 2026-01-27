@@ -26,6 +26,9 @@ import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.da
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
+import 'package:mower_bot/core/platform/mower_reachability_service.dart';
+import 'package:mower_bot/core/platform/wifi_join_service.dart';
+import 'package:mower_bot/core/platform/wifi_scan_permission_service.dart';
 
 final sl = GetIt.instance;
 
@@ -63,6 +66,9 @@ void _registerConnection() {
   sl.registerLazySingleton<DisconnectCtrlWsUseCase>(() => DisconnectCtrlWsUseCase(sl()));
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
   sl.registerLazySingleton<StreamConnectionStatusUseCase>(() => StreamConnectionStatusUseCase(sl()));
+  sl.registerLazySingleton<WifiScanPermissionService>(() => WifiScanPermissionService());
+  sl.registerLazySingleton<WifiJoinService>(() => WifiJoinService());
+  sl.registerLazySingleton<MowerReachabilityService>(() => MowerReachabilityService());
 }
 
 void _registerPaths() {
@@ -115,6 +121,9 @@ void _registerBlocs() {
         sl<CheckCtrlWsConnectedUseCase>(),
         sl<TelemetryBloc>(), // shared instance
         sl<MowerConnectionRepository>(),
+        sl<WifiScanPermissionService>(),
+        sl<WifiJoinService>(),
+        sl<MowerReachabilityService>(),
       ));
 
   sl.registerFactory<ControlBloc>(() => ControlBloc(

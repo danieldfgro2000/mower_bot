@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/core/error/error.dart';
 import 'package:mower_bot/features/connection/domain/repositories/connection_repository.dart';
@@ -8,8 +9,11 @@ import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:wifi_scan/wifi_scan.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-import 'package:mower_bot/core/platform/platform_permissions.dart';
+import 'package:mower_bot/core/platform/mower_reachability_service.dart';
+import 'package:mower_bot/core/platform/wifi_join_service.dart';
+import 'package:mower_bot/core/platform/wifi_scan_permission_service.dart';
 
 import 'connection_event.dart';
 import 'connection_state.dart';
@@ -21,6 +25,9 @@ class MowerConnectionBloc
   final CheckCtrlWsConnectedUseCase checkCtrlWsConnectedUseCase;
   final TelemetryBloc telemetryBloc;
   final MowerConnectionRepository repo;
+  final WifiScanPermissionService wifiScanPermissionService;
+  final WifiJoinService wifiJoinService;
+  final MowerReachabilityService reachabilityService;
   final ExceptionHandler _exceptionHandler = ExceptionHandler();
   final ErrorMapper _errorMapper = ErrorMapper();
 
@@ -31,8 +38,17 @@ class MowerConnectionBloc
   StreamSubscription<List<WiFiAccessPoint>>? _wifiScanSub;
   Timer? _wifiScanTimeout;
 
+  /// Monotonic id to guard against stale scan callbacks firing after a new scan starts.
+  int _wifiScanGeneration = 0;
+
+  // Remember last scan request so we can retry after permission prompt.
+  AutoDetectWifiMode? _pendingAutoDetect;
+
   // Internal events to safely emit from async sources (Timer/Stream).
   // (handled via WifiScanDetectedAp/WifiScanTimedOut/WifiScanFailed events)
+
+  // Guards against overlapping auto-connect sequences (scan->join->reachability->ws)
+  bool _autoConnectInFlight = false;
 
   MowerConnectionBloc(
     this.connectToCtrlWsUseCase,
@@ -40,20 +56,31 @@ class MowerConnectionBloc
     this.checkCtrlWsConnectedUseCase,
     this.telemetryBloc,
     this.repo,
+    this.wifiScanPermissionService,
+    this.wifiJoinService,
+    this.reachabilityService,
   ) : super(const MowerConnectionState()) {
     on<ChangeIp>(_onChangeIp);
     on<ChangePort>(_onChangePort);
     on<ChangeWiFiMode>(_onChangeWiFiMode);
+    on<ChangeApSsid>(_onChangeApSsid);
+    on<ChangeApPassword>(_onChangeApPassword);
     on<AutoDetectWifiMode>(_onAutoDetectWifiMode);
     on<RetryAutoDetectWifiMode>((event, emit) => add(const AutoDetectWifiMode()));
+    on<WifiScanPermissionInfoAccepted>(_onWifiScanPermissionInfoAccepted);
+    on<WifiScanPermissionInfoDeclined>(_onWifiScanPermissionInfoDeclined);
     on<ConnectToMower>(_onConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
     on<ConnectionError>(_onConnectionError);
     on<WifiScanDetectedAp>(_onWifiScanDetectedAp);
+    on<WifiScanFoundSsid>(_onWifiScanFoundSsid);
     on<WifiScanTimedOut>(_onWifiScanTimedOut);
     on<WifiScanFailed>(_onWifiScanFailed);
+    on<AutoConnectToMower>(_onAutoConnect);
+    on<AutoJoinWifiResult>(_onAutoJoinWifiResult);
+    on<ReachabilityResult>(_onReachabilityResult);
 
     // Initialize connection status listener on startup
     _initializeConnectionStatus();
@@ -65,13 +92,15 @@ class MowerConnectionBloc
 
     // Tear down any stale subscription and re-subscribe for fresh updates
     _connectionStatusSub ??= repo.ctrlWsConnected()?.listen(
-          (connectionStatus) {
+      (connectionStatus) {
+        if (isClosed) return;
         add(ConnectionChanged(connectionStatus: connectionStatus));
         connectionStatus == ConnectionStatus.ctrlWsConnected
             ? telemetryBloc.add(StartTelemetry())
             : telemetryBloc.add(StopTelemetry());
       },
       onDone: () {
+        if (isClosed) return;
         // Stream closed by repo, reset so a future call will re-subscribe
         _connectionStatusSub = null;
         add(CheckConnectionStatus());
@@ -86,6 +115,14 @@ class MowerConnectionBloc
 
   void _onChangePort(event, emit) {
     emit(state.copyWith(port: event.port));
+  }
+
+  void _onChangeApSsid(ChangeApSsid event, Emitter<MowerConnectionState> emit) {
+    emit(state.copyWith(apSsid: event.ssid));
+  }
+
+  void _onChangeApPassword(ChangeApPassword event, Emitter<MowerConnectionState> emit) {
+    emit(state.copyWith(apPassword: event.password));
   }
 
   void _onChangeWiFiMode(ChangeWiFiMode event, Emitter<MowerConnectionState> emit) {
@@ -112,12 +149,169 @@ class MowerConnectionBloc
   }
 
   FutureOr<void> _onWifiScanDetectedAp(WifiScanDetectedAp event, Emitter<MowerConnectionState> emit) {
+    // Mark scan as completed and switch to AP mode.
+    // IMPORTANT: Don't dispatch ChangeWiFiMode here because other parts of the app
+    // may treat that as a signal to initiate WS connection immediately.
+    // We only want to do: scan -> (auto) join Wi‑Fi -> wait handshake -> WS.
     emit(state.copyWith(
       wifiScanStatus: WifiScanStatus.completed,
       wifiMode: ESP32WiFiMode.ap,
       error: '',
+      // Ensure defaults are present for the auto-join step.
+      ip: '192.168.4.1',
+      port: 85,
+      // Persist SSID if the scan provided it.
+      detectedApSsid: (event.ssid ?? state.detectedApSsid),
     ));
-    add(const ChangeWiFiMode(ESP32WiFiMode.ap));
+
+    // Kick off join + handshake + ws.
+    add(const AutoConnectToMower());
+  }
+
+  FutureOr<void> _onWifiScanFoundSsid(
+    WifiScanFoundSsid event,
+    Emitter<MowerConnectionState> emit,
+  ) {
+    emit(state.copyWith(detectedApSsid: event.ssid));
+  }
+
+  Future<void> _onAutoConnect(
+    AutoConnectToMower event,
+    Emitter<MowerConnectionState> emit,
+  ) async {
+    // Avoid duplicate work.
+    if (_autoConnectInFlight ||
+        state.connectionStatus == ConnectionStatus.connecting ||
+        state.connectionStatus == ConnectionStatus.ctrlWsConnected) {
+      return;
+    }
+
+    _autoConnectInFlight = true;
+    try {
+      // If we are in client mode, just connect to whatever IP/port the user set.
+      if (state.wifiMode != ESP32WiFiMode.ap) {
+        add(ConnectToMower());
+        return;
+      }
+
+      // In AP mode we always use the standard mower endpoint.
+      const apHost = '192.168.4.1';
+      const apPort = 85;
+
+      // Prefer discovered SSID, otherwise fall back to configured default.
+      final ssid = (state.detectedApSsid ?? state.apSsid).trim();
+      final pwd = state.apPassword;
+
+      // Keep state in sync for UI, but don't depend on these async updates for logic.
+      if ((state.ip ?? '').trim().isEmpty || state.ip != apHost) {
+        emit(state.copyWith(ip: apHost));
+      }
+      if ((state.port ?? 0) != apPort) {
+        emit(state.copyWith(port: apPort));
+      }
+
+      // Mark as progressing, but websocket is NOT attempted yet.
+      emit(state.copyWith(status: ConnectionStatus.connecting, error: ''));
+
+      // Step 1) Join the mower Wi‑Fi (Android only).
+      // IMPORTANT: Do not attempt websocket until the OS reports we are actually on the target SSID.
+      bool joined = false; // non-Android: assume user already connected
+      if (Platform.isAndroid) {
+        if (ssid.isEmpty) {
+          joined = false;
+        } else {
+          joined = await wifiJoinService.connectToSsid(ssid, password: pwd);
+        }
+        if (emit.isDone) return;
+
+        // Even if connectToSsid() returns true, keep a second gate so the sequencing is explicit.
+        // This also helps if connectToSsid() returned early on some devices.
+        if (joined) {
+          joined = await wifiJoinService.waitForConnectedSsid(ssid);
+        }
+        if (emit.isDone) return;
+      }
+
+      if (!joined) {
+        emit(state.copyWith(
+          status: ConnectionStatus.hostUnreachable,
+          error: ssid.isEmpty
+              ? 'Not connected to the mower Wi‑Fi yet. Please join it and try again.'
+              : 'Not connected to $ssid yet. Please join the mower Wi‑Fi and try again.',
+        ));
+        return;
+      }
+
+      // Step 2) Probe reachability before attempting websocket.
+      final reachable = await reachabilityService.waitUntilReachable(apHost, port: apPort);
+      if (emit.isDone) return;
+
+      if (!reachable) {
+        emit(state.copyWith(
+          status: ConnectionStatus.hostUnreachable,
+          error:
+              'Mower not reachable yet. Make sure you are connected to the mower Wi‑Fi and try again.',
+        ));
+        return;
+      }
+
+      // Step 3) Now do the actual websocket connect.
+      add(ConnectToMower());
+    } finally {
+      _autoConnectInFlight = false;
+    }
+  }
+
+  Future<void> _onAutoJoinWifiResult(
+    AutoJoinWifiResult event,
+    Emitter<MowerConnectionState> emit,
+  ) async {
+    // If auto-join failed, do not continue to probe/ws.
+    if (!event.connected) {
+      final ssid = event.ssid;
+      emit(state.copyWith(
+        status: ConnectionStatus.hostUnreachable,
+        error: ssid == null || ssid.trim().isEmpty
+            ? 'Not connected to the mower Wi‑Fi yet. Please join it and try again.'
+            : 'Not connected to $ssid yet. Please join the mower Wi‑Fi and try again.',
+      ));
+      return;
+    }
+
+    // Step 2) Probe reachability before attempting websocket.
+    final ip = (state.ip ?? '192.168.4.1').trim();
+    final port = state.port ?? 85;
+
+    final reachable = await reachabilityService.waitUntilReachable(ip, port: port);
+    if (emit.isDone) return;
+
+    if (!reachable) {
+      emit(state.copyWith(
+        status: ConnectionStatus.hostUnreachable,
+        error:
+            'Mower not reachable yet. Make sure you are connected to the mower Wi‑Fi and try again.',
+      ));
+      return;
+    }
+
+    // Step 3) Now do the actual websocket connect.
+    add(ConnectToMower());
+  }
+
+  Future<void> _onReachabilityResult(
+    ReachabilityResult event,
+    Emitter<MowerConnectionState> emit,
+  ) async {
+    if (!event.reachable) {
+      emit(state.copyWith(
+        status: ConnectionStatus.hostUnreachable,
+        error: 'Mower not reachable yet. Make sure you are connected to the mower Wi‑Fi and try again.',
+      ));
+      return;
+    }
+
+    // Network handshake OK -> do the actual websocket connect using existing logic.
+    add(ConnectToMower());
   }
 
   FutureOr<void> _onWifiScanTimedOut(WifiScanTimedOut event, Emitter<MowerConnectionState> emit) {
@@ -136,6 +330,40 @@ class MowerConnectionBloc
     ));
   }
 
+  Future<void> _onWifiScanPermissionInfoAccepted(
+    WifiScanPermissionInfoAccepted event,
+    Emitter<MowerConnectionState> emit,
+  ) async {
+    final status = await wifiScanPermissionService.requestPermission();
+    if (status != PermissionStatus.granted) {
+      final permanentlyDenied = await wifiScanPermissionService.isPermanentlyDenied();
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.failed,
+        wifiMode: ESP32WiFiMode.client,
+        error: permanentlyDenied
+            ? 'Location permission permanently denied. Enable it in Settings to scan for the mower network.'
+            : 'Location permission denied. Cannot scan for the mower network.',
+      ));
+      return;
+    }
+
+    final pending = _pendingAutoDetect;
+    _pendingAutoDetect = null;
+    add(pending ?? const AutoDetectWifiMode());
+  }
+
+  void _onWifiScanPermissionInfoDeclined(
+    WifiScanPermissionInfoDeclined event,
+    Emitter<MowerConnectionState> emit,
+  ) {
+    _pendingAutoDetect = null;
+    emit(state.copyWith(
+      wifiScanStatus: WifiScanStatus.failed,
+      wifiMode: ESP32WiFiMode.client,
+      error: 'Wi‑Fi scan requires Location permission. You can continue without scan or enable it later.',
+    ));
+  }
+
   Future<void> _onAutoDetectWifiMode(
     AutoDetectWifiMode event,
     Emitter<MowerConnectionState> emit,
@@ -146,9 +374,24 @@ class MowerConnectionBloc
     _wifiScanTimeout?.cancel();
     _wifiScanTimeout = null;
 
+    final scanGen = ++_wifiScanGeneration;
+
+    _pendingAutoDetect = event;
+
     emit(state.copyWith(wifiScanStatus: WifiScanStatus.scanning, error: ''));
 
-    final readinessError = await PlatformPermissions.ensureWifiScanReady();
+    final readinessError = await wifiScanPermissionService.checkReady();
+
+    // Special case: missing permission -> let UI show explanation dialog.
+    if (readinessError == 'Location permission required.') {
+      emit(state.copyWith(
+        wifiScanStatus: WifiScanStatus.needsPermission,
+        wifiMode: ESP32WiFiMode.client,
+        error: '',
+      ));
+      return;
+    }
+
     if (readinessError != null) {
       emit(state.copyWith(
         wifiScanStatus: WifiScanStatus.failed,
@@ -171,30 +414,64 @@ class MowerConnectionBloc
 
     final ssidPrefixLower = event.ssidPrefix.toLowerCase();
 
-    void finishAsAp() {
+    void cleanupScan() {
       _wifiScanTimeout?.cancel();
       _wifiScanTimeout = null;
       _wifiScanSub?.cancel();
       _wifiScanSub = null;
-      add(const WifiScanDetectedAp());
+      _pendingAutoDetect = null;
+    }
+
+    void finishAsAp(String ssid) {
+      if (isClosed) return;
+      if (scanGen != _wifiScanGeneration) return; // stale
+      cleanupScan();
+      // IMPORTANT: carry the SSID so the auto-join step can't race state updates.
+      add(WifiScanDetectedAp(ssid: ssid));
     }
 
     void finishAsClientTimeout() {
-      _wifiScanSub?.cancel();
-      _wifiScanSub = null;
+      if (isClosed) return;
+      if (scanGen != _wifiScanGeneration) return; // stale
+      cleanupScan();
       add(const WifiScanTimedOut());
     }
 
     // Poll results during the timeout window.
-    _wifiScanSub = Stream.periodic(const Duration(seconds: 2))
+    _wifiScanSub = Stream<void>.multi((controller) async {
+      // Immediate first attempt
+      controller.add(null);
+      var delay = const Duration(milliseconds: 500);
+      while (!controller.isClosed) {
+        await Future<void>.delayed(delay);
+        if (controller.isClosed) break;
+        controller.add(null);
+        final nextMs = (delay.inMilliseconds * 2).clamp(500, 2000);
+        delay = Duration(milliseconds: nextMs);
+      }
+    })
         .asyncMap((_) => WiFiScan.instance.getScannedResults())
         .listen((results) {
-      final found = results.any((ap) {
-        final ssid = (ap.ssid).toLowerCase();
-        return ssid.isNotEmpty && ssid.startsWith(ssidPrefixLower);
-      });
-      if (found) finishAsAp();
+      if (isClosed) return;
+      if (scanGen != _wifiScanGeneration) return; // stale
+
+      final match = results.cast<WiFiAccessPoint?>().firstWhere(
+            (ap) {
+              final ssid = ((ap?.ssid) ?? '').toLowerCase();
+              return ssid.isNotEmpty && ssid.startsWith(ssidPrefixLower);
+            },
+            orElse: () => null,
+          );
+
+      if (match != null) {
+        // Keep UI updated with the SSID, but also pass it to the AP-finish event.
+        add(WifiScanFoundSsid(match.ssid));
+        finishAsAp(match.ssid);
+      }
     }, onError: (e, st) {
+      if (isClosed) return;
+      if (scanGen != _wifiScanGeneration) return;
+      cleanupScan();
       add(WifiScanFailed('Wi‑Fi scan error: $e'));
     });
 
