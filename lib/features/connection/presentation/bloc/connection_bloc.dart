@@ -190,7 +190,7 @@ class MowerConnectionBloc
     try {
       // If we are in client mode, just connect to whatever IP/port the user set.
       if (state.wifiMode != ESP32WiFiMode.ap) {
-        add(ConnectToMower());
+        // add(ConnectToMower());
         return;
       }
 
@@ -226,19 +226,20 @@ class MowerConnectionBloc
 
         // Even if connectToSsid() returns true, keep a second gate so the sequencing is explicit.
         // This also helps if connectToSsid() returned early on some devices.
-        if (joined) {
+        if (!joined) {
           joined = await wifiJoinService.waitForConnectedSsid(ssid);
         }
         if (emit.isDone) return;
       }
 
-      if (!joined) {
-        emit(state.copyWith(
-          status: ConnectionStatus.hostUnreachable,
-          error: ssid.isEmpty
-              ? 'Not connected to the mower Wi‑Fi yet. Please join it and try again.'
-              : 'Not connected to $ssid yet. Please join the mower Wi‑Fi and try again.',
-        ));
+      if (joined) {
+        add(ConnectToMower());
+        // emit(state.copyWith(
+        //   status: ConnectionStatus.hostUnreachable,
+        //   error: ssid.isEmpty
+        //       ? 'Not connected to the mower Wi‑Fi yet. Please join it and try again.'
+        //       : 'Not connected to $ssid yet. Please join the mower Wi‑Fi and try again.',
+        // ));
         return;
       }
 
@@ -382,7 +383,6 @@ class MowerConnectionBloc
 
     final readinessError = await wifiScanPermissionService.checkReady();
 
-    // Special case: missing permission -> let UI show explanation dialog.
     if (readinessError == 'Location permission required.') {
       emit(state.copyWith(
         wifiScanStatus: WifiScanStatus.needsPermission,

@@ -19,17 +19,15 @@ class WifiJoinService {
 
     try {
       // Some devices require quotes around SSID; the plugin handles this internally.
-      final ok = await WiFiForIoTPlugin.connect(
+      final hasConnected = await WiFiForIoTPlugin.connect(
         ssid,
         password: password,
         joinOnce: true,
-        security: password == null || password.isEmpty
-            ? NetworkSecurity.NONE
-            : NetworkSecurity.WPA,
+        security: NetworkSecurity.WPA,
         withInternet: false,
       );
 
-      if (ok != true) return false;
+      if (hasConnected != true) return false;
 
       // Wait until we're actually on that SSID AND the OS has finalized the network
       // (i.e. we have a Wi‑Fi interface and an IP). This avoids racing the websocket.
@@ -67,7 +65,8 @@ class WifiJoinService {
         await Future<void>.delayed(pollInterval);
       }
       return false;
-    } catch (_) {
+    } catch (e) {
+      if(kDebugMode) print('WIFI joining error: $e');
       return false;
     }
   }
@@ -82,7 +81,8 @@ class WifiJoinService {
       if (s == '0.0.0.0') return false;
       // Basic IPv4 shape check.
       return RegExp(r'^\d{1,3}(?:\.\d{1,3}){3}$').hasMatch(s);
-    } catch (_) {
+    } catch (e) {
+      if(kDebugMode) print('WIFI joining read IP error: $e');
       return false;
     }
   }

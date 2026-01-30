@@ -61,7 +61,7 @@ class AutoDetectWifiMode extends MowerConnectionEvent {
 
   const AutoDetectWifiMode({
     this.ssidPrefix = 'Mower',
-    this.timeout = const Duration(seconds: 30),
+    this.timeout = const Duration(seconds: 5),
   });
 
   @override
