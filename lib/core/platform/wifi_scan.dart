@@ -2,24 +2,33 @@ import 'package:flutter/material.dart';
 
 class WifiScanLoading extends StatelessWidget {
   final VoidCallback onOpenWifiSettings;
+  final VoidCallback onCancel;
 
-  const WifiScanLoading({super.key, required this.onOpenWifiSettings});
+  const WifiScanLoading({
+    super.key,
+    required this.onOpenWifiSettings,
+    required this.onCancel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(),
           const SizedBox(height: 16),
-          const Text('Scanning Wi‑Fi for MowerBot network (up to 30s)...'),
+          const Text('Scanning Wi‑Fi for'),
+          const Text('MowerBot network'),
+          const Text('(up to 30s)'),
           const SizedBox(height: 16),
           TextButton.icon(
             onPressed: onOpenWifiSettings,
             icon: const Icon(Icons.wifi),
             label: const Text('Open Wi‑Fi Settings'),
           ),
+          TextButton(onPressed: onCancel, child: const Text('Cancel Scan')),
         ],
       ),
     );

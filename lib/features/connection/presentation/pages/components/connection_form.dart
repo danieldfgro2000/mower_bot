@@ -69,7 +69,6 @@ class _ConnectionFormState extends State<ConnectionForm> {
     return BlocListener<MowerConnectionBloc, MowerConnectionState>(
       listenWhen: (p, n) => p.wifiMode != n.wifiMode,
       listener: (context, state) {
-        // Swap IP defaults when switching modes (only if user didn't customize it).
         final currentText = ipController.text.trim();
         final nextDefault = state.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
         final otherDefault = state.wifiMode == ESP32WiFiMode.ap ? _clientDefaultIp : _apDefaultIp;

@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/core/platform/platform_settings.dart';
 import 'package:mower_bot/core/platform/wifi_scan.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
-import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart' hide WifiScanFailed;
+import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart'
+    hide WifiScanFailed;
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
 
 import 'components/connection_button.dart';
@@ -41,7 +42,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenOrientation = MediaQuery.of(context).orientation;
+    final screenOrientation = MediaQuery
+        .of(context)
+        .orientation;
 
     return MultiBlocListener(
       listeners: [
@@ -60,14 +63,18 @@ class _ConnectionPageState extends State<ConnectionPage> {
             if (state.wifiScanStatus != WifiScanStatus.needsPermission) return;
 
             if (_permissionDialogOpen) return;
-            bool accepted = (await _showLocationPermissionDialog(context)) ?? false;
+            bool accepted =
+                (await _showLocationPermissionDialog(context)) ?? false;
             _permissionDialogOpen = false;
 
             if (!context.mounted) return;
             accepted
-                ? context.read<MowerConnectionBloc>().add(const WifiScanPermissionInfoAccepted())
-                : context.read<MowerConnectionBloc>().add(const WifiScanPermissionInfoDeclined());
-
+                ? context.read<MowerConnectionBloc>().add(
+              const WifiScanPermissionInfoAccepted(),
+            )
+                : context.read<MowerConnectionBloc>().add(
+              const WifiScanPermissionInfoDeclined(),
+            );
           },
         ),
       ],
@@ -75,117 +82,76 @@ class _ConnectionPageState extends State<ConnectionPage> {
         minimum: const EdgeInsets.all(16.0),
         maintainBottomViewPadding: true,
         child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-          buildWhen: (p, n) => p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
+          buildWhen: (p, n) =>
+          p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
           builder: (context, state) {
-            final header = ConnectionModeHeader(
-              wifiMode: state.wifiMode,
-              onModeChanged: (mode) {
-                context.read<MowerConnectionBloc>().add(ChangeWiFiMode(mode));
-              },
-              onOpenWifiSettings: PlatformSettings.openWifiSettings,
-              onRetryScan: Platform.isAndroid
-                  ? () => context.read<MowerConnectionBloc>().add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
-                  : null,
-              scanStatus: state.wifiScanStatus,
-              infoBuilder: (ctx) => const Text(
-                  'Some phones still require a manual confirm in Wi‑Fi settings. '
-                      'The phone will not automatically connect to the MowerBot network\n\n'
-                      'In this case, follow these steps:\n'
-                      '1) Open Wi‑Fi settings and connect to the mower network\n'
-                      '2) Come back and tap “Connect WebSocket”\n'
-                      '3) The status in the upper part of the screen will show "Connected"\n'
-              ),
-            );
-            bool isScanning = Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.scanning;
-            if (isScanning) WifiScanLoading(onOpenWifiSettings: PlatformSettings.openWifiSettings);
+            bool isScanning =
+                Platform.isAndroid &&
+                    state.wifiScanStatus == WifiScanStatus.scanning;
+            if (isScanning) {
+              return WifiScanLoading(
+                onOpenWifiSettings: PlatformSettings.openWifiSettings,
+                onCancel: () {
+                  context.read<MowerConnectionBloc>().add(
+                    const WifiScanTimedOut(),
+                  );
+                  context.read<MowerConnectionBloc>().add(
+                    const ChangeWiFiMode(ESP32WiFiMode.client),
+                  );
+                },
+              );
+            }
 
-            bool hasScanFailed = Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.failed;
+            bool hasScanFailed =
+                Platform.isAndroid &&
+                    state.wifiScanStatus == WifiScanStatus.failed;
             if (hasScanFailed) {
               return WifiScanFailed(
                 message: state.error ?? 'Wi‑Fi scan failed.',
                 onOpenLocationSettings: PlatformSettings.openLocationSettings,
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
-                onRetry: () => context.read<MowerConnectionBloc>()
-                    .add(const AutoDetectWifiMode(ssidPrefix: 'mower')),
-                onContinue: () => context.read<MowerConnectionBloc>()
-                    .add(const ChangeWiFiMode(ESP32WiFiMode.client)),
+                onRetry: () =>
+                    context.read<MowerConnectionBloc>().add(
+                      const AutoDetectWifiMode(ssidPrefix: 'mower'),
+                    ),
+                onContinue: () =>
+                    context.read<MowerConnectionBloc>().add(
+                      const ChangeWiFiMode(ESP32WiFiMode.client),
+                    ),
               );
             }
 
-            final isApMode = state.wifiMode == ESP32WiFiMode.ap;
-            if (isApMode) {
-              return SingleChildScrollView(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 24),
-                    header,
-                    const SizedBox(height: 12),
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: ConnectionForm(formKey: _formKey),
-                    ),
-                    const SizedBox(height: 16),
-                    ConnectionButton(formKey: _formKey),
-                    const SizedBox(height: 16),
-                  ],
+            return Column(
+                children: [
+                const SizedBox(height: 24),
+                ConnectionModeHeader(
+                  wifiMode: state.wifiMode,
+                  onModeChanged: (mode) {
+                    context.read<MowerConnectionBloc>().add(ChangeWiFiMode(mode));
+                  },
+                  onOpenWifiSettings: PlatformSettings.openWifiSettings,
+                  onRetryScan: Platform.isAndroid
+                      ? () => context.read<MowerConnectionBloc>()
+                        .add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
+                      : null,
+                  scanStatus: state.wifiScanStatus,
+                  infoBuilder: (ctx) =>
+                  const Text(
+                    'Some phones still require a manual confirm in Wi‑Fi settings. '
+                        'The phone will not automatically connect to the MowerBot network\n\n'
+                        'In this case, follow these steps:\n'
+                        '1) Open Wi‑Fi settings and connect to the mower network\n'
+                        '2) Come back and tap “Connect WebSocket”\n'
+                        '3) The status in the upper part of the screen will show "Connected"\n',
+                  ),
                 ),
-              );
-            }
-
-            return screenOrientation == Orientation.portrait
-                ? SingleChildScrollView(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(height: 24),
-                        header,
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: ConnectionForm(formKey: _formKey),
-                        ),
-                        const SizedBox(height: 16),
-                        ConnectionButton(formKey: _formKey),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
-                  )
-                : SingleChildScrollView(
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              header,
-                              const SizedBox(height: 12),
-                              ConnectionForm(formKey: _formKey),
-                              const SizedBox(height: 16),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const SizedBox(height: 0),
-                              ConnectionButton(formKey: _formKey),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                      ],
-                    ),
-                  );
+                Flexible(child: Container()),
+                ConnectionForm(formKey: _formKey),
+                Flexible(child: Container()),
+                ConnectionButton(formKey: _formKey),
+                const SizedBox(height: 16),
+            ],
+            );
           },
         ),
       ),
@@ -202,8 +168,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
           title: const Text('Location permission needed'),
           content: const Text(
             'Android requires Location permission to scan nearby Wi‑Fi network names (SSIDs).\n\n'
-            'We only use this to detect the mower Wi‑Fi network automatically. '
-            'We do not track or store your location.',
+                'We only use this to detect the mower Wi‑Fi network automatically. '
+                'We do not track or store your location.',
           ),
           actions: [
             TextButton(
@@ -222,11 +188,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
   }
 }
 
-void _showSnackBar(
-  BuildContext context,
-  String message, {
-  bool isError = false,
-}) {
+void _showSnackBar(BuildContext context,
+    String message, {
+      bool isError = false,
+    }) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
