@@ -19,19 +19,21 @@ class _ConnectionButtonState extends State<ConnectionButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus ||
-          p.ip != n.ip ||
-          p.port != n.port,
+      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus || p.ip != n.ip || p.port != n.port,
       builder: (context, state) {
         isBusy = state.connectionStatus == ConnectionStatus.connecting;
         isConnected = state.connectionStatus == ConnectionStatus.ctrlWsConnected;
-        return ElevatedButton.icon(
+
+        final icon = isConnected ? Icons.cloud_off : Icons.cloud_queue;
+        final label = isConnected ? 'Disconnect WebSocket' : 'Connect WebSocket';
+
+        return FilledButton.icon(
           onPressed: isBusy ? null : _handleOnPressed,
-          icon: Icon(isConnected ? Icons.wifi : Icons.wifi_off),
+          icon: Icon(icon),
           label: Text(
+            label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            isConnected ? 'Disconnect' : 'Connect',
           ),
         );
       },

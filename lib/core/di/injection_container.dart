@@ -12,6 +12,7 @@ import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/core/data/repo/path_repository_impl.dart';
+import 'package:mower_bot/core/data/repo/path_repository_remote_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
 import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
@@ -25,6 +26,9 @@ import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.da
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
+import 'package:mower_bot/core/platform/mower_reachability_service.dart';
+import 'package:mower_bot/core/platform/wifi_join_service.dart';
+import 'package:mower_bot/core/platform/wifi_scan_permission_service.dart';
 
 final sl = GetIt.instance;
 
@@ -62,11 +66,22 @@ void _registerConnection() {
   sl.registerLazySingleton<DisconnectCtrlWsUseCase>(() => DisconnectCtrlWsUseCase(sl()));
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
   sl.registerLazySingleton<StreamConnectionStatusUseCase>(() => StreamConnectionStatusUseCase(sl()));
+  sl.registerLazySingleton<WifiScanPermissionService>(() => WifiScanPermissionService());
+  sl.registerLazySingleton<WifiJoinService>(() => WifiJoinService());
+  sl.registerLazySingleton<MowerReachabilityService>(() => MowerReachabilityService());
 }
 
 void _registerPaths() {
   // Switch to a real repository when available.
-  sl.registerLazySingleton<PathRepository>(() => MockPathRepository());
+  if (appEnvironment == AppEnvironment.prod) {
+    // Real remote implementation over control WS
+    sl.registerLazySingleton<PathRepository>(() => PathRepositoryRemote(
+          sl<IWebSocketClient>(instanceName: 'ctrl'),
+        ));
+  } else {
+    // Development / demo mock
+    sl.registerLazySingleton<PathRepository>(() => MockPathRepository());
+  }
   sl.registerLazySingleton<GetPathsUseCase>(() => GetPathsUseCase(sl()));
   sl.registerLazySingleton<PlayPathUseCase>(() => PlayPathUseCase(sl()));
   sl.registerLazySingleton<StopPathUseCase>(() => StopPathUseCase(sl()));
@@ -106,6 +121,9 @@ void _registerBlocs() {
         sl<CheckCtrlWsConnectedUseCase>(),
         sl<TelemetryBloc>(), // shared instance
         sl<MowerConnectionRepository>(),
+        sl<WifiScanPermissionService>(),
+        sl<WifiJoinService>(),
+        sl<MowerReachabilityService>(),
       ));
 
   sl.registerFactory<ControlBloc>(() => ControlBloc(

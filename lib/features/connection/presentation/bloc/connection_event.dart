@@ -37,6 +37,24 @@ class ChangeWiFiMode extends MowerConnectionEvent {
   List<Object?> get props => [mode];
 }
 
+class ChangeApSsid extends MowerConnectionEvent {
+  final String ssid;
+
+  const ChangeApSsid(this.ssid);
+
+  @override
+  List<Object?> get props => [ssid];
+}
+
+class ChangeApPassword extends MowerConnectionEvent {
+  final String password;
+
+  const ChangeApPassword(this.password);
+
+  @override
+  List<Object?> get props => [password];
+}
+
 class AutoDetectWifiMode extends MowerConnectionEvent {
   final String ssidPrefix;
   final Duration timeout;
@@ -55,6 +73,11 @@ class RetryAutoDetectWifiMode extends MowerConnectionEvent {
 }
 
 class ConnectToMower extends MowerConnectionEvent {}
+
+/// Automatically join mower Wi‑Fi (best effort), wait for network handshake, then connect WS.
+class AutoConnectToMower extends MowerConnectionEvent {
+  const AutoConnectToMower();
+}
 
 class DisconnectFromMower extends MowerConnectionEvent {}
 
@@ -83,7 +106,24 @@ class ConnectionError extends MowerConnectionEvent {
 ///
 /// Keep these in this file so they can be registered via `on<T>()`.
 class WifiScanDetectedAp extends MowerConnectionEvent {
-  const WifiScanDetectedAp();
+  final String? ssid;
+
+  const WifiScanDetectedAp({this.ssid});
+
+  @override
+  List<Object?> get props => [ssid];
+}
+
+/// Internal event carrying the SSID we discovered.
+///
+/// This avoids calling `emit(...)` from inside a Stream/Timer callback.
+class WifiScanFoundSsid extends MowerConnectionEvent {
+  final String ssid;
+
+  const WifiScanFoundSsid(this.ssid);
+
+  @override
+  List<Object?> get props => [ssid];
 }
 
 class WifiScanTimedOut extends MowerConnectionEvent {
@@ -97,4 +137,32 @@ class WifiScanFailed extends MowerConnectionEvent {
 
   @override
   List<Object?> get props => [message];
+}
+
+class WifiScanPermissionInfoAccepted extends MowerConnectionEvent {
+  const WifiScanPermissionInfoAccepted();
+}
+
+class WifiScanPermissionInfoDeclined extends MowerConnectionEvent {
+  const WifiScanPermissionInfoDeclined();
+}
+
+// Internal auto-connect steps
+class AutoJoinWifiResult extends MowerConnectionEvent {
+  final bool connected;
+  final String? ssid;
+
+  const AutoJoinWifiResult({required this.connected, this.ssid});
+
+  @override
+  List<Object?> get props => [connected, ssid];
+}
+
+class ReachabilityResult extends MowerConnectionEvent {
+  final bool reachable;
+
+  const ReachabilityResult(this.reachable);
+
+  @override
+  List<Object?> get props => [reachable];
 }

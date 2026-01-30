@@ -114,9 +114,10 @@ void messagingSendTelemetry() {
 
   StaticJsonDocument<384> doc;
   doc["topic"] = "telemetry";
+  doc["data"]["actuatorDrive"] = actuatorIsDriving();
+  doc["data"]["actuatorStart"] = actuatorIsStarted();
   doc["data"]["stepperAngle"] = steeringGetCommandedAngle();
   doc["data"]["actualAngleFromOptic"] = wheelGetAngle();
-  // Removed centerOffsetDeg telemetry (simplified logic)
   doc["data"]["limitLeftDeg"] = steeringGetLimitLeftDeg();
   doc["data"]["limitRightDeg"] = steeringGetLimitRightDeg();
   doc["data"]["limitLeftSteps"] = steeringGetLimitLeftSteps();
