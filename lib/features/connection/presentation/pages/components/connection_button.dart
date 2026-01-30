@@ -24,7 +24,7 @@ class _ConnectionButtonState extends State<ConnectionButton> {
         isBusy = state.connectionStatus == ConnectionStatus.connecting;
         isConnected = state.connectionStatus == ConnectionStatus.ctrlWsConnected;
 
-        final icon = isConnected ? Icons.cloud_off : Icons.cloud_queue;
+        final icon = isConnected ? Icons.link_off : Icons.link;
         final label = isConnected ? 'Disconnect WebSocket' : 'Connect WebSocket';
 
         return FilledButton.icon(
