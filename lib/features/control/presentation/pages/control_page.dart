@@ -50,62 +50,65 @@ class _ControlPageState extends State<ControlPage>
     final controlBloc = context.read<ControlBloc>();
     const double controlsHeight = 72 + 16 + 100; // arrow + spacing + joystick/stop
 
-    return LayoutBuilder(
-      builder: (ctx, constraints) { // use ctx instead of context
-        final screenWidth = constraints.maxWidth; // for dynamic sizing
-        return Stack(
-          children: [
-            Positioned.fill(top: 0, left: 0, child: EspMjpegWebView()),
-            if (ctx.select((ControlBloc b) => b.state.isRecording == true))
-              _recordingBanner(ctx),
-            _recordButton(ctx),
-            Positioned.fill(
-              top: 0,
-              left: 0,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      // Removed fixed height to allow minimal intrinsic height
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: _driveUnit(ctx, screenWidth),
-                      ),
-                      const Spacer(),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: _stopButton(ctx, controlBloc),
-                      ),
-                    ],
+    return SizedBox.expand(
+      child: LayoutBuilder(
+        builder: (ctx, constraints) { // use ctx instead of context
+          final screenWidth = constraints.maxWidth; // for dynamic sizing
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              const Positioned.fill(child: EspMjpegWebView()),
+              if (ctx.select((ControlBloc b) => b.state.isRecording == true))
+                _recordingBanner(ctx),
+              _recordButton(ctx),
+              Positioned.fill(
+                top: 0,
+                left: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Removed fixed height to allow minimal intrinsic height
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: _driveUnit(ctx, screenWidth),
+                        ),
+                        const Spacer(),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: _stopButton(ctx, controlBloc),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            ctx.select((ControlBloc b) => (b.state.errorMessage != null && b.state.errorMessage!.isNotEmpty))
-                ? Positioned(
-                    bottom: controlsHeight + 20,
-                    left: 20,
-                    right: 20,
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        ctx.select((ControlBloc b) => b.state.errorMessage ?? ''),
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+              ctx.select((ControlBloc b) => (b.state.errorMessage != null && b.state.errorMessage!.isNotEmpty))
+                  ? Positioned(
+                      bottom: controlsHeight + 20,
+                      left: 20,
+                      right: 20,
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          ctx.select((ControlBloc b) => b.state.errorMessage ?? ''),
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ],
-        );
-      },
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          );
+        },
+      ),
     );
   }
 

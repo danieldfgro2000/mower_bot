@@ -18,28 +18,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PageController _pageController = PageController();
   int _currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final List<Widget> _pages = [
+  late final List<Widget> _pages = const [
     ConnectionPage(),
     ControlPage(),
     PathsPage(),
   ];
 
   void _onNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-    );
-  }
-
-  void _onPageChanged(int index) {
+    if(_currentIndex == index) return;
     setState(() {
       _currentIndex = index;
     });
@@ -114,13 +103,11 @@ class _HomePageState extends State<HomePage> {
             ),
             body: Stack(
               children: [
-                PageView(
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  physics: _currentIndex == 1
-                      ? const NeverScrollableScrollPhysics()
-                      : const AlwaysScrollableScrollPhysics(),
-                  children: _pages,
+                Positioned.fill(
+                  child: IndexedStack(
+                    index: _currentIndex,
+                    children: _pages,
+                  ),
                 ),
                 Positioned(
                   top: 0,
@@ -217,5 +204,5 @@ class _HomePageState extends State<HomePage> {
     };
   }
 
-  String _short(String s) => s.length > 48 ? s.substring(0, 45) + '...' : s;
+  String _short(String s) => s.length > 48 ? '${s.substring(0, 45)}...' : s;
 }

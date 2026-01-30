@@ -41,9 +41,6 @@ class MowerConnectionBloc
   /// Monotonic id to guard against stale scan callbacks firing after a new scan starts.
   int _wifiScanGeneration = 0;
 
-  // Remember last scan request so we can retry after permission prompt.
-  AutoDetectWifiMode? _pendingAutoDetect;
-
   // Internal events to safely emit from async sources (Timer/Stream).
   // (handled via WifiScanDetectedAp/WifiScanTimedOut/WifiScanFailed events)
 
@@ -66,7 +63,6 @@ class MowerConnectionBloc
     on<ChangeApSsid>(_onChangeApSsid);
     on<ChangeApPassword>(_onChangeApPassword);
     on<AutoDetectWifiMode>(_onAutoDetectWifiMode);
-    on<RetryAutoDetectWifiMode>((event, emit) => add(const AutoDetectWifiMode()));
     on<WifiScanPermissionInfoAccepted>(_onWifiScanPermissionInfoAccepted);
     on<WifiScanPermissionInfoDeclined>(_onWifiScanPermissionInfoDeclined);
     on<ConnectToMower>(_onConnect);
@@ -347,17 +343,14 @@ class MowerConnectionBloc
       ));
       return;
     }
-
-    final pending = _pendingAutoDetect;
-    _pendingAutoDetect = null;
-    add(pending ?? const AutoDetectWifiMode());
+    print( 'Location permission granted.');
+    add( const AutoDetectWifiMode());
   }
 
   void _onWifiScanPermissionInfoDeclined(
     WifiScanPermissionInfoDeclined event,
     Emitter<MowerConnectionState> emit,
   ) {
-    _pendingAutoDetect = null;
     emit(state.copyWith(
       wifiScanStatus: WifiScanStatus.failed,
       wifiMode: ESP32WiFiMode.client,
@@ -369,6 +362,7 @@ class MowerConnectionBloc
     AutoDetectWifiMode event,
     Emitter<MowerConnectionState> emit,
   ) async {
+    print('Starting Wi‑Fi scan for SSIDs starting with "${event.ssidPrefix}"...');
     // Cancel any previous scan attempt.
     await _wifiScanSub?.cancel();
     _wifiScanSub = null;
@@ -376,8 +370,6 @@ class MowerConnectionBloc
     _wifiScanTimeout = null;
 
     final scanGen = ++_wifiScanGeneration;
-
-    _pendingAutoDetect = event;
 
     emit(state.copyWith(wifiScanStatus: WifiScanStatus.scanning, error: ''));
 
@@ -419,7 +411,6 @@ class MowerConnectionBloc
       _wifiScanTimeout = null;
       _wifiScanSub?.cancel();
       _wifiScanSub = null;
-      _pendingAutoDetect = null;
     }
 
     void finishAsAp(String ssid) {

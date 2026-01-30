@@ -36,6 +36,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     // Wi‑Fi SSID scanning is not generally available on iOS.
     // Only auto-detect on Android; iOS users can toggle AP/Client manually.
     if (Platform.isAndroid) {
+      print('Auto-detecting Wi‑Fi mode on Android - initState');
       connectionBloc.add(const AutoDetectWifiMode());
     }
   }
@@ -80,18 +81,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
         child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
           buildWhen: (p, n) => p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
           builder: (context, state) {
-            bool isScanning = Platform.isAndroid &&
-                state.wifiScanStatus == WifiScanStatus.scanning;
+            bool isScanning = Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.scanning;
             if (isScanning) {
               return WifiScanLoading(
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onCancel: () {
-                  context.read<MowerConnectionBloc>().add(
-                    const WifiScanTimedOut(),
-                  );
-                  context.read<MowerConnectionBloc>().add(
-                    const ChangeWiFiMode(ESP32WiFiMode.client),
-                  );
+                  connectionBloc.add(const WifiScanTimedOut());
+                  connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client));
                 },
               );
             }
@@ -110,7 +106,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.min,
               children: [
                 ConnectionModeHeader(
                   wifiMode: state.wifiMode,
