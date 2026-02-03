@@ -13,7 +13,7 @@ class MowerBlocObserver extends BlocObserver {
 
   String _timestamp() {
     final now = DateTime.now();
-    return '[${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}]';
+    return 'm${now.minute.toString().padLeft(2, '0')}:s${now.second.toString().padLeft(2, '0')}:mi${now.millisecond.toString().padLeft(3, '0')}';
   }
 
   void _printWithCollapse(BlocBase bloc, String snapshot) {

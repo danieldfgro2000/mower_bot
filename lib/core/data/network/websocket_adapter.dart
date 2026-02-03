@@ -59,17 +59,15 @@ class WebSocketAdapter {
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
-    final isReachable = await _tcpProbe(host, port);
-
-    if (!isReachable) {
-      final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
-      if (kDebugMode) print(err);
-      _notifyClosed();
-      onConnectionChanged(ConnectionStatus.hostUnreachable);
-      onError(err);
-      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
-      return;
-    }
+    // final isReachable = await _tcpProbe(uri ?? _lastUri!);
+    // if (!isReachable && wscfg.enableReachability) {
+    //   final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
+    //   _notifyClosed();
+    //   onConnectionChanged(ConnectionStatus.hostUnreachable);
+    //   onError(err);
+    //   await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+    //   return;
+    // }
 
     try {
       if (kDebugMode) print("WS: connecting to $uri");
@@ -110,13 +108,13 @@ class WebSocketAdapter {
             onError("Error decoding message: $e", st);
           }
         },
-        onError: (error) {
+        onError: (error) async {
           if (kDebugMode) print("[WS] onError: $error");
-          _onStreamClosed(onReconnect, onConnectionChanged, onError);
+          await _onStreamClosed(onReconnect, onConnectionChanged, onError);
         },
-        onDone: () {
+        onDone: () async {
           if (kDebugMode) print("[WS] onDone:: connection closed by remote");
-          _onStreamClosed(onReconnect, onConnectionChanged, onError);
+          await _onStreamClosed(onReconnect, onConnectionChanged, onError);
         },
         cancelOnError: false,
       );
@@ -124,7 +122,7 @@ class WebSocketAdapter {
       onError("Message decode error: $e", st);
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.error);
-      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      // await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
       return;
     }
   }
@@ -148,31 +146,28 @@ class WebSocketAdapter {
     _isOpen = false;
   }
 
-  Future<bool> _tcpProbe(String host, int port) async {
+  Future<bool> _tcpProbe(Uri uri) async {
     try {
       final socket = await Socket.connect(
-        host,
-        port,
+        uri.host,
+        uri.port,
         timeout: wscfg.timeout3sec,
       );
       socket.destroy();
       return true;
     } catch (e) {
-      if (kDebugMode) print("TCP probe failed for $host:$port - $e");
+      if (kDebugMode) print("TCP probe failed for ${uri.host}:${uri.port} - $e");
       return false;
     }
   }
 
-  void _onStreamClosed(
+  Future<void> _onStreamClosed(
     VoidCallback onReconnect,
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
-  ) {
+  ) async {
     _notifyClosed();
     onConnectionChanged(ConnectionStatus.disconnected);
-    if (!_manuallyClosed) {
-      _scheduleReconnect(onReconnect, onConnectionChanged, onError);
-    }
   }
 
   void _notifyClosed() {
@@ -180,11 +175,11 @@ class WebSocketAdapter {
     _webSocketChannel = null;
   }
 
-  void _scheduleReconnect(
+  Future<void> _scheduleReconnect(
     VoidCallback onReconnect,
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
-  ) {
+  ) async {
     if (_manuallyClosed) {
       if (kDebugMode) print("[WS] manually closed: $_manuallyClosed)");
       return;
@@ -193,12 +188,13 @@ class WebSocketAdapter {
     if (_reconnectAttempts >= wscfg.max5attempts) {
       if (kDebugMode) print("[WS]: Max attempts reached. Not reconnecting.");
       onError("Max reconnect attempts reached: ${wscfg.max5attempts}");
+      _reconnectAttempts = 0;
       return;
     }
 
     final delay = _nextBackoff(
-      wscfg.retry100millis,
-      wscfg.retry300millis,
+      wscfg.retry1sec,
+      wscfg.retry5sec,
       _reconnectAttempts,
     );
     _reconnectAttempts++;
@@ -210,7 +206,7 @@ class WebSocketAdapter {
       );
     }
 
-    Future.delayed(delay, onReconnect);
+    await Future.delayed(delay, onReconnect);
   }
 
   Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {
