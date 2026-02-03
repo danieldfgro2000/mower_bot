@@ -52,5 +52,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>App-Prefs</string>
+    </array>
 </dict>
 </plist>

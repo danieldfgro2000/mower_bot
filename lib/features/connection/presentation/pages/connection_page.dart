@@ -125,7 +125,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                     'Some phones still require a manual confirm in Wi‑Fi settings. '
                     'The phone will not automatically connect to the MowerBot network\n\n'
                     'In this case, follow these steps:\n'
-                    '1) Open Wi‑Fi settings and connect to the mower network\n'
+                    '1) Open Wi‑Fi settings and connect to the MowerBot-AP network\n'
                     '2) Come back and tap “Connect WebSocket”\n'
                     '3) The status in the upper part of the screen will show "Connected"\n',
                   ),

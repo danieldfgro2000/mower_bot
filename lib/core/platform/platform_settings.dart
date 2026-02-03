@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,22 +19,22 @@ class PlatformSettings {
       try {
         await _channel.invokeMethod<void>('openWifiPanel');
         return;
-      } catch (_) {
-        // Fall through to other options.
+      } catch (e) {
+        if(kDebugMode) print('Failed to open Wi‑Fi panel via native intent: $e');
       }
-
       // Fallback: try app_settings (may open Wi‑Fi settings depending on OEM).
       try {
         AppSettings.openAppSettings(type: AppSettingsType.wifi);
         return;
-      } catch (_) {
-        // ignore
+      } catch (e) {
+        if(kDebugMode) print('Failed to open Wi‑Fi settings via app_settings: $e');
       }
-
       // Last resort: open Settings root.
       try {
         AppSettings.openAppSettings();
-      } catch (_) {}
+      } catch (e) {
+        if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+      }
       return;
     }
 
@@ -41,21 +42,29 @@ class PlatformSettings {
       // iOS: best effort. This usually opens Settings (sometimes directly to Wi‑Fi depending on iOS version).
       final uri = Uri.parse('App-Prefs:WIFI');
       if (await canLaunchUrl(uri)) {
+        if (kDebugMode) {
+          print('Opening iOS Wi‑Fi settings via deep link: $uri');
+        }
         await launchUrl(uri);
         return;
       }
 
       // Fallback: app settings.
       try {
-        AppSettings.openAppSettings();
-      } catch (_) {}
+        print('Falling back to opening App settings on iOS');
+        AppSettings.openAppSettings(type: AppSettingsType.wifi);
+      } catch (e) {
+        if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+      }
       return;
     }
 
     // Other platforms
     try {
       AppSettings.openAppSettings();
-    } catch (_) {}
+    } catch (e) {
+      if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+    }
   }
 
   static Future<void> openLocationSettings() async {
@@ -63,22 +72,28 @@ class PlatformSettings {
       try {
         await _channel.invokeMethod<void>('openLocationSettings');
         return;
-      } catch (_) {
-        // fall through
+      } catch (e) {
+        if(kDebugMode) print('Failed to open Location settings via native intent: $e');
       }
       try {
         AppSettings.openAppSettings(type: AppSettingsType.location);
         return;
-      } catch (_) {}
+      } catch (e) {
+        if(kDebugMode) print('Failed to open Location settings via app_settings: $e');
+      }
       try {
         AppSettings.openAppSettings();
-      } catch (_) {}
+      } catch (e) {
+        if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+      }
       return;
     }
 
     // Other platforms: best-effort.
     try {
       AppSettings.openAppSettings();
-    } catch (_) {}
+    } catch (e) {
+      if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+    }
   }
 }
