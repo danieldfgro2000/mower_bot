@@ -83,8 +83,7 @@ class MowerConnectionBloc
   }
 
   void _initializeConnectionStatus() {
-    // Check current connection status
-    // add(CheckConnectionStatus());
+    add(CheckConnectionStatus());
 
     // Tear down any stale subscription and re-subscribe for fresh updates
     _connectionStatusSub ??= repo.ctrlWsConnected()?.listen(
@@ -122,8 +121,7 @@ class MowerConnectionBloc
   }
 
   void _onChangeWiFiMode(ChangeWiFiMode event, Emitter<MowerConnectionState> emit) {
-    // Keep it simple: flip mode + set a sensible default IP if none was set yet
-    // (or if current IP matches the other mode's common default).
+
     const clientDefaultIp = '192.168.100.114';
     const apDefaultIp = '192.168.4.1';
 
@@ -141,7 +139,7 @@ class MowerConnectionBloc
       }
     }
 
-    emit(state.copyWith(wifiMode: nextMode, ip: nextIp, error: ''));
+    emit(state.copyWith(wifiMode: nextMode, ip: nextIp, error: '', wifiScanStatus: WifiScanStatus.completed));
   }
 
   FutureOr<void> _onWifiScanDetectedAp(WifiScanDetectedAp event, Emitter<MowerConnectionState> emit) {

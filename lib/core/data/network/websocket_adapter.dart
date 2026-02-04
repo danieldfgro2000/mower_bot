@@ -59,15 +59,15 @@ class WebSocketAdapter {
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
-    // final isReachable = await _tcpProbe(uri ?? _lastUri!);
-    // if (!isReachable && wscfg.enableReachability) {
-    //   final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
-    //   _notifyClosed();
-    //   onConnectionChanged(ConnectionStatus.hostUnreachable);
-    //   onError(err);
-    //   await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
-    //   return;
-    // }
+    final isReachable = await _tcpProbe(uri ?? _lastUri!);
+    if (!isReachable && wscfg.enableReachability) {
+      final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
+      _notifyClosed();
+      onConnectionChanged(ConnectionStatus.hostUnreachable);
+      onError(err);
+      await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      return;
+    }
 
     try {
       if (kDebugMode) print("WS: connecting to |$uri|");

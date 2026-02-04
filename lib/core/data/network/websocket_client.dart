@@ -13,7 +13,7 @@ abstract class IWebSocketClient {
 
   void setEndpoint(Uri uri);
 
-  Future<void> connect();
+  Future<void> connect({bool fromReconnect = false});
 
   Future<void> disconnect();
 
@@ -51,7 +51,7 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   void setEndpoint(Uri uri) => _endpoint = uri;
 
   @override
-  Future<void> connect() async {
+  Future<void> connect({bool fromReconnect = false}) async {
     if (isConnected) return;
     if (_endpoint == null) throw StateError('$runtimeType: endpoint is not set');
 
