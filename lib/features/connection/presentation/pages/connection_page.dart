@@ -149,10 +149,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
       builder: (ctx) {
         return AlertDialog(
           title: const Text('Location permission needed'),
-          content: const Text(
-            'Android requires Location permission to scan nearby Wi‑Fi network names (SSIDs).\n\n'
-            'We only use this to detect the mower Wi‑Fi network automatically. '
-            'We do not track or store your location.',
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Text(
+                  'Android requires Location permission to scan nearby Wi‑Fi network names (SSIDs).\n\n'
+                  'We only use this to detect the mower Wi‑Fi network automatically. '
+                  'We do not track or store your location.',
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(

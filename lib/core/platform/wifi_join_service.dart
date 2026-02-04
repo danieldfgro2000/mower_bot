@@ -22,10 +22,12 @@ class WifiJoinService {
       final hasConnected = await WiFiForIoTPlugin.connect(
         ssid,
         password: password,
-        joinOnce: true,
+        joinOnce: false,
         security: NetworkSecurity.WPA,
         withInternet: false,
       );
+
+      print('WiFiForIoTPlugin.connect returned: $hasConnected');
 
       if (hasConnected != true) return false;
 
@@ -77,6 +79,7 @@ class WifiJoinService {
       if (ip == null) return false;
       final s = ip.trim();
       if (s.isEmpty) return false;
+      print('WIFI joined IP: $s');
       // Some implementations return 0.0.0.0 while still connecting.
       if (s == '0.0.0.0') return false;
       // Basic IPv4 shape check.

@@ -218,16 +218,18 @@ class MowerConnectionBloc
         } else {
           joined = await wifiJoinService.connectToSsid(ssid, password: pwd);
         }
+
         if (emit.isDone) return;
 
         // Even if connectToSsid() returns true, keep a second gate so the sequencing is explicit.
         // This also helps if connectToSsid() returned early on some devices.
-        if (!joined) {
-          joined = await wifiJoinService.waitForConnectedSsid(ssid);
-        }
-        if (emit.isDone) return;
+        // if (!joined) {
+        //   joined = await wifiJoinService.waitForConnectedSsid(ssid);
+        // }
+        // if (emit.isDone) return;
       }
 
+      print('Auto-connect: joined=$joined SSID="$ssid"');
       if (joined) {
         add(ConnectToMower());
         // emit(state.copyWith(
