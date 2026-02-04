@@ -28,6 +28,7 @@ class MowerConnectionRepositoryImpl implements MowerConnectionRepository {
 
   @override
   Future<void> connectCtrlWs(String ipAddress, int port) async {
+    print('Connecting to control WS at $ipAddress:$port');
     if (ipAddress.isEmpty) {
       throw ValidationException.required('IP Address');
     }

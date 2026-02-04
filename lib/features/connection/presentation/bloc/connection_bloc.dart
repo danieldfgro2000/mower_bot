@@ -84,7 +84,7 @@ class MowerConnectionBloc
 
   void _initializeConnectionStatus() {
     // Check current connection status
-    add(CheckConnectionStatus());
+    // add(CheckConnectionStatus());
 
     // Tear down any stale subscription and re-subscribe for fresh updates
     _connectionStatusSub ??= repo.ctrlWsConnected()?.listen(
@@ -526,11 +526,13 @@ class MowerConnectionBloc
       final status = isConnected
           ? ConnectionStatus.ctrlWsConnected
           : ConnectionStatus.disconnected;
+      print('CheckConnectionStatus: isConnected=$isConnected, status=$status');
       emit(state.copyWith(status: status));
     });
   }
 
   FutureOr<void> _onConnectionChanged(event, emit) {
+    print('Connection status changed: ${event.connectionStatus}');
     emit(state.copyWith(status: event.connectionStatus, error: ''));
   }
 

@@ -70,13 +70,13 @@ class WebSocketAdapter {
     // }
 
     try {
-      if (kDebugMode) print("WS: connecting to $uri");
+      if (kDebugMode) print("WS: connecting to |$uri|");
       onConnectionChanged(ConnectionStatus.connecting);
       final socket = await WebSocket.connect(uri.toString());
       socket.pingInterval = wscfg.ping3sec;
 
       _webSocketChannel = IOWebSocketChannel(socket);
-
+      print("[WS] Connected to $uri");
       _isOpen = true;
       _reconnectAttempts = 0;
       onConnectionChanged(ConnectionStatus.ctrlWsConnected);
@@ -122,7 +122,7 @@ class WebSocketAdapter {
       onError("Message decode error: $e", st);
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.error);
-      // await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
       return;
     }
   }
