@@ -65,7 +65,7 @@ class MowerConnectionBloc
     on<AutoDetectWifiMode>(_onAutoDetectWifiMode);
     on<WifiScanPermissionInfoAccepted>(_onWifiScanPermissionInfoAccepted);
     on<WifiScanPermissionInfoDeclined>(_onWifiScanPermissionInfoDeclined);
-    on<ConnectToMower>(_onConnect);
+    on<ConnectToControlWebsocketMower>(_onCtrlWsConnect);
     on<DisconnectFromMower>(_onDisconnect);
     on<CheckConnectionStatus>(_onCheckConnection);
     on<ConnectionChanged>(_onConnectionChanged);
@@ -150,7 +150,7 @@ class MowerConnectionBloc
     _autoConnectInFlight = true;
     try {
       if (state.wifiMode != ESP32WiFiMode.ap) {
-        add(ConnectToMower());
+        add(ConnectToControlWebsocketMower());
         return;
       }
 
@@ -159,7 +159,7 @@ class MowerConnectionBloc
       final joined = await _hasJoinedToApWifi(emit);
       if (emit.isDone) return;
       if (joined) {
-        add(ConnectToMower());
+        add(ConnectToControlWebsocketMower());
         return;
       }
 
@@ -170,7 +170,7 @@ class MowerConnectionBloc
         return;
       }
 
-      add(ConnectToMower());
+      add(ConnectToControlWebsocketMower());
     } catch (e) {
       if (emit.isDone) return;
       final userMessage = _errorMapper
@@ -223,7 +223,7 @@ class MowerConnectionBloc
       ));
       return;
     }
-    add(ConnectToMower());
+    add(ConnectToControlWebsocketMower());
   }
 
   Future<void> _onReachabilityResult(
@@ -239,7 +239,7 @@ class MowerConnectionBloc
     }
 
     // Network handshake OK -> do the actual websocket connect using existing logic.
-    add(ConnectToMower());
+    add(ConnectToControlWebsocketMower());
   }
 
   FutureOr<void> _onWifiScanTimedOut(WifiScanTimedOut event, Emitter<MowerConnectionState> emit) {
@@ -393,7 +393,7 @@ class MowerConnectionBloc
     _wifiScanTimeout = Timer(event.timeout, finishAsClientTimeout);
   }
 
-  FutureOr<void> _onConnect(event, emit) async {
+  FutureOr<void> _onCtrlWsConnect(event, emit) async {
     emit(state.copyWith(status: ConnectionStatus.connecting));
 
     // Recreate the connection status listener to avoid being stuck with a completed/closed sub
@@ -426,8 +426,7 @@ class MowerConnectionBloc
       final lastException = _exceptionHandler.exceptions.take(1);
       await for (final exception in lastException) {
         final userMessage = _errorMapper.mapExceptionToMessage(exception);
-        emit(
-            state.copyWith(status: ConnectionStatus.error, error: userMessage));
+        emit(state.copyWith(status: ConnectionStatus.error, error: userMessage));
         break;
       }
     }
@@ -448,26 +447,33 @@ class MowerConnectionBloc
       final status = isConnected
           ? ConnectionStatus.ctrlWsConnected
           : ConnectionStatus.disconnected;
-      print('CheckConnectionStatus: isConnected=$isConnected, status=$status');
       emit(state.copyWith(status: status));
     });
   }
 
-  FutureOr<void> _onConnectionChanged(event, emit) {
-    print('Connection status changed: ${event.connectionStatus}');
+  void _onConnectionChanged(event, emit) =>
     emit(state.copyWith(status: event.connectionStatus, error: ''));
-  }
+
 
   FutureOr<void> _onConnectionError(event, emit) {
     final exception = event.exception as AppException;
     final userMessage = _errorMapper.mapExceptionToMessage(exception);
     ConnectionStatus status;
-    if (exception is NetworkException && exception.code == 'HOST_UNREACHABLE') {
-      status = ConnectionStatus.hostUnreachable;
-    } else if (exception is NetworkException && exception.code == 'CONNECTION_FAILED') {
-      status = ConnectionStatus.error; // could add a distinct status later
-    } else if (exception is NetworkException && exception.code == 'TIMEOUT') {
-      status = ConnectionStatus.error;
+
+    if (exception is NetworkException) {
+      switch (exception.code) {
+        case AppExceptionCode.hostUnreachable:
+          status = ConnectionStatus.hostUnreachable;
+          break;
+        case AppExceptionCode.connectionFailed:
+            status = ConnectionStatus.hostUnreachable;
+            break;
+        case AppExceptionCode.timeout:
+          status = ConnectionStatus.error; // could add a distinct status later
+          break;
+        default:
+          status = ConnectionStatus.error;
+      }
     } else {
       status = ConnectionStatus.error;
     }

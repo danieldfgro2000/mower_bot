@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     title: const Text('Connect'),
                     onTap: () {
                       Navigator.pop(context);
-                      context.read<MowerConnectionBloc>().add(ConnectToMower());
+                      context.read<MowerConnectionBloc>().add(ConnectToControlWebsocketMower());
                     },
                   ),
                   ListTile(

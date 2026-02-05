@@ -72,7 +72,7 @@ class RetryAutoDetectWifiMode extends MowerConnectionEvent {
   const RetryAutoDetectWifiMode();
 }
 
-class ConnectToMower extends MowerConnectionEvent {}
+class ConnectToControlWebsocketMower extends MowerConnectionEvent {}
 
 /// Automatically join mower Wi‑Fi (best effort), wait for network handshake, then connect WS.
 class AutoConnectToMower extends MowerConnectionEvent {

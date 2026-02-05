@@ -47,6 +47,6 @@ class _ConnectionButtonState extends State<ConnectionButton> {
     if (formState != null && !formState.validate()) return;
 
     final event = context.read<MowerConnectionBloc>().add;
-    isConnected ? event(DisconnectFromMower()) : event(ConnectToMower());
+    isConnected ? event(DisconnectFromMower()) : event(ConnectToControlWebsocketMower());
   }
 }
