@@ -42,6 +42,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       (telemetryData) => add(TelemetryDataReceived(telemetryData)),
       onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
     );
+    add(GetVideoStreamUrl());
   }
 
   FutureOr<void> _onTelemetryDataReceived(event, emit) {

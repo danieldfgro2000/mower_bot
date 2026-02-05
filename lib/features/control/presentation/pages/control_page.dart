@@ -11,8 +11,9 @@ import 'components/esp_cam_view.dart';
 
 class ControlPage extends StatefulWidget {
   static const String routeName = '/control';
+  final bool isVisible;
 
-  const ControlPage({super.key});
+  const ControlPage({super.key, required this.isVisible});
 
   @override
   State<ControlPage> createState() => _ControlPageState();
@@ -22,6 +23,7 @@ class _ControlPageState extends State<ControlPage>
     with SingleTickerProviderStateMixin {
   double steering = 0; // retain steering value locally
   late AnimationController _blinkController;
+  bool _depsHandled = false;
 
   @override
   void initState() {
@@ -41,8 +43,22 @@ class _ControlPageState extends State<ControlPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.read<ControlBloc>().add(StartTelemetryStream());
-    context.read<ControlBloc>().add(ClearError());
+    if (!_depsHandled && widget.isVisible) {
+      _depsHandled = true;
+      context.read<ControlBloc>().add(StartTelemetryStream());
+      context.read<ControlBloc>().add(ClearError());
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant ControlPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('ControlPage visibility changed: ${oldWidget.isVisible} -> ${widget.isVisible}');
+    if (widget.isVisible && !oldWidget.isVisible) {
+      context.read<ControlBloc>().add(StartTelemetryStream());
+      context.read<ControlBloc>().add(ClearError());
+      context.read<ControlBloc>().add(GetVideoStreamUrl());
+    }
   }
 
   @override
@@ -58,8 +74,11 @@ class _ControlPageState extends State<ControlPage>
             fit: StackFit.expand,
             children: [
               const Positioned.fill(child: EspMjpegWebView()),
-              if (ctx.select((ControlBloc b) => b.state.isRecording == true))
-                _recordingBanner(ctx),
+              if(ctx.select((ControlBloc b) => b.state.isRecording == true))
+                Positioned.fill(
+                    top: 0,
+                    left: 0,
+                    child: _recordingBanner(ctx)),
               _recordButton(ctx),
               Positioned.fill(
                 top: 0,

@@ -21,10 +21,10 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late final List<Widget> _pages = const [
-    ConnectionPage(),
-    ControlPage(),
-    PathsPage(),
+  late final List<Widget> _pages = [
+    ConnectionPage(isVisible: _currentIndex == 0),
+    ControlPage(isVisible: _currentIndex == 1),
+    PathsPage(isVisible: _currentIndex == 2),
   ];
 
   void _onNavTap(int index) {
@@ -72,12 +72,20 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ListTile(
                     leading: state.connectionStatus == ConnectionStatus.ctrlWsConnected
-                        ? const Icon(Icons.link)
-                        : const Icon(Icons.link_off),
-                    title: const Text('Connect'),
+                        ? const Icon(Icons.link_off)
+                        : const Icon(Icons.link),
+                    title: Text(
+                        state.connectionStatus == ConnectionStatus.ctrlWsConnected
+                            ? 'Disconnect'
+                            : 'Connect'
+                    ),
                     onTap: () {
                       Navigator.pop(context);
-                      context.read<MowerConnectionBloc>().add(ConnectToControlWebsocketMower());
+                      state.connectionStatus == ConnectionStatus.ctrlWsConnected
+                      ? context.read<MowerConnectionBloc>()
+                          .add(DisconnectFromMower())
+                       : context.read<MowerConnectionBloc>()
+                          .add(ConnectToControlWebsocketMower());
                     },
                   ),
                   ListTile(

@@ -7,8 +7,9 @@ import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 
 class PathsPage extends StatelessWidget {
   static const String routeName = '/paths';
+  final bool isVisible;
 
-  const PathsPage({super.key});
+  const PathsPage({super.key, required this.isVisible});
 
   @override
   Widget build(BuildContext context) {

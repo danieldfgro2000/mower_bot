@@ -19,7 +19,7 @@ class ControlRepositoryImpl implements ControlRepository {
   String? get videoStreamUrl {
     final Uri? uri = _controlWebSocketClient.endpoint;
     if (uri == null) return null;
-
+    print('Video stream URL: http://${uri.host}');
     return 'http://${uri.host}';
   }
 
