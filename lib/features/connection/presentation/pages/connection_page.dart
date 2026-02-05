@@ -12,6 +12,7 @@ import 'package:mower_bot/features/connection/presentation/bloc/connection_state
 import 'components/connection_button.dart';
 import 'components/connection_form.dart';
 import 'components/connection_mode_header.dart';
+import 'components/info.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
@@ -36,7 +37,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
     // Wi‑Fi SSID scanning is not generally available on iOS.
     // Only auto-detect on Android; iOS users can toggle AP/Client manually.
     if (Platform.isAndroid) {
-      print('Auto-detecting Wi‑Fi mode on Android - initState');
       connectionBloc.add(const AutoDetectWifiMode());
     }
   }
@@ -45,6 +45,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        /// Show errors as snack bars.
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
           listenWhen: (p, c) => p.error != c.error,
           listener: (context, state) {
@@ -53,6 +54,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
             _showSnackBar(context, state.error!, isError: true);
           },
         ),
+        /// On Android, if the Wi‑Fi scan detects that Location permission is needed,
+        /// show a dialog explaining why and asking to continue to the system permission prompt.
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
           listenWhen: (p, c) => p.wifiScanStatus != c.wifiScanStatus,
           listener: (context, state) async {
@@ -60,18 +63,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
             if (state.wifiScanStatus != WifiScanStatus.needsPermission) return;
 
             if (_permissionDialogOpen) return;
-            bool accepted =
-                (await _showLocationPermissionDialog(context)) ?? false;
+            bool accepted = (await _showLocationPermissionDialog(context)) ?? false;
             _permissionDialogOpen = false;
 
             if (!context.mounted) return;
             accepted
-                ? context.read<MowerConnectionBloc>().add(
-                    const WifiScanPermissionInfoAccepted(),
-                  )
-                : context.read<MowerConnectionBloc>().add(
-                    const WifiScanPermissionInfoDeclined(),
-                  );
+                ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
+                : connectionBloc.add(const WifiScanPermissionInfoDeclined());
           },
         ),
       ],
@@ -79,26 +77,22 @@ class _ConnectionPageState extends State<ConnectionPage> {
         minimum: const EdgeInsets.all(16.0),
         maintainBottomViewPadding: true,
         child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-          buildWhen: (p, n) =>
-              p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
+          buildWhen: (p, n) => p.wifiMode != n.wifiMode ||
+              p.wifiScanStatus != n.wifiScanStatus,
           builder: (context, state) {
-            bool isScanning =
-                Platform.isAndroid &&
+            bool isScanning = Platform.isAndroid &&
                 state.wifiScanStatus == WifiScanStatus.scanning;
             if (isScanning) {
               return WifiScanLoading(
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onCancel: () {
                   connectionBloc.add(const WifiScanTimedOut());
-                  connectionBloc.add(
-                    const ChangeWiFiMode(ESP32WiFiMode.client),
-                  );
+                  connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client));
                 },
               );
             }
 
-            bool hasScanFailed =
-                Platform.isAndroid &&
+            bool hasScanFailed = Platform.isAndroid &&
                 state.wifiScanStatus == WifiScanStatus.failed;
             if (hasScanFailed) {
               return WifiScanFailed(
@@ -106,9 +100,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 onOpenLocationSettings: PlatformSettings.openLocationSettings,
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onRetry: () => connectionBloc.add(const AutoDetectWifiMode()),
-                onContinue: () => connectionBloc.add(
-                  const ChangeWiFiMode(ESP32WiFiMode.client),
-                ),
+                onContinue: () => connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client)),
               );
             }
 
@@ -117,59 +109,13 @@ class _ConnectionPageState extends State<ConnectionPage> {
               children: [
                 ConnectionModeHeader(
                   wifiMode: state.wifiMode,
-                  onModeChanged: (mode) {
-                    context.read<MowerConnectionBloc>().add(
-                      ChangeWiFiMode(mode),
-                    );
-                  },
+                  onModeChanged: (mode) => connectionBloc.add(ChangeWiFiMode(mode)),
                   onOpenWifiSettings: PlatformSettings.openWifiSettings,
                   onRetryScan: Platform.isAndroid
-                      ? () => context.read<MowerConnectionBloc>().add(
-                          const AutoDetectWifiMode(ssidPrefix: 'mower'),
-                        )
+                      ? () => connectionBloc.add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
                       : null,
                   scanStatus: state.wifiScanStatus,
-                  infoBuilder: (_) => Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              'Some phones still require a manual confirm in Wi‑Fi settings. '
-                              'The phone will not automatically connect to the MowerBot-AP network.\n'
-                              'After automatic scanning, the following error is shown:\n',
-                        ),
-                        TextSpan(
-                          text: '[Error] Host unreachable \n',
-                          style: TextStyle(
-                            color: Colors.red,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              'With final status\n',
-                        ),
-                        TextSpan(
-                          text: 'Disconnected \n',
-                          style: TextStyle(
-                            color: Colors.red,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                          'In this case, follow these steps:\n'
-                              '1) Open Wi‑Fi settings and connect to the MowerBot-AP network\n'
-                              '2) Come back and tap “Connect WebSocket”\n'
-                              '3) The status in the upper part of the screen will show\n',
-                        ),
-                        TextSpan(
-                          text: 'Connected \n',
-                          style: TextStyle(
-                            color: Colors.green
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  infoBuilder: (_) => InfoWidget(),
                 ),
                 ConnectionForm(formKey: _formKey),
                 ConnectionButton(formKey: _formKey),
@@ -217,6 +163,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     return accepted;
   }
 }
+
 
 void _showSnackBar(
   BuildContext context,
