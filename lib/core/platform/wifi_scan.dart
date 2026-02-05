@@ -21,7 +21,7 @@ class WifiScanLoading extends StatelessWidget {
           const SizedBox(height: 16),
           const Text('Scanning Wi‑Fi for'),
           const Text('MowerBot network'),
-          const Text('(up to 30s)'),
+          const Text('(up to 10s)'),
           const SizedBox(height: 16),
           TextButton.icon(
             onPressed: onOpenWifiSettings,

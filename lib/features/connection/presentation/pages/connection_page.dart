@@ -67,10 +67,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
             if (!context.mounted) return;
             accepted
                 ? context.read<MowerConnectionBloc>().add(
-                    const WifiScanPermissionInfoAccepted()
+                    const WifiScanPermissionInfoAccepted(),
                   )
                 : context.read<MowerConnectionBloc>().add(
-                    const WifiScanPermissionInfoDeclined()
+                    const WifiScanPermissionInfoDeclined(),
                   );
           },
         ),
@@ -79,20 +79,26 @@ class _ConnectionPageState extends State<ConnectionPage> {
         minimum: const EdgeInsets.all(16.0),
         maintainBottomViewPadding: true,
         child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-          buildWhen: (p, n) => p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
+          buildWhen: (p, n) =>
+              p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
           builder: (context, state) {
-            bool isScanning = Platform.isAndroid && state.wifiScanStatus == WifiScanStatus.scanning;
+            bool isScanning =
+                Platform.isAndroid &&
+                state.wifiScanStatus == WifiScanStatus.scanning;
             if (isScanning) {
               return WifiScanLoading(
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onCancel: () {
                   connectionBloc.add(const WifiScanTimedOut());
-                  connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client));
+                  connectionBloc.add(
+                    const ChangeWiFiMode(ESP32WiFiMode.client),
+                  );
                 },
               );
             }
 
-            bool hasScanFailed = Platform.isAndroid &&
+            bool hasScanFailed =
+                Platform.isAndroid &&
                 state.wifiScanStatus == WifiScanStatus.failed;
             if (hasScanFailed) {
               return WifiScanFailed(
@@ -100,7 +106,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 onOpenLocationSettings: PlatformSettings.openLocationSettings,
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onRetry: () => connectionBloc.add(const AutoDetectWifiMode()),
-                onContinue: () => connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client)),
+                onContinue: () => connectionBloc.add(
+                  const ChangeWiFiMode(ESP32WiFiMode.client),
+                ),
               );
             }
 
@@ -121,13 +129,46 @@ class _ConnectionPageState extends State<ConnectionPage> {
                         )
                       : null,
                   scanStatus: state.wifiScanStatus,
-                  infoBuilder: (ctx) => const Text(
-                    'Some phones still require a manual confirm in Wi‑Fi settings. '
-                    'The phone will not automatically connect to the MowerBot network\n\n'
-                    'In this case, follow these steps:\n'
-                    '1) Open Wi‑Fi settings and connect to the MowerBot-AP network\n'
-                    '2) Come back and tap “Connect WebSocket”\n'
-                    '3) The status in the upper part of the screen will show "Connected"\n',
+                  infoBuilder: (_) => Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              'Some phones still require a manual confirm in Wi‑Fi settings. '
+                              'The phone will not automatically connect to the MowerBot-AP network.\n'
+                              'After automatic scanning, the following error is shown:\n',
+                        ),
+                        TextSpan(
+                          text: '[Error] Host unreachable \n',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'With final status\n',
+                        ),
+                        TextSpan(
+                          text: 'Disconnected \n',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                          'In this case, follow these steps:\n'
+                              '1) Open Wi‑Fi settings and connect to the MowerBot-AP network\n'
+                              '2) Come back and tap “Connect WebSocket”\n'
+                              '3) The status in the upper part of the screen will show\n',
+                        ),
+                        TextSpan(
+                          text: 'Connected \n',
+                          style: TextStyle(
+                            color: Colors.green
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 ConnectionForm(formKey: _formKey),

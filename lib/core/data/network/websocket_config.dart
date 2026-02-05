@@ -15,6 +15,6 @@ class WebSocketConfig {
     this.retry1sec = const Duration(seconds: 1),
     this.retry5sec = const Duration(seconds: 5),
     this.max5attempts = 5,
-    this.enableReachability = false,
+    this.enableReachability = true,
   });
 }

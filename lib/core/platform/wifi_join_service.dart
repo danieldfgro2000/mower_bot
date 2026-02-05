@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 
 /// Best-effort helper to programmatically join the mower AP on Android.
@@ -10,6 +11,8 @@ import 'package:wifi_iot/wifi_iot.dart';
 /// - On newer Android versions, the OS may limit silent Wi‑Fi joins.
 /// - If this fails, the UI should fall back to opening Wi‑Fi Settings.
 class WifiJoinService {
+  static const MethodChannel _channel = MethodChannel('mower_bot/wifi_network');
+
   Future<bool> connectToSsid(
     String ssid, {
     String? password,
@@ -33,9 +36,25 @@ class WifiJoinService {
 
       // Wait until we're actually on that SSID AND the OS has finalized the network
       // (i.e. we have a Wi‑Fi interface and an IP). This avoids racing the websocket.
-      return await waitForConnectedSsid(ssid, timeout: timeout);
+      final joined = await waitForConnectedSsid(ssid, timeout: timeout);
+      if (!joined) return false;
+
+      // Ensure sockets are routed over the joined Wi‑Fi network.
+      return await _bindToWifiNetwork();
     } catch (e) {
       if (kDebugMode) print('WifiJoinService.connectToSsid error: $e');
+      return false;
+    }
+  }
+
+  Future<bool> _bindToWifiNetwork() async {
+    try {
+      final ok = await _channel.invokeMethod<bool>('bindToWifiNetwork');
+      if (ok == true) return true;
+      if (kDebugMode) print('WifiJoinService: bindToWifiNetwork returned false');
+      return false;
+    } catch (e) {
+      if (kDebugMode) print('WifiJoinService: bindToWifiNetwork error: $e');
       return false;
     }
   }
