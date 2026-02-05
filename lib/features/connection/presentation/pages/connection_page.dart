@@ -13,6 +13,7 @@ import 'components/connection_button.dart';
 import 'components/connection_form.dart';
 import 'components/connection_mode_header.dart';
 import 'components/info.dart';
+import 'components/permissions_dialog.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
@@ -59,17 +60,15 @@ class _ConnectionPageState extends State<ConnectionPage> {
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
           listenWhen: (p, c) => p.wifiScanStatus != c.wifiScanStatus,
           listener: (context, state) async {
-            if (!Platform.isAndroid) return;
-            if (state.wifiScanStatus != WifiScanStatus.needsPermission) return;
-
-            if (_permissionDialogOpen) return;
-            bool accepted = (await _showLocationPermissionDialog(context)) ?? false;
+            if (!Platform.isAndroid || _permissionDialogOpen ||
+                state.wifiScanStatus != WifiScanStatus.needsPermission) {
+              return;
+            }
+            _permissionDialogOpen = true;
+            await isLocationPermissionAccepted(context)
+              ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
+              : connectionBloc.add(const WifiScanPermissionInfoDeclined());
             _permissionDialogOpen = false;
-
-            if (!context.mounted) return;
-            accepted
-                ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
-                : connectionBloc.add(const WifiScanPermissionInfoDeclined());
           },
         ),
       ],
@@ -112,7 +111,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   onModeChanged: (mode) => connectionBloc.add(ChangeWiFiMode(mode)),
                   onOpenWifiSettings: PlatformSettings.openWifiSettings,
                   onRetryScan: Platform.isAndroid
-                      ? () => connectionBloc.add(const AutoDetectWifiMode(ssidPrefix: 'mower'))
+                      ? () => connectionBloc.add(const AutoDetectWifiMode())
                       : null,
                   scanStatus: state.wifiScanStatus,
                   infoBuilder: (_) => InfoWidget(),
@@ -128,40 +127,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
     );
   }
 
-  Future<bool?> _showLocationPermissionDialog(BuildContext context) async {
-    _permissionDialogOpen = true;
-    final accepted = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (ctx) {
-        return AlertDialog(
-          title: const Text('Location permission needed'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text(
-                  'Android requires Location permission to scan nearby Wi‑Fi network names (SSIDs).\n\n'
-                  'We only use this to detect the mower Wi‑Fi network automatically. '
-                  'We do not track or store your location.',
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: const Text('Cancel'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('Continue'),
-            ),
-          ],
-        );
-      },
-    );
-    return accepted;
-  }
 }
 
 

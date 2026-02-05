@@ -63,12 +63,12 @@ class WifiScanFailed extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Text(message),
+                const SizedBox(height: 12),
                 const Text(
-                  'Can\'t scan Wi‑Fi networks',
+                  'Can\'t scan Wi‑Fi networks, check the following:',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 12),
-                Text(message),
                 const SizedBox(height: 16),
                 Wrap(
                   spacing: 12,

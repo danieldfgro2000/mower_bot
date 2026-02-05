@@ -313,6 +313,7 @@ class MowerConnectionBloc
 
   FutureOr<void> _onWifiScanTimedOut(WifiScanTimedOut event, Emitter<MowerConnectionState> emit) {
     emit(state.copyWith(
+      error: "No mower Wi‑Fi network found. Make sure the mower is powered on and in range, then try again.",
       wifiScanStatus: WifiScanStatus.timeout,
       wifiMode: ESP32WiFiMode.client,
     ));
