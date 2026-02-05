@@ -17,9 +17,13 @@ class ControlRepositoryImpl implements ControlRepository {
 
   @override
   String? get videoStreamUrl {
+    if (!isCtrlWsConnected) {
+      print('Video stream URL: Control WebSocket is not connected');
+      return null;
+    }
     final Uri? uri = _controlWebSocketClient.endpoint;
+    print('Video stream URL: http://${uri?.host}');
     if (uri == null) return null;
-    print('Video stream URL: http://${uri.host}');
     return 'http://${uri.host}';
   }
 

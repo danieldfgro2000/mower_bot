@@ -31,10 +31,10 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     print('App lifecycle changed: $state');
+    if(state == AppLifecycleState.resumed) _bloc.add(GetVideoStreamUrl());
     if (state == AppLifecycleState.resumed && _controller != null) {
       // Re-apply last URL if we were using the /stream shell
       _controller!.reload();
-      _bloc.add(GetVideoStreamUrl());
     }
     super.didChangeAppLifecycleState(state);
   }

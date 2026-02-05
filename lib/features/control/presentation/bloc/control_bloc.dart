@@ -39,10 +39,12 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     _telemetrySubscription?.cancel();
     _telemetrySubscription =
     observeTelemetryUseCase().listen(
-      (telemetryData) => add(TelemetryDataReceived(telemetryData)),
+      (telemetryData) {
+        add(TelemetryDataReceived(telemetryData));
+        add(GetVideoStreamUrl());
+      },
       onError: (e) => emit(state.copyWith(errorMessage: e.toString())),
     );
-    add(GetVideoStreamUrl());
   }
 
   FutureOr<void> _onTelemetryDataReceived(event, emit) {
@@ -54,8 +56,10 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
     ));
   }
 
-  FutureOr<void> _onGetVideoStreamUrl(event, emit) =>
-      emit(state.copyWith(videoStreamUrl: getVideoStreamUrl()));
+  FutureOr<void> _onGetVideoStreamUrl(event, emit) {
+    print("##########   Getting video stream URL...");
+    emit(state.copyWith(videoStreamUrl: getVideoStreamUrl()));
+}
 
   FutureOr<void> _onDriveCommand(event, emit) async {
     final wasSent = await sendCommand({
