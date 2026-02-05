@@ -47,7 +47,7 @@ class ExceptionHandler {
         final stateError = error as StateError;
         appException = DataException(
           message: 'Invalid state: ${stateError.message}',
-          code: 'INVALID_STATE',
+          code: AppExceptionCode.invalidField,
           originalError: error,
           stackTrace: stackTrace,
         );
@@ -57,7 +57,7 @@ class ExceptionHandler {
         final argError = error as ArgumentError;
         appException = ValidationException(
           message: 'Invalid argument: ${argError.message}',
-          code: 'INVALID_ARGUMENT',
+          code: AppExceptionCode.invalidField,
           originalError: error,
           stackTrace: stackTrace,
         );

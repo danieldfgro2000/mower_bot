@@ -51,7 +51,7 @@ sealed class Result<T> {
       } catch (error, stackTrace) {
         return Failure(GenericException(
           message: 'Transformation failed: $error',
-          code: 'TRANSFORM_ERROR',
+          code: AppExceptionCode.serializationFailed,
           originalError: error,
           stackTrace: stackTrace,
         ));
@@ -69,7 +69,7 @@ sealed class Result<T> {
       } catch (error, stackTrace) {
         return Failure(GenericException(
           message: 'Async transformation failed: $error',
-          code: 'ASYNC_TRANSFORM_ERROR',
+          code: AppExceptionCode.transformationFailed,
           originalError: error,
           stackTrace: stackTrace,
         ));
@@ -86,7 +86,7 @@ sealed class Result<T> {
       } catch (error, stackTrace) {
         return Failure(GenericException(
           message: 'Success callback failed: $error',
-          code: 'SUCCESS_CALLBACK_ERROR',
+          code: AppExceptionCode.serializationFailed,
           originalError: error,
           stackTrace: stackTrace,
         ));

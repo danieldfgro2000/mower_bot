@@ -15,6 +15,7 @@ enum AppExceptionCode {
   dataNotFound,
   dataCorrupted,
   serializationFailed,
+  transformationFailed,
   unknownError,
 }
 /// Base exception class for all application exceptions
