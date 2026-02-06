@@ -68,17 +68,20 @@ class _ControlPageState extends State<ControlPage>
 
     return SizedBox.expand(
       child: LayoutBuilder(
-        builder: (ctx, constraints) { // use ctx instead of context
-          final screenWidth = constraints.maxWidth; // for dynamic sizing
+        builder: (ctx, constraints) {
+          final screenWidth = constraints.maxWidth;
           return Stack(
             fit: StackFit.expand,
             children: [
               const Positioned.fill(child: EspMjpegWebView()),
-              if(ctx.select((ControlBloc b) => b.state.isRecording == true))
-                Positioned.fill(
-                    top: 0,
-                    left: 0,
-                    child: _recordingBanner(ctx)),
+              if (ctx.select((ControlBloc b) => b.state.isRecording == true))
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 100,
+                  child: _recordingBanner(ctx),
+                ),
               _recordButton(ctx),
               Positioned.fill(
                 top: 0,
@@ -91,7 +94,6 @@ class _ControlPageState extends State<ControlPage>
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Removed fixed height to allow minimal intrinsic height
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: _driveUnit(ctx, screenWidth),
@@ -175,8 +177,8 @@ class _ControlPageState extends State<ControlPage>
           ),
           onPressed: () {
             final next = !isMowerMoving;
-            controlBloc.add(DriveCommand(isMoving: next));
             controlBloc.add(SteerCommand(angle: steering));
+            controlBloc.add(DriveCommand(isMoving: next));
           },
         ),
         // Use a compact joystick with minimal footprint
