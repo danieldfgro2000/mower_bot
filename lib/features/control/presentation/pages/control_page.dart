@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mower_bot/app_router.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
@@ -21,60 +20,63 @@ class ControlPage extends StatefulWidget {
 }
 
 class _ControlPageState extends State<ControlPage>
-    with SingleTickerProviderStateMixin, RouteAware {
+    with SingleTickerProviderStateMixin {
   double steering = 0; // retain steering value locally
   late AnimationController _blinkController;
-  bool _depsHandled = false;
+
+  /// Ensures we only call [_onEnter] when the control tab becomes active.
+  bool _isActive = false;
+
+  late final RouteInformationProvider _routeInfoProvider;
+  late final VoidCallback _routeListener;
 
   // Fire the actions that should happen when the control tab becomes visible.
   void _onEnter() {
+    // NOTE: keep this idempotent; it can still be called when re-entering.
     final bloc = context.read<ControlBloc>();
     bloc.add(StartTelemetryStream());
     bloc.add(ClearError());
     bloc.add(GetVideoStreamUrl());
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _blinkController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..repeat(reverse: true);
-  }
+  void _syncActiveFromRoute() {
+    final location = _routeInfoProvider.value.uri.toString();
+    final nowActive = location.startsWith(ControlPage.routeName);
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_depsHandled) {
-      _depsHandled = true;
-      mowerRouteObserver.subscribe(this, ModalRoute.of(context)!);
-
-      // If we land directly on /control (deep link / initialLocation), initialize.
-      final uri = GoRouterState.of(context).uri;
-      if (uri.path == ControlPage.routeName) {
-        _onEnter();
-      }
+    if (nowActive && !_isActive) {
+      _isActive = true;
+      _onEnter();
+    } else if (!nowActive && _isActive) {
+      _isActive = false;
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _blinkController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..repeat(reverse: true);
+
+    // Hook tab-activation detection to the router's route info changes.
+    final router = GoRouter.of(context);
+    _routeInfoProvider = router.routeInformationProvider;
+    _routeListener = _syncActiveFromRoute;
+    _routeInfoProvider.addListener(_routeListener);
+
+    // Evaluate immediately (covers initialLocation=/control).
+    _syncActiveFromRoute();
+  }
+
+  @override
   void dispose() {
-    mowerRouteObserver.unsubscribe(this);
+    _routeInfoProvider.removeListener(_routeListener);
     _blinkController.dispose();
     super.dispose();
   }
 
-  @override
-  void didPush() {
-    _onEnter();
-  }
-
-  @override
-  void didPopNext() {
-    // Coming back to this page from another route.
-    _onEnter();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +154,25 @@ class _ControlPageState extends State<ControlPage>
     final isMowerMoving = ctx.select((ControlBloc b) => b.state.isMowerMoving == true);
     return IconButton(
       padding: EdgeInsets.zero,
-      constraints: const BoxConstraints.tightFor(width: 100, height: 100),
-      iconSize: 100.0,
+      constraints: const BoxConstraints.tightFor(width: 120, height: 120),
+      iconSize: 120.0,
       splashColor: Colors.red.shade500,
-      icon: Icon(
-        Icons.stop_circle_rounded,
-        color: isMowerMoving ? Colors.red : Colors.grey,
+      icon: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.hexagon_rounded,
+            color: isMowerMoving ? Colors.red : Colors.grey,
+          ),
+          Text(
+            'STOP',
+            style: TextStyle(
+              color: isMowerMoving ? Colors.white : Colors.grey.shade300,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          )
+        ],
       ),
       onPressed: () {
         controlBloc.add(EmergencyStop());
