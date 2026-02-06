@@ -5,11 +5,22 @@ import 'package:mower_bot/features/paths/presentation/bloc/path_event.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/path_state.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 
-class PathsPage extends StatelessWidget {
+class PathsPage extends StatefulWidget {
   static const String routeName = '/paths';
-  final bool isVisible;
 
-  const PathsPage({super.key, required this.isVisible});
+  const PathsPage({super.key});
+
+  @override
+  State<PathsPage> createState() => _PathsPageState();
+}
+
+class _PathsPageState extends State<PathsPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Trigger once when the page is first created.
+    context.read<PathBloc>().add(FetchPaths());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +29,6 @@ class PathsPage extends StatelessWidget {
         builder: (context, state) {
           switch (state) {
             case PathInitial():
-              pathsBloc.add(FetchPaths());
-              return const Center(child: CircularProgressIndicator());
             case PathLoading():
               return const Center(child: CircularProgressIndicator());
             case PathLoaded():
@@ -46,12 +55,12 @@ class PathsPage extends StatelessWidget {
                             if(isActive)
                               IconButton(
                                 onPressed: () => pathsBloc.add(StopPath(name)),
-                                icon: Icon(Icons.stop),
+                                icon: const Icon(Icons.stop),
                               ),
                             IconButton(
                               onPressed: () =>
                                   _confirmDelete(context, name, pathsBloc),
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                             ),
                           ],
                         ),

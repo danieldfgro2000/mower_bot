@@ -17,9 +17,8 @@ import 'components/permissions_dialog.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
-  final bool isVisible;
 
-  const ConnectionPage({super.key, required this.isVisible});
+  const ConnectionPage({super.key});
 
   @override
   State<ConnectionPage> createState() => _ConnectionPageState();

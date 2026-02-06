@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mower_bot/app_router.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
@@ -11,19 +13,26 @@ import 'components/esp_cam_view.dart';
 
 class ControlPage extends StatefulWidget {
   static const String routeName = '/control';
-  final bool isVisible;
 
-  const ControlPage({super.key, required this.isVisible});
+  const ControlPage({super.key});
 
   @override
   State<ControlPage> createState() => _ControlPageState();
 }
 
 class _ControlPageState extends State<ControlPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, RouteAware {
   double steering = 0; // retain steering value locally
   late AnimationController _blinkController;
   bool _depsHandled = false;
+
+  // Fire the actions that should happen when the control tab becomes visible.
+  void _onEnter() {
+    final bloc = context.read<ControlBloc>();
+    bloc.add(StartTelemetryStream());
+    bloc.add(ClearError());
+    bloc.add(GetVideoStreamUrl());
+  }
 
   @override
   void initState() {
@@ -35,30 +44,36 @@ class _ControlPageState extends State<ControlPage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_depsHandled) {
+      _depsHandled = true;
+      mowerRouteObserver.subscribe(this, ModalRoute.of(context)!);
+
+      // If we land directly on /control (deep link / initialLocation), initialize.
+      final uri = GoRouterState.of(context).uri;
+      if (uri.path == ControlPage.routeName) {
+        _onEnter();
+      }
+    }
+  }
+
+  @override
   void dispose() {
+    mowerRouteObserver.unsubscribe(this);
     _blinkController.dispose();
     super.dispose();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_depsHandled && widget.isVisible) {
-      _depsHandled = true;
-      context.read<ControlBloc>().add(StartTelemetryStream());
-      context.read<ControlBloc>().add(ClearError());
-    }
+  void didPush() {
+    _onEnter();
   }
 
   @override
-  void didUpdateWidget(covariant ControlPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print('ControlPage visibility changed: ${oldWidget.isVisible} -> ${widget.isVisible}');
-    if (widget.isVisible && !oldWidget.isVisible) {
-      context.read<ControlBloc>().add(StartTelemetryStream());
-      context.read<ControlBloc>().add(ClearError());
-      context.read<ControlBloc>().add(GetVideoStreamUrl());
-    }
+  void didPopNext() {
+    // Coming back to this page from another route.
+    _onEnter();
   }
 
   @override
@@ -118,7 +133,7 @@ class _ControlPageState extends State<ControlPage>
                         child: Text(
                           textAlign: TextAlign.center,
                           ctx.select((ControlBloc b) => b.state.errorMessage ?? ''),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
                           ),
