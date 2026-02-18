@@ -9,21 +9,41 @@ import 'package:wifi_scan/wifi_scan.dart';
 /// IMPORTANT: On Android, scanning nearby Wi‑Fi SSIDs is gated behind Location
 /// permission and Location services.
 class WifiScanPermissionService {
+  // coverage:ignore-start
+  WifiScanPermissionService({
+    bool Function()? isAndroid,
+    Future<PermissionStatus> Function()? getLocationStatus,
+    Future<PermissionStatus> Function()? requestLocation,
+    Future<CanGetScannedResults> Function()? canGetScannedResults,
+  })  : _isAndroid = isAndroid ?? (() => Platform.isAndroid),
+        _getLocationStatus =
+            getLocationStatus ?? (() => Permission.locationWhenInUse.status),
+        _requestLocation =
+            requestLocation ?? (() => Permission.locationWhenInUse.request()),
+        _canGetScannedResults =
+            canGetScannedResults ?? (() => WiFiScan.instance.canGetScannedResults());
+  // coverage:ignore-end
+
+  final bool Function() _isAndroid;
+  final Future<PermissionStatus> Function() _getLocationStatus;
+  final Future<PermissionStatus> Function() _requestLocation;
+  final Future<CanGetScannedResults> Function() _canGetScannedResults;
+
   /// Returns `null` if scanning is possible *without requesting anything*.
   /// Otherwise returns a user-facing error message.
   Future<String?> checkReady() async {
-    if (!Platform.isAndroid) {
+    if (!_isAndroid()) {
       return 'Wi‑Fi scanning is not supported on this platform.';
     }
 
-    final locationStatus = await Permission.locationWhenInUse.status;
+    final locationStatus = await _getLocationStatus();
     if (!locationStatus.isGranted) {
       // Not granted yet -> let caller decide whether to show an explanation
       // dialog and request it.
       return 'Location permission required.';
     }
 
-    final can = await WiFiScan.instance.canGetScannedResults();
+    final can = await _canGetScannedResults();
     if (can == CanGetScannedResults.yes) return null;
 
     switch (can) {
@@ -42,14 +62,14 @@ class WifiScanPermissionService {
 
   /// Returns the resulting permission status after prompting.
   Future<PermissionStatus> requestPermission() async {
-    if (!Platform.isAndroid) {
+    if (!_isAndroid()) {
       return PermissionStatus.denied;
     }
-    return Permission.locationWhenInUse.request();
+    return _requestLocation();
   }
 
   Future<bool> isPermanentlyDenied() async {
-    final s = await Permission.locationWhenInUse.status;
+    final s = await _getLocationStatus();
     return s.isPermanentlyDenied;
   }
 }
