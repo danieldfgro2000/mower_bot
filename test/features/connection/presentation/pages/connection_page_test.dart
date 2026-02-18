@@ -18,8 +18,14 @@ class _MockConnectionBloc extends MockBloc<MowerConnectionEvent, MowerConnection
 
 class _MockPermissionRationaleStore extends Mock implements PermissionRationaleStore {}
 
+class _FakeMowerConnectionEvent extends Fake implements MowerConnectionEvent {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() {
+    registerFallbackValue(_FakeMowerConnectionEvent());
+  });
 
   group('ConnectionPage', () {
     late _MockConnectionBloc bloc;
@@ -184,19 +190,9 @@ void main() {
 
       final formKey = GlobalKey<FormState>();
 
-      // BlocBuilder reads bloc.state synchronously during builds.
-      // Mocktail's thenReturn can't be chained (it returns void), so use an iterator.
-      final states = <MowerConnectionState>[base, connected].iterator;
-      when(() => bloc.state).thenAnswer((_) {
-        if (states.moveNext()) return states.current;
-        return connected;
-      });
-
-      whenListen(
-        bloc,
-        Stream.fromIterable([base, connected]),
-        initialState: base,
-      );
+      // 1) Disconnected: should dispatch Connect event
+      when(() => bloc.state).thenReturn(base);
+      when(() => bloc.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
 
       await tester.pumpWidget(
         MaterialApp(
@@ -209,18 +205,47 @@ void main() {
         ),
       );
 
+      final buttonFinder = find.byWidgetPredicate(
+        (w) => w is FilledButton,
+        description: 'FilledButton',
+      );
+      expect(buttonFinder, findsOneWidget);
+      await tester.tap(buttonFinder);
       await tester.pump();
-      expect(find.text('Connect WebSocket'), findsOneWidget);
+      verify(() => bloc.add(any(that: isA<ConnectToControlWebsocketMower>()))).called(1);
 
-      // Let the bloc stream emit the next state and rebuild.
+      // 2) Connected: use a fresh bloc instance to avoid any lingering widget subscriptions.
+      final bloc2 = _MockConnectionBloc();
+      when(() => bloc2.state).thenReturn(connected);
+      when(() => bloc2.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<MowerConnectionBloc>.value(
+            value: bloc2,
+            child: Scaffold(
+              body: ConnectionButton(formKey: formKey),
+            ),
+          ),
+        ),
+      );
+
+      final buttonFinder2 = find.byWidgetPredicate(
+        (w) => w is FilledButton,
+        description: 'FilledButton',
+      );
+      expect(buttonFinder2, findsOneWidget);
+      await tester.tap(buttonFinder2);
       await tester.pump();
-      expect(find.text('Disconnect WebSocket'), findsOneWidget);
+      verify(() => bloc2.add(any(that: isA<DisconnectFromMower>()))).called(1);
     });
 
     testWidgets('shows a SnackBar when error changes to a non-empty string', (tester) async {
       final base = const MowerConnectionState(ip: '1.2.3.4', port: 85);
 
       when(() => bloc.state).thenReturn(base);
+      when(() => bloc.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+
       whenListen(
         bloc,
         Stream.fromIterable([
