@@ -63,5 +63,13 @@ void main() {
       expect(back.topic, MessageTopic.drive);
       expect(back.data, {'speed': 10});
     });
+
+    test('toString includes topic and data', () {
+      final env = MessageEnvelope(topic: MessageTopic.telemetry, data: {'x': 1});
+      final s = env.toString();
+      expect(s, contains('MessageEnvelope'));
+      expect(s, contains('MessageTopic.telemetry'));
+      expect(s, contains('x: 1'));
+    });
   });
 }
