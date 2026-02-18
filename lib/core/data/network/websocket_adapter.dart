@@ -16,10 +16,16 @@ typedef ConnectionChanged = void Function(ConnectionStatus connStatus);
 enum WsPayloadMode { jsonOnly, binaryOnly, jsonAndBinary }
 
 class WebSocketAdapter {
-  WebSocketAdapter({WebSocketConfig? config})
-    : wscfg = config ?? WebSocketConfig();
+  WebSocketAdapter({
+    WebSocketConfig? config,
+    Future<bool> Function(Uri uri)? tcpProbe,
+  }) : wscfg = config ?? const WebSocketConfig(),
+       _tcpProbeFn = tcpProbe;
 
   final WebSocketConfig wscfg;
+
+  // Injectable hook (mainly for unit tests).
+  final Future<bool> Function(Uri uri)? _tcpProbeFn;
 
   IOWebSocketChannel? _webSocketChannel;
 
@@ -59,7 +65,7 @@ class WebSocketAdapter {
       throw StateError("WebSocketAdapter: endpoint is not set");
     }
 
-    final isReachable = await _tcpProbe(uri ?? _lastUri!);
+    final isReachable = await (_tcpProbeFn ?? _tcpProbe)(uri ?? _lastUri!);
     if (!isReachable && wscfg.enableReachability) {
       final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
       _notifyClosed();
@@ -161,12 +167,16 @@ class WebSocketAdapter {
     }
   }
 
+  bool _isDisposed = false;
+
   Future<void> _onStreamClosed(
     VoidCallback onReconnect,
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
   ) async {
     _notifyClosed();
+    if (_isDisposed) return;
+    // If the owner already disposed/closed, avoid throwing from late callbacks.
     onConnectionChanged(ConnectionStatus.disconnected);
   }
 
@@ -230,6 +240,7 @@ class WebSocketAdapter {
   }
 
   Future<void> dispose() async {
+    _isDisposed = true;
     await close(manuallyClosed: true);
     await _jsonCtrl.close();
     await _binaryCtrl.close();

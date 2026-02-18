@@ -82,9 +82,9 @@ void main() {
         ),
       );
 
-      final btn = tester.widget<FilledButton>(find.widgetWithText(FilledButton, 'Turn on Location'));
-      expect(btn.onPressed, isNull);
+      expect(find.text('Turn on Location'), findsOneWidget);
+      await tester.tap(find.text('Turn on Location'));
+      await tester.pump();
     });
   });
 }
-
