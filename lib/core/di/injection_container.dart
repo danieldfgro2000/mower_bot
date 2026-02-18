@@ -29,6 +29,7 @@ import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 import 'package:mower_bot/core/platform/mower_reachability_service.dart';
 import 'package:mower_bot/core/platform/wifi_join_service.dart';
 import 'package:mower_bot/core/platform/wifi_scan_permission_service.dart';
+import 'package:mower_bot/core/platform/permission_rationale_store.dart';
 
 final sl = GetIt.instance;
 
@@ -67,6 +68,7 @@ void _registerConnection() {
   sl.registerLazySingleton<CheckCtrlWsConnectedUseCase>(() => CheckCtrlWsConnectedUseCase(sl()));
   sl.registerLazySingleton<StreamConnectionStatusUseCase>(() => StreamConnectionStatusUseCase(sl()));
   sl.registerLazySingleton<WifiScanPermissionService>(() => WifiScanPermissionService());
+  sl.registerLazySingleton<PermissionRationaleStore>(() => PermissionRationaleStore());
   sl.registerLazySingleton<WifiJoinService>(() => WifiJoinService());
   sl.registerLazySingleton<MowerReachabilityService>(() => MowerReachabilityService());
 }
