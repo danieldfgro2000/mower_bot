@@ -63,10 +63,9 @@ def parse_lcov_text(text: str) -> list[FileCoverage]:
 
 
 def is_lib_source(path: str) -> bool:
-    # Flutter LCOV often includes absolute paths.
-    # We only care about app code under lib/.
+    # Flutter LCOV may include either absolute paths (…/lib/…) or repo-relative paths (lib/…).
     p = path.replace("\\", "/")
-    return "/lib/" in p and not "/.dart_tool/" in p
+    return (p.startswith("lib/") or "/lib/" in p) and "/.dart_tool/" not in p
 
 
 def normalize_to_repo_relative(path: str, repo_root: Path) -> str:
