@@ -1,14 +1,9 @@
 Coverage summary (lib/ only)
 
-TOTAL: 68.02% (1244/1829 lines)
+TOTAL: 69.27% (1267/1829 lines)
 
 Lowest-covered files (top 25):
 -   0.00%      0/39     missing=39     lib/core/platform/platform_settings.dart
--   0.00%      0/13     missing=13     lib/core/data/repo/path_repository_impl.dart
--   0.00%      0/3      missing=3      lib/features/connection/domain/usecases/connect_to_ctrl_ws_use_case.dart
--   0.00%      0/3      missing=3      lib/features/connection/domain/usecases/disconnect_ctrl_ws_use_case.dart
--   0.00%      0/3      missing=3      lib/features/connection/domain/usecases/stream_connection_status_use_case.dart
--   0.00%      0/2      missing=2      lib/features/connection/domain/usecases/check_ctrl_ws_connected_use_case.dart
 -  10.81%      4/37     missing=33     lib/core/platform/wifi_join_service.dart
 -  12.50%      2/16     missing=14     lib/features/control/presentation/bloc/control_event.dart
 -  19.15%      9/47     missing=38     lib/features/connection/presentation/bloc/connection_event.dart
@@ -28,3 +23,8 @@ Lowest-covered files (top 25):
 -  71.43%     30/42     missing=12     lib/core/data/network/websocket_client.dart
 -  75.68%     28/37     missing=9      lib/features/telemetry/presentation/bloc/telemetry_bloc.dart
 -  79.37%    100/126    missing=26     lib/core/data/network/websocket_adapter.dart
+-  84.44%     76/90     missing=14     lib/core/error/error_ui.dart
+-  87.50%      7/8      missing=1      lib/core/platform/mower_reachability_service.dart
+-  88.00%     22/25     missing=3      lib/features/paths/presentation/bloc/paths_bloc.dart
+-  92.86%     13/14     missing=1      lib/features/connection/presentation/pages/components/info.dart
+-  94.44%     17/18     missing=1      lib/core/platform/wifi_scan_permission_service.dart
