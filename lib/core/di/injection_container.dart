@@ -16,6 +16,7 @@ import 'package:mower_bot/core/data/repo/path_repository_remote_impl.dart';
 import 'package:mower_bot/features/paths/domain/usecases/delete_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/get_paths.dart';
 import 'package:mower_bot/features/paths/domain/usecases/play_path.dart';
+import 'package:mower_bot/features/paths/domain/usecases/save_path.dart';
 import 'package:mower_bot/features/paths/domain/usecases/stop_path.dart';
 import 'package:mower_bot/core/data/repo/telemetry_repository_impl.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
@@ -74,20 +75,14 @@ void _registerConnection() {
 }
 
 void _registerPaths() {
-  // Switch to a real repository when available.
-  if (appEnvironment == AppEnvironment.prod) {
-    // Real remote implementation over control WS
-    sl.registerLazySingleton<PathRepository>(() => PathRepositoryRemote(
-          sl<IWebSocketClient>(instanceName: 'ctrl'),
-        ));
-  } else {
-    // Development / demo mock
-    sl.registerLazySingleton<PathRepository>(() => MockPathRepository());
-  }
+  sl.registerLazySingleton<PathRepository>(() => PathRepositoryRemote(
+        sl<IWebSocketClient>(instanceName: 'ctrl'),
+      ));
   sl.registerLazySingleton<GetPathsUseCase>(() => GetPathsUseCase(sl()));
   sl.registerLazySingleton<PlayPathUseCase>(() => PlayPathUseCase(sl()));
   sl.registerLazySingleton<StopPathUseCase>(() => StopPathUseCase(sl()));
   sl.registerLazySingleton<DeletePathUseCase>(() => DeletePathUseCase(sl()));
+  sl.registerLazySingleton<SavePathUseCase>(() => SavePathUseCase(sl()));
 }
 
 void _registerControl() {
@@ -132,6 +127,7 @@ void _registerBlocs() {
         sl<SendDriveCommandUseCase>(),
         sl<GetVideoStreamUrlUseCase>(),
         sl<ObserverTelemetryUseCase>(),
+        sl<SavePathUseCase>(),
       ));
 
   sl.registerFactory<PathBloc>(() => PathBloc(

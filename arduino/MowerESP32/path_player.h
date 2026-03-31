@@ -11,6 +11,10 @@ public:
     void stop();
     void loop();
     bool isPlaying() const { return _playing; }
+    uint32_t sampleCount() const { return _sampleCount; }
+    uint32_t malformedCount() const { return _malformedCount; }
+    String activeFilePath() const { return _activeFilePath; }
+    String lastError() const { return _lastError; }
 private:
     bool loadNextSample();
     void sendAngle(float angle);
@@ -22,5 +26,9 @@ private:
     unsigned long _startedAt = 0;
     unsigned long _nextSampleMs = 0;
     float _nextAngle = 0.0f;
+    uint32_t _sampleCount = 0;   // samples dispatched in current session
+    uint32_t _malformedCount = 0; // skipped malformed lines
+    String _activeFilePath;
+    String _lastError;
 };
 

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
+import 'package:mower_bot/features/paths/domain/usecases/save_path.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 import 'package:stream_transform/stream_transform.dart' as st;
 
@@ -13,6 +14,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
   final SendDriveCommandUseCase sendCommand;
   final GetVideoStreamUrlUseCase getVideoStreamUrl;
   final ObserverTelemetryUseCase observeTelemetryUseCase;
+  final SavePathUseCase savePath;
 
   StreamSubscription? _telemetrySubscription;
 
@@ -21,7 +23,7 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
         .debounce(Duration(milliseconds: 100))
         .switchMap(mapper);
 
-  ControlBloc(this.sendCommand, this.getVideoStreamUrl, this.observeTelemetryUseCase)
+  ControlBloc(this.sendCommand, this.getVideoStreamUrl, this.observeTelemetryUseCase, this.savePath)
     : super(ControlState().initial()) {
     on<StartTelemetryStream>(_onStartTelemetryStream);
     on<TelemetryDataReceived>(_onTelemetryDataReceived);
@@ -98,19 +100,6 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
       : emit(state.copyWith(errorMessage: "Steer failed 🔗🚫"));
   }
 
-  FutureOr<void> _onStartRecord(event, emit) async {
-    final wasSent = await sendCommand({"cmd": "start_record"});
-    wasSent
-      ? emit(state.copyWith(isRecording: true, recordedFilePath: null))
-      : emit(state.copyWith(errorMessage: "Recording failed 🔗🚫"));
-  }
-
-  FutureOr<void> _onStopRecord(event, emit) async {
-    final wasSent = await sendCommand({"cmd": "stop_record", "fileName": event.fileName});
-    wasSent
-      ? emit(state.copyWith(isRecording: false, recordedFilePath: event.fileName))
-      : emit(state.copyWith(errorMessage: "Recording failed 🔗🚫"));
-  }
 
   FutureOr<void> _onEmergencyStop(event, emit) async {
     final wasSent = await sendCommand({
@@ -126,6 +115,16 @@ class ControlBloc extends Bloc<ControlEvent, ControlState> {
 
   FutureOr<void> _onClearError(event, emit) =>
       emit(state.copyWith(errorMessage: ''));
+
+  FutureOr<void> _onStartRecord(event, emit) async {
+    await savePath.startRecording();
+    emit(state.copyWith(isRecording: true, recordedFilePath: null, errorMessage: ''));
+  }
+
+  FutureOr<void> _onStopRecord(event, emit) async {
+    await savePath.stopRecording(event.fileName);
+    emit(state.copyWith(isRecording: false, recordedFilePath: event.fileName, errorMessage: ''));
+  }
 
   @override
   Future<void> close() {

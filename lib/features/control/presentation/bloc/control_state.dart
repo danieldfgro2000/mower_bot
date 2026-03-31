@@ -25,69 +25,64 @@ class ControlState extends Equatable implements DiffableState {
     this.telemetryData,
   });
 
-  ControlState initial() {
-    return const ControlState(
-      isConnected: false,
-      isRecording: false,
-      isVideoEnabled: false,
-      isMowerMoving: false,
-      isMowerRunning: false,
-      videoStreamUrl: null,
-      recordedFilePath: null,
-      errorMessage: null,
-      telemetryData: null
-    );
-  }
+  ControlState initial() => const ControlState(
+        isConnected: false,
+        isRecording: false,
+        isVideoEnabled: false,
+        isMowerMoving: false,
+        isMowerRunning: false,
+        videoStreamUrl: null,
+        recordedFilePath: null,
+        errorMessage: null,
+        telemetryData: null,
+      );
 
   @override
   List<Object?> get props => [
-    isConnected,
-    isRecording,
-    isVideoEnabled,
-    isMowerMoving,
-    isMowerRunning,
-    videoStreamUrl,
-    recordedFilePath,
-    errorMessage,
-    telemetryData
-  ];
+        isConnected,
+        isRecording,
+        isVideoEnabled,
+        isMowerMoving,
+        isMowerRunning,
+        videoStreamUrl,
+        recordedFilePath,
+        errorMessage,
+        telemetryData,
+      ];
 
   ControlState copyWith({
     bool? isConnected,
     bool? isRecording,
     bool? isVideoEnabled,
-    bool? isVideoWsConnected,
     bool? isMowerMoving,
     bool? isMowerRunning,
     String? videoStreamUrl,
     String? recordedFilePath,
     String? errorMessage,
     TelemetryDataModel? telemetryData,
-  }) {
-    return ControlState(
-      isConnected: isConnected ?? this.isConnected,
-      isRecording: isRecording ?? this.isRecording,
-      isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
-      isMowerMoving: isMowerMoving ?? this.isMowerMoving,
-      isMowerRunning: isMowerRunning ?? this.isMowerRunning,
-      videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
-      recordedFilePath: recordedFilePath ?? this.recordedFilePath,
-      errorMessage: errorMessage ?? this.errorMessage,
-      telemetryData: telemetryData ?? this.telemetryData,
-    );
-  }
+  }) => ControlState(
+        isConnected: isConnected ?? this.isConnected,
+        isRecording: isRecording ?? this.isRecording,
+        isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
+        isMowerMoving: isMowerMoving ?? this.isMowerMoving,
+        isMowerRunning: isMowerRunning ?? this.isMowerRunning,
+        videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
+        recordedFilePath: recordedFilePath ?? this.recordedFilePath,
+        errorMessage: errorMessage ?? this.errorMessage,
+        telemetryData: telemetryData ?? this.telemetryData,
+      );
 
   @override
   Map<String, dynamic> toDiffMap() => {
-    'isConnected': isConnected,
-    'isRecording': isRecording,
-    'isVideoEnabled': isVideoEnabled,
-    'isMowerMoving': isMowerMoving,
-    'isMowerRunning': isMowerRunning,
-    'videoStreamUrl': videoStreamUrl,
-    'recordedFilePath': recordedFilePath,
-    'errorMessage': errorMessage,
-    'telemetry.wheelAngle': telemetryData?.wheelAngle,
-    'telemetry.speed': telemetryData?.speed,
-  };
+        'isConnected': isConnected,
+        'isRecording': isRecording,
+        'isVideoEnabled': isVideoEnabled,
+        'isMowerMoving': isMowerMoving,
+        'isMowerRunning': isMowerRunning,
+        'videoStreamUrl': videoStreamUrl,
+        'recordedFilePath': recordedFilePath,
+        'errorMessage': errorMessage,
+        'telemetry.wheelAngle': telemetryData?.wheelAngle,
+        'telemetry.speed': telemetryData?.speed,
+      };
 }

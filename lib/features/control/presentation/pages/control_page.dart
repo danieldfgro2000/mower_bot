@@ -234,7 +234,7 @@ class _ControlPageState extends State<ControlPage>
             onPressed: () async {
               if (isRecording) {
                 final fileName = await _askPathName(context) ??
-                    'path_${DateTime.now().millisecondsSinceEpoch}.txt';
+                    'path_${DateTime.now().millisecondsSinceEpoch}';
                 controlBloc.add(StopRecord(fileName: fileName));
               } else {
                 controlBloc.add(StartRecord());

@@ -5,6 +5,7 @@ enum MessageTopic {
   controlAck,
   pathList,
   pathEvent,
+  pathDiag,
   heartbeat,
   camera,
   unknown,
@@ -24,6 +25,8 @@ MessageTopic topicFromString(String topic) {
       return MessageTopic.pathList;
     case 'pathEvent':
       return MessageTopic.pathEvent;
+    case 'pathDiag':
+      return MessageTopic.pathDiag;
     case 'heartbeat':
       return MessageTopic.heartbeat;
     case 'camera':

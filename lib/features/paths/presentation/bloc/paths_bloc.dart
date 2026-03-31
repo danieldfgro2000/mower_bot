@@ -34,8 +34,7 @@ class PathBloc extends Bloc<PathEvent, PathState> {
     on<StopPath>((event, emit) async {
       await stopPath(event.name);
       if (state is PathLoaded) {
-        final paths = (state as PathLoaded).paths;
-        emit(PathLoaded(paths, activePath: null));
+        emit(PathLoaded((state as PathLoaded).paths, activePath: null));
       }
     });
 
@@ -43,18 +42,11 @@ class PathBloc extends Bloc<PathEvent, PathState> {
       emit(PathLoading());
       await deletePath(event.name);
       final paths = await getPaths();
-      String? activePath;
-      if(state is PathLoaded){
-        activePath = (state as PathLoaded).activePath == event.name
-          ? null
-          : (state as PathLoaded).activePath;
-      }
-      emit(PathLoaded(paths, activePath: activePath));
+      emit(PathLoaded(paths, activePath: null));
     });
 
     on<PathsReceived>((event, emit) {
       emit(PathLoaded(event.paths, activePath: null));
     });
-
   }
 }

@@ -11,6 +11,10 @@ public:
         _mountPoint = mountPoint; return true; }
 
     bool isRecording() const { return _recording; }
+    uint32_t sampleCount() const { return _sampleCount; }
+    String activeTempFilePath() const { return _recording ? tempFilePath() : String(); }
+    String lastSavedFilePath() const { return _lastSavedFilePath; }
+    String lastError() const { return _lastError; }
 
     bool start();
     bool stop(const String& finalName);
@@ -30,5 +34,8 @@ private:
     unsigned long _lastSampleAt = 0;
     String _tempName; // e.g., tmp_<millis>
     File _file;
+    uint32_t _sampleCount = 0; // samples written in current session
+    String _lastSavedFilePath;
+    String _lastError;
 };
 

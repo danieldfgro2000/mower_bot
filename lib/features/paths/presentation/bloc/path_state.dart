@@ -28,7 +28,6 @@ class PathLoaded extends PathState {
   Map<String, dynamic> toDiffMap() => {
         ...super.toDiffMap(),
         'pathsCount': paths.length,
-        // Keep summary concise to avoid noisy logs
         'pathsPreview': paths.take(3).join(','),
         'activePath': activePath,
       };

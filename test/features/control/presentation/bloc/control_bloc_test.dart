@@ -6,6 +6,7 @@ import 'package:mower_bot/features/control/domain/usecases/send_drive_command_us
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
+import 'package:mower_bot/features/paths/domain/usecases/save_path.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 
@@ -18,6 +19,8 @@ class _MockGetVideoStreamUrlUseCase extends Mock
 class _MockObserverTelemetryUseCase extends Mock
     implements ObserverTelemetryUseCase {}
 
+class _MockSavePathUseCase extends Mock implements SavePathUseCase {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -29,11 +32,13 @@ void main() {
     late _MockSendDriveCommandUseCase send;
     late _MockGetVideoStreamUrlUseCase getVideo;
     late _MockObserverTelemetryUseCase observe;
+    late _MockSavePathUseCase savePath;
 
     setUp(() {
       send = _MockSendDriveCommandUseCase();
       getVideo = _MockGetVideoStreamUrlUseCase();
       observe = _MockObserverTelemetryUseCase();
+      savePath = _MockSavePathUseCase();
 
       when(() => getVideo()).thenReturn('http://example/stream');
       when(() => observe()).thenAnswer((_) => const Stream.empty());
@@ -43,7 +48,7 @@ void main() {
       'DriveCommand success clears errorMessage',
       build: () {
         when(() => send(any())).thenAnswer((_) async => true);
-        return ControlBloc(send, getVideo, observe);
+        return ControlBloc(send, getVideo, observe, savePath);
       },
       act: (bloc) => bloc.add(const DriveCommand(isMoving: true)),
       expect: () => [isA<ControlState>().having((s) => s.errorMessage, 'errorMessage', '')],
@@ -53,7 +58,7 @@ void main() {
       'DriveCommand failure sets errorMessage',
       build: () {
         when(() => send(any())).thenAnswer((_) async => false);
-        return ControlBloc(send, getVideo, observe);
+        return ControlBloc(send, getVideo, observe, savePath);
       },
       act: (bloc) => bloc.add(const DriveCommand(isMoving: true)),
       expect: () => [
@@ -69,7 +74,7 @@ void main() {
       'TelemetryDataReceived updates isMowerMoving and isMowerRunning',
       build: () {
         when(() => send(any())).thenAnswer((_) async => true);
-        return ControlBloc(send, getVideo, observe);
+        return ControlBloc(send, getVideo, observe, savePath);
       },
       act: (bloc) {
         const telemetry = TelemetryDataModel(

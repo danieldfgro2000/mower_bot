@@ -61,10 +61,10 @@ class StartRecord extends ControlEvent {}
 
 class StopRecord extends ControlEvent {
   final String fileName;
+  const StopRecord({required this.fileName});
 
-  const StopRecord({
-    required this.fileName,
-  });
+  @override
+  List<Object?> get props => [fileName];
 }
 
 class EmergencyStop extends ControlEvent {}
