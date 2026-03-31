@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Helpers to open platform settings screens.
@@ -94,6 +95,45 @@ class PlatformSettings {
       AppSettings.openAppSettings();
     } catch (e) {
       if(kDebugMode) print('Failed to open App settings via app_settings: $e');
+    }
+  }
+
+  /// Opens an appropriate screen for fixing Location requirements.
+  ///
+  /// - If the app's location permission is denied/permanently denied/restricted,
+  ///   open the app-specific settings page so the user can grant it.
+  /// - If permission is already granted, open the system Location toggle settings.
+  static Future<void> openLocationOrAppPermissionSettings() async {
+    try {
+      final status = await Permission.locationWhenInUse.status;
+      if (!status.isGranted) {
+        // AppSettingsType.location often goes to the global location screen,
+        // but in this case we want *app* permission settings.
+        await openAppPermissionSettings();
+        return;
+      }
+    } catch (e) {
+      if (kDebugMode) print('Failed to check location permission status: $e');
+      // Fall through to default behavior.
+    }
+
+    await openLocationSettings();
+  }
+
+  static Future<void> openAppPermissionSettings() async {
+    // permission_handler provides the most reliable deep link.
+    try {
+      final ok = await openAppSettings();
+      if (ok) return;
+    } catch (e) {
+      if (kDebugMode) print('Failed to open app settings via permission_handler: $e');
+    }
+
+    // Fallback
+    try {
+      AppSettings.openAppSettings();
+    } catch (e) {
+      if (kDebugMode) print('Failed to open app settings via app_settings: $e');
     }
   }
 }

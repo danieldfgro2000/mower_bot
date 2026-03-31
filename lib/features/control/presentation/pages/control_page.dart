@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
@@ -11,9 +12,8 @@ import 'components/esp_cam_view.dart';
 
 class ControlPage extends StatefulWidget {
   static const String routeName = '/control';
-  final bool isVisible;
 
-  const ControlPage({super.key, required this.isVisible});
+  const ControlPage({super.key});
 
   @override
   State<ControlPage> createState() => _ControlPageState();
@@ -23,43 +23,60 @@ class _ControlPageState extends State<ControlPage>
     with SingleTickerProviderStateMixin {
   double steering = 0; // retain steering value locally
   late AnimationController _blinkController;
-  bool _depsHandled = false;
+
+  /// Ensures we only call [_onEnter] when the control tab becomes active.
+  bool _isActive = false;
+
+  late final RouteInformationProvider _routeInfoProvider;
+  late final VoidCallback _routeListener;
+
+  // Fire the actions that should happen when the control tab becomes visible.
+  void _onEnter() {
+    // NOTE: keep this idempotent; it can still be called when re-entering.
+    final bloc = context.read<ControlBloc>();
+    bloc.add(StartTelemetryStream());
+    bloc.add(ClearError());
+    bloc.add(GetVideoStreamUrl());
+  }
+
+  void _syncActiveFromRoute() {
+    final location = _routeInfoProvider.value.uri.toString();
+    final nowActive = location.startsWith(ControlPage.routeName);
+
+    if (nowActive && !_isActive) {
+      _isActive = true;
+      _onEnter();
+    } else if (!nowActive && _isActive) {
+      _isActive = false;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+
     _blinkController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     )..repeat(reverse: true);
+
+    // Hook tab-activation detection to the router's route info changes.
+    final router = GoRouter.of(context);
+    _routeInfoProvider = router.routeInformationProvider;
+    _routeListener = _syncActiveFromRoute;
+    _routeInfoProvider.addListener(_routeListener);
+
+    // Evaluate immediately (covers initialLocation=/control).
+    _syncActiveFromRoute();
   }
 
   @override
   void dispose() {
+    _routeInfoProvider.removeListener(_routeListener);
     _blinkController.dispose();
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_depsHandled && widget.isVisible) {
-      _depsHandled = true;
-      context.read<ControlBloc>().add(StartTelemetryStream());
-      context.read<ControlBloc>().add(ClearError());
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant ControlPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print('ControlPage visibility changed: ${oldWidget.isVisible} -> ${widget.isVisible}');
-    if (widget.isVisible && !oldWidget.isVisible) {
-      context.read<ControlBloc>().add(StartTelemetryStream());
-      context.read<ControlBloc>().add(ClearError());
-      context.read<ControlBloc>().add(GetVideoStreamUrl());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,17 +85,20 @@ class _ControlPageState extends State<ControlPage>
 
     return SizedBox.expand(
       child: LayoutBuilder(
-        builder: (ctx, constraints) { // use ctx instead of context
-          final screenWidth = constraints.maxWidth; // for dynamic sizing
+        builder: (ctx, constraints) {
+          final screenWidth = constraints.maxWidth;
           return Stack(
             fit: StackFit.expand,
             children: [
               const Positioned.fill(child: EspMjpegWebView()),
-              if(ctx.select((ControlBloc b) => b.state.isRecording == true))
-                Positioned.fill(
-                    top: 0,
-                    left: 0,
-                    child: _recordingBanner(ctx)),
+              if (ctx.select((ControlBloc b) => b.state.isRecording == true))
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 100,
+                  child: _recordingBanner(ctx),
+                ),
               _recordButton(ctx),
               Positioned.fill(
                 top: 0,
@@ -91,7 +111,6 @@ class _ControlPageState extends State<ControlPage>
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Removed fixed height to allow minimal intrinsic height
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: _driveUnit(ctx, screenWidth),
@@ -116,7 +135,7 @@ class _ControlPageState extends State<ControlPage>
                         child: Text(
                           textAlign: TextAlign.center,
                           ctx.select((ControlBloc b) => b.state.errorMessage ?? ''),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
                           ),
@@ -135,12 +154,25 @@ class _ControlPageState extends State<ControlPage>
     final isMowerMoving = ctx.select((ControlBloc b) => b.state.isMowerMoving == true);
     return IconButton(
       padding: EdgeInsets.zero,
-      constraints: const BoxConstraints.tightFor(width: 100, height: 100),
-      iconSize: 100.0,
+      constraints: const BoxConstraints.tightFor(width: 120, height: 120),
+      iconSize: 120.0,
       splashColor: Colors.red.shade500,
-      icon: Icon(
-        Icons.stop_circle_rounded,
-        color: isMowerMoving ? Colors.red : Colors.grey,
+      icon: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.hexagon_rounded,
+            color: isMowerMoving ? Colors.red : Colors.grey,
+          ),
+          Text(
+            'STOP',
+            style: TextStyle(
+              color: isMowerMoving ? Colors.white : Colors.grey.shade300,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          )
+        ],
       ),
       onPressed: () {
         controlBloc.add(EmergencyStop());
@@ -175,8 +207,8 @@ class _ControlPageState extends State<ControlPage>
           ),
           onPressed: () {
             final next = !isMowerMoving;
-            controlBloc.add(DriveCommand(isMoving: next));
             controlBloc.add(SteerCommand(angle: steering));
+            controlBloc.add(DriveCommand(isMoving: next));
           },
         ),
         // Use a compact joystick with minimal footprint

@@ -9,67 +9,59 @@ class ExceptionHandler {
   factory ExceptionHandler() => _instance;
   ExceptionHandler._internal();
 
-  final StreamController<AppException> _exceptionController =
+  StreamController<AppException> _exceptionController =
       StreamController<AppException>.broadcast();
 
   /// Stream of unhandled exceptions
-  Stream<AppException> get exceptions => _exceptionController.stream;
+  Stream<AppException> get exceptions {
+    // If someone disposed the handler and later uses it again (common in tests
+    // because this is a singleton), recreate the controller.
+    if (_exceptionController.isClosed) {
+      _exceptionController = StreamController<AppException>.broadcast();
+    }
+    return _exceptionController.stream;
+  }
 
   /// Handle and convert generic exceptions to AppExceptions
   AppException handleException(dynamic error, [StackTrace? stackTrace]) {
     AppException appException;
 
-    switch (error.runtimeType) {
-      case SocketException _:
-        final socketError = error as SocketException;
-        appException = NetworkException.connectionFailed(
-          socketError.address?.host ?? 'unknown',
-          socketError.port ?? 0,
-          error,
-        );
-        break;
-
-      case TimeoutException _:
-        appException = NetworkException.timeout(
-          'Network operation',
-          error,
-        );
-        break;
-
-      case FormatException _:
-        appException = DataException.serializationFailed(
-          'Data parsing',
-          error,
-        );
-        break;
-
-      case StateError _:
-        final stateError = error as StateError;
-        appException = DataException(
-          message: 'Invalid state: ${stateError.message}',
-          code: AppExceptionCode.invalidField,
-          originalError: error,
-          stackTrace: stackTrace,
-        );
-        break;
-
-      case ArgumentError _:
-        final argError = error as ArgumentError;
-        appException = ValidationException(
-          message: 'Invalid argument: ${argError.message}',
-          code: AppExceptionCode.invalidField,
-          originalError: error,
-          stackTrace: stackTrace,
-        );
-        break;
-
-      default:
-        if (error is AppException) {
-          appException = error;
-        } else {
-          appException = GenericException.unknown(error, stackTrace);
-        }
-        break;
+    // Use type checks rather than runtimeType switching; subclasses and
+    // different exception implementations should still be recognized.
+    if (error is SocketException) {
+      appException = NetworkException.connectionFailed(
+        error.address?.host ?? 'unknown',
+        error.port ?? 0,
+        error,
+      );
+    } else if (error is TimeoutException) {
+      appException = NetworkException.timeout(
+        'Network operation',
+        error,
+      );
+    } else if (error is FormatException) {
+      appException = DataException.serializationFailed(
+        'Data parsing',
+        error,
+      );
+    } else if (error is StateError) {
+      appException = DataException(
+        message: 'Invalid state: ${error.message}',
+        code: AppExceptionCode.invalidField,
+        originalError: error,
+        stackTrace: stackTrace,
+      );
+    } else if (error is ArgumentError) {
+      appException = ValidationException(
+        message: 'Invalid argument: ${error.message}',
+        code: AppExceptionCode.invalidField,
+        originalError: error,
+        stackTrace: stackTrace,
+      );
+    } else if (error is AppException) {
+      appException = error;
+    } else {
+      appException = GenericException.unknown(error, stackTrace);
     }
 
     _reportException(appException);
@@ -91,6 +83,10 @@ class ExceptionHandler {
       }
     }
 
+    if (_exceptionController.isClosed) {
+      // Avoid throwing in release / tests. Recreate so future listeners work.
+      _exceptionController = StreamController<AppException>.broadcast();
+    }
     _exceptionController.add(exception);
   }
 

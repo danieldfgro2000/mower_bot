@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/core/di/injection_container.dart';
+import 'package:mower_bot/core/platform/permission_rationale_store.dart';
 import 'package:mower_bot/core/platform/platform_settings.dart';
 import 'package:mower_bot/core/platform/wifi_scan.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
@@ -17,9 +19,8 @@ import 'components/permissions_dialog.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
-  final bool isVisible;
 
-  const ConnectionPage({super.key, required this.isVisible});
+  const ConnectionPage({super.key});
 
   @override
   State<ConnectionPage> createState() => _ConnectionPageState();
@@ -29,6 +30,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
   final _formKey = GlobalKey<FormState>();
   late final MowerConnectionBloc connectionBloc;
   bool _permissionDialogOpen = false;
+
+  static const _locationRationaleKey = 'location_when_in_use';
 
   @override
   void initState() {
@@ -61,14 +64,30 @@ class _ConnectionPageState extends State<ConnectionPage> {
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
           listenWhen: (p, c) => p.wifiScanStatus != c.wifiScanStatus,
           listener: (context, state) async {
-            if (!Platform.isAndroid || _permissionDialogOpen ||
+            if (!Platform.isAndroid ||
+                _permissionDialogOpen ||
                 state.wifiScanStatus != WifiScanStatus.needsPermission) {
               return;
             }
+
+            final store = sl<PermissionRationaleStore>();
+            final alreadyShown = await store.wasShown(_locationRationaleKey);
+            if (alreadyShown) {
+              // Don't nag again. Proceed as if user declined the rationale.
+              connectionBloc.add(const WifiScanPermissionInfoDeclined());
+              return;
+            }
+
             _permissionDialogOpen = true;
-            await isLocationPermissionAccepted(context)
-              ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
-              : connectionBloc.add(const WifiScanPermissionInfoDeclined());
+            if (!context.mounted) return;
+            final accepted = await isLocationPermissionAccepted(context);
+            await store.markShown(_locationRationaleKey);
+            if (!context.mounted) return;
+
+            accepted
+                ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
+                : connectionBloc.add(const WifiScanPermissionInfoDeclined());
+
             _permissionDialogOpen = false;
           },
         ),
@@ -97,7 +116,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             if (hasScanFailed) {
               return WifiScanFailed(
                 message: state.error ?? 'Wi‑Fi scan failed.',
-                onOpenLocationSettings: PlatformSettings.openLocationSettings,
+                onOpenLocationSettings: PlatformSettings.openLocationOrAppPermissionSettings,
                 onOpenWifiSettings: PlatformSettings.openWifiSettings,
                 onRetry: () => connectionBloc.add(const AutoDetectWifiMode()),
                 onContinue: () => connectionBloc.add(const ChangeWiFiMode(ESP32WiFiMode.client)),
