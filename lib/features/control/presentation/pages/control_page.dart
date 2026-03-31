@@ -275,17 +275,16 @@ class _ControlPageState extends State<ControlPage>
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Path name'),
         content: TextField(controller: controller),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(dialogContext).pop(),
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(
-              context,
+            onPressed: () => Navigator.of(dialogContext).pop(
               controller.text.trim().isEmpty ? null : controller.text.trim(),
             ),
             child: const Text('Save'),
