@@ -27,7 +27,7 @@ void startCameraServer();
 
 // SD mount point and paths directory — must match PathRecorder/PathPlayer
 static const char* const MOUNT_POINT  = "/sdcard";
-static const char* const PATHS_DIR    = "/sdcard/paths";
+static const char* const PATHS_DIR    = "/paths";
 
 /// Strip a trailing ".csv" extension (case-sensitive) from a name string.
 static String stripCsv(const String& name) {
@@ -42,6 +42,60 @@ static void broadcastPathEvent(const char* event, const char* name, bool ok) {
     doc["data"]["name"]  = name;
     doc["data"]["ok"]    = ok;
     wsServer.broadcastJson(doc);
+}
+
+static void printPathDiagToSerial(const JsonDocument& doc) {
+    Serial.println(F("[PATH][DIAG] ================================="));
+    Serial.print(F("[PATH][DIAG] sdOk="));
+    Serial.print(doc["data"]["sdOk"].as<bool>() ? F("true") : F("false"));
+    Serial.print(F(" totalMB="));
+    Serial.print(doc["data"]["sdTotalMB"].as<uint32_t>());
+    Serial.print(F(" usedMB="));
+    Serial.print(doc["data"]["sdUsedMB"].as<uint32_t>());
+    Serial.print(F(" freeMB="));
+    Serial.println(doc["data"]["sdFreeMB"].as<uint32_t>());
+
+    Serial.print(F("[PATH][DIAG] dir='"));
+    Serial.print(doc["data"]["pathsDir"].as<const char*>());
+    Serial.print(F("' exists="));
+    Serial.print(doc["data"]["pathsDirExists"].as<bool>() ? F("true") : F("false"));
+    Serial.print(F(" count="));
+    Serial.println(doc["data"]["pathCount"].as<uint16_t>());
+
+    Serial.print(F("[PATH][DIAG] recording="));
+    Serial.print(doc["data"]["isRecording"].as<bool>() ? F("true") : F("false"));
+    Serial.print(F(" samples="));
+    Serial.print(doc["data"]["recordSampleCount"].as<uint32_t>());
+    Serial.print(F(" temp='"));
+    Serial.print(doc["data"]["recordTempFile"].as<const char*>());
+    Serial.print(F("' saved='"));
+    Serial.print(doc["data"]["recordLastSavedFile"].as<const char*>());
+    Serial.print(F("' err='"));
+    Serial.print(doc["data"]["recordLastError"].as<const char*>());
+    Serial.println(F("'"));
+
+    Serial.print(F("[PATH][DIAG] playing="));
+    Serial.print(doc["data"]["isPlaying"].as<bool>() ? F("true") : F("false"));
+    Serial.print(F(" samples="));
+    Serial.print(doc["data"]["playSampleCount"].as<uint32_t>());
+    Serial.print(F(" malformed="));
+    Serial.print(doc["data"]["playMalformedCount"].as<uint32_t>());
+    Serial.print(F(" active='"));
+    Serial.print(doc["data"]["playActiveFile"].as<const char*>());
+    Serial.print(F("' err='"));
+    Serial.print(doc["data"]["playLastError"].as<const char*>());
+    Serial.println(F("'"));
+
+    JsonArrayConst paths = doc["data"]["paths"].as<JsonArrayConst>();
+    for (JsonObjectConst p : paths) {
+        Serial.print(F("[PATH][DIAG] file name='"));
+        Serial.print(p["name"].as<const char*>());
+        Serial.print(F("' size="));
+        Serial.print(p["sizeBytes"].as<uint32_t>());
+        Serial.print(F(" estSamples="));
+        Serial.println(p["estSamples"].as<uint32_t>());
+    }
+    Serial.println(F("[PATH][DIAG] ================================="));
 }
 
 static void broadcastPathList() {
@@ -66,6 +120,15 @@ static void broadcastPathList() {
             root.close();
         }
     }
+
+    Serial.print(F("[PATH] list_paths count="));
+    Serial.println(arr.size());
+    for (JsonVariant v : arr) {
+        Serial.print(F("[PATH] list_paths item='"));
+        Serial.print(v.as<const char*>());
+        Serial.println(F("'"));
+    }
+
     wsServer.broadcastJson(doc);
 }
 
@@ -139,6 +202,8 @@ static void broadcastPathDiag() {
           (unsigned long)pathPlayer.sampleCount(),
           (unsigned long)pathPlayer.malformedCount());
 
+    printPathDiagToSerial(doc);
+
     wsServer.broadcastJson(doc);
 }
 
@@ -151,9 +216,11 @@ void setup() {
     log_err(esp_reset_reason(), "BOOT");
 
     // Initialise SD card early (one-bit mode – safest wiring for ESP32-CAM)
-    sdRecorder.begin("/sdcard", true);
-    pathRecorder.begin("/sdcard");
-    pathPlayer.begin("/sdcard");
+    sdRecorder.begin(MOUNT_POINT, true);
+    pathRecorder.begin(MOUNT_POINT);
+    pathPlayer.begin(MOUNT_POINT);
+    Serial.println(F("[PATH] startup diagnostics after SD/path init"));
+    broadcastPathDiag();
 
     wifiAdapter.onConnected([](){
         wsServer.begin(85);
@@ -170,12 +237,14 @@ void setup() {
 
     wsServer.onMessage([](const JsonDocument& doc, uint8_t /*clientId*/) {
         const char* topic = doc["topic"] | "";
+        JsonVariantConst data = doc["data"].as<JsonVariantConst>();
 
-        if (strcmp(topic, "drive") == 0 && doc["data"].is<JsonObject>()) {
-            const char* cmd = doc["data"]["cmd"] | "";
+        if (strcmp(topic, "drive") == 0 && data.is<JsonObjectConst>()) {
+            const char* cmd = data["cmd"] | "";
 
             // ── start recording ──────────────────────────────
             if (strcmp(cmd, "start_record") == 0) {
+                Serial.println(F("[PATH] command=start_record"));
                 bool ok = pathRecorder.start();
                 log_i("Record start: %s", ok ? "OK" : "FAIL");
                 broadcastPathEvent("recordStarted", "", ok);
@@ -184,9 +253,12 @@ void setup() {
 
             // ── stop recording ───────────────────────────────
             } else if (strcmp(cmd, "stop_record") == 0) {
-                const char* fn = doc["data"]["fileName"] | "";
+                const char* fn = data["fileName"] | "";
                 // Strip accidental .csv suffix; empty name = discard
                 String name = stripCsv(String(fn));
+                Serial.print(F("[PATH] command=stop_record file='"));
+                Serial.print(name);
+                Serial.println(F("'"));
                 bool ok = pathRecorder.stop(name);   // empty → discards temp file
                 log_i("Record stop: '%s' => %s", name.c_str(), ok ? "OK" : "FAIL");
                 broadcastPathEvent("recordStopped", name.c_str(), ok);
@@ -195,12 +267,17 @@ void setup() {
 
             // ── play path ────────────────────────────────────
             } else if (strcmp(cmd, "play_path") == 0) {
-                const char* fn = doc["data"]["fileName"] | "";
+                const char* fn = data["fileName"] | "";
                 if (strlen(fn) == 0) {
+                    Serial.println(F("[PATH] command=play_path missing fileName"));
                     log_w("play_path: missing fileName");
                     broadcastPathEvent("playing", "", false);
+                    broadcastPathDiag();
                 } else {
                     String name = stripCsv(String(fn));   // strip .csv if client sent it
+                    Serial.print(F("[PATH] command=play_path file='"));
+                    Serial.print(name);
+                    Serial.println(F("'"));
                     bool ok = pathPlayer.play(name);
                     log_i("Path play: '%s' => %s", name.c_str(), ok ? "OK" : "FAIL");
                     broadcastPathEvent("playing", name.c_str(), ok);
@@ -210,6 +287,7 @@ void setup() {
 
             // ── stop playback ────────────────────────────────
             } else if (strcmp(cmd, "stop_path") == 0) {
+                Serial.println(F("[PATH] command=stop_path"));
                 pathPlayer.stop();
                 broadcastPathEvent("playingStopped", "", true);
                 broadcastPathDiag();
@@ -217,28 +295,42 @@ void setup() {
 
             // ── list paths ───────────────────────────────────
             } else if (strcmp(cmd, "list_paths") == 0) {
+                Serial.println(F("[PATH] command=list_paths"));
                 broadcastPathList();
+                broadcastPathDiag();
                 return;
 
             // ── path diagnostics ─────────────────────────────
             } else if (strcmp(cmd, "diag_paths") == 0) {
+                Serial.println(F("[PATH] command=diag_paths"));
                 broadcastPathDiag();
                 return;
 
             // ── delete path ──────────────────────────────────
             } else if (strcmp(cmd, "delete_path") == 0) {
-                const char* fn = doc["data"]["fileName"] | "";
+                const char* fn = data["fileName"] | "";
                 bool ok = false;
                 if (strlen(fn) > 0) {
                     // Build full path; strip .csv first so we never get .csv.csv
                     String path = String(PATHS_DIR) + "/" + stripCsv(String(fn)) + ".csv";
+                    Serial.print(F("[PATH] command=delete_path target='"));
+                    Serial.print(path);
+                    Serial.println(F("'"));
                     ok = SD_MMC.remove(path.c_str());
                     log_i("Delete: '%s' => %s", path.c_str(), ok ? "OK" : "FAIL");
+                } else {
+                    Serial.println(F("[PATH] command=delete_path missing fileName"));
                 }
                 broadcastPathEvent("deleted", fn, ok);
                 broadcastPathDiag();
                 return;
             }
+
+            Serial.print(F("[PATH] drive command not handled locally, cmd='"));
+            Serial.print(cmd);
+            Serial.println(F("' -> forwarding to Mega"));
+        } else if (strcmp(topic, "drive") == 0) {
+            Serial.println(F("[PATH] drive message has non-object data -> forwarding to Mega"));
         }
 
         // Default: forward everything else to Mega

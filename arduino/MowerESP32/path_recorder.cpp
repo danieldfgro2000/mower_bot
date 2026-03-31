@@ -3,18 +3,26 @@
 #include <ArduinoJson.h>
 #include <mower_esp.h>
 
+static bool ensurePathsDirExists(const char* mountPoint) {
+    (void)mountPoint;
+    String dir = "/paths";
+    if (SD_MMC.exists(dir.c_str())) return true;
+    if (!SD_MMC.mkdir(dir.c_str())) {
+        log_e("PathRecorder: cannot create paths dir: %s", dir.c_str());
+        return false;
+    }
+    log_i("PathRecorder: created paths dir: %s", dir.c_str());
+    return true;
+}
+
 bool PathRecorder::start() {
     if (_recording) return false;
     _lastError = "";
     _lastSavedFilePath = "";
     // Ensure /sdcard/paths exists
-    String dir = String(_mountPoint) + "/paths";
-    if (!SD_MMC.exists(dir.c_str())) {
-        if (!SD_MMC.mkdir(dir.c_str())) {
-            _lastError = "mkdir paths failed";
-            log_e("PathRecorder: cannot create paths dir");
-            return false;
-        }
+    if (!ensurePathsDirExists(_mountPoint)) {
+        _lastError = "mkdir paths failed";
+        return false;
     }
     _tempName = String("tmp_") + String((unsigned long)millis());
     String path = tempFilePath();
@@ -57,6 +65,10 @@ bool PathRecorder::stop(const String& finalName) {
     }
 
     // Rename temp file to final name (ensure unique if already exists)
+    if (!ensurePathsDirExists(_mountPoint)) {
+        _lastError = "mkdir paths failed during save";
+        return false;
+    }
     String target = finalFilePath(finalName);
     int suffix = 1;
     while (SD_MMC.exists(target.c_str())) {

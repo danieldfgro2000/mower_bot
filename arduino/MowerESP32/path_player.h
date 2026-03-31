@@ -18,7 +18,7 @@ public:
 private:
     bool loadNextSample();
     void sendAngle(float angle);
-    String filePath(const String& name) const { return String(_mountPoint) + "/paths/" + name + ".csv"; }
+    String filePath(const String& name) const { return String("/paths/") + name + ".csv"; }
 private:
     const char* _mountPoint = "/sdcard";
     File _file;

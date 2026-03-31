@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/path_event.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/path_state.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
@@ -15,10 +16,43 @@ class PathsPage extends StatefulWidget {
 }
 
 class _PathsPageState extends State<PathsPage> {
+  bool _isActive = false;
+  late final RouteInformationProvider _routeInfoProvider;
+  late final VoidCallback _routeListener;
+
+  void _fetchPaths() {
+    context.read<PathBloc>().add(FetchPaths());
+  }
+
+  void _syncActiveFromRoute() {
+    final location = _routeInfoProvider.value.uri.toString();
+    final nowActive = location.startsWith(PathsPage.routeName);
+
+    if (nowActive && !_isActive) {
+      _isActive = true;
+      _fetchPaths();
+    } else if (!nowActive && _isActive) {
+      _isActive = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    context.read<PathBloc>().add(FetchPaths());
+
+    final router = GoRouter.of(context);
+    _routeInfoProvider = router.routeInformationProvider;
+    _routeListener = _syncActiveFromRoute;
+    _routeInfoProvider.addListener(_routeListener);
+
+    // Evaluate immediately so an initial /paths route also refreshes.
+    _syncActiveFromRoute();
+  }
+
+  @override
+  void dispose() {
+    _routeInfoProvider.removeListener(_routeListener);
+    super.dispose();
   }
 
   @override

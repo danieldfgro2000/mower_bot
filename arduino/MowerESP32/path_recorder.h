@@ -22,8 +22,8 @@ public:
 
 private:
     bool sampleAndWrite();
-    String tempFilePath() const { return String(_mountPoint) + "/paths/" + _tempName + ".csv"; }
-    String finalFilePath(const String& name) const { return String(_mountPoint) + "/paths/" + name + ".csv"; }
+    String tempFilePath() const { return String("/paths/") + _tempName + ".csv"; }
+    String finalFilePath(const String& name) const { return String("/paths/") + name + ".csv"; }
 
 private:
     const unsigned long SAMPLE_INTERVAL_MS = 200; // adjustable
