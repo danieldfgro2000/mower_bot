@@ -21,13 +21,13 @@ TMC2209Stepper driver(&Serial2, R_SENSE, 0b00);
 // ----- Steering Config
 // ===========================
 static const uint16_t MICROSTEPS = 4;
-const float stepsPerRevolution = 200.0f * MICROSTEPS;
+const float stepsPerRevolution = 200.0f * MICROSTEPS;   // 800 steps/motor-rev
 const float steeringRange = 90.0f;
 const float gearRatio = 5.0f;
 
 // Homing params
-static const long HOMING_SPEED_STEPS = 1000;       // steps/s, sign controlled per direction
-static unsigned long g_homingNoPulseMs = 180; // inactivity threshold (user-adjustable)
+static const long HOMING_SPEED_STEPS = 700;       // steps/s, sign controlled per direction
+static unsigned long g_homingNoPulseMs = 280; // inactivity threshold (user-adjustable)
 
 // ===========================
 // ----- Helpers
@@ -75,7 +75,6 @@ bool newTarget = false;
 // limits stored in steps relative to zero after homing
 long leftLimit = 0;
 long rightLimit = 0;
-static float zeroAngleOffsetDeg = 0.0f; // manual zero definition applied post-homing
 
 void steeringInit() {
     pinMode(enPin, OUTPUT);
@@ -122,7 +121,6 @@ void steeringHome() {
     enum HomingState { HS_INIT, HS_SEEK_NEG, HS_SEEK_POS, HS_CENTERING };
     static HomingState state = HS_INIT;
 
-    static long correctionCenterSteps = 500;
 
     static long lastTurnCount = 0;
     static unsigned long lastPulseAt = 0;
@@ -194,7 +192,7 @@ void steeringHome() {
             // Rate-based stall detection window
             if (windowStartAt != 0 && (now - windowStartAt) >= g_homingNoPulseMs) {
                 if (windowPulseCount < minPulsesPerWindow) {
-                    stopNegSteps = lastPulseSteps; // use last accepted pulse pos
+                    stopNegSteps = stepper.currentPosition();
                     Serial.print("[STEERING] Negative stop at steps: ");
                     Serial.println(stopNegSteps);
 
@@ -217,7 +215,7 @@ void steeringHome() {
 
             // Fallback: pure inactivity (no accepted pulse yet since start)
             if (!sawPulseNeg && (now - stateStartAt) >= g_homingNoPulseMs) {
-                stopNegSteps = lastPulseSteps; // at start value
+                stopNegSteps = stepper.currentPosition();
                 Serial.print("[STEERING] Negative stop (no pulses) at steps: ");
                 Serial.println(stopNegSteps);
 
@@ -251,7 +249,7 @@ void steeringHome() {
 
             if (windowStartAt != 0 && (now - windowStartAt) >= g_homingNoPulseMs) {
                 if (windowPulseCount < minPulsesPerWindow) {
-                    stopPosSteps = lastPulseSteps; // use last accepted pulse pos
+                    stopPosSteps = stepper.currentPosition();
                     Serial.print("[STEERING] Positive stop at steps: ");
                     Serial.println(stopPosSteps);
 
@@ -270,7 +268,7 @@ void steeringHome() {
                     }
 
                     // Move to center between the two measured stops
-                    long center = correctionCenterSteps + minStop + span / 2;
+                    long center = (minStop + maxStop) / 2;
 
                     stepper.moveTo(center);
                     state = HS_CENTERING;
@@ -290,7 +288,7 @@ void steeringHome() {
 
             if (!sawPulsePos && (now - stateStartAt) >= g_homingNoPulseMs) {
                 // No pulses at all -> we started already at positive limit
-                stopPosSteps = lastPulseSteps;
+                stopPosSteps = stepper.currentPosition();
                 Serial.print("[STEERING] Positive stop (no pulses) at steps: ");
                 Serial.println(stopPosSteps);
 
@@ -305,7 +303,7 @@ void steeringHome() {
                     state = HS_INIT;
                     break;
                 }
-                long center = correctionCenterSteps + minStop + span / 2;
+                long center = (minStop + maxStop) / 2;
                 stepper.moveTo(center);
                 state = HS_CENTERING;
                 Serial.print("[STEERING] Homing: move to center steps: ");
@@ -349,43 +347,26 @@ void steeringSetHomingNoPulseMs(unsigned long ms) {
 void steeringUpdate() {
     if (newTarget) {
         const long steps = - wheelDegToSteps(targetAngle); // target angle to steps (no calibration offset)
-        long adjusted = steps;
-        if (homed) {
-            long clamped = constrain(adjusted, leftLimit, rightLimit);
-            stepper.moveTo(clamped);
-        } else {
-            stepper.moveTo(adjusted);
-        }
+        stepper.moveTo(steps);
         newTarget = false;
     }
     stepper.run();
 }
 
-void steeringSetZeroAngleDeg(float angleDeg) {
-    // angleDeg represents the current physical angle that should become logical 0.
-    // Store offset so subsequent physical queries shift accordingly.
-    zeroAngleOffsetDeg = -angleDeg; // if current physical is X, offset = -X to make reported 0.
-    Serial.print("[STEERING] Zero angle set. Offset deg: ");
-    Serial.println(zeroAngleOffsetDeg);
-}
-
 void steeringSetAngle(float angle) {
-    // angle is logical command relative to defined zero (after optional zeroAngleOffsetDeg)
-    float physicalTarget = angle - zeroAngleOffsetDeg; // convert logical to physical reference frame
-    targetAngle = constrain(physicalTarget, -45.0f, 45.0f);
+    targetAngle = constrain(angle, -45.0f, 45.0f);
     Serial.print("[STEERING] New target angle: ");
-    Serial.println(angle);
+    Serial.println(targetAngle);
     newTarget = true;
 }
 
 float steeringGetCommandedAngle() {
-    // Return commanded logical angle
-    return targetAngle + zeroAngleOffsetDeg;
+    return targetAngle;
 }
 
 float steeringGetPhysicalAngle() {
     // Physical angle derived directly from step position (midpoint == 0 deg)
-    return - stepsToWheelDeg(stepper.currentPosition()) + zeroAngleOffsetDeg;
+    return -stepsToWheelDeg(stepper.currentPosition());
 }
 
 // Limit / homed queries remain same

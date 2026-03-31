@@ -18,5 +18,3 @@ long steeringGetLimitRightSteps();
 float steeringGetLimitLeftDeg();
 float steeringGetLimitRightDeg();
 
-// Simple manual zeroing: define a wheel angle (deg) to become new logical 0 after homing.
-void steeringSetZeroAngleDeg(float angleDeg);

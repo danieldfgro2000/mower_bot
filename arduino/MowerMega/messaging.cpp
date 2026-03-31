@@ -81,10 +81,6 @@ void messagingHandleInput() {
           if (doc["data"]["mega"].containsKey("angle")) {
               steeringSetAngle(doc["data"]["mega"]["angle"].as<float>());
           }
-          // Simple manual zeroing: declare current physical angle as logical zero
-          if (doc["data"]["mega"].containsKey("zeroAngleDeg")) {
-              steeringSetZeroAngleDeg(doc["data"]["mega"]["zeroAngleDeg"].as<float>());
-          }
           // Adjust homing inactivity window ms
           if (doc["data"]["mega"].containsKey("homingNoPulseMs")) {
               steeringSetHomingNoPulseMs(doc["data"]["mega"]["homingNoPulseMs"].as<unsigned long>());
