@@ -13,6 +13,7 @@ narrowest applicable scope below.
 | Product direction and current implementation gaps | [Project overview](project/overview.md) |
 | Engineering targets, business assumptions, build gates | [Root plan](../plan.md) |
 | Flutter UI, BLoCs, use cases, repositories, local checks | [Flutter development](flutter/development.md) |
+| App implementation review and proposed module/package improvements | [App improvement plan](flutter/implementation-improvement-plan.md) |
 | ESP32/Mega ownership, wire/storage contracts, build prerequisites | [Firmware development](firmware/development.md) |
 
 There is no Firebase/backend, OTA deployment, or PlatformIO workflow configured

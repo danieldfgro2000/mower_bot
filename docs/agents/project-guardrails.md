@@ -111,10 +111,55 @@ owns the concrete module map.
   Reuse local UI conventions; localization infrastructure is not currently
   configured, so do not reference nonexistent localization helpers.
 
+## Mandatory test-driven development
+
+All code improvements, including the
+[app improvement plan](../flutter/implementation-improvement-plan.md), must be
+test-driven. Tests written only after implementation do not satisfy this rule.
+
+1. **Define the slice:** identify the behavior or boundary being changed, the
+   intended acceptance criteria, affected consumers, and existing baseline.
+   Select the smallest relevant unit, BLoC, widget, integration, contract, or
+   architecture test scope before editing implementation.
+2. **Red:** for a bug fix or behavior change, write/update the regression test
+   first and run it against the current implementation. Confirm it fails for
+   the intended missing/incorrect behavior. Syntax, missing imports/tools, or
+   broken setup are not behavioral red evidence; add only the minimal test
+   scaffolding needed to reach the intended assertion.
+3. **Green:** implement the smallest complete change that makes that test pass.
+   Keep the approved behavior and existing unaffected assertions intact; do
+   not weaken, skip, or delete a valid test merely to obtain green.
+4. **Refactor:** improve ownership, naming, and structure while tests stay green.
+   Re-run the focused tests after each meaningful change, then the broader
+   affected suite and static analysis before marking the slice complete.
+
+For behavior-preserving file moves, package extraction, and cleanup, first add
+or identify characterization/contract tests and run them green on the current
+code. Preserve those assertions through the change; do not manufacture a
+behavioral failure. For a dependency-boundary correction, write the architecture
+test first, observe the existing forbidden dependency fail, and then move code
+until both the boundary test and behavior tests pass.
+
+Drive tests from observable requirements, not implementation details or current
+bugs. Existing tests that encode incorrect behavior must be replaced with
+approved expected behavior before the corresponding implementation change.
+Prefer deterministic fakes/injected clocks and platform/socket seams; do not
+use a live mower to obtain a red test.
+
+Record concise per-slice evidence in the owning implementation documentation:
+test identifiers/commands, the observed red reason (or passing characterization
+baseline), green result, and broader validation/blockers. An unexecutable test
+is a blocker, not evidence of TDD completion; report it and resolve the test
+prerequisite before proceeding with the affected implementation.
+
+This code-work requirement does not require artificial tests for prose-only
+edits, authorize unrequested implementation, or replace user-authorized hardware
+validation.
+
 ## Validation and handoff
 
-- Use a short test-driven loop: identify the behavior and affected layers, add
-  focused regression coverage, implement, validate, and perform scoped cleanup.
+- Follow the [mandatory test-driven workflow](#mandatory-test-driven-development)
+  for each implementation slice, not only once at the end of a phase.
 - Run relevant local tests and static analysis for code changes. Expand to the
   full Flutter suite for shared transport, DI, or cross-feature behavior changes.
   Commands and firmware prerequisites are in the scoped development docs.

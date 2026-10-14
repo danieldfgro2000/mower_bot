@@ -12,6 +12,7 @@
 | Documentation policy and reuse provenance | This document |
 | Current implementation versus product direction | [Project overview](../project/overview.md) |
 | Flutter architecture, feature ownership, tests | [Flutter development](../flutter/development.md) |
+| App review findings and proposed module/package migration | [App improvement plan](../flutter/implementation-improvement-plan.md) |
 | Firmware, app/device protocol, path storage, build prerequisites | [Firmware development](../firmware/development.md) |
 
 Maintain one authoritative owner per topic and link from other scopes. Split a
@@ -27,6 +28,11 @@ justifies it; update the index at the same time.
 - Update documentation in the same change as behavior, protocol, configuration,
   navigation, or operational guidance. Cross-layer changes update the contract
   owner and link affected consumers rather than copying separate specifications.
+- Improvement plans must link to the
+  [mandatory test-driven workflow](project-guardrails.md#mandatory-test-driven-development)
+  and define test-first gates for each implementation phase. Record actual
+  per-slice test evidence in the owning implementation document; keep proposed
+  acceptance tests visibly separate from executed results.
 - Keep current behavior, intended requirements, unverified assumptions, and
   historical evidence visibly separate. Source code establishes implementation;
   the plan establishes intent. Document discrepancies rather than silently

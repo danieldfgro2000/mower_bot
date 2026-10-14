@@ -48,6 +48,11 @@ The [firmware guide](../firmware/development.md) records specific prototype
 caveats. They are constraints for future work, not changes made by this
 documentation task.
 
+The [app improvement plan](../flutter/implementation-improvement-plan.md)
+reviews current Flutter dependency boundaries, state/lifecycle gaps, and a
+proposed staged module migration. It complements, not replaces, the product
+build gates below.
+
 ## Build sequence and decision gates
 
 Follow the plan's sequence rather than treating autonomy as the first milestone:

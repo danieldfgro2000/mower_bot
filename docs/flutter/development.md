@@ -9,6 +9,10 @@ existing dependencies rather than installing Bee Hive Monitor's stack.
 The current organization is feature-first presentation/domain with shared data
 infrastructure, not a separate data directory inside every feature:
 
+The [implementation review and improvement plan](implementation-improvement-plan.md)
+proposes a staged ownership/module migration. It is not the current architecture
+or approval to reorganize the app during unrelated work.
+
 | Scope | Owner and important consumers |
 | --- | --- |
 | Startup and DI | [`main.dart`](../../lib/main.dart), [`injection_container.dart`](../../lib/core/di/injection_container.dart) |
@@ -55,6 +59,13 @@ to match Dart naming.
   is part of the task.
 
 ## Local validation
+
+Follow the
+[mandatory test-driven workflow](../agents/project-guardrails.md#mandatory-test-driven-development):
+run the new regression test red before implementing changed behavior, or run
+characterization tests green before a behavior-preserving move. Repeat the
+focused tests through green/refactor, then broaden validation for the affected
+scope. The commands below are used throughout that loop, not just after coding.
 
 Run commands from the repository root with Flutter/Dart on `PATH`.
 For a fresh checkout or changed dependencies, resolve the manifest with
