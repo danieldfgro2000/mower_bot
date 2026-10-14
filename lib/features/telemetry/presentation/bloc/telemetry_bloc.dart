@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
@@ -25,16 +26,25 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     this._observeTelemetryStreamUseCase,
     this._observeTelemetryStatusUseCase,
   ) : super(TelemetryInitial()) {
-    on<StartTelemetry>(_onStartTelemetry);
+    on<TelemetryLifecycleEvent>(_onLifecycleEvent, transformer: sequential());
     on<TelemetryReceived>(_onTelemetryReceived);
-    on<StopTelemetry>(_onStopTelemetry);
     on<MegaTelemetryStatusUpdated>(_onMegaTelemetryStatusUpdated);
+  }
+
+  Future<void> _onLifecycleEvent(
+    TelemetryLifecycleEvent event,
+    Emitter<TelemetryState> emit,
+  ) {
+    if (event is StartTelemetry) return _onStartTelemetry(event, emit);
+    if (event is StopTelemetry) return _onStopTelemetry(event, emit);
+    return Future<void>.value();
   }
 
   Future<void> _onStartTelemetry(
     StartTelemetry event,
     Emitter<TelemetryState> emit,
   ) async {
+    if (_streamStarted) return;
     emit(TelemetryLoading());
     try {
       await _startTelemetryStreamUseCase();

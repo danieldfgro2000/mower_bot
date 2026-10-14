@@ -6,9 +6,11 @@ abstract class TelemetryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class StartTelemetry extends TelemetryEvent {}
+abstract class TelemetryLifecycleEvent extends TelemetryEvent {}
 
-class StopTelemetry extends TelemetryEvent {}
+class StartTelemetry extends TelemetryLifecycleEvent {}
+
+class StopTelemetry extends TelemetryLifecycleEvent {}
 
 class TelemetryReceived extends TelemetryEvent {
   final TelemetryDataModel telemetry;

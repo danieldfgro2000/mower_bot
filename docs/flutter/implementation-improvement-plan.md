@@ -327,6 +327,27 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   mismatch; repository-wide analysis retained the same 20 unrelated
   diagnostics.
 
+**2026-10-14 - R4 serialized telemetry BLoC lifecycle**
+
+- Scope and acceptance: repeated `StartTelemetry` events must retain one
+  repository start and one observer set. A `StopTelemetry` event received while
+  start is pending must execute afterward and prevent later telemetry events.
+- Baseline: the telemetry BLoC and event tests passed all 8 existing tests
+  before this slice.
+- Red: repeated starts called the start and observation use cases twice. With a
+  deliberately pending start, stop ran too early and a later telemetry sample
+  still emitted `TelemetryLoaded`.
+- Green/refactor: start and stop now share one sequential lifecycle event
+  handler, and an already-started BLoC ignores duplicate starts. The focused
+  BLoC/event selection passed all 10 tests; the telemetry and connection
+  consumer selection passed all 30 tests; changed-file analysis passed.
+- Broader validation: the full suite passed 189 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 20
+  unrelated diagnostics.
+- Dependency consequence: `bloc_concurrency` now has an active production
+  consumer for sequential telemetry lifecycle handling and is no longer an
+  unused-dependency removal candidate.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small
@@ -383,11 +404,12 @@ needs them. Decide whether the standalone telemetry screen is a planned operator
 surface or obsolete; do not add a route just to justify keeping it.
 
 Audit direct dependencies against code, tests, assets, generators, and native
-registration. `http`, `flutter_joystick`, `bloc_concurrency`, `json_annotation`,
-and the JSON generation tooling have no observed active imports/annotations in
-the reviewed app. They are removal candidates, not automatic deletions.
-`fl_chart` is used by the currently unrouted chart; launcher/splash tooling has
-manifest configuration and must not be removed solely for lacking Dart imports.
+registration. `bloc_concurrency` is retained for serialized telemetry lifecycle
+handling. `http`, `flutter_joystick`, `json_annotation`, and the JSON generation
+tooling have no observed active imports/annotations in the reviewed app. They
+are removal candidates, not automatic deletions. `fl_chart` is used by the
+currently unrouted chart; launcher/splash tooling has manifest configuration
+and must not be removed solely for lacking Dart imports.
 
 **Exit:** retained dependencies and modules have a named consumer or documented
 purpose; generated/native dependency changes are reproducible; cleanup preserves

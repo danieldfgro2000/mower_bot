@@ -26,6 +26,9 @@ void main() {
     late _MockStop stop;
     late _MockObserve observe;
     late _MockObserveStatus observeStatus;
+    late Completer<void> startCompleter;
+    late StreamController<TelemetryDataModel> telemetryController;
+    late StreamController<MowerStatusModel> statusController;
 
     setUp(() {
       start = _MockStart();
@@ -128,6 +131,72 @@ void main() {
       ],
       verify: (_) {
         verify(() => stop.call()).called(1);
+      },
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
+      'repeated starts retain one repository start and observer set',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      act: (bloc) {
+        bloc.add(StartTelemetry());
+        bloc.add(StartTelemetry());
+      },
+      wait: const Duration(milliseconds: 10),
+      expect: () => [isA<TelemetryLoading>()],
+      verify: (_) {
+        verify(() => start.call()).called(1);
+        verify(() => observe()).called(1);
+        verify(() => observeStatus()).called(1);
+      },
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
+      'stop queued during start prevents later telemetry emissions',
+      build: () {
+        when(() => start.call()).thenAnswer((_) => startCompleter.future);
+        when(() => observe()).thenAnswer((_) => telemetryController.stream);
+        when(() => observeStatus()).thenAnswer((_) => statusController.stream);
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      setUp: () {
+        startCompleter = Completer<void>();
+        telemetryController = StreamController<TelemetryDataModel>.broadcast();
+        statusController = StreamController<MowerStatusModel>.broadcast();
+      },
+      act: (bloc) async {
+        bloc.add(StartTelemetry());
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        bloc.add(StopTelemetry());
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        startCompleter.complete();
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        telemetryController.add(
+          const TelemetryDataModel(
+            wheelAngle: 1,
+            opticalAngle: 2,
+            distanceTraveled: 3,
+            speed: 4,
+            actuatorDrive: true,
+            actuatorStart: false,
+          ),
+        );
+      },
+      wait: const Duration(milliseconds: 5),
+      expect: () => [
+        isA<TelemetryLoading>(),
+        isA<TelemetryInitial>(),
+      ],
+      verify: (_) {
+        verify(() => stop.call()).called(1);
+      },
+      tearDown: () async {
+        await telemetryController.close();
+        await statusController.close();
       },
     );
 
