@@ -12,6 +12,7 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
   final IWebSocketClient _webSocketClient;
   late final StreamController<TelemetryDataModel> _telemetryDataCtrl;
   late final StreamController<MowerStatusModel> _mowerStatusCtrl;
+  StreamSubscription<JsonMap>? _messageSubscription;
 
   TelemetryRepositoryImpl(this._webSocketClient) {
     _telemetryDataCtrl = StreamController<TelemetryDataModel>.broadcast();
@@ -21,20 +22,21 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
   @override
   bool get isConnected => _webSocketClient.isConnected;
 
-
   @override
   Future<void> startTelemetry() async {
-    if(!isConnected) {
+    if (!isConnected) {
       throw Exception('WebSocket is not connected');
     }
-    _webSocketClient.messages.listen((raw) {
+    _messageSubscription ??= _webSocketClient.messages.listen((raw) {
       final envelope = MessageEnvelope.fromJson(raw);
       switch (envelope.topic) {
         case MessageTopic.telemetry:
           _telemetryDataCtrl.add(TelemetryMapper.fromData(envelope.data));
           break;
         case MessageTopic.status:
-          _mowerStatusCtrl.add(MowerStatusMapper.fromData(envelope.data['telemetry'] ?? {}));
+          _mowerStatusCtrl.add(
+            MowerStatusMapper.fromData(envelope.data['telemetry'] ?? {}),
+          );
           break;
         default:
           break;

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mower_bot/core/data/repo/telemetry_repository_impl.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
@@ -114,6 +112,27 @@ void main() {
       });
 
       await future;
+    });
+
+    test('two starts emit one telemetry event per socket message', () async {
+      final ws = FakeWebSocketClient();
+      ws.emitConnection(ConnectionStatus.ctrlWsConnected);
+
+      final repo = TelemetryRepositoryImpl(ws);
+      await repo.startTelemetry();
+      await repo.startTelemetry();
+
+      final events = <TelemetryDataModel>[];
+      final subscription = repo.observeTelemetry().listen(events.add);
+
+      ws.emitMessage({
+        'topic': 'telemetry',
+        'data': {'stepperAngle': 1.0},
+      });
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+
+      expect(events, hasLength(1));
+      await subscription.cancel();
     });
 
     test('unknown topics are ignored (no emissions)', () async {

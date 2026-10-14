@@ -1,7 +1,8 @@
 # App Implementation Review and Improvement Plan
 
 **Reviewed:** 2026-10-14, revision `874d932`, clean working tree before review.
-**Status:** proposed work, not an implemented refactor.
+**Status:** implementation started; the executed slice evidence below records
+completed work without implying that the broader refactor is complete.
 **Scope:** Flutter package/module separation, dependency ownership, state and
 resource lifecycle, operator behavior, and representative existing tests.
 
@@ -278,6 +279,30 @@ Use separate, reviewable changes for these responsibilities:
 not duplicate events; disconnect during backoff cannot reconnect later; no late
 emits after close; operator state never equates submission with confirmed safety.
 Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
+
+#### Executed slice evidence
+
+**2026-10-14 - R4 telemetry repository repeated-start ownership**
+
+- Scope and acceptance: calling `startTelemetry()` twice on one repository must
+  retain one socket listener, so one telemetry socket message produces exactly
+  one repository event. Wire mapping, reconnect policy, and teardown behavior
+  were intentionally unchanged in this slice.
+- Baseline: `flutter test
+  test/core/data/repo/telemetry_repository_impl_test.dart
+  test/features/telemetry/presentation/bloc/telemetry_bloc_test.dart --reporter
+  compact` passed all 9 existing tests before implementation.
+- Red: the new `two starts emit one telemetry event per socket message` test
+  failed before the fix because one message produced 2 events instead of 1.
+- Green/refactor: the repository retains one message subscription; the focused
+  regression passed, and `flutter test
+  test/core/data/repo/telemetry_repository_impl_test.dart
+  test/features/telemetry --reporter compact` passed all 16 tests.
+- Broader validation: `flutter test --no-pub --reporter compact` retained the
+  known Phase 0 DI baseline failure where `dev` expects `MockPathRepository` but
+  resolves `PathRepositoryRemote`; no other test failed. `flutter analyze
+  --no-pub` reported 20 existing diagnostics outside the changed files, so the
+  repository-wide analysis baseline remains non-green.
 
 ### Phase 2 - Repair dependency direction and move by owner
 
