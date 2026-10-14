@@ -5,7 +5,9 @@ import 'package:mower_bot/features/connection/presentation/pages/components/perm
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('isLocationPermissionAccepted returns false when Cancel tapped', (tester) async {
+  testWidgets('isLocationPermissionAccepted returns false when Cancel tapped', (
+    tester,
+  ) async {
     late BuildContext ctx;
 
     await tester.pumpWidget(
@@ -31,27 +33,29 @@ void main() {
     await expectLater(future, completion(isFalse));
   });
 
-  testWidgets('isLocationPermissionAccepted returns true when Continue tapped', (tester) async {
-    late BuildContext ctx;
+  testWidgets(
+    'isLocationPermissionAccepted returns true when Continue tapped',
+    (tester) async {
+      late BuildContext ctx;
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Builder(
-          builder: (context) {
-            ctx = context;
-            return const Scaffold(body: SizedBox());
-          },
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) {
+              ctx = context;
+              return const Scaffold(body: SizedBox());
+            },
+          ),
         ),
-      ),
-    );
+      );
 
-    final future = isLocationPermissionAccepted(ctx);
-    await tester.pumpAndSettle();
+      final future = isLocationPermissionAccepted(ctx);
+      await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Continue'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('Continue'));
+      await tester.pumpAndSettle();
 
-    await expectLater(future, completion(isTrue));
-  });
+      await expectLater(future, completion(isTrue));
+    },
+  );
 }
-

@@ -40,4 +40,3 @@ class PathsReceived extends PathEvent {
   @override
   List<Object?> get props => [paths];
 }
-

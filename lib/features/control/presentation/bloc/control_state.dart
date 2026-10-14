@@ -4,85 +4,81 @@ import '../../../../core/diffable_state.dart';
 
 class ControlState extends Equatable implements DiffableState {
   final bool? isConnected;
-  final bool? isRecording;
-  final bool? isVideoEnabled;
   final bool? isMowerMoving;
   final bool? isMowerRunning;
-  final String? videoStreamUrl;
-  final String? recordedFilePath;
   final String? errorMessage;
+  final String? commandMessage;
   final TelemetryDataModel? telemetryData;
+  final double commandedSteeringAngle;
 
   const ControlState({
     this.isConnected,
-    this.isRecording,
-    this.isVideoEnabled,
     this.isMowerMoving,
     this.isMowerRunning,
-    this.videoStreamUrl,
-    this.recordedFilePath,
     this.errorMessage,
+    this.commandMessage,
     this.telemetryData,
+    this.commandedSteeringAngle = 0,
   });
 
+  double? get observedSteeringAngle => telemetryData?.wheelAngle;
+
   ControlState initial() => const ControlState(
-        isConnected: false,
-        isRecording: false,
-        isVideoEnabled: false,
-        isMowerMoving: false,
-        isMowerRunning: false,
-        videoStreamUrl: null,
-        recordedFilePath: null,
-        errorMessage: null,
-        telemetryData: null,
-      );
+    isConnected: false,
+    isMowerMoving: false,
+    isMowerRunning: false,
+    errorMessage: null,
+    commandMessage: null,
+    telemetryData: null,
+    commandedSteeringAngle: 0,
+  );
 
   @override
   List<Object?> get props => [
-        isConnected,
-        isRecording,
-        isVideoEnabled,
-        isMowerMoving,
-        isMowerRunning,
-        videoStreamUrl,
-        recordedFilePath,
-        errorMessage,
-        telemetryData,
-      ];
+    isConnected,
+    isMowerMoving,
+    isMowerRunning,
+    errorMessage,
+    commandMessage,
+    telemetryData,
+    commandedSteeringAngle,
+  ];
 
   ControlState copyWith({
     bool? isConnected,
-    bool? isRecording,
-    bool? isVideoEnabled,
     bool? isMowerMoving,
     bool? isMowerRunning,
-    String? videoStreamUrl,
-    String? recordedFilePath,
     String? errorMessage,
+    String? commandMessage,
     TelemetryDataModel? telemetryData,
+    double? commandedSteeringAngle,
+    bool clearErrorMessage = false,
+    bool clearCommandMessage = false,
+    bool clearTelemetryData = false,
   }) => ControlState(
-        isConnected: isConnected ?? this.isConnected,
-        isRecording: isRecording ?? this.isRecording,
-        isVideoEnabled: isVideoEnabled ?? this.isVideoEnabled,
-        isMowerMoving: isMowerMoving ?? this.isMowerMoving,
-        isMowerRunning: isMowerRunning ?? this.isMowerRunning,
-        videoStreamUrl: videoStreamUrl ?? this.videoStreamUrl,
-        recordedFilePath: recordedFilePath ?? this.recordedFilePath,
-        errorMessage: errorMessage ?? this.errorMessage,
-        telemetryData: telemetryData ?? this.telemetryData,
-      );
+    isConnected: isConnected ?? this.isConnected,
+    isMowerMoving: isMowerMoving ?? this.isMowerMoving,
+    isMowerRunning: isMowerRunning ?? this.isMowerRunning,
+    errorMessage: clearErrorMessage ? null : errorMessage ?? this.errorMessage,
+    commandMessage: clearCommandMessage
+        ? null
+        : commandMessage ?? this.commandMessage,
+    telemetryData: clearTelemetryData
+        ? null
+        : telemetryData ?? this.telemetryData,
+    commandedSteeringAngle:
+        commandedSteeringAngle ?? this.commandedSteeringAngle,
+  );
 
   @override
   Map<String, dynamic> toDiffMap() => {
-        'isConnected': isConnected,
-        'isRecording': isRecording,
-        'isVideoEnabled': isVideoEnabled,
-        'isMowerMoving': isMowerMoving,
-        'isMowerRunning': isMowerRunning,
-        'videoStreamUrl': videoStreamUrl,
-        'recordedFilePath': recordedFilePath,
-        'errorMessage': errorMessage,
-        'telemetry.wheelAngle': telemetryData?.wheelAngle,
-        'telemetry.speed': telemetryData?.speed,
-      };
+    'isConnected': isConnected,
+    'isMowerMoving': isMowerMoving,
+    'isMowerRunning': isMowerRunning,
+    'errorMessage': errorMessage,
+    'commandMessage': commandMessage,
+    'observedSteeringAngle': observedSteeringAngle,
+    'commandedSteeringAngle': commandedSteeringAngle,
+    'telemetry.speed': telemetryData?.speed,
+  };
 }

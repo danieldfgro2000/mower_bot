@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
+import 'package:mower_bot/core/device/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
@@ -20,27 +20,34 @@ void main() {
       repo = _MockTelemetryRepository();
     });
 
-    test('StartTelemetryStreamUseCase delegates to repository.startTelemetry', () async {
-      when(() => repo.startTelemetry()).thenAnswer((_) async {});
+    test(
+      'StartTelemetryStreamUseCase delegates to repository.startTelemetry',
+      () async {
+        when(() => repo.startTelemetry()).thenAnswer((_) async {});
 
-      final uc = StartTelemetryStreamUseCase(repo);
-      await uc();
+        final uc = StartTelemetryStreamUseCase(repo);
+        await uc();
 
-      verify(() => repo.startTelemetry()).called(1);
-    });
+        verify(() => repo.startTelemetry()).called(1);
+      },
+    );
 
-    test('StopTelemetryStreamUseCase delegates to repository.stopTelemetry', () async {
-      when(() => repo.stopTelemetry()).thenAnswer((_) async {});
+    test(
+      'StopTelemetryStreamUseCase delegates to repository.stopTelemetry',
+      () async {
+        when(() => repo.stopTelemetry()).thenAnswer((_) async {});
 
-      final uc = StopTelemetryStreamUseCase(repo);
-      await uc();
+        final uc = StopTelemetryStreamUseCase(repo);
+        await uc();
 
-      verify(() => repo.stopTelemetry()).called(1);
-    });
+        verify(() => repo.stopTelemetry()).called(1);
+      },
+    );
 
-    test('ObserverTelemetryUseCase delegates to repository.observeTelemetry', () async {
-      final stream = Stream<TelemetryDataModel>.fromIterable(
-        const [
+    test(
+      'ObserverTelemetryUseCase delegates to repository.observeTelemetry',
+      () async {
+        final stream = Stream<TelemetryDataModel>.fromIterable(const [
           TelemetryDataModel(
             wheelAngle: 1,
             opticalAngle: 2,
@@ -49,22 +56,25 @@ void main() {
             actuatorDrive: true,
             actuatorStart: false,
           ),
-        ],
-      );
-      when(() => repo.observeTelemetry()).thenAnswer((_) => stream);
+        ]);
+        when(() => repo.observeTelemetry()).thenAnswer((_) => stream);
 
-      final uc = ObserverTelemetryUseCase(repo);
-      expect(uc(), same(stream));
-      verify(() => repo.observeTelemetry()).called(1);
-    });
+        final uc = ObserverTelemetryUseCase(repo);
+        expect(uc(), same(stream));
+        verify(() => repo.observeTelemetry()).called(1);
+      },
+    );
 
-    test('ObserverTelemetryStatusUseCase delegates to repository.observeMowerStatus', () async {
-      final stream = Stream<MowerStatusModel>.empty();
-      when(() => repo.observeMowerStatus()).thenAnswer((_) => stream);
+    test(
+      'ObserverTelemetryStatusUseCase delegates to repository.observeMowerStatus',
+      () async {
+        final stream = Stream<MowerStatusModel>.empty();
+        when(() => repo.observeMowerStatus()).thenAnswer((_) => stream);
 
-      final uc = ObserverTelemetryStatusUseCase(repo);
-      expect(uc(), same(stream));
-      verify(() => repo.observeMowerStatus()).called(1);
-    });
+        final uc = ObserverTelemetryStatusUseCase(repo);
+        expect(uc(), same(stream));
+        verify(() => repo.observeMowerStatus()).called(1);
+      },
+    );
   });
 }

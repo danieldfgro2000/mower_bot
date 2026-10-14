@@ -41,10 +41,10 @@ void main() {
       );
 
       expect(() => client.connect(), throwsA(isA<StateError>()));
-      client.dispose();
+      await client.dispose();
     });
 
-    test('send is ignored when not connected', () {
+    test('send reports false when not connected', () async {
       final adapter = WebSocketAdapter(
         config: const WebSocketConfig(enableReachability: false),
         tcpProbe: (_) async => true,
@@ -53,9 +53,8 @@ void main() {
       final client = ControlWebSocketClient(adapter: adapter);
       expect(client.isConnected, isFalse);
 
-      // Should not throw.
-      client.send({'x': 1});
-      client.dispose();
+      expect(client.send({'x': 1}), isFalse);
+      await client.dispose();
     });
 
     test('connects and send emits JSON string over the socket', () async {
@@ -75,7 +74,7 @@ void main() {
 
       expect(client.isConnected, isTrue);
 
-      client.send({'hello': 'world'});
+      expect(client.send({'hello': 'world'}), isTrue);
       await Future<void>.delayed(const Duration(milliseconds: 30));
 
       expect(received, isNotEmpty);
@@ -101,4 +100,3 @@ void main() {
     });
   });
 }
-

@@ -21,13 +21,19 @@ class TelemetryReceived extends TelemetryEvent {
   List<Object?> get props => [telemetry];
 }
 
+enum TelemetryStreamSource { telemetry, status }
+
 class TelemetryStreamFailed extends TelemetryEvent {
   final String error;
+  final TelemetryStreamSource source;
 
-  TelemetryStreamFailed(this.error);
+  TelemetryStreamFailed(
+    this.error, {
+    this.source = TelemetryStreamSource.telemetry,
+  });
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [error, source];
 }
 
 class MegaTelemetryStatusUpdated extends TelemetryEvent {

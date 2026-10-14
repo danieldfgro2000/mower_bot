@@ -41,6 +41,7 @@ class _FakeConnectionRepo implements MowerConnectionRepository {
   @override
   bool get isCtrlWsConnected => _isConnected;
 
+  @override
   Future<void> dispose() async {
     await _connectedCtrl.close();
   }
@@ -83,27 +84,33 @@ void main() {
       await repo.dispose();
     });
 
-    test('StreamConnectionStatusUseCase streams through from repository', () async {
-      final repo = _FakeConnectionRepo();
-      final connect = ConnectToCtrlWsUseCase(repo);
-      final disconnect = DisconnectCtrlWsUseCase(repo);
-      final streamUsecase = StreamConnectionStatusUseCase(repo);
+    test(
+      'StreamConnectionStatusUseCase streams through from repository',
+      () async {
+        final repo = _FakeConnectionRepo();
+        final connect = ConnectToCtrlWsUseCase(repo);
+        final disconnect = DisconnectCtrlWsUseCase(repo);
+        final streamUsecase = StreamConnectionStatusUseCase(repo);
 
-      final events = <ConnectionStatus>[];
-      final sub = streamUsecase()!.listen(events.add);
+        final events = <ConnectionStatus>[];
+        final sub = streamUsecase()!.listen(events.add);
 
-      await connect('10.0.0.42', 85);
-      await disconnect();
+        await connect('10.0.0.42', 85);
+        await disconnect();
 
-      await Future<void>.delayed(Duration.zero);
+        await Future<void>.delayed(Duration.zero);
 
-      expect(events, containsAllInOrder(<ConnectionStatus>[
-        ConnectionStatus.ctrlWsConnected,
-        ConnectionStatus.disconnected,
-      ]));
+        expect(
+          events,
+          containsAllInOrder(<ConnectionStatus>[
+            ConnectionStatus.ctrlWsConnected,
+            ConnectionStatus.disconnected,
+          ]),
+        );
 
-      await sub.cancel();
-      await repo.dispose();
-    });
+        await sub.cancel();
+        await repo.dispose();
+      },
+    );
   });
 }

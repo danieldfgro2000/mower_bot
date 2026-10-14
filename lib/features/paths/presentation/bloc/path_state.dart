@@ -18,19 +18,28 @@ class PathLoading extends PathState {}
 class PathLoaded extends PathState {
   final List<String> paths;
   final String? activePath;
+  final String? commandMessage;
+  final String? errorMessage;
 
-  const PathLoaded(this.paths, {required this.activePath});
+  const PathLoaded(
+    this.paths, {
+    required this.activePath,
+    this.commandMessage,
+    this.errorMessage,
+  });
 
   @override
-  List<Object?> get props => [paths, activePath];
+  List<Object?> get props => [paths, activePath, commandMessage, errorMessage];
 
   @override
   Map<String, dynamic> toDiffMap() => {
-        ...super.toDiffMap(),
-        'pathsCount': paths.length,
-        'pathsPreview': paths.take(3).join(','),
-        'activePath': activePath,
-      };
+    ...super.toDiffMap(),
+    'pathsCount': paths.length,
+    'pathsPreview': paths.take(3).join(','),
+    'activePath': activePath,
+    'commandMessage': commandMessage,
+    'errorMessage': errorMessage,
+  };
 }
 
 class PathError extends PathState {
@@ -42,8 +51,5 @@ class PathError extends PathState {
   List<Object?> get props => [message];
 
   @override
-  Map<String, dynamic> toDiffMap() => {
-        ...super.toDiffMap(),
-        'error': message,
-      };
+  Map<String, dynamic> toDiffMap() => {...super.toDiffMap(), 'error': message};
 }

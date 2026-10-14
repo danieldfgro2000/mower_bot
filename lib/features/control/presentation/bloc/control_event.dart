@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 
@@ -10,8 +9,6 @@ abstract class ControlEvent extends Equatable {
 }
 
 class CheckConnectionStatus extends ControlEvent {}
-
-class GetVideoStreamUrl extends ControlEvent {}
 
 class StartTelemetryStream extends ControlEvent {}
 
@@ -27,9 +24,7 @@ class TelemetryDataReceived extends ControlEvent {
 class DriveCommand extends ControlEvent {
   final bool isMoving;
 
-  const DriveCommand({
-    required this.isMoving,
-  });
+  const DriveCommand({required this.isMoving});
 
   @override
   List<Object?> get props => [isMoving];
@@ -38,9 +33,7 @@ class DriveCommand extends ControlEvent {
 class RunCommand extends ControlEvent {
   final bool isRunning;
 
-  const RunCommand({
-    required this.isRunning,
-  });
+  const RunCommand({required this.isRunning});
 
   @override
   List<Object?> get props => [isRunning];
@@ -49,22 +42,10 @@ class RunCommand extends ControlEvent {
 class SteerCommand extends ControlEvent {
   final double angle;
 
-  const SteerCommand({
-    required this.angle,
-  });
+  const SteerCommand({required this.angle});
 
   @override
   List<Object?> get props => [angle];
-}
-
-class StartRecord extends ControlEvent {}
-
-class StopRecord extends ControlEvent {
-  final String fileName;
-  const StopRecord({required this.fileName});
-
-  @override
-  List<Object?> get props => [fileName];
 }
 
 class EmergencyStop extends ControlEvent {}

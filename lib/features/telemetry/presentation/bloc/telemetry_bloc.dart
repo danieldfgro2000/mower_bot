@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
+import 'package:mower_bot/core/device/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
@@ -56,7 +56,11 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     _streamStarted = true;
     _observeTelemetrySubscription = _observeTelemetryStreamUseCase().listen(
       (telemetryData) => add(TelemetryReceived(telemetryData)),
-      onError: (error) => _addStreamError('Telemetry data stream', error),
+      onError: (error) => _addStreamError(
+        TelemetryStreamSource.telemetry,
+        'Telemetry data stream',
+        error,
+      ),
     );
     _observeTelemetryStatusSubscription = _observeTelemetryStatusUseCase()
         .listen(
@@ -67,7 +71,11 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
               ok: status.telemetryAge.ok,
             ),
           ),
-          onError: (error) => _addStreamError('Telemetry status stream', error),
+          onError: (error) => _addStreamError(
+            TelemetryStreamSource.status,
+            'Telemetry status stream',
+            error,
+          ),
         );
   }
 
@@ -84,33 +92,66 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     TelemetryReceived event,
     Emitter<TelemetryState> emit,
   ) {
-    emit(TelemetryLoaded(event.telemetry));
+    final current = _activeState;
+    emit(
+      TelemetryActive(
+        telemetry: event.telemetry,
+        received: current?.received,
+        ageMs: current?.ageMs,
+        ok: current?.ok,
+        statusError: current?.statusError,
+      ),
+    );
   }
 
   void _onTelemetryStreamFailed(
     TelemetryStreamFailed event,
     Emitter<TelemetryState> emit,
   ) {
-    emit(TelemetryError(event.error));
+    final current = _activeState;
+    emit(
+      TelemetryActive(
+        telemetry: current?.telemetry,
+        received: current?.received,
+        ageMs: current?.ageMs,
+        ok: current?.ok,
+        telemetryError: event.source == TelemetryStreamSource.telemetry
+            ? event.error
+            : current?.telemetryError,
+        statusError: event.source == TelemetryStreamSource.status
+            ? event.error
+            : current?.statusError,
+      ),
+    );
   }
 
-  void _addStreamError(String source, Object error) {
+  void _addStreamError(
+    TelemetryStreamSource stream,
+    String source,
+    Object error,
+  ) {
     if (isClosed) return;
-    add(TelemetryStreamFailed('$source: $error'));
+    add(TelemetryStreamFailed('$source: $error', source: stream));
   }
 
   void _onMegaTelemetryStatusUpdated(
     MegaTelemetryStatusUpdated event,
     Emitter<TelemetryState> emit,
   ) {
+    final current = _activeState;
     emit(
-      MegaTelemetryStatus(
+      TelemetryActive(
+        telemetry: current?.telemetry,
         received: event.received,
         ageMs: event.ageMs,
         ok: event.ok,
+        telemetryError: current?.telemetryError,
       ),
     );
   }
+
+  TelemetryActive? get _activeState =>
+      state is TelemetryActive ? state as TelemetryActive : null;
 
   Future<void> _stopRepositoryStream() async {
     if (!_streamStarted) return;

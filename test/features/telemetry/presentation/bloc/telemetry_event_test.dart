@@ -23,13 +23,18 @@ void main() {
       expect(e.props, [t]);
     });
 
-    test('TelemetryStreamFailed includes its error in props', () {
+    test('TelemetryStreamFailed includes its error and source in props', () {
       final e = TelemetryStreamFailed('stream failed');
-      expect(e.props, ['stream failed']);
+
+      expect(e.props, ['stream failed', TelemetryStreamSource.telemetry]);
     });
 
     test('MegaTelemetryStatusUpdated includes all fields in props', () {
-      final e = MegaTelemetryStatusUpdated(received: true, ageMs: 10, ok: false);
+      final e = MegaTelemetryStatusUpdated(
+        received: true,
+        ageMs: 10,
+        ok: false,
+      );
       expect(e.props, [true, 10, false]);
     });
   });

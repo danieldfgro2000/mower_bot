@@ -1,18 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:mower_bot/core/device/model/connection_status.dart';
+
 import '../../../../core/diffable_state.dart';
 
-enum ConnectionStatus{
-  disconnected,
-  connecting,
-  ctrlWsConnected,
-  videoWsConnected,
-  hostUnreachable,
-  error
-}
+export 'package:mower_bot/core/device/model/connection_status.dart';
 
 enum ESP32WiFiMode { client, ap }
 
-enum WifiScanStatus { idle, scanning, needsPermission, completed, timeout, failed }
+enum WifiScanStatus {
+  idle,
+  scanning,
+  needsPermission,
+  completed,
+  timeout,
+  failed,
+}
 
 class MowerConnectionState extends Equatable implements DiffableState {
   final ConnectionStatus connectionStatus;
@@ -65,26 +67,26 @@ class MowerConnectionState extends Equatable implements DiffableState {
 
   @override
   List<Object?> get props => [
-        connectionStatus,
-        wifiMode,
-        wifiScanStatus,
-        ip,
-        port,
-        error,
-        detectedApSsid,
-        apSsid,
-        apPassword,
-      ];
+    connectionStatus,
+    wifiMode,
+    wifiScanStatus,
+    ip,
+    port,
+    error,
+    detectedApSsid,
+    apSsid,
+    apPassword,
+  ];
 
   @override
   Map<String, dynamic> toDiffMap() => {
-        'status': connectionStatus,
-        'wifiMode': wifiMode,
-        'wifiScanStatus': wifiScanStatus,
-        'ip': ip,
-        'port': port,
-        'error': error,
-        'detectedApSsid': detectedApSsid,
-        'apSsid': apSsid,
-      };
+    'status': connectionStatus,
+    'wifiMode': wifiMode,
+    'wifiScanStatus': wifiScanStatus,
+    'ip': ip,
+    'port': port,
+    'error': error,
+    'detectedApSsid': detectedApSsid,
+    'apSsid': apSsid,
+  };
 }

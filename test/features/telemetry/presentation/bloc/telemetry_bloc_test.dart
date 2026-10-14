@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
-import 'package:mower_bot/features/connection/domain/model/telemetry_age_model.dart';
-import 'package:mower_bot/features/connection/domain/model/wifi_info_model.dart';
-import 'package:mower_bot/features/connection/domain/model/ws_info_model.dart';
+import 'package:mower_bot/core/device/model/mower_status_model.dart';
+import 'package:mower_bot/core/device/model/telemetry_age_model.dart';
+import 'package:mower_bot/core/device/model/wifi_info_model.dart';
+import 'package:mower_bot/core/device/model/ws_info_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
@@ -17,9 +17,13 @@ import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_state.d
 import 'package:mocktail/mocktail.dart';
 
 class _MockStart extends Mock implements StartTelemetryStreamUseCase {}
+
 class _MockStop extends Mock implements StopTelemetryStreamUseCase {}
+
 class _MockObserve extends Mock implements ObserverTelemetryUseCase {}
-class _MockObserveStatus extends Mock implements ObserverTelemetryStatusUseCase {}
+
+class _MockObserveStatus extends Mock
+    implements ObserverTelemetryStatusUseCase {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -42,31 +46,35 @@ void main() {
     });
 
     blocTest<TelemetryBloc, TelemetryState>(
-      'emits Loading then Loaded when telemetry stream emits',
+      'emits Loading then Active when telemetry stream emits',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
         when(() => observe()).thenAnswer(
-          (_) => Stream<TelemetryDataModel>.fromIterable(
-            const [
-              TelemetryDataModel(
-                wheelAngle: 1,
-                opticalAngle: 2,
-                distanceTraveled: 3,
-                speed: 4,
-                actuatorDrive: true,
-                actuatorStart: false,
-              ),
-            ],
-          ),
+          (_) => Stream<TelemetryDataModel>.fromIterable(const [
+            TelemetryDataModel(
+              wheelAngle: 1,
+              opticalAngle: 2,
+              distanceTraveled: 3,
+              speed: 4,
+              actuatorDrive: true,
+              actuatorStart: false,
+            ),
+          ]),
         );
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
 
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) => bloc.add(StartTelemetry()),
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<TelemetryLoaded>(),
+        isA<TelemetryActive>().having(
+          (state) => state.telemetry,
+          'telemetry',
+          isNotNull,
+        ),
       ],
     );
 
@@ -76,24 +84,29 @@ void main() {
         when(() => start.call()).thenAnswer((_) async {
           throw StateError('boom');
         });
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) => bloc.add(StartTelemetry()),
       wait: const Duration(milliseconds: 10),
-      expect: () => [
-        isA<TelemetryLoading>(),
-        isA<TelemetryError>(),
-      ],
+      expect: () => [isA<TelemetryLoading>(), isA<TelemetryError>()],
     );
 
     blocTest<TelemetryBloc, TelemetryState>(
-      'emits MegaTelemetryStatus when status stream emits',
+      'emits TelemetryActive when status stream emits',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
 
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
@@ -101,16 +114,71 @@ void main() {
         bloc.add(StartTelemetry());
         await Future<void>.delayed(const Duration(milliseconds: 5));
         bloc.add(
-          MegaTelemetryStatusUpdated(
-            received: true,
-            ageMs: 2,
-            ok: true,
-          ),
+          MegaTelemetryStatusUpdated(received: true, ageMs: 2, ok: true),
         );
+      },
+      expect: () => [isA<TelemetryLoading>(), isA<TelemetryActive>()],
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
+      'retains telemetry and freshness when a stream error arrives',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      act: (bloc) async {
+        bloc.add(StartTelemetry());
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        bloc
+          ..add(TelemetryReceived(_telemetrySample))
+          ..add(MegaTelemetryStatusUpdated(received: true, ageMs: 25, ok: true))
+          ..add(
+            TelemetryStreamFailed(
+              'Telemetry status stream: unavailable',
+              source: TelemetryStreamSource.status,
+            ),
+          );
       },
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<MegaTelemetryStatus>(),
+        isA<TelemetryState>().having(
+          (state) => state.toDiffMap()['wheelAngle'],
+          'wheel angle',
+          1.0,
+        ),
+        isA<TelemetryState>()
+            .having(
+              (state) => state.toDiffMap()['wheelAngle'],
+              'retained wheel angle',
+              1.0,
+            )
+            .having(
+              (state) => state.toDiffMap()['received'],
+              'freshness received',
+              isTrue,
+            ),
+        isA<TelemetryState>()
+            .having(
+              (state) => state.toDiffMap()['wheelAngle'],
+              'retained wheel angle',
+              1.0,
+            )
+            .having(
+              (state) => state.toDiffMap()['received'],
+              'retained freshness',
+              isTrue,
+            )
+            .having(
+              (state) => state.toDiffMap()['error'],
+              'stream error',
+              contains('unavailable'),
+            ),
       ],
     );
 
@@ -118,7 +186,9 @@ void main() {
       'preserves positive and zero telemetry age in milliseconds',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer(
           (_) => Stream<MowerStatusModel>.fromIterable([
             _statusWithAge(120000),
@@ -130,12 +200,8 @@ void main() {
       act: (bloc) => bloc.add(StartTelemetry()),
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<MegaTelemetryStatus>().having(
-          (state) => state.ageMs,
-          'ageMs',
-          120000,
-        ),
-        isA<MegaTelemetryStatus>().having((state) => state.ageMs, 'ageMs', 0),
+        isA<TelemetryActive>().having((state) => state.ageMs, 'ageMs', 120000),
+        isA<TelemetryActive>().having((state) => state.ageMs, 'ageMs', 0),
       ],
     );
 
@@ -143,7 +209,9 @@ void main() {
       'preserves absent telemetry age separately from measured zero',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer(
           (_) => Stream<MowerStatusModel>.value(_statusWithAge(null)),
         );
@@ -152,11 +220,7 @@ void main() {
       act: (bloc) => bloc.add(StartTelemetry()),
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<MegaTelemetryStatus>().having(
-          (state) => state.ageMs,
-          'ageMs',
-          isNull,
-        ),
+        isA<TelemetryActive>().having((state) => state.ageMs, 'ageMs', isNull),
       ],
     );
 
@@ -164,8 +228,12 @@ void main() {
       'StopTelemetry cancels subscriptions and returns to initial',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) async {
@@ -174,10 +242,7 @@ void main() {
         bloc.add(StopTelemetry());
       },
       wait: const Duration(milliseconds: 5),
-      expect: () => [
-        isA<TelemetryLoading>(),
-        isA<TelemetryInitial>(),
-      ],
+      expect: () => [isA<TelemetryLoading>(), isA<TelemetryInitial>()],
       verify: (_) {
         verify(() => stop.call()).called(1);
       },
@@ -187,8 +252,12 @@ void main() {
       'repeated starts retain one repository start and observer set',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) {
@@ -236,10 +305,7 @@ void main() {
         );
       },
       wait: const Duration(milliseconds: 5),
-      expect: () => [
-        isA<TelemetryLoading>(),
-        isA<TelemetryInitial>(),
-      ],
+      expect: () => [isA<TelemetryLoading>(), isA<TelemetryInitial>()],
       verify: (_) {
         verify(() => stop.call()).called(1);
       },
@@ -250,11 +316,13 @@ void main() {
     );
 
     blocTest<TelemetryBloc, TelemetryState>(
-      'emits Error when the telemetry data stream fails',
+      'retains active state when the telemetry data stream fails',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
         when(() => observe()).thenAnswer((_) => telemetryController.stream);
-        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        when(
+          () => observeStatus(),
+        ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
       setUp: () {
@@ -268,8 +336,8 @@ void main() {
       wait: const Duration(milliseconds: 5),
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<TelemetryError>().having(
-          (state) => state.error,
+        isA<TelemetryActive>().having(
+          (state) => state.telemetryError,
           'error',
           contains('telemetry stream failed'),
         ),
@@ -278,10 +346,12 @@ void main() {
     );
 
     blocTest<TelemetryBloc, TelemetryState>(
-      'emits Error when the telemetry status stream fails',
+      'retains active state when the telemetry status stream fails',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
-        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(
+          () => observe(),
+        ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer((_) => statusController.stream);
         return TelemetryBloc(start, stop, observe, observeStatus);
       },
@@ -296,8 +366,8 @@ void main() {
       wait: const Duration(milliseconds: 5),
       expect: () => [
         isA<TelemetryLoading>(),
-        isA<TelemetryError>().having(
-          (state) => state.error,
+        isA<TelemetryActive>().having(
+          (state) => state.statusError,
           'error',
           contains('status stream failed'),
         ),
@@ -307,8 +377,12 @@ void main() {
 
     test('close stops the repository telemetry stream', () async {
       when(() => start.call()).thenAnswer((_) async {});
-      when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
-      when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+      when(
+        () => observe(),
+      ).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+      when(
+        () => observeStatus(),
+      ).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
       final bloc = TelemetryBloc(start, stop, observe, observeStatus);
       bloc.add(StartTelemetry());
       await Future<void>.delayed(const Duration(milliseconds: 5));
@@ -321,8 +395,17 @@ void main() {
 }
 
 MowerStatusModel _statusWithAge(int? ageMs) => MowerStatusModel(
-      uptimeMs: 1,
-      wifi: const WiFiInfoModel(connected: true, ip: '192.168.4.1'),
-      ws: const WsInfoModel(clients: 1),
-      telemetryAge: TelemetryAgeModel(received: true, ageMs: ageMs, ok: true),
-    );
+  uptimeMs: 1,
+  wifi: const WiFiInfoModel(connected: true, ip: '192.168.4.1'),
+  ws: const WsInfoModel(clients: 1),
+  telemetryAge: TelemetryAgeModel(received: true, ageMs: ageMs, ok: true),
+);
+
+const _telemetrySample = TelemetryDataModel(
+  wheelAngle: 1,
+  opticalAngle: 2,
+  distanceTraveled: 3,
+  speed: 4,
+  actuatorDrive: true,
+  actuatorStart: false,
+);

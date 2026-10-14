@@ -81,7 +81,7 @@ void main() {
         },
       );
 
-      // Reconnect callback is scheduled via Future.delayed.
+      // Reconnect callback is scheduled asynchronously.
       await Future<void>.delayed(Duration.zero);
 
       expect(statuses, contains(ConnectionStatus.hostUnreachable));
@@ -195,6 +195,117 @@ void main() {
       expect(errors.any((e) => e.contains('Max reconnect attempts reached')), isTrue);
     });
 
+    test('remote close of an established socket schedules reconnect', () async {
+      final (server, uri) = await _startWsServer(
+        onClient: (ws) => ws.close(),
+      );
+      addTearDown(() async => server.close(force: true));
+      var reconnectCalled = 0;
+      final statuses = <ConnectionStatus>[];
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: false,
+          retry1sec: Duration.zero,
+          retry5sec: Duration.zero,
+          max5attempts: 1,
+        ),
+        tcpProbe: (_) async => true,
+      );
+      addTearDown(adapter.dispose);
+
+      await adapter.openWebsocketChannel(
+        uri: uri,
+        onError: (_, [__]) {},
+        onConnectionChanged: statuses.add,
+        onReconnect: () => reconnectCalled++,
+      );
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+
+      expect(statuses, contains(ConnectionStatus.disconnected));
+      expect(reconnectCalled, 1);
+    });
+
+    test('manual close of an established socket does not reconnect', () async {
+      final connected = Completer<void>();
+      final (server, uri) = await _startWsServer(onClient: (ws) async {
+        connected.complete();
+        await ws.done;
+      });
+      addTearDown(() async => server.close(force: true));
+      var reconnectCalled = 0;
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: false,
+          retry1sec: Duration.zero,
+          retry5sec: Duration.zero,
+        ),
+        tcpProbe: (_) async => true,
+      );
+      addTearDown(adapter.dispose);
+
+      await adapter.openWebsocketChannel(
+        uri: uri,
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => reconnectCalled++,
+      );
+      await connected.future;
+      await adapter.close(manuallyClosed: true);
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+
+      expect(reconnectCalled, 0);
+    });
+
+    test('closure from a replaced socket cannot close the active session', () async {
+      final firstClient = Completer<WebSocket>();
+      final secondClient = Completer<WebSocket>();
+      final (firstServer, firstUri) = await _startWsServer(onClient: (ws) async {
+        firstClient.complete(ws);
+        await ws.done;
+      });
+      final (secondServer, secondUri) = await _startWsServer(onClient: (ws) async {
+        secondClient.complete(ws);
+        await ws.done;
+      });
+      addTearDown(() async {
+        await firstServer.close(force: true);
+        await secondServer.close(force: true);
+      });
+      var staleReconnects = 0;
+      var activeReconnects = 0;
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: false,
+          retry1sec: Duration.zero,
+          retry5sec: Duration.zero,
+        ),
+        tcpProbe: (_) async => true,
+      );
+      addTearDown(adapter.dispose);
+
+      await adapter.openWebsocketChannel(
+        uri: firstUri,
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => staleReconnects++,
+      );
+      final replacedSocket = await firstClient.future;
+      await adapter.openWebsocketChannel(
+        uri: secondUri,
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => activeReconnects++,
+      );
+      await secondClient.future;
+
+      await replacedSocket.close();
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+
+      expect(adapter.isOpen, isTrue);
+      expect(staleReconnects, 0);
+      expect(activeReconnects, 0);
+    });
+
     test('connects and emits decoded json; reports decode errors', () async {
       final (server, uri) = await _startWsServer(onClient: (ws) async {
         ws.add(jsonEncode({'a': 1}));
@@ -207,6 +318,7 @@ void main() {
         config: const WebSocketConfig(enableReachability: false),
         tcpProbe: (_) async => true,
       );
+      addTearDown(adapter.dispose);
 
       final received = <Map<String, dynamic>>[];
       final errors = <String>[];
@@ -241,6 +353,7 @@ void main() {
         config: const WebSocketConfig(enableReachability: false),
         tcpProbe: (_) async => true,
       );
+      addTearDown(adapter.dispose);
 
       final jsonReceived = <Map<String, dynamic>>[];
       final binReceived = <Uint8List>[];

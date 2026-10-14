@@ -7,11 +7,7 @@ void main() {
 
   testWidgets('InfoWidget renders key instructions', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(
-          body: InfoWidget(),
-        ),
-      ),
+      const MaterialApp(home: Scaffold(body: InfoWidget())),
     );
 
     expect(find.textContaining('manual confirm'), findsOneWidget);
@@ -21,4 +17,3 @@ void main() {
     expect(find.textContaining('Connected'), findsOneWidget);
   });
 }
-

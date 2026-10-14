@@ -61,13 +61,40 @@ class _PathsPageState extends State<PathsPage> {
     return BlocBuilder<PathBloc, PathState>(
       builder: (context, state) {
         return switch (state) {
-          PathInitial() || PathLoading() =>
-            const Center(child: CircularProgressIndicator()),
-          PathLoaded() when state.paths.isEmpty =>
-            const Center(child: Text('No saved paths')),
-          PathLoaded() => Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: ListView.builder(
+          PathInitial() ||
+          PathLoading() => const Center(child: CircularProgressIndicator()),
+          PathLoaded() => _PathList(state: state, pathsBloc: pathsBloc),
+          PathError() => Center(child: Text('Error: ${state.message}')),
+          _ => const SizedBox.shrink(),
+        };
+      },
+    );
+  }
+}
+
+class _PathList extends StatelessWidget {
+  final PathLoaded state;
+  final PathBloc pathsBloc;
+
+  const _PathList({required this.state, required this.pathsBloc});
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      if (state.errorMessage case final error?)
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(error, style: const TextStyle(color: Colors.red)),
+        ),
+      if (state.commandMessage case final message?)
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(message, style: const TextStyle(color: Colors.amber)),
+        ),
+      Expanded(
+        child: state.paths.isEmpty
+            ? const Center(child: Text('No saved paths'))
+            : ListView.builder(
                 itemCount: state.paths.length,
                 itemBuilder: (context, index) {
                   final name = state.paths[index];
@@ -82,7 +109,9 @@ class _PathsPageState extends State<PathsPage> {
                             onPressed: () => isActive
                                 ? pathsBloc.add(StopPath(name))
                                 : pathsBloc.add(PlayPath(name)),
-                            icon: Icon(isActive ? Icons.stop : Icons.play_arrow),
+                            icon: Icon(
+                              isActive ? Icons.stop : Icons.play_arrow,
+                            ),
                           ),
                           IconButton(
                             onPressed: () =>
@@ -95,17 +124,10 @@ class _PathsPageState extends State<PathsPage> {
                   );
                 },
               ),
-            ),
-          PathError() => Center(child: Text('Error: ${state.message}')),
-          _ => const SizedBox.shrink(),
-        };
-      },
-    );
-  }
+      ),
+    ],
+  );
 }
-
-// ── dialogs ──────────────────────────────────────────────────
-
 
 void _confirmDelete(BuildContext context, String name, PathBloc pathsBloc) {
   showCupertinoDialog(

@@ -1,4 +1,4 @@
-import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
+import 'package:mower_bot/core/device/model/mower_status_model.dart';
 import 'package:mower_bot/features/telemetry/domain/repository/telemetry_repository.dart';
 
 class ObserverTelemetryStatusUseCase {

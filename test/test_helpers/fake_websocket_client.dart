@@ -15,7 +15,8 @@ class FakeWebSocketClient implements IWebSocketClient {
 
   bool _isConnected = false;
 
-  final StreamController<JsonMap> _messagesCtrl = StreamController<JsonMap>.broadcast();
+  final StreamController<JsonMap> _messagesCtrl =
+      StreamController<JsonMap>.broadcast();
   final StreamController<ConnectionStatus> _connectionCtrl =
       StreamController<ConnectionStatus>.broadcast();
 
@@ -45,16 +46,20 @@ class FakeWebSocketClient implements IWebSocketClient {
   }
 
   @override
-  void send(JsonMap message) {
+  bool send(JsonMap message) {
+    if (!isConnected) return false;
     sent.add(message);
+    return true;
   }
 
   void emitMessage(JsonMap message) => _messagesCtrl.add(message);
 
-  void emitMessageError(Object error, [StackTrace? st]) => _messagesCtrl.addError(error, st);
+  void emitMessageError(Object error, [StackTrace? st]) =>
+      _messagesCtrl.addError(error, st);
 
   void emitConnection(ConnectionStatus status) {
-    if (status == ConnectionStatus.ctrlWsConnected || status == ConnectionStatus.videoWsConnected) {
+    if (status == ConnectionStatus.ctrlWsConnected ||
+        status == ConnectionStatus.videoWsConnected) {
       _isConnected = true;
     }
     if (status == ConnectionStatus.disconnected) {
@@ -64,9 +69,8 @@ class FakeWebSocketClient implements IWebSocketClient {
   }
 
   @override
-  void dispose() {
-    _messagesCtrl.close();
-    _connectionCtrl.close();
+  Future<void> dispose() async {
+    await _messagesCtrl.close();
+    await _connectionCtrl.close();
   }
 }
-

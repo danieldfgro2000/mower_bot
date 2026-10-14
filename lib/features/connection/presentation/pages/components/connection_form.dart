@@ -31,7 +31,9 @@ class _ConnectionFormState extends State<ConnectionForm> {
     final bloc = context.read<MowerConnectionBloc>();
     final s = bloc.state;
 
-    final defaultIp = s.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
+    final defaultIp = s.wifiMode == ESP32WiFiMode.ap
+        ? _apDefaultIp
+        : _clientDefaultIp;
 
     ipController = TextEditingController(text: s.ip ?? defaultIp);
     portController = TextEditingController(text: (s.port?.toString() ?? '85'));
@@ -61,19 +63,29 @@ class _ConnectionFormState extends State<ConnectionForm> {
   Widget build(BuildContext context) {
     final bloc = context.read<MowerConnectionBloc>();
     final isBusy = context.select(
-      (MowerConnectionBloc bloc) => bloc.state.connectionStatus == ConnectionStatus.connecting,
+      (MowerConnectionBloc bloc) =>
+          bloc.state.connectionStatus == ConnectionStatus.connecting,
     );
 
-    final wifiMode = context.select((MowerConnectionBloc b) => b.state.wifiMode);
+    final wifiMode = context.select(
+      (MowerConnectionBloc b) => b.state.wifiMode,
+    );
 
     return BlocListener<MowerConnectionBloc, MowerConnectionState>(
       listenWhen: (p, n) => p.wifiMode != n.wifiMode,
       listener: (context, state) {
         final currentText = ipController.text.trim();
-        final nextDefault = state.wifiMode == ESP32WiFiMode.ap ? _apDefaultIp : _clientDefaultIp;
-        final otherDefault = state.wifiMode == ESP32WiFiMode.ap ? _clientDefaultIp : _apDefaultIp;
+        final nextDefault = state.wifiMode == ESP32WiFiMode.ap
+            ? _apDefaultIp
+            : _clientDefaultIp;
+        final otherDefault = state.wifiMode == ESP32WiFiMode.ap
+            ? _clientDefaultIp
+            : _apDefaultIp;
 
-        if (currentText.isEmpty || currentText == otherDefault || currentText == _clientDefaultIp || currentText == _apDefaultIp) {
+        if (currentText.isEmpty ||
+            currentText == otherDefault ||
+            currentText == _clientDefaultIp ||
+            currentText == _apDefaultIp) {
           ipController.text = nextDefault;
           bloc.add(ChangeIp(nextDefault));
         }
@@ -102,7 +114,9 @@ class _ConnectionFormState extends State<ConnectionForm> {
                   labelText: 'Mower Wi‑Fi Password',
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
-                    tooltip: _showApPassword ? 'Hide password' : 'Show password',
+                    tooltip: _showApPassword
+                        ? 'Hide password'
+                        : 'Show password',
                     onPressed: isBusy
                         ? null
                         : () {

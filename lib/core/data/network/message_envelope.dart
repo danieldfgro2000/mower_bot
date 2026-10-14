@@ -40,10 +40,7 @@ class MessageEnvelope {
   final MessageTopic topic;
   final Map<String, dynamic> data;
 
-  MessageEnvelope({
-    required this.topic,
-    required this.data,
-  });
+  MessageEnvelope({required this.topic, required this.data});
 
   factory MessageEnvelope.fromJson(Map<String, dynamic> json) {
     return MessageEnvelope(
@@ -53,10 +50,7 @@ class MessageEnvelope {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'topic': topic.name,
-      'data': data,
-    };
+    return {'topic': topic.name, 'data': data};
   }
 
   @override

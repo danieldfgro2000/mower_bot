@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mower_bot/core/di/injection_container.dart';
 import 'package:mower_bot/core/platform/permission_rationale_store.dart';
-import 'package:mower_bot/core/platform/wifi_scan.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart'
     hide WifiScanFailed;
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
 import 'package:mower_bot/features/connection/presentation/pages/connection_page.dart';
 import 'package:mower_bot/features/connection/presentation/pages/components/connection_button.dart';
+import 'package:mower_bot/features/connection/presentation/widgets/wifi_scan.dart';
 
-class _MockConnectionBloc extends MockBloc<MowerConnectionEvent, MowerConnectionState>
+class _MockConnectionBloc
+    extends MockBloc<MowerConnectionEvent, MowerConnectionState>
     implements MowerConnectionBloc {}
 
-class _MockPermissionRationaleStore extends Mock implements PermissionRationaleStore {}
+class _MockPermissionRationaleStore extends Mock
+    implements PermissionRationaleStore {}
 
 class _FakeMowerConnectionEvent extends Fake implements MowerConnectionEvent {}
 
@@ -35,19 +36,8 @@ void main() {
       bloc = _MockConnectionBloc();
       store = _MockPermissionRationaleStore();
 
-      if (sl.isRegistered<PermissionRationaleStore>()) {
-        sl.unregister<PermissionRationaleStore>();
-      }
-      sl.registerLazySingleton<PermissionRationaleStore>(() => store);
-
       when(() => store.wasShown(any())).thenAnswer((_) async => true);
       when(() => store.markShown(any())).thenAnswer((_) async {});
-    });
-
-    tearDown(() {
-      if (sl.isRegistered<PermissionRationaleStore>()) {
-        sl.unregister<PermissionRationaleStore>();
-      }
     });
 
     testWidgets(
@@ -68,7 +58,9 @@ void main() {
           MaterialApp(
             home: BlocProvider<MowerConnectionBloc>.value(
               value: bloc,
-              child: const Scaffold(body: ConnectionPage()),
+              child: Scaffold(
+                body: ConnectionPage(permissionRationaleStore: store),
+              ),
             ),
           ),
         );
@@ -81,9 +73,13 @@ void main() {
       },
     );
 
-    testWidgets('shows WifiScanLoading when wifiScanStatus=scanning', (tester) async {
+    testWidgets('shows WifiScanLoading when wifiScanStatus=scanning', (
+      tester,
+    ) async {
       final base = const MowerConnectionState();
-      when(() => bloc.state).thenReturn(base.copyWith(wifiScanStatus: WifiScanStatus.scanning));
+      when(
+        () => bloc.state,
+      ).thenReturn(base.copyWith(wifiScanStatus: WifiScanStatus.scanning));
       whenListen(
         bloc,
         Stream.fromIterable([
@@ -96,7 +92,9 @@ void main() {
         MaterialApp(
           home: BlocProvider<MowerConnectionBloc>.value(
             value: bloc,
-            child: const Scaffold(body: ConnectionPage()),
+            child: Scaffold(
+              body: ConnectionPage(permissionRationaleStore: store),
+            ),
           ),
         ),
       );
@@ -112,22 +110,31 @@ void main() {
       }
     });
 
-    testWidgets('shows WifiScanFailed when wifiScanStatus=failed', (tester) async {
+    testWidgets('shows WifiScanFailed when wifiScanStatus=failed', (
+      tester,
+    ) async {
       final base = const MowerConnectionState();
-      when(() => bloc.state).thenReturn(base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'));
+      when(() => bloc.state).thenReturn(
+        base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
+      );
       whenListen(
         bloc,
         Stream.fromIterable([
           base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
         ]),
-        initialState: base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
+        initialState: base.copyWith(
+          wifiScanStatus: WifiScanStatus.failed,
+          error: 'boom',
+        ),
       );
 
       await tester.pumpWidget(
         MaterialApp(
           home: BlocProvider<MowerConnectionBloc>.value(
             value: bloc,
-            child: const Scaffold(body: ConnectionPage()),
+            child: Scaffold(
+              body: ConnectionPage(permissionRationaleStore: store),
+            ),
           ),
         ),
       );
@@ -145,106 +152,129 @@ void main() {
       }
     });
 
-    testWidgets('WifiScanFailed retry/continue buttons dispatch expected events (Android-only UI)',
-        (tester) async {
-      final base = const MowerConnectionState();
-      when(() => bloc.state).thenReturn(base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'));
-      whenListen(
-        bloc,
-        Stream.fromIterable([
+    testWidgets(
+      'WifiScanFailed retry/continue buttons dispatch expected events (Android-only UI)',
+      (tester) async {
+        final base = const MowerConnectionState();
+        when(() => bloc.state).thenReturn(
           base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
-        ]),
-        initialState: base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
-      );
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: BlocProvider<MowerConnectionBloc>.value(
-            value: bloc,
-            child: const Scaffold(body: ConnectionPage()),
+        );
+        whenListen(
+          bloc,
+          Stream.fromIterable([
+            base.copyWith(wifiScanStatus: WifiScanStatus.failed, error: 'boom'),
+          ]),
+          initialState: base.copyWith(
+            wifiScanStatus: WifiScanStatus.failed,
+            error: 'boom',
           ),
-        ),
-      );
+        );
 
-      await tester.pump();
-
-      if (find.byType(WifiScanFailed).evaluate().isEmpty) {
-        // Non-Android host environment: can't assert button->event wiring.
-        return;
-      }
-
-      await tester.tap(find.text('Retry'));
-      await tester.pump();
-      verify(() => bloc.add(const AutoDetectWifiMode())).called(1);
-
-      await tester.tap(find.text('Continue without scan'));
-      await tester.pump();
-      verify(() => bloc.add(const ChangeWiFiMode(ESP32WiFiMode.client))).called(1);
-    });
-
-    testWidgets('ConnectionButton label toggles between connect and disconnect based on connectionStatus',
-        (tester) async {
-      // Testing ConnectionButton in isolation avoids ConnectionPage platform-conditional branches.
-      final base = const MowerConnectionState(ip: '1.2.3.4', port: 85);
-      final connected = base.copyWith(status: ConnectionStatus.ctrlWsConnected);
-
-      final formKey = GlobalKey<FormState>();
-
-      // 1) Disconnected: should dispatch Connect event
-      when(() => bloc.state).thenReturn(base);
-      when(() => bloc.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: BlocProvider<MowerConnectionBloc>.value(
-            value: bloc,
-            child: Scaffold(
-              body: ConnectionButton(formKey: formKey),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: BlocProvider<MowerConnectionBloc>.value(
+              value: bloc,
+              child: Scaffold(
+                body: ConnectionPage(permissionRationaleStore: store),
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      final buttonFinder = find.byWidgetPredicate(
-        (w) => w is FilledButton,
-        description: 'FilledButton',
-      );
-      expect(buttonFinder, findsOneWidget);
-      await tester.tap(buttonFinder);
-      await tester.pump();
-      verify(() => bloc.add(any(that: isA<ConnectToControlWebsocketMower>()))).called(1);
+        await tester.pump();
 
-      // 2) Connected: use a fresh bloc instance to avoid any lingering widget subscriptions.
-      final bloc2 = _MockConnectionBloc();
-      when(() => bloc2.state).thenReturn(connected);
-      when(() => bloc2.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+        if (find.byType(WifiScanFailed).evaluate().isEmpty) {
+          // Non-Android host environment: can't assert button->event wiring.
+          return;
+        }
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: BlocProvider<MowerConnectionBloc>.value(
-            value: bloc2,
-            child: Scaffold(
-              body: ConnectionButton(formKey: formKey),
+        await tester.tap(find.text('Retry'));
+        await tester.pump();
+        verify(() => bloc.add(const AutoDetectWifiMode())).called(1);
+
+        await tester.tap(find.text('Continue without scan'));
+        await tester.pump();
+        verify(
+          () => bloc.add(const ChangeWiFiMode(ESP32WiFiMode.client)),
+        ).called(1);
+      },
+    );
+
+    testWidgets(
+      'ConnectionButton label toggles between connect and disconnect based on connectionStatus',
+      (tester) async {
+        // Testing ConnectionButton in isolation avoids ConnectionPage platform-conditional branches.
+        final base = const MowerConnectionState(ip: '1.2.3.4', port: 85);
+        final connected = base.copyWith(
+          status: ConnectionStatus.ctrlWsConnected,
+        );
+
+        final formKey = GlobalKey<FormState>();
+
+        // 1) Disconnected: should dispatch Connect event
+        when(() => bloc.state).thenReturn(base);
+        when(
+          () => bloc.stream,
+        ).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: BlocProvider<MowerConnectionBloc>.value(
+              value: bloc,
+              child: Scaffold(body: ConnectionButton(formKey: formKey)),
             ),
           ),
-        ),
-      );
+        );
 
-      final buttonFinder2 = find.byWidgetPredicate(
-        (w) => w is FilledButton,
-        description: 'FilledButton',
-      );
-      expect(buttonFinder2, findsOneWidget);
-      await tester.tap(buttonFinder2);
-      await tester.pump();
-      verify(() => bloc2.add(any(that: isA<DisconnectFromMower>()))).called(1);
-    });
+        final buttonFinder = find.byWidgetPredicate(
+          (w) => w is FilledButton,
+          description: 'FilledButton',
+        );
+        expect(buttonFinder, findsOneWidget);
+        await tester.tap(buttonFinder);
+        await tester.pump();
+        verify(
+          () => bloc.add(any(that: isA<ConnectToControlWebsocketMower>())),
+        ).called(1);
 
-    testWidgets('shows a SnackBar when error changes to a non-empty string', (tester) async {
+        // 2) Connected: use a fresh bloc instance to avoid any lingering widget subscriptions.
+        final bloc2 = _MockConnectionBloc();
+        when(() => bloc2.state).thenReturn(connected);
+        when(
+          () => bloc2.stream,
+        ).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: BlocProvider<MowerConnectionBloc>.value(
+              value: bloc2,
+              child: Scaffold(body: ConnectionButton(formKey: formKey)),
+            ),
+          ),
+        );
+
+        final buttonFinder2 = find.byWidgetPredicate(
+          (w) => w is FilledButton,
+          description: 'FilledButton',
+        );
+        expect(buttonFinder2, findsOneWidget);
+        await tester.tap(buttonFinder2);
+        await tester.pump();
+        verify(
+          () => bloc2.add(any(that: isA<DisconnectFromMower>())),
+        ).called(1);
+      },
+    );
+
+    testWidgets('shows a SnackBar when error changes to a non-empty string', (
+      tester,
+    ) async {
       final base = const MowerConnectionState(ip: '1.2.3.4', port: 85);
 
       when(() => bloc.state).thenReturn(base);
-      when(() => bloc.stream).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
+      when(
+        () => bloc.stream,
+      ).thenAnswer((_) => const Stream<MowerConnectionState>.empty());
 
       whenListen(
         bloc,
@@ -259,7 +289,9 @@ void main() {
         MaterialApp(
           home: BlocProvider<MowerConnectionBloc>.value(
             value: bloc,
-            child: const Scaffold(body: ConnectionPage()),
+            child: Scaffold(
+              body: ConnectionPage(permissionRationaleStore: store),
+            ),
           ),
         ),
       );

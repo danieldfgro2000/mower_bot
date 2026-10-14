@@ -6,6 +6,7 @@ import 'package:mower_bot/features/connection/domain/usecases/disconnect_ctrl_ws
 import 'package:mower_bot/core/platform/mower_reachability_service.dart';
 import 'package:mower_bot/core/platform/wifi_join_service.dart';
 import 'package:mower_bot/core/platform/wifi_scan_permission_service.dart';
+import 'package:mower_bot/core/platform/wifi_scanner.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 
 class MockMowerConnectionRepository extends Mock
@@ -25,8 +26,9 @@ class MockTelemetryBloc extends Mock implements TelemetryBloc {}
 class MockWifiScanPermissionService extends Mock
     implements WifiScanPermissionService {}
 
+class MockWifiScanner extends Mock implements WifiScanner {}
+
 class MockWifiJoinService extends Mock implements WifiJoinService {}
 
 class MockMowerReachabilityService extends Mock
     implements MowerReachabilityService {}
-

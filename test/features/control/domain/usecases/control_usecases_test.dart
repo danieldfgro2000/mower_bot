@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mower_bot/core/domain/command_submission_result.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 import 'package:mower_bot/features/control/domain/usecases/get_video_stream_url_use_case.dart';
 import 'package:mower_bot/features/control/domain/usecases/send_drive_command_use_case.dart';
@@ -25,26 +26,28 @@ void main() {
       verify(() => repo.videoStreamUrl).called(1);
     });
 
-    test('SendDriveCommandUseCase does not send when not connected and returns false', () async {
-      when(() => repo.isCtrlWsConnected).thenReturn(false);
+    test('SendDriveCommandUseCase returns disconnected outcome', () async {
+      when(
+        () => repo.sendDriveCommand(any()),
+      ).thenAnswer((_) async => CommandSubmissionResult.disconnected);
 
       final uc = SendDriveCommandUseCase(repo);
-      final ok = await uc({'cmd': 'x'});
+      final result = await uc({'cmd': 'x'});
 
-      expect(ok, isFalse);
-      verifyNever(() => repo.sendDriveCommand(any()));
+      expect(result, CommandSubmissionResult.disconnected);
+      verify(() => repo.sendDriveCommand({'cmd': 'x'})).called(1);
     });
 
-    test('SendDriveCommandUseCase sends when connected and returns true', () async {
-      when(() => repo.isCtrlWsConnected).thenReturn(true);
-      when(() => repo.sendDriveCommand(any())).thenAnswer((_) async {});
+    test('SendDriveCommandUseCase returns submitted outcome', () async {
+      when(
+        () => repo.sendDriveCommand(any()),
+      ).thenAnswer((_) async => CommandSubmissionResult.submitted);
 
       final uc = SendDriveCommandUseCase(repo);
-      final ok = await uc({'cmd': 'x'});
+      final result = await uc({'cmd': 'x'});
 
-      expect(ok, isTrue);
+      expect(result, CommandSubmissionResult.submitted);
       verify(() => repo.sendDriveCommand({'cmd': 'x'})).called(1);
     });
   });
 }
-

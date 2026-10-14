@@ -19,22 +19,24 @@ class _ConnectionButtonState extends State<ConnectionButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus || p.ip != n.ip || p.port != n.port,
+      buildWhen: (p, n) =>
+          p.connectionStatus != n.connectionStatus ||
+          p.ip != n.ip ||
+          p.port != n.port,
       builder: (context, state) {
         isBusy = state.connectionStatus == ConnectionStatus.connecting;
-        isConnected = state.connectionStatus == ConnectionStatus.ctrlWsConnected;
+        isConnected =
+            state.connectionStatus == ConnectionStatus.ctrlWsConnected;
 
         final icon = isConnected ? Icons.link_off : Icons.link;
-        final label = isConnected ? 'Disconnect WebSocket' : 'Connect WebSocket';
+        final label = isConnected
+            ? 'Disconnect WebSocket'
+            : 'Connect WebSocket';
 
         return FilledButton.icon(
           onPressed: isBusy ? null : _handleOnPressed,
           icon: Icon(icon),
-          label: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+          label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
         );
       },
     );
@@ -47,6 +49,8 @@ class _ConnectionButtonState extends State<ConnectionButton> {
     if (formState != null && !formState.validate()) return;
 
     final event = context.read<MowerConnectionBloc>().add;
-    isConnected ? event(DisconnectFromMower()) : event(ConnectToControlWebsocketMower());
+    isConnected
+        ? event(DisconnectFromMower())
+        : event(ConnectToControlWebsocketMower());
   }
 }

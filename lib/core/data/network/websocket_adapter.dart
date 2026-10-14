@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/data/network/websocket_config.dart';
-import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
+import 'package:mower_bot/core/device/model/connection_status.dart';
 import 'package:web_socket_channel/io.dart';
 
 typedef JsonMap = Map<String, dynamic>;
@@ -36,6 +36,8 @@ class WebSocketAdapter {
   int _reconnectAttempts = 0;
   Timer? _reconnectTimer;
   Completer<void>? _reconnectCompleter;
+  int _connectionGeneration = 0;
+  int? _handledClosureGeneration;
 
   final _jsonCtrl = StreamController<JsonMap>.broadcast();
   final _binaryCtrl = StreamController<Uint8List>.broadcast();
@@ -54,6 +56,7 @@ class WebSocketAdapter {
     required VoidCallback onReconnect,
   }) async {
     _cancelScheduledReconnect();
+    final connectionGeneration = ++_connectionGeneration;
     _manuallyClosed = false;
 
     _lastUri = uri ?? _lastUri;
@@ -69,12 +72,18 @@ class WebSocketAdapter {
     }
 
     final isReachable = await (_tcpProbeFn ?? _tcpProbe)(uri ?? _lastUri!);
+    if (!_isCurrentConnection(connectionGeneration)) return;
     if (!isReachable && wscfg.enableReachability) {
       final err = "Cannot reach $host:$port. Aborting WebSocket connection.";
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.hostUnreachable);
       onError(err);
-      await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      await _scheduleReconnect(
+        connectionGeneration,
+        onReconnect,
+        onConnectionChanged,
+        onError,
+      );
       return;
     }
 
@@ -82,6 +91,10 @@ class WebSocketAdapter {
       if (kDebugMode) print("WS: connecting to |$uri|");
       onConnectionChanged(ConnectionStatus.connecting);
       final socket = await WebSocket.connect(uri.toString());
+      if (!_isCurrentConnection(connectionGeneration)) {
+        await socket.close();
+        return;
+      }
       socket.pingInterval = wscfg.ping3sec;
 
       _webSocketChannel = IOWebSocketChannel(socket);
@@ -113,25 +126,43 @@ class WebSocketAdapter {
                 break;
             }
           } catch (e, st) {
-            if (kDebugMode) print("Error decoding message: $e, stacktrace: $st");
+            if (kDebugMode) {
+              print("Error decoding message: $e, stacktrace: $st");
+            }
             onError("Error decoding message: $e", st);
           }
         },
         onError: (error) async {
           if (kDebugMode) print("[WS] onError: $error");
-          await _onStreamClosed(onReconnect, onConnectionChanged, onError);
+          await _onStreamClosed(
+            connectionGeneration,
+            onReconnect,
+            onConnectionChanged,
+            onError,
+          );
         },
         onDone: () async {
           if (kDebugMode) print("[WS] onDone:: connection closed by remote");
-          await _onStreamClosed(onReconnect, onConnectionChanged, onError);
+          await _onStreamClosed(
+            connectionGeneration,
+            onReconnect,
+            onConnectionChanged,
+            onError,
+          );
         },
         cancelOnError: false,
       );
     } catch (e, st) {
+      if (!_isCurrentConnection(connectionGeneration)) return;
       onError("Message decode error: $e", st);
       _notifyClosed();
       onConnectionChanged(ConnectionStatus.error);
-      await _scheduleReconnect(onReconnect, onConnectionChanged, onError);
+      await _scheduleReconnect(
+        connectionGeneration,
+        onReconnect,
+        onConnectionChanged,
+        onError,
+      );
       return;
     }
   }
@@ -166,7 +197,9 @@ class WebSocketAdapter {
       socket.destroy();
       return true;
     } catch (e) {
-      if (kDebugMode) print("TCP probe failed for ${uri.host}:${uri.port} - $e");
+      if (kDebugMode) {
+        print("TCP probe failed for ${uri.host}:${uri.port} - $e");
+      }
       return false;
     }
   }
@@ -174,14 +207,25 @@ class WebSocketAdapter {
   bool _isDisposed = false;
 
   Future<void> _onStreamClosed(
+    int connectionGeneration,
     VoidCallback onReconnect,
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
   ) async {
+    if (connectionGeneration != _connectionGeneration ||
+        _handledClosureGeneration == connectionGeneration) {
+      return;
+    }
+    _handledClosureGeneration = connectionGeneration;
     _notifyClosed();
     if (_isDisposed) return;
-    // If the owner already disposed/closed, avoid throwing from late callbacks.
     onConnectionChanged(ConnectionStatus.disconnected);
+    await _scheduleReconnect(
+      connectionGeneration,
+      onReconnect,
+      onConnectionChanged,
+      onError,
+    );
   }
 
   void _notifyClosed() {
@@ -190,11 +234,12 @@ class WebSocketAdapter {
   }
 
   Future<void> _scheduleReconnect(
+    int connectionGeneration,
     VoidCallback onReconnect,
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
   ) async {
-    if (_manuallyClosed || _isDisposed) {
+    if (!_isCurrentConnection(connectionGeneration)) {
       if (kDebugMode) print("[WS] manually closed: $_manuallyClosed)");
       return;
     }
@@ -225,7 +270,7 @@ class WebSocketAdapter {
     _reconnectTimer = Timer(delay, () {
       _reconnectTimer = null;
       _reconnectCompleter = null;
-      if (_manuallyClosed || _isDisposed) {
+      if (!_isCurrentConnection(connectionGeneration)) {
         completer.complete();
         return;
       }
@@ -238,6 +283,11 @@ class WebSocketAdapter {
     });
     await completer.future;
   }
+
+  bool _isCurrentConnection(int connectionGeneration) =>
+      connectionGeneration == _connectionGeneration &&
+      !_manuallyClosed &&
+      !_isDisposed;
 
   void _cancelScheduledReconnect() {
     _reconnectTimer?.cancel();

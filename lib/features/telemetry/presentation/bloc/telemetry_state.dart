@@ -15,26 +15,6 @@ class TelemetryInitial extends TelemetryState {}
 
 class TelemetryLoading extends TelemetryState {}
 
-class TelemetryLoaded extends TelemetryState {
-  final TelemetryDataModel telemetry;
-
-  TelemetryLoaded(this.telemetry);
-
-  @override
-  List<Object?> get props => [telemetry];
-
-  @override
-  Map<String, dynamic> toDiffMap() => {
-        ...super.toDiffMap(),
-        'wheelAngle': telemetry.wheelAngle,
-        'opticalAngle': telemetry.opticalAngle,
-        'distanceTraveled': telemetry.distanceTraveled,
-        'speed': telemetry.speed,
-        'actuatorDrive': telemetry.actuatorDrive,
-        'actuatorStart': telemetry.actuatorStart,
-      };
-}
-
 class TelemetryError extends TelemetryState {
   final String error;
 
@@ -44,31 +24,55 @@ class TelemetryError extends TelemetryState {
   List<Object?> get props => [error];
 
   @override
-  Map<String, dynamic> toDiffMap() => {
-        ...super.toDiffMap(),
-        'error': error,
-      };
+  Map<String, dynamic> toDiffMap() => {...super.toDiffMap(), 'error': error};
 }
 
-class MegaTelemetryStatus extends TelemetryState {
-  final bool received;
+class TelemetryActive extends TelemetryState {
+  final TelemetryDataModel? telemetry;
+  final bool? received;
   final int? ageMs;
-  final bool ok;
+  final bool? ok;
+  final String? telemetryError;
+  final String? statusError;
 
-  MegaTelemetryStatus({
-    required this.received,
-    required this.ageMs,
-    required this.ok,
+  TelemetryActive({
+    this.telemetry,
+    this.received,
+    this.ageMs,
+    this.ok,
+    this.telemetryError,
+    this.statusError,
   });
 
+  String? get error {
+    final errors = [telemetryError, statusError].whereType<String>().toList();
+    return errors.isEmpty ? null : errors.join('\n');
+  }
+
   @override
-  List<Object?> get props => [received, ageMs, ok];
+  List<Object?> get props => [
+    telemetry,
+    received,
+    ageMs,
+    ok,
+    telemetryError,
+    statusError,
+  ];
 
   @override
   Map<String, dynamic> toDiffMap() => {
-        ...super.toDiffMap(),
-        'received': received,
-        'ageMs': ageMs,
-        'ok': ok,
-      };
+    ...super.toDiffMap(),
+    if (telemetry != null) ...{
+      'wheelAngle': telemetry!.wheelAngle,
+      'opticalAngle': telemetry!.opticalAngle,
+      'distanceTraveled': telemetry!.distanceTraveled,
+      'speed': telemetry!.speed,
+      'actuatorDrive': telemetry!.actuatorDrive,
+      'actuatorStart': telemetry!.actuatorStart,
+    },
+    'received': received,
+    'ageMs': ageMs,
+    'ok': ok,
+    'error': error,
+  };
 }

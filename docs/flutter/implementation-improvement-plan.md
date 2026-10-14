@@ -1,16 +1,20 @@
 # App Implementation Review and Improvement Plan
 
 **Reviewed:** 2026-10-14, revision `874d932`, clean working tree before review.
-**Status:** implementation started; the executed slice evidence below records
-completed work without implying that the broader refactor is complete.
+**Status:** implementation complete for the approved application-code scope.
+Firmware-dependent acknowledgments/status mapping and later product expansion
+remain explicitly deferred until verified contracts and separate approval.
+Final validation passed 238 tests; static analysis reports 12 existing
+non-blocking diagnostics.
 **Scope:** Flutter package/module separation, dependency ownership, state and
 resource lifecycle, operator behavior, and representative existing tests.
 
-This is a source-inspection review, not a runtime, hardware, or security
-certification. Tests and static analysis were not executed for this
-documentation-only task. Findings below distinguish directly observed code
-from questions requiring firmware evidence. [plan.md](../../plan.md) remains
-the product/build authority; this document does not change its stage gates.
+This began as a source-inspection review and is not a hardware or security
+certification. The executed evidence below records app-level tests and static
+analysis; it does not claim real-device or firmware verification. Findings
+distinguish directly observed code from questions requiring firmware evidence.
+[plan.md](../../plan.md) remains the product/build authority; this document
+does not change its stage gates.
 
 ## Recommendation
 
@@ -444,6 +448,230 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   tests and retained only the known dev-DI mismatch; repository-wide analysis
   retained the same 20 unrelated diagnostics.
 
+**2026-10-14 - R6 established-stream reconnect and stale-session rejection**
+
+- Scope and acceptance: unexpected closure of the active established socket
+  must enter the existing bounded reconnect policy; manual closure must not
+  reconnect, and closure from a replaced socket must not affect the active
+  session. No command is queued or replayed by this transport behavior.
+- Baseline: the WebSocket adapter suite passed all 8 existing tests before this
+  slice.
+- Red: remote closure emitted disconnected but invoked no reconnect callback;
+  closing a replaced socket also cleared the replacement adapter session.
+  The manual-close characterization already passed with no reconnect.
+- Green/refactor: each open now has a generation, closure is handled once for
+  only the current generation, and stale asynchronous probe/connect/closure
+  results are ignored. Active remote closure schedules the owned reconnect
+  timer, while manual close and disposal remain suppressing boundaries. The
+  focused adapter suite passed all 11 tests, and the affected
+  transport/repository selection passed all 28 tests.
+- Broader validation: targeted analysis retained only the known adapter
+  `avoid_print` diagnostic. The full suite passed 203 tests and retained only
+  the known dev-DI mismatch. Repository-wide analysis reported 19 existing
+  diagnostics; the former unnecessary `dart:async` import is now used by the
+  new asynchronous session fixture.
+
+**2026-10-14 - R4 path diagnostic-listener ownership**
+
+- Scope and acceptance: `PathRepositoryRemote` must retain ownership of its
+  passive diagnostic message listener, expose awaitable teardown, and release
+  that listener when the repository singleton is disposed.
+- Baseline: the remote path repository suite passed all 5 existing tests before
+  this slice.
+- Red: the executable lifecycle regression failed with `NoSuchMethodError`
+  because the repository had no disposal boundary and its constructor listener
+  could only be released by closing the shared WebSocket client.
+- Green/refactor: `PathRepository` now exposes `dispose()`;
+  `PathRepositoryRemote` retains and cancels its diagnostic subscription, the
+  mock implementation provides a no-op boundary, and GetIt disposes the lazy
+  singleton through that contract. The focused remote suite passed all 6 tests,
+  and the affected path repository/use-case/BLoC selection passed all 17 tests.
+- Broader validation: production DI registrations and reset teardown passed;
+  the DI file retained only the known dev repository mismatch. Changed-file
+  analysis retained the 5 existing `avoid_print` diagnostics in the mock
+  repository. The full suite passed 204 tests with only the known dev-DI
+  failure, and repository-wide analysis retained the same 19 diagnostics.
+
+**2026-10-14 - R8 composite telemetry state**
+
+- Scope and acceptance: later freshness or asynchronous stream-error events
+  must retain the latest telemetry value, and the telemetry page must render
+  value, freshness, and errors together rather than replacing one with another.
+  Startup failure remains a separate pre-stream error state.
+- Baseline: the telemetry BLoC and page selection passed all 13 existing tests
+  before this slice.
+- Red: after telemetry, freshness, and a status-stream error were dispatched,
+  the freshness state had no wheel value and the error state retained neither
+  value nor freshness. After introducing the composite state, the page's
+  executable widget regressions fell through to `Unknown state` until rendering
+  was updated.
+- Green/refactor: `TelemetryActive` now carries the latest optional telemetry,
+  nullable freshness, and per-stream errors. Successful data/status events
+  clear only their own stream's error. The page composes all available fields,
+  including absent age and millisecond labels. The focused BLoC/page selection
+  passed all 15 tests, the full telemetry feature passed all 23 tests, and
+  changed-file analysis passed with no diagnostics.
+- Broader validation: the full suite passed 206 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R7 AP reachability endpoint correctness**
+
+- Scope and acceptance: AP-mode reachability must probe the configured mower
+  host and port; the discovered/configured SSID is only a Wi-Fi identity and
+  must never be used as a TCP host.
+- Baseline: the connection BLoC suite passed all 9 existing tests before this
+  slice.
+- Red: the endpoint regression expected `192.168.4.1:85`, but the recorded
+  reachability call used `MowerBot-AP:85`.
+- Green/refactor: both AP reachability paths now forward `state.ip` and
+  `state.port`, retaining the established AP defaults only when those values
+  are absent. The focused BLoC suite passed all 10 tests, changed-file analysis
+  passed, and the affected connection/repository/reachability selection passed
+  all 33 tests.
+- Broader validation: the full suite passed 207 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R7 injectable and cancellable Wi-Fi scanning**
+
+- Scope and acceptance: the connection BLoC must use an injected scan port
+  rather than the plugin singleton, and the timeout event used by the UI's
+  cancel action must invalidate and await active polling before later results
+  can start more work.
+- Baseline: the connection BLoC suite passed all 10 existing tests. Replacing
+  direct plugin calls with a DI-registered `WifiScanner` preserved that baseline
+  and passed changed-file analysis before cancellation behavior changed.
+- Red: with the first injected result deliberately held pending, canceling the
+  scan and then completing that result allowed a second poll; the regression
+  observed 2 result calls instead of 1.
+- Green/refactor: timeout/cancel now advances the scan generation and awaits
+  timer/subscription cleanup, while a replacement scan awaits prior cleanup
+  before starting. The injected seam also covers plugin start failure. The
+  focused BLoC suite passed all 12 tests and changed-file analysis passed.
+- Broader validation: the full suite passed 209 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R7 explicit WebSocket connection result**
+
+- Scope and acceptance: a synchronous or asynchronous failure from connection
+  setup must leave `connecting`, emit a mapped visible error, and complete
+  without inferring failure from a nullable `void` result or waiting for the
+  process-wide exception stream.
+- Baseline: the connection BLoC suite passed all 12 existing tests before this
+  behavior changed.
+- Red: a connect use case throwing a typed network exception escaped the BLoC
+  handler through `safeExecute`; no error state was emitted and the regression
+  ended disconnected.
+- Green/refactor: connection setup now returns `Result<bool>` with an explicit
+  `Success`/`Failure` branch. The failure branch maps the contained exception
+  directly, while the success branch starts status verification. The focused
+  BLoC suite passed all 13 tests and changed-file analysis passed.
+- Broader validation: the full suite passed 210 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R5 typed control-command submission**
+
+- Scope and acceptance: control commands must distinguish local socket
+  submission from disconnection/invalid/unknown delivery, and successful run or
+  emergency-stop submission must not overwrite telemetry-confirmed physical
+  state. Firmware acknowledgment was not inferred or added.
+- Baseline: the WebSocket client, control repository/use-case, and control BLoC
+  selection passed all 10 existing tests before this slice.
+- Red: successful `RunCommand` changed `isMowerRunning` to true locally, while
+  successful `EmergencyStop` changed both physical-state flags to false before
+  any confirming telemetry.
+- Green/refactor: WebSocket `send` now reports whether it accepted a message on
+  an active channel. The repository/use case returns a typed
+  `CommandSubmissionResult`, the BLoC exposes submission/disconnection/unknown
+  feedback, and physical flags are changed only by telemetry. The control page
+  labels successful requests as submitted and awaiting confirmation. The
+  affected transport/control/path selection passed all 22 tests; changed-file
+  analysis retained only 4 existing `avoid_print` diagnostics.
+- Broader validation: the full suite passed 212 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R5 typed path-command submission**
+
+- Scope and acceptance: play, stop, and delete operations must report local
+  submission/disconnection/invalid/unknown outcomes; submission alone must not
+  mark playback active, stopped, or deleted. Recording semantics were excluded
+  because cancel/save/discard behavior requires the documented UX decision.
+- Baseline: path repository, use-case, and BLoC tests passed all 17 existing
+  tests before this slice.
+- Red: successful play immediately set `activePath`, and successful stop
+  immediately cleared it, despite neither operation observing a mower result.
+- Green/refactor: path repository methods now return
+  `CommandSubmissionResult`; the BLoC preserves confirmed list/active state and
+  exposes pending or failure feedback inline. Delete no longer reloads and
+  implies completion immediately after submission. The focused selection
+  passed all 19 tests; changed-file analysis retained only 5 existing
+  `avoid_print` diagnostics in the mock repository.
+- Broader validation: the full suite passed 214 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+- Remaining protocol gate: `pathEvent` acknowledgment identity and playback
+  status semantics must be verified before pending requests can become
+  confirmed active/stopped/deleted state.
+
+**2026-10-14 - R10 stop invalidates pending steering**
+
+- Scope and acceptance: emergency stop, drive-stop, run-stop, and BLoC teardown
+  must invalidate any steering command still inside the local debounce window;
+  no delayed normal command may be submitted after that boundary.
+- Baseline: the control BLoC suite passed all 5 existing tests before this
+  slice.
+- Red: scheduling steer, waiting 20 ms, then submitting emergency stop still
+  invoked the steering use case after the 100 ms debounce.
+- Green/refactor: `ControlBloc` now owns one steering timer and generation.
+  Stop boundaries cancel and invalidate it before sending their own command,
+  and close performs the same cleanup. The focused suite passed all 6 tests;
+  changed-file analysis retained only the existing `avoid_print` diagnostic.
+  The now-unused direct `stream_transform` dependency was removed without
+  retaining unrelated package-tool lockfile or analyzer rewrites.
+- Broader validation: the full suite passed 215 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R9 composition-root disposal ownership**
+
+- Scope and acceptance: resetting the application scope must await teardown of
+  the shared telemetry BLoC, telemetry and connection repositories, and both
+  concrete WebSocket clients; their owned subscriptions, controllers, and
+  adapter resources must no longer outlive the scope.
+- Baseline: the focused composition-root test showed that GetIt reset left the
+  telemetry BLoC open and did not close the five observed repository/client
+  streams.
+- Red: after `GetIt.I.reset()`, `telemetryBloc.isClosed` remained false.
+- Green/refactor: GetIt registrations now own disposal callbacks in dependency
+  order. Repository contracts expose awaitable disposal, repository teardown
+  cancels owned subscriptions and closes controllers, and WebSocket client
+  disposal now awaits its subscription, controllers, and adapter. The
+  composition-root regression and all affected lifecycle suites passed;
+  changed-file analysis retained only the existing connection-repository
+  `avoid_print` diagnostic.
+- Broader validation: the full suite passed 216 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**2026-10-14 - R9 effective WebSocket configuration injection**
+
+- Scope and acceptance: replacing the registered `WebSocketConfig` before
+  concrete client creation must reach both clients' actual adapters.
+- Baseline: DI registered `WebSocketConfig`, but both concrete clients
+  default-constructed adapters and ignored that registration.
+- Red: after replacing the lazy config with a non-default instance, the
+  resolved control client exposed a different default config.
+- Green/refactor: both concrete clients accept configuration when constructing
+  their adapters, expose the effective immutable config, and DI passes the
+  registered instance to control and binary clients. The focused DI regression
+  passed.
+- Broader validation: the final full suite passed 238 tests; repository-wide
+  analysis reported 12 existing diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small
@@ -464,6 +692,115 @@ Introduce the narrow shared device session around existing transport behavior.
 Replace connection-to-telemetry BLoC coupling with application coordination.
 Extend the boundary tests before each additional ownership change, keeping
 previously corrected boundaries and behavioral tests green.
+
+**Executed 2026-10-14 - domain import boundary and contract ownership**
+
+- Scope and acceptance: feature domain code must not import concrete `core/data`
+  implementations or presentation code; connection status and path repository
+  abstractions must be owned by their domains without changing wire behavior.
+- Baseline: focused path, connection, and WebSocket behavior tests passed before
+  the move.
+- Red: the new local boundary test reported seven violations: five path use
+  cases importing the data implementation module and two connection domain
+  files importing presentation state.
+- Green/refactor: `PathRepository` moved to paths/domain and
+  `ConnectionStatus` moved to connection/domain. Data implementations,
+  composition wiring, consumers, and tests now import the owning contract.
+  The boundary test and 32 affected behavior tests passed.
+- Broader validation: the full suite passed 217 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics. The boundary test remains executable regression coverage.
+
+**Executed 2026-10-14 - feature-owned data implementations**
+
+- Scope and acceptance: feature-specific repositories, DTOs, and their mirrored
+  tests must live under the owning feature rather than generic `core/data`;
+  transport primitives remain shared and behavior must not change.
+- Baseline: all 46 moved implementation/DTO tests and the first architecture
+  boundary passed before the move.
+- Red: the extended ownership boundary reported ten misplaced Dart files under
+  `core/data/dto` and `core/data/repo`.
+- Green/refactor: connection, control, paths, and telemetry repositories moved
+  to feature data directories; telemetry DTOs moved with telemetry ingestion;
+  composition and test imports now target those owners. Both architecture
+  boundaries and all 47 moved-data tests passed.
+- Broader validation: the full suite passed 218 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**Executed 2026-10-14 - application-owned session coordination**
+
+- Scope and acceptance: connection presentation must not import or command
+  telemetry presentation; control-channel status must retain the existing
+  start-on-connected/stop-otherwise telemetry behavior at the application
+  boundary.
+- Baseline: all connection BLoC tests passed while the connection BLoC still
+  accepted a shared `TelemetryBloc` and dispatched telemetry events from its
+  repository-status listener.
+- Red: the cross-feature presentation boundary reported both telemetry imports,
+  and the new coordinator behavior test observed no start/stop callbacks.
+- Green/refactor: a pure app-owned `DeviceSessionCoordinator` maps connection
+  status to telemetry lifecycle callbacks. The app root listens to connection
+  state and dispatches telemetry events; connection BLoC and DI no longer know
+  about `TelemetryBloc`. The coordinator, all three architecture boundaries,
+  and all 13 connection BLoC tests passed.
+- Broader validation: the full suite passed 220 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**Executed 2026-10-14 - neutral shared device health models**
+
+- Scope and acceptance: transport, connection, and telemetry must share one
+  neutral connection-status/device-health contract and one nullable freshness
+  model; duplicate telemetry-age declarations must not survive.
+- Baseline: affected telemetry, connection, transport, and coordinator tests
+  passed with two separate `TelemetryAgeModel` declarations under different
+  features.
+- Red: the extended architecture test found both freshness declarations.
+- Green/refactor: connection status, mower status, Wi-Fi status, WebSocket
+  status, and nullable telemetry age now live under `core/device/model`.
+  Connection, telemetry, transport, DTOs, and tests import that neutral
+  contract; the duplicate model was removed. All affected suites and four
+  architecture boundaries passed.
+- Broader validation: the full suite passed 221 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**Executed 2026-10-14 - application-owned composition and navigation**
+
+- Scope and acceptance: composition root, routing, and shell must live under
+  `lib/app`; feature widgets must not resolve dependencies from the service
+  locator.
+- Baseline: connection page and DI lifecycle tests passed while DI lived under
+  core, router/shell lived at unrelated roots, and `ConnectionPage` resolved its
+  rationale store through global `sl`.
+- Red: the app-ownership boundary reported all three legacy paths.
+- Green/refactor: DI, router, shell, and mirrored DI tests moved under `app`.
+  App routing injects `PermissionRationaleStore` into `ConnectionPage`, removing
+  feature-level service-locator access. All five architecture boundaries,
+  connection-page widget tests, app coordinator tests, and the moved DI
+  lifecycle regression passed; changed-file analysis was clean.
+- Broader validation: the full suite passed 222 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**Executed 2026-10-14 - pure error barrel and presentation-owned scan UI**
+
+- Scope and acceptance: the shared error barrel must not export Flutter/global
+  UI concerns, and platform service directories must not own feature widgets.
+- Baseline: error and connection widget suites passed while `error.dart`
+  exported `error_ui.dart` and `global_error_interceptor.dart`, and Wi-Fi scan
+  widgets lived in `core/platform`.
+- Red: two architecture regressions identified both mixed ownership violations.
+- Green/refactor: the error barrel now exports only non-UI error/result APIs;
+  the global interceptor imports its UI notifier explicitly. Wi-Fi scan widgets
+  and mirrored tests moved under connection presentation. The import-boundary
+  detector also rejects a deliberately invalid fixture. All eight
+  architecture boundaries plus affected error and connection widget suites
+  passed.
+- Broader validation: the full suite passed 224 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
 
 **Exit:** zero domain/transport imports of presentation; zero domain imports of
 concrete data implementations; zero cross-feature BLoC dependencies; feature
@@ -487,6 +824,86 @@ steering. Remove the stale page-local steering source once one owner is selected
 Camera URL changes must update the existing WebView, and unavailable/disconnected
 state must be representable without retaining an old URL.
 
+**Executed 2026-10-14 - explicit camera clearing and steering ownership**
+
+- Scope and acceptance: camera unavailability must clear an old endpoint,
+  endpoint replacement must recreate the WebView request, and commanded steering
+  must not reuse a stale page-local value or overwrite observed wheel angle.
+- Baseline: focused control tests passed while nullable `copyWith` preserved an
+  old camera URL and the drive button always resubmitted its page-local zero.
+- Red: explicit camera clearing retained `http://old-camera`; a steering input
+  left the new commanded-angle state at zero.
+- Green/refactor: control state exposes explicit nullable clear flags; camera
+  refresh clears unavailable URLs and tracks availability, and the WebView key
+  follows the endpoint. Control BLoC now owns commanded steering while telemetry
+  remains the observed angle; the page-local steering source was removed. All
+  nine focused control state/BLoC tests passed.
+- Broader validation: the full suite passed 228 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 19
+  diagnostics.
+
+**Executed 2026-10-14 - independent camera availability state**
+
+- Scope and acceptance: camera endpoint/availability refreshes must not rebuild
+  or mutate drive/stop/recording state, and connection changes must refresh
+  camera availability independently.
+- Baseline: camera URL and availability were fields/events in `ControlBloc`;
+  telemetry updates also triggered camera refreshes.
+- Red: the new camera owner observed no endpoint after refresh.
+- Green/refactor: `CameraCubit` now exclusively owns replacement, unavailable,
+  and cleared camera state. App connection coordination, control-tab entry, and
+  app resume refresh that cubit; the WebView consumes only camera state.
+  Camera fields/events/use-case wiring were removed from `ControlBloc`.
+  Camera and control focused suites passed.
+- Broader validation: the full suite passed 227 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis improved from 19 to 18
+  diagnostics after removing the control BLoC debug print.
+
+**Executed 2026-10-14 - bounded camera listeners and responsive STOP**
+
+- Scope and acceptance: stateful-shell control-tab re-entry must retain one
+  app-lifecycle camera observer, and emergency STOP must remain visible and
+  tappable without layout overflow on a narrow, large-text surface.
+- Baseline: focused camera/control suites passed, but no widget regression
+  exercised stateful-shell retention or constrained control layouts.
+- Red: a 220x180 surface at 2x text scale overflowed the bottom control row by
+  26 pixels. The first listener fixture was corrected to use the app's
+  stateful-shell retention rather than route replacement, then demonstrated
+  one lifecycle refresh after three tab re-entry cycles.
+- Green/refactor: bottom control padding and STOP dimensions now derive from
+  the available width and height, and the STOP label scales down within its
+  bounded icon while retaining its text/semantics. The listener and responsive
+  widget regressions both pass.
+- Broader validation: the full suite passed 231 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis improved from 18 to 17
+  diagnostics after removing the camera lifecycle debug print.
+
+**Executed 2026-10-14 - independent recording state and explicit cancel**
+
+- Scope and acceptance: recording must not live in drive state; start, save,
+  and discard must expose local submission failure without claiming firmware
+  confirmation. Cancel must stop and discard, while empty Save must keep the
+  dialog open with validation.
+- Baseline: `ControlBloc` optimistically set recording state after `Future<void>`
+  calls, and Cancel generated a filename and silently saved. The approved
+  semantics are discard on explicit Cancel and validation on empty Save.
+- Red: the widget regression observed Cancel calling stop with an autogenerated
+  name instead of the discard sentinel. A second regression required the empty
+  Save dialog to remain visible with an inline error, and an exception
+  regression showed a start failure left the new owner pending.
+- Green/refactor: `RecordingCubit` now independently owns start/stop pending,
+  recording-requested, failure, discard, and last-saved state. Repository and
+  use-case recording methods return `CommandSubmissionResult`; the existing
+  empty `fileName` discard wire format is preserved. `ControlBloc` and
+  `ControlState` no longer own recording. The recording widget subtree handles
+  its own animation/dialog rebuilds, explicit Cancel discards, empty Save
+  validates in place, and all labels describe submission as awaiting device
+  status rather than physical confirmation.
+- Broader validation: 51 focused architecture, control, path, use-case, and
+  widget tests passed. The full suite passed 244 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 17
+  diagnostics.
+
 **Exit:** recording changes do not rebuild unrelated drive/video state; tab
 re-entry does not attach another listener; camera endpoint replacement works;
 STOP remains reachable with large text and narrow/landscape layouts; cancel
@@ -507,6 +924,46 @@ are removal candidates, not automatic deletions. `fl_chart` is used by the
 currently unrouted chart; launcher/splash tooling has manifest configuration
 and must not be removed solely for lacking Dart imports.
 
+**Executed 2026-10-14 - decision-free inactive code and dependency cleanup**
+
+- Scope and acceptance: remove only unreachable/empty modules with no consumer
+  or documented purpose and direct dependencies with no source, test, asset,
+  generator, manifest, or native-registration use. Preserve the unresolved
+  telemetry page/chart, dev simulation repository, `fl_chart`, and configured
+  launcher/splash tooling.
+- Baseline: six legacy files existed without consumers, and `http`,
+  `flutter_joystick`, `json_annotation`, `build_runner`, and
+  `json_serializable` remained direct entries without active usage.
+- Red: architecture regressions listed all six files and all five manifest
+  entries as retained cleanup violations.
+- Green/refactor: the unused connection model, control-command placeholder,
+  connection status tile, permission helper, and two empty legacy error files
+  were removed. The error barrel dropped their compatibility exports, and the
+  five unused direct dependency/tool entries were removed. Dependency
+  resolution removed their now-unneeded transitive graph; unrelated analyzer
+  rewrites and test-package upgrades were restored.
+- Broader validation: all ten architecture checks and both new control-page
+  widget regressions passed. The full suite passed 231 tests and retained only
+  the known dev-DI mismatch; repository-wide analysis reported 17 existing
+  diagnostics.
+
+**Executed 2026-10-14 - approved inactive-surface and simulation removal**
+
+- Decisions: the application uses the real remote path repository; the unused
+  dev/prod switch is not retained when it selects no different behavior. The
+  standalone telemetry page/chart is obsolete rather than a future routed
+  operator surface.
+- Red: the existing dev-DI regression expected `MockPathRepository`, while
+  architecture cleanup regressions found the selected-obsolete telemetry page
+  and drift chart.
+- Green/refactor: the dev DI regression now asserts `PathRepositoryRemote`.
+  The production mock repository, its orphan `PathModel`, and their tests were
+  removed. The unrouted telemetry page/chart and mirrored widget tests were
+  removed, and `fl_chart` was removed from the manifest and lockfile.
+- Broader validation: all 11 architecture boundaries passed. The final full
+  suite passed all 238 tests, and repository-wide analysis improved from 17 to
+  12 existing diagnostics after the simulation repository was removed.
+
 **Exit:** retained dependencies and modules have a named consumer or documented
 purpose; generated/native dependency changes are reproducible; cleanup preserves
 platform behavior and does not remove safety-related code without replacement.
@@ -522,12 +979,27 @@ and independent safety are subsequent product work under the root plan. Preserve
 an adapter for the verified current steering protocol until an explicit firmware
 migration is approved. Do not fabricate RTK metadata for `ms,angle` recordings.
 
+**Executed 2026-10-14 - extraction and operational-policy reassessment**
+
+- No concrete second Dart/Flutter consumer exists, so protocol/client code
+  remains in the application package and no package/tooling split is added.
+- No verified firmware acknowledgment/status contract is available. Drive,
+  recording, and path state therefore remains explicitly local-submission or
+  requested state awaiting telemetry/device status; no acknowledgments or
+  response matching are fabricated.
+- Backgrounding retains the existing connection and telemetry session and sends
+  no automatic motion, stop, reconnect, or replay command. Camera availability
+  refreshes on resume under the bounded lifecycle observer regression.
+- Product expansion remains outside this implementation plan until verified
+  contracts and separately approved product work exist.
+
 ## Acceptance matrix for implementation
 
-Use existing Flutter test tools and fakes; inject platform/clock/socket seams
-where necessary. Implement and run each applicable test before changing the
-behavior it covers, following the test-first gates above. The following tests
-are planned, not already executed:
+Existing Flutter test tools and fakes were used with injected
+platform/clock/socket seams where necessary. Each applicable app-observable
+test was implemented before its behavior change, following the test-first gates
+above. Firmware producer fixtures, acknowledgments, and response matching remain
+inapplicable until those contracts are verified:
 
 | Area | Required observable result |
 | --- | --- |
@@ -553,11 +1025,12 @@ explicit authorization and observation as described in the
 
 ## Approval boundaries and suggested first slice
 
-This document proposes sequencing; it authorizes no code, dependency, firmware,
-hardware, or root product-plan changes. Before the affected phase, confirm:
-dev-mode simulation versus real device behavior; recording cancel semantics;
-disconnect/background operational policy; actual firmware acknowledgment and
-status contracts; and whether there is a concrete second consumer for a package.
+The implementation resolved the approval boundaries as follows: the single
+runtime composition uses the real remote path repository; recording Cancel
+discards and empty Save validates in place; backgrounding retains the current
+session without automatic commands; no verified firmware
+acknowledgment/status contract exists, so local submission/requested semantics
+remain; and no second package consumer exists, so extraction is deferred.
 
 The first implementation slice should be Phase 0 followed by a failing
 regression test and its focused Phase 1 fix, rather than moving all folders at
