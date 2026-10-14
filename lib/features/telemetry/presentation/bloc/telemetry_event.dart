@@ -21,6 +21,15 @@ class TelemetryReceived extends TelemetryEvent {
   List<Object?> get props => [telemetry];
 }
 
+class TelemetryStreamFailed extends TelemetryEvent {
+  final String error;
+
+  TelemetryStreamFailed(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+
 class MegaTelemetryStatusUpdated extends TelemetryEvent {
   final bool received;
   final int ageMs;

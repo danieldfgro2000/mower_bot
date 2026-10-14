@@ -348,6 +348,25 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   consumer for sequential telemetry lifecycle handling and is no longer an
   unused-dependency removal candidate.
 
+**2026-10-14 - R8 asynchronous telemetry stream errors**
+
+- Scope and acceptance: asynchronous errors from both telemetry observation
+  streams must produce visible `TelemetryError` states with enough context to
+  identify the failing stream; callbacks must not emit through an expired
+  handler.
+- Baseline: the telemetry BLoC and event tests passed all 10 existing tests
+  before this slice.
+- Red: telemetry-data and status-stream error tests emitted only
+  `TelemetryLoading`; each callback constructed an unused `TelemetryError`.
+- Green/refactor: both callbacks now dispatch a typed internal failure event
+  guarded against a closed BLoC, and the event handler emits the error state.
+  The focused BLoC/event selection passed all 13 tests; the telemetry and
+  connection consumer selection passed all 33 tests; changed-file analysis
+  passed.
+- Broader validation: the full suite passed 192 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 20
+  unrelated diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small

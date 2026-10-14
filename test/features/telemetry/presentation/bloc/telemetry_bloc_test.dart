@@ -200,6 +200,62 @@ void main() {
       },
     );
 
+    blocTest<TelemetryBloc, TelemetryState>(
+      'emits Error when the telemetry data stream fails',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(() => observe()).thenAnswer((_) => telemetryController.stream);
+        when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      setUp: () {
+        telemetryController = StreamController<TelemetryDataModel>.broadcast();
+      },
+      act: (bloc) async {
+        bloc.add(StartTelemetry());
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        telemetryController.addError(StateError('telemetry stream failed'));
+      },
+      wait: const Duration(milliseconds: 5),
+      expect: () => [
+        isA<TelemetryLoading>(),
+        isA<TelemetryError>().having(
+          (state) => state.error,
+          'error',
+          contains('telemetry stream failed'),
+        ),
+      ],
+      tearDown: () => telemetryController.close(),
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
+      'emits Error when the telemetry status stream fails',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(() => observeStatus()).thenAnswer((_) => statusController.stream);
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      setUp: () {
+        statusController = StreamController<MowerStatusModel>.broadcast();
+      },
+      act: (bloc) async {
+        bloc.add(StartTelemetry());
+        await Future<void>.delayed(const Duration(milliseconds: 5));
+        statusController.addError(StateError('status stream failed'));
+      },
+      wait: const Duration(milliseconds: 5),
+      expect: () => [
+        isA<TelemetryLoading>(),
+        isA<TelemetryError>().having(
+          (state) => state.error,
+          'error',
+          contains('status stream failed'),
+        ),
+      ],
+      tearDown: () => statusController.close(),
+    );
+
     test('close stops the repository telemetry stream', () async {
       when(() => start.call()).thenAnswer((_) async {});
       when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());

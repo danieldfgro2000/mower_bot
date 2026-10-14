@@ -28,6 +28,7 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
   ) : super(TelemetryInitial()) {
     on<TelemetryLifecycleEvent>(_onLifecycleEvent, transformer: sequential());
     on<TelemetryReceived>(_onTelemetryReceived);
+    on<TelemetryStreamFailed>(_onTelemetryStreamFailed);
     on<MegaTelemetryStatusUpdated>(_onMegaTelemetryStatusUpdated);
   }
 
@@ -55,7 +56,7 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     _streamStarted = true;
     _observeTelemetrySubscription = _observeTelemetryStreamUseCase().listen(
       (telemetryData) => add(TelemetryReceived(telemetryData)),
-      onError: (e) => TelemetryError(e.toString()),
+      onError: (error) => _addStreamError('Telemetry data stream', error),
     );
     _observeTelemetryStatusSubscription = _observeTelemetryStatusUseCase()
         .listen(
@@ -68,7 +69,7 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
               ok: status.telemetryAge.ok,
             ),
           ),
-          onError: (e) => TelemetryError(e.toString()),
+          onError: (error) => _addStreamError('Telemetry status stream', error),
         );
   }
 
@@ -86,6 +87,18 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
     Emitter<TelemetryState> emit,
   ) {
     emit(TelemetryLoaded(event.telemetry));
+  }
+
+  void _onTelemetryStreamFailed(
+    TelemetryStreamFailed event,
+    Emitter<TelemetryState> emit,
+  ) {
+    emit(TelemetryError(event.error));
+  }
+
+  void _addStreamError(String source, Object error) {
+    if (isClosed) return;
+    add(TelemetryStreamFailed('$source: $error'));
   }
 
   void _onMegaTelemetryStatusUpdated(
