@@ -5,6 +5,7 @@ import 'package:mower_bot/features/telemetry/domain/repository/telemetry_reposit
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/start_telemetry_stream_use_case.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/stop_telemetry_stream_use_case.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockTelemetryRepository extends Mock implements TelemetryRepository {}
@@ -26,6 +27,15 @@ void main() {
       await uc();
 
       verify(() => repo.startTelemetry()).called(1);
+    });
+
+    test('StopTelemetryStreamUseCase delegates to repository.stopTelemetry', () async {
+      when(() => repo.stopTelemetry()).thenAnswer((_) async {});
+
+      final uc = StopTelemetryStreamUseCase(repo);
+      await uc();
+
+      verify(() => repo.stopTelemetry()).called(1);
     });
 
     test('ObserverTelemetryUseCase delegates to repository.observeTelemetry', () async {
@@ -58,4 +68,3 @@ void main() {
     });
   });
 }
-

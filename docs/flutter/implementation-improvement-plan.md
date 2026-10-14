@@ -304,6 +304,29 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   --no-pub` reported 20 existing diagnostics outside the changed files, so the
   repository-wide analysis baseline remains non-green.
 
+**2026-10-14 - R4 telemetry stop and teardown ownership**
+
+- Scope and acceptance: stopping telemetry must await cancellation of the
+  repository's socket listener, allow one clean later restart, and be invoked
+  by both `StopTelemetry` and `TelemetryBloc.close()`. The composition root must
+  resolve the stop use case and the updated BLoC.
+- Baseline: `flutter test --no-pub
+  test/core/data/repo/telemetry_repository_impl_test.dart
+  test/features/telemetry --reporter compact` passed all 16 tests before this
+  slice.
+- Red: the repository test received a telemetry event after stop; the BLoC stop
+  and close tests observed no stop-use-case calls; and the DI regression failed
+  because `StopTelemetryStreamUseCase` was not registered.
+- Green/refactor: `stopTelemetry()` now clears and awaits its owned socket
+  subscription before restart. The BLoC awaits repository stop, cancels both
+  observation subscriptions, and reuses that teardown during close. The
+  focused repository/use-case/BLoC selection passed all 16 tests, and the
+  telemetry plus connection-consumer selection passed all 28 tests.
+- Broader validation: the new focused DI regression and changed-file analysis
+  passed. The full suite passed 187 tests and retained only the known dev-DI
+  mismatch; repository-wide analysis retained the same 20 unrelated
+  diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small

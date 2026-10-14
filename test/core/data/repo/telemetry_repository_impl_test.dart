@@ -135,6 +135,36 @@ void main() {
       await subscription.cancel();
     });
 
+    test('stop releases the socket listener and a later start reattaches once', () async {
+      final ws = FakeWebSocketClient();
+      ws.emitConnection(ConnectionStatus.ctrlWsConnected);
+
+      final repo = TelemetryRepositoryImpl(ws);
+      final events = <TelemetryDataModel>[];
+      final subscription = repo.observeTelemetry().listen(events.add);
+
+      await repo.startTelemetry();
+      await repo.stopTelemetry();
+      ws.emitMessage({
+        'topic': 'telemetry',
+        'data': {'stepperAngle': 1.0},
+      });
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+
+      expect(events, isEmpty);
+
+      await repo.startTelemetry();
+      ws.emitMessage({
+        'topic': 'telemetry',
+        'data': {'stepperAngle': 2.0},
+      });
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+
+      expect(events, hasLength(1));
+      expect(events.single.wheelAngle, 2.0);
+      await subscription.cancel();
+    });
+
     test('unknown topics are ignored (no emissions)', () async {
       final ws = FakeWebSocketClient();
       ws.emitConnection(ConnectionStatus.ctrlWsConnected);

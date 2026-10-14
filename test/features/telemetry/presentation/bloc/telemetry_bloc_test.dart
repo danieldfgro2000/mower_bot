@@ -7,12 +7,14 @@ import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.d
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/start_telemetry_stream_use_case.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/stop_telemetry_stream_use_case.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_event.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_state.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockStart extends Mock implements StartTelemetryStreamUseCase {}
+class _MockStop extends Mock implements StopTelemetryStreamUseCase {}
 class _MockObserve extends Mock implements ObserverTelemetryUseCase {}
 class _MockObserveStatus extends Mock implements ObserverTelemetryStatusUseCase {}
 
@@ -21,13 +23,16 @@ void main() {
 
   group('TelemetryBloc', () {
     late _MockStart start;
+    late _MockStop stop;
     late _MockObserve observe;
     late _MockObserveStatus observeStatus;
 
     setUp(() {
       start = _MockStart();
+      stop = _MockStop();
       observe = _MockObserve();
       observeStatus = _MockObserveStatus();
+      when(() => stop.call()).thenAnswer((_) async {});
     });
 
     blocTest<TelemetryBloc, TelemetryState>(
@@ -50,7 +55,7 @@ void main() {
         );
         when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
 
-        return TelemetryBloc(start, observe, observeStatus);
+        return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) => bloc.add(StartTelemetry()),
       expect: () => [
@@ -67,7 +72,7 @@ void main() {
         });
         when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
-        return TelemetryBloc(start, observe, observeStatus);
+        return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) => bloc.add(StartTelemetry()),
       wait: const Duration(milliseconds: 10),
@@ -84,7 +89,7 @@ void main() {
         when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
 
-        return TelemetryBloc(start, observe, observeStatus);
+        return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) async {
         bloc.add(StartTelemetry());
@@ -109,7 +114,7 @@ void main() {
         when(() => start.call()).thenAnswer((_) async {});
         when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
         when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
-        return TelemetryBloc(start, observe, observeStatus);
+        return TelemetryBloc(start, stop, observe, observeStatus);
       },
       act: (bloc) async {
         bloc.add(StartTelemetry());
@@ -121,6 +126,22 @@ void main() {
         isA<TelemetryLoading>(),
         isA<TelemetryInitial>(),
       ],
+      verify: (_) {
+        verify(() => stop.call()).called(1);
+      },
     );
+
+    test('close stops the repository telemetry stream', () async {
+      when(() => start.call()).thenAnswer((_) async {});
+      when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+      when(() => observeStatus()).thenAnswer((_) => const Stream<MowerStatusModel>.empty());
+      final bloc = TelemetryBloc(start, stop, observe, observeStatus);
+      bloc.add(StartTelemetry());
+      await Future<void>.delayed(const Duration(milliseconds: 5));
+
+      await bloc.close();
+
+      verify(() => stop.call()).called(1);
+    });
   });
 }

@@ -23,6 +23,7 @@ import 'package:mower_bot/features/telemetry/domain/repository/telemetry_reposit
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/start_telemetry_stream_use_case.dart';
+import 'package:mower_bot/features/telemetry/domain/usecases/stop_telemetry_stream_use_case.dart';
 import 'package:mower_bot/features/telemetry/presentation/bloc/telemetry_bloc.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
 import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
@@ -101,12 +102,14 @@ void _registerTelemetry() {
   sl.registerLazySingleton<ObserverTelemetryUseCase>(() => ObserverTelemetryUseCase(sl()));
   sl.registerLazySingleton<ObserverTelemetryStatusUseCase>(() => ObserverTelemetryStatusUseCase(sl()));
   sl.registerLazySingleton<StartTelemetryStreamUseCase>(() => StartTelemetryStreamUseCase(sl()));
+  sl.registerLazySingleton<StopTelemetryStreamUseCase>(() => StopTelemetryStreamUseCase(sl()));
 }
 
 void _registerBlocs() {
   // Blocs: choose lifecycle (singleton vs factory). TelemetryBloc is a singleton so others share its stream.
   sl.registerLazySingleton<TelemetryBloc>(() => TelemetryBloc(
         sl<StartTelemetryStreamUseCase>(),
+        sl<StopTelemetryStreamUseCase>(),
         sl<ObserverTelemetryUseCase>(),
         sl<ObserverTelemetryStatusUseCase>(),
       ));

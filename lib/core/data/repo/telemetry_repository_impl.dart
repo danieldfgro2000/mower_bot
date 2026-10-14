@@ -45,6 +45,13 @@ class TelemetryRepositoryImpl implements TelemetryRepository {
   }
 
   @override
+  Future<void> stopTelemetry() async {
+    final subscription = _messageSubscription;
+    _messageSubscription = null;
+    await subscription?.cancel();
+  }
+
+  @override
   Stream<TelemetryDataModel> observeTelemetry() => _telemetryDataCtrl.stream;
 
   @override
