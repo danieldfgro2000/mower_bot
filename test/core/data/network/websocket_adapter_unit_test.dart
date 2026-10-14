@@ -89,6 +89,90 @@ void main() {
       expect(reconnectCalled, 1);
     });
 
+    test('manual close during backoff cancels reconnect', () async {
+      var reconnectCalled = 0;
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: true,
+          retry1sec: Duration(milliseconds: 40),
+          retry5sec: Duration(milliseconds: 40),
+        ),
+        tcpProbe: (_) async => false,
+      );
+
+      final opening = adapter.openWebsocketChannel(
+        uri: Uri.parse('ws://127.0.0.1:1234'),
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => reconnectCalled++,
+      );
+      await Future<void>.delayed(Duration.zero);
+
+      await adapter.close(manuallyClosed: true);
+      await opening;
+      await adapter.dispose();
+
+      expect(reconnectCalled, 0);
+    });
+
+    test('dispose during backoff cancels reconnect', () async {
+      var reconnectCalled = 0;
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: true,
+          retry1sec: Duration(milliseconds: 40),
+          retry5sec: Duration(milliseconds: 40),
+        ),
+        tcpProbe: (_) async => false,
+      );
+
+      final opening = adapter.openWebsocketChannel(
+        uri: Uri.parse('ws://127.0.0.1:1234'),
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => reconnectCalled++,
+      );
+      await Future<void>.delayed(Duration.zero);
+
+      await adapter.dispose();
+      await opening;
+
+      expect(reconnectCalled, 0);
+    });
+
+    test('replacement open invalidates the prior reconnect callback', () async {
+      var firstReconnects = 0;
+      var secondReconnects = 0;
+      final adapter = WebSocketAdapter(
+        config: const WebSocketConfig(
+          enableReachability: true,
+          retry1sec: Duration(milliseconds: 40),
+          retry5sec: Duration(milliseconds: 40),
+        ),
+        tcpProbe: (_) async => false,
+      );
+
+      final firstOpening = adapter.openWebsocketChannel(
+        uri: Uri.parse('ws://127.0.0.1:1234'),
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => firstReconnects++,
+      );
+      await Future<void>.delayed(Duration.zero);
+      final secondOpening = adapter.openWebsocketChannel(
+        uri: Uri.parse('ws://127.0.0.1:5678'),
+        onError: (_, [__]) {},
+        onConnectionChanged: (_) {},
+        onReconnect: () => secondReconnects++,
+      );
+
+      await Future.wait([firstOpening, secondOpening]);
+      await adapter.dispose();
+
+      expect(firstReconnects, 0);
+      expect(secondReconnects, 1);
+    });
+
     test('max reconnect attempts halts reconnecting and reports an error', () async {
       final adapter = WebSocketAdapter(
         config: const WebSocketConfig(

@@ -424,6 +424,26 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   passed 197 tests and retained only the known dev-DI mismatch;
   repository-wide analysis retained the same 20 unrelated diagnostics.
 
+**2026-10-14 - R6 cancellable reconnect backoff**
+
+- Scope and acceptance: a pending reconnect callback must be invalidated by
+  manual close, adapter disposal, or a replacement open/endpoint. Retry limits,
+  backoff calculation, command replay, and reconnect after an established
+  stream closes were intentionally unchanged in this slice.
+- Baseline: the WebSocket adapter unit tests passed all 5 existing tests before
+  this slice.
+- Red: each of the three new regressions observed one stale reconnect callback
+  after its invalidation boundary.
+- Green/refactor: the adapter now owns one reconnect timer and its completion;
+  canceling it also completes the waiting open operation. A new open replaces
+  any prior timer, while close and dispose cancel it. The focused adapter suite
+  passed all 8 tests, and the affected transport/repository selection passed
+  all 25 tests.
+- Broader validation: targeted analysis retained only the two known
+  pre-existing diagnostics in the affected files. The full suite passed 200
+  tests and retained only the known dev-DI mismatch; repository-wide analysis
+  retained the same 20 unrelated diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small

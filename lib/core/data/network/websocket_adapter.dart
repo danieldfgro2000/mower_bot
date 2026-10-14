@@ -34,6 +34,8 @@ class WebSocketAdapter {
   bool _manuallyClosed = false;
 
   int _reconnectAttempts = 0;
+  Timer? _reconnectTimer;
+  Completer<void>? _reconnectCompleter;
 
   final _jsonCtrl = StreamController<JsonMap>.broadcast();
   final _binaryCtrl = StreamController<Uint8List>.broadcast();
@@ -51,6 +53,7 @@ class WebSocketAdapter {
     required ConnectionChanged onConnectionChanged,
     required VoidCallback onReconnect,
   }) async {
+    _cancelScheduledReconnect();
     _manuallyClosed = false;
 
     _lastUri = uri ?? _lastUri;
@@ -147,6 +150,7 @@ class WebSocketAdapter {
 
   Future<void> close({bool manuallyClosed = false}) async {
     _manuallyClosed = manuallyClosed;
+    _cancelScheduledReconnect();
     _webSocketChannel?.sink.close(WebSocketStatus.normalClosure);
     _webSocketChannel = null;
     _isOpen = false;
@@ -190,7 +194,7 @@ class WebSocketAdapter {
     ConnectionChanged onConnectionChanged,
     ErrorHandler onError,
   ) async {
-    if (_manuallyClosed) {
+    if (_manuallyClosed || _isDisposed) {
       if (kDebugMode) print("[WS] manually closed: $_manuallyClosed)");
       return;
     }
@@ -216,7 +220,33 @@ class WebSocketAdapter {
       );
     }
 
-    await Future.delayed(delay, onReconnect);
+    final completer = Completer<void>();
+    _reconnectCompleter = completer;
+    _reconnectTimer = Timer(delay, () {
+      _reconnectTimer = null;
+      _reconnectCompleter = null;
+      if (_manuallyClosed || _isDisposed) {
+        completer.complete();
+        return;
+      }
+      try {
+        onReconnect();
+        completer.complete();
+      } catch (error, stackTrace) {
+        completer.completeError(error, stackTrace);
+      }
+    });
+    await completer.future;
+  }
+
+  void _cancelScheduledReconnect() {
+    _reconnectTimer?.cancel();
+    _reconnectTimer = null;
+    final completer = _reconnectCompleter;
+    _reconnectCompleter = null;
+    if (completer != null && !completer.isCompleted) {
+      completer.complete();
+    }
   }
 
   Duration _nextBackoff(Duration minDelay, Duration maxDelay, int attempt) {
