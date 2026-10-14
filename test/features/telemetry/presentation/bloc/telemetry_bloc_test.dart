@@ -140,6 +140,27 @@ void main() {
     );
 
     blocTest<TelemetryBloc, TelemetryState>(
+      'preserves absent telemetry age separately from measured zero',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(() => observeStatus()).thenAnswer(
+          (_) => Stream<MowerStatusModel>.value(_statusWithAge(null)),
+        );
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      act: (bloc) => bloc.add(StartTelemetry()),
+      expect: () => [
+        isA<TelemetryLoading>(),
+        isA<MegaTelemetryStatus>().having(
+          (state) => state.ageMs,
+          'ageMs',
+          isNull,
+        ),
+      ],
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
       'StopTelemetry cancels subscriptions and returns to initial',
       build: () {
         when(() => start.call()).thenAnswer((_) async {});
@@ -299,7 +320,7 @@ void main() {
   });
 }
 
-MowerStatusModel _statusWithAge(int ageMs) => MowerStatusModel(
+MowerStatusModel _statusWithAge(int? ageMs) => MowerStatusModel(
       uptimeMs: 1,
       wifi: const WiFiInfoModel(connected: true, ip: '192.168.4.1'),
       ws: const WsInfoModel(clients: 1),

@@ -384,6 +384,46 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   known dev-DI mismatch; repository-wide analysis retained the same 20
   unrelated diagnostics.
 
+**2026-10-14 - R8 absent telemetry age semantics**
+
+- Scope and acceptance: an absent domain `ageMs` must remain distinct from
+  measured zero through the telemetry event/state boundary and render as
+  unavailable; present values must be labeled in milliseconds. Malformed and
+  stale classifications remain separate future work.
+- Baseline: the telemetry BLoC and event tests passed all 14 existing tests
+  before this slice.
+- Red: the BLoC regression received `-1` instead of `null`; widget regressions
+  found neither `Age: Unavailable` nor the expected millisecond label because
+  the page rendered nullable/present values as minutes.
+- Green/refactor: telemetry status events and states now carry nullable
+  `ageMs`, the BLoC preserves the domain value, and the page renders absent age
+  as unavailable and present age in milliseconds. The focused BLoC, event, and
+  widget selection passed all 17 tests; the full affected telemetry and
+  connection-consumer selection passed all 37 tests; changed-file analysis
+  passed.
+- Broader validation: the full suite passed 196 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 20
+  unrelated diagnostics.
+
+**2026-10-14 - R10 connection-state diagnostic redaction**
+
+- Scope and acceptance: AP credentials stored in connection state must not
+  appear in its diagnostic diff projection or `MowerBlocObserver` output.
+  Synthetic markers were used in tests. Credential configuration/defaults and
+  arbitrary error-payload redaction remain separate decisions.
+- Baseline: the connection-state and shared diff utility tests passed all 7
+  existing tests before this slice.
+- Red: the state regression found the credential field in `toDiffMap()`, and
+  captured observer output contained the synthetic next-credential marker.
+- Green/refactor: the diagnostic projection no longer contains `apPassword`;
+  connection state, equality, copying, and join behavior remain unchanged. The
+  focused state/diff/observer selection passed all 8 tests, and the affected
+  connection/diagnostics selection passed all 30 tests.
+- Broader validation: targeted analysis retained only the known pre-existing
+  `unnecessary_this` diagnostic in the touched state file. The full suite
+  passed 197 tests and retained only the known dev-DI mismatch;
+  repository-wide analysis retained the same 20 unrelated diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small

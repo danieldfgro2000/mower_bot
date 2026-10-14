@@ -49,7 +49,8 @@ void main() {
       expect(next.apPassword, 'Y');
     });
 
-    test('props/toDiffMap includes all fields', () {
+    test('diagnostic diff map excludes AP credentials', () {
+      const credentialMarker = 'test-credential-marker';
       const s = MowerConnectionState(
         connectionStatus: ConnectionStatus.videoWsConnected,
         wifiMode: ESP32WiFiMode.ap,
@@ -59,7 +60,7 @@ void main() {
         error: 'err',
         detectedApSsid: 'ssid',
         apSsid: 'ap',
-        apPassword: 'pw',
+        apPassword: credentialMarker,
       );
 
       // Equatable uses props; equality sanity check.
@@ -74,8 +75,8 @@ void main() {
       expect(m['error'], 'err');
       expect(m['detectedApSsid'], 'ssid');
       expect(m['apSsid'], 'ap');
-      expect(m['apPassword'], 'pw');
+      expect(m.containsKey('apPassword'), isFalse);
+      expect(m.values, isNot(contains(credentialMarker)));
     });
   });
 }
-

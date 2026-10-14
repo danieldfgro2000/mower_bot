@@ -52,7 +52,7 @@ class TelemetryError extends TelemetryState {
 
 class MegaTelemetryStatus extends TelemetryState {
   final bool received;
-  final int ageMs;
+  final int? ageMs;
   final bool ok;
 
   MegaTelemetryStatus({

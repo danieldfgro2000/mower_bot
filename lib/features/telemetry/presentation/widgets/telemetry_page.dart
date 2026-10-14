@@ -67,7 +67,7 @@ class _TelemetryPageState extends State<TelemetryPage> {
                             Text(
                                 textAlign: TextAlign.right,
                                 textScaler: TextScaler.linear(0.8),
-                                'Age:         $ageMs min'),
+                                'Age: ${ageMs == null ? "Unavailable" : "$ageMs ms"}'),
                             Text(
                                 textAlign: TextAlign.right,
                                 textScaler: TextScaler.linear(0.8),

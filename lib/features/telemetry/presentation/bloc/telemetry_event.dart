@@ -32,7 +32,7 @@ class TelemetryStreamFailed extends TelemetryEvent {
 
 class MegaTelemetryStatusUpdated extends TelemetryEvent {
   final bool received;
-  final int ageMs;
+  final int? ageMs;
   final bool ok;
 
   MegaTelemetryStatusUpdated({

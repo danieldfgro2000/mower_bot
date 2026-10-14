@@ -86,6 +86,5 @@ class MowerConnectionState extends Equatable implements DiffableState {
         'error': error,
         'detectedApSsid': detectedApSsid,
         'apSsid': apSsid,
-        'apPassword': apPassword,
       };
 }
