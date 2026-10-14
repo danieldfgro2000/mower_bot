@@ -63,9 +63,7 @@ class TelemetryBloc extends Bloc<TelemetryEvent, TelemetryState> {
           (status) => add(
             MegaTelemetryStatusUpdated(
               received: status.telemetryAge.received,
-              ageMs: (status.telemetryAge.ageMs ?? -1) > 0
-                  ? (status.telemetryAge.ageMs! / 60000).toInt()
-                  : -1,
+              ageMs: status.telemetryAge.ageMs ?? -1,
               ok: status.telemetryAge.ok,
             ),
           ),

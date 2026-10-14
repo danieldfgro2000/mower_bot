@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mower_bot/features/connection/domain/model/mower_status_model.dart';
+import 'package:mower_bot/features/connection/domain/model/telemetry_age_model.dart';
+import 'package:mower_bot/features/connection/domain/model/wifi_info_model.dart';
+import 'package:mower_bot/features/connection/domain/model/ws_info_model.dart';
 import 'package:mower_bot/features/telemetry/domain/model/telemetry_data_model.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observe_telemetry_status_use_case.dart';
 import 'package:mower_bot/features/telemetry/domain/usecases/observer_telemetry_use_case.dart';
@@ -108,6 +111,31 @@ void main() {
       expect: () => [
         isA<TelemetryLoading>(),
         isA<MegaTelemetryStatus>(),
+      ],
+    );
+
+    blocTest<TelemetryBloc, TelemetryState>(
+      'preserves positive and zero telemetry age in milliseconds',
+      build: () {
+        when(() => start.call()).thenAnswer((_) async {});
+        when(() => observe()).thenAnswer((_) => const Stream<TelemetryDataModel>.empty());
+        when(() => observeStatus()).thenAnswer(
+          (_) => Stream<MowerStatusModel>.fromIterable([
+            _statusWithAge(120000),
+            _statusWithAge(0),
+          ]),
+        );
+        return TelemetryBloc(start, stop, observe, observeStatus);
+      },
+      act: (bloc) => bloc.add(StartTelemetry()),
+      expect: () => [
+        isA<TelemetryLoading>(),
+        isA<MegaTelemetryStatus>().having(
+          (state) => state.ageMs,
+          'ageMs',
+          120000,
+        ),
+        isA<MegaTelemetryStatus>().having((state) => state.ageMs, 'ageMs', 0),
       ],
     );
 
@@ -270,3 +298,10 @@ void main() {
     });
   });
 }
+
+MowerStatusModel _statusWithAge(int ageMs) => MowerStatusModel(
+      uptimeMs: 1,
+      wifi: const WiFiInfoModel(connected: true, ip: '192.168.4.1'),
+      ws: const WsInfoModel(clients: 1),
+      telemetryAge: TelemetryAgeModel(received: true, ageMs: ageMs, ok: true),
+    );

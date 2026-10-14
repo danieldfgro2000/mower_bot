@@ -367,6 +367,23 @@ Firmware-dependent safety guarantees remain separately gated, not "fixed" by UI.
   known dev-DI mismatch; repository-wide analysis retained the same 20
   unrelated diagnostics.
 
+**2026-10-14 - R8 telemetry age unit preservation**
+
+- Scope and acceptance: a status-stream `ageMs` value must remain milliseconds,
+  including valid zero; absent age continues to use the existing `-1` UI
+  sentinel in this slice.
+- Baseline: the telemetry BLoC tests passed all 9 existing tests before this
+  slice.
+- Red: `120000 ms` was emitted as `2`, while valid `0 ms` was collapsed to
+  `-1`.
+- Green/refactor: the BLoC now forwards the nullable domain age directly,
+  substituting `-1` only when absent. The focused BLoC selection passed all 10
+  tests; the telemetry and connection consumer selection passed all 34 tests;
+  changed-file analysis passed.
+- Broader validation: the full suite passed 193 tests and retained only the
+  known dev-DI mismatch; repository-wide analysis retained the same 20
+  unrelated diagnostics.
+
 ### Phase 2 - Repair dependency direction and move by owner
 
 First establish passing wire/behavior characterization tests and write a small
