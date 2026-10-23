@@ -15,6 +15,7 @@ narrowest applicable scope below.
 | Flutter UI, BLoCs, use cases, repositories, local checks | [Flutter development](flutter/development.md) |
 | App implementation review and proposed module/package improvements | [App improvement plan](flutter/implementation-improvement-plan.md) |
 | ESP32/Mega ownership, wire/storage contracts, build prerequisites | [Firmware development](firmware/development.md) |
+| Stage 1–2 prototype materials and sourcing research | [Stage 1–2 BOM](engineering/stage-1-2-bom.md) |
 
 There is no Firebase/backend, OTA deployment, or PlatformIO workflow configured
 in this repository. Do not infer one from Bee Hive Monitor or installed skills.
