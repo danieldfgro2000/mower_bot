@@ -1,31 +1,100 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/path_event.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/path_state.dart';
 import 'package:mower_bot/features/paths/presentation/bloc/paths_bloc.dart';
 
-class PathsPage extends StatelessWidget {
+class PathsPage extends StatefulWidget {
   static const String routeName = '/paths';
 
   const PathsPage({super.key});
 
   @override
+  State<PathsPage> createState() => _PathsPageState();
+}
+
+class _PathsPageState extends State<PathsPage> {
+  bool _isActive = false;
+  late final RouteInformationProvider _routeInfoProvider;
+  late final VoidCallback _routeListener;
+
+  void _fetchPaths() {
+    context.read<PathBloc>().add(FetchPaths());
+  }
+
+  void _syncActiveFromRoute() {
+    final location = _routeInfoProvider.value.uri.toString();
+    final nowActive = location.startsWith(PathsPage.routeName);
+
+    if (nowActive && !_isActive) {
+      _isActive = true;
+      _fetchPaths();
+    } else if (!nowActive && _isActive) {
+      _isActive = false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final router = GoRouter.of(context);
+    _routeInfoProvider = router.routeInformationProvider;
+    _routeListener = _syncActiveFromRoute;
+    _routeInfoProvider.addListener(_routeListener);
+
+    // Evaluate immediately so an initial /paths route also refreshes.
+    _syncActiveFromRoute();
+  }
+
+  @override
+  void dispose() {
+    _routeInfoProvider.removeListener(_routeListener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final pathsBloc = context.read<PathBloc>();
     return BlocBuilder<PathBloc, PathState>(
-        builder: (context, state) {
-          switch (state) {
-            case PathInitial():
-              pathsBloc.add(FetchPaths());
-              return const Center(child: CircularProgressIndicator());
-            case PathLoading():
-              return const Center(child: CircularProgressIndicator());
-            case PathLoaded():
-              if (state.paths.isEmpty) {
-                return const Center(child: Text('No saved paths'));
-              }
-              return ListView.builder(
+      builder: (context, state) {
+        return switch (state) {
+          PathInitial() ||
+          PathLoading() => const Center(child: CircularProgressIndicator()),
+          PathLoaded() => _PathList(state: state, pathsBloc: pathsBloc),
+          PathError() => Center(child: Text('Error: ${state.message}')),
+          _ => const SizedBox.shrink(),
+        };
+      },
+    );
+  }
+}
+
+class _PathList extends StatelessWidget {
+  final PathLoaded state;
+  final PathBloc pathsBloc;
+
+  const _PathList({required this.state, required this.pathsBloc});
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      if (state.errorMessage case final error?)
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(error, style: const TextStyle(color: Colors.red)),
+        ),
+      if (state.commandMessage case final message?)
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(message, style: const TextStyle(color: Colors.amber)),
+        ),
+      Expanded(
+        child: state.paths.isEmpty
+            ? const Center(child: Text('No saved paths'))
+            : ListView.builder(
                 itemCount: state.paths.length,
                 itemBuilder: (context, index) {
                   final name = state.paths[index];
@@ -37,32 +106,27 @@ class PathsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            onPressed: () => pathsBloc.add(PlayPath(name)),
-                            icon: Icon(isActive? Icons.pause : Icons.play_arrow),
-                          ),
-                          if(isActive)
-                            IconButton(
-                              onPressed: () => pathsBloc.add(StopPath(name)),
-                              icon: Icon(Icons.stop),
+                            onPressed: () => isActive
+                                ? pathsBloc.add(StopPath(name))
+                                : pathsBloc.add(PlayPath(name)),
+                            icon: Icon(
+                              isActive ? Icons.stop : Icons.play_arrow,
                             ),
+                          ),
                           IconButton(
                             onPressed: () =>
                                 _confirmDelete(context, name, pathsBloc),
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                           ),
                         ],
                       ),
                     ),
                   );
                 },
-              );
-            case PathError():
-              return Center(child: Text('Error: ${state.message}'));
-          }
-          return const SizedBox.shrink();
-        },
-    );
-  }
+              ),
+      ),
+    ],
+  );
 }
 
 void _confirmDelete(BuildContext context, String name, PathBloc pathsBloc) {
@@ -70,13 +134,14 @@ void _confirmDelete(BuildContext context, String name, PathBloc pathsBloc) {
     context: context,
     builder: (context) => CupertinoAlertDialog(
       title: const Text('Delete path'),
-      content: Text('Are you sure you want to delete the path "$name"?'),
+      content: Text('Are you sure you want to delete "$name"?'),
       actions: [
         CupertinoDialogAction(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
         CupertinoDialogAction(
+          isDestructiveAction: true,
           onPressed: () {
             pathsBloc.add(DeletePath(name));
             Navigator.of(context).pop();

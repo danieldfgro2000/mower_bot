@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/error/error.dart';
+import 'package:mower_bot/core/error/error_ui.dart';
 
 /// Global error interceptor that catches unhandled exceptions
 class GlobalErrorInterceptor {
-  static final GlobalErrorInterceptor _instance = GlobalErrorInterceptor._internal();
+  static final GlobalErrorInterceptor _instance =
+      GlobalErrorInterceptor._internal();
   factory GlobalErrorInterceptor() => _instance;
   GlobalErrorInterceptor._internal();
 

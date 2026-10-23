@@ -1,10 +1,14 @@
 import 'package:equatable/equatable.dart';
+import '../../../../core/diffable_state.dart';
 
-abstract class PathState extends Equatable {
+abstract class PathState extends Equatable implements DiffableState {
   const PathState();
 
   @override
   List<Object?> get props => [];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {'_type': runtimeType.toString()};
 }
 
 class PathInitial extends PathState {}
@@ -14,11 +18,28 @@ class PathLoading extends PathState {}
 class PathLoaded extends PathState {
   final List<String> paths;
   final String? activePath;
+  final String? commandMessage;
+  final String? errorMessage;
 
-  const PathLoaded(this.paths, {required this.activePath});
+  const PathLoaded(
+    this.paths, {
+    required this.activePath,
+    this.commandMessage,
+    this.errorMessage,
+  });
 
   @override
-  List<Object?> get props => [paths, activePath];
+  List<Object?> get props => [paths, activePath, commandMessage, errorMessage];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {
+    ...super.toDiffMap(),
+    'pathsCount': paths.length,
+    'pathsPreview': paths.take(3).join(','),
+    'activePath': activePath,
+    'commandMessage': commandMessage,
+    'errorMessage': errorMessage,
+  };
 }
 
 class PathError extends PathState {
@@ -28,4 +49,7 @@ class PathError extends PathState {
 
   @override
   List<Object?> get props => [message];
+
+  @override
+  Map<String, dynamic> toDiffMap() => {...super.toDiffMap(), 'error': message};
 }

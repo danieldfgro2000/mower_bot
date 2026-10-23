@@ -18,31 +18,39 @@ class _ConnectionButtonState extends State<ConnectionButton> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
-      buildWhen: (p, n) => p.connectionStatus != n.connectionStatus ||
+      buildWhen: (p, n) =>
+          p.connectionStatus != n.connectionStatus ||
           p.ip != n.ip ||
           p.port != n.port,
       builder: (context, state) {
         isBusy = state.connectionStatus == ConnectionStatus.connecting;
-        isConnected = state.connectionStatus == ConnectionStatus.ctrlWsConnected;
-        return ElevatedButton.icon(
-          onPressed: isBusy
-            ? null
-            :_handleOnPressed,
-          icon: Icon(isConnected ? Icons.wifi : Icons.wifi_off),
-          label: Text(isConnected ? 'Disconnect' : 'Connect'),
+        isConnected =
+            state.connectionStatus == ConnectionStatus.ctrlWsConnected;
+
+        final icon = isConnected ? Icons.link_off : Icons.link;
+        final label = isConnected
+            ? 'Disconnect WebSocket'
+            : 'Connect WebSocket';
+
+        return FilledButton.icon(
+          onPressed: isBusy ? null : _handleOnPressed,
+          icon: Icon(icon),
+          label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
         );
-      });
+      },
+    );
   }
 
   void _handleOnPressed() {
-    if(!widget.formKey.currentState!.validate()) return;
+    // In AP mode we intentionally don't render the form, so the key won't have a currentState.
+    // Only validate if a form is currently mounted.
+    final formState = widget.formKey.currentState;
+    if (formState != null && !formState.validate()) return;
 
     final event = context.read<MowerConnectionBloc>().add;
     isConnected
-      ? event(DisconnectFromMower())
-      : event(ConnectToMower());
+        ? event(DisconnectFromMower())
+        : event(ConnectToControlWebsocketMower());
   }
 }

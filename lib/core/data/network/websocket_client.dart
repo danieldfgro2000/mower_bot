@@ -3,7 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:mower_bot/core/data/network/websocket_adapter.dart';
-import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
+import 'package:mower_bot/core/data/network/websocket_config.dart';
+import 'package:mower_bot/core/device/model/connection_status.dart';
 
 typedef MessageHandler = void Function(Map<String, dynamic> message);
 typedef JsonMap = Map<String, dynamic>;
@@ -13,13 +14,13 @@ abstract class IWebSocketClient {
 
   void setEndpoint(Uri uri);
 
-  Future<void> connect();
+  Future<void> connect({bool fromReconnect = false});
 
   Future<void> disconnect();
 
-  void send(Map<String, dynamic> message);
+  bool send(Map<String, dynamic> message);
 
-  void dispose();
+  Future<void> dispose();
 
   Stream<Map<String, dynamic>> get messages;
 
@@ -51,9 +52,11 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
   void setEndpoint(Uri uri) => _endpoint = uri;
 
   @override
-  Future<void> connect() async {
+  Future<void> connect({bool fromReconnect = false}) async {
     if (isConnected) return;
-    if (_endpoint == null) throw StateError('$runtimeType: endpoint is not set');
+    if (_endpoint == null) {
+      throw StateError('$runtimeType: endpoint is not set');
+    }
 
     _jsonSub ??= _websocketAdapter.json.listen(
       _jsonCtrl.add,
@@ -74,28 +77,31 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
       await _websocketAdapter.close(manuallyClosed: true);
 
   @override
-  void dispose() {
-    _jsonSub?.cancel();
+  Future<void> dispose() async {
+    await _jsonSub?.cancel();
     _jsonSub = null;
-    _jsonCtrl.close();
-    _connectionChanges.close();
-    _websocketAdapter.dispose();
+    await _jsonCtrl.close();
+    await _connectionChanges.close();
+    await _websocketAdapter.dispose();
   }
 
   @override
   bool get isConnected => _websocketAdapter.isOpen;
 
+  WebSocketConfig get config => _websocketAdapter.wscfg;
+
   @override
-  void send(JsonMap message) {
+  bool send(JsonMap message) {
     if (!isConnected) {
       if (kDebugMode) {
         print(
           "WS[${runtimeType.toString()}]: send attempted while not connected, cannot send message: $message",
         );
       }
-      return;
+      return false;
     }
     _websocketAdapter.sendText(jsonEncode(message));
+    return true;
   }
 
   @override
@@ -106,14 +112,19 @@ abstract class BaseWebSocketClient implements IWebSocketClient {
 }
 
 class ControlWebSocketClient extends BaseWebSocketClient {
-  ControlWebSocketClient({WebSocketAdapter? adapter})
-    : super(adapter ?? WebSocketAdapter(), payloadMode: WsPayloadMode.jsonOnly);
+  ControlWebSocketClient({WebSocketAdapter? adapter, WebSocketConfig? config})
+    : assert(adapter == null || config == null),
+      super(
+        adapter ?? WebSocketAdapter(config: config),
+        payloadMode: WsPayloadMode.jsonOnly,
+      );
 }
 
 class BinaryWebSocketClient extends BaseWebSocketClient {
-  BinaryWebSocketClient({WebSocketAdapter? adapter})
-    : super(
-        adapter ?? WebSocketAdapter(),
+  BinaryWebSocketClient({WebSocketAdapter? adapter, WebSocketConfig? config})
+    : assert(adapter == null || config == null),
+      super(
+        adapter ?? WebSocketAdapter(config: config),
         payloadMode: WsPayloadMode.jsonAndBinary,
       );
 

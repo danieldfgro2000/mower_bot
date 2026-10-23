@@ -1,7 +1,6 @@
-
 import 'package:equatable/equatable.dart';
 
-class TelemetryDataModel extends Equatable{
+class TelemetryDataModel extends Equatable {
   final double wheelAngle;
   final double opticalAngle;
   final double distanceTraveled;

@@ -5,6 +5,7 @@ enum MessageTopic {
   controlAck,
   pathList,
   pathEvent,
+  pathDiag,
   heartbeat,
   camera,
   unknown,
@@ -24,6 +25,8 @@ MessageTopic topicFromString(String topic) {
       return MessageTopic.pathList;
     case 'pathEvent':
       return MessageTopic.pathEvent;
+    case 'pathDiag':
+      return MessageTopic.pathDiag;
     case 'heartbeat':
       return MessageTopic.heartbeat;
     case 'camera':
@@ -37,10 +40,7 @@ class MessageEnvelope {
   final MessageTopic topic;
   final Map<String, dynamic> data;
 
-  MessageEnvelope({
-    required this.topic,
-    required this.data,
-  });
+  MessageEnvelope({required this.topic, required this.data});
 
   factory MessageEnvelope.fromJson(Map<String, dynamic> json) {
     return MessageEnvelope(
@@ -50,10 +50,7 @@ class MessageEnvelope {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'topic': topic.name,
-      'data': data,
-    };
+    return {'topic': topic.name, 'data': data};
   }
 
   @override

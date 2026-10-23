@@ -12,12 +12,21 @@ volatile long turnCount = 0;
 unsigned long lastUpdate = 0;
 float wheelSpeed = 0.0;
 
+// Debounce for the turn encoder pulses at ISR level to reduce noise at hard stops
+static volatile unsigned long g_turnDebounceUs = 5000; // default 5ms, adjustable
+static volatile unsigned long g_lastTurnPulseUs = 0;
+
 void distISR() {
   distCount ++;
 }
 
 void turnISR() {
-  turnCount ++;
+  unsigned long nowUs = micros();
+  // simple debounce: accept pulse only if enough time passed
+  if ((nowUs - g_lastTurnPulseUs) >= g_turnDebounceUs) {
+    turnCount ++;
+    g_lastTurnPulseUs = nowUs;
+  }
 }
 
 void wheelTelemetryInit() {
@@ -29,6 +38,7 @@ void wheelTelemetryInit() {
 
   distCount = 0;
   turnCount = 0;
+  g_lastTurnPulseUs = micros();
 }
 
 void wheelTelemetryUpdate() {
@@ -65,4 +75,27 @@ float wheelGetAngle() {
 void wheelReset() {
   distCount = 0;
   turnCount = 0;
+}
+
+// New getter for raw turn encoder count
+long wheelGetTurnCount() {
+  noInterrupts();
+  long val = turnCount;
+  interrupts();
+  return val;
+}
+
+int wheelGetAnglePPR() { return anglePPR; }
+
+void wheelSetTurnDebounceMicros(unsigned long us) {
+  noInterrupts();
+  g_turnDebounceUs = us;
+  interrupts();
+}
+
+unsigned long wheelGetTurnDebounceMicros() {
+  noInterrupts();
+  unsigned long v = g_turnDebounceUs;
+  interrupts();
+  return v;
 }

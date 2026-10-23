@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-import 'package:mower_bot/features/control/presentation/bloc/control_bloc.dart';
-import 'package:mower_bot/features/control/presentation/bloc/control_event.dart';
-import 'package:mower_bot/features/control/presentation/bloc/control_state.dart';
+import 'package:mower_bot/features/control/presentation/bloc/camera_cubit.dart';
+import 'package:mower_bot/features/control/presentation/bloc/camera_state.dart';
 
 class EspMjpegWebView extends StatefulWidget {
   const EspMjpegWebView({super.key});
@@ -18,18 +17,21 @@ class EspMjpegWebView extends StatefulWidget {
 class _EspMjpegWebViewState extends State<EspMjpegWebView>
     with WidgetsBindingObserver {
   InAppWebViewController? _controller;
-  late final ControlBloc _bloc;
+  late final CameraCubit _cameraCubit;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _bloc = context.read<ControlBloc>();
-    _bloc.add(GetVideoStreamUrl());
+    _cameraCubit = context.read<CameraCubit>();
+    _cameraCubit.refresh();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _cameraCubit.refresh();
+    }
     if (state == AppLifecycleState.resumed && _controller != null) {
       // Re-apply last URL if we were using the /stream shell
       _controller!.reload();
@@ -39,11 +41,9 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ControlBloc, ControlState>(
-      buildWhen: (prev, next) =>
-      prev.videoStreamUrl != next.videoStreamUrl,
+    return BlocBuilder<CameraCubit, CameraState>(
       builder: (context, state) {
-        final videoStreamUrl = state.videoStreamUrl;
+        final videoStreamUrl = state.streamUrl;
 
         if (videoStreamUrl == null || videoStreamUrl.isEmpty) {
           return const Center(child: Text('No video stream'));
@@ -51,6 +51,7 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
 
         return SafeArea(
           child: InAppWebView(
+            key: ValueKey(videoStreamUrl),
             initialSettings: InAppWebViewSettings(
               javaScriptEnabled: true,
               domStorageEnabled: true,
@@ -67,7 +68,8 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
             initialUrlRequest: URLRequest(url: WebUri(videoStreamUrl)),
             onWebViewCreated: (c) => _controller = c,
             onLoadStop: (controller, url) async {
-              await controller.evaluateJavascript(source: '''
+              await controller.evaluateJavascript(
+                source: '''
               (function(){
                 try {
                   // Start video stream
@@ -94,12 +96,13 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
                   // swallow errors to avoid console spam on transient pages
                 }
               })();
-              ''');
+              ''',
+              );
             },
             onReceivedError: (controller, request, error) async {
               final desc = (error.description).toString();
               if (kDebugMode) {
-                print('WebView error: $desc');
+                debugPrint('WebView error: $desc');
               }
             },
           ),
@@ -107,9 +110,10 @@ class _EspMjpegWebViewState extends State<EspMjpegWebView>
       },
     );
   }
-    @override
-    void dispose() {
-      WidgetsBinding.instance.removeObserver(this);
-      super.dispose();
-    }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
+}

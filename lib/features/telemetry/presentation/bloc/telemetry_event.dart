@@ -6,9 +6,11 @@ abstract class TelemetryEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class StartTelemetry extends TelemetryEvent {}
+abstract class TelemetryLifecycleEvent extends TelemetryEvent {}
 
-class StopTelemetry extends TelemetryEvent {}
+class StartTelemetry extends TelemetryLifecycleEvent {}
+
+class StopTelemetry extends TelemetryLifecycleEvent {}
 
 class TelemetryReceived extends TelemetryEvent {
   final TelemetryDataModel telemetry;
@@ -19,9 +21,24 @@ class TelemetryReceived extends TelemetryEvent {
   List<Object?> get props => [telemetry];
 }
 
+enum TelemetryStreamSource { telemetry, status }
+
+class TelemetryStreamFailed extends TelemetryEvent {
+  final String error;
+  final TelemetryStreamSource source;
+
+  TelemetryStreamFailed(
+    this.error, {
+    this.source = TelemetryStreamSource.telemetry,
+  });
+
+  @override
+  List<Object?> get props => [error, source];
+}
+
 class MegaTelemetryStatusUpdated extends TelemetryEvent {
   final bool received;
-  final int ageMs;
+  final int? ageMs;
   final bool ok;
 
   MegaTelemetryStatusUpdated({

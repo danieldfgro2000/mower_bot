@@ -1,3 +1,4 @@
+import 'package:mower_bot/core/domain/command_submission_result.dart';
 import 'package:mower_bot/features/control/domain/repo/control_repository.dart';
 
 class SendDriveCommandUseCase {
@@ -5,8 +6,6 @@ class SendDriveCommandUseCase {
 
   SendDriveCommandUseCase(this.repository);
 
-  Future<bool> call(Map<String, dynamic> command) async {
-    if (repository.isCtrlWsConnected) await repository.sendDriveCommand(command);
-    return repository.isCtrlWsConnected;
-  }
+  Future<CommandSubmissionResult> call(Map<String, dynamic> command) =>
+      repository.sendDriveCommand(command);
 }

@@ -1,16 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mower_bot/core/platform/permission_rationale_store.dart';
+import 'package:mower_bot/core/platform/platform_settings.dart';
 import 'package:mower_bot/features/connection/presentation/bloc/connection_bloc.dart';
-import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart';
+import 'package:mower_bot/features/connection/presentation/bloc/connection_event.dart'
+    hide WifiScanFailed;
 import 'package:mower_bot/features/connection/presentation/bloc/connection_state.dart';
+import 'package:mower_bot/features/connection/presentation/widgets/wifi_scan.dart';
 
 import 'components/connection_button.dart';
 import 'components/connection_form.dart';
+import 'components/connection_mode_header.dart';
+import 'components/info.dart';
+import 'components/permissions_dialog.dart';
 
 class ConnectionPage extends StatefulWidget {
   static const String routeName = '/connection';
+  final PermissionRationaleStore permissionRationaleStore;
 
-  const ConnectionPage({super.key});
+  const ConnectionPage({super.key, required this.permissionRationaleStore});
 
   @override
   State<ConnectionPage> createState() => _ConnectionPageState();
@@ -18,54 +28,133 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   final _formKey = GlobalKey<FormState>();
+  late final MowerConnectionBloc connectionBloc;
+  bool _permissionDialogOpen = false;
+
+  static const _locationRationaleKey = 'location_when_in_use';
 
   @override
   void initState() {
     super.initState();
-    context.read<MowerConnectionBloc>().add(CheckConnectionStatus());
+    connectionBloc = context.read<MowerConnectionBloc>();
+    connectionBloc.add(CheckConnectionStatus());
+
+    // Wi‑Fi SSID scanning is not generally available on iOS.
+    // Only auto-detect on Android; iOS users can toggle AP/Client manually.
+    if (Platform.isAndroid) {
+      connectionBloc.add(const AutoDetectWifiMode());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenOrientation = MediaQuery.of(context).orientation;
-    return  MultiBlocListener(
+    return MultiBlocListener(
       listeners: [
+        /// Show errors as snack bars.
         BlocListener<MowerConnectionBloc, MowerConnectionState>(
-          listenWhen: (p, c) => p.error  != c.error,
+          listenWhen: (p, c) => p.error != c.error,
           listener: (context, state) {
             String? err = state.error;
             if (err == null || err.isEmpty) return;
             _showSnackBar(context, state.error!, isError: true);
           },
-        )
+        ),
+
+        /// On Android, if the Wi‑Fi scan detects that Location permission is needed,
+        /// show a dialog explaining why and asking to continue to the system permission prompt.
+        BlocListener<MowerConnectionBloc, MowerConnectionState>(
+          listenWhen: (p, c) => p.wifiScanStatus != c.wifiScanStatus,
+          listener: (context, state) async {
+            if (!Platform.isAndroid ||
+                _permissionDialogOpen ||
+                state.wifiScanStatus != WifiScanStatus.needsPermission) {
+              return;
+            }
+
+            final alreadyShown = await widget.permissionRationaleStore.wasShown(
+              _locationRationaleKey,
+            );
+            if (alreadyShown) {
+              // Don't nag again. Proceed as if user declined the rationale.
+              connectionBloc.add(const WifiScanPermissionInfoDeclined());
+              return;
+            }
+
+            _permissionDialogOpen = true;
+            if (!context.mounted) return;
+            final accepted = await isLocationPermissionAccepted(context);
+            await widget.permissionRationaleStore.markShown(
+              _locationRationaleKey,
+            );
+            if (!context.mounted) return;
+
+            accepted
+                ? connectionBloc.add(const WifiScanPermissionInfoAccepted())
+                : connectionBloc.add(const WifiScanPermissionInfoDeclined());
+
+            _permissionDialogOpen = false;
+          },
+        ),
       ],
       child: SafeArea(
-          minimum: EdgeInsets.all(16.0),
-          maintainBottomViewPadding: true,
-          child: screenOrientation == Orientation.portrait
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: ConnectionForm(formKey: _formKey),
+        minimum: const EdgeInsets.all(16.0),
+        maintainBottomViewPadding: true,
+        child: BlocBuilder<MowerConnectionBloc, MowerConnectionState>(
+          buildWhen: (p, n) =>
+              p.wifiMode != n.wifiMode || p.wifiScanStatus != n.wifiScanStatus,
+          builder: (context, state) {
+            bool isScanning =
+                Platform.isAndroid &&
+                state.wifiScanStatus == WifiScanStatus.scanning;
+            if (isScanning) {
+              return WifiScanLoading(
+                onOpenWifiSettings: PlatformSettings.openWifiSettings,
+                onCancel: () {
+                  connectionBloc.add(const WifiScanTimedOut());
+                  connectionBloc.add(
+                    const ChangeWiFiMode(ESP32WiFiMode.client),
+                  );
+                },
+              );
+            }
+
+            bool hasScanFailed =
+                Platform.isAndroid &&
+                state.wifiScanStatus == WifiScanStatus.failed;
+            if (hasScanFailed) {
+              return WifiScanFailed(
+                message: state.error ?? 'Wi‑Fi scan failed.',
+                onOpenLocationSettings:
+                    PlatformSettings.openLocationOrAppPermissionSettings,
+                onOpenWifiSettings: PlatformSettings.openWifiSettings,
+                onRetry: () => connectionBloc.add(const AutoDetectWifiMode()),
+                onContinue: () => connectionBloc.add(
+                  const ChangeWiFiMode(ESP32WiFiMode.client),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ConnectionButton(formKey: _formKey),
-            ],
-          )
-              : Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              );
+            }
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Flexible(flex: 1, child: ConnectionForm(formKey: _formKey)),
-                Flexible(child: SizedBox(width: 20)),
-                Flexible(flex: 1, child: ConnectionButton(formKey: _formKey)),
-                Flexible(child: SizedBox(width: 20)),
-              ]
-          )
+                ConnectionModeHeader(
+                  wifiMode: state.wifiMode,
+                  onModeChanged: (mode) =>
+                      connectionBloc.add(ChangeWiFiMode(mode)),
+                  onOpenWifiSettings: PlatformSettings.openWifiSettings,
+                  onRetryScan: Platform.isAndroid
+                      ? () => connectionBloc.add(const AutoDetectWifiMode())
+                      : null,
+                  scanStatus: state.wifiScanStatus,
+                  infoBuilder: (_) => InfoWidget(),
+                ),
+                ConnectionForm(formKey: _formKey),
+                ConnectionButton(formKey: _formKey),
+                const SizedBox(height: 16),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

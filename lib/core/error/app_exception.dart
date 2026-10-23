@@ -1,7 +1,27 @@
+
+enum AppExceptionCode {
+  connectionFailed,
+  timeout,
+  hostUnreachable,
+  connectionLost,
+  invalidMessage,
+  sendFailed,
+  requiredField,
+  invalidField,
+  deviceNotFound,
+  communicationFailed,
+  unauthorized,
+  forbidden,
+  dataNotFound,
+  dataCorrupted,
+  serializationFailed,
+  transformationFailed,
+  unknownError,
+}
 /// Base exception class for all application exceptions
 abstract class AppException implements Exception {
   final String message;
-  final String? code;
+  final AppExceptionCode? code;
   final dynamic originalError;
   final StackTrace? stackTrace;
 
@@ -28,7 +48,7 @@ class NetworkException extends AppException {
   factory NetworkException.connectionFailed(String host, int port, [dynamic error]) {
     return NetworkException(
       message: 'Failed to connect to $host:$port',
-      code: 'CONNECTION_FAILED',
+      code: AppExceptionCode.connectionFailed,
       originalError: error,
     );
   }
@@ -36,7 +56,7 @@ class NetworkException extends AppException {
   factory NetworkException.timeout(String operation, [dynamic error]) {
     return NetworkException(
       message: 'Operation timed out: $operation',
-      code: 'TIMEOUT',
+      code: AppExceptionCode.timeout,
       originalError: error,
     );
   }
@@ -44,7 +64,7 @@ class NetworkException extends AppException {
   factory NetworkException.hostUnreachable(String host, [dynamic error]) {
     return NetworkException(
       message: 'Host unreachable: $host',
-      code: 'HOST_UNREACHABLE',
+      code: AppExceptionCode.hostUnreachable,
       originalError: error,
     );
   }
@@ -62,7 +82,7 @@ class WebSocketException extends AppException {
   factory WebSocketException.connectionLost([dynamic error]) {
     return WebSocketException(
       message: 'WebSocket connection lost',
-      code: 'CONNECTION_LOST',
+      code: AppExceptionCode.connectionLost,
       originalError: error,
     );
   }
@@ -70,7 +90,7 @@ class WebSocketException extends AppException {
   factory WebSocketException.invalidMessage(String reason, [dynamic error]) {
     return WebSocketException(
       message: 'Invalid WebSocket message: $reason',
-      code: 'INVALID_MESSAGE',
+      code: AppExceptionCode.invalidMessage,
       originalError: error,
     );
   }
@@ -78,7 +98,7 @@ class WebSocketException extends AppException {
   factory WebSocketException.sendFailed(String reason, [dynamic error]) {
     return WebSocketException(
       message: 'Failed to send WebSocket message: $reason',
-      code: 'SEND_FAILED',
+      code: AppExceptionCode.sendFailed,
       originalError: error,
     );
   }
@@ -99,7 +119,7 @@ class ValidationException extends AppException {
   factory ValidationException.required(String fieldName) {
     return ValidationException(
       message: '$fieldName is required',
-      code: 'REQUIRED_FIELD',
+      code: AppExceptionCode.requiredField,
       fieldErrors: {fieldName: 'This field is required'},
     );
   }
@@ -107,7 +127,7 @@ class ValidationException extends AppException {
   factory ValidationException.invalid(String fieldName, String reason) {
     return ValidationException(
       message: 'Invalid $fieldName: $reason',
-      code: 'INVALID_FIELD',
+      code: AppExceptionCode.invalidField,
       fieldErrors: {fieldName: reason},
     );
   }
@@ -125,14 +145,14 @@ class DeviceException extends AppException {
   factory DeviceException.notFound(String deviceType) {
     return DeviceException(
       message: '$deviceType not found',
-      code: 'DEVICE_NOT_FOUND',
+      code: AppExceptionCode.deviceNotFound,
     );
   }
 
   factory DeviceException.communicationFailed(String deviceType, [dynamic error]) {
     return DeviceException(
       message: 'Communication failed with $deviceType',
-      code: 'COMMUNICATION_FAILED',
+      code: AppExceptionCode.deviceNotFound,
       originalError: error,
     );
   }
@@ -150,14 +170,14 @@ class AuthException extends AppException {
   factory AuthException.unauthorized() {
     return const AuthException(
       message: 'Unauthorized access',
-      code: 'UNAUTHORIZED',
+      code: AppExceptionCode.unauthorized,
     );
   }
 
   factory AuthException.forbidden() {
     return const AuthException(
       message: 'Access forbidden',
-      code: 'FORBIDDEN',
+      code: AppExceptionCode.forbidden,
     );
   }
 }
@@ -174,14 +194,14 @@ class DataException extends AppException {
   factory DataException.notFound(String resource) {
     return DataException(
       message: '$resource not found',
-      code: 'DATA_NOT_FOUND',
+      code: AppExceptionCode.dataNotFound,
     );
   }
 
   factory DataException.corrupted(String resource, [dynamic error]) {
     return DataException(
       message: 'Data corrupted: $resource',
-      code: 'DATA_CORRUPTED',
+      code: AppExceptionCode.dataCorrupted,
       originalError: error,
     );
   }
@@ -189,7 +209,7 @@ class DataException extends AppException {
   factory DataException.serializationFailed(String operation, [dynamic error]) {
     return DataException(
       message: 'Serialization failed: $operation',
-      code: 'SERIALIZATION_FAILED',
+      code: AppExceptionCode.serializationFailed,
       originalError: error,
     );
   }
@@ -207,7 +227,7 @@ class GenericException extends AppException {
   factory GenericException.unknown(dynamic error, [StackTrace? stackTrace]) {
     return GenericException(
       message: error.toString(),
-      code: 'UNKNOWN_ERROR',
+      code: AppExceptionCode.unknownError,
       originalError: error,
       stackTrace: stackTrace,
     );

@@ -76,9 +76,16 @@ void messagingHandleInput() {
   CommandType cmd = parseCommandKey(doc);
 
   switch (cmd) {
-      case CMD_STEER:
-          steeringSetAngle(doc["data"]["mega"]["angle"].as<float>());
-          break;
+      case CMD_STEER: {
+          // Basic angle command
+          if (doc["data"]["mega"].containsKey("angle")) {
+              steeringSetAngle(doc["data"]["mega"]["angle"].as<float>());
+          }
+          // Adjust homing inactivity window ms
+          if (doc["data"]["mega"].containsKey("homingNoPulseMs")) {
+              steeringSetHomingNoPulseMs(doc["data"]["mega"]["homingNoPulseMs"].as<unsigned long>());
+          }
+          break; }
       case CMD_START:
           actuatorStart(doc["data"]["mega"]["start"].as<bool>());
           break;
@@ -103,14 +110,15 @@ void messagingSendTelemetry() {
 
   StaticJsonDocument<384> doc;
   doc["topic"] = "telemetry";
-  doc["data"]["stepperAngle"] = steeringGetCommandedAngle();
-  doc["data"]["actualAngleFromOptic"] = wheelGetAngle();
-  doc["data"]["distanceTraveled"] = wheelGetDistance();
-  doc["data"]["speed"] = wheelGetSpeed();
   doc["data"]["actuatorDrive"] = actuatorIsDriving();
   doc["data"]["actuatorStart"] = actuatorIsStarted();
-  String json;
-  serializeJson(doc, json);
-  Serial1.println(json);
+  doc["data"]["stepperAngle"] = steeringGetCommandedAngle();
+  doc["data"]["actualAngleFromOptic"] = wheelGetAngle();
+  doc["data"]["limitLeftDeg"] = steeringGetLimitLeftDeg();
+  doc["data"]["limitRightDeg"] = steeringGetLimitRightDeg();
+  doc["data"]["limitLeftSteps"] = steeringGetLimitLeftSteps();
+  doc["data"]["limitRightSteps"] = steeringGetLimitRightSteps();
+  serializeJson(doc, Serial1);
+  Serial1.println();
 //  Serial.println("[MEGA] Sending telemetry: " + json);
 }

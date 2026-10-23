@@ -28,11 +28,11 @@ class ErrorMapper {
 
   String _mapNetworkException(NetworkException exception) {
     switch (exception.code) {
-      case 'CONNECTION_FAILED':
+      case AppExceptionCode.connectionFailed:
         return 'Unable to connect to the mower. Please check your WiFi connection and try again.';
-      case 'TIMEOUT':
+      case AppExceptionCode.timeout:
         return 'Connection timed out. The mower may be out of range or busy.';
-      case 'HOST_UNREACHABLE':
+      case AppExceptionCode.hostUnreachable:
         return 'Mower is not reachable. Please verify the IP address and network connection.';
       default:
         return 'Network error: ${exception.message}';
@@ -41,11 +41,11 @@ class ErrorMapper {
 
   String _mapWebSocketException(WebSocketException exception) {
     switch (exception.code) {
-      case 'CONNECTION_LOST':
+      case AppExceptionCode.connectionLost:
         return 'Connection to mower lost. Attempting to reconnect...';
-      case 'INVALID_MESSAGE':
+      case AppExceptionCode.invalidMessage:
         return 'Received invalid data from mower. Please try again.';
-      case 'SEND_FAILED':
+      case AppExceptionCode.sendFailed:
         return 'Failed to send command to mower. Please check connection.';
       default:
         return 'Communication error: ${exception.message}';
@@ -54,9 +54,9 @@ class ErrorMapper {
 
   String _mapValidationException(ValidationException exception) {
     switch (exception.code) {
-      case 'REQUIRED_FIELD':
+      case AppExceptionCode.requiredField:
         return exception.message;
-      case 'INVALID_FIELD':
+      case AppExceptionCode.invalidField:
         return exception.message;
       default:
         return 'Invalid input: ${exception.message}';
@@ -65,9 +65,9 @@ class ErrorMapper {
 
   String _mapDeviceException(DeviceException exception) {
     switch (exception.code) {
-      case 'DEVICE_NOT_FOUND':
+      case AppExceptionCode.deviceNotFound:
         return 'Mower not found. Please check if it\'s powered on and connected.';
-      case 'COMMUNICATION_FAILED':
+      case AppExceptionCode.communicationFailed:
         return 'Unable to communicate with mower. Please check the connection.';
       default:
         return 'Device error: ${exception.message}';
@@ -76,9 +76,9 @@ class ErrorMapper {
 
   String _mapAuthException(AuthException exception) {
     switch (exception.code) {
-      case 'UNAUTHORIZED':
+      case AppExceptionCode.unauthorized:
         return 'Access denied. Please check your credentials.';
-      case 'FORBIDDEN':
+      case AppExceptionCode.forbidden:
         return 'You don\'t have permission to perform this action.';
       default:
         return 'Authentication error: ${exception.message}';
@@ -87,11 +87,11 @@ class ErrorMapper {
 
   String _mapDataException(DataException exception) {
     switch (exception.code) {
-      case 'DATA_NOT_FOUND':
+      case AppExceptionCode.dataNotFound:
         return 'Requested data not found.';
-      case 'DATA_CORRUPTED':
+      case AppExceptionCode.dataCorrupted:
         return 'Data appears to be corrupted. Please try refreshing.';
-      case 'SERIALIZATION_FAILED':
+      case AppExceptionCode.serializationFailed:
         return 'Failed to process data. Please try again.';
       default:
         return 'Data error: ${exception.message}';
