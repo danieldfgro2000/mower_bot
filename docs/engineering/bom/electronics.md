@@ -3,14 +3,17 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Power electronics totals](../chassis-bom.md#power-cables-and-electronics) ·
-[Safety, control and sensor totals](../chassis-bom.md#safety-controls-and-sensors) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Itemized costs](electronics.md#detailed-module-costs) ·
+[Requirements](electronics.md#specification-and-inspection-requirements) ·
+[Sourcing](electronics.md#sourcing) · [Interfaces](electronics.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Power cables and electronics totals](../cost-breakdown.md#power-cables-and-electronics) ·
+[Safety and sensor totals](../cost-breakdown.md#safety-controls-and-sensors)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Switchgear, precharge, control supplies, enclosures, independent stopping, control boards and installed instrumentation.
 

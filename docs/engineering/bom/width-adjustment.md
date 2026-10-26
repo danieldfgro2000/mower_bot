@@ -3,13 +3,17 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Width adjustment totals](../chassis-bom.md#width-adjustment) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Adjustment concept](width-adjustment.md#powered-rolling-width-adjustment) ·
+[Itemized costs](width-adjustment.md#detailed-module-costs) ·
+[Requirements](width-adjustment.md#specification-and-inspection-requirements) ·
+[Sourcing](width-adjustment.md#sourcing) · [Interfaces](width-adjustment.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Width adjustment totals](../cost-breakdown.md#width-adjustment)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Reused motor, screw drive, local power, feedback, limits, harness and guarding.
 

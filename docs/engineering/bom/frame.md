@@ -3,13 +3,16 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Structure and running gear totals](../chassis-bom.md#structure-and-running-gear) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Itemized costs](frame.md#detailed-module-costs) ·
+[Requirements](frame.md#specification-and-inspection-requirements) ·
+[Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Structure and running gear totals](../cost-breakdown.md#structure-and-running-gear)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Structural stock, weldments, pivots, positive holding, guards, joints and installed handling points.
 

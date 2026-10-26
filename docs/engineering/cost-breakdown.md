@@ -8,7 +8,23 @@ and [module mapping](bom/cost-modules.csv). See the
 readiness, acquisition stages, and broader budget assumptions.
 
 Do not edit the generated tables by hand. Follow the
-[cost update procedure](chassis-bom.md#updating-linked-costs).
+[cost update procedure](bom/updating-linked-costs.md).
+
+**On this page:** [Major estimates](cost-breakdown.md#major-module-estimates) ·
+[Detailed costs](cost-breakdown.md#detailed-module-costs) ·
+[Purchase totals](cost-breakdown.md#purchase-totals)
+
+**BOM documents:** [Main BOM and estimate rules](chassis-bom.md) ·
+[Updating linked costs](bom/updating-linked-costs.md)
+
+**Cost data:** [Itemized ledger (CSV)](chassis-bom.csv)
+
+**Scope index:** [Tracks and running gear](bom/running-gear.md) ·
+[Frame](bom/frame.md) · [Drive train](bom/propulsion.md) ·
+[Width adjustment](bom/width-adjustment.md) · [Batteries](bom/batteries.md) ·
+[Cables and connectors](bom/cables-connectors.md) ·
+[Electronics and safety](bom/electronics.md) ·
+[Workshop and support](bom/workshop.md)
 
 ## Major module estimates
 

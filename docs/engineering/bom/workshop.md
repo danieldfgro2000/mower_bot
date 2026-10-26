@@ -3,13 +3,16 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Workshop and support totals](../chassis-bom.md#workshop-and-support) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Itemized costs](workshop.md#detailed-module-costs) ·
+[Requirements](workshop.md#specification-and-inspection-requirements) ·
+[Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Workshop and support totals](../cost-breakdown.md#workshop-and-support)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Loose handling equipment, bench fixtures, instruments, fabrication consumables, spares and PPE.
 

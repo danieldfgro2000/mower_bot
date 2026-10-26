@@ -13,27 +13,28 @@ This document is not another BOM, a software release, or proof of production
 readiness. A **release hold** means a requirement is still unresolved and blocks
 the applicable purchase/build approval; all existing holds remain in effect.
 
-[BOM scope, supplier links and estimates](chassis-bom.md) ·
+**BOM records:** [Scope, supplier links and estimates](chassis-bom.md) ·
 [Cost and quantity ledger](chassis-bom.csv) ·
-[Product authority](../../plan.md) ·
 [Width/slope sizing limitations](width-and-slope-sizing.md)
+
+**Authority:** [Product direction and build gates](../../plan.md)
 
 ## How to use this checklist
 
 Work through the document in order. Do not treat a later section as permission
 to skip an earlier gate.
 
-1. [Freeze the configuration](#1-freeze-the-configuration-and-establish-control):
+1. [Freeze the configuration](chassis-build-requirements.md#1-freeze-the-configuration-and-establish-control):
    choose one voltage scenario and define assemblies and released-line records.
-2. [Confirm specifications](#2-confirm-item-family-specifications): open the
+2. [Confirm specifications](chassis-build-requirements.md#2-confirm-item-family-specifications): open the
    linked scope document for each PS family being purchased or manufactured.
-3. [Prepare manufacturing evidence](#3-prepare-manufacturing-and-inspection-deliverables):
+3. [Prepare manufacturing evidence](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables):
    complete the applicable drawing, harness, traveler, verification, and service packs.
-4. [Prepare supplier requests](#4-prepare-procurement-work-packages): assemble
+4. [Prepare supplier requests](chassis-build-requirements.md#4-prepare-procurement-work-packages): assemble
    RFQs, but do not send them without separate user approval.
-5. [Close release holds](#5-close-release-hold-points): provide the stated
+5. [Close release holds](chassis-build-requirements.md#5-close-release-hold-points): provide the stated
    evidence before the affected purchase, fabrication, energizing, or release.
-6. [Reconcile cost exposure](#6-reconcile-unresolved-cost-exposure): update the
+6. [Reconcile cost exposure](chassis-build-requirements.md#6-reconcile-unresolved-cost-exposure): update the
    BOM only after the design and supplier contents are known.
 
 ### Current status
@@ -41,11 +42,11 @@ to skip an earlier gate.
 | Question | Current answer | Go to |
 | --- | --- | --- |
 | What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM cost breakdown](cost-breakdown.md) |
-| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](#2-confirm-item-family-specifications) |
-| Are manufacturing drawings released? | No | [Required deliverables](#3-prepare-manufacturing-and-inspection-deliverables) |
-| Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](#4-prepare-procurement-work-packages) |
-| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](#5-close-release-hold-points) |
-| Is hardware operation authorized? | No | [Status and safety boundary](#chassis-build-and-procurement-checklist) |
+| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) |
+| Are manufacturing drawings released? | No | [Required deliverables](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) |
+| Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) |
+| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](chassis-build-requirements.md#5-close-release-hold-points) |
+| Is hardware operation authorized? | No | [Status and safety boundary](chassis-build-requirements.md#chassis-build-and-procurement-checklist) |
 
 ## 1. Freeze the configuration and establish control
 
@@ -260,14 +261,14 @@ Engineering approval is not operational authorization.
 
 | Hold | What it blocks | Evidence theme |
 | --- | --- | --- |
-| [H01](#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
-| [H02](#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
-| [H03](#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
-| [H04](#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
-| [H05](#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
-| [H06](#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
-| [H07](#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
-| [H08](#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
+| [H01](chassis-build-requirements.md#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
+| [H02](chassis-build-requirements.md#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
+| [H03](chassis-build-requirements.md#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
+| [H04](chassis-build-requirements.md#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
+| [H05](chassis-build-requirements.md#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
+| [H06](chassis-build-requirements.md#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
+| [H07](chassis-build-requirements.md#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
+| [H08](chassis-build-requirements.md#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
 
 ### H01: configuration and package fit
 

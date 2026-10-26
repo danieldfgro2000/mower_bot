@@ -1,6 +1,6 @@
 # Chassis BOM and Cost Breakdown
 
-**Document:** MBR-ENG-BOM-001 | **Revision:** K | **Revised:** 2026-10-26
+**Document:** MBR-ENG-BOM-001 | **Revision:** L | **Revised:** 2026-10-26
 
 **Status:** costed engineering estimate; **not released for purchase, fabrication, or operation**.
 
@@ -10,6 +10,17 @@ needed to build and check it; the mower implement and autonomy are excluded.
 The companion [Chassis Build and Procurement Checklist](chassis-build-requirements.md)
 answers **what drawings, supplier information and inspections are still needed
 before buying or building**. It is a checklist, not a product/software release.
+
+**On this page:** [Module summary](chassis-bom.md#module-cost-summary) ·
+[BOM scopes](chassis-bom.md#bom-by-scope) · [Estimate rules](chassis-bom.md#estimate-rules) ·
+[Configuration comparison](chassis-bom.md#propulsionbattery-comparison)
+
+**BOM documents:** [Cost breakdown](cost-breakdown.md) ·
+[Build checklist](chassis-build-requirements.md) ·
+[Supplier evidence](bom/sources.md) · [Feedback and qualification loops](bom/feedback.md) ·
+[Update linked costs](bom/updating-linked-costs.md)
+
+**Cost data:** [Itemized quantity and cost ledger (CSV)](chassis-bom.csv)
 
 ## Module cost summary
 
@@ -52,17 +63,16 @@ totals; it has not replaced the costed planetary drive.
 | **Indicative build budget** | €23,343.38 | €26,689.78 |
 <!-- END GENERATED: budget -->
 
-[Installed parts / bench / support split](#purchase-totals) ·
-[Budget assumptions and exclusions](#budget-assumptions)
+[Installed parts / bench / support split](chassis-bom.md#purchase-totals) ·
+[Budget assumptions and exclusions](chassis-bom.md#budget-assumptions)
 
-**Cost tables:** [All materials and equipment](cost-breakdown.md) ·
-[Drive train](#drive-train) ·
-[Batteries, BMS and chargers](#battery-and-charging) ·
-[Cables and power electronics](#power-cables-and-electronics) ·
-[Sensors, safety and controls](#safety-controls-and-sensors) ·
-[Frame and tracks](#structure-and-running-gear) ·
-[Width adjustment](#width-adjustment) ·
-[Workshop](#workshop-and-support) · [Overall totals](#purchase-totals).
+**Cost tables on this page:** [Drive train](chassis-bom.md#drive-train) ·
+[Batteries, BMS and chargers](chassis-bom.md#battery-and-charging) ·
+[Cables and power electronics](chassis-bom.md#power-cables-and-electronics) ·
+[Sensors, safety and controls](chassis-bom.md#safety-controls-and-sensors) ·
+[Frame and tracks](chassis-bom.md#structure-and-running-gear) ·
+[Width adjustment](chassis-bom.md#width-adjustment) ·
+[Workshop](chassis-bom.md#workshop-and-support) · [Overall totals](chassis-bom.md#purchase-totals).
 Each module row links directly to its itemized cost table.
 
 **Detailed BOM:** [129 itemized material/equipment rows in CSV](chassis-bom.csv).
@@ -74,16 +84,11 @@ maps every line to technical specification and inspection deliverables, defines
 released-part records and RFQ packages, and identifies production release holds.
 It does not turn this estimate into a released manufacturing BOM.
 
-**Revision K change:** removed the obsolete stage-named forwarding page.
-This document is the single BOM entry point, with generated totals at the top.
-Quantities, prices, requirements, calculation rules and totals are unchanged.
+**Revision L change:** separated same-page navigation from document links and
+moved cost maintenance into [its own guide](bom/updating-linked-costs.md).
+This remains the main BOM entry point. Quantities, prices, requirements,
+calculation rules and totals are unchanged.
 
-**Read by task:** [Documentation index](../index.md) ·
-[BOM scopes](#bom-by-scope) ·
-[Updating linked costs](#updating-linked-costs) ·
-[Drive options](#propulsionbattery-comparison) ·
-[Supplier sources](bom/sources.md#source-register) ·
-[Open feedback loops](bom/feedback.md#feedback-and-qualification-loops).
 Technical details are presented as labeled sections; tables are reserved for
 compact numerical comparisons. The CSV remains the full line-item ledger.
 
@@ -97,7 +102,7 @@ links to another scope do not add quantities or costs.
   tensioners, axles, bearings and guides.
   [Itemized costs](bom/running-gear.md#detailed-module-costs) ·
   [Specifications](bom/running-gear.md#specification-and-inspection-requirements).
-- [Propulsion, reductions and brakes](bom/propulsion.md): 48 V / 72 V drive
+- [Drive train: propulsion, reductions and brakes](bom/propulsion.md): 48 V / 72 V drive
   comparison, motors, matched controllers, shafts and transmission; includes the
   [HPM5000B alternative cost record](bom/propulsion-alternatives.csv).
   [Itemized costs](bom/propulsion.md#detailed-module-costs) ·
@@ -130,7 +135,9 @@ links to another scope do not add quantities or costs.
 
 Shared references: [Supplier sources](bom/sources.md) ·
 [Feedback and qualification loops](bom/feedback.md) ·
-[Build and procurement checklist](chassis-build-requirements.md).
+[Build and procurement checklist](chassis-build-requirements.md) ·
+[Updating linked costs](bom/updating-linked-costs.md) (input files, regeneration
+and reference checks).
 
 ### Readiness snapshot
 
@@ -208,7 +215,7 @@ pending their own mechanical/environmental design.
   until Stage 2. DRV-007–011 quantities apply only to the 72 V external reduction;
   their 48 V costs are `N/A` because DRV-001 budgets planetary reduction.
   WID-001 retains an installed quantity even though its purchase cost is `N/A`.
-- Source IDs resolve to the [source register](#source-register). A category,
+- Source IDs resolve to the [source register](chassis-bom.md#source-register). A category,
   manufacturer page, or price proxy is a sourcing lead, not an exact qualified
   SKU or proof that the allowance can buy it. Most rows are allowances.
 - Quantities, steel mass, bearing count, cable lengths, and bought assemblies
@@ -389,7 +396,7 @@ not priced into the maintained-action bench pendant.
 
 ### Broader build-budget allowances — not material prices
 
-The generated [build-budget table is at the top of this document](#build-budget).
+The generated [build-budget table is at the top of this document](chassis-bom.md#build-budget).
 Its allowances and exclusions are explained below.
 
 #### Budget assumptions
@@ -428,58 +435,11 @@ the need to perform the planned measurements.
 
 ## Updating linked costs
 
-The project [BOM documentation skill](../../.github/skills/bom-documentation/SKILL.md)
-owns the update procedure. Numeric costs are edited in their CSV owner, not
-in generated Markdown tables:
-
-- [Baseline item quantities and costs](chassis-bom.csv).
-- [Module-to-item and scope mapping](bom/cost-modules.csv): each item belongs
-  to exactly one module; scopes may contain several modules.
-- [Non-material budget allowances](bom/budget-allowances.csv).
-- [Non-additive propulsion alternatives](bom/propulsion-alternatives.csv).
-
-From the repository root, regenerate and then check:
-
-```sh
-python3 .github/skills/bom-documentation/scripts/update_costs.py
-python3 .github/skills/bom-documentation/scripts/update_costs.py --check
-```
-
-This updates the dedicated cost breakdown, module/category totals, accounting
-totals, stages, cost-basis snapshot, candidate cost table, broader budget and
-all eight scoped item-cost tables in one pass. Extensions must reconcile with
-unit costs and quantities; missing purchase prices and missing/duplicate module
-ownership fail explicitly.
-The 20% contingency is applied after the separately sourced cash provisions.
-
-The skill requires this after BOM edits. **This is not a live spreadsheet or
-watcher:** edits outside that workflow need the same command before tables
-are current. The check reports stale documents without changing them.
-Technical requirements, supplier evidence and narrative amounts outside
-generated blocks still require review; the generator never selects hardware
-or rewrites engineering assumptions.
-
-### Generator validation evidence
-
-The regression command is:
-
-```sh
-python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_*.py'
-```
-
-TDD evidence, 2026-10-26: the initial executable scaffold ran but failed the
-expected module-link, cost-propagation, stale-table and invalid-input assertions.
-After implementation, the focused suite passed. A separate category-subtotal
-assertion then failed before subtotal generation was added and passed afterward.
-Coverage includes unchanged baseline sums, updates reaching scope and summary,
-non-additive alternatives, missing prices, inconsistent extensions, unmapped or
-multiply owned items, and missing markers without partial output writes.
-No application build or hardware test is implied.
-
-Naming refactor, 2026-10-26: the same eight regression checks passed before
-and after renaming the documents and updating generator paths. The item ledger
-schema and its numeric content are unchanged; build-phase column names remain
-compatible with the existing cost model.
+To maintain this estimate, use the
+[Updating linked costs guide](bom/updating-linked-costs.md). It identifies the
+owning CSVs, regeneration commands, reference checks and repair procedure.
+Edit inputs rather than generated tables; no cost update authorizes a hardware
+selection, purchase or operation.
 
 ## Source register
 

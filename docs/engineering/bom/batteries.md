@@ -3,13 +3,17 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Battery and charging totals](../chassis-bom.md#battery-and-charging) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Battery alternatives](batteries.md#battery-alternatives) ·
+[Itemized costs](batteries.md#detailed-module-costs) ·
+[Requirements](batteries.md#specification-and-inspection-requirements) ·
+[Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Battery and charging totals](../cost-breakdown.md#battery-and-charging)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Battery/BMS alternatives, restraints, charging and charge interlocks.
 

@@ -3,10 +3,17 @@
 **Date:** 2026-10-26 | **Status:** preliminary calculations, not operating limits,
 fabrication dimensions, a structural analysis, or a machine safety assessment.
 
-[Product authority](../../plan.md#42-variable-width-scissor-frame) |
+**Related documents:** [Product authority](../../plan.md#42-variable-width-scissor-frame) |
 [BOM and costs](cost-breakdown.md) |
 [Feedback decisions](bom/feedback.md#feedback-decisions) |
 [Width-adjustment BOM](bom/width-adjustment.md)
+
+**On this page:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
+[Packaging](width-and-slope-sizing.md#minimum-width-and-packaging) ·
+[Track length](width-and-slope-sizing.md#track-length-check) ·
+[Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) ·
+[Traction and holding](width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates) ·
+[Design and BOM implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom)
 
 ## Inputs and unresolved definitions
 

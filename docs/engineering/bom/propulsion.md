@@ -3,13 +3,17 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Drive train totals](../chassis-bom.md#drive-train) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Drive alternatives](propulsion.md#drive-alternatives) ·
+[Itemized costs](propulsion.md#detailed-module-costs) ·
+[Requirements](propulsion.md#specification-and-inspection-requirements) ·
+[Sourcing](propulsion.md#sourcing) · [Interfaces](propulsion.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Drive train totals](../cost-breakdown.md#drive-train)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Traction motor/controller packages, output support, transmission and mechanical braking.
 

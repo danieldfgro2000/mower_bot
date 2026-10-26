@@ -29,6 +29,8 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   not additional purchases. Never merge into baseline sums without an explicit
   configuration decision and complete downstream re-costing.
 - `docs/engineering/bom/sources.md`: dated supplier evidence and price limits.
+- `docs/engineering/bom/updating-linked-costs.md`: human-facing maintenance
+  procedure, input ownership, regeneration, reference checks and validation history.
 - `docs/engineering/cost-breakdown.md`: generated focused view of major and
   detailed module costs; `docs/engineering/chassis-bom.md` remains the main
   estimate owner.
@@ -71,29 +73,51 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    source/feedback records and the main BOM. Update current statements or label
    historical figures rather than leaving contradictory costs. Generation
    deliberately does not rewrite engineering claims or supplier evidence.
-8. Check changed relative links/anchors and `git diff --check`. Explain changed
-   totals, reclassifications and unpriced exposure without claiming qualification.
-   For a full BOM link audit, run the standard checker against every engineering
-   Markdown file and treat every HTTP 4xx response as a failed link:
+8. After **every BOM documentation change**, run the repository-owned Python
+   link test and `git diff --check`. The test enumerates every Markdown file
+   under `docs/engineering/`, validates local files and same-/cross-file fragments
+   against rendered GitHub-style headings and explicit anchors, and delegates
+   only external URL reachability to the pinned HTTP checker. Every HTTP 4xx
+   response is a failure. Follow the
+   [reference-check setup](../../../docs/engineering/bom/updating-linked-costs.md#reference-checks)
+   before the first run:
 
    ```sh
-   while IFS= read -r file; do
-     npx -y markdown-link-check@3.13.7 --quiet "$file" || exit 1
-   done < <(find docs/engineering -type f -name '*.md' -print)
+   python3 .github/skills/bom-documentation/scripts/test_bom_links.py
+   git diff --check
    ```
+
+   Never skip the test because only prose, generated output, an anchor, a source
+   URL, or a newly added document changed. Fix the reference or replace it with
+   verified evidence; do not whitelist a broken or HTTP 4xx destination.
+   A fragment is not a file: repair its target heading or link to the existing
+   owning scope. Create a genuinely missing scope with corresponding details,
+   not an empty placeholder. The test must remain read-only.
+   Explain changed totals, reclassifications and unpriced exposure without
+   claiming qualification.
 
 ## Generator changes
 
 Follow repository TDD rules before changing executable logic. Run:
 
 ```sh
-python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_*.py'
+python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_update_costs.py'
 ```
 
 The tests cover module links, source-to-summary propagation, preserved totals,
 non-additive alternatives, invalid input rejection and non-writing stale checks.
 Use temporary copied documents, not live hardware or supplier transactions.
-No third-party Python packages are required.
+Reference-validator changes also require test-first regression fixtures:
+
+```sh
+python3 .github/skills/bom-documentation/scripts/test_bom_links.py BomReferenceRegressionTest -v
+```
+
+The link test uses Node.js 20+ with the parser dependencies locked in this
+skill's `package-lock.json`; install with
+`npm ci --prefix .github/skills/bom-documentation --ignore-scripts`.
+External URL checks use `npx` and pinned `markdown-link-check@3.13.7`; remote-page
+fragments are not validated. No third-party Python packages are required.
 
 ## Synchronization boundary
 

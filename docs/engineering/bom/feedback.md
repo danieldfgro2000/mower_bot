@@ -3,16 +3,17 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[All module totals](../cost-breakdown.md) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Feedback decisions](feedback.md#feedback-decisions) ·
+[Qualification loops](feedback.md#feedback-and-qualification-loops)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Cost breakdown](../cost-breakdown.md)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 Dated estimating decisions and remaining qualification inputs; the product plan remains authoritative.
-
-[Decisions](#feedback-decisions) ·
-[Qualification loops](#feedback-and-qualification-loops)
 
 ## Feedback decisions
 

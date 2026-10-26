@@ -1,0 +1,9 @@
+{
+  "name": "mowerbot-bom-documentation",
+  "private": true,
+  "description": "Markdown parsing for the Python BOM reference checks",
+  "dependencies": {
+    "marked": "18.0.7",
+    "marked-gfm-heading-id": "4.1.4"
+  }
+}

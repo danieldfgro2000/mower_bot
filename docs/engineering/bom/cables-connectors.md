@@ -3,13 +3,16 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[Cables and power electronics totals](../chassis-bom.md#power-cables-and-electronics) ·
-[Itemized costs](#detailed-module-costs) ·
-[Specifications](#specification-and-inspection-requirements) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Supplier sources](sources.md)
+**On this page:** [Itemized costs](cables-connectors.md#detailed-module-costs) ·
+[Requirements](cables-connectors.md#specification-and-inspection-requirements) ·
+[Sourcing](cables-connectors.md#sourcing) · [Interfaces](cables-connectors.md#interfaces-with-other-scopes)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Power cables and electronics totals](../cost-breakdown.md#power-cables-and-electronics)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md) ·
+[Supplier register](sources.md#source-register)
 
 High-current and signal harnesses, lugs, mating connectors, shielding, routing and strain relief.
 

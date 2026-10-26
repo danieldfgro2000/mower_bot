@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /arduino/MowerESP32/secrets.h
+
+# BOM documentation parser dependencies
+/.github/skills/bom-documentation/node_modules/

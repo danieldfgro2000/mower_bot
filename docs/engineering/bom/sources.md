@@ -3,11 +3,14 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-[BOM overview](../chassis-bom.md) ·
-[All module totals](../cost-breakdown.md) ·
-[Quantity/cost ledger](../chassis-bom.csv) ·
-[Build and procurement checklist](../chassis-build-requirements.md) ·
-[Link verification](#link-verification)
+**On this page:** [Link verification](sources.md#link-verification) ·
+[Source register](sources.md#source-register)
+
+**BOM documents:** [BOM overview](../chassis-bom.md) ·
+[Cost breakdown](../cost-breakdown.md) · [Feedback decisions](feedback.md)
+
+**Related records:** [Cost ledger](../chassis-bom.csv) ·
+[Build checklist](../chassis-build-requirements.md)
 
 Shared source evidence for all BOM scopes; source IDs are stable.
 
@@ -16,15 +19,12 @@ Shared source evidence for all BOM scopes; source IDs are stable.
 **Checked 2026-10-26:** all 25 supplier URLs below and the
 [ECB exchange-rate reference](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml)
 and [VAT reference](https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm)
-were requested, following redirects. Of these 27 destinations, 24 returned
-HTTP 200 directly; the two TME destinations were readable through the page
-reader after direct requests returned HTTP 403. The remaining destination,
-[S02](#s02), returned HTTP 403 through both methods and is **not verified**.
+were requested, following redirects. All 27 destinations passed the
+repository-owned live link test.
 
-- [S07](#s07): the reader retrieved the RS Romania catalog.
-- [S08](#s08): the reader retrieved the RS XPSUAF13AP product page.
-- [S02](#s02): retain only as an access-blocked sourcing lead. Manual browser
-  verification is required before relying on it.
+- [S07](sources.md#s07): the reader retrieved the RS Romania catalog.
+- [S08](sources.md#s08): the reader retrieved the RS XPSUAF13AP product page.
+- [S02](sources.md#s02): the reader retrieved the TVH undercarriage-parts catalog.
 
 Successful retrieval verifies link access, not current stock, prices, exact
 configuration, delivered cost, or suitability for the machine. It does not
@@ -50,12 +50,13 @@ each pending live pair/delivery quote, not the old discount.
 
 ### S02
 
-**Source / source type:** [Mini Excavator Centre track/undercarriage
-lead](https://www.miniexcavatorcentre.com/shop/200x72x36-rubber-track/), sourcing lead
+**Source / source type:** [TVH mini-excavator undercarriage-parts
+catalog](https://www.tvh.com/parts/parts-for/small-earth-moving-equipment/mini-excavators/undercarriage-parts),
+sourcing lead
 
-**Evidence or limitation:** Automated access returned 403; no roller, idler, sprocket,
-or tensioner price/compatibility verified. Ask a track supplier for a matched complete
-undercarriage kit.
+**Evidence or limitation:** The catalog covers rollers, idlers, sprockets,
+tensioning groups and rubber tracks, but no MowerBot-compatible set, price or
+interface is verified. Ask a supplier for a matched complete undercarriage kit.
 
 ### S03
 
