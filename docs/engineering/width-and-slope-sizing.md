@@ -4,7 +4,7 @@
 fabrication dimensions, a structural analysis, or a machine safety assessment.
 
 [Product authority](../../plan.md#42-variable-width-scissor-frame) |
-[BOM and costs](chassis-bom.md#cost-breakdown) |
+[BOM and costs](cost-breakdown.md) |
 [Feedback decisions](bom/feedback.md#feedback-decisions) |
 [Width-adjustment BOM](bom/width-adjustment.md)
 

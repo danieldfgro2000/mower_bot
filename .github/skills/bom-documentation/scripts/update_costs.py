@@ -116,8 +116,16 @@ def render(base):
     groups = {m["module_id"]: [items[i] for i in select_ids(m["items"])] for m in modules}
     main = base / "chassis-bom.md"
     text = main.read_text()
+    categories = dict.fromkeys(m["category"] for m in modules)
+    overview = table("Module")
+    for category in categories:
+        selected = [row for module in modules if module["category"] == category
+                    for row in groups[module["module_id"]]]
+        overview.append(cost_row(f"**{category}**", selected))
+    overview.append(cost_row("**All listed materials/equipment**", rows))
+    text = block(text, "overview", "\n".join(overview))
     summary = []
-    for category in dict.fromkeys(m["category"] for m in modules):
+    for category in categories:
         summary.extend([f"### {category}", "", *table("Module / detailed BOM")])
         category_rows = []
         for module in (m for m in modules if m["category"] == category):
@@ -187,7 +195,10 @@ def render(base):
         label = f"[{alt['candidate_id']}: {alt['description']}](bom/propulsion-alternatives.csv)"
         alt_lines.append(f"| {label} | {money(unit)} | {money(extended)} |")
     text = block(text, "alternatives", "\n".join(alt_lines))
-    outputs = {main: text}
+    breakdown = base / "cost-breakdown.md"
+    breakdown_text = block(breakdown.read_text(), "overview", "\n".join(overview))
+    breakdown_text = block(breakdown_text, "modules", "\n".join(summary))
+    outputs = {main: text, breakdown: breakdown_text}
     for scope in dict.fromkeys(m["scope"] for m in modules):
         path = base / "bom" / f"{scope}.md"
         detail = ["Generated from the [cost ledger](../chassis-bom.csv).",

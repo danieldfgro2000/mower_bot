@@ -1,6 +1,6 @@
 # Chassis Build and Procurement Checklist
 
-**Document:** MBR-ENG-BOM-002 | **Revision:** D | **Date:** 2026-10-26
+**Document:** MBR-ENG-BOM-002 | **Revision:** E | **Date:** 2026-10-26
 
 **Status:** DRAFT / HOLD. This is a production-oriented specification checklist,
 not a released manufacturing BOM, approved component selection, or certification.
@@ -8,23 +8,46 @@ No purchase, fabrication, energizing, upload, or physical test is authorized.
 
 **Purpose:** track the drawings, supplier confirmations, manufacturing records
 and inspections needed before the chassis can be bought or built.
-For **parts and prices**, use the [Chassis BOM and Cost Breakdown](chassis-bom.md#cost-breakdown).
+For **parts and prices**, use the [BOM Cost Breakdown](cost-breakdown.md).
 This document is not another BOM, a software release, or proof of production
 readiness. A **release hold** means a requirement is still unresolved and blocks
 the applicable purchase/build approval; all existing holds remain in effect.
 
-[BOM scope, supplier links and estimates](chassis-bom.md) |
-[Cost and quantity ledger](chassis-bom.csv) |
-[Product authority](../../plan.md) |
+[BOM scope, supplier links and estimates](chassis-bom.md) ·
+[Cost and quantity ledger](chassis-bom.csv) ·
+[Product authority](../../plan.md) ·
 [Width/slope sizing limitations](width-and-slope-sizing.md)
 
-**Jump to:** [Specifications](#item-family-specification-and-inspection-matrix) ·
-[Manufacturing deliverables](#manufacturing-and-inspection-deliverables) ·
-[Supplier requests](#procurement-work-packages-and-rfq-content) ·
-[Release holds](#release-hold-points) ·
-[Cost gaps](#cost-exposure-not-resolved-by-this-detail).
+## How to use this checklist
 
-## Configuration and document control
+Work through the document in order. Do not treat a later section as permission
+to skip an earlier gate.
+
+1. [Freeze the configuration](#1-freeze-the-configuration-and-establish-control):
+   choose one voltage scenario and define assemblies and released-line records.
+2. [Confirm specifications](#2-confirm-item-family-specifications): open the
+   linked scope document for each PS family being purchased or manufactured.
+3. [Prepare manufacturing evidence](#3-prepare-manufacturing-and-inspection-deliverables):
+   complete the applicable drawing, harness, traveler, verification, and service packs.
+4. [Prepare supplier requests](#4-prepare-procurement-work-packages): assemble
+   RFQs, but do not send them without separate user approval.
+5. [Close release holds](#5-close-release-hold-points): provide the stated
+   evidence before the affected purchase, fabrication, energizing, or release.
+6. [Reconcile cost exposure](#6-reconcile-unresolved-cost-exposure): update the
+   BOM only after the design and supplier contents are known.
+
+### Current status
+
+| Question | Current answer | Go to |
+| --- | --- | --- |
+| What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM cost breakdown](cost-breakdown.md) |
+| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](#2-confirm-item-family-specifications) |
+| Are manufacturing drawings released? | No | [Required deliverables](#3-prepare-manufacturing-and-inspection-deliverables) |
+| Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](#4-prepare-procurement-work-packages) |
+| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](#5-close-release-hold-points) |
+| Is hardware operation authorized? | No | [Status and safety boundary](#chassis-build-and-procurement-checklist) |
+
+## 1. Freeze the configuration and establish control
 
 The cost ledger has 129 estimating lines. This companion owns shared document
 control, manufacturing deliverables, procurement packages and release holds.
@@ -33,56 +56,23 @@ Every line maps to one primary PS family; several families can share an
 assembly drawing or safety review. PS IDs are requirement references, not
 additional parts or costs. All families are currently **HOLD**.
 
-**Revision D change:** linked directly to the cost summary and each scope's
-specification section. Coverage, requirements, inspection evidence and
-qualification status are unchanged.
+**Revision E change:** reorganized the same requirements into a numbered workflow,
+status dashboard, and compact control tables. Technical requirements, holds,
+costs, and authorization boundaries are unchanged.
 
 The two voltage scenarios are alternatives. Freeze one approved configuration
 before issuing a manufacturing BOM; retain the other only as an estimate.
 Stage 2 quantities are cumulative. Installed parts, reusable bench equipment,
 and consumables must remain separate in production and accounting records.
 
-### Left/right tracked pods
-
-**Existing line prefixes:** RUN, DRV, BAT; pod-specific PWR, SAF and INS
-
-**Configuration detail required:** Separate left/right assembly drawings, handed parts
-and harness variants; do not divide shared items by two
-
-### Central frame and width drive
-
-**Existing line prefixes:** CHS, WID
-
-**Configuration detail required:** Spine/scissor datums, swept envelopes, operating
-widths, actuator and holding interfaces
-
-### Shared electrical/control system
-
-**Existing line prefixes:** Shared PWR, SAF and INS
-
-**Configuration detail required:** Explicit mounting location, supply origin, interface
-and stop-chain references
-
-### Handling/service kit
-
-**Existing line prefixes:** MNT
-
-**Configuration detail required:** Separate installed eyes/brackets from loose lifting,
-transport and support equipment
-
-### Bench assets
-
-**Existing line prefixes:** TST
-
-**Configuration detail required:** Asset IDs, ratings and calibration records; not
-installed machine mass
-
-### Consumables and initial spares
-
-**Existing line prefixes:** CON
-
-**Configuration detail required:** Production consumption versus retained spares; no
-duplicate installed quantities
+| Assembly/accounting scope | Existing line prefixes | Configuration detail required |
+| --- | --- | --- |
+| Left/right tracked pods | RUN, DRV, BAT; pod-specific PWR, SAF and INS | Separate left/right assembly drawings, handed parts and harness variants; do not divide shared items by two |
+| Central frame and width drive | CHS, WID | Spine/scissor datums, swept envelopes, operating widths, actuator and holding interfaces |
+| Shared electrical/control system | Shared PWR, SAF and INS | Explicit mounting location, supply origin, interface and stop-chain references |
+| Handling/service kit | MNT | Separate installed eyes/brackets from loose lifting, transport and support equipment |
+| Bench assets | TST | Asset IDs, ratings and calibration records; exclude from installed machine mass |
+| Consumables and initial spares | CON | Separate production consumption from retained spares; do not duplicate installed quantities |
 
 RUN/CHS/etc. IDs remain stable estimating references. A released assembly needs
 its own controlled part number, revision, parent and reference designators.
@@ -91,54 +81,22 @@ original ID as the cost-parent reference. Replace its parent extension with the
 sum of children; never count both. A compatible supplier kit may instead absorb
 children, with its contents and removed duplicate costs explicitly recorded.
 
-### Required released-line fields
+### Required released-line record
 
 These are required deliverables, **not populated or approved records**. Do not
 fill unknowns with plausible ratings. Mark `HOLD: reason`, with the responsible
 review role and evidence needed to close it. Roles below are proposed functions;
 no engineer, buyer or inspector has been appointed by this document.
 
-#### Identity/effectivity
-
-**Required content before the applicable release:** Stable item ID; parent assembly;
-part number and revision; description; left/right/shared location or reference
-designator; applicable voltage/build serial range
-
-#### Make/buy/reuse
-
-**Required content before the applicable release:** Disposition; exact manufacturer and
-full MPN/options for bought items; drawing/revision for made parts; asset
-identity/condition for reused parts
-
-#### Engineering definition
-
-**Required content before the applicable release:** Units and quantity per parent;
-drawing/datums/tolerances; material/finish; electrical/mechanical interfaces; accepted
-ratings, duty and environment; approved specification revision
-
-#### Procurement
-
-**Required content before the applicable release:** Approved supplier and order code
-distinct from MPN; exact product URL; quote ID/date/expiry; pack size/MOQ; order
-quantity; stock/lead time; delivery terms/location; warranty and approved substitutions
-
-#### Cost
-
-**Required content before the applicable release:** Currency; net unit price; VAT basis;
-gross price; exchange-rate date; freight/duty allocation; tooling/NRE separately; bundle
-contents; purchase extension and revised scenario/stage rollups
-
-#### Quality
-
-**Required content before the applicable release:** Critical characteristics;
-receiving/first-article/assembly checks; numeric limits and method references; sampling
-decision; lot/serial traceability; certificates/calibration where applicable
-
-#### Release
-
-**Required content before the applicable release:** Status and open holds;
-engineering/procurement/quality approval references and dates as applicable;
-deviation/change reference; as-built serial/lot and inspection result
+| Record area | Required content before the applicable release |
+| --- | --- |
+| Identity/effectivity | Stable item ID; parent assembly; part number and revision; description; left/right/shared location or reference designator; applicable voltage/build serial range |
+| Make/buy/reuse | Disposition; exact manufacturer and full MPN/options for bought items; drawing/revision for made parts; asset identity/condition for reused parts |
+| Engineering definition | Units and quantity per parent; drawing/datums/tolerances; material/finish; electrical/mechanical interfaces; accepted ratings, duty and environment; approved specification revision |
+| Procurement | Approved supplier and order code distinct from MPN; exact product URL; quote ID/date/expiry; pack size/MOQ; order quantity; stock/lead time; delivery terms/location; warranty and approved substitutions |
+| Cost | Currency; net unit price; VAT basis; gross price; exchange-rate date; freight/duty allocation; tooling/NRE separately; bundle contents; purchase extension and revised scenario/stage rollups |
+| Quality | Critical characteristics; receiving/first-article/assembly checks; numeric limits and method references; sampling decision; lot/serial traceability; certificates/calibration where applicable |
+| Release | Status and open holds; engineering/procurement/quality approval references and dates as applicable; deviation/change reference; as-built serial/lot and inspection result |
 
 Current `each`, `m`, `kg`, `m2`, `pair`, `set`, `kit`, `lot` and `pod set` units
 are estimate units, not necessarily supplier order units. Convert explicitly:
@@ -148,7 +106,7 @@ pack rounding; do not change the installed quantity to conceal excess stock.
 Record each half of a connector pair, including contacts, seals, wedges,
 backshells and caps; two housings alone are not a complete mating pair.
 
-## Item-family specification and inspection matrix
+## 2. Confirm item-family specifications
 
 All 39 PS families remain **HOLD**. Their definitions and inspection evidence now
 live in the scope documents; each of the 129 cost lines has one primary owner.
@@ -163,7 +121,7 @@ Cross-scope interfaces are linked, not copied.
 - [Electronics, power distribution and safety](bom/electronics.md#specification-and-inspection-requirements) — PS21, PS22, PS24, PS25, PS27, PS28, PS29, PS30, PS31
 - [Workshop, bench equipment and service supplies](bom/workshop.md#specification-and-inspection-requirements) — PS33, PS34, PS35, PS36, PS37, PS38, PS39
 
-## Manufacturing and inspection deliverables
+## 3. Prepare manufacturing and inspection deliverables
 
 Before fabricated parts or harnesses can be released, the responsible designer
 must set numerical acceptance limits and inspection methods. A blank tolerance,
@@ -228,7 +186,7 @@ amps, braking energy, or safety-performance category simply to make this checkli
 look complete. They depend on the frozen geometry, load cases and hazard review.
 Reused equipment requires the same suitability evidence as a new item.
 
-## Procurement work packages and RFQ content
+## 4. Prepare procurement work packages
 
 Prepare these requests only; **sending supplier requests needs separate user
 approval**. Each response must identify exact MPN/options and its included
@@ -294,11 +252,22 @@ No claimed second source is interchangeable until form, fit, function, ratings,
 firmware/interfaces and acceptance evidence are reviewed. A supplier "equivalent"
 or marketplace stock substitution is a change request, not purchasing discretion.
 
-## Release hold points
+## 5. Close release hold points
 
 All hold points below are **OPEN**; required approval roles are not yet assigned.
 An approval record must identify its scope, configuration, reviewer and evidence.
 Engineering approval is not operational authorization.
+
+| Hold | What it blocks | Evidence theme |
+| --- | --- | --- |
+| [H01](#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
+| [H02](#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
+| [H03](#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
+| [H04](#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
+| [H05](#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
+| [H06](#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
+| [H07](#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
+| [H08](#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
 
 ### H01: configuration and package fit
 
@@ -371,7 +340,7 @@ Commissioning must progress through separately authorized controlled steps.
 Do not use the 40-degree site aspiration as an initial test angle or an accepted
 tilt threshold. Production readiness needs actual evidence, not closed cells.
 
-## Cost exposure not resolved by this detail
+## 6. Reconcile unresolved cost exposure
 
 This revision changes technical detail, **not the 129-line prices or totals**.
 An allowance is not evidence that all children of a released design are funded.

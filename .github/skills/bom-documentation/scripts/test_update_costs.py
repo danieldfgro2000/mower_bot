@@ -46,8 +46,13 @@ class CostDocumentationTest(unittest.TestCase):
         self.run_generator()
         self.run_generator("--check")
         text = (self.engineering / "chassis-bom.md").read_text()
+        self.assertLess(
+            text.index("<!-- BEGIN GENERATED: overview -->"),
+            text.index("<!-- BEGIN GENERATED: budget -->"),
+        )
         for expected in [
             "€18,322.82", "€20,611.48", "€23,343.38", "€26,689.78",
+            "| **Drive train** | €3,781.66 | €3,520.00 |",
             "bom/propulsion.md#cost-motors", "bom/batteries.md#cost-chargers",
             "bom/cables-connectors.md#cost-power-cables",
             "bom/electronics.md#cost-drive-sensors", "BMS: included in pack",
@@ -55,6 +60,9 @@ class CostDocumentationTest(unittest.TestCase):
             "| **Drive train subtotal** | €3,781.66 | €3,520.00 |",
         ]:
             self.assertIn(expected, text)
+        breakdown = (self.engineering / "cost-breakdown.md").read_text()
+        self.assertIn("| **Drive train** | €3,781.66 | €3,520.00 |", breakdown)
+        self.assertIn("bom/propulsion.md#cost-motors", breakdown)
         cable_doc = (self.engineering / "bom/cables-connectors.md").read_text()
         self.assertIn("PWR-008", cable_doc)
         self.assertIn("€90.00", cable_doc)
@@ -67,6 +75,14 @@ class CostDocumentationTest(unittest.TestCase):
         text = (self.engineering / "chassis-bom.md").read_text()
         self.assertIn("€18,332.82", text)
         self.assertIn("€23,355.38", text)
+        self.assertIn(
+            "| **Power cables and electronics** | €1,689.00 | €1,679.00 |",
+            text,
+        )
+        self.assertIn(
+            "| **Power cables and electronics** | €1,689.00 | €1,679.00 |",
+            (self.engineering / "cost-breakdown.md").read_text(),
+        )
         self.assertIn("€100.00", (self.engineering / "bom/cables-connectors.md").read_text())
         self.assertIn("€20,611.48", text)
 

@@ -11,9 +11,29 @@ The companion [Chassis Build and Procurement Checklist](chassis-build-requiremen
 answers **what drawings, supplier information and inspections are still needed
 before buying or building**. It is a checklist, not a product/software release.
 
-## Totals
+## Module cost summary
 
-These are alternative chassis build budgets, not amounts to add together.
+These are estimated cumulative Stage 1-2 costs for each major module. The
+48 V and 72 V columns are alternative chassis configurations, not amounts to
+add together. Follow a module link in the detailed tables below for its
+itemized parts and assumptions.
+
+<!-- BEGIN GENERATED: overview -->
+| Module | 48 V / 2 kW | 72 V / 4 kW |
+| --- | ---: | ---: |
+| **Structure and running gear** | €2,213.00 | €2,213.00 |
+| **Drive train** | €3,781.66 | €3,520.00 |
+| **Width adjustment** | €407.00 | €407.00 |
+| **Battery and charging** | €3,148.16 | €5,698.48 |
+| **Power cables and electronics** | €1,679.00 | €1,679.00 |
+| **Safety controls and sensors** | €2,580.00 | €2,580.00 |
+| **Workshop and support** | €4,514.00 | €4,514.00 |
+| **All listed materials/equipment** | €18,322.82 | €20,611.48 |
+<!-- END GENERATED: overview -->
+
+### Build budget
+
+The following adds non-material allowances and contingency to the module costs.
 The materials/equipment row includes installed parts, reusable bench equipment
 and support supplies. The HPM5000B candidate is excluded from these baseline
 totals; it has not replaced the costed planetary drive.
@@ -35,7 +55,7 @@ totals; it has not replaced the costed planetary drive.
 [Installed parts / bench / support split](#purchase-totals) ·
 [Budget assumptions and exclusions](#budget-assumptions)
 
-**Cost tables:** [All materials and equipment](#cost-breakdown) ·
+**Cost tables:** [All materials and equipment](cost-breakdown.md) ·
 [Drive train](#drive-train) ·
 [Batteries, BMS and chargers](#battery-and-charging) ·
 [Cables and power electronics](#power-cables-and-electronics) ·
@@ -369,7 +389,7 @@ not priced into the maintained-action bench pendant.
 
 ### Broader build-budget allowances — not material prices
 
-The generated [totals table is at the top of this document](#totals).
+The generated [build-budget table is at the top of this document](#build-budget).
 Its allowances and exclusions are explained below.
 
 #### Budget assumptions
@@ -425,10 +445,11 @@ python3 .github/skills/bom-documentation/scripts/update_costs.py
 python3 .github/skills/bom-documentation/scripts/update_costs.py --check
 ```
 
-This updates the module/category totals, accounting totals, stages, cost-basis
-snapshot, candidate cost table, broader budget and all eight scoped item-cost
-tables in one pass. Extensions must reconcile with unit costs and quantities;
-missing purchase prices and missing/duplicate module ownership fail explicitly.
+This updates the dedicated cost breakdown, module/category totals, accounting
+totals, stages, cost-basis snapshot, candidate cost table, broader budget and
+all eight scoped item-cost tables in one pass. Extensions must reconcile with
+unit costs and quantities; missing purchase prices and missing/duplicate module
+ownership fail explicitly.
 The 20% contingency is applied after the separately sourced cash provisions.
 
 The skill requires this after BOM edits. **This is not a live spreadsheet or

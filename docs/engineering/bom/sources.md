@@ -4,7 +4,7 @@
 No procurement, fabrication, energizing or operation is authorized.
 
 [BOM overview](../chassis-bom.md) ·
-[All module totals](../chassis-bom.md#cost-breakdown) ·
+[All module totals](../cost-breakdown.md) ·
 [Quantity/cost ledger](../chassis-bom.csv) ·
 [Build and procurement checklist](../chassis-build-requirements.md) ·
 [Link verification](#link-verification)
@@ -21,9 +21,8 @@ HTTP 200 directly; the two TME destinations were readable through the page
 reader after direct requests returned HTTP 403. The remaining destination,
 [S02](#s02), returned HTTP 403 through both methods and is **not verified**.
 
-- [S07](#s07): the reader retrieved the TME Romania catalog.
-- [S08](#s08): the reader retrieved the Schneider XPSUAF13AP product page;
-  the link below uses its resolved canonical destination.
+- [S07](#s07): the reader retrieved the RS Romania catalog.
+- [S08](#s08): the reader retrieved the RS XPSUAF13AP product page.
 - [S02](#s02): retain only as an access-blocked sourcing lead. Manual browser
   verification is required before relying on it.
 
@@ -92,7 +91,7 @@ fabricator.
 
 ### S07
 
-**Source / source type:** [TME Romania](https://www.tme.eu/ro/), catalog
+**Source / source type:** [RS Romania](https://ro.rs-online.com/web/), catalog
 
 **Evidence or limitation:** Electrical, connectors, sensors, electronics, and tools
 sourcing lead; specific rated items/prices not selected.
@@ -100,7 +99,7 @@ sourcing lead; specific rated items/prices not selected.
 ### S08
 
 **Source / source type:** [Schneider XPSUAF13AP at
-TME](https://www.tme.eu/en/details/xpsuaf13ap/safety-switches-control-modules/schneider-electric/), product example
+RS](https://uk.rs-online.com/web/p/safety-relays/2006133/), product example
 
 **Evidence or limitation:** 24 V AC/DC safety relay, IP20; public page exposes no usable
 price. €300 is an allowance for a reviewed safety solution, not its quote or a machine

@@ -4,7 +4,7 @@
 No procurement, fabrication, energizing or operation is authorized.
 
 [BOM overview](../chassis-bom.md) ·
-[All module totals](../chassis-bom.md#cost-breakdown) ·
+[All module totals](../cost-breakdown.md) ·
 [Quantity/cost ledger](../chassis-bom.csv) ·
 [Build and procurement checklist](../chassis-build-requirements.md) ·
 [Supplier sources](sources.md)

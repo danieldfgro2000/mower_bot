@@ -29,9 +29,14 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   not additional purchases. Never merge into baseline sums without an explicit
   configuration decision and complete downstream re-costing.
 - `docs/engineering/bom/sources.md`: dated supplier evidence and price limits.
+- `docs/engineering/cost-breakdown.md`: generated focused view of major and
+  detailed module costs; `docs/engineering/chassis-bom.md` remains the main
+  estimate owner.
 - Scope Markdown files: technical requirements and generated detailed costs.
   The main BOM contains generated linked module totals, evidence counts, stage
-  costs, alternatives and broader budget. Do not edit generated blocks by hand.
+  costs, alternatives and broader budget. Present its generated major-module
+  cost summary before broader budget allowances and contingency so readers see
+  what each module costs. Do not edit generated blocks by hand.
 
 ## Editing workflow
 
@@ -59,7 +64,7 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    python3 .github/skills/bom-documentation/scripts/update_costs.py --check
    ```
 
-   Generation updates nine Markdown documents from the CSV owners. It refuses
+   Generation updates ten Markdown documents from the CSV owners. It refuses
    malformed prices, inconsistent extensions, missing/duplicate item coverage
    and missing generated-region markers. Fix the input; never suppress errors.
 7. Review narrative amounts outside generated blocks in all affected scopes,
@@ -68,6 +73,14 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    deliberately does not rewrite engineering claims or supplier evidence.
 8. Check changed relative links/anchors and `git diff --check`. Explain changed
    totals, reclassifications and unpriced exposure without claiming qualification.
+   For a full BOM link audit, run the standard checker against every engineering
+   Markdown file and treat every HTTP 4xx response as a failed link:
+
+   ```sh
+   while IFS= read -r file; do
+     npx -y markdown-link-check@3.13.7 --quiet "$file" || exit 1
+   done < <(find docs/engineering -type f -name '*.md' -print)
+   ```
 
 ## Generator changes
 
