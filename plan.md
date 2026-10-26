@@ -47,7 +47,8 @@ The following numbers are useful for sizing but are not yet validated on the com
 
 - normal operating mass: approximately **300 kg**;
 - maximum loaded design case: approximately **450 kg**;
-- mowing speed: approximately **4 km/h**;
+- mowing speed: approximately **4 km/h in normal conditions**; reduced speed
+  on slopes is accepted where required by qualified machine limits;
 - general travel speed: approximately **8 km/h**;
 - desired transport maximum: approximately **15–20 km/h**, subject to gearing and safety;
 - two motors, each approximately **2 kW continuous**, **3–4 kW short peak**;
@@ -56,6 +57,14 @@ The following numbers are useful for sizing but are not yet validated on the com
 - preferred transport output speed: approximately **500–700 rpm** only if torque, thermal limits and safety permit;
 - first battery system: likely **48 V nominal**, with capacity around **8 kWh** as a starting estimate;
 - electrical autonomy: several hours of mowing, to be proven by logged field energy use.
+
+The 2026-10-26 BOM feedback adds an aspirational **400 mm minimum / 1,600 mm
+maximum outside-track width** and sites with inclines up to **40°**.
+The owner confirms this site target includes both uphill/downhill and
+cross-slope travel, and accepts speed reduction below 4 km/h on slopes.
+These are packaging/feasibility inputs, **not validated machine dimensions or
+operating limits**. See the [width and slope screen](docs/engineering/width-and-slope-sizing.md)
+for clearance, CG, traction, torque, and track-length limitations.
 
 ### Not yet validated
 
@@ -162,6 +171,34 @@ The scissor frame should allow the pod spacing to change for:
 
 The mechanism needs positive mechanical locking at each operating width. Hydraulic or electric adjustment is optional; a manually set and pinned first prototype is acceptable if it is quick and safe to configure.
 
+**2026-10-26 design direction:** the operator will enter a target width and
+adjustment is intended to occur while the chassis rolls at a calculated,
+validated speed to reduce track scrubbing. The available actuator is an
+owner-identified 12 V windshield motor with worm-and-wheel reduction and an
+estimated 3–5 A running current, driving a screw/nut mechanism. Screw turns are
+intended to be counted with Hall/optical feedback and converted to width from
+the linkage geometry. Motor output speed/torque, stall current, duty, screw
+lead/load rating, reference recovery, and the motion envelope remain unverified.
+Rolling is not evidence that lateral track loads are acceptable.
+
+The proposed reliance on worm reduction alone for holding is **not yet an
+accepted replacement for the positive-locking requirement** above. Gear type
+identification does not establish non-backdrivability under the machine's loads,
+wear, vibration, lubrication, or loss of power. Resolve holding/stopping and
+fault behavior through engineering review before releasing this mechanism.
+Hard travel stops, travel limits, guarding, independent stopping, and explicit
+restart/reference recovery remain required. No adjustment speed or hardware
+operation is approved by this design direction. The
+[costed BOM](docs/engineering/chassis-bom.md) records the prototype allowances
+and qualification gaps.
+
+The current width study targets are an aspirational 400 mm minimum and
+1,600 mm maximum measured outside the tracks. The minimum must increase if
+required by complete pod/spine/scissor packaging; overall body width may exceed
+outside-track width. The suggested width/length ratio is not a stability rule.
+The owner's expected 40° site inclines require separate lateral, longitudinal,
+traction, braking, and adjustment-envelope assessment; no such slope is approved.
+
 Design requirements:
 
 - no pinch access during normal adjustment;
@@ -197,6 +234,16 @@ The important constraint is power:
 
 Therefore the first machine should accept modest transport speed and select gearing for approximately 140–280 rpm at the track drive during work. High-speed operation is not a primary requirement.
 
+**2026-10-26 slope clarification:** 4 km/h is a normal-condition target, not a
+requirement at the owner's aspirational 40° site incline. Speed may be reduced,
+but no safe slope/speed envelope has been established. The
+[slope screen](docs/engineering/width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
+shows that gravity alone can require more than the provisional 70–80 Nm per
+track. Revisit output torque, reduction, and working rpm against actual
+sprocket radius and load before selecting either BOM scenario. Lower speed
+reduces climbing power, not the torque required to resist gravity; it does not
+resolve sliding, tipping, parking hold, or loss-of-energy downhill braking.
+
 ### 5.2 Motor and gearbox target
 
 | Parameter | Target | Status |
@@ -221,6 +268,7 @@ The following options came from an earlier market screen. Prices and seller spec
 | ATO D130BLD2000 | About $816; 2 kW; 2,000 rpm; advertised 10 Nm continuous / 30 Nm peak; IP65; retailer rating 4.9/5 from 13 reviews | Review independence, gearbox/controller cost, continuous thermal performance |
 | BLDC.com D110BLD2000 planetary | About $958; 48 V; 3,000 rpm; configurable planetary reduction | Actual gearbox torque limit, duty cycle, shaft/bearing life and total landed cost |
 | Motenergy ME0907 | About $399 in the earlier listing; Hall sensors and temperature sensor; external reduction | Mechanical torque/performance curve, controller match and environmental packaging |
+| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller, chain reduction and braking remain unqualified |
 
 Potential reduction strategies:
 
@@ -549,10 +597,10 @@ Exit condition: reliability and contribution margin support a deliberate second 
 2. Final motor/gearbox choice after bench comparison.
 3. Reduction ratio and sprocket sizes.
 4. Track supplier, compound and verified load rating.
-5. Minimum and maximum machine width.
+5. Feasible minimum/maximum body and outside-track widths from the 400/1,600 mm study targets, and a qualified slope/configuration envelope for expected sites up to 40°.
 6. Total mass and target centre of gravity.
 7. DAC 9100 mounting, cutting width and measured power demand.
-8. Manual versus powered scissor-width adjustment.
+8. Qualification of powered rolling width adjustment: exact motor/screw/feedback, reference recovery, validated rolling-speed envelope, and resolution of worm-only holding versus positive locking.
 9. RTK correction source and operation under local tree cover.
 10. Remote-control frequency, range and fail-safe architecture.
 11. Trailer payload, braking and maximum permitted slope.
@@ -591,4 +639,3 @@ Exit condition: reliability and contribution margin support a deliberate second 
 Proceed with a **two-pod, variable-width tracked prototype** centered on the DAC 9100 mower, using 48 V-class electrical architecture and two approximately 2 kW continuous traction drives. Treat 70–80 Nm continuous output per track and approximately 140–280 rpm working speed as engineering targets. Use a guarded chain reduction when it provides a better serviceable cost than an integrated planetary unit, but prefer planetary reduction when the documented price premium is within approximately €300 and the torque rating is credible.
 
 The next irreversible purchase should be the propulsion bench-test components, not a complete production chassis. The machine earns the right to become a service business only after the measured cost per job, field reliability and independent safety behaviour support the conservative local utilization model.
-

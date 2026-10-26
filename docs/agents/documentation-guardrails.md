@@ -61,8 +61,11 @@ justifies it; update the index at the same time.
   hardware. Inspect side-effecting commands instead of executing them to check
   documentation. Follow the operational boundary in the project guardrails.
 - Check changed links/anchors, referenced files, command working directories,
-  and flags. No documentation checker is currently configured; inspect directly
-  without adding a toolchain or running application tests for prose-only work.
+  and flags. For BOM costs, follow the project
+  [documentation skill](../../.github/skills/bom-documentation/SKILL.md) and its
+  generation/freshness commands. Other documentation links still need direct
+  inspection; there is no general documentation checker. Do not run application
+  tests for prose-only work.
 
 ## Bee Hive Monitor adaptation
 

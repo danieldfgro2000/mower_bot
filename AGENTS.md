@@ -12,6 +12,11 @@ safety, or autonomy decisions, also read the
 [project overview](docs/project/overview.md) and the relevant sections of
 [plan.md](plan.md).
 
+For documentation or BOM changes, load the project skill
+[bom-documentation](.github/skills/bom-documentation/SKILL.md). If the client
+does not list it, read that file directly. BOM edits must regenerate linked
+cost tables and pass the skill's freshness check before handoff.
+
 All implementation slices in the
 [app improvement plan](docs/flutter/implementation-improvement-plan.md) must
 follow the [mandatory test-driven workflow](docs/agents/project-guardrails.md#mandatory-test-driven-development).
