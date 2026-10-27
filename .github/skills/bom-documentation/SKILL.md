@@ -21,10 +21,12 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
 
 ## BOM ownership
 
-- `docs/engineering/chassis-bom.csv`: authoritative baseline quantities,
+- `docs/engineering/bom/chassis-bom.csv`: authoritative baseline quantities,
   scenario unit/extended costs, basis codes, source IDs and assumptions.
 - `docs/engineering/bom/cost-modules.csv`: exactly-once item ownership, module
   labels, scope links, display grouping and installed/bench/support disposition.
+  Its `scope` values route to authoritative documents under the numbered
+  `docs/engineering/modules/` folders.
   Inclusive `PREFIX-001:PREFIX-003` ranges and `|` unions are supported.
 - `docs/engineering/bom/budget-allowances.csv`: non-material cash provisions.
 - `docs/engineering/bom/propulsion-alternatives.csv`: candidate replacements,
@@ -81,7 +83,10 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    are existing estimate policies, not component prices.
 5. For new/moved items, update module coverage and primary specification
    ownership together. Maintain scope technical/specification links and release
-   records. Every baseline item must belong to exactly one cost module.
+   records. Every baseline item must belong to exactly one cost module. When
+   moving authoritative BOM files, update generator input/output paths,
+   regression fixture paths, and generated relative links together; assert the
+   new locations in tests before regenerating and freshness-checking.
 6. Run from the repository root:
 
    ```sh
@@ -89,7 +94,7 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    python3 .github/skills/bom-documentation/scripts/update_costs.py --check
    ```
 
-   Generation updates ten Markdown documents from the CSV owners. It refuses
+   Generation updates eleven Markdown documents from the CSV owners. It refuses
    malformed prices, inconsistent extensions, missing/duplicate item coverage
    and missing generated-region markers. Fix the input; never suppress errors.
 7. Review narrative amounts outside generated blocks in all affected scopes,

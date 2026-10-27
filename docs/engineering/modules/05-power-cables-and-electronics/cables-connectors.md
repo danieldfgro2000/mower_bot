@@ -15,11 +15,12 @@ acceptance limits remain unqualified.
 [Sourcing](cables-connectors.md#sourcing) ·
 [Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
 [Itemized costs](cables-connectors.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Cost totals](../cost-breakdown.md#05--power-cables-and-electronics) ·
-[Ledger](../chassis-bom.csv) ·
-[Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Cost totals](../../cost-breakdown.md#05--power-cables-and-electronics) ·
+[Ledger](../../bom/chassis-bom.csv) ·
+[Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 05 overview](README.md)
 
 ## Specification and inspection requirements
 
@@ -56,7 +57,7 @@ normal control as designed
 
 ## Sourcing
 
-[S07](sources.md#s07).
+[S07](../../bom/sources.md#s07).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -65,16 +66,17 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Electronics, power distribution and safety](electronics.md)
-- [Powered width adjustment](width-adjustment.md)
-- [Batteries, enclosures and charging](batteries.md)
+- [Power distribution and enclosures](power-distribution.md)
+- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
+- [Powered width adjustment](../03-width-adjustment/width-adjustment.md)
+- [Batteries, enclosures and charging](../04-battery-and-charging/batteries.md)
 
 [↑ Back to document overview](cables-connectors.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

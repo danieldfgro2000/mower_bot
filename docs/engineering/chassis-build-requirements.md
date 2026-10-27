@@ -13,9 +13,9 @@ before purchasing, fabricating, energizing, or releasing chassis parts.
 not a released manufacturing BOM, approved component selection, or certification.
 No purchase, fabrication, energizing, upload, or physical test is authorized.
 
-**References:** [Chassis BOM](chassis-bom.md) ·
+**References:** [Chassis BOM](bom/chassis-bom.md) ·
 [BOM Cost Breakdown](cost-breakdown.md) ·
-[Cost ledger](chassis-bom.csv) ·
+[Cost ledger](bom/chassis-bom.csv) ·
 [Width/slope limitations](width-and-slope-sizing.md) ·
 [Product direction and build gates](../../plan.md)
 
@@ -120,14 +120,15 @@ All 39 PS families remain **HOLD**. Their definitions and inspection evidence no
 live in the scope documents; each of the 129 cost lines has one primary owner.
 Cross-scope interfaces are linked, not copied.
 
-- [Tracks and running gear](bom/running-gear.md#specification-and-inspection-requirements) — PS01, PS02, PS03
-- [Propulsion, reductions and brakes](bom/propulsion.md#specification-and-inspection-requirements) — PS14, PS15, PS16, PS17
-- [Frame, scissor and spine](bom/frame.md#specification-and-inspection-requirements) — PS04, PS05, PS06, PS07, PS08, PS32
-- [Powered width adjustment](bom/width-adjustment.md#specification-and-inspection-requirements) — PS09, PS10, PS11, PS12, PS13
-- [Batteries, enclosures and charging](bom/batteries.md#specification-and-inspection-requirements) — PS18, PS19, PS20
-- [Cables, connectors and harnesses](bom/cables-connectors.md#specification-and-inspection-requirements) — PS23, PS26
-- [Electronics, power distribution and safety](bom/electronics.md#specification-and-inspection-requirements) — PS21, PS22, PS24, PS25, PS27, PS28, PS29, PS30, PS31
-- [Workshop, bench equipment and service supplies](bom/workshop.md#specification-and-inspection-requirements) — PS33, PS34, PS35, PS36, PS37, PS38, PS39
+- [Tracks and running gear](modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements) — PS01, PS02, PS03
+- [Propulsion, reductions and brakes](modules/02-drive-train/propulsion.md#specification-and-inspection-requirements) — PS14, PS15, PS16, PS17
+- [Frame, scissor and spine](modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements) — PS04, PS05, PS06, PS07, PS08, PS32
+- [Powered width adjustment](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements) — PS09, PS10, PS11, PS12, PS13
+- [Batteries, enclosures and charging](modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements) — PS18, PS19, PS20
+- [Cables, connectors and harnesses](modules/05-power-cables-and-electronics/cables-connectors.md#specification-and-inspection-requirements) — PS23, PS26
+- [Power distribution and enclosures](modules/05-power-cables-and-electronics/power-distribution.md#specification-and-inspection-requirements) — PS21, PS22, PS24, PS25, PS27
+- [Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements) — PS28, PS29, PS30, PS31
+- [Workshop, bench equipment and service supplies](modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) — PS33, PS34, PS35, PS36, PS37, PS38, PS39
 
 [↑ Back to document overview](chassis-build-requirements.md#document-overview)
 
@@ -224,7 +225,7 @@ separately
 separately; documented operating-point curves, reduction and brake ratings, controller
 configuration and all wiring/interfaces; flag present voltage/current contradictions
 
-**Additional non-additive candidate:** [HPM5000B ALT-DRV-001](bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals),
+**Additional non-additive candidate:** [HPM5000B ALT-DRV-001](modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals),
 S23/S24 with S25 as an EU fallback. Confirm 48 V air-cooled winding/shaft and
 motor-only contents at the published quantity tier. Price a compatible controller,
 independent holding/stopping solution and custom planetary gearbox separately;

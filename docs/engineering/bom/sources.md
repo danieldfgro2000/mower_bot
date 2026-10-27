@@ -13,8 +13,8 @@ claim is not a quote, qualification, or approval.
 **Navigate:** [Source ID lookup](sources.md#source-id-lookup) ·
 [Supplier register](sources.md#source-register) ·
 [Link verification](sources.md#link-verification) |
-[Chassis BOM](../chassis-bom.md) ·
-[Cost ledger](../chassis-bom.csv) ·
+[Chassis BOM](chassis-bom.md) ·
+[Cost ledger](chassis-bom.csv) ·
 [Feedback decisions](feedback.md#feedback-decisions) ·
 [Chassis Build and Procurement Checklist](../chassis-build-requirements.md)
 

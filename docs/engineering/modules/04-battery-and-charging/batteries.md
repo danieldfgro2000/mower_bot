@@ -9,21 +9,22 @@ No procurement, fabrication, energizing or operation is authorized.
 [pack, enclosure, charging, and interlock requirements](batteries.md#specification-and-inspection-requirements).
 Candidate pack claims do not establish vehicle suitability or
 controller/charger compatibility; compare them with the
-[supplier evidence](sources.md#source-id-lookup).
+[supplier evidence](../../bom/sources.md#source-id-lookup).
 
 **Navigate:** [Alternatives](batteries.md#battery-alternatives) ·
 [Requirements](batteries.md#specification-and-inspection-requirements) ·
 [Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes) ·
 [Itemized costs](batteries.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Cost totals](../cost-breakdown.md#04--battery-and-charging) ·
-[Ledger](../chassis-bom.csv) ·
-[Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Cost totals](../../cost-breakdown.md#04--battery-and-charging) ·
+[Ledger](../../bom/chassis-bom.csv) ·
+[Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 04 overview](README.md)
 
 ## Battery alternatives
 
-Prices follow the [estimate rules](../chassis-bom.md#estimate-rules).
+Prices follow the [estimate rules](../../bom/chassis-bom.md#estimate-rules).
 Nominal voltage alone does not establish controller or charger compatibility.
 
 ### 48 V / approximately 2 kW per drive
@@ -113,7 +114,7 @@ ordering
 
 ## Sourcing
 
-[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S16](sources.md#s16) · [S17](sources.md#s17).
+[S04](../../bom/sources.md#s04) · [S06](../../bom/sources.md#s06) · [S07](../../bom/sources.md#s07) · [S16](../../bom/sources.md#s16) · [S17](../../bom/sources.md#s17).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -122,16 +123,17 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Electronics, power distribution and safety](electronics.md)
-- [Frame, scissor and spine](frame.md)
+- [Propulsion, reductions and brakes](../02-drive-train/propulsion.md)
+- [Power distribution and enclosures](../05-power-cables-and-electronics/power-distribution.md)
+- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
+- [Frame, scissor and spine](../01-structure-and-running-gear/frame.md)
 
 [↑ Back to document overview](batteries.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

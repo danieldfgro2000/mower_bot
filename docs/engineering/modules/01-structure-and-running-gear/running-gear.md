@@ -17,11 +17,12 @@ for the evidence needed to select them.
 [Sourcing](running-gear.md#sourcing) ·
 [Interfaces](running-gear.md#interfaces-with-other-scopes) ·
 [Itemized costs](running-gear.md#detailed-module-costs) |
-[Pod-fit sketch](../cad/module-01-track-pod-fit.scad) ·
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Structure cost totals](../cost-breakdown.md#01--structure-and-running-gear) ·
-[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Pod-fit sketch](../../cad/module-01-track-pod-fit.scad) ·
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Structure cost totals](../../cost-breakdown.md#01--structure-and-running-gear) ·
+[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 01 overview](README.md)
 
 ## Specification and inspection requirements
 
@@ -55,10 +56,10 @@ against the battery, carrier, guards and battery-removal path.
 **Owner lower-roller layout:** Four support rollers per track, evenly spaced along
 the lower run, as selected for this study. Diameter, width, material, axle/bearing
 interfaces and load capacity remain unselected; the layout is not a load or clearance
-validation. See the [pod-fit sketch](../cad/module-01-track-pod-fit.scad).
+validation. See the [pod-fit sketch](../../cad/module-01-track-pod-fit.scad).
 
 **Drive drum study:** The 350 mm outside-diameter drum is the track-drive output.
-The [HPM5000B planetary-in-drum study](propulsion.md#hpm5000b-planetary-in-drum-study)
+The [HPM5000B planetary-in-drum study](../02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 shows one possible reduction layout only; S01 track engagement geometry and the
 drum's sprocket profile remain unverified.
 
@@ -67,7 +68,7 @@ and spring hardware; mount each roller at the fork's normal wheel axle position
 and clamp the fork to the frame. This is a concept only, not a selected or
 qualified fork. Confirm the fork's available travel, spring/preload behavior,
 side-load capacity, sealing, stops, retention and service method against the
-track loads. The [Cohidrex idler lead](sources.md#s26) is listed for Trabber
+track loads. The [Cohidrex idler lead](../../bom/sources.md#s26) is listed for Trabber
 tracks and is not confirmed to fit S01.
 
 **Receiving or first-article evidence:** Matched kit contents; drawing-based
@@ -90,7 +91,7 @@ assembly; no binding or prohibited track contact against reviewed limits
 
 ## Sourcing
 
-[S01](sources.md#s01) · [S02](sources.md#s02) · [S03](sources.md#s03) · [S06](sources.md#s06) · [S26 idler lead](sources.md#s26).
+[S01](../../bom/sources.md#s01) · [S02](../../bom/sources.md#s02) · [S03](../../bom/sources.md#s03) · [S06](../../bom/sources.md#s06) · [S26 idler lead](../../bom/sources.md#s26).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -99,7 +100,7 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Propulsion, reductions and brakes](propulsion.md)
+- [Propulsion, reductions and brakes](../02-drive-train/propulsion.md)
 - [Frame, scissor and spine](frame.md)
 
 [↑ Back to document overview](running-gear.md#document-overview)
@@ -107,7 +108,7 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

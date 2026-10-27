@@ -12,7 +12,7 @@ actions.
 [Validation history](updating-linked-costs.md#validation-history) |
 [Engineering BOM agent guide](agent-guide.md) ·
 [Agent index](agent-index.md) |
-[Chassis BOM](../chassis-bom.md) ·
+[Chassis BOM](chassis-bom.md) ·
 [BOM Cost Breakdown](../cost-breakdown.md) ·
 [Supplier register](sources.md)
 
@@ -22,13 +22,13 @@ Edit numeric costs in their authoritative CSV, not in generated Markdown tables:
 
 | Input file | What it owns |
 | --- | --- |
-| [Cost ledger](../chassis-bom.csv) | Item quantities, scenario unit/extended costs, basis codes, source IDs and assumptions |
-| [Module mapping](cost-modules.csv) | Exactly-once item ownership, module/submodule numbering, scope documents, cost categories and accounting disposition |
+| [Cost ledger](chassis-bom.csv) | Item quantities, scenario unit/extended costs, basis codes, source IDs and assumptions |
+| [Module mapping](cost-modules.csv) | Exactly-once item ownership, module/submodule numbering, module-folder scope routes, cost categories and accounting disposition |
 | [Budget allowances](budget-allowances.csv) | Non-material cash provisions |
 | [Propulsion alternatives](propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals |
 
 Keep the [Supplier register](sources.md) and affected scope requirements in
-step with the inputs. Follow the [estimate rules](../chassis-bom.md#estimate-rules)
+step with the inputs. Follow the [estimate rules](chassis-bom.md#estimate-rules)
 and the [BOM documentation skill](../../../.github/skills/bom-documentation/SKILL.md).
 A sourcing request alone does not select a new hardware configuration.
 
@@ -46,7 +46,7 @@ python3 .github/skills/bom-documentation/scripts/update_costs.py --check
 
 This updates BOM Cost Breakdown, module/category totals, accounting totals,
 stage acquisitions, cost-basis snapshot, candidate cost table, broader budget and
-all eight scoped item-cost tables in one pass. Extensions must reconcile with
+all nine scoped item-cost tables in one pass. Extensions must reconcile with
 unit costs and quantities; missing purchase prices and missing/duplicate module
 ownership fail explicitly. The 20% contingency is applied after the separately
 sourced cash provisions.

@@ -200,7 +200,7 @@ fault behavior through engineering review before releasing this mechanism.
 Hard travel stops, travel limits, guarding, independent stopping, and explicit
 restart/reference recovery remain required. No adjustment speed or hardware
 operation is approved by this design direction. The
-[costed BOM](docs/engineering/chassis-bom.md) records the prototype allowances
+[costed BOM](docs/engineering/bom/chassis-bom.md) records the prototype allowances
 and qualification gaps.
 
 The current width study targets are an aspirational 400 mm minimum and
@@ -286,7 +286,7 @@ The following options came from an earlier market screen. Prices and seller spec
 | ATO D130BLD2000 | About $816; 2 kW; 2,000 rpm; advertised 10 Nm continuous / 30 Nm peak; IP65; retailer rating 4.9/5 from 13 reviews | Review independence, gearbox/controller cost, continuous thermal performance |
 | BLDC.com D110BLD2000 planetary | About $958; 48 V; 3,000 rpm; configurable planetary reduction | Actual gearbox torque limit, duty cycle, shaft/bearing life and total landed cost |
 | Motenergy ME0907 | About $399 in the earlier listing; Hall sensors and temperature sensor; external reduction | Mechanical torque/performance curve, controller match and environmental packaging |
-| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
+| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
 
 Potential reduction strategies:
 

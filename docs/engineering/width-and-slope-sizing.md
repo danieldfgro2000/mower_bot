@@ -27,7 +27,7 @@ speed.
 [Product authority](../../plan.md#42-variable-width-scissor-frame) ·
 [BOM Cost Breakdown](cost-breakdown.md) ·
 [Feedback decisions](bom/feedback.md#feedback-decisions) ·
-[Width-adjustment scope](bom/width-adjustment.md)
+[Width-adjustment scope](modules/03-width-adjustment/width-adjustment.md)
 
 ## Inputs and unresolved definitions
 
@@ -234,7 +234,7 @@ fault recovery. The claim that rolling protects the tracks remains a validation
 target, not a demonstrated behavior. Worm-only holding remains unresolved.
 No automatic narrowing, homing, or restart after a fault is authorized.
 
-The [BOM](chassis-bom.md) retains provisional material quantities and prices:
+The [BOM](bom/chassis-bom.md) retains provisional material quantities and prices:
 these calculations alone do not establish screw length, frame sections,
 drive ratio, braking ratings, sensor ranges, or a delivered parts list.
 Next evidence: pod layout, contact geometry, actual motor data, linkage/screw

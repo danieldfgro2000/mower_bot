@@ -10,20 +10,20 @@ for the required editing and validation procedure.
 [Module numbering](agent-guide.md#module-numbering) ·
 [Change boundaries](agent-guide.md#change-boundaries) |
 [Agent index](agent-index.md) ·
-[Chassis BOM](../chassis-bom.md) ·
+[Chassis BOM](chassis-bom.md) ·
 [Cost update procedure](updating-linked-costs.md)
 
 ## Authority map
 
 | Information | Source of truth |
 | --- | --- |
-| Baseline item quantities, scenario prices, basis, source IDs, assumptions | [Cost ledger](../chassis-bom.csv) |
-| Cost-module ownership, display order, module/submodule numbers and scope links | [Cost module map](cost-modules.csv) |
+| Baseline item quantities, scenario prices, basis, source IDs, assumptions | [Cost ledger](chassis-bom.csv) |
+| Cost-module ownership, display order, module/submodule numbers and scope links | [Cost module map](cost-modules.csv); scope paths route to the numbered folders in the [module directory](../modules/README.md) |
 | Non-material provisions | [Budget allowances](budget-allowances.csv) |
 | Supplier evidence and price limits | [Supplier register](sources.md) |
 | Candidate propulsion replacements, excluded from baseline totals | [Propulsion alternatives](propulsion-alternatives.csv) |
-| Generated module totals and cost tables | [Chassis BOM](../chassis-bom.md), [BOM Cost Breakdown](../cost-breakdown.md), and generated scope tables |
-| Technical requirements and interfaces | The linked engineering [scope documents](../chassis-bom.md#bom-by-scope) |
+| Generated module totals and cost tables | [Chassis BOM](chassis-bom.md), [BOM Cost Breakdown](../cost-breakdown.md), and generated scope tables |
+| Technical requirements and interfaces | The module folders and linked engineering [scope documents](chassis-bom.md#bom-by-scope) |
 | Procurement and release evidence | [Chassis Build and Procurement Checklist](../chassis-build-requirements.md) |
 
 Generated Markdown is a view, not an input. Change the owning CSV and use the
@@ -45,6 +45,12 @@ scope cost tables.
 | 05 | 05.01–05.08 | Power cables and electronics |
 | 06 | 06.01–06.07 | Safety controls and sensors |
 | 07 | 07.01–07.06 | Workshop and support |
+
+Each module has its own folder and overview page under
+[`docs/engineering/modules/`](../modules/README.md). Scope documents live in
+their owning module folder. Module 05's power and wiring requirements and
+Module 06's safety controls are separate technical documents; the cost module
+map still owns item numbering and exactly-once cost ownership.
 
 These are navigation and cross-reference numbers, not controlled document
 numbers, item IDs, or specification-family IDs. Existing document identifiers

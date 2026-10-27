@@ -13,10 +13,11 @@ identifies evidence still needed before purchasing or use.
 **Navigate:** [Requirements](workshop.md#specification-and-inspection-requirements) ·
 [Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes) ·
 [Itemized costs](workshop.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Workshop cost totals](../cost-breakdown.md#07--workshop-and-support) ·
-[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Workshop cost totals](../../cost-breakdown.md#07--workshop-and-support) ·
+[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 07 overview](README.md)
 
 ## Specification and inspection requirements
 
@@ -111,7 +112,7 @@ pressure-wash or battery-fire suppression capability assumed
 
 ## Sourcing
 
-[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S19](sources.md#s19) · [S20](sources.md#s20) · [S21](sources.md#s21) · [S22](sources.md#s22).
+[S04](../../bom/sources.md#s04) · [S06](../../bom/sources.md#s06) · [S07](../../bom/sources.md#s07) · [S19](../../bom/sources.md#s19) · [S20](../../bom/sources.md#s20) · [S21](../../bom/sources.md#s21) · [S22](../../bom/sources.md#s22).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -120,16 +121,17 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Frame, scissor and spine](frame.md)
-- [Electronics, power distribution and safety](electronics.md)
+- [Propulsion, reductions and brakes](../02-drive-train/propulsion.md)
+- [Frame, scissor and spine](../01-structure-and-running-gear/frame.md)
+- [Power distribution and enclosures](../05-power-cables-and-electronics/power-distribution.md)
+- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
 
 [↑ Back to document overview](workshop.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

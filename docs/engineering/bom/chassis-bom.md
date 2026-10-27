@@ -11,15 +11,15 @@ fabrication, or operation**.
 **Stage 2 — rolling two-pod chassis**. The 48 V and 72 V columns are alternative
 configurations, not additive purchases. **Stage 3 — supervised mower
 integration** and later autonomy are excluded. The summary below shows module
-costs and the indicative build budget; [BOM Cost Breakdown](cost-breakdown.md)
+costs and the indicative build budget; [BOM Cost Breakdown](../cost-breakdown.md)
 and the [Cost ledger](chassis-bom.csv) hold the line-level detail. Module links
 open technical scopes. Use the
-[Chassis Build and Procurement Checklist](chassis-build-requirements.md) for
+[Chassis Build and Procurement Checklist](../chassis-build-requirements.md) for
 evidence, inspections, and release holds.
 
-**Evidence and upkeep:** [Supplier register](bom/sources.md) ·
-[Feedback decisions](bom/feedback.md) ·
-[Cost update guide](bom/updating-linked-costs.md)
+**Evidence and upkeep:** [Supplier register](sources.md) ·
+[Feedback decisions](feedback.md) ·
+[Cost update guide](updating-linked-costs.md)
 
 ## Estimate at a glance
 
@@ -29,13 +29,13 @@ through Stage 2; it is not a per-pod or per-motor price.
 <!-- BEGIN GENERATED: overview -->
 | Module | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **[01 — Structure](bom/frame.md) and [01 — Running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |
-| **[02 — Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |
-| **[03 — Width adjustment](bom/width-adjustment.md)** | €407.00 | Same as 48 V |
-| **[04 — Battery and charging](bom/batteries.md)** | €3,148.16 | €5,698.48 |
-| **[05 — Power cables](bom/cables-connectors.md) and [05 — Electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |
-| **[06 — Safety controls and sensors](bom/electronics.md)** | €2,580.00 | Same as 48 V |
-| **[07 — Workshop and support](bom/workshop.md)** | €4,514.00 | Same as 48 V |
+| **[01 — Structure](../modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](../modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 | Same as 48 V |
+| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €3,781.66 | €3,520.00 |
+| **[03 — Width adjustment](../modules/03-width-adjustment/width-adjustment.md)** | €407.00 | Same as 48 V |
+| **[04 — Battery and charging](../modules/04-battery-and-charging/batteries.md)** | €3,148.16 | €5,698.48 |
+| **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 | Same as 48 V |
+| **[06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md)** | €2,580.00 | Same as 48 V |
+| **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €4,514.00 | Same as 48 V |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: overview -->
 
@@ -76,7 +76,7 @@ prototype**, where one drive is tested on a bench, then **Stage 2 — rolling
 two-pod chassis**, where both pods, the scissor frame, and spine are assembled.
 Stage 2 quantities are cumulative, not additional to Stage 1. Bench equipment
 is retained separately, not installed on the chassis. These stages do not cover
-the complete mower product. The [plan](../../plan.md) remains the product
+the complete mower product. The [plan](../../../plan.md) remains the product
 authority; its 48 V / approximately 2 kW continuous-per-drive baseline has not
 changed.
 
@@ -109,13 +109,13 @@ pending their own mechanical/environmental design.
 ## Propulsion/battery comparison
 
 The 48 V and 72 V estimates are alternatives, not a selected configuration.
-See [propulsion, reductions and brakes](bom/propulsion.md) and
-[batteries and charging](bom/batteries.md) for their technical requirements.
+See [propulsion, reductions and brakes](../modules/02-drive-train/propulsion.md) and
+[batteries and charging](../modules/04-battery-and-charging/batteries.md) for their technical requirements.
 
 <!-- BEGIN GENERATED: alternatives -->
 | Alternative (excluded from totals) | Unit reference | Cumulative reference |
 | --- | ---: | ---: |
-| [ALT-DRV-001: Golden Motor HPM5000B bare motor 48 V advertised 5 kW](bom/propulsion-alternatives.csv) | €482.36 | €964.72 |
+| [ALT-DRV-001: Golden Motor HPM5000B bare motor 48 V advertised 5 kW](propulsion-alternatives.csv) | €482.36 | €964.72 |
 <!-- END GENERATED: alternatives -->
 
 This candidate could replace DRV-001; it is not an additive purchase or an
@@ -123,12 +123,12 @@ approved change from the approximately 2 kW-per-drive baseline. The estimate
 still costs the baseline planetary package, not an HPM5000B/custom
 planetary-in-drum package; the latter's gearbox is unpriced. References exclude
 freight, duty, and brokerage; see the
-[supplier and integration details](bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
+[supplier and integration details](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
 
 ### Powered rolling width adjustment
 
 For actuator, screw, feedback, holding, and stopping requirements, see
-[powered width adjustment](bom/width-adjustment.md).
+[powered width adjustment](../modules/03-width-adjustment/width-adjustment.md).
 
 [↑ Back to document overview](chassis-bom.md#document-overview)
 
@@ -141,20 +141,20 @@ overview, or open its specification section directly:
 
 | Scope | Covers | Requirements and inspection |
 | --- | --- | --- |
-| [01.01–01.03 Tracks and running gear](bom/running-gear.md) | Tracks, sprockets, rollers, tensioners, axles, bearings, and guides | [Specification](bom/running-gear.md#specification-and-inspection-requirements) |
-| [01.04–01.07 Frame, scissor, and spine](bom/frame.md) | Stock, weldments, pivots, width holding, guards, and lifting points | [Specification](bom/frame.md#specification-and-inspection-requirements) |
-| [02.01–02.05 Drive train](bom/propulsion.md) | Motors, matched controllers, reductions, shafts, and brakes | [Specification](bom/propulsion.md#specification-and-inspection-requirements) |
-| [03.01–03.04 Powered width adjustment](bom/width-adjustment.md) | Motor, screw, driver, feedback, limits, and guard | [Specification](bom/width-adjustment.md#specification-and-inspection-requirements) |
-| [04.01–04.04 Batteries and charging](bom/batteries.md) | Pack alternatives, BMS, enclosures, chargers, and interlocks | [Specification](bom/batteries.md#specification-and-inspection-requirements) |
-| [05.01–05.04 Cables, connectors, and harnesses](bom/cables-connectors.md) | Power and signal wiring, mating connectors, shielding, and routing | [Specification](bom/cables-connectors.md#specification-and-inspection-requirements) |
-| [05.05–05.08 Electronics and distribution](bom/electronics.md) | Switchgear, supplies, enclosures, and power distribution | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
-| [06.01–06.07 Safety controls and sensors](bom/electronics.md) | Independent stop hardware, operator control, sensors, and logging | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
-| [07.01–07.06 Workshop and support](bom/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](bom/workshop.md#specification-and-inspection-requirements) |
+| [01.01–01.03 Tracks and running gear](../modules/01-structure-and-running-gear/running-gear.md) | Tracks, sprockets, rollers, tensioners, axles, bearings, and guides | [Specification](../modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements) |
+| [01.04–01.07 Frame, scissor, and spine](../modules/01-structure-and-running-gear/frame.md) | Stock, weldments, pivots, width holding, guards, and lifting points | [Specification](../modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements) |
+| [02.01–02.05 Drive train](../modules/02-drive-train/propulsion.md) | Motors, matched controllers, reductions, shafts, and brakes | [Specification](../modules/02-drive-train/propulsion.md#specification-and-inspection-requirements) |
+| [03.01–03.04 Powered width adjustment](../modules/03-width-adjustment/width-adjustment.md) | Motor, screw, driver, feedback, limits, and guard | [Specification](../modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements) |
+| [04.01–04.04 Batteries and charging](../modules/04-battery-and-charging/batteries.md) | Pack alternatives, BMS, enclosures, chargers, and interlocks | [Specification](../modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements) |
+| [05.01–05.04 Cables, connectors, and harnesses](../modules/05-power-cables-and-electronics/cables-connectors.md) | Power and signal wiring, mating connectors, shielding, and routing | [Specification](../modules/05-power-cables-and-electronics/cables-connectors.md#specification-and-inspection-requirements) |
+| [05.05–05.08 Power distribution and enclosures](../modules/05-power-cables-and-electronics/power-distribution.md) | Switchgear, supplies, enclosures, and power distribution | [Specification](../modules/05-power-cables-and-electronics/power-distribution.md#specification-and-inspection-requirements) |
+| [06.01–06.07 Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md) | Independent stop hardware, operator control, sensors, and logging | [Specification](../modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements) |
+| [07.01–07.06 Workshop and support](../modules/07-workshop-and-support/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](../modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) |
 
-Shared references: [Supplier register](bom/sources.md) ·
-[Feedback and qualification loops](bom/feedback.md) ·
-[Chassis Build and Procurement Checklist](chassis-build-requirements.md) ·
-[Cost update guide](bom/updating-linked-costs.md).
+Shared references: [Supplier register](sources.md) ·
+[Feedback and qualification loops](feedback.md) ·
+[Chassis Build and Procurement Checklist](../chassis-build-requirements.md) ·
+[Cost update guide](updating-linked-costs.md).
 
 [↑ Back to document overview](chassis-bom.md#document-overview)
 
@@ -162,7 +162,7 @@ Shared references: [Supplier register](bom/sources.md) ·
 
 The module summary above is for scanning. For category detail, line totals,
 and the installed/bench/support split, use the generated
-[BOM Cost Breakdown](cost-breakdown.md). The [Cost ledger](chassis-bom.csv) is the
+[BOM Cost Breakdown](../cost-breakdown.md). The [Cost ledger](chassis-bom.csv) is the
 authoritative source for quantities, scenario costs, basis codes, and
 assumptions. `I` and `R` rows do not add separate purchase costs; unknown
 qualification exposure is not treated as free.
@@ -191,7 +191,7 @@ numeric inspection limits, or signed first-article records.
 
 ### Installed, bench, and support totals
 
-The [purchase totals in BOM Cost Breakdown](cost-breakdown.md#purchase-totals)
+The [purchase totals in BOM Cost Breakdown](../cost-breakdown.md#purchase-totals)
 separate installed-machine materials, reusable bench equipment, and loose
 handling/consumables/support. The width-adjustment estimate includes a reused
 donor motor: its purchase cost is N/A because it is already owned, not because
@@ -241,7 +241,7 @@ pendant.
   reduction; their 48 V costs are `N/A` because DRV-001 budgets planetary
   reduction. WID-001 retains an installed quantity although its purchase cost
   is `N/A`.
-- Source IDs resolve to the [Supplier register](bom/sources.md). A category,
+- Source IDs resolve to the [Supplier register](sources.md). A category,
   manufacturer page, or price proxy is a sourcing lead, not an exact qualified
   SKU or proof that an allowance can buy it. Most rows are allowances.
 - Quantities, steel mass, bearing count, cable lengths, and bought assemblies
@@ -300,19 +300,19 @@ required.
 
 ### Updating linked costs
 
-Use the [cost update guide](bom/updating-linked-costs.md) to edit the owning
+Use the [cost update guide](updating-linked-costs.md) to edit the owning
 CSVs, regenerate linked tables, and verify freshness and references. Edit
 inputs, not generated tables. A cost update does not authorize a hardware
 selection, purchase, fabrication, or operation.
 
 ### Supplier register
 
-Use the [Supplier register](bom/sources.md) for source IDs and
+Use the [Supplier register](sources.md) for source IDs and
 dated evidence. Catalog leads are not component qualification.
 
 ### Feedback and qualification loops
 
-See [feedback and qualification loops](bom/feedback.md) for dated decisions,
+See [feedback and qualification loops](feedback.md) for dated decisions,
 required inputs, closure evidence, and authorization boundaries.
 
 [↑ Back to document overview](chassis-bom.md#document-overview)

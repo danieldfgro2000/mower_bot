@@ -6,12 +6,12 @@
 No procurement, fabrication, energizing or operation is authorized.
 
 **Summary:** Compares the
-[48 V / approximately 2 kW planetary motor (S11)](sources.md#s11), the
-[72 V / approximately 4 kW VOL-BL400C72 motor (S13)](sources.md#s13), and the
+[48 V / approximately 2 kW planetary motor (S11)](../../bom/sources.md#s11), the
+[72 V / approximately 4 kW VOL-BL400C72 motor (S13)](../../bom/sources.md#s13), and the
 [non-additive HPM5000B sourcing alternative](propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
 These are candidates and screening calculations, not approved motors, ratios,
 brakes, or operating limits. Exact listings are in the
-[supplier register](sources.md#source-id-lookup).
+[supplier register](../../bom/sources.md#source-id-lookup).
 
 **Navigate:** [Alternatives](propulsion.md#drive-alternatives) ·
 [Compatibility and duty](propulsion.md#compatibility-and-duty-limitations) ·
@@ -19,10 +19,11 @@ brakes, or operating limits. Exact listings are in the
 [Sourcing](propulsion.md#sourcing) ·
 [Interfaces](propulsion.md#interfaces-with-other-scopes) ·
 [Itemized costs](propulsion.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Drive-train cost totals](../cost-breakdown.md#02--drive-train) ·
-[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Drive-train cost totals](../../cost-breakdown.md#02--drive-train) ·
+[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 02 overview](README.md)
 
 ## Drive alternatives
 
@@ -33,14 +34,14 @@ inputs, not accepted ratings or safe machine limits.
 
 **Candidate ID:** ALT-DRV-001, an alternative to **DRV-001**, not an additional
 motor fitted alongside it. Its machine-readable cost record is in the
-[propulsion alternatives CSV](propulsion-alternatives.csv). The main 129-line
+[propulsion alternatives CSV](../../bom/propulsion-alternatives.csv). The main 129-line
 ledger and its totals remain unchanged until a complete replacement drive
 configuration is chosen and re-costed.
 
 **Product and supplier:** Golden Motor **HPM5000B**, bare BLDC/PMSM motor;
 **48 V air-cooled configuration requested**.
 [Golden Motor Technology marketplace listing](https://goldenmotorcz.en.made-in-china.com/product/CwmnvfujhxVi/China-HPM5000B-48V-4000RPM-Brushless-DC-Motor-with-CE-Certificate.html)
-([S23](sources.md#s23)). Checked 2026-10-26; displayed price is not a delivered quote.
+([S23](../../bom/sources.md#s23)). Checked 2026-10-26; displayed price is not a delivered quote.
 The page offers air/liquid cooling and several windings, so obtain confirmation
 that the exact requested configuration and bare-motor scope receive this price.
 
@@ -60,13 +61,13 @@ acquisition price or a confirmed sub-€500 delivery.
 tables claim 5 kW rated, 7.5 kW peak, 13 Nm rated and 45 Nm peak, with VEC300
 named as the controller. Its description also gives 3,000–5,000 rpm.
 The [manufacturer family page](https://www.goldenmotor.com/frame-bldcmotor.htm)
-([S24](sources.md#s24)) instead describes configurable 2,000–6,000 rpm,
+([S24](../../bom/sources.md#s24)) instead describes configurable 2,000–6,000 rpm,
 3–7.5 kW, 40 Nm peak, approximately 11 kg air-cooled, 206 mm diameter and
 126 mm length. These are conflicting/family-level claims, not a coherent
 accepted torque-speed/duty specification. Do not use peak torque for climbing.
 
 **EU fallback:** [KellyControllers.eu 48 V air-cooled HPM5000B](https://www.kellycontrollers.eu/hpm5000b-5kw-48v-leghuteses)
-([S25](sources.md#s25)) displays **€994.33**, but **out of stock, inquire**.
+([S25](../../bom/sources.md#s25)) displays **€994.33**, but **out of stock, inquire**.
 Its displayed €28.19 shipping fee is not confirmed for Romania; VAT treatment
 also needs confirmation. This is a sourcing fallback, not the €482.36 basis.
 The existing HPM5000A-72 reference is a different model, not an interchangeable B.
@@ -88,12 +89,12 @@ the rear of the bot, behind the front-mounted implement zone. House three
 planetary stages inside the drum; hold each ring gear stationary to the pod and
 connect the final carrier to the rotating drum. This fore-aft location is a
 layout decision, not proof that the motor counterbalances implement loads. The
-[editable CAD study](../cad/module-01-track-pod-fit.scad) remains
+[editable CAD study](../../cad/module-01-track-pod-fit.scad) remains
 orientation-neutral and shows motor/gear envelopes on that axis only. This is
 not a baseline motor replacement, gearbox quote or release for manufacture.
 
 **Motor envelope:** The manufacturer family page lists **206 mm diameter ×
-126 mm length** and **11 kg air-cooled** for HPM5000B ([S24](sources.md#s24)).
+126 mm length** and **11 kg air-cooled** for HPM5000B ([S24](../../bom/sources.md#s24)).
 These published envelope dimensions are modeled; shaft projection, mounting
 face, cooling clearances and any gearbox dimensions are not supplied. S23's
 listing labels a 48 V / 4,000 rpm, 5 kW version and claims 13 Nm rated /
@@ -131,7 +132,7 @@ also a placeholder; none of these envelopes proves the gearbox fits or carries
 the required load.
 
 **Load-case screen:** The owner's clarification is recorded in the
-[width/slope screen](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates):
+[width/slope screen](../../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates):
 use the plan's 300 kg normal-mass estimate for the 40° mower-only case and cap
 the 450 kg loaded case at 15°. At the assumed 175 mm effective radius, gravity
 alone requires about **165.5 Nm per track at 300 kg / 40°** and
@@ -226,7 +227,7 @@ stopping/holding solution. Loss of electrical energy must not permit free roll.
 The owner accepts slower travel on slopes and clarified that the 450 kg loaded
 case is limited to 15°, while 40° is mower-only. At the 350 mm drum's assumed
 0.175 m effective radius, the
-[gravity-only requirements](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
+[gravity-only requirements](../../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
 are 165.5 Nm per track at 300 kg / 40° and 100.0 Nm at 450 kg / 15°.
 The example 48 V 16:1 reduction yields about 86.6 Nm at 85% assumed efficiency,
 below both cases; the 72 V 10:1 example yields about 125.9 Nm, above the
@@ -299,7 +300,7 @@ N/A separate-purchase rows; external reduction quantities apply only to 72 V
 
 ## Sourcing
 
-[S03](sources.md#s03) · [S04](sources.md#s04) · [S05](sources.md#s05) · [S07](sources.md#s07) · [S11](sources.md#s11) · [S12](sources.md#s12) · [S13](sources.md#s13) · [S14](sources.md#s14) · [S15](sources.md#s15) · [S23](sources.md#s23) · [S24](sources.md#s24) · [S25](sources.md#s25).
+[S03](../../bom/sources.md#s03) · [S04](../../bom/sources.md#s04) · [S05](../../bom/sources.md#s05) · [S07](../../bom/sources.md#s07) · [S11](../../bom/sources.md#s11) · [S12](../../bom/sources.md#s12) · [S13](../../bom/sources.md#s13) · [S14](../../bom/sources.md#s14) · [S15](../../bom/sources.md#s15) · [S23](../../bom/sources.md#s23) · [S24](../../bom/sources.md#s24) · [S25](../../bom/sources.md#s25).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -308,16 +309,17 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Tracks and running gear](running-gear.md)
-- [Batteries, enclosures and charging](batteries.md)
-- [Electronics, power distribution and safety](electronics.md)
+- [Tracks and running gear](../01-structure-and-running-gear/running-gear.md)
+- [Batteries, enclosures and charging](../04-battery-and-charging/batteries.md)
+- [Power distribution and enclosures](../05-power-cables-and-electronics/power-distribution.md)
+- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
 
 [↑ Back to document overview](propulsion.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

@@ -15,12 +15,12 @@ CONTINGENCY = Decimal(".20")
 ROOT = Path(__file__).resolve().parents[4]
 MULTI_SCOPE_CATEGORY_LINKS = {
     "01 — Structure and running gear": (
-        ("01 — Structure", "frame"),
-        ("01 — Running gear", "running-gear"),
+        ("01 — Structure", "01-structure-and-running-gear/frame"),
+        ("01 — Running gear", "01-structure-and-running-gear/running-gear"),
     ),
     "05 — Power cables and electronics": (
-        ("05 — Power cables", "cables-connectors"),
-        ("05 — Electronics", "electronics"),
+        ("05 — Power cables", "05-power-cables-and-electronics/cables-connectors"),
+        ("05 — Power distribution", "05-power-cables-and-electronics/power-distribution"),
     ),
 }
 
@@ -61,7 +61,7 @@ def select_ids(expression):
 
 
 def load(base):
-    rows = read_csv(base / "chassis-bom.csv")
+    rows = read_csv(base / "bom/chassis-bom.csv")
     ids = [row["item_id"] for row in rows]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate ledger item ID")
@@ -107,8 +107,13 @@ def load(base):
         submodule_numbers.add(submodule_number)
         if module["disposition"] not in ("installed", "bench", "support"):
             raise ValueError(f"Invalid disposition: {module['module_id']}")
-        path = base / "bom" / f"{module['scope']}.md"
-        if path.parent != base / "bom" or not path.is_file():
+        scope_path = module["scope"]
+        if not re.fullmatch(r"\d{2}-[a-z0-9-]+/[a-z0-9-]+", scope_path):
+            raise ValueError(f"Invalid scope: {scope_path}")
+        if not scope_path.startswith(f"{category_number}-"):
+            raise ValueError(f"Scope does not match its numbered module folder: {scope_path}")
+        path = base / "modules" / f"{scope_path}.md"
+        if not path.is_file():
             raise ValueError(f"Invalid scope: {module['scope']}")
     return rows, modules
 
@@ -168,7 +173,7 @@ def scenarios_match(rows, formatter):
                for row in rows)
 
 
-def category_label(category, category_modules):
+def category_label(category, category_modules, module_root):
     scopes = tuple(dict.fromkeys(module["scope"] for module in category_modules))
     links = MULTI_SCOPE_CATEGORY_LINKS.get(category)
     if links is None:
@@ -178,9 +183,24 @@ def category_label(category, category_modules):
     elif set(scope for _, scope in links) != set(scopes):
         raise ValueError(f"Category scope links do not match modules: {category}")
     linked_names = " and ".join(
-        f"[{label}](bom/{scope}.md)" for label, scope in links
+        f"[{label}]({module_root}/{scope}.md)" for label, scope in links
     )
     return f"**{linked_names}**"
+
+
+def overview_table(rows, modules, groups, module_root):
+    categories = dict.fromkeys(module["category"] for module in modules)
+    overview = table("Module")
+    for category in categories:
+        category_modules = [module for module in modules if module["category"] == category]
+        selected = [row for module in category_modules
+                    for row in groups[module["module_id"]]]
+        overview.append(cost_row(
+            category_label(category, category_modules, module_root),
+            selected,
+        ))
+    overview.append(cost_row("**All listed materials/equipment**", rows))
+    return "\n".join(overview)
 
 
 def block(text, name, content):
@@ -195,17 +215,10 @@ def render(base):
     rows, modules = load(base)
     items = {row["item_id"]: row for row in rows}
     groups = {m["module_id"]: [items[i] for i in select_ids(m["items"])] for m in modules}
-    main = base / "chassis-bom.md"
+    main = base / "bom/chassis-bom.md"
     text = main.read_text()
     categories = dict.fromkeys(m["category"] for m in modules)
-    overview = table("Module")
-    for category in categories:
-        category_modules = [module for module in modules if module["category"] == category]
-        selected = [row for module in modules if module["category"] == category
-                    for row in groups[module["module_id"]]]
-        overview.append(cost_row(category_label(category, category_modules), selected))
-    overview.append(cost_row("**All listed materials/equipment**", rows))
-    text = block(text, "overview", "\n".join(overview))
+    text = block(text, "overview", overview_table(rows, modules, groups, "../modules"))
     summary = []
     for category in categories:
         category_rows = []
@@ -220,14 +233,15 @@ def render(base):
             *comparison_table("Module / detailed BOM", shared, "Total"),
         ])
         for module in (m for m in modules if m["category"] == category):
-            link = f"[{module['label']}](bom/{module['scope']}.md#cost-{module['module_id']})"
+            link = f"[{module['label']}](modules/{module['scope']}.md#cost-{module['module_id']})"
             summary.append(cost_row(link, groups[module["module_id"]], shared))
             if module["module_id"] == "packs":
                 bms_values = [
                     "N/A - included", "N/A - included",
                 ]
                 summary.append(variant_row(
-                    "[BMS: included in pack; not separately priced](bom/batteries.md#cost-packs)",
+                    "[BMS: included in pack; not separately priced]"
+                    "(modules/04-battery-and-charging/batteries.md#cost-packs)",
                     bms_values,
                     shared,
                 )
@@ -296,16 +310,20 @@ def render(base):
             raise ValueError(f"Invalid alternative extension: {alt['candidate_id']}")
         if alt["replaces_item_id"] not in items or alt["source_currency"] != "USD":
             raise ValueError(f"Invalid alternative reference: {alt['candidate_id']}")
-        label = f"[{alt['candidate_id']}: {alt['description']}](bom/propulsion-alternatives.csv)"
+        label = f"[{alt['candidate_id']}: {alt['description']}](propulsion-alternatives.csv)"
         alt_lines.append(f"| {label} | {money(unit)} | {money(extended)} |")
     text = block(text, "alternatives", "\n".join(alt_lines))
     breakdown = base / "cost-breakdown.md"
-    breakdown_text = block(breakdown.read_text(), "overview", "\n".join(overview))
+    breakdown_text = block(
+        breakdown.read_text(),
+        "overview",
+        overview_table(rows, modules, groups, "modules"),
+    )
     breakdown_text = block(breakdown_text, "modules", "\n".join(summary))
     outputs = {main: text, breakdown: breakdown_text}
     for scope in dict.fromkeys(m["scope"] for m in modules):
-        path = base / "bom" / f"{scope}.md"
-        detail = ["Generated from the [cost ledger](../chassis-bom.csv).",
+        path = base / "modules" / f"{scope}.md"
+        detail = ["Generated from the [cost ledger](../../bom/chassis-bom.csv).",
                   "Quantities are cumulative Stage 2; prices are line totals, not unit prices.",
                   "C = calculated reference; A = allowance; I = included; R = reused.",
                   "N/A never means an unknown purchase is free.", ""]

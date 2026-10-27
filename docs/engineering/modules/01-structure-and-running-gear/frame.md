@@ -13,10 +13,11 @@ dimensions, materials, loads, and inspection limits remain unqualified.
 **Navigate:** [Requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
 [Itemized costs](frame.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Structure cost totals](../cost-breakdown.md#01--structure-and-running-gear) ·
-[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Structure cost totals](../../cost-breakdown.md#01--structure-and-running-gear) ·
+[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 01 overview](README.md)
 
 ## Specification and inspection requirements
 
@@ -98,7 +99,7 @@ a certified lifting point by default
 
 ## Sourcing
 
-[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07).
+[S04](../../bom/sources.md#s04) · [S06](../../bom/sources.md#s06) · [S07](../../bom/sources.md#s07).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -107,16 +108,16 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Powered width adjustment](width-adjustment.md)
+- [Powered width adjustment](../03-width-adjustment/width-adjustment.md)
 - [Tracks and running gear](running-gear.md)
-- [Workshop, bench equipment and service supplies](workshop.md)
+- [Workshop, bench equipment and service supplies](../07-workshop-and-support/workshop.md)
 
 [↑ Back to document overview](frame.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.

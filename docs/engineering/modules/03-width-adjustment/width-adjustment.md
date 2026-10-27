@@ -17,10 +17,11 @@ limits are not established. See the
 [Sourcing](width-adjustment.md#sourcing) ·
 [Interfaces](width-adjustment.md#interfaces-with-other-scopes) ·
 [Itemized costs](width-adjustment.md#detailed-module-costs) |
-[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Width-adjustment cost totals](../cost-breakdown.md#03--width-adjustment) ·
-[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-id-lookup)
+[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
+[Width-adjustment cost totals](../../cost-breakdown.md#03--width-adjustment) ·
+[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
+[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Module 03 overview](README.md)
 
 ## Powered rolling width adjustment
 
@@ -51,12 +52,12 @@ setpoint alone. It needs actual screw speed under load, geometry-dependent
 width rate, track/sprocket geometry, traction feedback, and acceptable lateral
 loads demonstrated under authorized testing. No numeric safe speed, width
 range, or automatic adjustment behavior is currently implemented or approved.
-The [width/slope screen](../width-and-slope-sizing.md) records the 400/1,600 mm
+The [width/slope screen](../../width-and-slope-sizing.md) records the 400/1,600 mm
 study targets and why 40° site inclines cannot be accepted from width alone.
 
 **Holding conflict remains open:** worm geometry alone is not a validated
 positive lock under vibration, wear, lubrication, load reversals, or power loss.
-The [plan's locking requirement](../../../plan.md#42-variable-width-scissor-frame)
+The [plan's locking requirement](../../../../plan.md#42-variable-width-scissor-frame)
 is retained. CHS-010 is a €48 estimating reserve while that requirement and the
 worm-only proposal are reviewed; it is not proof of a feasible automatic lock.
 The cost of any different reviewed holding solution must replace that reserve.
@@ -135,7 +136,7 @@ through full approved travel, no trapping or rubbing; guard attachment inspectio
 
 ## Sourcing
 
-[S03](sources.md#s03) · [S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [U01](sources.md#u01).
+[S03](../../bom/sources.md#s03) · [S04](../../bom/sources.md#s04) · [S06](../../bom/sources.md#s06) · [S07](../../bom/sources.md#s07) · [U01](../../bom/sources.md#u01).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
@@ -144,16 +145,17 @@ Catalog links and price proxies are not approved suppliers or delivered quotes.
 
 ## Interfaces with other scopes
 
-- [Frame, scissor and spine](frame.md)
-- [Cables, connectors and harnesses](cables-connectors.md)
-- [Electronics, power distribution and safety](electronics.md)
+- [Frame, scissor and spine](../01-structure-and-running-gear/frame.md)
+- [Cables, connectors and harnesses](../05-power-cables-and-electronics/cables-connectors.md)
+- [Power distribution and enclosures](../05-power-cables-and-electronics/power-distribution.md)
+- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
 
 [↑ Back to document overview](width-adjustment.md#document-overview)
 
 ## Detailed module costs
 
 <!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
+Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.
