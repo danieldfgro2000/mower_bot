@@ -30,9 +30,9 @@ to add together.
 | **[03 — Width adjustment](modules/03-width-adjustment/width-adjustment.md)** | €407.00 | Same as 48 V |
 | **[04 — Battery and charging](modules/04-battery-and-charging/batteries.md)** | €3,148.16 | €5,698.48 |
 | **[05 — Power cables](modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 | Same as 48 V |
-| **[06 — Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md)** | €2,580.00 | Same as 48 V |
-| **[07 — Workshop and support](modules/07-workshop-and-support/workshop.md)** | €4,514.00 | Same as 48 V |
-| **All listed materials/equipment** | €18,322.82 | €20,611.48 |
+| **[06 — Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 | Same as 48 V |
+| **[07 — Workshop and support](modules/07-workshop-and-support/workshop.md)** | €615.00 | Same as 48 V |
+| **All listed materials/equipment** | €12,888.82 | €15,177.48 |
 <!-- END GENERATED: overview -->
 
 [↑ Back to document overview](cost-breakdown.md#document-overview)
@@ -106,36 +106,34 @@ Each row links to its itemized scope table and sourcing assumptions.
 
 | Module / detailed BOM | Total (both variants) |
 | --- | ---: |
-| [06.01 Independent safety relay E-stops and reset controls](modules/06-safety-controls-and-sensors/safety-controls.md#cost-stop-controls) | €415.00 |
-| [06.02 Industrial operator remote and stop provision](modules/06-safety-controls-and-sensors/safety-controls.md#cost-remote) | €1,500.00 |
+| [06.01 Independent safety relay E-stops and reset controls](modules/06-safety-controls-and-sensors/safety-controls.md#cost-stop-controls) | €380.00 |
 | [06.03 Local control boards communications and service display](modules/06-safety-controls-and-sensors/safety-controls.md#cost-control-boards) | €120.00 |
 | [06.04 Status beacon and buzzer](modules/06-safety-controls-and-sensors/safety-controls.md#cost-status) | €30.00 |
 | [06.05 Tilt sensing and pod or guard interlocks](modules/06-safety-controls-and-sensors/safety-controls.md#cost-tilt-interlocks) | €200.00 |
 | [06.06 Drive current voltage temperature and speed sensors](modules/06-safety-controls-and-sensors/safety-controls.md#cost-drive-sensors) | €240.00 |
 | [06.07 Data logger storage and reader](modules/06-safety-controls-and-sensors/safety-controls.md#cost-logging) | €75.00 |
-| **06 — Safety controls and sensors subtotal** | €2,580.00 |
+| **06 — Safety controls and sensors subtotal** | €1,045.00 |
 
 ### 07 — Workshop and support
 
 | Module / detailed BOM | Total (both variants) |
 | --- | ---: |
-| [07.01 Loose slings straps shackles and service supports](modules/07-workshop-and-support/workshop.md#cost-loose-handling) | €224.00 |
-| [07.02 Bench fixture guards and pendant](modules/07-workshop-and-support/workshop.md#cost-bench-fixture) | €170.00 |
-| [07.03 Dynamometer torque measurement and adapters](modules/07-workshop-and-support/workshop.md#cost-dynamometer) | €3,050.00 |
-| [07.04 Meters instruments hand tools and crimp tooling](modules/07-workshop-and-support/workshop.md#cost-bench-tools) | €500.00 |
-| [07.05 Fabrication consumables and initial spares](modules/07-workshop-and-support/workshop.md#cost-consumables) | €245.00 |
-| [07.06 PPE barriers charging surface fire and cleaning supplies](modules/07-workshop-and-support/workshop.md#cost-ppe-support) | €325.00 |
-| **07 — Workshop and support subtotal** | €4,514.00 |
+| [07.01 Loose transport straps and service supports](modules/07-workshop-and-support/workshop.md#cost-loose-handling) | N/A |
+| [07.02 Bench fixture and guards](modules/07-workshop-and-support/workshop.md#cost-bench-fixture) | €135.00 |
+| [07.04 Meters instruments hand tools and crimp tooling](modules/07-workshop-and-support/workshop.md#cost-bench-tools) | €150.00 |
+| [07.05 Fabrication consumables and initial spares](modules/07-workshop-and-support/workshop.md#cost-consumables) | €170.00 |
+| [07.06 PPE deferred fire provision and cleaning supplies](modules/07-workshop-and-support/workshop.md#cost-ppe-support) | €160.00 |
+| **07 — Workshop and support subtotal** | €615.00 |
 
 ### Purchase totals
 
 | Accounting scope | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **Installed-machine materials** | €13,808.82 | €16,097.48 |
-| **Reusable bench equipment** | €3,720.00 | Same as 48 V |
-| **Loose handling / consumables / support** | €794.00 | Same as 48 V |
-| **All listed materials/equipment** | €18,322.82 | €20,611.48 |
-| Above €5,000 materials/equipment target | €13,322.82 | €15,611.48 |
+| **Installed-machine materials** | €12,273.82 | €14,562.48 |
+| **Reusable bench equipment** | €285.00 | Same as 48 V |
+| **Loose handling / consumables / support** | €330.00 | Same as 48 V |
+| **All listed materials/equipment** | €12,888.82 | €15,177.48 |
+| Above €5,000 materials/equipment target | €7,888.82 | €10,177.48 |
 <!-- END GENERATED: modules -->
 
 [↑ Back to document overview](cost-breakdown.md#document-overview)

@@ -11,6 +11,7 @@ evidence still needed; listed examples do not establish a qualified machine
 safety system.
 
 **Navigate:** [Requirements](safety-controls.md#specification-and-inspection-requirements) ·
+[Owner control and stop intent](safety-controls.md#ps28-independent-stopping-and-normal-control) ·
 [Sourcing](safety-controls.md#sourcing) ·
 [Interfaces](safety-controls.md#interfaces-with-other-scopes) ·
 [Itemized costs](safety-controls.md#detailed-module-costs) |
@@ -26,18 +27,32 @@ safety system.
 All specifications are **HOLD**. Checks describe evidence still required, not
 completed tests. Cost-ledger ranges are inclusive.
 
-### PS28: Independent stopping and remote control
+### PS28: Independent stopping and normal control
 
-**Cost-ledger coverage:** SAF-001:SAF-004
+**Cost-ledger coverage:** SAF-001:SAF-003
 
-**Required purchasing/manufacturing definition:** Hazard-derived independent stop
-architecture and required safety performance; exact relay/controller and remote
-variants, EU radio configuration, channels/outputs/reset/heartbeat logic; machine stop
-locations
+**Owner intent:** Use a mobile app as the only normal operator control. The
+owner expects the bot to stop if the app connection is interrupted
+and proposes a general emergency stop that interrupts current to all modules.
+These are intended behaviors, not verified implementation or safety evidence.
+One E-stop assembly is budgeted and intended to be reused from the bench through
+individual pod checks to the final bot; no industrial-remote purchase is
+included in the current estimate. The required final stop count and placement
+remain open.
+
+**Required purchasing/manufacturing definition:** Hazard-derived independent
+stop architecture and required safety performance; exact relay/controller,
+stop locations, outputs, reset and heartbeat logic; and a reviewed definition
+of the safe state when propulsion/implement power is interrupted. Normal
+mobile-app control and loss-of-link behavior cannot be the independent stop.
+Power interruption alone does not demonstrate that the machine stops or remains
+held; brake behavior, stored energy, and safe reset require explicit design.
 
 **Receiving or first-article evidence:** Approved safety requirements and schematic,
-configuration/certificate applicability review, measured complete-path
-stop/link-loss/reset evidence; component certification is not machine certification
+configuration/certificate applicability review, and independently observed
+complete-path stop/link-loss/reset evidence. The app/network stop expectation
+and general E-stop proposal remain unverified. Component certification is not
+machine certification.
 
 ### PS29: Normal control and diagnostics
 
@@ -80,10 +95,11 @@ not a safety substitute
 ## Sourcing
 
 [S07](../../bom/sources.md#s07) ·
-[S08](../../bom/sources.md#s08) ·
-[S09](../../bom/sources.md#s09).
+[S08](../../bom/sources.md#s08).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
+The [S09 industrial-remote family](../../bom/sources.md#s09) remains historical
+research; it is not part of the current baseline.
 
 [↑ Back to document overview](safety-controls.md#document-overview)
 
@@ -112,18 +128,9 @@ N/A never means an unknown purchase is free.
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
 | SAF-001 - Independent safety relay or controller allowance (1 set) | €300.00 / A |
-| SAF-002 - Machine emergency-stop assembly (2 each) | €70.00 / A |
+| SAF-002 - General emergency-stop assembly reused across build stages (1 each) | €35.00 / A |
 | SAF-003 - Manual reset enable and status controls (1 set) | €45.00 / A |
-| **Module subtotal** | €415.00 |
-
-### Cost: remote
-
-**06.02 Industrial operator remote and stop provision**
-
-| Item / cumulative quantity | Total / basis (both variants) |
-| --- | ---: |
-| SAF-004 - Industrial remote transmitter receiver and stop provision (1 set) | €1,500.00 / A |
-| **Module subtotal** | €1,500.00 |
+| **Module subtotal** | €380.00 |
 
 ### Cost: control-boards
 
@@ -179,7 +186,7 @@ N/A never means an unknown purchase is free.
 
 | Scope total | Total (both variants) |
 | --- | ---: |
-| **All items owned by this scope** | €2,580.00 |
+| **All items owned by this scope** | €1,045.00 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](safety-controls.md#document-overview)

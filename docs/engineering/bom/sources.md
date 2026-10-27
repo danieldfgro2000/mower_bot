@@ -33,7 +33,7 @@ to identify the evidence before opening the detailed entry.
 | [S06](sources.md#s06) | Dedeman Romania local-sourcing catalog |
 | [S07](sources.md#s07) | RS Romania electrical and tools catalog |
 | [S08](sources.md#s08) | Schneider XPSUAF13AP safety-relay example |
-| [S09](sources.md#s09) | Tele Radio Tiger G2 remote-control family |
+| [S09](sources.md#s09) | Tele Radio Tiger G2 remote-control family; not in current baseline |
 | [S10](sources.md#s10) | DOLD planetary-gearbox alternatives |
 | [S11](sources.md#s11) | BLDC 2 kW planetary motor listing |
 | [S12](sources.md#s12) | BLDC BD100/C100 motor-controller listing |
@@ -43,14 +43,16 @@ to identify the evidence before opening the detailed entry.
 | [S16](sources.md#s16) | Elker 48 V / 100 Ah battery listing |
 | [S17](sources.md#s17) | TZI 72 V / 60 Ah battery price/capacity proxy |
 | [S18](sources.md#s18) | DOLD DC-CON-72V400A contactor example |
-| [S19](sources.md#s19) | ATO dynamic torque-sensor example |
-| [S20](sources.md#s20) | ATO torque readout/interface example |
+| [S19](sources.md#s19) | ATO dynamic torque-sensor example; dynamometer option excluded |
+| [S20](sources.md#s20) | ATO torque readout/interface example; option excluded |
 | [S21](sources.md#s21) | ATO clamp-meter catalog |
-| [S22](sources.md#s22) | ATO digital-tachometer catalog |
+| [S22](sources.md#s22) | ATO digital-tachometer catalog; separate purchase excluded |
 | [S23](sources.md#s23) | Golden Motor HPM5000B marketplace listing |
 | [S24](sources.md#s24) | Golden Motor HPM5000B family specification |
 | [S25](sources.md#s25) | KellyControllers.eu HPM5000B EU retail fallback |
 | [S26](sources.md#s26) | Cohidrex Trasteel Track mini-excavator idler-wheel family |
+| [U01](sources.md#u01) | Owner-reported windshield-motor inventory |
+| [U02](sources.md#u02) | Owner-reported workshop tools, handling gear, and fabrication setup |
 
 [↑ Back to document overview](sources.md#document-overview)
 
@@ -146,7 +148,9 @@ G2](https://www.tele-radio.com/products/tiger-g2/), manufacturer
 
 **Evidence or limitation:** Manufacturer describes certified stop functions on specified
 configurations. Exact transmitter/receiver, EU frequency, motion interface, and
-delivered price unselected; €1,500 is a provisional complete-system allowance.
+delivered price were unselected. The owner has since specified a mobile app for normal
+control and removed this industrial-remote allowance from the current baseline. This
+family remains a considered alternative, not a selected or qualified safety system.
 
 ### S10
 
@@ -241,8 +245,9 @@ alternative.
 sensor](https://www.ato.com/dynamic-torque-sensor), instrument example
 
 **Evidence or limitation:** Multiple ranges including 200 Nm; torque/speed interfaces
-and overload selection need confirmation. €1,500 transducer and €1,200 load-device
-provisions are estimates; this page is **not a quote for a dynamometer**.
+and overload selection need confirmation. The owner has excluded the dynamometer
+package from the current baseline; this page remains historical research and is **not a
+quote for a dynamometer**.
 
 ### S20
 
@@ -250,8 +255,9 @@ provisions are estimates; this page is **not a quote for a dynamometer**.
 readout/interface](https://www.ato.com/display-controller-for-torque-sensor), instrument
 example
 
-**Evidence or limitation:** Matching depends on transducer/output version; €250
-allowance, not a verified matched instrument package.
+**Evidence or limitation:** Matching depends on transducer/output version. The
+readout/interface is not in the current baseline because direct torque measurement was
+not selected.
 
 ### S21
 
@@ -265,8 +271,9 @@ no exact model quoted.
 **Source / source type:** [ATO digital
 tachometers](https://www.ato.com/digital-tachometer), catalog
 
-**Evidence or limitation:** Independent speed cross-check; €50 allowance, no exact model
-quoted.
+**Evidence or limitation:** Previously considered as an independent speed cross-check;
+the owner selected installed speed sensing and logging instead. No handheld tachometer
+is in the current baseline.
 
 ### S23
 
@@ -330,6 +337,25 @@ purchase source
 3–5 A, and confirms worm-and-wheel type. Model, current measurement, torque, speed,
 duty, and non-backdrive evidence not supplied. Purchase cost N/A (already owned); not free capability
 validation.
+
+[↑ Back to document overview](sources.md#document-overview)
+
+### U02
+
+**Source / source type:** Owner feedback, 2026-10-27; existing inventory and
+fabrication access, not an online purchase source
+
+**Evidence or limitation:** Owner reports two transport straps described as 500 kg,
+two machine service supports, a torque wrench, insulated hand tools, crimp tooling,
+thread-locking/sealant/grease stock, cleaning/inspection supplies, welding PPE, safety
+glasses, safety footwear, and general lathe/mill access. Ratings, capacities, condition,
+calibration, exact products, die compatibility, and suitability for released work are
+not verified. The owner reports a 20–160 A Daewoo MOSFET welding machine and
+flux-coated electrodes; stick/MMA is a likely process identification, pending exact
+model/manual confirmation. Welding is planned outdoors. Owner prefers standard
+off-the-shelf gears where possible and retains the machining allowance for work that
+cannot be made in-house. These statements support reused-cost treatment only; they do
+not qualify equipment, fabrication, lifting, or testing.
 
 [↑ Back to document overview](sources.md#document-overview)
 ## Link verification

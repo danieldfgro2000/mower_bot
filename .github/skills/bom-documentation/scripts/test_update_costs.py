@@ -89,7 +89,7 @@ class CostDocumentationTest(unittest.TestCase):
             text.index("<!-- BEGIN GENERATED: budget -->"),
         )
         for expected in [
-            "€18,322.82", "€20,611.48", "€23,343.38", "€26,689.78",
+            "€12,888.82", "€15,177.48", "€16,522.58", "€19,868.98",
             "| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €3,781.66 | €3,520.00 |",
             "| **[01 — Structure](../modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](../modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 | Same as 48 V |",
             "| **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 | Same as 48 V |",
@@ -102,7 +102,7 @@ class CostDocumentationTest(unittest.TestCase):
             text,
         )
         self.assertIn(
-            "| Reused inventory (R) | 1 / N/A | Same as 48 V |",
+            "| Reused inventory (R) | 8 / N/A | Same as 48 V |",
             text,
         )
         self.assertIn(
@@ -110,17 +110,26 @@ class CostDocumentationTest(unittest.TestCase):
             text,
         )
         self.assertIn(
-            "| Stage 1 — bench propulsion prototype | €9,240.91 | €10,385.24 |",
+            "| Stage 1 — bench propulsion prototype | €5,615.91 | €6,760.24 |",
             text,
         )
         self.assertIn(
-            "| Stage 2 — rolling two-pod chassis (additional purchases only) | €9,081.91 | €10,226.24 |",
+            "| Stage 2 — rolling two-pod chassis (additional purchases only) | €7,272.91 | €8,417.24 |",
             text,
         )
         self.assertIn(
-            "| **Stages 1–2 cumulative** | €18,322.82 | €20,611.48 |",
+            "| **Stages 1–2 cumulative** | €12,888.82 | €15,177.48 |",
             text,
         )
+        self.assertIn("no dynamometer or direct torque measurement", text)
+        self.assertIn(
+            "| **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €615.00 | Same as 48 V |",
+            text,
+        )
+        overview = text.split("<!-- BEGIN GENERATED: overview -->", 1)[1].split(
+            "<!-- END GENERATED: overview -->", 1
+        )[0]
+        self.assertNotIn("€1,500.00 |", overview)
         self.assertNotIn("<!-- BEGIN GENERATED: modules -->", text)
         self.assertNotIn("../modules/02-drive-train/propulsion.md#cost-motors", text)
         breakdown = (self.engineering / "cost-breakdown.md").read_text()
@@ -144,9 +153,15 @@ class CostDocumentationTest(unittest.TestCase):
             breakdown,
         )
         self.assertIn(
-            "| **Reusable bench equipment** | €3,720.00 | Same as 48 V |",
+            "| **Reusable bench equipment** | €285.00 | Same as 48 V |",
             breakdown,
         )
+        self.assertIn(
+            "| **Loose handling / consumables / support** | €330.00 | Same as 48 V |",
+            breakdown,
+        )
+        self.assertNotIn("07.03 Dynamometer", breakdown)
+        self.assertNotIn("06.02 Industrial operator remote", breakdown)
         cable_doc = (self.engineering / "modules/05-power-cables-and-electronics/cables-connectors.md").read_text()
         self.assertIn("PWR-008", cable_doc)
         self.assertIn("€90.00", cable_doc)
@@ -161,7 +176,7 @@ class CostDocumentationTest(unittest.TestCase):
         ).read_text()
         self.assertIn("PWR-001", power_doc)
         self.assertNotIn("SAF-001", power_doc)
-        self.assertIn("PS28: Independent stopping and remote control", safety_doc)
+        self.assertIn("PS28: Independent stopping and normal control", safety_doc)
         self.assertIn("SAF-001", safety_doc)
         self.assertNotIn("PWR-001", safety_doc)
         running_gear = (self.engineering / "modules/01-structure-and-running-gear/running-gear.md").read_text()
@@ -261,8 +276,8 @@ class CostDocumentationTest(unittest.TestCase):
                         unit_eur_48v="10.00", extended_eur_48v="100.00")
         self.run_generator()
         text = (self.engineering / "bom/chassis-bom.md").read_text()
-        self.assertIn("€18,332.82", text)
-        self.assertIn("€23,355.38", text)
+        self.assertIn("€12,898.82", text)
+        self.assertIn("€16,534.58", text)
         self.assertIn(
             "| **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,689.00 | €1,679.00 |",
             text,
@@ -272,7 +287,7 @@ class CostDocumentationTest(unittest.TestCase):
             (self.engineering / "cost-breakdown.md").read_text(),
         )
         self.assertIn("€100.00", (self.engineering / "modules/05-power-cables-and-electronics/cables-connectors.md").read_text())
-        self.assertIn("€20,611.48", text)
+        self.assertIn("€15,177.48", text)
 
     def test_check_detects_stale_tables_without_writing(self):
         self.run_generator()
@@ -300,7 +315,7 @@ class CostDocumentationTest(unittest.TestCase):
         self.run_generator()
         text = (self.engineering / "bom/chassis-bom.md").read_text()
         self.assertIn("€540.76", text)
-        self.assertIn("€18,322.82", text)
+        self.assertIn("€12,888.82", text)
 
     def test_missing_markers_fail_without_partial_updates(self):
         self.run_generator()

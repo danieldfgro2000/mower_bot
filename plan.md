@@ -507,21 +507,29 @@ Exit condition: a plausible paid pilot route exists and the minimum operating en
 
 ### Stage 1 — bench propulsion prototype
 
-Build one pod or a rigid bench fixture. Verify:
+Build one pod or a rigid, restrained bench fixture. Pre-calculate expected
+torque from the selected motor and reduction data before testing; this is a
+sizing estimate, not measured torque capability. Bench checks are planned
+before field checks. Record:
 
 - motor/controller compatibility;
-- reduction ratio;
-- output torque and speed;
-- current draw;
-- thermal rise;
+- reduction ratio and calculated torque/speed;
+- measured output speed, current, voltage, and temperature;
 - braking and fault behaviour;
 - shaft, bearing and sprocket alignment.
 
-Exit condition: one drive can run at the intended duty without overheating or unsafe fault behaviour.
+Exit condition: one drive can run at the intended duty without overheating or
+unsafe fault behaviour in separately authorized checks. Torque remains
+unmeasured; calculation alone cannot pass a torque-capability gate or establish
+that the drive meets its output target.
 
 ### Stage 2 — rolling two-pod chassis
 
-Build both pods, the scissor frame and spine without commercial mowing. Test:
+Build both pods, the scissor frame and spine without commercial mowing. The
+owner's initial field-check configuration is a bare rolling chassis on flat,
+controlled ground, without a mower or attachment. The intended evidence is
+onboard logs plus observer notes for braking and track-retention behavior; this
+does not define acceptance criteria or authorize a test. Test:
 
 - width adjustment and mechanical locks;
 - straight-line tracking and skid steering;

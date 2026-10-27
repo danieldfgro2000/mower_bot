@@ -43,8 +43,8 @@ scope cost tables.
 | 03 | 03.01–03.04 | Width adjustment |
 | 04 | 04.01–04.04 | Battery and charging |
 | 05 | 05.01–05.08 | Power cables and electronics |
-| 06 | 06.01–06.07 | Safety controls and sensors |
-| 07 | 07.01–07.06 | Workshop and support |
+| 06 | 06.01, 06.03–06.07 | Safety controls and sensors |
+| 07 | 07.01–07.02, 07.04–07.06 | Workshop and support |
 
 Each module has its own folder and overview page under
 [`docs/engineering/modules/`](../modules/README.md). Scope documents live in
@@ -59,6 +59,9 @@ unchanged. Do not assign a submodule based on a scope filename: one cost module
 can span multiple technical scopes, and one scope can own several submodules.
 Preserve established numbers when editing labels; assign the next available
 submodule within its module when adding a genuinely new cost submodule.
+The gaps at 06.02 and 07.03 are retired industrial-remote and
+dynamometer/torque-measurement allowances, respectively; do not reuse those
+numbers for unrelated scope.
 
 ## Change boundaries
 

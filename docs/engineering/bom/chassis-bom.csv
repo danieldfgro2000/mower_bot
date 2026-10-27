@@ -82,9 +82,8 @@ PWR-022,Power distribution,DIY enclosure mounting backplates,each,1,2,10.00,10.0
 PWR-023,Power distribution,DIY enclosure gaskets and lid fasteners,pod set,1,2,8.00,8.00,16.00,16.00,A,A,S07,No IP or washdown rating established by a gasket allowance
 PWR-024,Power distribution,Threaded inserts for printed enclosures,pod set,1,2,5.00,5.00,10.00,10.00,A,A,S07,Pull-out and vibration retention to be verified
 SAF-001,Safety and control,Independent safety relay or controller allowance,set,1,1,300.00,300.00,300.00,300.00,A,A,S08,S08 is an illustrative 24 V relay not a selected complete safety architecture
-SAF-002,Safety and control,Machine emergency-stop assembly,each,1,2,35.00,35.00,70.00,70.00,A,A,S07,Two machine locations budgeted; channel architecture and placement require risk assessment
+SAF-002,Safety and control,General emergency-stop assembly reused across build stages,each,1,1,35.00,35.00,35.00,35.00,A,A,S07,One assembly budgeted from bench through pod checks to final bot; required final stop count and placement remain subject to hazard review
 SAF-003,Safety and control,Manual reset enable and status controls,set,1,1,45.00,45.00,45.00,45.00,A,A,S07,No automatic rearming after reboot reconnection or stop recovery
-SAF-004,Safety and control,Industrial remote transmitter receiver and stop provision,set,0,1,1500.00,1500.00,1500.00,1500.00,A,A,S09,Quote exact EU configuration with communication-loss handling; manufacturer component claims are not machine certification
 SAF-005,Safety and control,Local non-safety control board,each,1,2,25.00,25.00,50.00,50.00,A,A,S07,No tracked-pod firmware implementation is implied
 SAF-006,Safety and control,Isolated control communications interfaces,each,1,2,20.00,20.00,40.00,40.00,A,A,S07,Bus and command fault semantics remain design decisions
 SAF-007,Safety and control,Status beacon and buzzer,set,1,1,30.00,30.00,30.00,30.00,A,A,S07,Not a substitute for guarding or stop functions
@@ -99,32 +98,20 @@ INS-005,Installed instrumentation,Non-safety test data logger,set,1,1,60.00,60.0
 INS-006,Installed instrumentation,Logger storage and reader,set,1,1,15.00,15.00,15.00,15.00,A,A,S07,No RTK receiver or autonomy computer included
 MNT-001,Handling and service,Chassis lifting and tie-down eyes,each,0,4,15.00,15.00,60.00,60.00,A,A,S04,Attachments and structure must be rated together after mass is known
 MNT-002,Handling and service,Prototype recovery towing bracket,set,0,1,40.00,40.00,40.00,40.00,A,A,S06,No passive trailer or road towing approval included
-MNT-003,Handling and service,Rated lifting slings,each,0,2,20.00,20.00,40.00,40.00,A,A,S06,Selection depends on verified lifted mass and sling arrangement
-MNT-004,Handling and service,Transport ratchet straps,each,0,4,18.00,18.00,72.00,72.00,A,A,S06,No transport vehicle or trailer included
-MNT-005,Handling and service,Rated shackles,each,0,4,8.00,8.00,32.00,32.00,A,A,S06,Do not infer working load limit from budget
-MNT-006,Handling and service,Machine service supports,each,0,2,40.00,40.00,80.00,80.00,A,A,S06,Supports must be selected for verified mass; no unsupported work underneath
+MNT-004,Handling and service,Transport tie-down straps,each,0,2,N/A,N/A,N/A,N/A,R,R,U02,Owner reports two straps marked 500 kg; verify exact rating label condition and lashing arrangement before use
+MNT-006,Handling and service,Machine service supports,each,0,2,N/A,N/A,N/A,N/A,R,R,U02,Owner reports two existing supports; verify capacity stability and compatibility with the actual machine before use
 TST-001,Bench equipment,Guarded bench fixture steel,kg,20,20,3.50,3.50,70.00,70.00,A,A,S06,Reusable fixture retained separately from installed chassis structure
 TST-002,Bench equipment,Fixture feet anchors and fasteners,set,1,1,30.00,30.00,30.00,30.00,A,A,S04,Fixture strength and restraint need independent design
 TST-003,Bench equipment,Fixture guarding and protective screen,m2,1,1,35.00,35.00,35.00,35.00,A,A,S06,Material allowance only; no impact containment rating implied
-TST-004,Bench equipment,Maintained-action bench pendant,set,1,1,35.00,35.00,35.00,35.00,A,A,S07,Normal operator input; hardwired stop remains separate
-TST-005,Bench equipment,Rotary torque transducer and speed output provision,set,1,1,1500.00,1500.00,1500.00,1500.00,A,A,S19,Quote shaft range overload and calibration; intended load envelope includes proposed 72 V drive
-TST-006,Bench equipment,Torque sensor readout interface and software provision,set,1,1,250.00,250.00,250.00,250.00,A,A,S20,Confirm compatibility with TST-005; no second interface purchase if supplied together
-TST-007,Bench equipment,Guarded dynamometer load and heat-dissipation provision,set,1,1,1200.00,1200.00,1200.00,1200.00,A,A,S19,Engineering allowance not a supplier offer; must dissipate the selected drive duty continuously
-TST-008,Bench equipment,Test coupling adapters and alignment hardware,set,1,1,100.00,100.00,100.00,100.00,A,A,S04,Separate from installed output couplings
-TST-009,Bench equipment,Digital multimeter,each,1,1,70.00,70.00,70.00,70.00,A,A,S07,Check measurement category and DC range before purchase
-TST-010,Bench equipment,DC-capable clamp meter,each,1,1,100.00,100.00,100.00,100.00,A,A,S21,Not an AC-only clamp meter
+TST-010,Bench equipment,DC-capable clamp meter,each,1,1,100.00,100.00,100.00,100.00,A,A,S21,Independent workshop cross-check of installed current logging; select DC capability and range
 TST-011,Bench equipment,Infrared spot thermometer,each,1,1,50.00,50.00,50.00,50.00,A,A,S07,Supplementary external reading; not a winding temperature measurement
-TST-012,Bench equipment,Handheld tachometer,each,1,1,50.00,50.00,50.00,50.00,A,A,S22,Independent speed cross-check; not a second precision torque sensor
-TST-013,Bench equipment,Torque wrench,set,1,1,60.00,60.00,60.00,60.00,A,A,S06,Appropriate fastener range and calibration required
-TST-014,Bench equipment,Insulated hand tools,set,1,1,80.00,80.00,80.00,80.00,A,A,S06,Tools do not authorize live work
-TST-015,Bench equipment,Cable crimp tool dies and continuity accessories,set,1,1,90.00,90.00,90.00,90.00,A,A,S07,Correct dies required for selected lugs and connector contacts
-CON-001,Consumables and support,Welding wire and electrode allowance,lot,0,1,30.00,30.00,30.00,30.00,A,A,S06,Remove if bundled into fabrication service quote
-CON-002,Consumables and support,Shielding gas refill allowance,lot,0,1,50.00,50.00,50.00,50.00,A,A,S06,No welding machine or gas bottle purchase included
+TST-013,Bench equipment,Torque wrench,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tool available; verify range condition and calibration status for selected fasteners
+TST-014,Bench equipment,Insulated hand tools,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tool set available; condition and rating checks required; tools do not authorize live work
+TST-015,Bench equipment,Cable crimp tool dies and continuity accessories,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tooling available; verify dies match selected lugs and contacts
+CON-001,Consumables and support,Coated welding electrode allowance,lot,0,1,30.00,30.00,30.00,30.00,A,A,S06,Owner reports a 20–160 A Daewoo MOSFET welder and coated electrodes; likely stick/MMA process needs model/manual confirmation
 CON-003,Consumables and support,Cutting grinding and drilling consumables,lot,1,1,40.00,40.00,40.00,40.00,A,A,S06,Not cutting or machining labor
-CON-004,Consumables and support,Thread locking sealant and grease,lot,1,1,25.00,25.00,25.00,25.00,A,A,S06,Use only where specified by part supplier or drawings
+CON-004,Consumables and support,Thread locking sealant and grease,lot,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports suitable stock available; verify grade condition and compatibility against released drawings
 CON-005,Consumables and support,Initial electrical and mechanical spares,lot,1,1,100.00,100.00,100.00,100.00,A,A,S07|S04,Fuses connectors pins and fasteners; no complete spare battery track or motor included
-CON-006,Consumables and support,General workshop and field PPE,set,1,1,80.00,80.00,80.00,80.00,A,A,S06,Task-specific PPE assessment still required
-CON-007,Consumables and support,Warning signs and portable test-area barriers,set,1,1,100.00,100.00,100.00,100.00,A,A,S06,Not permission to conduct field tests
-CON-008,Consumables and support,Noncombustible charging surface materials,set,1,1,60.00,60.00,60.00,60.00,A,A,S06,Charging-area and battery incident plan still required
-CON-009,Consumables and support,General workshop fire equipment allowance,set,1,1,60.00,60.00,60.00,60.00,A,A,S06,Selection by competent fire-safety adviser; no battery-fire extinguishing capability claimed
-CON-010,Consumables and support,Cleaning and inspection kit,set,1,1,25.00,25.00,25.00,25.00,A,A,S06,No pressure-wash rating implied
+CON-006,Consumables and support,Non-welding starter PPE allowance,set,1,1,100.00,100.00,100.00,100.00,A,A,S06,Starter allowance for hearing protection grinding face shield paint-vapour respirator and task-appropriate gloves only where safe; no gloves near rotating machinery; glasses footwear and welding PPE reported available; hazard and product-SDS review required
+CON-009,Consumables and support,Deferred general workshop fire equipment allowance,set,1,1,60.00,60.00,60.00,60.00,A,A,S06,Retained provision pending competent fire-safety review; no battery-fire extinguishing capability claimed
+CON-010,Consumables and support,Cleaning and inspection kit,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports suitable supplies available; inspect condition and compatibility before use; no pressure-wash rating implied

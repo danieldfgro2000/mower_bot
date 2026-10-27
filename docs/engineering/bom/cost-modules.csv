@@ -28,15 +28,13 @@ precharge,05.06 Precharge discharge and voltage-test hardware,05-power-cables-an
 control-supplies,05.07 Control DC/DC logic supplies and branch protection,05-power-cables-and-electronics/power-distribution,PWR-012:PWR-014,05 — Power cables and electronics,installed
 enclosures,05.08 Electronics enclosures glands cooling and mounting,05-power-cables-and-electronics/power-distribution,PWR-015:PWR-016|PWR-021:PWR-024,05 — Power cables and electronics,installed
 stop-controls,06.01 Independent safety relay E-stops and reset controls,06-safety-controls-and-sensors/safety-controls,SAF-001:SAF-003,06 — Safety controls and sensors,installed
-remote,06.02 Industrial operator remote and stop provision,06-safety-controls-and-sensors/safety-controls,SAF-004,06 — Safety controls and sensors,installed
 control-boards,06.03 Local control boards communications and service display,06-safety-controls-and-sensors/safety-controls,SAF-005:SAF-006|SAF-008,06 — Safety controls and sensors,installed
 status,06.04 Status beacon and buzzer,06-safety-controls-and-sensors/safety-controls,SAF-007,06 — Safety controls and sensors,installed
 tilt-interlocks,06.05 Tilt sensing and pod or guard interlocks,06-safety-controls-and-sensors/safety-controls,SAF-009:SAF-010,06 — Safety controls and sensors,installed
 drive-sensors,06.06 Drive current voltage temperature and speed sensors,06-safety-controls-and-sensors/safety-controls,INS-001:INS-004,06 — Safety controls and sensors,installed
 logging,06.07 Data logger storage and reader,06-safety-controls-and-sensors/safety-controls,INS-005:INS-006,06 — Safety controls and sensors,installed
-loose-handling,07.01 Loose slings straps shackles and service supports,07-workshop-and-support/workshop,MNT-003:MNT-006,07 — Workshop and support,support
-bench-fixture,07.02 Bench fixture guards and pendant,07-workshop-and-support/workshop,TST-001:TST-004,07 — Workshop and support,bench
-dynamometer,07.03 Dynamometer torque measurement and adapters,07-workshop-and-support/workshop,TST-005:TST-008,07 — Workshop and support,bench
-bench-tools,07.04 Meters instruments hand tools and crimp tooling,07-workshop-and-support/workshop,TST-009:TST-015,07 — Workshop and support,bench
-consumables,07.05 Fabrication consumables and initial spares,07-workshop-and-support/workshop,CON-001:CON-005,07 — Workshop and support,support
-ppe-support,07.06 PPE barriers charging surface fire and cleaning supplies,07-workshop-and-support/workshop,CON-006:CON-010,07 — Workshop and support,support
+loose-handling,07.01 Loose transport straps and service supports,07-workshop-and-support/workshop,MNT-004|MNT-006,07 — Workshop and support,support
+bench-fixture,07.02 Bench fixture and guards,07-workshop-and-support/workshop,TST-001:TST-003,07 — Workshop and support,bench
+bench-tools,07.04 Meters instruments hand tools and crimp tooling,07-workshop-and-support/workshop,TST-010:TST-011|TST-013:TST-015,07 — Workshop and support,bench
+consumables,07.05 Fabrication consumables and initial spares,07-workshop-and-support/workshop,CON-001|CON-003:CON-005,07 — Workshop and support,support
+ppe-support,07.06 PPE deferred fire provision and cleaning supplies,07-workshop-and-support/workshop,CON-006|CON-009:CON-010,07 — Workshop and support,support

@@ -60,7 +60,7 @@ Follow the plan's sequence rather than treating autonomy as the first milestone:
 | Build phase | Required direction / exit evidence |
 | --- | --- |
 | 0 — Customer and site validation | Plausible pilot demand and documented site/operating constraints |
-| 1 — Bench propulsion prototype | One drive meets intended duty with measured current, thermal, torque, and fault behavior |
+| 1 — Bench propulsion prototype | One drive has calculated torque/speed estimates and measured current, voltage, speed, thermal, and fault observations; torque capability remains unmeasured |
 | 2 — Rolling two-pod chassis | Repeatable control, width locks, stability, braking, and track retention |
 | 3 — Supervised mower integration | Repeatable cutting with measured energy, vibration, stopping, and service effort |
 | 4 — Safety and supervised remote operation | Every emergency path demonstrated independently; predictable manual operation |

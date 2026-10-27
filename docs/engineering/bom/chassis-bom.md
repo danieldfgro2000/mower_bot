@@ -34,9 +34,9 @@ through Stage 2; it is not a per-pod or per-motor price.
 | **[03 — Width adjustment](../modules/03-width-adjustment/width-adjustment.md)** | €407.00 | Same as 48 V |
 | **[04 — Battery and charging](../modules/04-battery-and-charging/batteries.md)** | €3,148.16 | €5,698.48 |
 | **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 | Same as 48 V |
-| **[06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md)** | €2,580.00 | Same as 48 V |
-| **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €4,514.00 | Same as 48 V |
-| **All listed materials/equipment** | €18,322.82 | €20,611.48 |
+| **[06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 | Same as 48 V |
+| **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €615.00 | Same as 48 V |
+| **All listed materials/equipment** | €12,888.82 | €15,177.48 |
 <!-- END GENERATED: overview -->
 
 ### Build budget
@@ -49,15 +49,14 @@ costed planetary drive.
 <!-- BEGIN GENERATED: budget -->
 | Budget line | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| Materials/equipment | €18,322.82 | €20,611.48 |
+| Materials/equipment | €12,888.82 | €15,177.48 |
 | Freight/import/brokerage provision | €500.00 | €700.00 |
 | Outsourced precision machining provision | €350.00 | €650.00 |
 | DIY fabrication/printing energy | €30.00 | Same as 48 V |
-| Instrument calibration/setup service | €250.00 | Same as 48 V |
 | Owner fabrication labor | N/A - owner supplied | Same as 48 V |
-| **Budget before contingency** | €19,452.82 | €22,241.48 |
-| Uncertainty contingency (20%) | €3,890.56 | €4,448.30 |
-| **Indicative build budget** | €23,343.38 | €26,689.78 |
+| **Budget before contingency** | €13,768.82 | €16,557.48 |
+| Uncertainty contingency (20%) | €2,753.76 | €3,311.50 |
+| **Indicative build budget** | €16,522.58 | €19,868.98 |
 <!-- END GENERATED: budget -->
 
 **Find:** [Scope and decisions](chassis-bom.md#scope-and-decisions) ·
@@ -82,20 +81,25 @@ changed.
 
 **Included:** running gear; pod, scissor, and spine materials; width locks and
 guards; propulsion and brake provisions; batteries/BMS and chargers;
-protection and wiring; independent safety provisions; operator remote,
-logging, and sensors; handling; bench load/measurement equipment; initial
-consumables and support materials.
+protection and wiring; independent safety provisions; mobile-app normal-control
+intent, logging, and sensors; handling; a guarded bench fixture and selected
+measurement tools; initial consumables and support materials. The baseline has
+no dynamometer or direct torque measurement; torque remains pre-calculated and
+unmeasured.
 
 **Excluded:** **Stage 3 — supervised mower integration**, including the DAC
 9100 mower and its mount/cutting guards; conveyor, trailer, fruit drum,
-RTK/autonomy equipment and subscriptions; road transport vehicle; workshop
+RTK/autonomy equipment and subscriptions; dynamometer and direct torque
+measurement; industrial operator remote; road transport vehicle; workshop
 rent; insurance; certification; professional design/risk assessment; software
 development; field commissioning; major workshop machinery; and a complete
 spare track, motor, or battery. An existing programming computer and normal
 workshop infrastructure are assumed available. The confirmed welder and 3D
-printer are not priced as new purchases. The four-column cage is excluded.
-Outsourced machining, fabrication energy, calibration, freight, and uncertainty
-are shown separately rather than hidden in the material BOM.
+printer, reported lathe/mill access, and reused workshop tools are not priced as
+new purchases. The four-column cage is excluded. Outsourced machining,
+fabrication energy, freight, and uncertainty are shown separately rather than
+hidden in the material BOM; no separate calibration-service allowance is
+included.
 
 The DIY enclosure allowance covers electronics and cable covers, **not an
 approved printed structural part or traction-battery containment design**.
@@ -148,8 +152,8 @@ overview, or open its specification section directly:
 | [04.01–04.04 Batteries and charging](../modules/04-battery-and-charging/batteries.md) | Pack alternatives, BMS, enclosures, chargers, and interlocks | [Specification](../modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements) |
 | [05.01–05.04 Cables, connectors, and harnesses](../modules/05-power-cables-and-electronics/cables-connectors.md) | Power and signal wiring, mating connectors, shielding, and routing | [Specification](../modules/05-power-cables-and-electronics/cables-connectors.md#specification-and-inspection-requirements) |
 | [05.05–05.08 Power distribution and enclosures](../modules/05-power-cables-and-electronics/power-distribution.md) | Switchgear, supplies, enclosures, and power distribution | [Specification](../modules/05-power-cables-and-electronics/power-distribution.md#specification-and-inspection-requirements) |
-| [06.01–06.07 Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md) | Independent stop hardware, operator control, sensors, and logging | [Specification](../modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements) |
-| [07.01–07.06 Workshop and support](../modules/07-workshop-and-support/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](../modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) |
+| [06.01, 06.03–06.07 Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md) | Independent stop hardware, normal-control intent, sensors, and logging | [Specification](../modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements) |
+| [07.01–07.02, 07.04–07.06 Workshop and support](../modules/07-workshop-and-support/workshop.md) | Bench fixture, tools, handling gear, consumables, spares, and PPE | [Specification](../modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) |
 
 Shared references: [Supplier register](sources.md) ·
 [Feedback and qualification loops](feedback.md) ·
@@ -176,10 +180,10 @@ procurement or manufacture by this package.
 | Cost basis: lines / EUR | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
 | Calculated public-price references (C) | 4 / €6,009.82 | N/A - no lines |
-| Engineering allowances (A) | 119 / €12,313.00 | 128 / €20,611.48 |
+| Engineering allowances (A) | 99 / €6,879.00 | 108 / €15,177.48 |
 | Included / no separate purchase (I) | 5 / N/A | N/A - no lines |
-| Reused inventory (R) | 1 / N/A | Same as 48 V |
-| **Total (129 lines)** | €18,322.82 | €20,611.48 |
+| Reused inventory (R) | 8 / N/A | Same as 48 V |
+| **Total (116 lines)** | €12,888.82 | €15,177.48 |
 <!-- END GENERATED: readiness -->
 
 All 129 lines map to **39 specification families** across the scope documents.
@@ -207,16 +211,18 @@ neither the purchase total nor stage acquisitions.
 <!-- BEGIN GENERATED: phases -->
 | Acquisition stage | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| Stage 1 — bench propulsion prototype | €9,240.91 | €10,385.24 |
-| Stage 2 — rolling two-pod chassis (additional purchases only) | €9,081.91 | €10,226.24 |
-| **Stages 1–2 cumulative** | €18,322.82 | €20,611.48 |
+| Stage 1 — bench propulsion prototype | €5,615.91 | €6,760.24 |
+| Stage 2 — rolling two-pod chassis (additional purchases only) | €7,272.91 | €8,417.24 |
+| **Stages 1–2 cumulative** | €12,888.82 | €15,177.48 |
 <!-- END GENERATED: phases -->
 
-This assumes one instrumented bench setup is reused, not a dynamometer per
-pod. **Stage 1** includes protection and physical stopping provisions; later
-safety work does not permit deferring essential safety. **Stage 2** includes
-the industrial remote, which is not priced into the maintained-action bench
-pendant.
+This assumes one instrumented, guarded bench fixture is reused, with no
+dynamometer or direct torque measurement. **Stage 1** includes fixture
+materials and separate physical stopping provisions; later safety work does
+not permit deferring essential safety. **Stage 2** has no separate industrial
+remote allowance because the owner intends to use the mobile app for normal
+commands. The app/network and the proposed general E-stop are not yet verified
+safety behavior.
 
 [↑ Back to document overview](chassis-bom.md#document-overview)
 
@@ -276,23 +282,28 @@ The build-budget table is at the top. Its provisions are not material prices:
   duty calculation; pack transport and Romania delivery must be quoted.
 - **Owner fabrication labor:** no purchased labor applies because the owner
   performs fabrication. Effort and engineering qualification are not valued.
-- **Outsourced precision machining:** provision for shaft/hub/bore or other
-  precision work not confirmed as DIY; the 72 V scenario allows additional
-  reduction work. Obtain a quote.
+- **Outsourced precision machining:** retained provision for shaft/hub/bore or
+  other work that cannot be made with the owner's reported lathe/mill access;
+  off-the-shelf gears are preferred where possible. The 72 V scenario allows
+  additional reduction work. Exact parts and any quote remain open.
 - **DIY fabrication/printing energy:** provisional electricity allowance,
   not materials or purchased tools.
-- **Instrument calibration/setup:** allowance, not completed calibration.
+- **Calibration evidence:** no separate service allowance is included; use
+  supplier calibration data where provided and verify end-to-end sensor scaling,
+  channel mapping, and measurements. This is not a claim that the instruments
+  are calibrated or suitable.
 - **Budget before contingency:** sum of the preceding provisions.
 - **Uncertainty contingency:** 20% of that subtotal.
 - **Indicative build budget:** still excludes professional design,
   certification, and commissioning.
 
 Do not present the indicative budget as a quoted complete-machine price. Do not
-compare the historical €5,000 six-component basket with a full chassis,
-independent safety, and newly purchased dynamometer as though their scopes
-match. Reusing all bench equipment would remove €3,720 of listed acquisitions
-only if suitable equipment and access are confirmed; measurements are still
-required.
+compare the historical €5,000 six-component basket with a full chassis and
+independent safety as though their scopes match. Reused equipment has no new
+purchase cost, but its condition, capacity, calibration, and suitability remain
+to be checked. The selected test method does not measure output torque; it
+cannot establish torque capability or replace the open engineering and safety
+gates.
 
 [↑ Back to document overview](chassis-bom.md#document-overview)
 

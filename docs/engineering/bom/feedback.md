@@ -118,6 +118,58 @@ layout direction only; the distance datum, tool reactions, complete-machine CG,
 and track support loads remain unverified. This does not change the CAD
 orientation, baseline BOM quantities, or costs.
 
+### F10: workshop equipment, test method, and mobile-app control
+
+**Decision recorded on 2026-10-27:** Use bench checks before field checks.
+Torque will be calculated from the selected motor/reduction data and will remain
+unmeasured; no dynamometer is planned. Planned onboard sensors and the logger
+are the intended primary source for current, voltage, speed, and temperature,
+with a purchased DC-capable clamp meter as an independent current check and the
+existing infrared-thermometer allowance retained. Field braking and track-retention
+observations will use onboard logs plus observer notes. Initial field checks are
+for a bare rolling chassis on flat, controlled ground, without a mower or
+attachment.
+
+**Control intent:** The owner intends a mobile app as the only normal operator
+control, expects loss of connection to stop the bot, and proposes one general
+emergency stop that interrupts current to all modules. This is a proposed
+behavior, not a verified safety architecture: loss-of-link stopping, the
+independent stop path, brake/holding response, stored energy, and safe reset
+still need reviewed design and separate evidence. The industrial-remote and
+standalone bench-pendant allowances are removed; the app is not treated as the
+independent emergency stop. One general E-stop assembly is budgeted and reused
+from the bench through individual pod checks to the final bot; the final
+machine's required stop count and placement remain subject to hazard review.
+
+**Workshop and fabrication inputs:** The owner reports two transport straps
+described as 500 kg, two service supports, a torque wrench, insulated tools,
+crimp tooling, suitable thread-locking/sealant/grease stock, cleaning supplies,
+welding PPE, safety glasses, and safety footwear. These are treated as reused
+inventory pending rating, condition, calibration, compatibility, or suitability
+checks. No lifting slings or shackles are planned. The user will fabricate a
+restrained, guarded bench fixture from purchased material.
+
+The owner reports a 20–160 A Daewoo MOSFET welder using flux-coated electrodes;
+stick/MMA is a likely identification pending the exact model/manual. Welding is
+planned outdoors. Keep the electrode allowance, remove shielding gas, and budget
+€100 for non-welding starter PPE, including hearing protection, a grinding
+face shield, paint-vapour respiratory protection selected for the coating/SDS,
+and task-appropriate gloves only where safe; no gloves near rotating machinery.
+Welding PPE, glasses, and footwear are reported
+available. Use off-the-shelf gears where possible; general lathe/mill access is
+available but no gear-cutting capability. Retain the outsourced machining
+provision for parts that cannot be made in-house.
+
+**Effect on estimate:** Remove the dynamometer/torque package and separate
+multimeter, tachometer, bench pendant, industrial remote, lifting slings,
+shackles, portable test-area barriers, and charging-surface allowance. Retain
+the fire-equipment provision but defer its selection/purchase until a
+fire-safety review. Reused equipment does not establish suitability; field or
+bench testing remains unauthorized until the relevant safety and test gates are
+released. Remove the separate €250 calibration/setup service allowance and
+rely on supplier calibration data where provided; end-to-end sensor scaling,
+channel mapping, and measurement checks remain required.
+
 [↑ Back to document overview](feedback.md#document-overview)
 
 
@@ -130,14 +182,15 @@ component qualification. A failed check reopens downstream selections and costs.
 ### L1: inventory and cost scope
 
 **Inputs needed / next feedback:** Welder/printer and DIY frame/electronics enclosures
-confirmed; remaining tracks, motors, packs, measuring equipment, and precision machining
-access not supplied
+confirmed. Owner reports general lathe/mill access without gear cutting; standard gears
+are preferred where possible and the machining provision remains for unavoidable
+outsourcing. Exact component drawings and tool/inventory suitability checks remain open.
 
 **What changes:** DIY labor and printing materials now reflected; replace other new-buy
 allowances only after confirmed inventory/suitability
 
-**Closure evidence:** Partially closed by F03; required measurement/safety functions
-remain budgeted
+**Closure evidence:** Partially closed by F03 and F10; required measurement and
+safety functions remain subject to exact selection, design, and qualification.
 
 ### L2: drive operating points
 

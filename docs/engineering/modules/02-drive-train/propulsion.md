@@ -292,8 +292,11 @@ tensioner range and guard interfaces; 48 V included components identified separa
 from 72 V external reduction
 
 **Receiving or first-article evidence:** Parts and centre-distance/chain-alignment
-match; recorded tension; torque/speed/thermal confirmation; kit contents reconcile
-N/A separate-purchase rows; external reduction quantities apply only to 72 V
+match; recorded tension; calculated torque/speed from verified motor and reduction
+data; logged current and thermal observations; kit contents reconcile N/A
+separate-purchase rows; external reduction quantities apply only to 72 V. Direct
+torque measurement is not in the current test method, so torque capability remains
+unmeasured and unqualified.
 
 [↑ Back to document overview](propulsion.md#document-overview)
 
