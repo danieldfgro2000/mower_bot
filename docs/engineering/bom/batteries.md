@@ -11,17 +11,15 @@ Candidate pack claims do not establish vehicle suitability or
 controller/charger compatibility; compare them with the
 [supplier evidence](sources.md#source-id-lookup).
 
-**Contents:** [Battery alternatives](batteries.md#battery-alternatives) ·
+**Navigate:** [Alternatives](batteries.md#battery-alternatives) ·
 [Requirements](batteries.md#specification-and-inspection-requirements) ·
-[Sourcing](batteries.md#sourcing) ·
-[Interfaces](batteries.md#interfaces-with-other-scopes) ·
-[Itemized costs](batteries.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Battery and charging costs](../cost-breakdown.md#battery-and-charging) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+[Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes) ·
+[Itemized costs](batteries.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Cost totals](../cost-breakdown.md#battery-and-charging) ·
+[Ledger](../chassis-bom.csv) ·
+[Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Battery alternatives
 
@@ -151,12 +149,12 @@ N/A never means an unknown purchase is free.
 
 **Battery enclosures restraints and insulation**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| BAT-002 - Battery enclosure and terminal cover (2 each) | €180.00 / A | €180.00 / A |
-| BAT-003 - Battery restraint and vibration-isolation hardware (2 pod set) | €60.00 / A | €60.00 / A |
-| BAT-004 - Drain sealing and terminal-insulation materials (2 pod set) | €30.00 / A | €30.00 / A |
-| **Module subtotal** | €270.00 | €270.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| BAT-002 - Battery enclosure and terminal cover (2 each) | €180.00 / A |
+| BAT-003 - Battery restraint and vibration-isolation hardware (2 pod set) | €60.00 / A |
+| BAT-004 - Drain sealing and terminal-insulation materials (2 pod set) | €30.00 / A |
+| **Module subtotal** | €270.00 |
 
 ### Cost: chargers
 
@@ -171,11 +169,11 @@ N/A never means an unknown purchase is free.
 
 **Charge connectors fuse holders and interlock harness**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| BAT-006 - Charge connector and protective cap (2 pair) | €40.00 / A | €40.00 / A |
-| BAT-007 - Charge fuse holder and interlock harness (2 pod set) | €50.00 / A | €50.00 / A |
-| **Module subtotal** | €90.00 | €90.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| BAT-006 - Charge connector and protective cap (2 pair) | €40.00 / A |
+| BAT-007 - Charge fuse holder and interlock harness (2 pod set) | €50.00 / A |
+| **Module subtotal** | €90.00 |
 
 | Scope total | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |

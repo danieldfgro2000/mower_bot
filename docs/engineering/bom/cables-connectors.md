@@ -11,16 +11,15 @@ The [specification and inspection section](cables-connectors.md#specification-an
 defines evidence still needed; exact wire sizes, connector part numbers, and
 acceptance limits remain unqualified.
 
-**Contents:** [Requirements](cables-connectors.md#specification-and-inspection-requirements) ·
+**Navigate:** [Requirements](cables-connectors.md#specification-and-inspection-requirements) ·
 [Sourcing](cables-connectors.md#sourcing) ·
 [Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
-[Itemized costs](cables-connectors.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Power cable and electronics costs](../cost-breakdown.md#power-cables-and-electronics) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+[Itemized costs](cables-connectors.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
+[Ledger](../chassis-bom.csv) ·
+[Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 
@@ -84,45 +83,45 @@ N/A never means an unknown purchase is free.
 
 **High-current cable**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-008 - High-current cable (10 m) | €90.00 / A | €90.00 / A |
-| **Module subtotal** | €90.00 | €90.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-008 - High-current cable (10 m) | €90.00 / A |
+| **Module subtotal** | €90.00 |
 
 ### Cost: power-connectors
 
 **Power lugs connectors and terminal insulation**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-009 - Power cable lugs (24 each) | €48.00 / A | €48.00 / A |
-| PWR-010 - High-current sealed connector (4 pair) | €100.00 / A | €100.00 / A |
-| PWR-011 - Power insulation heat-shrink and terminal boots (1 lot) | €20.00 / A | €20.00 / A |
-| **Module subtotal** | €168.00 | €168.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-009 - Power cable lugs (24 each) | €48.00 / A |
+| PWR-010 - High-current sealed connector (4 pair) | €100.00 / A |
+| PWR-011 - Power insulation heat-shrink and terminal boots (1 lot) | €20.00 / A |
+| **Module subtotal** | €168.00 |
 
 ### Cost: signal-cables
 
 **Control and communications cables**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-017 - Low-voltage control wire (50 m) | €40.00 / A | €40.00 / A |
-| PWR-018 - Shielded communications cable (15 m) | €45.00 / A | €45.00 / A |
-| **Module subtotal** | €85.00 | €85.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-017 - Low-voltage control wire (50 m) | €40.00 / A |
+| PWR-018 - Shielded communications cable (15 m) | €45.00 / A |
+| **Module subtotal** | €85.00 |
 
 ### Cost: signal-connectors
 
 **Signal connectors conduit clips and labels**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-019 - Sealed signal connectors (12 pair) | €60.00 / A | €60.00 / A |
-| PWR-020 - Conduit loom P-clips ties and wire labels (1 lot) | €35.00 / A | €35.00 / A |
-| **Module subtotal** | €95.00 | €95.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-019 - Sealed signal connectors (12 pair) | €60.00 / A |
+| PWR-020 - Conduit loom P-clips ties and wire labels (1 lot) | €35.00 / A |
+| **Module subtotal** | €95.00 |
 
-| Scope total | 48 V / 2 kW | 72 V / 4 kW |
-| --- | ---: | ---: |
-| **All items owned by this scope** | €438.00 | €438.00 |
+| Scope total | Total (both variants) |
+| --- | ---: |
+| **All items owned by this scope** | €438.00 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](cables-connectors.md#document-overview)

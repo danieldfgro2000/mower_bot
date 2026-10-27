@@ -108,8 +108,39 @@ def table(title):
     return [f"| {title} | 48 V / 2 kW | 72 V / 4 kW |", "| --- | ---: | ---: |"]
 
 
-def cost_row(label, rows):
-    return f"| {label} | " + " | ".join(money(total(rows, s)) for s in SCENARIOS) + " |"
+def comparison_table(title, shared, value_header, scenario_headers=None):
+    if shared:
+        return [
+            f"| {title} | {value_header} (both variants) |",
+            "| --- | ---: |",
+        ]
+    if scenario_headers:
+        return [
+            f"| {title} | {scenario_headers[0]} | {scenario_headers[1]} |",
+            "| --- | ---: | ---: |",
+        ]
+    return table(title)
+
+
+def cost_row(label, rows, shared=False):
+    values = [money(total(rows, scenario)) for scenario in SCENARIOS]
+    if shared and values[0] != values[1]:
+        raise ValueError(f"Different scenario totals cannot share a column: {label}")
+    return f"| {label} | " + " | ".join(values[:1] if shared else values) + " |"
+
+
+def displayed_cost(row, scenario):
+    value = row[f"extended_eur_{scenario}"]
+    return value if value == "N/A" else money(number(value))
+
+
+def displayed_detail(row, scenario):
+    return f"{displayed_cost(row, scenario)} / {row[f'basis_{scenario}']}"
+
+
+def scenarios_match(rows, formatter):
+    return all(formatter(row, SCENARIOS[0]) == formatter(row, SCENARIOS[1])
+               for row in rows)
 
 
 def category_label(category, category_modules):
@@ -152,15 +183,30 @@ def render(base):
     text = block(text, "overview", "\n".join(overview))
     summary = []
     for category in categories:
-        summary.extend([f"### {category}", "", *table("Module / detailed BOM")])
         category_rows = []
         for module in (m for m in modules if m["category"] == category):
             category_rows.extend(groups[module["module_id"]])
+        shared = scenarios_match(
+            category_rows,
+            lambda row, scenario: money(total([row], scenario)),
+        )
+        summary.extend([
+            f"### {category}", "",
+            *comparison_table("Module / detailed BOM", shared, "Total"),
+        ])
+        for module in (m for m in modules if m["category"] == category):
             link = f"[{module['label']}](bom/{module['scope']}.md#cost-{module['module_id']})"
-            summary.append(cost_row(link, groups[module["module_id"]]))
+            summary.append(cost_row(link, groups[module["module_id"]], shared))
             if module["module_id"] == "packs":
-                summary.append("| [BMS: included in pack; not separately priced](bom/batteries.md#cost-packs) | N/A - included | N/A - included |")
-        summary.append(cost_row(f"**{category} subtotal**", category_rows))
+                bms_values = ["N/A - included"] if shared else [
+                    "N/A - included", "N/A - included",
+                ]
+                summary.append(
+                    "| [BMS: included in pack; not separately priced](bom/batteries.md#cost-packs) | "
+                    + " | ".join(bms_values)
+                    + " |"
+                )
+        summary.append(cost_row(f"**{category} subtotal**", category_rows, shared))
         summary.append("")
     summary.extend(["### Purchase totals", "", *table("Accounting scope")])
     for disposition, label in [("installed", "Installed-machine materials"),
@@ -234,17 +280,24 @@ def render(base):
         for module in (m for m in modules if m["scope"] == scope):
             selected = groups[module["module_id"]]
             owned.extend(selected)
+            shared = scenarios_match(selected, displayed_detail)
             detail.extend([f"### Cost: {module['module_id']}", "", f"**{module['label']}**", "",
-                           "| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |",
-                           "| --- | ---: | ---: |"])
+                           *comparison_table(
+                               "Item / cumulative quantity",
+                               shared,
+                               "Total / basis",
+                               ("48 V total / basis", "72 V total / basis"),
+                           )])
             for row in selected:
                 label = f"{row['item_id']} - {row['description']} ({row['qty_stage_2_total']} {row['unit']})"
-                cells = [f"{row[f'extended_eur_{s}'] if row[f'extended_eur_{s}'] == 'N/A' else money(number(row[f'extended_eur_{s}']))} / {row[f'basis_{s}']}"
-                         for s in SCENARIOS]
+                cells = [displayed_detail(row, scenario) for scenario in SCENARIOS]
+                if shared:
+                    cells = cells[:1]
                 detail.append(f"| {label} | " + " | ".join(cells) + " |")
-            detail.extend([cost_row("**Module subtotal**", selected), ""])
-        detail.extend(table("Scope total"))
-        detail.append(cost_row("**All items owned by this scope**", owned))
+            detail.extend([cost_row("**Module subtotal**", selected, shared), ""])
+        shared = scenarios_match(owned, displayed_detail)
+        detail.extend(comparison_table("Scope total", shared, "Total"))
+        detail.append(cost_row("**All items owned by this scope**", owned, shared))
         outputs[path] = block(path.read_text(), "details", "\n".join(detail))
     return outputs
 

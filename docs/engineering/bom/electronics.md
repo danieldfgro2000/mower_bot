@@ -11,17 +11,14 @@ logging. The [requirements section](electronics.md#specification-and-inspection-
 links each item family to evidence still needed. The listed examples are not
 selected or safety-qualified components.
 
-**Contents:** [Requirements](electronics.md#specification-and-inspection-requirements) ·
-[Sourcing](electronics.md#sourcing) ·
-[Interfaces](electronics.md#interfaces-with-other-scopes) ·
-[Itemized costs](electronics.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Power cable and electronics costs](../cost-breakdown.md#power-cables-and-electronics) ·
-[Safety and sensor costs](../cost-breakdown.md#safety-controls-and-sensors) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+**Navigate:** [Requirements](electronics.md#specification-and-inspection-requirements) ·
+[Sourcing](electronics.md#sourcing) · [Interfaces](electronics.md#interfaces-with-other-scopes) ·
+[Itemized costs](electronics.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Power cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
+[Safety cost totals](../cost-breakdown.md#safety-controls-and-sensors) ·
+[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 
@@ -170,125 +167,125 @@ N/A never means an unknown purchase is free.
 
 **Main fuses disconnects contactors and feedback**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-001 - DC main fuse (2 each) | €50.00 / A | €50.00 / A |
-| PWR-002 - Touch-protected main fuse holder (2 each) | €50.00 / A | €50.00 / A |
-| PWR-003 - DC service disconnect (2 each) | €110.00 / A | €110.00 / A |
-| PWR-004 - Monitored DC contactor provision (4 each) | €440.00 / A | €440.00 / A |
-| PWR-005 - Contactor feedback and coil protection provision (4 each) | €60.00 / A | €60.00 / A |
-| **Module subtotal** | €710.00 | €710.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-001 - DC main fuse (2 each) | €50.00 / A |
+| PWR-002 - Touch-protected main fuse holder (2 each) | €50.00 / A |
+| PWR-003 - DC service disconnect (2 each) | €110.00 / A |
+| PWR-004 - Monitored DC contactor provision (4 each) | €440.00 / A |
+| PWR-005 - Contactor feedback and coil protection provision (4 each) | €60.00 / A |
+| **Module subtotal** | €710.00 |
 
 ### Cost: precharge
 
 **Precharge discharge and voltage-test hardware**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-006 - Pre-charge relay resistor and mounting (2 pod set) | €70.00 / A | €70.00 / A |
-| PWR-007 - Controlled discharge and voltage-test provision (2 pod set) | €20.00 / A | €20.00 / A |
-| **Module subtotal** | €90.00 | €90.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-006 - Pre-charge relay resistor and mounting (2 pod set) | €70.00 / A |
+| PWR-007 - Controlled discharge and voltage-test provision (2 pod set) | €20.00 / A |
+| **Module subtotal** | €90.00 |
 
 ### Cost: control-supplies
 
 **Control DC/DC logic supplies and branch protection**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-012 - Protected traction-to-control DC/DC converter (2 each) | €180.00 / A | €180.00 / A |
-| PWR-013 - Logic step-down supply (2 each) | €30.00 / A | €30.00 / A |
-| PWR-014 - Low-voltage fuse blocks fuses and terminals (2 pod set) | €50.00 / A | €50.00 / A |
-| **Module subtotal** | €260.00 | €260.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-012 - Protected traction-to-control DC/DC converter (2 each) | €180.00 / A |
+| PWR-013 - Logic step-down supply (2 each) | €30.00 / A |
+| PWR-014 - Low-voltage fuse blocks fuses and terminals (2 pod set) | €50.00 / A |
+| **Module subtotal** | €260.00 |
 
 ### Cost: enclosures
 
 **Electronics enclosures glands cooling and mounting**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| PWR-015 - Filament for DIY electronics enclosures and cable covers (2 kg) | €50.00 / A | €50.00 / A |
-| PWR-016 - Cable glands vent and strain relief (1 lot) | €35.00 / A | €35.00 / A |
-| PWR-021 - Controller heat spreaders and thermal interface (2 pod set) | €50.00 / A | €50.00 / A |
-| PWR-022 - DIY enclosure mounting backplates (2 each) | €20.00 / A | €20.00 / A |
-| PWR-023 - DIY enclosure gaskets and lid fasteners (2 pod set) | €16.00 / A | €16.00 / A |
-| PWR-024 - Threaded inserts for printed enclosures (2 pod set) | €10.00 / A | €10.00 / A |
-| **Module subtotal** | €181.00 | €181.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| PWR-015 - Filament for DIY electronics enclosures and cable covers (2 kg) | €50.00 / A |
+| PWR-016 - Cable glands vent and strain relief (1 lot) | €35.00 / A |
+| PWR-021 - Controller heat spreaders and thermal interface (2 pod set) | €50.00 / A |
+| PWR-022 - DIY enclosure mounting backplates (2 each) | €20.00 / A |
+| PWR-023 - DIY enclosure gaskets and lid fasteners (2 pod set) | €16.00 / A |
+| PWR-024 - Threaded inserts for printed enclosures (2 pod set) | €10.00 / A |
+| **Module subtotal** | €181.00 |
 
 ### Cost: stop-controls
 
 **Independent safety relay E-stops and reset controls**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| SAF-001 - Independent safety relay or controller allowance (1 set) | €300.00 / A | €300.00 / A |
-| SAF-002 - Machine emergency-stop assembly (2 each) | €70.00 / A | €70.00 / A |
-| SAF-003 - Manual reset enable and status controls (1 set) | €45.00 / A | €45.00 / A |
-| **Module subtotal** | €415.00 | €415.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| SAF-001 - Independent safety relay or controller allowance (1 set) | €300.00 / A |
+| SAF-002 - Machine emergency-stop assembly (2 each) | €70.00 / A |
+| SAF-003 - Manual reset enable and status controls (1 set) | €45.00 / A |
+| **Module subtotal** | €415.00 |
 
 ### Cost: remote
 
 **Industrial operator remote and stop provision**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| SAF-004 - Industrial remote transmitter receiver and stop provision (1 set) | €1,500.00 / A | €1,500.00 / A |
-| **Module subtotal** | €1,500.00 | €1,500.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| SAF-004 - Industrial remote transmitter receiver and stop provision (1 set) | €1,500.00 / A |
+| **Module subtotal** | €1,500.00 |
 
 ### Cost: control-boards
 
 **Local control boards communications and service display**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| SAF-005 - Local non-safety control board (2 each) | €50.00 / A | €50.00 / A |
-| SAF-006 - Isolated control communications interfaces (2 each) | €40.00 / A | €40.00 / A |
-| SAF-008 - Service display USB interface and connectors (1 set) | €30.00 / A | €30.00 / A |
-| **Module subtotal** | €120.00 | €120.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| SAF-005 - Local non-safety control board (2 each) | €50.00 / A |
+| SAF-006 - Isolated control communications interfaces (2 each) | €40.00 / A |
+| SAF-008 - Service display USB interface and connectors (1 set) | €30.00 / A |
+| **Module subtotal** | €120.00 |
 
 ### Cost: status
 
 **Status beacon and buzzer**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| SAF-007 - Status beacon and buzzer (1 set) | €30.00 / A | €30.00 / A |
-| **Module subtotal** | €30.00 | €30.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| SAF-007 - Status beacon and buzzer (1 set) | €30.00 / A |
+| **Module subtotal** | €30.00 |
 
 ### Cost: tilt-interlocks
 
 **Tilt sensing and pod or guard interlocks**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| SAF-009 - Tilt and rollover sensing provision (1 set) | €120.00 / A | €120.00 / A |
-| SAF-010 - Pod disconnect and guard interlock provision (1 set) | €80.00 / A | €80.00 / A |
-| **Module subtotal** | €200.00 | €200.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| SAF-009 - Tilt and rollover sensing provision (1 set) | €120.00 / A |
+| SAF-010 - Pod disconnect and guard interlock provision (1 set) | €80.00 / A |
+| **Module subtotal** | €200.00 |
 
 ### Cost: drive-sensors
 
 **Drive current voltage temperature and speed sensors**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| INS-001 - Isolated DC current transducer (2 each) | €100.00 / A | €100.00 / A |
-| INS-002 - Isolated pack-voltage measurement (2 each) | €40.00 / A | €40.00 / A |
-| INS-003 - Temperature probes and harnesses (8 each) | €40.00 / A | €40.00 / A |
-| INS-004 - Output shaft speed sensor and target (2 each) | €60.00 / A | €60.00 / A |
-| **Module subtotal** | €240.00 | €240.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| INS-001 - Isolated DC current transducer (2 each) | €100.00 / A |
+| INS-002 - Isolated pack-voltage measurement (2 each) | €40.00 / A |
+| INS-003 - Temperature probes and harnesses (8 each) | €40.00 / A |
+| INS-004 - Output shaft speed sensor and target (2 each) | €60.00 / A |
+| **Module subtotal** | €240.00 |
 
 ### Cost: logging
 
 **Data logger storage and reader**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| INS-005 - Non-safety test data logger (1 set) | €60.00 / A | €60.00 / A |
-| INS-006 - Logger storage and reader (1 set) | €15.00 / A | €15.00 / A |
-| **Module subtotal** | €75.00 | €75.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| INS-005 - Non-safety test data logger (1 set) | €60.00 / A |
+| INS-006 - Logger storage and reader (1 set) | €15.00 / A |
+| **Module subtotal** | €75.00 |
 
-| Scope total | 48 V / 2 kW | 72 V / 4 kW |
-| --- | ---: | ---: |
-| **All items owned by this scope** | €3,821.00 | €3,821.00 |
+| Scope total | Total (both variants) |
+| --- | ---: |
+| **All items owned by this scope** | €3,821.00 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](electronics.md#document-overview)

@@ -10,14 +10,12 @@ followed by [qualification loops](feedback.md#feedback-and-qualification-loops)
 that identify technical evidence still needed. Decisions in this log are not
 component approval or operating authorization.
 
-**Contents:** [Feedback decisions](feedback.md#feedback-decisions) ·
-[Qualification loops](feedback.md#feedback-and-qualification-loops)
-
-**Related:** [BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md) ·
+**Navigate:** [Feedback decisions](feedback.md#feedback-decisions) ·
+[Qualification loops](feedback.md#feedback-and-qualification-loops) |
+[BOM overview](../chassis-bom.md) ·
 [Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+[Supplier register](sources.md#source-id-lookup) ·
+[Build checklist](../chassis-build-requirements.md)
 
 ## Feedback decisions
 

@@ -2,24 +2,17 @@
 
 <a id="document-overview"></a>
 
-**Summary:** Edit the [authoritative CSV inputs](updating-linked-costs.md#cost-inputs),
-[regenerate linked Markdown tables](updating-linked-costs.md#regenerate-and-verify),
-then [verify freshness and references](updating-linked-costs.md#reference-checks).
-The generator owns derived totals; this guide does not authorize hardware or
-supplier actions.
+**Summary:** Keep estimate inputs, generated tables, and references in sync.
+The generator owns derived totals; this guide authorizes no supplier or hardware
+actions.
 
-**Purpose:** maintain the BOM estimate when quantities, prices, module ownership
-or source evidence change. This is a documentation procedure, not an
-instruction to purchase parts, build, upload, energize or operate the machine.
-
-**Contents:** [Cost inputs](updating-linked-costs.md#cost-inputs) ·
+**Navigate:** [Cost inputs](updating-linked-costs.md#cost-inputs) ·
 [Regenerate and verify](updating-linked-costs.md#regenerate-and-verify) ·
 [Reference checks](updating-linked-costs.md#reference-checks) ·
-[Validation history](updating-linked-costs.md#validation-history)
-
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md) · [Supplier register](sources.md) ·
-[Documentation index](../../index.md)
+[Validation history](updating-linked-costs.md#validation-history) |
+[BOM overview](../chassis-bom.md) ·
+[Cost breakdown](../cost-breakdown.md) ·
+[Supplier register](sources.md)
 
 ## Cost inputs
 

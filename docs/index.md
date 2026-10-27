@@ -21,9 +21,10 @@ narrowest applicable scope below.
    do not edit generated tables directly.
 
 On a scope page, start with its summary, then follow the design or requirements
-through supplier evidence, interfaces, and itemized costs. Use the contents
-links to jump directly to a topic; the section-end **Back to document overview**
-link returns to the opening summary so you can choose another route.
+through supplier evidence, interfaces, and itemized costs. Use the opening
+navigation links to jump to a topic or its estimate context; section-end
+**Back to document overview** links return to the summary so you can choose
+another route.
 
 | Scope | Authoritative starting point |
 | --- | --- |

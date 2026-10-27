@@ -10,16 +10,13 @@ measurement tools, handling gear, service supplies, spares, and PPE. The
 [specification and inspection section](workshop.md#specification-and-inspection-requirements)
 identifies evidence still needed before purchasing or use.
 
-**Contents:** [Requirements](workshop.md#specification-and-inspection-requirements) ·
-[Sourcing](workshop.md#sourcing) ·
-[Interfaces](workshop.md#interfaces-with-other-scopes) ·
-[Itemized costs](workshop.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Workshop and support costs](../cost-breakdown.md#workshop-and-support) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+**Navigate:** [Requirements](workshop.md#specification-and-inspection-requirements) ·
+[Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes) ·
+[Itemized costs](workshop.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Workshop cost totals](../cost-breakdown.md#workshop-and-support) ·
+[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 
@@ -141,82 +138,82 @@ N/A never means an unknown purchase is free.
 
 **Loose slings straps shackles and service supports**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| MNT-003 - Rated lifting slings (2 each) | €40.00 / A | €40.00 / A |
-| MNT-004 - Transport ratchet straps (4 each) | €72.00 / A | €72.00 / A |
-| MNT-005 - Rated shackles (4 each) | €32.00 / A | €32.00 / A |
-| MNT-006 - Machine service supports (2 each) | €80.00 / A | €80.00 / A |
-| **Module subtotal** | €224.00 | €224.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| MNT-003 - Rated lifting slings (2 each) | €40.00 / A |
+| MNT-004 - Transport ratchet straps (4 each) | €72.00 / A |
+| MNT-005 - Rated shackles (4 each) | €32.00 / A |
+| MNT-006 - Machine service supports (2 each) | €80.00 / A |
+| **Module subtotal** | €224.00 |
 
 ### Cost: bench-fixture
 
 **Bench fixture guards and pendant**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| TST-001 - Guarded bench fixture steel (20 kg) | €70.00 / A | €70.00 / A |
-| TST-002 - Fixture feet anchors and fasteners (1 set) | €30.00 / A | €30.00 / A |
-| TST-003 - Fixture guarding and protective screen (1 m2) | €35.00 / A | €35.00 / A |
-| TST-004 - Maintained-action bench pendant (1 set) | €35.00 / A | €35.00 / A |
-| **Module subtotal** | €170.00 | €170.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| TST-001 - Guarded bench fixture steel (20 kg) | €70.00 / A |
+| TST-002 - Fixture feet anchors and fasteners (1 set) | €30.00 / A |
+| TST-003 - Fixture guarding and protective screen (1 m2) | €35.00 / A |
+| TST-004 - Maintained-action bench pendant (1 set) | €35.00 / A |
+| **Module subtotal** | €170.00 |
 
 ### Cost: dynamometer
 
 **Dynamometer torque measurement and adapters**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| TST-005 - Rotary torque transducer and speed output provision (1 set) | €1,500.00 / A | €1,500.00 / A |
-| TST-006 - Torque sensor readout interface and software provision (1 set) | €250.00 / A | €250.00 / A |
-| TST-007 - Guarded dynamometer load and heat-dissipation provision (1 set) | €1,200.00 / A | €1,200.00 / A |
-| TST-008 - Test coupling adapters and alignment hardware (1 set) | €100.00 / A | €100.00 / A |
-| **Module subtotal** | €3,050.00 | €3,050.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| TST-005 - Rotary torque transducer and speed output provision (1 set) | €1,500.00 / A |
+| TST-006 - Torque sensor readout interface and software provision (1 set) | €250.00 / A |
+| TST-007 - Guarded dynamometer load and heat-dissipation provision (1 set) | €1,200.00 / A |
+| TST-008 - Test coupling adapters and alignment hardware (1 set) | €100.00 / A |
+| **Module subtotal** | €3,050.00 |
 
 ### Cost: bench-tools
 
 **Meters instruments hand tools and crimp tooling**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| TST-009 - Digital multimeter (1 each) | €70.00 / A | €70.00 / A |
-| TST-010 - DC-capable clamp meter (1 each) | €100.00 / A | €100.00 / A |
-| TST-011 - Infrared spot thermometer (1 each) | €50.00 / A | €50.00 / A |
-| TST-012 - Handheld tachometer (1 each) | €50.00 / A | €50.00 / A |
-| TST-013 - Torque wrench (1 set) | €60.00 / A | €60.00 / A |
-| TST-014 - Insulated hand tools (1 set) | €80.00 / A | €80.00 / A |
-| TST-015 - Cable crimp tool dies and continuity accessories (1 set) | €90.00 / A | €90.00 / A |
-| **Module subtotal** | €500.00 | €500.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| TST-009 - Digital multimeter (1 each) | €70.00 / A |
+| TST-010 - DC-capable clamp meter (1 each) | €100.00 / A |
+| TST-011 - Infrared spot thermometer (1 each) | €50.00 / A |
+| TST-012 - Handheld tachometer (1 each) | €50.00 / A |
+| TST-013 - Torque wrench (1 set) | €60.00 / A |
+| TST-014 - Insulated hand tools (1 set) | €80.00 / A |
+| TST-015 - Cable crimp tool dies and continuity accessories (1 set) | €90.00 / A |
+| **Module subtotal** | €500.00 |
 
 ### Cost: consumables
 
 **Fabrication consumables and initial spares**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| CON-001 - Welding wire and electrode allowance (1 lot) | €30.00 / A | €30.00 / A |
-| CON-002 - Shielding gas refill allowance (1 lot) | €50.00 / A | €50.00 / A |
-| CON-003 - Cutting grinding and drilling consumables (1 lot) | €40.00 / A | €40.00 / A |
-| CON-004 - Thread locking sealant and grease (1 lot) | €25.00 / A | €25.00 / A |
-| CON-005 - Initial electrical and mechanical spares (1 lot) | €100.00 / A | €100.00 / A |
-| **Module subtotal** | €245.00 | €245.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| CON-001 - Welding wire and electrode allowance (1 lot) | €30.00 / A |
+| CON-002 - Shielding gas refill allowance (1 lot) | €50.00 / A |
+| CON-003 - Cutting grinding and drilling consumables (1 lot) | €40.00 / A |
+| CON-004 - Thread locking sealant and grease (1 lot) | €25.00 / A |
+| CON-005 - Initial electrical and mechanical spares (1 lot) | €100.00 / A |
+| **Module subtotal** | €245.00 |
 
 ### Cost: ppe-support
 
 **PPE barriers charging surface fire and cleaning supplies**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| CON-006 - General workshop and field PPE (1 set) | €80.00 / A | €80.00 / A |
-| CON-007 - Warning signs and portable test-area barriers (1 set) | €100.00 / A | €100.00 / A |
-| CON-008 - Noncombustible charging surface materials (1 set) | €60.00 / A | €60.00 / A |
-| CON-009 - General workshop fire equipment allowance (1 set) | €60.00 / A | €60.00 / A |
-| CON-010 - Cleaning and inspection kit (1 set) | €25.00 / A | €25.00 / A |
-| **Module subtotal** | €325.00 | €325.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| CON-006 - General workshop and field PPE (1 set) | €80.00 / A |
+| CON-007 - Warning signs and portable test-area barriers (1 set) | €100.00 / A |
+| CON-008 - Noncombustible charging surface materials (1 set) | €60.00 / A |
+| CON-009 - General workshop fire equipment allowance (1 set) | €60.00 / A |
+| CON-010 - Cleaning and inspection kit (1 set) | €25.00 / A |
+| **Module subtotal** | €325.00 |
 
-| Scope total | 48 V / 2 kW | 72 V / 4 kW |
-| --- | ---: | ---: |
-| **All items owned by this scope** | €4,514.00 | €4,514.00 |
+| Scope total | Total (both variants) |
+| --- | ---: |
+| **All items owned by this scope** | €4,514.00 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](workshop.md#document-overview)

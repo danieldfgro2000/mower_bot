@@ -2,10 +2,10 @@
 
 <a id="document-overview"></a>
 
-**Summary:** The [evidence and approval path](chassis-build-requirements.md#how-to-use-this-checklist)
-before chassis parts can be purchased, fabricated, energized, or released. It
-tracks configuration, specifications, manufacturing records, procurement
-packages, release holds, and cost reconciliation; all holds remain open.
+**Summary:** All purchase/build holds remain open. Check the
+[current status](chassis-build-requirements.md#current-status), then follow the
+[evidence and approval path](chassis-build-requirements.md#how-to-use-this-checklist)
+before purchasing, fabricating, energizing, or releasing chassis parts.
 
 **Document:** MBR-ENG-BOM-002 | **Revision:** E | **Date:** 2026-10-26
 
@@ -13,26 +13,24 @@ packages, release holds, and cost reconciliation; all holds remain open.
 not a released manufacturing BOM, approved component selection, or certification.
 No purchase, fabrication, energizing, upload, or physical test is authorized.
 
-**Purpose:** track the drawings, supplier confirmations, manufacturing records
-and inspections needed before the chassis can be bought or built.
-For **parts and prices**, use the [BOM Cost Breakdown](cost-breakdown.md).
-This document is not another BOM, a software release, or proof of production
-readiness. A **release hold** means a requirement is still unresolved and blocks
-the applicable purchase/build approval; all existing holds remain in effect.
+**References:** [BOM scope and estimates](chassis-bom.md) ·
+[Cost ledger](chassis-bom.csv) ·
+[Width/slope limitations](width-and-slope-sizing.md) ·
+[Product direction and build gates](../../plan.md)
 
-**BOM records:** [Scope, supplier links and estimates](chassis-bom.md) ·
-[Cost and quantity ledger](chassis-bom.csv) ·
-[Width/slope sizing limitations](width-and-slope-sizing.md)
+## Current status
 
-**Authority:** [Product direction and build gates](../../plan.md)
+| Question | Current answer | Go to |
+| --- | --- | --- |
+| What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM cost breakdown](cost-breakdown.md) |
+| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) |
+| Are manufacturing drawings released? | No | [Required deliverables](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) |
+| Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) |
+| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](chassis-build-requirements.md#5-close-release-hold-points) |
+| Is hardware operation authorized? | No | [Status and safety boundary](chassis-build-requirements.md#chassis-build-and-procurement-checklist) |
 
-**Contents:** [Checklist workflow](chassis-build-requirements.md#how-to-use-this-checklist) ·
-[Configuration](chassis-build-requirements.md#1-freeze-the-configuration-and-establish-control) ·
-[Specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) ·
-[Manufacturing evidence](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) ·
-[Supplier packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) ·
-[Release holds](chassis-build-requirements.md#5-close-release-hold-points) ·
-[Cost exposure](chassis-build-requirements.md#6-reconcile-unresolved-cost-exposure)
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
 
 ## How to use this checklist
 
@@ -52,20 +50,6 @@ to skip an earlier gate.
 6. [Reconcile cost exposure](chassis-build-requirements.md#6-reconcile-unresolved-cost-exposure): update the
    BOM only after the design and supplier contents are known.
 
-### Current status
-
-| Question | Current answer | Go to |
-| --- | --- | --- |
-| What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM cost breakdown](cost-breakdown.md) |
-| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) |
-| Are manufacturing drawings released? | No | [Required deliverables](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) |
-| Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) |
-| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](chassis-build-requirements.md#5-close-release-hold-points) |
-| Is hardware operation authorized? | No | [Status and safety boundary](chassis-build-requirements.md#chassis-build-and-procurement-checklist) |
-
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
-
-
 ## 1. Freeze the configuration and establish control
 
 The cost ledger has 129 estimating lines. This companion owns shared document
@@ -74,10 +58,6 @@ The linked scope documents own technical definitions and inspection evidence.
 Every line maps to one primary PS family; several families can share an
 assembly drawing or safety review. PS IDs are requirement references, not
 additional parts or costs. All families are currently **HOLD**.
-
-**Revision E change:** reorganized the same requirements into a numbered workflow,
-status dashboard, and compact control tables. Technical requirements, holds,
-costs, and authorization boundaries are unchanged.
 
 The estimate covers **Stage 1 — bench propulsion prototype** and **Stage 2 —
 rolling two-pod chassis** only. **Stage 3 — supervised mower integration** and

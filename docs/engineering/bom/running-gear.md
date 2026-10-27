@@ -11,16 +11,14 @@ are a plan target, not a qualified undercarriage selection. See the
 [specification and inspection requirements](running-gear.md#specification-and-inspection-requirements)
 for the evidence needed to select them.
 
-**Contents:** [Requirements](running-gear.md#specification-and-inspection-requirements) ·
+**Navigate:** [Requirements](running-gear.md#specification-and-inspection-requirements) ·
 [Sourcing](running-gear.md#sourcing) ·
 [Interfaces](running-gear.md#interfaces-with-other-scopes) ·
-[Itemized costs](running-gear.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Structure and running-gear costs](../cost-breakdown.md#structure-and-running-gear) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+[Itemized costs](running-gear.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Structure cost totals](../cost-breakdown.md#structure-and-running-gear) ·
+[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 
@@ -92,38 +90,38 @@ N/A never means an unknown purchase is free.
 
 **Rubber tracks**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| RUN-001 - Rubber track 200x72x36 (2 each) | €280.00 / A | €280.00 / A |
-| **Module subtotal** | €280.00 | €280.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| RUN-001 - Rubber track 200x72x36 (2 each) | €280.00 / A |
+| **Module subtotal** | €280.00 |
 
 ### Cost: track-hardware
 
 **Sprockets idlers rollers and tensioners**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| RUN-002 - Track drive sprocket and hub (2 each) | €180.00 / A | €180.00 / A |
-| RUN-003 - Front idler assembly (2 each) | €150.00 / A | €150.00 / A |
-| RUN-004 - Lower support roller (8 each) | €200.00 / A | €200.00 / A |
-| RUN-005 - Upper return guide roller (2 each) | €40.00 / A | €40.00 / A |
-| RUN-006 - Track tension adjuster (2 each) | €90.00 / A | €90.00 / A |
-| **Module subtotal** | €660.00 | €660.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| RUN-002 - Track drive sprocket and hub (2 each) | €180.00 / A |
+| RUN-003 - Front idler assembly (2 each) | €150.00 / A |
+| RUN-004 - Lower support roller (8 each) | €200.00 / A |
+| RUN-005 - Upper return guide roller (2 each) | €40.00 / A |
+| RUN-006 - Track tension adjuster (2 each) | €90.00 / A |
+| **Module subtotal** | €660.00 |
 
 ### Cost: track-support
 
 **Track axles bearings guides and scrapers**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| RUN-007 - Undercarriage axle stock and spacers (2 pod set) | €90.00 / A | €90.00 / A |
-| RUN-008 - Undercarriage sealed bearings and seals (12 each) | €144.00 / A | €144.00 / A |
-| RUN-009 - Track retention guides and scrapers (2 pod set) | €50.00 / A | €50.00 / A |
-| **Module subtotal** | €284.00 | €284.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| RUN-007 - Undercarriage axle stock and spacers (2 pod set) | €90.00 / A |
+| RUN-008 - Undercarriage sealed bearings and seals (12 each) | €144.00 / A |
+| RUN-009 - Track retention guides and scrapers (2 pod set) | €50.00 / A |
+| **Module subtotal** | €284.00 |
 
-| Scope total | 48 V / 2 kW | 72 V / 4 kW |
-| --- | ---: | ---: |
-| **All items owned by this scope** | €1,224.00 | €1,224.00 |
+| Scope total | Total (both variants) |
+| --- | ---: |
+| **All items owned by this scope** | €1,224.00 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](running-gear.md#document-overview)

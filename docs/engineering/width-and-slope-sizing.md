@@ -5,22 +5,24 @@
 **Date:** 2026-10-26 | **Status:** preliminary calculations, not operating limits,
 fabrication dimensions, a structural analysis, or a machine safety assessment.
 
-**Summary:** A [preliminary screen](width-and-slope-sizing.md#inputs-and-unresolved-definitions)
-of track-width packaging, track length, static tipping geometry, and
-traction/holding demands. It identifies design questions; it does **not**
-establish safe dimensions, a slope limit, or an operating speed.
+**Summary:** At the 400 mm outside-track target, 200 mm tracks leave no
+central gap; the referenced low-height battery layout needs 538 mm for two pod
+interiors. An illustrative 36-link track loop needs about 1,182 mm pitch length
+at a 100 mm turn radius, so an 800 mm complete pod length is unsupported. The
+40° site expectation remains unapproved because CG, contact geometry, traction,
+braking, and continuous drive capability are unresolved. This screen establishes
+no safe width, slope, or speed.
 
-**Related documents:** [Product authority](../../plan.md#42-variable-width-scissor-frame) |
-[BOM and costs](cost-breakdown.md) |
-[Feedback decisions](bom/feedback.md#feedback-decisions) |
-[Width-adjustment BOM](bom/width-adjustment.md)
-
-**Contents:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
+**Navigate:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
 [Packaging](width-and-slope-sizing.md#minimum-width-and-packaging) ·
 [Track length](width-and-slope-sizing.md#track-length-check) ·
-[Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) ·
+[Tipping](width-and-slope-sizing.md#lateral-static-tipping-screen) ·
 [Traction and holding](width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates) ·
-[Design and BOM implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom)
+[Design implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom) |
+[Product authority](../../plan.md#42-variable-width-scissor-frame) ·
+[Cost breakdown](cost-breakdown.md) ·
+[Feedback decisions](bom/feedback.md#feedback-decisions) ·
+[Width-adjustment scope](bom/width-adjustment.md)
 
 ## Inputs and unresolved definitions
 

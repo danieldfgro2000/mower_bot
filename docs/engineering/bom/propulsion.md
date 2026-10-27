@@ -13,18 +13,16 @@ These are candidates and screening calculations, not approved motors, ratios,
 brakes, or operating limits. Exact listings are in the
 [supplier register](sources.md#source-id-lookup).
 
-**Contents:** [Drive alternatives](propulsion.md#drive-alternatives) ·
+**Navigate:** [Alternatives](propulsion.md#drive-alternatives) ·
 [Compatibility and duty](propulsion.md#compatibility-and-duty-limitations) ·
 [Requirements](propulsion.md#specification-and-inspection-requirements) ·
 [Sourcing](propulsion.md#sourcing) ·
 [Interfaces](propulsion.md#interfaces-with-other-scopes) ·
-[Itemized costs](propulsion.md#detailed-module-costs)
-
-**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
-[Drive-train costs](../cost-breakdown.md#drive-train) ·
-[Cost ledger](../chassis-bom.csv) ·
-[Build checklist](../chassis-build-requirements.md) ·
-[Supplier register](sources.md#source-register)
+[Itemized costs](propulsion.md#detailed-module-costs) |
+[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Drive-train cost totals](../cost-breakdown.md#drive-train) ·
+[Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
+[Source register](sources.md#source-id-lookup)
 
 ## Drive alternatives
 
@@ -294,12 +292,12 @@ N/A never means an unknown purchase is free.
 
 **Output hubs shafts and bearings**
 
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| DRV-004 - Output shaft couplings or mounting hubs (2 each) | €60.00 / A | €60.00 / A |
-| DRV-005 - External output shaft stock (2 each) | €70.00 / A | €70.00 / A |
-| DRV-006 - Output shaft bearing blocks (4 each) | €80.00 / A | €80.00 / A |
-| **Module subtotal** | €210.00 | €210.00 |
+| Item / cumulative quantity | Total / basis (both variants) |
+| --- | ---: |
+| DRV-004 - Output shaft couplings or mounting hubs (2 each) | €60.00 / A |
+| DRV-005 - External output shaft stock (2 each) | €70.00 / A |
+| DRV-006 - Output shaft bearing blocks (4 each) | €80.00 / A |
+| **Module subtotal** | €210.00 |
 
 ### Cost: chain-reduction
 

@@ -41,8 +41,10 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   cost summary before broader budget allowances and contingency so readers see
   what each module costs. Link the module/category labels to their engineering
   scope documents and omit a duplicate Contents entry for the summary; reserve
-  remaining navigation for other useful destinations. Do not edit generated
-  blocks by hand.
+  remaining navigation for other useful destinations. In variant tables, use
+  one shared column only when every displayed item cost and basis matches
+  across scenarios; retain separate columns if any displayed value differs.
+  Do not edit generated blocks by hand.
 - Write engineering scope pages for human readers first: open with a concise
   summary and complete contents map, then flow from design intent or
   requirements to supplier evidence, interfaces and itemized costs. Remove

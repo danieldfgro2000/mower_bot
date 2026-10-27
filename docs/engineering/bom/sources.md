@@ -10,14 +10,12 @@ price proxies cited by the BOM. Source IDs map to the
 [descriptive lookup](sources.md#source-id-lookup); link access or a published
 claim is not a quote, qualification, or approval.
 
-**Contents:** [Source ID lookup](sources.md#source-id-lookup) ·
+**Navigate:** [Source ID lookup](sources.md#source-id-lookup) ·
 [Source register](sources.md#source-register) ·
-[Link verification](sources.md#link-verification)
-
-**Related:** [BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md) ·
-[Feedback decisions](feedback.md) ·
+[Link verification](sources.md#link-verification) |
+[BOM overview](../chassis-bom.md) ·
 [Cost ledger](../chassis-bom.csv) ·
+[Feedback decisions](feedback.md#feedback-decisions) ·
 [Build checklist](../chassis-build-requirements.md)
 
 ## Source ID lookup

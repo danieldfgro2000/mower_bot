@@ -76,6 +76,44 @@ class CostDocumentationTest(unittest.TestCase):
         self.assertIn("PWR-008", cable_doc)
         self.assertIn("€90.00", cable_doc)
         self.assertIn("PS23: High-current harness", cable_doc)
+        running_gear = (self.engineering / "bom/running-gear.md").read_text()
+        self.assertIn(
+            "| Item / cumulative quantity | Total / basis (both variants) |",
+            running_gear,
+        )
+        self.assertIn("| Scope total | Total (both variants) |", running_gear)
+        self.assertNotIn(
+            "| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |",
+            running_gear,
+        )
+        structure = breakdown.split("### Structure and running gear", 1)[1].split(
+            "### Drive train", 1
+        )[0]
+        self.assertIn(
+            "| Module / detailed BOM | Total (both variants) |",
+            structure,
+        )
+        self.assertIn(
+            "| **Structure and running gear subtotal** | €2,213.00 |",
+            structure,
+        )
+        self.assertNotIn("€2,213.00 | €2,213.00", structure)
+        self.assertIn(
+            "| Module / detailed BOM | 48 V / 2 kW | 72 V / 4 kW |",
+            breakdown.split("### Drive train", 1)[1].split("### Width adjustment", 1)[0],
+        )
+        batteries = (self.engineering / "bom/batteries.md").read_text()
+        housing = batteries.split("### Cost: battery-housing", 1)[1].split(
+            "### Cost: chargers", 1
+        )[0]
+        self.assertIn(
+            "| Item / cumulative quantity | Total / basis (both variants) |",
+            housing,
+        )
+        self.assertIn(
+            "| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |",
+            batteries.split("### Cost: packs", 1)[1].split("### Cost: battery-housing", 1)[0],
+        )
 
     def test_cost_change_updates_scope_module_and_overall_totals(self):
         self.change_row("chassis-bom.csv", "PWR-008",
