@@ -91,8 +91,10 @@ git diff --check
 
 **Local targets:** the test renders Markdown with pinned `marked` and
 `marked-gfm-heading-id`, then checks links against actual files and rendered
-heading IDs. Both `#section` and `other-file.md#section` must resolve; finding
-the file alone is not sufficient. Inline/reference-style links, images, HTML
+heading IDs. Same-page links must include their document name
+(`scope.md#section`), as must cross-file links (`other-file.md#section`);
+fragment-only links are rejected to preserve document context. Finding the
+file alone is not sufficient. Inline/reference-style links, images, HTML
 links and explicit anchors, encoded paths, formatted/duplicate headings and
 underlined headings are covered. Code samples and comments cannot satisfy a
 missing heading.

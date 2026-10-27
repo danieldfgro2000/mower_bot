@@ -189,7 +189,8 @@ class BomReferenceRegressionTest(unittest.TestCase):
         self.write_document("bom/propulsion.md", "# Propulsion\n\n## Drive train\n")
         document = self.write_document(
             "chassis-bom.md",
-            "## Drive train\n\n[Totals](#drive-train)\n\n[Drive details][drive]\n\n"
+            "## Drive train\n\n[Totals](chassis-bom.md#drive-train)\n\n"
+            "[Drive details][drive]\n\n"
             '[drive]: bom/propulsion.md#drive-train "Drive details"\n',
         )
         result = run_checker(document)
@@ -200,9 +201,11 @@ class BomReferenceRegressionTest(unittest.TestCase):
             "chassis-bom.md",
             "# **Drive** `train`\n\n## Drive train\n\n## Drive train-1\n\n"
             "## Drive train\n\nBattery & charging\n------------------\n\n"
-            "[First](#drive-train)\n[Second](#drive-train-1)\n"
-            "[Collision](#drive-train-1-1)\n[Third](#drive-train-2)\n"
-            "[Battery](#battery--charging)\n",
+            "[First](chassis-bom.md#drive-train)\n"
+            "[Second](chassis-bom.md#drive-train-1)\n"
+            "[Collision](chassis-bom.md#drive-train-1-1)\n"
+            "[Third](chassis-bom.md#drive-train-2)\n"
+            "[Battery](chassis-bom.md#battery--charging)\n",
         )
         result = run_checker(document)
         self.assertFalse(checker_failure(result), result.stdout + result.stderr)
