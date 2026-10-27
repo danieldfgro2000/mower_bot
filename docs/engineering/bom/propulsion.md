@@ -52,7 +52,7 @@ purchase and the two-motor chassis requirement use this tier; do not apply the
 `446 / 1.1188 × 1.21 = €482.36 per motor`, including a provisional 21% VAT
 addition. **Two motors: €964.72** using rounded unit costs. This excludes
 freight, duty, brokerage and any VAT on those charges, as well as the controller,
-brake, chain reduction and mounting hardware. It is a calculated public-price
+brake, planetary reduction and mounting hardware. It is a calculated public-price
 reference (`C`), not a landed acquisition price or a confirmed sub-€500 delivery.
 
 **Supplier-advertised specification:** Listing title says 48 V / 4,000 rpm;
@@ -78,18 +78,57 @@ recommendation and S11's optional brake apply to the former planetary motor,
 not to this HPM5000B. A VEC300 mention does not establish its price, exact
 voltage/current settings, control interfaces or safe stopping behavior.
 
-**Two-stage chain direction:** The owner prefers a bare motor and two guarded
-chain stages over the expensive planetary package. This candidate fits that
-layout concept but supplies **no gearbox**. Before substituting it into the
-main 48 V column, price DRV-007–011 rather than leaving them N/A, reselect the
-controller/brake and review machining, shaft radial loads, guards and cooling.
-Recalculate ratios from the exact motor curve and actual drive pitch radius;
-do not carry over either the former 16:1 example or the earlier hypothetical
-2 kW / 3,000 rpm screen. A larger motor does not qualify traction or 40° travel.
-At full advertised 5 kW output, the existing pack's listed 100 A maximum cannot
-be presumed adequate: at 48 V even loss-free electrical input exceeds 104 A.
-Review battery/BMS, wiring, fuses, contactors and full-SOC downhill braking
-against the chosen limits; no safety provision is removed by the lower price.
+### HPM5000B planetary-in-drum study
+
+**Owner-selected study direction (2026-10-27):** Use the HPM5000B as the
+provisional motor envelope, coaxial with the 350 mm outside-diameter drive drum
+and extending into it as far as packaging allows. House three planetary stages
+inside the drum; hold each ring gear stationary to the pod and connect the final
+carrier to the rotating drum. The
+[editable CAD study](../cad/module-01-track-pod-fit.scad) places motor and gear
+envelopes on that axis. This is not a baseline motor replacement, gearbox quote,
+or release for manufacture.
+
+**Motor envelope:** The manufacturer family page lists **206 mm diameter ×
+126 mm length** and **11 kg air-cooled** for HPM5000B ([S24](sources.md#s24)).
+These published envelope dimensions are modeled; shaft projection, mounting
+face, cooling clearances and any gearbox dimensions are not supplied. S23's
+listing labels a 48 V / 4,000 rpm, 5 kW version and claims 13 Nm rated /
+45 Nm peak, while S24 describes a configurable 2,000–6,000 rpm family and
+40 Nm peak. There is no verified torque-speed curve for the exact 5 kW variant.
+
+**Speed-driven ratio screen:** Assuming 350 mm is the effective rolling
+diameter, 4 km/h requires about **60.6 rpm** at the drum. At the listing's
+4,000 rpm motor speed, that implies **65.97:1**, rounded to a 66:1 study ratio.
+The sketch divides it into 4:1 × 4:1 × 4.125:1 fixed-ring stages:
+24-tooth sun / 72-tooth ring / 24-tooth planets in each 4:1 stage, and
+16-tooth sun / 50-tooth ring / 17-tooth planets in the 4.125:1 stage, with
+three planets per stage. For simple fixed-ring planetary stages,
+`ratio = 1 + ring teeth / sun teeth`. Tooth counts establish only the kinematic
+ratio; they do not establish tooth module, face width, material, strength,
+bearing life, lubrication or package clearance. The physical track pitch-line
+diameter may differ from 350 mm, so the ratio and speed remain provisional.
+
+**Load-case screen:** The owner's clarification is recorded in the
+[width/slope screen](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates):
+use the plan's 300 kg normal-mass estimate for the 40° mower-only case and cap
+the 450 kg loaded case at 15°. At the assumed 175 mm effective radius, gravity
+alone requires about **165.5 Nm per track at 300 kg / 40°** and
+**100.0 Nm per track at 450 kg / 15°**. With 66:1 and an assumed 85% total
+mechanical efficiency, those cases require about **2.95 Nm** and **1.78 Nm**
+at the motor respectively when running at 4,000 rpm. These screens exclude
+rolling resistance, steering, acceleration, transient loads and margin; the
+motor's exact continuous torque at speed and gearbox capacity remain unknown.
+
+At 66:1, the motor reaches only about 4 km/h at 4,000 rpm; this does not meet
+the plan's separate 8 km/h general-travel or 15–20 km/h transport aspirations.
+Treat 66:1 as a 4 km/h study point, not the final ratio. Resolving multiple
+speed requirements, tooth geometry and gear capacity requires the exact motor
+curve, confirmed track pitch geometry, a reviewed load/duty factor and detailed
+gearbox design. At full advertised 5 kW output, the existing pack's listed
+100 A maximum cannot be presumed adequate; at 48 V even loss-free input exceeds
+104 A. Review battery/BMS, wiring, fuses, contactors and full-SOC downhill
+braking against the eventual limits.
 
 ### 48 V / approximately 2 kW per drive
 
@@ -162,15 +201,15 @@ geometry/tooth count; neither example above proves 4 km/h or slope capability.
 Regeneration and opening contactors are not substitutes for a qualified
 stopping/holding solution. Loss of electrical energy must not permit free roll.
 
-The owner accepts slower travel on slopes, including the aspirational 40°
-uphill/downhill and cross-slope site cases. At the illustrative 0.10 m drive
-radius, the [gravity-only requirements](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
-are 94.6 Nm per track at 300 kg and 141.9 Nm at 450 kg. The example 48 V
-16:1 reduction is below both; the example 72 V 10:1 is below the loaded case,
-even before resistance or reserve. These ratios remain costing/screening
-examples, not viable selections established for that duty. A higher reduction
-may help torque at lower speed only within documented gearbox, shaft, track,
-motor/controller, and thermal ratings; quote and re-cost the reviewed solution.
+The owner accepts slower travel on slopes and clarified that the 450 kg loaded
+case is limited to 15°, while 40° is mower-only. At the 350 mm drum's assumed
+0.175 m effective radius, the
+[gravity-only requirements](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
+are 165.5 Nm per track at 300 kg / 40° and 100.0 Nm at 450 kg / 15°.
+The example 48 V 16:1 reduction yields about 86.6 Nm at 85% assumed efficiency,
+below both cases; the 72 V 10:1 example yields about 125.9 Nm, above the
+450 kg / 15° gravity-only case but below the 300 kg / 40° case. Neither has a
+demonstrated load margin or qualifies either operating condition.
 
 The battery cost difference reflects **different suppliers and qualification
 levels**, not proof that 72 V itself doubles battery cost. These are complete

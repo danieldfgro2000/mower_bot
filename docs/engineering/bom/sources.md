@@ -50,6 +50,7 @@ to identify the evidence before opening the detailed entry.
 | [S23](sources.md#s23) | Golden Motor HPM5000B marketplace listing |
 | [S24](sources.md#s24) | Golden Motor HPM5000B family specification |
 | [S25](sources.md#s25) | KellyControllers.eu HPM5000B EU retail fallback |
+| [S26](sources.md#s26) | Cohidrex Trasteel Track mini-excavator idler-wheel family |
 
 [↑ Back to document overview](sources.md#document-overview)
 
@@ -70,9 +71,15 @@ not evidence for the numeric allowances. All `A` rows require an exact quote.
 200×72×36](https://www.powertrack.it/en/powertrack-rubber-tracks/2023-Rubber-tracks-for-miniexcavators-200x72x36-0793596792038.html),
 product
 
-**Evidence or limitation:** HTML displays €138.52 VAT included; structured data also has
-a €128.82 quantity price. A price-validity field is already past its date. Budget €140
-each pending live pair/delivery quote, not the old discount.
+**Evidence or limitation:** The product title and structured data identify the
+listing as `200×72×36` / SKU `200X72X36`, but the page does not define those
+dimensions or provide a dimensional drawing/table. Interpreting this as
+200 mm width × 72 mm pitch × 36 links gives a **calculated nominal pitch-line
+length of 2,592 mm**; this is not a verified physical loop length or track
+profile. Rechecked 2026-10-27 in the public HTML/structured data. The page
+displays €138.52 VAT included; structured data also has a €128.82 quantity
+price. A price-validity field is already past its date. Budget €140 each
+pending a live pair/delivery quote, not the old discount.
 
 ### S02
 
@@ -82,7 +89,7 @@ sourcing lead
 
 **Evidence or limitation:** The catalog covers rollers, idlers, sprockets,
 tensioning groups and rubber tracks, but no MowerBot-compatible set, price or
-interface is verified. Ask a supplier for a matched complete undercarriage kit.
+interface is verified. Ask a supplier for a matched undercarriage component.
 
 ### S03
 
@@ -282,12 +289,14 @@ neither baseline scenario is re-costed or qualified by this listing.
 **Source / source type:** [Golden Motor HPM5000B family
 specification](https://www.goldenmotor.com/frame-bldcmotor.htm), manufacturer
 
-**Evidence or limitation:** Checked 2026-10-26: 48/72/96/120 V family,
+**Evidence or limitation:** Rechecked 2026-10-27: 48/72/96/120 V family,
 3–7.5 kW, configurable 2,000–6,000 rpm, 40 Nm peak, 11 kg air-cooled /
 11.35 kg water-cooled, 206 mm diameter and 126 mm length.
 Family claims differ from S23's 45 Nm peak and specific speed claim.
 Obtain the exact winding/cooling/shaft drawing, rated operating curve, continuous
-thermal duty and permissible shaft loads. No price or machine approval here.
+thermal duty and permissible shaft loads. The dimensions are the published
+motor envelope only; this source does not specify a planetary reducer. No price
+or machine approval here.
 
 ### S25
 
@@ -299,6 +308,18 @@ availability "Out of stock, inquire!". Page shows €28.19 shipping, not verifie
 for Romania; VAT basis and delivered price remain unconfirmed. The motor is
 explicitly HPM5000B, not HPM5000A. Not the basis for ALT-DRV-001's lower import
 reference and not evidence of immediate availability.
+
+### S26
+
+**Source / source type:** [Cohidrex Trasteel Track idler wheels for mini
+excavators](https://cohidrex.com/en/idler-wheel-for-mini-excavator), product family
+
+**Evidence or limitation:** The supplier describes application-specific idlers
+for its Trabber rubber tracks and major compact-machine brands. The public page
+does not identify a model, dimensions, bearing/axle interface, price, or fit for
+the PowerTrack `200×72×36` listing. This is an idler design/supplier lead only;
+checked 2026-10-27. Request a dimensioned drawing and compatibility confirmation
+before selection.
 
 ### U01
 

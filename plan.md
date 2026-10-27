@@ -62,6 +62,10 @@ The 2026-10-26 BOM feedback adds an aspirational **400 mm minimum / 1,600 mm
 maximum outside-track width** and sites with inclines up to **40°**.
 The owner confirms this site target includes both uphill/downhill and
 cross-slope travel, and accepts speed reduction below 4 km/h on slopes.
+**2026-10-27 load clarification:** the 450 kg maximum-loaded case is limited to
+slopes of 15° or less; 40° is for the mower-only configuration. Use the
+provisional 300 kg normal-mass estimate for mower-only screening until the
+configuration mass is measured.
 These are packaging/feasibility inputs, **not validated machine dimensions or
 operating limits**. See the [width and slope screen](docs/engineering/width-and-slope-sizing.md)
 for clearance, CG, traction, torque, and track-length limitations.

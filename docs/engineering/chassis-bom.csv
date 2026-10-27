@@ -1,10 +1,10 @@
 item_id,assembly,description,unit,qty_stage_1,qty_stage_2_total,unit_eur_48v,unit_eur_72v,extended_eur_48v,extended_eur_72v,basis_48v,basis_72v,source_ids,qualification_or_assumption
 RUN-001,Running gear,Rubber track 200x72x36,each,0,2,140.00,140.00,280.00,280.00,A,A,S01,Round allowance above observed single-track price; exact guide profile and load rating unqualified
 RUN-002,Running gear,Track drive sprocket and hub,each,0,2,90.00,90.00,180.00,180.00,A,A,S02,Must match selected track internal geometry; not selected by pitch alone
-RUN-003,Running gear,Front idler assembly,each,0,2,75.00,75.00,150.00,150.00,A,A,S02,Two assumed; axle and bearing provisions budgeted separately
+RUN-003,Running gear,Front idler assembly,each,0,2,75.00,75.00,150.00,150.00,A,A,S02|S26,Two assumed; Cohidrex S26 is a Trabber-track idler lead only; no PowerTrack fit or dimensions verified
 RUN-004,Running gear,Lower support roller,each,0,8,25.00,25.00,200.00,200.00,A,A,S02,Four per pod is a layout allowance not a released undercarriage design
 RUN-005,Running gear,Upper return guide roller,each,0,2,20.00,20.00,40.00,40.00,A,A,S02,One per pod provision; confirm need from track path
-RUN-006,Running gear,Track tension adjuster,each,0,2,45.00,45.00,90.00,90.00,A,A,S02,Mechanical adjustment and retention hardware allowance
+RUN-006,Running gear,Track tension adjuster,each,0,2,45.00,45.00,90.00,90.00,A,A,S02,Owner concept: custom spring tensioner using motorcycle fork/spring hardware; allowance remains provisional and exact fork; spring; travel; loads; and mounting are undefined
 RUN-007,Running gear,Undercarriage axle stock and spacers,pod set,0,2,45.00,45.00,90.00,90.00,A,A,S03,Allowance for shafts not already supplied with roller assemblies
 RUN-008,Running gear,Undercarriage sealed bearings and seals,each,0,12,12.00,12.00,144.00,144.00,A,A,S03,Provisional spares and bearing positions; deduct bearings included in bought assemblies at quotation
 RUN-009,Running gear,Track retention guides and scrapers,pod set,0,2,25.00,25.00,50.00,50.00,A,A,S06,Custom material allowance; not proven track-retention performance

@@ -66,9 +66,10 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
 
 1. Establish whether the change is baseline, alternative, historical or an
    unqualified proposal. Do not infer a hardware upgrade from a sourcing request.
-2. Update the owning input CSV and supplier evidence. Keep source IDs stable.
-   Verify exact model/options, quantity tier, currency, tax, included contents
-   and delivery exclusions; catalog leads are not quotes.
+2. Update the owning input CSV and supplier evidence. Quote CSV fields that
+   contain commas, and keep source IDs stable. Verify exact model/options,
+   quantity tier, currency, tax, included contents and delivery exclusions;
+   catalog leads are not quotes.
 3. Recalculate baseline extensions from cumulative Stage 2 quantity and unit
    price, rounding half-up to cents. Stage 1 quantity is a subset, not an addition.
    `C`/`A` purchases require positive numeric prices. Only explained `I`/`R`

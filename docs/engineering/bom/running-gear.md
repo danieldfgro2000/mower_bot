@@ -7,7 +7,9 @@ No procurement, fabrication, energizing or operation is authorized.
 
 **Summary:** Cost allowances and release requirements for tracks, sprockets,
 rollers, tensioners, axles, bearings, and guides. The nominal track dimensions
-are a plan target, not a qualified undercarriage selection. See the
+are a plan target, not a qualified undercarriage selection. Current concept:
+spring-loaded upper-return support rollers push outward to tension the track;
+their layout and settings remain open. See the
 [specification and inspection requirements](running-gear.md#specification-and-inspection-requirements)
 for the evidence needed to select them.
 
@@ -15,6 +17,7 @@ for the evidence needed to select them.
 [Sourcing](running-gear.md#sourcing) ·
 [Interfaces](running-gear.md#interfaces-with-other-scopes) ·
 [Itemized costs](running-gear.md#detailed-module-costs) |
+[Pod-fit sketch](../cad/module-01-track-pod-fit.scad) ·
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Structure cost totals](../cost-breakdown.md#01--structure-and-running-gear) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
@@ -42,7 +45,30 @@ drawings; condition and batch; compatibility with the selected complete undercar
 
 **Required purchasing/manufacturing definition:** Sprocket tooth count/profile, pitch
 geometry, bore/key/hub; idler and roller diameters, flanges, axle interfaces and
-capacities; tensioner stroke, adjustment/retention and track sag method
+capacities. Owner-selected concept: spring-load the upper-return support rollers
+to push outward and tension the track. Define roller count/spacing, whether they
+move together or independently, contact profile and usable stroke, spring
+type/rate/preload, travel stops and retention, service method, track-tension
+measurement, and allowable track/bearing/frame loads. Verify the moving envelope
+against the battery, carrier, guards and battery-removal path.
+
+**Owner lower-roller layout:** Four support rollers per track, evenly spaced along
+the lower run, as selected for this study. Diameter, width, material, axle/bearing
+interfaces and load capacity remain unselected; the layout is not a load or clearance
+validation. See the [pod-fit sketch](../cad/module-01-track-pod-fit.scad).
+
+**Drive drum study:** The 350 mm outside-diameter drum is the track-drive output.
+The [HPM5000B planetary-in-drum study](propulsion.md#hpm5000b-planetary-in-drum-study)
+shows one possible reduction layout only; S01 track engagement geometry and the
+drum's sprocket profile remain unverified.
+
+**Owner tensioner concept:** Fabricate the spring take-up using motorcycle fork
+and spring hardware; mount each roller at the fork's normal wheel axle position
+and clamp the fork to the frame. This is a concept only, not a selected or
+qualified fork. Confirm the fork's available travel, spring/preload behavior,
+side-load capacity, sealing, stops, retention and service method against the
+track loads. The [Cohidrex idler lead](sources.md#s26) is listed for Trabber
+tracks and is not confirmed to fit S01.
 
 **Receiving or first-article evidence:** Matched kit contents; drawing-based
 dimensional/alignment report; approved tension/retention and rolling checks under a
@@ -64,7 +90,7 @@ assembly; no binding or prohibited track contact against reviewed limits
 
 ## Sourcing
 
-[S01](sources.md#s01) · [S02](sources.md#s02) · [S03](sources.md#s03) · [S06](sources.md#s06).
+[S01](sources.md#s01) · [S02](sources.md#s02) · [S03](sources.md#s03) · [S06](sources.md#s06) · [S26 idler lead](sources.md#s26).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
