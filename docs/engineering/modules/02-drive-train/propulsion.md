@@ -12,6 +12,9 @@ No procurement, fabrication, energizing or operation is authorized.
 These are candidates and screening calculations, not approved motors, ratios,
 brakes, or operating limits. Exact listings are in the
 [supplier register](../../bom/sources.md#source-id-lookup).
+The current owner direction is controller-supported motor braking for dynamic
+deceleration and a default-applied mechanical brake for stationary holding;
+neither function is qualified by this comparison.
 
 **Navigate:** [Alternatives](propulsion.md#drive-alternatives) ·
 [Compatibility and duty](propulsion.md#compatibility-and-duty-limitations) ·
@@ -29,6 +32,25 @@ brakes, or operating limits. Exact listings are in the
 
 Both scenarios provision two independent pods. These are research and sizing
 inputs, not accepted ratings or safe machine limits.
+
+### Owner braking direction (2026-10-27)
+
+Use the motor/controller as the dynamic service brake through regeneration or
+another manufacturer-documented reverse-current braking mode. A direction
+reversal command alone is not evidence of controlled braking. Use a mechanical
+brake on each pod for stationary holding, applied by default when its release
+power is absent. Field evidence is intended to determine whether a separate
+mechanical dynamic brake is needed; a holding-only brake is not credited with
+stopping a moving bot unless its rating includes that duty.
+
+Select the motor, controller and reduction together for braking torque and
+speed at the track, downhill back-driven motor speed, electrical energy
+handling at high state of charge or BMS cutoff, and current/thermal limits.
+Compare any integrated mechanical holding-brake option with a separate brake
+assembly; if the integrated option materially raises the motor/gearbox price,
+use a separate brake. No numeric price threshold has been set. The existing
+DRV-003 line remains a provisional stationary-hold allowance, not a selected
+brake or dynamic-stop provision.
 
 ### HPM5000B sourced alternative — not added to baseline totals
 
@@ -79,6 +101,8 @@ reviewed current/thermal limits and a matched controller. S12's BD100
 recommendation and S11's optional brake apply to the former planetary motor,
 not to this HPM5000B. A VEC300 mention does not establish its price, exact
 voltage/current settings, control interfaces or safe stopping behavior.
+The owner's braking direction does not establish HPM5000B/controller braking
+compatibility or select its separate holding brake.
 
 ### HPM5000B planetary-in-drum study
 
@@ -214,15 +238,19 @@ The 48 V controller page conflicts between a 24–60 V supply description and a
 24–72 V input table. A 51.2 V LiFePO₄ pack can charge to 58.4 V per the battery
 listing; this does **not** prove adequate controller transient/regeneration
 headroom. Confirm battery bus-current versus phase-current limits, Hall/encoder
-interfaces, reverse, low-speed behavior, full-SOC downhill braking, BMS opening,
-and environmental packaging. Do not treat matching nominal voltage as qualification.
+interfaces, the documented dynamic-braking mode and energy path, low-speed
+behavior, full-SOC downhill braking, BMS opening, and environmental packaging.
+Do not treat matching nominal voltage as qualification.
 
 The plan's torque and speed targets cannot all be demanded simultaneously from
 a 2 kW motor: **80 Nm at 280 rpm is approximately 2.35 kW at the track**, before
 reduction losses. Track-ground speed also depends on actual sprocket pitch
 geometry/tooth count; neither example above proves 4 km/h or slope capability.
-Regeneration and opening contactors are not substitutes for a qualified
-stopping/holding solution. Loss of electrical energy must not permit free roll.
+The owner-selected dynamic motor-braking approach is not a stationary hold or
+an independent stop if the controller or its energy path is unavailable. The
+default-applied mechanical brake is intended for stationary holding; it is not
+credited for dynamic stopping unless specifically rated for it. Loss of
+electrical energy must not permit uncontrolled free roll.
 
 The owner accepts slower travel on slopes and clarified that the 450 kg loaded
 case is limited to 15°, while 40° is mower-only. At the 350 mm drum's assumed
@@ -252,24 +280,37 @@ completed tests. Cost-ledger ranges are inclusive.
 **Required purchasing/manufacturing definition:** Exact motor/controller/gearhead
 options; continuous torque-speed curve and low-speed cooling, peak duration, bus/phase
 currents, control interfaces and software version; gearbox output/radial loads and duty;
-full-charge/transient/regen voltage margin
+controller-documented dynamic-braking mode and energy path; full-charge/transient/regen
+voltage margin; braking torque/speed and thermal performance through the selected
+reduction
 
 **Receiving or first-article evidence:** Supplier compatibility statement and complete
 package quote; model/nameplate match and configuration backup; instrumented
-duty/thermal/fault evidence; current example ratios do not qualify 40-degree operation
+duty/thermal/fault and controlled-braking evidence; current example ratios do not
+qualify 40-degree operation
 
 ### PS15: Mechanical brakes
 
 **Cost-ledger coverage:** DRV-003:DRV-003
 
-**Required purchasing/manufacturing definition:** Brake type and default state, mounting
-location, static holding torque versus temperature/wear, dynamic stop energy/duty if
-applicable, coil voltage, release monitoring and manual service release; assess
-drivetrain failure between brake and track
+The current direction is a mechanical brake on each pod for stationary holding,
+applied by default when release power is absent. Its dynamic-stop role is not
+assumed. Field evidence is intended to decide whether an additional mechanical
+dynamic brake is needed.
 
-**Receiving or first-article evidence:** Documented holding/stopping design at actual
-ratio/radius/load, full-SOC and power-loss cases; no regenerative-only parking hold;
-label restrictions if holding-only brake
+**Required purchasing/manufacturing definition:** Brake type and de-energized
+default state, mounting location, static holding torque versus
+temperature/wear, coil voltage, release monitoring and manual service release;
+compare integrated and separate holding-brake options against equivalent
+delivered configurations; assess drivetrain failure between brake and track.
+If a selected brake is expected to stop a moving machine, define its dynamic
+stop energy/duty rating.
+
+**Receiving or first-article evidence:** Documented stationary holding at actual
+ratio/radius/load and evidence that the brake applies when release power is lost;
+no regenerative-only parking hold. Record whether a mechanical dynamic brake is
+required based on controlled test evidence and fault analysis. Label any
+holding-only brake with its stopping limitation.
 
 ### PS16: Output shafts and bearings
 
@@ -289,14 +330,15 @@ identity and fastening evidence; loaded performance per reviewed test plan
 **Required purchasing/manufacturing definition:** Released ratio/tooth counts, chain
 standard/size/length, lubrication and service factor, shaft/key/bearing drawings,
 tensioner range and guard interfaces; 48 V included components identified separately
-from 72 V external reduction
+from 72 V external reduction; ratio/load ratings for propulsion and motor braking,
+including downhill back-driven speed and brake torque at the track
 
 **Receiving or first-article evidence:** Parts and centre-distance/chain-alignment
 match; recorded tension; calculated torque/speed from verified motor and reduction
-data; logged current and thermal observations; kit contents reconcile N/A
-separate-purchase rows; external reduction quantities apply only to 72 V. Direct
-torque measurement is not in the current test method, so torque capability remains
-unmeasured and unqualified.
+data; logged current, voltage, speed, and thermal observations during reviewed
+braking checks; kit contents reconcile N/A separate-purchase rows; external
+reduction quantities apply only to 72 V. Direct torque measurement is not in the
+current test method, so torque capability remains unmeasured and unqualified.
 
 [↑ Back to document overview](propulsion.md#document-overview)
 

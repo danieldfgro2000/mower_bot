@@ -269,6 +269,20 @@ resolve sliding, tipping, parking hold, or loss-of-energy downhill braking.
 | Control | Independent closed-loop speed/current control | Required design direction |
 | Environmental protection | Sealed/guarded for dust and washdown | To verify by component selection |
 
+**2026-10-27 braking direction:** Use a controller-supported motor-braking
+mode for dynamic deceleration (regeneration or another documented
+reverse-current mode) and a mechanical brake on each pod for stationary
+holding, applied by default when release power is absent. Motor, controller,
+and gearbox selection must account for braking torque/speed at the track,
+downhill back-driven speed, current and thermal limits, and battery/BMS energy
+handling at high state of charge or cutoff. Field evidence is intended to
+determine whether an additional mechanical dynamic brake is needed. Compare
+integrated and separate stationary-brake options; if an integrated option
+materially raises the motor/gearbox price, use a separate brake. No numeric
+price threshold is set. This direction does not qualify stopping or define the
+E-stop/fault safe state; the mechanical hold brake is not credited for dynamic
+stopping unless rated for it.
+
 **2026-10-27 fore-aft layout direction:** Place the traction motors at the rear
 of the bot, with front-mounted implements ahead of them. The owner identifies
 front tools up to 50 kg, roughly 1 m forward, that may push against the ground.
@@ -424,7 +438,7 @@ Safety must not depend solely on the navigation computer or normal motor softwar
 - physical emergency stop on the machine;
 - operator remote emergency stop;
 - remote heartbeat/communications timeout;
-- safe motor disable/contactors;
+- a defined braking/energy-isolation sequence and safe motor disable/contactors;
 - mower and attachment interlocks;
 - tilt/rollover response;
 - low battery safe return or stop;
@@ -432,6 +446,10 @@ Safety must not depend solely on the navigation computer or normal motor softwar
 - restart inhibition after an emergency stop.
 
 The safety layer should remove propulsion and implement energy through a defined safe-state sequence. It must be testable without trusting the autonomy stack.
+Motor braking may contribute to dynamic deceleration while its controller and
+energy path remain available. The safety design must separately define the
+response to controller, battery-path, and power faults; the default-applied
+stationary brake is not assumed to be a dynamic stop.
 
 ## 9. Preliminary BOM structure
 
@@ -514,6 +532,7 @@ before field checks. Record:
 
 - motor/controller compatibility;
 - reduction ratio and calculated torque/speed;
+- controlled motor-braking mode, energy path, and stationary-brake behavior;
 - measured output speed, current, voltage, and temperature;
 - braking and fault behaviour;
 - shaft, bearing and sprocket alignment.
@@ -534,7 +553,9 @@ does not define acceptance criteria or authorize a test. Test:
 - width adjustment and mechanical locks;
 - straight-line tracking and skid steering;
 - turning loads and track retention;
-- braking on representative slopes;
+- characterize motor braking and stationary holding, then decide from controlled
+  evidence whether an additional mechanical dynamic brake is needed;
+- braking on representative slopes after the applicable safety and test gates;
 - centre of gravity and static stability;
 - transport tie-down points;
 - washdown and debris protection.
@@ -592,7 +613,7 @@ Exit condition: reliability and contribution margin support a deliberate second 
 | Drive | Rated torque/speed duty cycle | Temperature stays within component limits |
 | Battery | Full charge/discharge logging | Capacity, reserve and cutoff are understood |
 | Water/debris | Controlled washdown and grass/debris exposure | No unsafe leakage or connector faults |
-| Braking | Flat and slope stopping tests | Stopping distance and hold behaviour documented |
+| Braking | Controlled motor-braking, stationary-hold, and approved fault tests on flat ground and representative slopes | Stopping distance and hold behaviour documented; evidence-based decision on separate mechanical dynamic brake |
 | Remote control | Range and link-loss tests | Predictable stop on timeout |
 | Emergency stop | Machine and remote E-stop | Propulsion and implement enter safe state |
 | Mower | Dry, wet and tall grass tests | Cut quality and energy/area recorded |
@@ -606,6 +627,7 @@ Exit condition: reliability and contribution margin support a deliberate second 
 |---|---|---|
 | Motor listing overstates continuous torque | Overheating or stalled machine | Bench test; require continuous-duty data and thermal logs |
 | Reduction too fast or too slow | Poor slope performance or unusable transport | Select gearing from measured wheel speed/torque; accept lower top speed |
+| Motor braking is unavailable or limited by full battery/BMS cutoff | Reduced downhill or fault stopping | Verify controller braking mode and energy path across the operating envelope; retain the default-applied mechanical hold and decide dynamic-brake need from controlled tests plus fault analysis |
 | Skid steering overloads tracks and frame | Track wear, high energy use, structural damage | Use replaceable wear parts; test turns and reinforce load paths |
 | Wet grass raises mower load | Battery depletion and thermal faults | Wet-grass test; limit speed; monitor current and temperature |
 | Battery water or impact damage | Unsafe failure and downtime | Protected enclosure, isolation, drainage and inspection procedure |
@@ -620,7 +642,9 @@ Exit condition: reliability and contribution margin support a deliberate second 
 ## 13. Open decisions
 
 1. Exact battery chemistry, voltage and modular capacity.
-2. Final motor/gearbox choice after bench comparison.
+2. Final motor/controller/gearbox choice after bench comparison, including the
+   documented dynamic-braking mode, energy path, and integrated-versus-separate
+   stationary-brake price comparison.
 3. Reduction ratio and sprocket sizes.
 4. Track supplier, compound and verified load rating.
 5. Feasible minimum/maximum body and outside-track widths from the 400/1,600 mm study targets, and a qualified slope/configuration envelope for expected sites up to 40°.

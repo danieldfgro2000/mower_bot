@@ -40,6 +40,13 @@ individual pod checks to the final bot; no industrial-remote purchase is
 included in the current estimate. The required final stop count and placement
 remain open.
 
+**Braking intent:** Use a controller-supported motor-braking mode for dynamic
+deceleration, through regeneration or another documented reverse-current mode.
+Use a mechanical brake on each pod for stationary holding, applied by default
+when release power is absent. Field evidence is intended to determine whether
+an additional mechanical dynamic brake is needed. This is a design direction,
+not a selected or validated stopping system.
+
 **Required purchasing/manufacturing definition:** Hazard-derived independent
 stop architecture and required safety performance; exact relay/controller,
 stop locations, outputs, reset and heartbeat logic; and a reviewed definition
@@ -47,11 +54,16 @@ of the safe state when propulsion/implement power is interrupted. Normal
 mobile-app control and loss-of-link behavior cannot be the independent stop.
 Power interruption alone does not demonstrate that the machine stops or remains
 held; brake behavior, stored energy, and safe reset require explicit design.
+Define whether the E-stop sequence can use motor braking before isolation; if
+the controller, battery path, or its braking mode is unavailable, active motor
+braking cannot be assumed. The stationary holding brake is not credited with
+stopping a moving bot unless its dynamic-stop rating is established.
 
 **Receiving or first-article evidence:** Approved safety requirements and schematic,
 configuration/certificate applicability review, and independently observed
 complete-path stop/link-loss/reset evidence. The app/network stop expectation
-and general E-stop proposal remain unverified. Component certification is not
+and general E-stop proposal remain unverified. Motor-braking tests do not alone
+resolve controller-fault or power-loss stopping. Component certification is not
 machine certification.
 
 ### PS29: Normal control and diagnostics

@@ -12,6 +12,9 @@ remains unmeasured. Planned onboard sensors/logger are intended as the primary
 source for current, voltage, speed, and temperature; a clamp meter is retained
 as an independent current check.
 Owner-reported tools and handling equipment are marked reused pending checks.
+The current braking direction uses motor/controller braking for dynamic
+deceleration and a default-applied mechanical brake for stationary holding;
+tests and the need for a separate mechanical dynamic brake remain unqualified.
 Nothing here releases procurement, fabrication, energizing, or testing.
 
 **Navigate:** [Test method and evidence](workshop.md#test-method-and-evidence) ·
@@ -78,6 +81,14 @@ Torque is to be pre-calculated from the selected motor, reduction, and their
 verified data. It will not be directly measured; therefore calculated output
 torque is not measured capability or proof that the drive meets its target.
 
+The current braking direction is controlled motor/controller braking for
+dynamic deceleration, using regeneration or another documented reverse-current
+mode, plus a mechanical brake on each pod that is applied by default when
+release power is absent for stationary holding. Field evidence is intended to
+determine whether an additional mechanical dynamic brake is needed. A
+holding-only brake is not credited with stopping a moving machine unless its
+dynamic rating supports that duty.
+
 Bench checks precede field checks. The planned [Module 06 sensors and logger](../06-safety-controls-and-sensors/safety-controls.md)
 are intended to provide primary current, voltage, speed, temperature, and fault
 records after their installation and channel checks. The budgeted DC clamp meter
@@ -86,8 +97,12 @@ infrared thermometer is supplementary and does not measure motor winding
 temperature. For initial field observations, the owner specifies a bare rolling
 chassis on flat, controlled ground without a mower or attachment; braking and
 track-retention behavior will be documented using onboard logs plus observer
-notes. The exact test procedure, acceptance criteria, and authorized test
-conditions remain open.
+notes, including the test configuration and observed stopping distance. These
+observations may inform the separate dynamic-brake decision but do not by
+themselves establish controller-fault or power-loss stopping. Before braking
+tests, a reviewed test plan must define the independent response if motor
+braking is unavailable. The exact procedure, acceptance criteria, and authorized
+test conditions remain open.
 
 ### PS36: Instruments and workshop tools
 
@@ -181,14 +196,17 @@ dynamometer testing. The stages are deliberately distinct:
    load device, adapters, and bench pendant are not in the current estimate.
 3. **Initial field observations:** after bench checks and separate release
    review, begin with a bare rolling chassis on flat, controlled ground without
-   the mower or an attachment. Use onboard logs plus observer notes for
-   braking and track-retention behavior.
+   the mower or an attachment. Characterize controlled motor braking and
+   stationary holding with onboard logs plus observer notes for stopping
+   distance, surface, load, speed, battery state, and track-retention behavior.
+   Use the evidence to decide whether an additional mechanical dynamic brake is
+   needed; do not infer safety under untested controller or power faults.
 
 Calculated torque is not measured performance. Logged speed/current/temperature
 and observer notes do not prove torque capability, stopping safety, track
 retention, or qualification. Test procedures, acceptance criteria, test-area
-controls, and authorization remain open; this document does not authorize
-energizing or field operation.
+controls, a response to unavailable motor braking, and authorization remain
+open; this document does not authorize energizing or field operation.
 
 [↑ Back to document overview](workshop.md#document-overview)
 

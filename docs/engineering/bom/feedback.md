@@ -170,6 +170,27 @@ released. Remove the separate €250 calibration/setup service allowance and
 rely on supplier calibration data where provided; end-to-end sensor scaling,
 channel mapping, and measurement checks remain required.
 
+### F11: motor braking and stationary hold
+
+**Decision recorded on 2026-10-27:** Use controlled motor/controller braking
+for dynamic deceleration, through regeneration or another supported
+reverse-current braking mode. Use a mechanical brake that is applied by
+default when release power is absent for stationary holding. Field evidence is
+intended to determine whether an additional mechanical dynamic brake is needed.
+If an integrated mechanical holding-brake option materially raises the
+motor/gearbox price, use a separate brake instead; no numeric price threshold
+has been set.
+
+**Effect on design and estimate:** Motor, controller, and reduction selection
+must establish braking torque and speed, electrical energy handling, and
+thermal limits as well as propulsion performance. The existing DRV-003
+provision remains a stationary-hold allowance, not a qualified dynamic brake;
+its quantities and scenario costs do not change. No motor, controller, brake,
+or gearbox is selected, and the HPM5000B alternative still excludes its
+controller, brake, and custom gearbox. Field observations can inform the
+additional dynamic-brake decision but do not by themselves qualify fault or
+power-loss stopping. Test and safety release remain open.
+
 [↑ Back to document overview](feedback.md#document-overview)
 
 
@@ -230,15 +251,17 @@ validation; positive holding and fault/reference behavior remain open, not waive
 ### L5: stopping and electrical safety
 
 **Inputs needed / next feedback:** Hazard review, safe-state sequence, independent
-remote-stop/heartbeat path, full-SOC downhill behavior, power-loss holding,
-reset/charge/width interlocks
+remote-stop/heartbeat path, motor/controller dynamic-braking mode and energy
+handling at full SOC or BMS cutoff, default-applied stationary brake, power-loss
+response, reset/charge/width interlocks
 
-**What changes:** Select braking, switching, fusing, pre-charge, DC/DC, stop chain and
-cable sizes; revise all affected costs
+**What changes:** Select braking and stop sequence, switching, fusing, pre-charge,
+DC/DC, stop chain and cable sizes; revise all affected costs
 
 **Closure evidence:** Competent design review and independently observed
-stop/holding/fault tests under separately authorized commissioning; no firmware-only
-substitute
+motor-braking, holding and fault tests under separately authorized commissioning;
+decide from evidence whether an additional mechanical dynamic brake is needed;
+no firmware-only substitute
 
 ### L6: supplier/price convergence
 

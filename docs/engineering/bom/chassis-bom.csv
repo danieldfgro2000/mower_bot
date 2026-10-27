@@ -40,7 +40,7 @@ WID-013,Width adjustment,Width mechanism harness and strain relief,set,0,1,20.00
 WID-014,Width adjustment,Actuator screw guard and local cable cover materials,set,0,1,20.00,20.00,20.00,20.00,A,A,S06,Specific screw guarding beyond main scissor and propulsion guards
 DRV-001,Propulsion,Traction motor with scenario-specific gearbox basis,each,1,2,1035.94,650.00,2071.88,1300.00,C,A,S11|S13|S15,48 V includes 16:1 planetary; 72 V is a 4 kW motor-only allowance using a 5 kW price proxy
 DRV-002,Propulsion,Matched motor controller,each,1,2,511.62,500.00,1023.24,1000.00,C,A,S12|S14,48 V supplier-recommended BD100; 72 V matched controller not yet selected
-DRV-003,Propulsion,Mechanical holding brake provision,each,1,2,223.27,250.00,446.54,500.00,C,A,S11|S07,48 V optional 24 V brake price; holding torque and spring-applied behavior require confirmation
+DRV-003,Propulsion,Mechanical holding brake provision,each,1,2,223.27,250.00,446.54,500.00,C,A,S11|S07,Owner direction is default-applied stationary hold; 48 V optional 24 V brake price is reference only; type and holding torque unconfirmed; dynamic braking is a motor/controller selection and field-test decision
 DRV-004,Propulsion,Output shaft couplings or mounting hubs,each,1,2,30.00,30.00,60.00,60.00,A,A,S04,Separate track-interface hardware; verify radial load does not overload gearbox
 DRV-005,Propulsion,External output shaft stock,each,1,2,35.00,35.00,70.00,70.00,A,A,S04,Budget provision for independently supported sprocket shaft
 DRV-006,Propulsion,Output shaft bearing blocks,each,2,4,20.00,20.00,80.00,80.00,A,A,S03,Independent track load support not confirmed by this allowance

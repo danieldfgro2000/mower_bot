@@ -61,7 +61,7 @@ Follow the plan's sequence rather than treating autonomy as the first milestone:
 | --- | --- |
 | 0 — Customer and site validation | Plausible pilot demand and documented site/operating constraints |
 | 1 — Bench propulsion prototype | One drive has calculated torque/speed estimates and measured current, voltage, speed, thermal, and fault observations; torque capability remains unmeasured |
-| 2 — Rolling two-pod chassis | Repeatable control, width locks, stability, braking, and track retention |
+| 2 — Rolling two-pod chassis | Characterize motor-controlled dynamic braking and default-applied stationary holding; decide from controlled evidence whether a separate mechanical dynamic brake is needed; qualify repeatable control, width locks, stability, and track retention |
 | 3 — Supervised mower integration | Repeatable cutting with measured energy, vibration, stopping, and service effort |
 | 4 — Safety and supervised remote operation | Every emergency path demonstrated independently; predictable manual operation |
 | 5 — RTK route qualification | Qualified routes and observed boundary, localization-loss, pause, and stop behavior |
