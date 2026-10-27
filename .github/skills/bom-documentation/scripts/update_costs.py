@@ -13,6 +13,16 @@ CENT = Decimal(".01")
 TARGET = Decimal("5000")
 CONTINGENCY = Decimal(".20")
 ROOT = Path(__file__).resolve().parents[4]
+MULTI_SCOPE_CATEGORY_LINKS = {
+    "Structure and running gear": (
+        ("Structure", "frame"),
+        ("running gear", "running-gear"),
+    ),
+    "Power cables and electronics": (
+        ("Power cables", "cables-connectors"),
+        ("electronics", "electronics"),
+    ),
+}
 
 
 def read_csv(path):
@@ -102,6 +112,21 @@ def cost_row(label, rows):
     return f"| {label} | " + " | ".join(money(total(rows, s)) for s in SCENARIOS) + " |"
 
 
+def category_label(category, category_modules):
+    scopes = tuple(dict.fromkeys(module["scope"] for module in category_modules))
+    links = MULTI_SCOPE_CATEGORY_LINKS.get(category)
+    if links is None:
+        if len(scopes) != 1:
+            raise ValueError(f"Category needs explicit scope links: {category}")
+        links = ((category, scopes[0]),)
+    elif set(scope for _, scope in links) != set(scopes):
+        raise ValueError(f"Category scope links do not match modules: {category}")
+    linked_names = " and ".join(
+        f"[{label}](bom/{scope}.md#document-overview)" for label, scope in links
+    )
+    return f"**{linked_names}**"
+
+
 def block(text, name, content):
     begin, end = f"<!-- BEGIN GENERATED: {name} -->", f"<!-- END GENERATED: {name} -->"
     if text.count(begin) != 1 or text.count(end) != 1 or text.index(begin) > text.index(end):
@@ -119,9 +144,10 @@ def render(base):
     categories = dict.fromkeys(m["category"] for m in modules)
     overview = table("Module")
     for category in categories:
+        category_modules = [module for module in modules if module["category"] == category]
         selected = [row for module in modules if module["category"] == category
                     for row in groups[module["module_id"]]]
-        overview.append(cost_row(f"**{category}**", selected))
+        overview.append(cost_row(category_label(category, category_modules), selected))
     overview.append(cost_row("**All listed materials/equipment**", rows))
     text = block(text, "overview", "\n".join(overview))
     summary = []
@@ -146,7 +172,6 @@ def render(base):
     summary.append(cost_row("**All listed materials/equipment**", rows))
     summary.append("| Above €5,000 materials/equipment target | " + " | ".join(
         money(max(Decimal(0), total(rows, s) - TARGET)) for s in SCENARIOS) + " |")
-    text = block(text, "modules", "\n".join(summary))
     phases = table("Acquisition phase")
     for label, values in [
         ("Stage 1: one-drive bench", [total(rows, s, True) for s in SCENARIOS]),

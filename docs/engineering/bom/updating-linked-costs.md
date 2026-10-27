@@ -1,10 +1,18 @@
 # Updating linked costs
 
+<a id="document-overview"></a>
+
+**Summary:** Edit the [authoritative CSV inputs](updating-linked-costs.md#cost-inputs),
+[regenerate linked Markdown tables](updating-linked-costs.md#regenerate-and-verify),
+then [verify freshness and references](updating-linked-costs.md#reference-checks).
+The generator owns derived totals; this guide does not authorize hardware or
+supplier actions.
+
 **Purpose:** maintain the BOM estimate when quantities, prices, module ownership
 or source evidence change. This is a documentation procedure, not an
 instruction to purchase parts, build, upload, energize or operate the machine.
 
-**On this page:** [Cost inputs](updating-linked-costs.md#cost-inputs) ·
+**Contents:** [Cost inputs](updating-linked-costs.md#cost-inputs) ·
 [Regenerate and verify](updating-linked-costs.md#regenerate-and-verify) ·
 [Reference checks](updating-linked-costs.md#reference-checks) ·
 [Validation history](updating-linked-costs.md#validation-history)
@@ -28,6 +36,9 @@ Keep the [supplier evidence](sources.md) and affected scope requirements in
 step with the inputs. Follow the [estimate rules](../chassis-bom.md#estimate-rules)
 and the [BOM documentation skill](../../../.github/skills/bom-documentation/SKILL.md).
 A sourcing request alone does not select a new hardware configuration.
+
+[↑ Back to document overview](updating-linked-costs.md#document-overview)
+
 
 ## Regenerate and verify
 
@@ -59,6 +70,9 @@ When changing the generator, also run its regression suite:
 ```sh
 python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_update_costs.py'
 ```
+
+[↑ Back to document overview](updating-linked-costs.md#document-overview)
+
 
 ## Reference checks
 
@@ -112,6 +126,9 @@ document links under **BOM documents** or a scope directory. Check that a reader
 can identify the owning document and distinguish estimates, requirements,
 source evidence and maintenance instructions.
 
+[↑ Back to document overview](updating-linked-costs.md#document-overview)
+
+
 ## Validation history
 
 ### Generator validation evidence
@@ -139,3 +156,5 @@ all 15 reference regressions passed. A temporary copy of
 [the main BOM](../chassis-bom.md) passes before removing `### Drive train` and
 reports the broken `#drive-train` afterward; the live repository-test entry point
 also rejects a missing cross-file fragment.
+
+[↑ Back to document overview](updating-linked-costs.md#document-overview)

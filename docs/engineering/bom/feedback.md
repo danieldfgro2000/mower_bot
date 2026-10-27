@@ -1,19 +1,23 @@
 # BOM feedback and qualification loops
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Feedback decisions](feedback.md#feedback-decisions) ·
+**Summary:** A dated record of user inputs that changed estimate assumptions,
+followed by [qualification loops](feedback.md#feedback-and-qualification-loops)
+that identify technical evidence still needed. Decisions in this log are not
+component approval or operating authorization.
+
+**Contents:** [Feedback decisions](feedback.md#feedback-decisions) ·
 [Qualification loops](feedback.md#feedback-and-qualification-loops)
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md)
-
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md) ·
+[Cost breakdown](../cost-breakdown.md) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
-
-Dated estimating decisions and remaining qualification inputs; the product plan remains authoritative.
 
 ## Feedback decisions
 
@@ -100,6 +104,9 @@ The main CSV still costs the former planetary scenario: a complete replacement
 must re-cost chain parts, compatible controller/brake, machining and any affected
 battery/electrical/cooling provisions. No updated total is claimed yet.
 
+[↑ Back to document overview](feedback.md#document-overview)
+
+
 ## Feedback and qualification loops
 
 Each loop records **input → proposed revision → user review → BOM/total update**.
@@ -180,3 +187,5 @@ unknowns stay identified
 No supplier contact, order, fabrication, upload, energizing, or field test has
 been authorized by these feedback decisions. No component, braking arrangement,
 controller topology, or operating envelope is approved by this estimate.
+
+[↑ Back to document overview](feedback.md#document-overview)

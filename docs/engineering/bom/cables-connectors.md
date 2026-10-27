@@ -1,20 +1,76 @@
 # Cables, connectors and harnesses
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Itemized costs](cables-connectors.md#detailed-module-costs) ·
-[Requirements](cables-connectors.md#specification-and-inspection-requirements) ·
-[Sourcing](cables-connectors.md#sourcing) · [Interfaces](cables-connectors.md#interfaces-with-other-scopes)
+**Summary:** Cost allowance and release requirements for high-current power
+harnesses, signal wiring, connectors, shielding, routing, and strain relief.
+The [specification and inspection section](cables-connectors.md#specification-and-inspection-requirements)
+defines evidence still needed; exact wire sizes, connector part numbers, and
+acceptance limits remain unqualified.
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Power cables and electronics totals](../cost-breakdown.md#power-cables-and-electronics)
+**Contents:** [Requirements](cables-connectors.md#specification-and-inspection-requirements) ·
+[Sourcing](cables-connectors.md#sourcing) ·
+[Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
+[Itemized costs](cables-connectors.md#detailed-module-costs)
 
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Power cable and electronics costs](../cost-breakdown.md#power-cables-and-electronics) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
 
-High-current and signal harnesses, lugs, mating connectors, shielding, routing and strain relief.
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS23: High-current harness
+
+**Cost-ledger coverage:** PWR-008:PWR-011
+
+**Required purchasing/manufacturing definition:** Cable
+section/insulation/temperature/flex class, lengths and derating; lug/terminal/stud
+compatibility, connector complete mating BOM and full-voltage DC rating; crimp tooling
+and terminal insulation
+
+**Receiving or first-article evidence:** Harness drawing/cut list, crimp process
+evidence and specified pull checks, continuity/polarity, strain relief and tightening
+records; no universal wire size or fuse rating inferred from motor kW
+
+### PS26: Signal harness and communications
+
+**Cost-ledger coverage:** PWR-017:PWR-020
+
+**Required purchasing/manufacturing definition:** Signal wire size, shielding/bonding,
+topology/termination, connector pin maps and unused-cavity seals; moving-loop bend
+radius/flex life, clips/labels and protected service loops
+
+**Receiving or first-article evidence:** Pin-to-pin record, shield/ground inspection,
+full-travel routing check and defined communications fault evidence; separate safety and
+normal control as designed
+
+[↑ Back to document overview](cables-connectors.md#document-overview)
+
+
+## Sourcing
+
+[S07](sources.md#s07).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](cables-connectors.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Electronics, power distribution and safety](electronics.md)
+- [Powered width adjustment](width-adjustment.md)
+- [Batteries, enclosures and charging](batteries.md)
+
+[↑ Back to document overview](cables-connectors.md#document-overview)
 
 ## Detailed module costs
 
@@ -69,44 +125,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €438.00 | €438.00 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S07](sources.md#s07).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS23: High-current harness
-
-**Cost-ledger coverage:** PWR-008:PWR-011
-
-**Required purchasing/manufacturing definition:** Cable
-section/insulation/temperature/flex class, lengths and derating; lug/terminal/stud
-compatibility, connector complete mating BOM and full-voltage DC rating; crimp tooling
-and terminal insulation
-
-**Receiving or first-article evidence:** Harness drawing/cut list, crimp process
-evidence and specified pull checks, continuity/polarity, strain relief and tightening
-records; no universal wire size or fuse rating inferred from motor kW
-
-### PS26: Signal harness and communications
-
-**Cost-ledger coverage:** PWR-017:PWR-020
-
-**Required purchasing/manufacturing definition:** Signal wire size, shielding/bonding,
-topology/termination, connector pin maps and unused-cavity seals; moving-loop bend
-radius/flex life, clips/labels and protected service loops
-
-**Receiving or first-article evidence:** Pin-to-pin record, shield/ground inspection,
-full-travel routing check and defined communications fault evidence; separate safety and
-normal control as designed
-
-## Interfaces with other scopes
-
-- [Electronics, power distribution and safety](electronics.md)
-- [Powered width adjustment](width-adjustment.md)
-- [Batteries, enclosures and charging](batteries.md)
+[↑ Back to document overview](cables-connectors.md#document-overview)

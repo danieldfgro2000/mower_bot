@@ -1,34 +1,60 @@
 # BOM supplier source register
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Link verification](sources.md#link-verification) ·
-[Source register](sources.md#source-register)
+**Summary:** Shared evidence register for supplier listings, catalogs, and
+price proxies cited by the BOM. Source IDs map to the
+[descriptive lookup](sources.md#source-id-lookup); link access or a published
+claim is not a quote, qualification, or approval.
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md) · [Feedback decisions](feedback.md)
+**Contents:** [Source ID lookup](sources.md#source-id-lookup) ·
+[Source register](sources.md#source-register) ·
+[Link verification](sources.md#link-verification)
 
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md) ·
+[Cost breakdown](../cost-breakdown.md) ·
+[Feedback decisions](feedback.md) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md)
 
-Shared source evidence for all BOM scopes; source IDs are stable.
+## Source ID lookup
 
-## Link verification
+The IDs are stable cross-references used by the BOM. Use the description here
+to identify the evidence before opening the detailed entry.
 
-**Checked 2026-10-26:** all 25 supplier URLs below and the
-[ECB exchange-rate reference](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml)
-and [VAT reference](https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm)
-were requested, following redirects. All 27 destinations passed the
-repository-owned live link test.
+| ID | Supplier/reference |
+| --- | --- |
+| [S01](sources.md#s01) | PowerTrack 200 × 72 × 36 rubber-track listing |
+| [S02](sources.md#s02) | TVH undercarriage-parts catalog |
+| [S03](sources.md#s03) | DOLD bearing-housings catalog |
+| [S04](sources.md#s04) | DOLD mechanical-parts catalog |
+| [S05](sources.md#s05) | DOLD chain-drive catalog |
+| [S06](sources.md#s06) | Dedeman Romania local-sourcing catalog |
+| [S07](sources.md#s07) | RS Romania electrical and tools catalog |
+| [S08](sources.md#s08) | Schneider XPSUAF13AP safety-relay example |
+| [S09](sources.md#s09) | Tele Radio Tiger G2 remote-control family |
+| [S10](sources.md#s10) | DOLD planetary-gearbox alternatives |
+| [S11](sources.md#s11) | BLDC 2 kW planetary motor listing |
+| [S12](sources.md#s12) | BLDC BD100/C100 motor-controller listing |
+| [S13](sources.md#s13) | Volcano VOL-BL400C72 4 kW motor listing |
+| [S14](sources.md#s14) | DOLD EZ-A72500 controller price proxy |
+| [S15](sources.md#s15) | DOLD HPM5000A-72 motor price proxy |
+| [S16](sources.md#s16) | Elker 48 V / 100 Ah battery listing |
+| [S17](sources.md#s17) | TZI 72 V / 60 Ah battery price/capacity proxy |
+| [S18](sources.md#s18) | DOLD DC-CON-72V400A contactor example |
+| [S19](sources.md#s19) | ATO dynamic torque-sensor example |
+| [S20](sources.md#s20) | ATO torque readout/interface example |
+| [S21](sources.md#s21) | ATO clamp-meter catalog |
+| [S22](sources.md#s22) | ATO digital-tachometer catalog |
+| [S23](sources.md#s23) | Golden Motor HPM5000B marketplace listing |
+| [S24](sources.md#s24) | Golden Motor HPM5000B family specification |
+| [S25](sources.md#s25) | KellyControllers.eu HPM5000B EU retail fallback |
 
-- [S07](sources.md#s07): the reader retrieved the RS Romania catalog.
-- [S08](sources.md#s08): the reader retrieved the RS XPSUAF13AP product page.
-- [S02](sources.md#s02): the reader retrieved the TVH undercarriage-parts catalog.
+[↑ Back to document overview](sources.md#document-overview)
 
-Successful retrieval verifies link access, not current stock, prices, exact
-configuration, delivered cost, or suitability for the machine. It does not
-refresh or qualify the dated product evidence below.
 
 ## Source register
 
@@ -148,9 +174,10 @@ Direct outdoor/high-vibration use is cautioned against.
 VOL-BL400C72](https://www.volcanomotors.com/product/251mm-72v-4kw-hall-sensor-bldc-motor-with-controller/),
 product/RFQ
 
-**Evidence or limitation:** Genuine 4 kW S1 listing; controller optional/customized, no
-public price, current conflict. €650 motor and €500 controller allowances do not qualify
-a matched pair.
+**Evidence or limitation:** Genuine 4 kW listing claims an S1 continuous-duty
+rating; controller optional/customized, no public price, current conflict.
+The rating conditions are not established. €650 motor and €500 controller
+allowances do not qualify a matched pair.
 
 ### S14
 
@@ -282,3 +309,22 @@ purchase source
 3–5 A, and confirms worm-and-wheel type. Model, current measurement, torque, speed,
 duty, and non-backdrive evidence not supplied. Purchase cost N/A (already owned); not free capability
 validation.
+
+[↑ Back to document overview](sources.md#document-overview)
+## Link verification
+
+**Checked 2026-10-26:** all 25 supplier URLs below and the
+[ECB exchange-rate reference](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml)
+and [VAT reference](https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm)
+were requested, following redirects. All 27 destinations passed the
+repository-owned live link test.
+
+- [S07](sources.md#s07): the reader retrieved the RS Romania catalog.
+- [S08](sources.md#s08): the reader retrieved the RS XPSUAF13AP product page.
+- [S02](sources.md#s02): the reader retrieved the TVH undercarriage-parts catalog.
+
+Successful retrieval verifies link access, not current stock, prices, exact
+configuration, delivered cost, or suitability for the machine. It does not
+refresh or qualify the dated product evidence below.
+
+[↑ Back to document overview](sources.md#document-overview)

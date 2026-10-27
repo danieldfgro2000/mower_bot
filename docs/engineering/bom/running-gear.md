@@ -1,20 +1,84 @@
 # Tracks and running gear
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Itemized costs](running-gear.md#detailed-module-costs) ·
-[Requirements](running-gear.md#specification-and-inspection-requirements) ·
-[Sourcing](running-gear.md#sourcing) · [Interfaces](running-gear.md#interfaces-with-other-scopes)
+**Summary:** Cost allowances and release requirements for tracks, sprockets,
+rollers, tensioners, axles, bearings, and guides. The nominal track dimensions
+are a plan target, not a qualified undercarriage selection. See the
+[specification and inspection requirements](running-gear.md#specification-and-inspection-requirements)
+for the evidence needed to select them.
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Structure and running gear totals](../cost-breakdown.md#structure-and-running-gear)
+**Contents:** [Requirements](running-gear.md#specification-and-inspection-requirements) ·
+[Sourcing](running-gear.md#sourcing) ·
+[Interfaces](running-gear.md#interfaces-with-other-scopes) ·
+[Itemized costs](running-gear.md#detailed-module-costs)
 
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Structure and running-gear costs](../cost-breakdown.md#structure-and-running-gear) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
 
-Track selection, matched sprockets, rollers, tensioners, axles and guides.
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS01: Rubber tracks
+
+**Cost-ledger coverage:** RUN-001:RUN-001
+
+**Required purchasing/manufacturing definition:** Matched 200 x 72 x 36 track MPN,
+guide-lug profile, internal width, sprocket engagement, load/speed/duty limits,
+compound, tension specification and replacement availability; S01/S02 remain leads
+
+**Receiving or first-article evidence:** Identity and dimensional match to supplier
+drawings; condition and batch; compatibility with the selected complete undercarriage
+
+### PS02: Sprockets, rollers and tensioners
+
+**Cost-ledger coverage:** RUN-002:RUN-006
+
+**Required purchasing/manufacturing definition:** Sprocket tooth count/profile, pitch
+geometry, bore/key/hub; idler and roller diameters, flanges, axle interfaces and
+capacities; tensioner stroke, adjustment/retention and track sag method
+
+**Receiving or first-article evidence:** Matched kit contents; drawing-based
+dimensional/alignment report; approved tension/retention and rolling checks under a
+separately authorized plan
+
+### PS03: Axles, bearings and track guides
+
+**Cost-ledger coverage:** RUN-007:RUN-009
+
+**Required purchasing/manufacturing definition:** Axle grades, diameters/fits, bearing
+IDs, seals/lubrication, spacers and axial retention; scraper/guide clearances through
+track movement; remove kit overlap
+
+**Receiving or first-article evidence:** Material/part identity, fits and retained
+assembly; no binding or prohibited track contact against reviewed limits
+
+[↑ Back to document overview](running-gear.md#document-overview)
+
+
+## Sourcing
+
+[S01](sources.md#s01) · [S02](sources.md#s02) · [S03](sources.md#s03) · [S06](sources.md#s06).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](running-gear.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Propulsion, reductions and brakes](propulsion.md)
+- [Frame, scissor and spine](frame.md)
+
+[↑ Back to document overview](running-gear.md#document-overview)
 
 ## Detailed module costs
 
@@ -62,52 +126,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €1,224.00 | €1,224.00 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S01](sources.md#s01) · [S02](sources.md#s02) · [S03](sources.md#s03) · [S06](sources.md#s06).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS01: Rubber tracks
-
-**Cost-ledger coverage:** RUN-001:RUN-001
-
-**Required purchasing/manufacturing definition:** Matched 200 x 72 x 36 track MPN,
-guide-lug profile, internal width, sprocket engagement, load/speed/duty limits,
-compound, tension specification and replacement availability; S01/S02 remain leads
-
-**Receiving or first-article evidence:** Identity and dimensional match to supplier
-drawings; condition and batch; compatibility with the selected complete undercarriage
-
-### PS02: Sprockets, rollers and tensioners
-
-**Cost-ledger coverage:** RUN-002:RUN-006
-
-**Required purchasing/manufacturing definition:** Sprocket tooth count/profile, pitch
-geometry, bore/key/hub; idler and roller diameters, flanges, axle interfaces and
-capacities; tensioner stroke, adjustment/retention and track sag method
-
-**Receiving or first-article evidence:** Matched kit contents; drawing-based
-dimensional/alignment report; approved tension/retention and rolling checks under a
-separately authorized plan
-
-### PS03: Axles, bearings and track guides
-
-**Cost-ledger coverage:** RUN-007:RUN-009
-
-**Required purchasing/manufacturing definition:** Axle grades, diameters/fits, bearing
-IDs, seals/lubrication, spacers and axial retention; scraper/guide clearances through
-track movement; remove kit overlap
-
-**Receiving or first-article evidence:** Material/part identity, fits and retained
-assembly; no binding or prohibited track contact against reviewed limits
-
-## Interfaces with other scopes
-
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Frame, scissor and spine](frame.md)
+[↑ Back to document overview](running-gear.md#document-overview)

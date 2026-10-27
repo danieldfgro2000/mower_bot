@@ -57,15 +57,15 @@ build gates below.
 
 Follow the plan's sequence rather than treating autonomy as the first milestone:
 
-| Stage | Required direction / exit evidence |
+| Build phase | Required direction / exit evidence |
 | --- | --- |
-| 0: customer and site validation | Plausible pilot demand and documented site/operating constraints |
-| 1: bench propulsion | One drive meets intended duty with measured current, thermal, torque, and fault behavior |
-| 2: rolling two-pod chassis | Repeatable control, width locks, stability, braking, and track retention |
-| 3: mower integration | Repeatable supervised cutting with measured energy, vibration, stopping, and service effort |
-| 4: independent safety and supervised operations | Every emergency path demonstrated independently; predictable manual operation |
-| 5: RTK Teach & Repeat | Qualified routes and observed boundary, localization-loss, pause, and stop behavior |
-| 6: pilot service | Recorded reliability, operator effort, energy, revenue, and contribution margin |
+| 0 — Customer and site validation | Plausible pilot demand and documented site/operating constraints |
+| 1 — Bench propulsion prototype | One drive meets intended duty with measured current, thermal, torque, and fault behavior |
+| 2 — Rolling two-pod chassis | Repeatable control, width locks, stability, braking, and track retention |
+| 3 — Supervised mower integration | Repeatable cutting with measured energy, vibration, stopping, and service effort |
+| 4 — Safety and supervised remote operation | Every emergency path demonstrated independently; predictable manual operation |
+| 5 — RTK route qualification | Qualified routes and observed boundary, localization-loss, pause, and stop behavior |
+| 6 — Pilot service | Recorded reliability, operator effort, energy, revenue, and contribution margin |
 
 Safety is a prerequisite throughout commissioning; Stage 4 is not permission to
 defer emergency protection during earlier bench/chassis work.

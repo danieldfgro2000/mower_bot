@@ -1,14 +1,21 @@
 # Width and Slope Feasibility Screen
 
+<a id="document-overview"></a>
+
 **Date:** 2026-10-26 | **Status:** preliminary calculations, not operating limits,
 fabrication dimensions, a structural analysis, or a machine safety assessment.
+
+**Summary:** A [preliminary screen](width-and-slope-sizing.md#inputs-and-unresolved-definitions)
+of track-width packaging, track length, static tipping geometry, and
+traction/holding demands. It identifies design questions; it does **not**
+establish safe dimensions, a slope limit, or an operating speed.
 
 **Related documents:** [Product authority](../../plan.md#42-variable-width-scissor-frame) |
 [BOM and costs](cost-breakdown.md) |
 [Feedback decisions](bom/feedback.md#feedback-decisions) |
 [Width-adjustment BOM](bom/width-adjustment.md)
 
-**On this page:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
+**Contents:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
 [Packaging](width-and-slope-sizing.md#minimum-width-and-packaging) ·
 [Track length](width-and-slope-sizing.md#track-length-check) ·
 [Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) ·
@@ -31,6 +38,9 @@ fabrication dimensions, a structural analysis, or a machine safety assessment.
 
 Angles are **degrees**, not percent grade: `tan(40°) × 100 ≈ 83.91%`.
 
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)
+
+
 ## Minimum width and packaging
 
 For track width `t` and clear gap `g` between their inner edges,
@@ -52,6 +62,9 @@ scissor/lock/screw swept envelopes, guards, and moving harness. Keep body width,
 outside-track width, track centre spacing, and inner clearance as separate
 dimensions. No width-specific safe slope is currently known.
 
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)
+
+
 ## Track length check
 
 The target pitch-loop length is `72 × 36 = 2,592 mm`. For an illustrative
@@ -64,6 +77,9 @@ thickness and structural overhangs. This is **not** the selected sprocket size
 or layout. It shows why an 800 mm complete pod length must not be inferred
 from the proposed 1,600 mm width or a width/length ratio. Actual roller/idler
 geometry and wrap determine the envelope.
+
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)
+
 
 ## Lateral static tipping screen
 
@@ -96,6 +112,9 @@ At the 400 mm geometric width bound, the same centre-line screen gives
 `d = 0.10 m` and a **zero-margin critical h of only 0.119 m at 40°**.
 This is not a usable design operating point. Do not allow an arbitrary
 target width on a slope merely because the motor can reach it.
+
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)
+
 
 ## Traction, climbing, and holding are separate gates
 
@@ -150,6 +169,9 @@ BMS disconnection, or lost electrical power. Do not rely on regeneration alone.
 Cross-slope slipping and rollover require their own assessment regardless of
 speed reduction.
 
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)
+
+
 ## Consequences for the design and BOM
 
 Retain 1,600 mm as a **study target**; do not approve 40° operation from it.
@@ -171,3 +193,5 @@ dimensions, and CG/load
 model, followed by competent design review. Any physical tests need separate
 explicit authorization and a reviewed progressive test plan; this note
 does **not** authorize approaching 40° with the prototype.
+
+[↑ Back to document overview](width-and-slope-sizing.md#document-overview)

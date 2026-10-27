@@ -1,16 +1,20 @@
 # BOM Cost Breakdown
 
+<a id="document-overview"></a>
+
 **Status:** generated cost view; **not released for purchase, fabrication, or operation**.
 
-This document is generated from the [authoritative cost ledger](chassis-bom.csv)
-and [module mapping](bom/cost-modules.csv). See the
-[main chassis BOM](chassis-bom.md) for scope, estimate rules, alternatives,
-readiness, acquisition stages, and broader budget assumptions.
+**Summary:** Generated cost tables for each chassis module and the overall
+installed/bench/support totals. Use the
+[main BOM](chassis-bom.md) for estimate scope and alternatives, and the
+[module scopes](cost-breakdown.md#detailed-module-costs) for technical
+requirements and evidence. Tables are generated from the
+[cost ledger](chassis-bom.csv) and [module mapping](bom/cost-modules.csv).
 
 Do not edit the generated tables by hand. Follow the
 [cost update procedure](bom/updating-linked-costs.md).
 
-**On this page:** [Major estimates](cost-breakdown.md#major-module-estimates) ·
+**Contents:** [Major estimates](cost-breakdown.md#major-module-estimates) ·
 [Detailed costs](cost-breakdown.md#detailed-module-costs) ·
 [Purchase totals](cost-breakdown.md#purchase-totals)
 
@@ -34,15 +38,18 @@ to add together.
 <!-- BEGIN GENERATED: overview -->
 | Module | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **Structure and running gear** | €2,213.00 | €2,213.00 |
-| **Drive train** | €3,781.66 | €3,520.00 |
-| **Width adjustment** | €407.00 | €407.00 |
-| **Battery and charging** | €3,148.16 | €5,698.48 |
-| **Power cables and electronics** | €1,679.00 | €1,679.00 |
-| **Safety controls and sensors** | €2,580.00 | €2,580.00 |
-| **Workshop and support** | €4,514.00 | €4,514.00 |
+| **[Structure](bom/frame.md#document-overview) and [running gear](bom/running-gear.md#document-overview)** | €2,213.00 | €2,213.00 |
+| **[Drive train](bom/propulsion.md#document-overview)** | €3,781.66 | €3,520.00 |
+| **[Width adjustment](bom/width-adjustment.md#document-overview)** | €407.00 | €407.00 |
+| **[Battery and charging](bom/batteries.md#document-overview)** | €3,148.16 | €5,698.48 |
+| **[Power cables](bom/cables-connectors.md#document-overview) and [electronics](bom/electronics.md#document-overview)** | €1,679.00 | €1,679.00 |
+| **[Safety controls and sensors](bom/electronics.md#document-overview)** | €2,580.00 | €2,580.00 |
+| **[Workshop and support](bom/workshop.md#document-overview)** | €4,514.00 | €4,514.00 |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: overview -->
+
+[↑ Back to document overview](cost-breakdown.md#document-overview)
+
 
 ## Detailed module costs
 
@@ -143,3 +150,5 @@ Each row links to its itemized scope table and sourcing assumptions.
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 | Above €5,000 materials/equipment target | €13,322.82 | €15,611.48 |
 <!-- END GENERATED: modules -->
+
+[↑ Back to document overview](cost-breakdown.md#document-overview)

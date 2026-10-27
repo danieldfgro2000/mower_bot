@@ -1,20 +1,133 @@
 # Workshop, bench equipment and service supplies
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Itemized costs](workshop.md#detailed-module-costs) ·
-[Requirements](workshop.md#specification-and-inspection-requirements) ·
-[Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes)
+**Summary:** Cost allowances and unqualified requirements for bench fixtures,
+measurement tools, handling gear, service supplies, spares, and PPE. The
+[specification and inspection section](workshop.md#specification-and-inspection-requirements)
+identifies evidence still needed before purchasing or use.
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Workshop and support totals](../cost-breakdown.md#workshop-and-support)
+**Contents:** [Requirements](workshop.md#specification-and-inspection-requirements) ·
+[Sourcing](workshop.md#sourcing) ·
+[Interfaces](workshop.md#interfaces-with-other-scopes) ·
+[Itemized costs](workshop.md#detailed-module-costs)
 
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Workshop and support costs](../cost-breakdown.md#workshop-and-support) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
 
-Loose handling equipment, bench fixtures, instruments, fabrication consumables, spares and PPE.
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS33: Slings, straps, shackles and supports
+
+**Cost-ledger coverage:** MNT-003:MNT-006
+
+**Required purchasing/manufacturing definition:** Sling/shackle working load limits for
+actual arrangement/angles, strap lashing capacity, support stability/capacity and
+compatibility with lifting/support points
+
+**Receiving or first-article evidence:** Supplier rating/identity and condition;
+handling instructions and inspection register; lifting WLL and transport lashing
+capacity are not interchangeable
+
+### PS34: Bench fixture and controls
+
+**Cost-ledger coverage:** TST-001:TST-004
+
+**Required purchasing/manufacturing definition:** Bench reaction-torque/mounting/anchor
+load case, fixture drawings and guard containment needs; operator pendant and
+independent hardwired stopping interface
+
+**Receiving or first-article evidence:** Fixture/guard inspection and reviewed
+test-area/stop arrangement before energizing; the bench pendant is not a
+substitute for the industrial remote intended for the rolling-chassis phase
+
+### PS35: Dynamometer and torque measurement
+
+**Cost-ledger coverage:** TST-005:TST-008
+
+**Required purchasing/manufacturing definition:** Matched torque/speed transducer,
+readout, couplings and load device; range/overload, rpm, continuous power/heat
+rejection, calibration and acquisition interfaces
+
+**Receiving or first-article evidence:** Complete supplier package and fixture
+integration review; traceable calibration and authorized shakedown; load device must
+absorb selected full duty, not merely survive a peak
+
+### PS36: Instruments and workshop tools
+
+**Cost-ledger coverage:** TST-009:TST-015
+
+**Required purchasing/manufacturing definition:** Exact instrument/tool ranges,
+accuracy, DC capability, electrical ratings, torque range, compatible crimp dies and
+calibration/inspection requirements
+
+**Receiving or first-article evidence:** Tool/asset register, condition and calibration
+evidence; correct crimp tooling and approved process coupons; IR reading not treated as
+winding temperature
+
+### PS37: Fabrication consumables
+
+**Cost-ledger coverage:** CON-001:CON-004
+
+**Required purchasing/manufacturing definition:** Welding filler/gas matched to released
+materials/process; abrasive/drill suitability; specified lubricant/sealant/thread-lock
+grade and storage/use limits
+
+**Receiving or first-article evidence:** Batch/expiry and supplier compatibility where
+applicable; consumables schedule tied to work instructions, no generic substitution on
+critical joints
+
+### PS38: Initial spare parts
+
+**Cost-ledger coverage:** CON-005:CON-005
+
+**Required purchasing/manufacturing definition:** Split spare lot into exact
+fuse/contact/seal/fastener/pin MPNs, quantities and approved interchangeability after
+installed selections freeze
+
+**Receiving or first-article evidence:** Separate spare stock list and labels; fuse
+substitutions need coordination review; no complete spare motor/pack/track included
+
+### PS39: PPE, charging area and cleaning
+
+**Cost-ledger coverage:** CON-006:CON-010
+
+**Required purchasing/manufacturing definition:** Task-specific PPE and barrier list,
+charging-area surface/layout, fire-adviser-selected equipment, compatible cleaning
+products and inspection tools
+
+**Receiving or first-article evidence:** Correct items/condition and expiry/service
+checks where applicable; reviewed charging/incident/cleaning instructions; no
+pressure-wash or battery-fire suppression capability assumed
+
+[↑ Back to document overview](workshop.md#document-overview)
+
+
+## Sourcing
+
+[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S19](sources.md#s19) · [S20](sources.md#s20) · [S21](sources.md#s21) · [S22](sources.md#s22).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](workshop.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Propulsion, reductions and brakes](propulsion.md)
+- [Frame, scissor and spine](frame.md)
+- [Electronics, power distribution and safety](electronics.md)
+
+[↑ Back to document overview](workshop.md#document-overview)
 
 ## Detailed module costs
 
@@ -106,102 +219,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €4,514.00 | €4,514.00 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S19](sources.md#s19) · [S20](sources.md#s20) · [S21](sources.md#s21) · [S22](sources.md#s22).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS33: Slings, straps, shackles and supports
-
-**Cost-ledger coverage:** MNT-003:MNT-006
-
-**Required purchasing/manufacturing definition:** Sling/shackle working load limits for
-actual arrangement/angles, strap lashing capacity, support stability/capacity and
-compatibility with lifting/support points
-
-**Receiving or first-article evidence:** Supplier rating/identity and condition;
-handling instructions and inspection register; lifting WLL and transport lashing
-capacity are not interchangeable
-
-### PS34: Bench fixture and controls
-
-**Cost-ledger coverage:** TST-001:TST-004
-
-**Required purchasing/manufacturing definition:** Bench reaction-torque/mounting/anchor
-load case, fixture drawings and guard containment needs; operator pendant and
-independent hardwired stopping interface
-
-**Receiving or first-article evidence:** Fixture/guard inspection and reviewed
-test-area/stop arrangement before energizing; bench pendant is not the Stage 2
-industrial remote
-
-### PS35: Dynamometer and torque measurement
-
-**Cost-ledger coverage:** TST-005:TST-008
-
-**Required purchasing/manufacturing definition:** Matched torque/speed transducer,
-readout, couplings and load device; range/overload, rpm, continuous power/heat
-rejection, calibration and acquisition interfaces
-
-**Receiving or first-article evidence:** Complete supplier package and fixture
-integration review; traceable calibration and authorized shakedown; load device must
-absorb selected full duty, not merely survive a peak
-
-### PS36: Instruments and workshop tools
-
-**Cost-ledger coverage:** TST-009:TST-015
-
-**Required purchasing/manufacturing definition:** Exact instrument/tool ranges,
-accuracy, DC capability, electrical ratings, torque range, compatible crimp dies and
-calibration/inspection requirements
-
-**Receiving or first-article evidence:** Tool/asset register, condition and calibration
-evidence; correct crimp tooling and approved process coupons; IR reading not treated as
-winding temperature
-
-### PS37: Fabrication consumables
-
-**Cost-ledger coverage:** CON-001:CON-004
-
-**Required purchasing/manufacturing definition:** Welding filler/gas matched to released
-materials/process; abrasive/drill suitability; specified lubricant/sealant/thread-lock
-grade and storage/use limits
-
-**Receiving or first-article evidence:** Batch/expiry and supplier compatibility where
-applicable; consumables schedule tied to work instructions, no generic substitution on
-critical joints
-
-### PS38: Initial spare parts
-
-**Cost-ledger coverage:** CON-005:CON-005
-
-**Required purchasing/manufacturing definition:** Split spare lot into exact
-fuse/contact/seal/fastener/pin MPNs, quantities and approved interchangeability after
-installed selections freeze
-
-**Receiving or first-article evidence:** Separate spare stock list and labels; fuse
-substitutions need coordination review; no complete spare motor/pack/track included
-
-### PS39: PPE, charging area and cleaning
-
-**Cost-ledger coverage:** CON-006:CON-010
-
-**Required purchasing/manufacturing definition:** Task-specific PPE and barrier list,
-charging-area surface/layout, fire-adviser-selected equipment, compatible cleaning
-products and inspection tools
-
-**Receiving or first-article evidence:** Correct items/condition and expiry/service
-checks where applicable; reviewed charging/incident/cleaning instructions; no
-pressure-wash or battery-fire suppression capability assumed
-
-## Interfaces with other scopes
-
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Frame, scissor and spine](frame.md)
-- [Electronics, power distribution and safety](electronics.md)
+[↑ Back to document overview](workshop.md#document-overview)

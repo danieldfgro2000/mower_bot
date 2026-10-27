@@ -31,14 +31,23 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
 - `docs/engineering/bom/sources.md`: dated supplier evidence and price limits.
 - `docs/engineering/bom/updating-linked-costs.md`: human-facing maintenance
   procedure, input ownership, regeneration, reference checks and validation history.
-- `docs/engineering/cost-breakdown.md`: generated focused view of major and
-  detailed module costs; `docs/engineering/chassis-bom.md` remains the main
-  estimate owner.
+- `docs/engineering/cost-breakdown.md`: generated focused view of detailed
+  module costs and installed/bench/support totals. The main BOM remains estimate
+  owner; keep its generated module totals and budget concise and link to this
+  detailed view and technical scopes instead of duplicating itemized tables.
 - Scope Markdown files: technical requirements and generated detailed costs.
   The main BOM contains generated linked module totals, evidence counts, stage
   costs, alternatives and broader budget. Present its generated major-module
   cost summary before broader budget allowances and contingency so readers see
-  what each module costs. Do not edit generated blocks by hand.
+  what each module costs. Link the module/category labels to their engineering
+  scope documents and omit a duplicate Contents entry for the summary; reserve
+  remaining navigation for other useful destinations. Do not edit generated
+  blocks by hand.
+- Write engineering scope pages for human readers first: open with a concise
+  summary and complete contents map, then flow from design intent or
+  requirements to supplier evidence, interfaces and itemized costs. Remove
+  duplicate, unlabelled opening prose while preserving technical details and
+  source links.
 
 ## Editing workflow
 
@@ -86,6 +95,20 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
    python3 .github/skills/bom-documentation/scripts/test_bom_links.py
    git diff --check
    ```
+
+   Same-document links must include the current Markdown filename before the
+   fragment (for example, `scope.md#document-overview`); fragment-only links
+   such as `#document-overview` fail this repository's reference validator.
+
+   If the full module reports regression-fixture failures, run the focused
+   repository audit separately:
+
+   ```sh
+   python3 .github/skills/bom-documentation/scripts/test_bom_links.py BomDocumentationLinkTest.test_every_engineering_markdown_reference_resolves -v
+   ```
+
+   Report both outcomes. A passing repository audit confirms document
+   references only; it does not make the regression suite pass.
 
    Never skip the test because only prose, generated output, an anchor, a source
    URL, or a newly added document changed. Fix the reference or replace it with

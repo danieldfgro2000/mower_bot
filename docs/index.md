@@ -6,6 +6,25 @@ All tasks start with [project guardrails](agents/project-guardrails.md) and
 [documentation guardrails](agents/documentation-guardrails.md), then the
 narrowest applicable scope below.
 
+## Chassis engineering reading path
+
+1. Start with the [Chassis BOM](engineering/chassis-bom.md) for what is in the
+   estimate, what it costs, and what is explicitly excluded.
+2. Use the [Build and Procurement Checklist](engineering/chassis-build-requirements.md)
+   to follow the evidence and release holds before any purchase or build.
+3. Open the linked [BOM scope](engineering/chassis-bom.md#bom-by-scope) for a
+   part family's requirements, cost detail, and inspection evidence. Use the
+   [supplier register](engineering/bom/sources.md) and
+   [feedback decisions](engineering/bom/feedback.md) for sourcing context and
+   dated decisions.
+4. For a cost change, follow [Updating linked costs](engineering/bom/updating-linked-costs.md);
+   do not edit generated tables directly.
+
+On a scope page, start with its summary, then follow the design or requirements
+through supplier evidence, interfaces, and itemized costs. Use the contents
+links to jump directly to a topic; the section-end **Back to document overview**
+link returns to the opening summary so you can choose another route.
+
 | Scope | Authoritative starting point |
 | --- | --- |
 | Agent behavior, architecture, safety, cleanup | [Project guardrails](agents/project-guardrails.md) |

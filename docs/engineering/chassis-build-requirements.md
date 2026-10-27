@@ -1,5 +1,12 @@
 # Chassis Build and Procurement Checklist
 
+<a id="document-overview"></a>
+
+**Summary:** The [evidence and approval path](chassis-build-requirements.md#how-to-use-this-checklist)
+before chassis parts can be purchased, fabricated, energized, or released. It
+tracks configuration, specifications, manufacturing records, procurement
+packages, release holds, and cost reconciliation; all holds remain open.
+
 **Document:** MBR-ENG-BOM-002 | **Revision:** E | **Date:** 2026-10-26
 
 **Status:** DRAFT / HOLD. This is a production-oriented specification checklist,
@@ -18,6 +25,14 @@ the applicable purchase/build approval; all existing holds remain in effect.
 [Width/slope sizing limitations](width-and-slope-sizing.md)
 
 **Authority:** [Product direction and build gates](../../plan.md)
+
+**Contents:** [Checklist workflow](chassis-build-requirements.md#how-to-use-this-checklist) ·
+[Configuration](chassis-build-requirements.md#1-freeze-the-configuration-and-establish-control) ·
+[Specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) ·
+[Manufacturing evidence](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) ·
+[Supplier packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) ·
+[Release holds](chassis-build-requirements.md#5-close-release-hold-points) ·
+[Cost exposure](chassis-build-requirements.md#6-reconcile-unresolved-cost-exposure)
 
 ## How to use this checklist
 
@@ -48,6 +63,9 @@ to skip an earlier gate.
 | Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](chassis-build-requirements.md#5-close-release-hold-points) |
 | Is hardware operation authorized? | No | [Status and safety boundary](chassis-build-requirements.md#chassis-build-and-procurement-checklist) |
 
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
+
 ## 1. Freeze the configuration and establish control
 
 The cost ledger has 129 estimating lines. This companion owns shared document
@@ -60,6 +78,11 @@ additional parts or costs. All families are currently **HOLD**.
 **Revision E change:** reorganized the same requirements into a numbered workflow,
 status dashboard, and compact control tables. Technical requirements, holds,
 costs, and authorization boundaries are unchanged.
+
+The estimate covers **Stage 1 — bench propulsion prototype** and **Stage 2 —
+rolling two-pod chassis** only. **Stage 3 — supervised mower integration** and
+later autonomy/service work need their own requirements, costs and release
+evidence; they are not authorized by closing this checklist.
 
 The two voltage scenarios are alternatives. Freeze one approved configuration
 before issuing a manufacturing BOM; retain the other only as an estimate.
@@ -107,6 +130,9 @@ pack rounding; do not change the installed quantity to conceal excess stock.
 Record each half of a connector pair, including contacts, seals, wedges,
 backshells and caps; two housings alone are not a complete mating pair.
 
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
+
 ## 2. Confirm item-family specifications
 
 All 39 PS families remain **HOLD**. Their definitions and inspection evidence now
@@ -121,6 +147,9 @@ Cross-scope interfaces are linked, not copied.
 - [Cables, connectors and harnesses](bom/cables-connectors.md#specification-and-inspection-requirements) — PS23, PS26
 - [Electronics, power distribution and safety](bom/electronics.md#specification-and-inspection-requirements) — PS21, PS22, PS24, PS25, PS27, PS28, PS29, PS30, PS31
 - [Workshop, bench equipment and service supplies](bom/workshop.md#specification-and-inspection-requirements) — PS33, PS34, PS35, PS36, PS37, PS38, PS39
+
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
 
 ## 3. Prepare manufacturing and inspection deliverables
 
@@ -187,6 +216,9 @@ amps, braking energy, or safety-performance category simply to make this checkli
 look complete. They depend on the frozen geometry, load cases and hazard review.
 Reused equipment requires the same suitability evidence as a new item.
 
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
+
 ## 4. Prepare procurement work packages
 
 Prepare these requests only; **sending supplier requests needs separate user
@@ -252,6 +284,9 @@ rental/outsourcing without dropping required measurements
 No claimed second source is interchangeable until form, fit, function, ratings,
 firmware/interfaces and acceptance evidence are reviewed. A supplier "equivalent"
 or marketplace stock substitution is a change request, not purchasing discretion.
+
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
 
 ## 5. Close release hold points
 
@@ -331,15 +366,19 @@ review
 
 **Must close before:** Commercial machine use
 
-**Closure evidence / responsible review role:** Later-stage mower/guarding/safety
-integration, applicable legal/conformity review, technical file and service/operator
-documentation; qualified product/compliance review outside this Stage 1-2 estimate
+**Closure evidence / responsible review role:** Stage 3 supervised mower
+integration, including the mower, guarding and safety integration; applicable
+legal/conformity review, technical file and service/operator documentation.
+Qualified product/compliance review is outside this Stage 1-2 estimate.
 
 H05 requires a review and an approved sequence before energizing, not a claim
 that live stop tests have already passed before power is first applied.
 Commissioning must progress through separately authorized controlled steps.
 Do not use the 40-degree site aspiration as an initial test angle or an accepted
 tilt threshold. Production readiness needs actual evidence, not closed cells.
+
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+
 
 ## 6. Reconcile unresolved cost exposure
 
@@ -376,12 +415,14 @@ recurring calibration/inspection separately
 
 ### Finished mowing product and commercial support
 
-**Reconciliation required:** Stage 3+ mower/mounts/guards, later autonomy, packaging,
-operator training, warranty stock, transport and ongoing service remain outside this
-chassis estimate
+**Reconciliation required:** Stage 3 supervised mower integration (mower,
+mounts/guards), later autonomy, packaging, operator training, warranty stock,
+transport and ongoing service remain outside this chassis estimate
 
 Maintain a dated change record: affected IDs, reason, old/new approved revision,
 evidence, quantity/cost delta, applicable builds, approver and disposition of
 stock/work in progress. Update CSV, totals and package definitions together.
 After assembly, preserve an as-built BOM with serial/lot identities and approved
 deviations; do not overwrite it with a later design revision.
+
+[↑ Back to document overview](chassis-build-requirements.md#document-overview)

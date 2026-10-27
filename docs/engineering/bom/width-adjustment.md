@@ -1,21 +1,28 @@
 # Powered width adjustment
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Adjustment concept](width-adjustment.md#powered-rolling-width-adjustment) ·
-[Itemized costs](width-adjustment.md#detailed-module-costs) ·
+**Summary:** The proposed rolling width-adjustment concept, its cost allowance,
+and the requirements for drive, feedback, limits, holding, and guarding. The
+12 V worm-drive donor motor is owner-reported; load, duty, holding, and motion
+limits are not established. See the
+[mechanism detail](width-adjustment.md#powered-rolling-width-adjustment) and
+[specification requirements](width-adjustment.md#specification-and-inspection-requirements).
+
+**Contents:** [Adjustment concept](width-adjustment.md#powered-rolling-width-adjustment) ·
 [Requirements](width-adjustment.md#specification-and-inspection-requirements) ·
-[Sourcing](width-adjustment.md#sourcing) · [Interfaces](width-adjustment.md#interfaces-with-other-scopes)
+[Sourcing](width-adjustment.md#sourcing) ·
+[Interfaces](width-adjustment.md#interfaces-with-other-scopes) ·
+[Itemized costs](width-adjustment.md#detailed-module-costs)
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Width adjustment totals](../cost-breakdown.md#width-adjustment)
-
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Width-adjustment costs](../cost-breakdown.md#width-adjustment) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
-
-Reused motor, screw drive, local power, feedback, limits, harness and guarding.
 
 ## Powered rolling width adjustment
 
@@ -58,70 +65,7 @@ The cost of any different reviewed holding solution must replace that reserve.
 Width-drive stopping must remain independent of the normal app/control loop
 and coordinated with propulsion; disabling energy is not proof of a held width.
 
-## Detailed module costs
-
-<!-- BEGIN GENERATED: details -->
-Generated from the [cost ledger](../chassis-bom.csv).
-Quantities are cumulative Stage 2; prices are line totals, not unit prices.
-C = calculated reference; A = allowance; I = included; R = reused.
-N/A never means an unknown purchase is free.
-
-### Cost: width-mechanics
-
-**Width motor screw bearings mounts and guard**
-
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| WID-001 - Existing 12 V windshield motor with worm reduction (1 each) | N/A / R | N/A / R |
-| WID-002 - Screw and mating nut mechanism (1 set) | €60.00 / A | €60.00 / A |
-| WID-003 - Screw thrust and radial bearings (1 set) | €35.00 / A | €35.00 / A |
-| WID-004 - Motor-to-screw coupling and adapter (1 set) | €25.00 / A | €25.00 / A |
-| WID-005 - Actuator brackets and bearing mounts (1 set) | €15.00 / A | €15.00 / A |
-| WID-014 - Actuator screw guard and local cable cover materials (1 set) | €20.00 / A | €20.00 / A |
-| **Module subtotal** | €155.00 | €155.00 |
-
-### Cost: width-power
-
-**Width converter driver and protected enable**
-
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| WID-006 - Traction-pack-to-12 V actuator converter (1 each) | €90.00 / A | €90.00 / A |
-| WID-007 - Reversible DC motor driver (1 each) | €35.00 / A | €35.00 / A |
-| WID-008 - Actuator branch fuse and independent enable provision (1 set) | €30.00 / A | €30.00 / A |
-| **Module subtotal** | €155.00 | €155.00 |
-
-### Cost: width-sensors
-
-**Width encoder limits current and reference sensors**
-
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| WID-009 - Hall or optical turn encoder and target (1 set) | €25.00 / A | €25.00 / A |
-| WID-010 - Width end-of-travel limit switch (2 each) | €24.00 / A | €24.00 / A |
-| WID-011 - Width-drive current sensing provision (1 set) | €20.00 / A | €20.00 / A |
-| WID-012 - Known-position reference sensor (1 set) | €8.00 / A | €8.00 / A |
-| **Module subtotal** | €77.00 | €77.00 |
-
-### Cost: width-harness
-
-**Width actuator harness and strain relief**
-
-| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
-| --- | ---: | ---: |
-| WID-013 - Width mechanism harness and strain relief (1 set) | €20.00 / A | €20.00 / A |
-| **Module subtotal** | €20.00 | €20.00 |
-
-| Scope total | 48 V / 2 kW | 72 V / 4 kW |
-| --- | ---: | ---: |
-| **All items owned by this scope** | €407.00 | €407.00 |
-<!-- END GENERATED: details -->
-
-## Sourcing
-
-[S03](sources.md#s03) · [S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [U01](sources.md#u01).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
+[↑ Back to document overview](width-adjustment.md#document-overview)
 
 ## Specification and inspection requirements
 
@@ -188,8 +132,83 @@ distinct from main scissor guards
 **Receiving or first-article evidence:** Pin-to-pin and polarity record; clearance
 through full approved travel, no trapping or rubbing; guard attachment inspection
 
+[↑ Back to document overview](width-adjustment.md#document-overview)
+
+
+## Sourcing
+
+[S03](sources.md#s03) · [S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [U01](sources.md#u01).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](width-adjustment.md#document-overview)
+
+
 ## Interfaces with other scopes
 
 - [Frame, scissor and spine](frame.md)
 - [Cables, connectors and harnesses](cables-connectors.md)
 - [Electronics, power distribution and safety](electronics.md)
+
+[↑ Back to document overview](width-adjustment.md#document-overview)
+
+## Detailed module costs
+
+<!-- BEGIN GENERATED: details -->
+Generated from the [cost ledger](../chassis-bom.csv).
+Quantities are cumulative Stage 2; prices are line totals, not unit prices.
+C = calculated reference; A = allowance; I = included; R = reused.
+N/A never means an unknown purchase is free.
+
+### Cost: width-mechanics
+
+**Width motor screw bearings mounts and guard**
+
+| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
+| --- | ---: | ---: |
+| WID-001 - Existing 12 V windshield motor with worm reduction (1 each) | N/A / R | N/A / R |
+| WID-002 - Screw and mating nut mechanism (1 set) | €60.00 / A | €60.00 / A |
+| WID-003 - Screw thrust and radial bearings (1 set) | €35.00 / A | €35.00 / A |
+| WID-004 - Motor-to-screw coupling and adapter (1 set) | €25.00 / A | €25.00 / A |
+| WID-005 - Actuator brackets and bearing mounts (1 set) | €15.00 / A | €15.00 / A |
+| WID-014 - Actuator screw guard and local cable cover materials (1 set) | €20.00 / A | €20.00 / A |
+| **Module subtotal** | €155.00 | €155.00 |
+
+### Cost: width-power
+
+**Width converter driver and protected enable**
+
+| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
+| --- | ---: | ---: |
+| WID-006 - Traction-pack-to-12 V actuator converter (1 each) | €90.00 / A | €90.00 / A |
+| WID-007 - Reversible DC motor driver (1 each) | €35.00 / A | €35.00 / A |
+| WID-008 - Actuator branch fuse and independent enable provision (1 set) | €30.00 / A | €30.00 / A |
+| **Module subtotal** | €155.00 | €155.00 |
+
+### Cost: width-sensors
+
+**Width encoder limits current and reference sensors**
+
+| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
+| --- | ---: | ---: |
+| WID-009 - Hall or optical turn encoder and target (1 set) | €25.00 / A | €25.00 / A |
+| WID-010 - Width end-of-travel limit switch (2 each) | €24.00 / A | €24.00 / A |
+| WID-011 - Width-drive current sensing provision (1 set) | €20.00 / A | €20.00 / A |
+| WID-012 - Known-position reference sensor (1 set) | €8.00 / A | €8.00 / A |
+| **Module subtotal** | €77.00 | €77.00 |
+
+### Cost: width-harness
+
+**Width actuator harness and strain relief**
+
+| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
+| --- | ---: | ---: |
+| WID-013 - Width mechanism harness and strain relief (1 set) | €20.00 / A | €20.00 / A |
+| **Module subtotal** | €20.00 | €20.00 |
+
+| Scope total | 48 V / 2 kW | 72 V / 4 kW |
+| --- | ---: | ---: |
+| **All items owned by this scope** | €407.00 | €407.00 |
+<!-- END GENERATED: details -->
+
+[↑ Back to document overview](width-adjustment.md#document-overview)

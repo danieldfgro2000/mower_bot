@@ -269,16 +269,23 @@ class BomReferenceRegressionTest(unittest.TestCase):
         shutil.copytree(ROOT / "docs/engineering", self.root / "docs/engineering")
         for relative in ("plan.md", ".github/skills/bom-documentation/SKILL.md"):
             self.write_document(relative, (ROOT / relative).read_text(encoding="utf-8"))
-        document = self.root / "docs/engineering/chassis-bom.md"
+        document = self.root / "docs/engineering/cost-breakdown.md"
+        original = "[Drive train](cost-breakdown.md#drive-train)\n\n" + document.read_text(
+            encoding="utf-8",
+        )
+        document.write_text(original, encoding="utf-8")
         errors, _ = local_reference_errors(document, root=self.root)
         self.assertEqual(errors, [])
-        original = document.read_text(encoding="utf-8")
         changed = original.replace("\n### Drive train\n", "\n### Removed drive section\n")
         self.assertNotEqual(original, changed, "The real Drive train heading was not found")
         document.write_text(changed, encoding="utf-8")
         errors, _ = local_reference_errors(document, root=self.root)
         self.assertEqual(len(errors), 1, errors)
-        self.assertIn("chassis-bom.md: #drive-train -> missing anchor '#drive-train'", errors[0])
+        self.assertIn(
+            "docs/engineering/cost-breakdown.md: cost-breakdown.md#drive-train "
+            "-> missing anchor '#drive-train'",
+            errors[0],
+        )
         self.assertEqual(document.read_text(encoding="utf-8"), changed)
 
     def test_repository_test_fails_for_a_missing_cross_file_fragment(self):

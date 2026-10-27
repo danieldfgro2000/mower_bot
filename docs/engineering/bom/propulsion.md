@@ -1,21 +1,30 @@
 # Propulsion, reductions and brakes
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Drive alternatives](propulsion.md#drive-alternatives) ·
-[Itemized costs](propulsion.md#detailed-module-costs) ·
+**Summary:** Compares the
+[48 V / approximately 2 kW planetary motor (S11)](sources.md#s11), the
+[72 V / approximately 4 kW VOL-BL400C72 motor (S13)](sources.md#s13), and the
+[non-additive HPM5000B sourcing alternative](propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
+These are candidates and screening calculations, not approved motors, ratios,
+brakes, or operating limits. Exact listings are in the
+[supplier register](sources.md#source-id-lookup).
+
+**Contents:** [Drive alternatives](propulsion.md#drive-alternatives) ·
+[Compatibility and duty](propulsion.md#compatibility-and-duty-limitations) ·
 [Requirements](propulsion.md#specification-and-inspection-requirements) ·
-[Sourcing](propulsion.md#sourcing) · [Interfaces](propulsion.md#interfaces-with-other-scopes)
+[Sourcing](propulsion.md#sourcing) ·
+[Interfaces](propulsion.md#interfaces-with-other-scopes) ·
+[Itemized costs](propulsion.md#detailed-module-costs)
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Drive train totals](../cost-breakdown.md#drive-train)
-
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Drive-train costs](../cost-breakdown.md#drive-train) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
-
-Traction motor/controller packages, output support, transmission and mechanical braking.
 
 ## Drive alternatives
 
@@ -111,8 +120,9 @@ conditional Elker tax reserve; excludes brakes and all other materials.
 
 ### 72 V / approximately 4 kW per drive
 
-**Motor reference:** Volcano VOL-BL400C72; 4 kW, 2,580 rpm, 14.81 Nm, S1 claimed. Its
-page conflicts between 58.82 A and 71.17 A.
+**Motor reference:** Volcano VOL-BL400C72; 4 kW, 2,580 rpm, 14.81 Nm, supplier
+claims an **S1 continuous-duty rating**. Its page conflicts between 58.82 A and
+71.17 A; the rating's test conditions are not established.
 [S13](https://www.volcanomotors.com/product/251mm-72v-4kw-hall-sensor-bldc-motor-with-controller/)
 
 **Motor cost basis:** **€650 each allowance**; no Volcano public quote. A different 5 kW
@@ -134,6 +144,9 @@ stopping/holding performance.
 
 **Two motors + two controllers + two packs only:** **€7,198.48**, predominantly
 allowances; excludes reductions, brakes, and all other materials.
+
+[↑ Back to document overview](propulsion.md#document-overview)
+
 
 ## Compatibility and duty limitations
 
@@ -164,6 +177,83 @@ motor/controller, and thermal ratings; quote and re-cost the reviewed solution.
 The battery cost difference reflects **different suppliers and qualification
 levels**, not proof that 72 V itself doubles battery cost. These are complete
 cost-model alternatives, **not two complete supplier-qualified packages**.
+
+[↑ Back to document overview](propulsion.md#document-overview)
+
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS14: Traction motor and controller
+
+**Cost-ledger coverage:** DRV-001:DRV-002
+
+**Required purchasing/manufacturing definition:** Exact motor/controller/gearhead
+options; continuous torque-speed curve and low-speed cooling, peak duration, bus/phase
+currents, control interfaces and software version; gearbox output/radial loads and duty;
+full-charge/transient/regen voltage margin
+
+**Receiving or first-article evidence:** Supplier compatibility statement and complete
+package quote; model/nameplate match and configuration backup; instrumented
+duty/thermal/fault evidence; current example ratios do not qualify 40-degree operation
+
+### PS15: Mechanical brakes
+
+**Cost-ledger coverage:** DRV-003:DRV-003
+
+**Required purchasing/manufacturing definition:** Brake type and default state, mounting
+location, static holding torque versus temperature/wear, dynamic stop energy/duty if
+applicable, coil voltage, release monitoring and manual service release; assess
+drivetrain failure between brake and track
+
+**Receiving or first-article evidence:** Documented holding/stopping design at actual
+ratio/radius/load, full-SOC and power-loss cases; no regenerative-only parking hold;
+label restrictions if holding-only brake
+
+### PS16: Output shafts and bearings
+
+**Cost-ledger coverage:** DRV-004:DRV-006
+
+**Required purchasing/manufacturing definition:** Supported sprocket shaft drawing,
+material, fits, key/hub/coupling, bearing loads/life and retention; avoid track side
+load on an unqualified gearhead
+
+**Receiving or first-article evidence:** Material/fit/runout/alignment records, bearing
+identity and fastening evidence; loaded performance per reviewed test plan
+
+### PS17: Reduction and transmission hardware
+
+**Cost-ledger coverage:** DRV-007:DRV-012
+
+**Required purchasing/manufacturing definition:** Released ratio/tooth counts, chain
+standard/size/length, lubrication and service factor, shaft/key/bearing drawings,
+tensioner range and guard interfaces; 48 V included components identified separately
+from 72 V external reduction
+
+**Receiving or first-article evidence:** Parts and centre-distance/chain-alignment
+match; recorded tension; torque/speed/thermal confirmation; kit contents reconcile
+N/A separate-purchase rows; external reduction quantities apply only to 72 V
+
+[↑ Back to document overview](propulsion.md#document-overview)
+
+
+## Sourcing
+
+[S03](sources.md#s03) · [S04](sources.md#s04) · [S05](sources.md#s05) · [S07](sources.md#s07) · [S11](sources.md#s11) · [S12](sources.md#s12) · [S13](sources.md#s13) · [S14](sources.md#s14) · [S15](sources.md#s15) · [S23](sources.md#s23) · [S24](sources.md#s24) · [S25](sources.md#s25).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](propulsion.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Tracks and running gear](running-gear.md)
+- [Batteries, enclosures and charging](batteries.md)
+- [Electronics, power distribution and safety](electronics.md)
+
+[↑ Back to document overview](propulsion.md#document-overview)
 
 ## Detailed module costs
 
@@ -230,69 +320,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €3,781.66 | €3,520.00 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S03](sources.md#s03) · [S04](sources.md#s04) · [S05](sources.md#s05) · [S07](sources.md#s07) · [S11](sources.md#s11) · [S12](sources.md#s12) · [S13](sources.md#s13) · [S14](sources.md#s14) · [S15](sources.md#s15) · [S23](sources.md#s23) · [S24](sources.md#s24) · [S25](sources.md#s25).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS14: Traction motor and controller
-
-**Cost-ledger coverage:** DRV-001:DRV-002
-
-**Required purchasing/manufacturing definition:** Exact motor/controller/gearhead
-options; continuous torque-speed curve and low-speed cooling, peak duration, bus/phase
-currents, control interfaces and software version; gearbox output/radial loads and duty;
-full-charge/transient/regen voltage margin
-
-**Receiving or first-article evidence:** Supplier compatibility statement and complete
-package quote; model/nameplate match and configuration backup; instrumented
-duty/thermal/fault evidence; current example ratios do not qualify 40-degree operation
-
-### PS15: Mechanical brakes
-
-**Cost-ledger coverage:** DRV-003:DRV-003
-
-**Required purchasing/manufacturing definition:** Brake type and default state, mounting
-location, static holding torque versus temperature/wear, dynamic stop energy/duty if
-applicable, coil voltage, release monitoring and manual service release; assess
-drivetrain failure between brake and track
-
-**Receiving or first-article evidence:** Documented holding/stopping design at actual
-ratio/radius/load, full-SOC and power-loss cases; no regenerative-only parking hold;
-label restrictions if holding-only brake
-
-### PS16: Output shafts and bearings
-
-**Cost-ledger coverage:** DRV-004:DRV-006
-
-**Required purchasing/manufacturing definition:** Supported sprocket shaft drawing,
-material, fits, key/hub/coupling, bearing loads/life and retention; avoid track side
-load on an unqualified gearhead
-
-**Receiving or first-article evidence:** Material/fit/runout/alignment records, bearing
-identity and fastening evidence; loaded performance per reviewed test plan
-
-### PS17: Reduction and transmission hardware
-
-**Cost-ledger coverage:** DRV-007:DRV-012
-
-**Required purchasing/manufacturing definition:** Released ratio/tooth counts, chain
-standard/size/length, lubrication and service factor, shaft/key/bearing drawings,
-tensioner range and guard interfaces; 48 V included components identified separately
-from 72 V external reduction
-
-**Receiving or first-article evidence:** Parts and centre-distance/chain-alignment
-match; recorded tension; torque/speed/thermal confirmation; kit contents reconcile
-N/A separate-purchase rows; external reduction quantities apply only to 72 V
-
-## Interfaces with other scopes
-
-- [Tracks and running gear](running-gear.md)
-- [Batteries, enclosures and charging](batteries.md)
-- [Electronics, power distribution and safety](electronics.md)
+[↑ Back to document overview](propulsion.md#document-overview)

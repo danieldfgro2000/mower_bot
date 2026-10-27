@@ -1,21 +1,27 @@
 # Batteries, enclosures and charging
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Battery alternatives](batteries.md#battery-alternatives) ·
-[Itemized costs](batteries.md#detailed-module-costs) ·
+**Summary:** Compares the [costed 48 V and 72 V battery scenarios](batteries.md#battery-alternatives) and
+[pack, enclosure, charging, and interlock requirements](batteries.md#specification-and-inspection-requirements).
+Candidate pack claims do not establish vehicle suitability or
+controller/charger compatibility; compare them with the
+[supplier evidence](sources.md#source-id-lookup).
+
+**Contents:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Requirements](batteries.md#specification-and-inspection-requirements) ·
-[Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes)
+[Sourcing](batteries.md#sourcing) ·
+[Interfaces](batteries.md#interfaces-with-other-scopes) ·
+[Itemized costs](batteries.md#detailed-module-costs)
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Battery and charging totals](../cost-breakdown.md#battery-and-charging)
-
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Battery and charging costs](../cost-breakdown.md#battery-and-charging) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
-
-Battery/BMS alternatives, restraints, charging and charge interlocks.
 
 ## Battery alternatives
 
@@ -58,6 +64,71 @@ resolved. The custom 70 Ah pack is **unquoted**.
 **Chargers:** Two €220 charger allowances. BAT-001 is a custom battery-only budget,
 conservatively anchored to a reference bundle that includes a charger; deduct BAT-005 if
 the actual pack quotation includes the required charger.
+
+[↑ Back to document overview](batteries.md#document-overview)
+
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS18: Battery packs and BMS
+
+**Cost-ledger coverage:** BAT-001:BAT-001
+
+**Required purchasing/manufacturing definition:** Exact chemistry/series count,
+full/cutoff voltage, usable energy, continuous/peak discharge and charge/regen limits
+versus temperature/SOC; BMS limits/disconnect behavior; terminal layout/mass/envelope,
+vibration and transport documentation
+
+**Receiving or first-article evidence:** Pack/charger/controller compatibility,
+traceable pack serials and BMS configuration; supplier battery transport evidence as
+applicable, including UN 38.3 test summary for lithium shipment; separately authorized
+capacity/thermal/fault results
+
+### PS19: Battery enclosures and restraints
+
+**Cost-ledger coverage:** BAT-002:BAT-004
+
+**Required purchasing/manufacturing definition:** Battery enclosure material/thickness,
+debris shielding, terminal insulation, removable restraint and shock/rollover load path;
+drainage/venting/thermal design and galvanic compatibility
+
+**Receiving or first-article evidence:** Drawing/material match, restraint installation
+and isolation/clearance inspection; reviewed environmental evidence; no printed battery
+containment or fire-containment assumption
+
+### PS20: Charging and charge interlocks
+
+**Cost-ledger coverage:** BAT-005:BAT-007
+
+**Required purchasing/manufacturing definition:** Exact charge
+profile/voltage/current/temperature restrictions, mains input/plug, BMS compatibility,
+connectors/contact ratings/polarity and charge fuse; charging interlock inhibits motion
+
+**Receiving or first-article evidence:** Correct charger identity/settings, keyed
+polarity/continuity and interlock evidence; reconcile included charger bundles before
+ordering
+
+[↑ Back to document overview](batteries.md#document-overview)
+
+
+## Sourcing
+
+[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S16](sources.md#s16) · [S17](sources.md#s17).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](batteries.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Propulsion, reductions and brakes](propulsion.md)
+- [Electronics, power distribution and safety](electronics.md)
+- [Frame, scissor and spine](frame.md)
+
+[↑ Back to document overview](batteries.md#document-overview)
 
 ## Detailed module costs
 
@@ -111,57 +182,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €3,148.16 | €5,698.48 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S04](sources.md#s04) · [S06](sources.md#s06) · [S07](sources.md#s07) · [S16](sources.md#s16) · [S17](sources.md#s17).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS18: Battery packs and BMS
-
-**Cost-ledger coverage:** BAT-001:BAT-001
-
-**Required purchasing/manufacturing definition:** Exact chemistry/series count,
-full/cutoff voltage, usable energy, continuous/peak discharge and charge/regen limits
-versus temperature/SOC; BMS limits/disconnect behavior; terminal layout/mass/envelope,
-vibration and transport documentation
-
-**Receiving or first-article evidence:** Pack/charger/controller compatibility,
-traceable pack serials and BMS configuration; supplier battery transport evidence as
-applicable, including UN 38.3 test summary for lithium shipment; separately authorized
-capacity/thermal/fault results
-
-### PS19: Battery enclosures and restraints
-
-**Cost-ledger coverage:** BAT-002:BAT-004
-
-**Required purchasing/manufacturing definition:** Battery enclosure material/thickness,
-debris shielding, terminal insulation, removable restraint and shock/rollover load path;
-drainage/venting/thermal design and galvanic compatibility
-
-**Receiving or first-article evidence:** Drawing/material match, restraint installation
-and isolation/clearance inspection; reviewed environmental evidence; no printed battery
-containment or fire-containment assumption
-
-### PS20: Charging and charge interlocks
-
-**Cost-ledger coverage:** BAT-005:BAT-007
-
-**Required purchasing/manufacturing definition:** Exact charge
-profile/voltage/current/temperature restrictions, mains input/plug, BMS compatibility,
-connectors/contact ratings/polarity and charge fuse; charging interlock inhibits motion
-
-**Receiving or first-article evidence:** Correct charger identity/settings, keyed
-polarity/continuity and interlock evidence; reconcile included charger bundles before
-ordering
-
-## Interfaces with other scopes
-
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Electronics, power distribution and safety](electronics.md)
-- [Frame, scissor and spine](frame.md)
+[↑ Back to document overview](batteries.md#document-overview)

@@ -1,21 +1,162 @@
 # Electronics, power distribution and safety
 
+<a id="document-overview"></a>
+
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**On this page:** [Itemized costs](electronics.md#detailed-module-costs) ·
-[Requirements](electronics.md#specification-and-inspection-requirements) ·
-[Sourcing](electronics.md#sourcing) · [Interfaces](electronics.md#interfaces-with-other-scopes)
+**Summary:** Cost allowances and unqualified requirements for switchgear,
+power distribution, independent stopping, operator control, sensors, and
+logging. The [requirements section](electronics.md#specification-and-inspection-requirements)
+links each item family to evidence still needed. The listed examples are not
+selected or safety-qualified components.
 
-**BOM documents:** [BOM overview](../chassis-bom.md) ·
-[Power cables and electronics totals](../cost-breakdown.md#power-cables-and-electronics) ·
-[Safety and sensor totals](../cost-breakdown.md#safety-controls-and-sensors)
+**Contents:** [Requirements](electronics.md#specification-and-inspection-requirements) ·
+[Sourcing](electronics.md#sourcing) ·
+[Interfaces](electronics.md#interfaces-with-other-scopes) ·
+[Itemized costs](electronics.md#detailed-module-costs)
 
-**Related records:** [Cost ledger](../chassis-bom.csv) ·
+**Related:** [BOM overview](../chassis-bom.md#scope-and-decisions) ·
+[Power cable and electronics costs](../cost-breakdown.md#power-cables-and-electronics) ·
+[Safety and sensor costs](../cost-breakdown.md#safety-controls-and-sensors) ·
+[Cost ledger](../chassis-bom.csv) ·
 [Build checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-register)
 
-Switchgear, precharge, control supplies, enclosures, independent stopping, control boards and installed instrumentation.
+## Specification and inspection requirements
+
+All specifications are **HOLD**. Checks describe evidence still required, not
+completed tests. Cost-ledger ranges are inclusive.
+
+### PS21: Main fuses, disconnects and contactors
+
+**Cost-ledger coverage:** PWR-001:PWR-005
+
+**Required purchasing/manufacturing definition:** Fuse time-current curve, DC breaking
+capacity and fault coordination; holder/disconnect DC ratings; contactor
+make/break/duty/coil ratings at full bus voltage and current; feedback and suppression
+compatible with stop timing
+
+**Receiving or first-article evidence:** Exact MPN/certificates where required;
+schematic/rating review against pack fault current; assembly polarity, tightening and
+feedback records; welded-contact fault response evidence
+
+### PS22: Precharge and discharge
+
+**Cost-ledger coverage:** PWR-006:PWR-007
+
+**Required purchasing/manufacturing definition:** Controller input capacitance and
+charging limits; precharge resistance/energy/duty and relay sequence; discharge energy,
+component ratings, voltage-test points and isolation criteria
+
+**Receiving or first-article evidence:** Calculation and schematic review; documented
+voltage/time measurements and failure responses under authorized energizing; no assumed
+safe discharge interval
+
+### PS24: Control supplies and branch protection
+
+**Cost-ledger coverage:** PWR-012:PWR-014
+
+**Required purchasing/manufacturing definition:** Actual control-rail/load budget
+including brakes, safety coils and startup loads; DC/DC input range/isolation/thermal
+derating and grounding; branch fuse/wire coordination and brownout behavior
+
+**Receiving or first-article evidence:** Rail and isolation design review; supply
+identity and authorized load/brownout evidence; control power loss cannot create an
+automatic restart
+
+### PS25: Printed enclosures and cable glands
+
+**Cost-ledger coverage:** PWR-015:PWR-016
+
+**Required purchasing/manufacturing definition:** Enclosure CAD/revision, resin grade
+and batch, print orientation/walls/infill/process, heat/UV/flame suitability, gland
+cable diameter ranges, vent/drain and sealing strategy
+
+**Receiving or first-article evidence:** First-article dimensions and print inspection;
+material/process record, cable retention and approved temperature/ingress evidence; no
+IP rating inferred from nominal filament type
+
+### PS27: Thermal paths and enclosure hardware
+
+**Cost-ledger coverage:** PWR-021:PWR-024
+
+**Required purchasing/manufacturing definition:** Heat-flow/loss budget,
+backplate/spreader material/thickness/contact area, thermal interface, gasket
+compression, lid fastener spacing and insert retention at service temperature
+
+**Receiving or first-article evidence:** Assembly flatness/interface and fastener
+inspection; thermal and insert-retention evidence on actual printed configuration; no
+enclosure thermal/ingress rating claimed before qualification
+
+### PS28: Independent stopping and remote control
+
+**Cost-ledger coverage:** SAF-001:SAF-004
+
+**Required purchasing/manufacturing definition:** Hazard-derived independent stop
+architecture and required safety performance; exact relay/controller and remote
+variants, EU radio configuration, channels/outputs/reset/heartbeat logic; machine stop
+locations
+
+**Receiving or first-article evidence:** Approved safety requirements and schematic,
+configuration/certificate applicability review, measured complete-path
+stop/link-loss/reset evidence; component certification is not machine certification
+
+### PS29: Normal control and diagnostics
+
+**Cost-ledger coverage:** SAF-005:SAF-008
+
+**Required purchasing/manufacturing definition:** Exact boards/interfaces, isolation,
+bus termination, supply and connector maps, firmware/configuration revision, diagnostic
+indications and service-port access
+
+**Receiving or first-article evidence:** Hardware identity, traceable
+firmware/configuration and communications/diagnostic checks; normal controller remains
+outside sole authority for safety
+
+### PS30: Tilt sensing and interlocks
+
+**Cost-ledger coverage:** SAF-009:SAF-010
+
+**Required purchasing/manufacturing definition:** Tilt/interlock purpose, mounting,
+range/accuracy and fault detection; configuration-specific thresholds and stop/hold
+response; guard/pod-disconnect interlock contacts and bypass prevention
+
+**Receiving or first-article evidence:** Approved hazard-derived thresholds and
+calibration/fault evidence; sensor orientation and interlock installation records; no
+arbitrary 40-degree trip threshold
+
+### PS31: Installed instrumentation and logging
+
+**Cost-ledger coverage:** INS-001:INS-006
+
+**Required purchasing/manufacturing definition:** Current/voltage/temperature/speed
+measurement range, isolation, uncertainty, bandwidth, sensor mounting and scaling;
+logger channels, timestamps/sample rate, storage/fault behavior and data export
+
+**Receiving or first-article evidence:** Sensor/calibration identities, end-to-end
+scaling and channel mapping, logging completeness and missing-data indication; logger
+not a safety substitute
+
+[↑ Back to document overview](electronics.md#document-overview)
+
+
+## Sourcing
+
+[S06](sources.md#s06) · [S07](sources.md#s07) · [S08](sources.md#s08) · [S09](sources.md#s09) · [S18](sources.md#s18).
+
+Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](electronics.md#document-overview)
+
+
+## Interfaces with other scopes
+
+- [Cables, connectors and harnesses](cables-connectors.md)
+- [Propulsion, reductions and brakes](propulsion.md)
+- [Powered width adjustment](width-adjustment.md)
+
+[↑ Back to document overview](electronics.md#document-overview)
 
 ## Detailed module costs
 
@@ -150,129 +291,4 @@ N/A never means an unknown purchase is free.
 | **All items owned by this scope** | €3,821.00 | €3,821.00 |
 <!-- END GENERATED: details -->
 
-## Sourcing
-
-[S06](sources.md#s06) · [S07](sources.md#s07) · [S08](sources.md#s08) · [S09](sources.md#s09) · [S18](sources.md#s18).
-
-Catalog links and price proxies are not approved suppliers or delivered quotes.
-
-## Specification and inspection requirements
-
-All specifications are **HOLD**. Checks describe evidence still required, not
-completed tests. Cost-ledger ranges are inclusive.
-
-### PS21: Main fuses, disconnects and contactors
-
-**Cost-ledger coverage:** PWR-001:PWR-005
-
-**Required purchasing/manufacturing definition:** Fuse time-current curve, DC breaking
-capacity and fault coordination; holder/disconnect DC ratings; contactor
-make/break/duty/coil ratings at full bus voltage and current; feedback and suppression
-compatible with stop timing
-
-**Receiving or first-article evidence:** Exact MPN/certificates where required;
-schematic/rating review against pack fault current; assembly polarity, tightening and
-feedback records; welded-contact fault response evidence
-
-### PS22: Precharge and discharge
-
-**Cost-ledger coverage:** PWR-006:PWR-007
-
-**Required purchasing/manufacturing definition:** Controller input capacitance and
-charging limits; precharge resistance/energy/duty and relay sequence; discharge energy,
-component ratings, voltage-test points and isolation criteria
-
-**Receiving or first-article evidence:** Calculation and schematic review; documented
-voltage/time measurements and failure responses under authorized energizing; no assumed
-safe discharge interval
-
-### PS24: Control supplies and branch protection
-
-**Cost-ledger coverage:** PWR-012:PWR-014
-
-**Required purchasing/manufacturing definition:** Actual control-rail/load budget
-including brakes, safety coils and startup loads; DC/DC input range/isolation/thermal
-derating and grounding; branch fuse/wire coordination and brownout behavior
-
-**Receiving or first-article evidence:** Rail and isolation design review; supply
-identity and authorized load/brownout evidence; control power loss cannot create an
-automatic restart
-
-### PS25: Printed enclosures and cable glands
-
-**Cost-ledger coverage:** PWR-015:PWR-016
-
-**Required purchasing/manufacturing definition:** Enclosure CAD/revision, resin grade
-and batch, print orientation/walls/infill/process, heat/UV/flame suitability, gland
-cable diameter ranges, vent/drain and sealing strategy
-
-**Receiving or first-article evidence:** First-article dimensions and print inspection;
-material/process record, cable retention and approved temperature/ingress evidence; no
-IP rating inferred from nominal filament type
-
-### PS27: Thermal paths and enclosure hardware
-
-**Cost-ledger coverage:** PWR-021:PWR-024
-
-**Required purchasing/manufacturing definition:** Heat-flow/loss budget,
-backplate/spreader material/thickness/contact area, thermal interface, gasket
-compression, lid fastener spacing and insert retention at service temperature
-
-**Receiving or first-article evidence:** Assembly flatness/interface and fastener
-inspection; thermal and insert-retention evidence on actual printed configuration; no
-enclosure thermal/ingress rating claimed before qualification
-
-### PS28: Independent stopping and remote control
-
-**Cost-ledger coverage:** SAF-001:SAF-004
-
-**Required purchasing/manufacturing definition:** Hazard-derived independent stop
-architecture and required safety performance; exact relay/controller and remote
-variants, EU radio configuration, channels/outputs/reset/heartbeat logic; machine stop
-locations
-
-**Receiving or first-article evidence:** Approved safety requirements and schematic,
-configuration/certificate applicability review, measured complete-path
-stop/link-loss/reset evidence; component certification is not machine certification
-
-### PS29: Normal control and diagnostics
-
-**Cost-ledger coverage:** SAF-005:SAF-008
-
-**Required purchasing/manufacturing definition:** Exact boards/interfaces, isolation,
-bus termination, supply and connector maps, firmware/configuration revision, diagnostic
-indications and service-port access
-
-**Receiving or first-article evidence:** Hardware identity, traceable
-firmware/configuration and communications/diagnostic checks; normal controller remains
-outside sole authority for safety
-
-### PS30: Tilt sensing and interlocks
-
-**Cost-ledger coverage:** SAF-009:SAF-010
-
-**Required purchasing/manufacturing definition:** Tilt/interlock purpose, mounting,
-range/accuracy and fault detection; configuration-specific thresholds and stop/hold
-response; guard/pod-disconnect interlock contacts and bypass prevention
-
-**Receiving or first-article evidence:** Approved hazard-derived thresholds and
-calibration/fault evidence; sensor orientation and interlock installation records; no
-arbitrary 40-degree trip threshold
-
-### PS31: Installed instrumentation and logging
-
-**Cost-ledger coverage:** INS-001:INS-006
-
-**Required purchasing/manufacturing definition:** Current/voltage/temperature/speed
-measurement range, isolation, uncertainty, bandwidth, sensor mounting and scaling;
-logger channels, timestamps/sample rate, storage/fault behavior and data export
-
-**Receiving or first-article evidence:** Sensor/calibration identities, end-to-end
-scaling and channel mapping, logging completeness and missing-data indication; logger
-not a safety substitute
-
-## Interfaces with other scopes
-
-- [Cables, connectors and harnesses](cables-connectors.md)
-- [Propulsion, reductions and brakes](propulsion.md)
-- [Powered width adjustment](width-adjustment.md)
+[↑ Back to document overview](electronics.md#document-overview)
