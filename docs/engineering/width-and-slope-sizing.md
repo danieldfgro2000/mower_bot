@@ -205,9 +205,11 @@ The BOM's illustrative 48 V 16:1 reduction yields about 86.6 Nm at assumed 85%
 mechanical efficiency, below both gravity-only cases. Its 72 V 10:1 example
 yields about 125.9 Nm, above the 450 kg / 15° case but below the 300 kg / 40°
 case, before any margin or resistance. The HPM5000B CAD study uses 66:1 to
-approach 4 km/h at 4,000 motor rpm with the 350 mm roller assumption; this is a
-speed-driven concept, not a gearbox rating or approved ratio. Revisit output
-speed, torque, and duty together rather than selecting by nominal voltage or kW.
+approach 4 km/h at 4,000 motor rpm by temporarily treating the 350 mm physical
+roller OD as the effective rolling diameter; the track pitch-line diameter is
+unknown. This is a speed-driven concept, not a gearbox rating or approved
+ratio. Revisit output speed, torque, and duty together rather than selecting by
+nominal voltage or kW.
 
 For descent, slowing reduces gravitational power to dissipate at a given
 instant, but not the gravitational energy over the same vertical drop or the

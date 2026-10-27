@@ -227,8 +227,9 @@ configuration and all wiring/interfaces; flag present voltage/current contradict
 **Additional non-additive candidate:** [HPM5000B ALT-DRV-001](bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals),
 S23/S24 with S25 as an EU fallback. Confirm 48 V air-cooled winding/shaft and
 motor-only contents at the published quantity tier. Price a compatible controller,
-independent holding/stopping solution and two-stage chain hardware separately;
-do not transfer S11/S12 compatibility or infer approval of a 5 kW power increase.
+independent holding/stopping solution and custom planetary gearbox separately;
+the in-drum gearbox concept is unpriced. Do not transfer S11/S12 compatibility
+or infer approval of a 5 kW power increase.
 
 ### Q03: battery/charging alternatives
 

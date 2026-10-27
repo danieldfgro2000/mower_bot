@@ -5,12 +5,17 @@
  release for purchase/build. S01 identifies the listing as 200x72x36 but does
  not define that code or provide a dimensional drawing. The code interpretation,
  belt thickness and pitch-line offset, battery envelope, and carrier are
- assumptions requiring supplier/engineering confirmation.  The owner-selected 350 mm value means physical roller outside diameter. The
- HPM5000B body is modeled at the manufacturer's 206 mm diameter x 126 mm length;
+ assumptions requiring supplier/engineering confirmation. The owner-selected
+ 350 mm value means physical roller outside diameter. The speed screen
+ temporarily treats that as the effective rolling diameter; the track
+ pitch-line diameter is unknown. The HPM5000B body is modeled at the
+ manufacturer's 206 mm diameter x 126 mm length;
  the published envelope does not include a selected gearbox. The motor is
  coaxial with the drive drum and extends inward from its outboard face. Three
  fixed-ring planetary stages are shown at a 66:1 study ratio; pitch circles
  use a visual-only 3 mm module and the 18 mm stage widths are placeholders.
+ View from the final-carrier side (negative Z) to inspect the planetary stages;
+ the outboard view exposes the motor package.
  Tooth profiles, carrier supports, bearings, shaft interfaces, strength and
  clearances are not designed. The upper-return support
  rollers are intended to push outward against the upper run on spring-loaded
@@ -30,6 +35,7 @@ track_links = 36;
 nominal_pitch_loop = track_pitch * track_links;
 
 roller_outer_diameter = 350; // Owner-selected physical outside-diameter study.
+effective_rolling_diameter_placeholder = 350; // Track pitch-line diameter is unknown.
 belt_thickness = 20; // Illustrative only; S01 does not publish this dimension.
 track_path_diameter = roller_outer_diameter + belt_thickness;
 // Simplified path estimate: assumes the modelled track path is at belt mid-thickness.
@@ -61,7 +67,8 @@ motor_inboard_face_z = track_width / 2 - motor_body_length;
 motor_center_z = track_width / 2 - motor_body_length / 2;
 planetary_output_rpm = motor_speed_study_rpm / planetary_total_ratio;
 roller_speed_study_kmh =
-    PI * roller_outer_diameter / 1000 * planetary_output_rpm * 60 / 1000;
+    PI * effective_rolling_diameter_placeholder / 1000
+    * planetary_output_rpm * 60 / 1000;
 
 lower_support_roller_count = 4; // User-selected study layout per track.
 lower_support_roller_placeholder_diameter = 80; // Visual placeholder only.
@@ -94,10 +101,14 @@ echo("Fixed-ring planetary study ratio: ", planetary_total_ratio, ":1");
 echo("Planetary sun teeth by stage: ", planetary_sun_teeth);
 echo("Planetary ring teeth by stage: ", planetary_ring_teeth);
 echo("Planetary planet teeth by stage: ", planetary_planet_teeth);
+echo("Study gear module and stage width (mm): ",
+     planetary_module_placeholder, " / ", planetary_stage_width_placeholder);
 echo("Study drum speed at 4000 motor rpm (rpm): ", planetary_output_rpm);
-echo("Study surface speed at 350 mm roller OD (km/h): ",
+echo("Assumed effective rolling diameter for speed screen (mm): ",
+     effective_rolling_diameter_placeholder);
+echo("Study surface speed at assumed effective diameter (km/h): ",
      roller_speed_study_kmh);
-echo("Planetary module/face widths and drum wall are visual placeholders only.");
+echo("Planetary module/stage extents and drum wall are visual placeholders only.");
 echo("Drive-sprocket tooth profile and motor coupling are not modeled.");
 echo("Four lower support rollers per track shown; size and capacity are placeholders.");
 echo("Study roller centre spacing (mm): ", roller_center_spacing);
@@ -147,7 +158,7 @@ module idler_placeholder(x) {
 module hpm5000b_motor_envelope(x) {
     // Published body envelope only; shaft and mounting details are unknown.
     translate([x, roller_radius, motor_center_z])
-        color([0.15, 0.35, 0.72, 0.9])
+        color([0.15, 0.35, 0.72, 0.48])
             cylinder(d = motor_body_diameter, h = motor_body_length, center = true);
 }
 

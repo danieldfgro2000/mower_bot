@@ -58,6 +58,13 @@ The following numbers are useful for sizing but are not yet validated on the com
 - first battery system: likely **48 V nominal**, with capacity around **8 kWh** as a starting estimate;
 - electrical autonomy: several hours of mowing, to be proven by logged field energy use.
 
+The 140–280 rpm output-speed estimate predates the 350 mm roller study. A
+temporary assumption that its 350 mm physical outside diameter is also the
+effective rolling diameter gives about 60.6 rpm at 4 km/h. The track pitch-line
+diameter is unknown, so reconcile these provisional speed targets against
+confirmed track geometry and the selected travel envelope before choosing a
+reduction.
+
 The 2026-10-26 BOM feedback adds an aspirational **400 mm minimum / 1,600 mm
 maximum outside-track width** and sites with inclines up to **40°**.
 The owner confirms this site target includes both uphill/downhill and
@@ -262,6 +269,13 @@ resolve sliding, tipping, parking hold, or loss-of-energy downhill braking.
 | Control | Independent closed-loop speed/current control | Required design direction |
 | Environmental protection | Sealed/guarded for dust and washdown | To verify by component selection |
 
+**2026-10-27 fore-aft layout direction:** Place the traction motors at the rear
+of the bot, with front-mounted implements ahead of them. The owner identifies
+front tools up to 50 kg, roughly 1 m forward, that may push against the ground.
+Treat this as an unresolved load case, not a validated counterbalance: the
+distance datum, working forces, measured CG, and track support footprint still
+need definition. This does not change the orientation-neutral CAD model.
+
 ### 5.3 Candidate market options
 
 The following options came from an earlier market screen. Prices and seller specifications must be rechecked before purchase; retailer reviews are not independent durability validation.
@@ -272,7 +286,7 @@ The following options came from an earlier market screen. Prices and seller spec
 | ATO D130BLD2000 | About $816; 2 kW; 2,000 rpm; advertised 10 Nm continuous / 30 Nm peak; IP65; retailer rating 4.9/5 from 13 reviews | Review independence, gearbox/controller cost, continuous thermal performance |
 | BLDC.com D110BLD2000 planetary | About $958; 48 V; 3,000 rpm; configurable planetary reduction | Actual gearbox torque limit, duty cycle, shaft/bearing life and total landed cost |
 | Motenergy ME0907 | About $399 in the earlier listing; Hall sensors and temperature sensor; external reduction | Mechanical torque/performance curve, controller match and environmental packaging |
-| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller, chain reduction and braking remain unqualified |
+| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
 
 Potential reduction strategies:
 

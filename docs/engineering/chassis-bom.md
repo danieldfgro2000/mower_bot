@@ -120,8 +120,9 @@ See [propulsion, reductions and brakes](bom/propulsion.md) and
 
 This candidate could replace DRV-001; it is not an additive purchase or an
 approved change from the approximately 2 kW-per-drive baseline. The estimate
-still costs the former planetary package, not an HPM5000B/two-stage-chain
-package. References exclude freight, duty, and brokerage; see the
+still costs the baseline planetary package, not an HPM5000B/custom
+planetary-in-drum package; the latter's gearbox is unpriced. References exclude
+freight, duty, and brokerage; see the
 [supplier and integration details](bom/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
 
 ### Powered rolling width adjustment

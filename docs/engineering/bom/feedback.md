@@ -99,8 +99,24 @@ US$446 / €482.36 each under existing FX and provisional VAT assumptions,
 excluding delivery/duty/brokerage. This is a sourced alternative, not a selected
 5 kW machine-power upgrade or an extra motor added to baseline totals.
 The main CSV still costs the former planetary scenario: a complete replacement
-must re-cost chain parts, compatible controller/brake, machining and any affected
-battery/electrical/cooling provisions. No updated total is claimed yet.
+must re-cost reduction hardware, compatible controller/brake, machining and any
+affected battery/electrical/cooling provisions. No updated total is claimed yet.
+
+**2026-10-27 correction:** The current HPM5000B CAD study uses three custom
+planetary stages inside a 350 mm drive drum, replacing the earlier two-stage
+chain concept for this candidate only. The custom gearbox remains unpriced and
+unqualified; this does not change the baseline drive or its totals.
+
+### F09: rear traction-motor position
+
+**Decision recorded on 2026-10-27:** Place the traction motors at the rear of
+the bot, behind the front-mounted implements.
+
+**Effect on design:** The owner identifies front tools up to 50 kg, roughly 1 m
+forward, that may push against the ground. Record the rear motor position as a
+layout direction only; the distance datum, tool reactions, complete-machine CG,
+and track support loads remain unverified. This does not change the CAD
+orientation, baseline BOM quantities, or costs.
 
 [↑ Back to document overview](feedback.md#document-overview)
 

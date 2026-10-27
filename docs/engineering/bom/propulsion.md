@@ -52,8 +52,9 @@ purchase and the two-motor chassis requirement use this tier; do not apply the
 `446 / 1.1188 × 1.21 = €482.36 per motor`, including a provisional 21% VAT
 addition. **Two motors: €964.72** using rounded unit costs. This excludes
 freight, duty, brokerage and any VAT on those charges, as well as the controller,
-brake, planetary reduction and mounting hardware. It is a calculated public-price
-reference (`C`), not a landed acquisition price or a confirmed sub-€500 delivery.
+brake, custom planetary gearbox and mounting hardware. The planetary gearbox is
+unpriced. It is a calculated public-price reference (`C`), not a landed
+acquisition price or a confirmed sub-€500 delivery.
 
 **Supplier-advertised specification:** Listing title says 48 V / 4,000 rpm;
 tables claim 5 kW rated, 7.5 kW peak, 13 Nm rated and 45 Nm peak, with VEC300
@@ -82,12 +83,14 @@ voltage/current settings, control interfaces or safe stopping behavior.
 
 **Owner-selected study direction (2026-10-27):** Use the HPM5000B as the
 provisional motor envelope, coaxial with the 350 mm outside-diameter drive drum
-and extending into it as far as packaging allows. House three planetary stages
-inside the drum; hold each ring gear stationary to the pod and connect the final
-carrier to the rotating drum. The
-[editable CAD study](../cad/module-01-track-pod-fit.scad) places motor and gear
-envelopes on that axis. This is not a baseline motor replacement, gearbox quote,
-or release for manufacture.
+and extending into it as far as packaging allows. Place the motor/drive drum at
+the rear of the bot, behind the front-mounted implement zone. House three
+planetary stages inside the drum; hold each ring gear stationary to the pod and
+connect the final carrier to the rotating drum. This fore-aft location is a
+layout decision, not proof that the motor counterbalances implement loads. The
+[editable CAD study](../cad/module-01-track-pod-fit.scad) remains
+orientation-neutral and shows motor/gear envelopes on that axis only. This is
+not a baseline motor replacement, gearbox quote or release for manufacture.
 
 **Motor envelope:** The manufacturer family page lists **206 mm diameter ×
 126 mm length** and **11 kg air-cooled** for HPM5000B ([S24](sources.md#s24)).
@@ -97,9 +100,11 @@ listing labels a 48 V / 4,000 rpm, 5 kW version and claims 13 Nm rated /
 45 Nm peak, while S24 describes a configurable 2,000–6,000 rpm family and
 40 Nm peak. There is no verified torque-speed curve for the exact 5 kW variant.
 
-**Speed-driven ratio screen:** Assuming 350 mm is the effective rolling
-diameter, 4 km/h requires about **60.6 rpm** at the drum. At the listing's
-4,000 rpm motor speed, that implies **65.97:1**, rounded to a 66:1 study ratio.
+**Speed-driven ratio screen:** Temporarily treating the user-selected 350 mm
+physical drum outside diameter as the effective rolling diameter, 4 km/h
+requires about **60.6 rpm** at the drum. At the listing's 4,000 rpm motor
+speed, that implies **65.97:1**, rounded to a 66:1 study ratio. The physical
+track pitch-line diameter is unknown, so this is not a verified ground speed.
 The sketch divides it into 4:1 × 4:1 × 4.125:1 fixed-ring stages:
 24-tooth sun / 72-tooth ring / 24-tooth planets in each 4:1 stage, and
 16-tooth sun / 50-tooth ring / 17-tooth planets in the 4.125:1 stage, with
@@ -108,6 +113,22 @@ three planets per stage. For simple fixed-ring planetary stages,
 ratio; they do not establish tooth module, face width, material, strength,
 bearing life, lubrication or package clearance. The physical track pitch-line
 diameter may differ from 350 mm, so the ratio and speed remain provisional.
+
+**CAD package envelope:** The motor body uses the manufacturer-listed 206 mm
+diameter × 126 mm length. In the 200 mm track-width study, the body starts at
+the roller's outboard face and extends 126 mm inward. The three stage envelopes
+are shown at 18 mm each, giving a nominal 180 mm motor-plus-stage stack and
+20 mm remaining to the assumed roller-width boundary before the final carrier.
+The carrier adds 6 mm axially, leaving 14 mm nominal for any other structures
+and clearances; this is not a fit allowance. A visual-only 3 mm gear module
+produces ring/sun/planet pitch diameters of 216/72/72 mm for the first two
+stages and 150/48/51 mm for the last stage. To see the planets in the model,
+view from the final-carrier side (negative Z); the outboard view prioritizes the
+motor package. The sketch does not model actual tooth profiles, face widths,
+shafts, carriers' structural sections, fixed-ring supports, bearings, seals or
+assembly clearances. The 10 mm drum wall used to show its hollow interior is
+also a placeholder; none of these envelopes proves the gearbox fits or carries
+the required load.
 
 **Load-case screen:** The owner's clarification is recorded in the
 [width/slope screen](../width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates):
@@ -120,8 +141,9 @@ at the motor respectively when running at 4,000 rpm. These screens exclude
 rolling resistance, steering, acceleration, transient loads and margin; the
 motor's exact continuous torque at speed and gearbox capacity remain unknown.
 
-At 66:1, the motor reaches only about 4 km/h at 4,000 rpm; this does not meet
-the plan's separate 8 km/h general-travel or 15–20 km/h transport aspirations.
+At 66:1, the temporary 350 mm effective-diameter assumption gives about 4 km/h
+at 4,000 rpm; this does not meet the plan's separate 8 km/h general-travel or
+15–20 km/h transport aspirations.
 Treat 66:1 as a 4 km/h study point, not the final ratio. Resolving multiple
 speed requirements, tooth geometry and gear capacity requires the exact motor
 curve, confirmed track pitch geometry, a reviewed load/duty factor and detailed
