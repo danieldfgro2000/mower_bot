@@ -16,7 +16,7 @@ controller/charger compatibility; compare them with the
 [Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes) ·
 [Itemized costs](batteries.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Cost totals](../cost-breakdown.md#battery-and-charging) ·
+[Cost totals](../cost-breakdown.md#04--battery-and-charging) ·
 [Ledger](../chassis-bom.csv) ·
 [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
@@ -138,7 +138,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: packs
 
-**Battery packs with integrated BMS**
+**04.01 Battery packs with integrated BMS**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |
@@ -147,7 +147,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: battery-housing
 
-**Battery enclosures restraints and insulation**
+**04.02 Battery enclosures restraints and insulation**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -158,7 +158,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: chargers
 
-**Matched battery chargers**
+**04.03 Matched battery chargers**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |
@@ -167,7 +167,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: charge-harness
 
-**Charge connectors fuse holders and interlock harness**
+**04.04 Charge connectors fuse holders and interlock harness**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

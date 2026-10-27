@@ -273,20 +273,22 @@ class BomReferenceRegressionTest(unittest.TestCase):
         for relative in ("plan.md", ".github/skills/bom-documentation/SKILL.md"):
             self.write_document(relative, (ROOT / relative).read_text(encoding="utf-8"))
         document = self.root / "docs/engineering/cost-breakdown.md"
-        original = "[Drive train](cost-breakdown.md#drive-train)\n\n" + document.read_text(
+        original = "[Drive train](cost-breakdown.md#02--drive-train)\n\n" + document.read_text(
             encoding="utf-8",
         )
         document.write_text(original, encoding="utf-8")
         errors, _ = local_reference_errors(document, root=self.root)
         self.assertEqual(errors, [])
-        changed = original.replace("\n### Drive train\n", "\n### Removed drive section\n")
+        changed = original.replace(
+            "\n### 02 — Drive train\n", "\n### Removed drive section\n",
+        )
         self.assertNotEqual(original, changed, "The real Drive train heading was not found")
         document.write_text(changed, encoding="utf-8")
         errors, _ = local_reference_errors(document, root=self.root)
         self.assertEqual(len(errors), 1, errors)
         self.assertIn(
-            "docs/engineering/cost-breakdown.md: cost-breakdown.md#drive-train "
-            "-> missing anchor '#drive-train'",
+            "docs/engineering/cost-breakdown.md: cost-breakdown.md#02--drive-train "
+            "-> missing anchor '#02--drive-train'",
             errors[0],
         )
         self.assertEqual(document.read_text(encoding="utf-8"), changed)

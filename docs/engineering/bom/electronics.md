@@ -15,8 +15,8 @@ selected or safety-qualified components.
 [Sourcing](electronics.md#sourcing) · [Interfaces](electronics.md#interfaces-with-other-scopes) ·
 [Itemized costs](electronics.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Power cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
-[Safety cost totals](../cost-breakdown.md#safety-controls-and-sensors) ·
+[Power cost totals](../cost-breakdown.md#05--power-cables-and-electronics) ·
+[Safety cost totals](../cost-breakdown.md#06--safety-controls-and-sensors) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -165,7 +165,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: switchgear
 
-**Main fuses disconnects contactors and feedback**
+**05.05 Main fuses disconnects contactors and feedback**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -178,7 +178,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: precharge
 
-**Precharge discharge and voltage-test hardware**
+**05.06 Precharge discharge and voltage-test hardware**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -188,7 +188,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: control-supplies
 
-**Control DC/DC logic supplies and branch protection**
+**05.07 Control DC/DC logic supplies and branch protection**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -199,7 +199,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: enclosures
 
-**Electronics enclosures glands cooling and mounting**
+**05.08 Electronics enclosures glands cooling and mounting**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -213,7 +213,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: stop-controls
 
-**Independent safety relay E-stops and reset controls**
+**06.01 Independent safety relay E-stops and reset controls**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -224,7 +224,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: remote
 
-**Industrial operator remote and stop provision**
+**06.02 Industrial operator remote and stop provision**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -233,7 +233,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: control-boards
 
-**Local control boards communications and service display**
+**06.03 Local control boards communications and service display**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -244,7 +244,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: status
 
-**Status beacon and buzzer**
+**06.04 Status beacon and buzzer**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -253,7 +253,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: tilt-interlocks
 
-**Tilt sensing and pod or guard interlocks**
+**06.05 Tilt sensing and pod or guard interlocks**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -263,7 +263,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: drive-sensors
 
-**Drive current voltage temperature and speed sensors**
+**06.06 Drive current voltage temperature and speed sensors**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -275,7 +275,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: logging
 
-**Data logger storage and reader**
+**06.07 Data logger storage and reader**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

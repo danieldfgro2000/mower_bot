@@ -16,7 +16,7 @@ for the evidence needed to select them.
 [Interfaces](running-gear.md#interfaces-with-other-scopes) ·
 [Itemized costs](running-gear.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Structure cost totals](../cost-breakdown.md#structure-and-running-gear) ·
+[Structure cost totals](../cost-breakdown.md#01--structure-and-running-gear) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -88,7 +88,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: tracks
 
-**Rubber tracks**
+**01.01 Rubber tracks**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -97,7 +97,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: track-hardware
 
-**Sprockets idlers rollers and tensioners**
+**01.02 Sprockets idlers rollers and tensioners**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -110,7 +110,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: track-support
 
-**Track axles bearings guides and scrapers**
+**01.03 Track axles bearings guides and scrapers**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

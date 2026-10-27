@@ -14,7 +14,7 @@ dimensions, materials, loads, and inspection limits remain unqualified.
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
 [Itemized costs](frame.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Structure cost totals](../cost-breakdown.md#structure-and-running-gear) ·
+[Structure cost totals](../cost-breakdown.md#01--structure-and-running-gear) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -123,7 +123,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: frame-stock
 
-**Frame stock and mounting plates**
+**01.04 Frame stock and mounting plates**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -137,7 +137,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: frame-pivots
 
-**Scissor pivots locks and hard stops**
+**01.05 Scissor pivots locks and hard stops**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -150,7 +150,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: frame-finish
 
-**Guards fasteners coatings and labels**
+**01.06 Guards fasteners coatings and labels**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -163,7 +163,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: handling-points
 
-**Installed lifting and recovery points**
+**01.07 Installed lifting and recovery points**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

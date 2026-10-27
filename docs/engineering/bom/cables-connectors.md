@@ -16,7 +16,7 @@ acceptance limits remain unqualified.
 [Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
 [Itemized costs](cables-connectors.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
+[Cost totals](../cost-breakdown.md#05--power-cables-and-electronics) ·
 [Ledger](../chassis-bom.csv) ·
 [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
@@ -81,7 +81,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: power-cables
 
-**High-current cable**
+**05.01 High-current cable**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -90,7 +90,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: power-connectors
 
-**Power lugs connectors and terminal insulation**
+**05.02 Power lugs connectors and terminal insulation**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -101,7 +101,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: signal-cables
 
-**Control and communications cables**
+**05.03 Control and communications cables**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -111,7 +111,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: signal-connectors
 
-**Signal connectors conduit clips and labels**
+**05.04 Signal connectors conduit clips and labels**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

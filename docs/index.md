@@ -31,6 +31,7 @@ another route.
 | Agent behavior, architecture, safety, cleanup | [Project guardrails](agents/project-guardrails.md) |
 | Documentation ownership and adaptation policy | [Documentation guardrails](agents/documentation-guardrails.md) |
 | BOM maintenance: inputs, cost regeneration and reference checks | [Updating linked costs](engineering/bom/updating-linked-costs.md) · [BOM documentation skill](../.github/skills/bom-documentation/SKILL.md) |
+| Agent routing and ownership for engineering BOM work | [Engineering BOM Agent Index](engineering/bom/agent-index.md) · [Engineering BOM Agent Guide](engineering/bom/agent-guide.md) |
 | Product direction and current implementation gaps | [Project overview](project/overview.md) |
 | Engineering targets, business assumptions, build gates | [Root plan](../plan.md) |
 | Flutter UI, BLoCs, use cases, repositories, local checks | [Flutter development](flutter/development.md) |

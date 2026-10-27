@@ -29,13 +29,13 @@ through Stage 2; it is not a per-pod or per-motor price.
 <!-- BEGIN GENERATED: overview -->
 | Module | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **[Structure](bom/frame.md) and [running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |
-| **[Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |
-| **[Width adjustment](bom/width-adjustment.md)** | €407.00 | Same as 48 V |
-| **[Battery and charging](bom/batteries.md)** | €3,148.16 | €5,698.48 |
-| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |
-| **[Safety controls and sensors](bom/electronics.md)** | €2,580.00 | Same as 48 V |
-| **[Workshop and support](bom/workshop.md)** | €4,514.00 | Same as 48 V |
+| **[01 — Structure](bom/frame.md) and [01 — Running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |
+| **[02 — Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |
+| **[03 — Width adjustment](bom/width-adjustment.md)** | €407.00 | Same as 48 V |
+| **[04 — Battery and charging](bom/batteries.md)** | €3,148.16 | €5,698.48 |
+| **[05 — Power cables](bom/cables-connectors.md) and [05 — Electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |
+| **[06 — Safety controls and sensors](bom/electronics.md)** | €2,580.00 | Same as 48 V |
+| **[07 — Workshop and support](bom/workshop.md)** | €4,514.00 | Same as 48 V |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: overview -->
 
@@ -140,14 +140,15 @@ overview, or open its specification section directly:
 
 | Scope | Covers | Requirements and inspection |
 | --- | --- | --- |
-| [Tracks and running gear](bom/running-gear.md) | Tracks, sprockets, rollers, tensioners, axles, bearings, and guides | [Specification](bom/running-gear.md#specification-and-inspection-requirements) |
-| [Drive train](bom/propulsion.md) | Motors, matched controllers, reductions, shafts, and brakes | [Specification](bom/propulsion.md#specification-and-inspection-requirements) |
-| [Frame, scissor, and spine](bom/frame.md) | Stock, weldments, pivots, width holding, guards, and lifting points | [Specification](bom/frame.md#specification-and-inspection-requirements) |
-| [Powered width adjustment](bom/width-adjustment.md) | Motor, screw, driver, feedback, limits, and guard | [Specification](bom/width-adjustment.md#specification-and-inspection-requirements) |
-| [Batteries and charging](bom/batteries.md) | Pack alternatives, BMS, enclosures, chargers, and interlocks | [Specification](bom/batteries.md#specification-and-inspection-requirements) |
-| [Cables, connectors, and harnesses](bom/cables-connectors.md) | Power and signal wiring, mating connectors, shielding, and routing | [Specification](bom/cables-connectors.md#specification-and-inspection-requirements) |
-| [Electronics, distribution, and safety](bom/electronics.md) | Switchgear, supplies, controls, independent stop hardware, sensors, and logging | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
-| [Workshop and support](bom/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](bom/workshop.md#specification-and-inspection-requirements) |
+| [01.01–01.03 Tracks and running gear](bom/running-gear.md) | Tracks, sprockets, rollers, tensioners, axles, bearings, and guides | [Specification](bom/running-gear.md#specification-and-inspection-requirements) |
+| [01.04–01.07 Frame, scissor, and spine](bom/frame.md) | Stock, weldments, pivots, width holding, guards, and lifting points | [Specification](bom/frame.md#specification-and-inspection-requirements) |
+| [02.01–02.05 Drive train](bom/propulsion.md) | Motors, matched controllers, reductions, shafts, and brakes | [Specification](bom/propulsion.md#specification-and-inspection-requirements) |
+| [03.01–03.04 Powered width adjustment](bom/width-adjustment.md) | Motor, screw, driver, feedback, limits, and guard | [Specification](bom/width-adjustment.md#specification-and-inspection-requirements) |
+| [04.01–04.04 Batteries and charging](bom/batteries.md) | Pack alternatives, BMS, enclosures, chargers, and interlocks | [Specification](bom/batteries.md#specification-and-inspection-requirements) |
+| [05.01–05.04 Cables, connectors, and harnesses](bom/cables-connectors.md) | Power and signal wiring, mating connectors, shielding, and routing | [Specification](bom/cables-connectors.md#specification-and-inspection-requirements) |
+| [05.05–05.08 Electronics and distribution](bom/electronics.md) | Switchgear, supplies, enclosures, and power distribution | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
+| [06.01–06.07 Safety controls and sensors](bom/electronics.md) | Independent stop hardware, operator control, sensors, and logging | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
+| [07.01–07.06 Workshop and support](bom/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](bom/workshop.md#specification-and-inspection-requirements) |
 
 Shared references: [Supplier register](bom/sources.md) ·
 [Feedback and qualification loops](bom/feedback.md) ·

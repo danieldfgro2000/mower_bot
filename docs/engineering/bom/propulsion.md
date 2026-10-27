@@ -20,7 +20,7 @@ brakes, or operating limits. Exact listings are in the
 [Interfaces](propulsion.md#interfaces-with-other-scopes) ·
 [Itemized costs](propulsion.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Drive-train cost totals](../cost-breakdown.md#drive-train) ·
+[Drive-train cost totals](../cost-breakdown.md#02--drive-train) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -263,7 +263,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: motors
 
-**Traction motors and included planetary where applicable**
+**02.01 Traction motors and included planetary where applicable**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |
@@ -272,7 +272,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: motor-controllers
 
-**Traction motor controllers**
+**02.02 Traction motor controllers**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |
@@ -281,7 +281,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: brakes
 
-**Mechanical holding brakes**
+**02.03 Mechanical holding brakes**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |
@@ -290,7 +290,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: output-support
 
-**Output hubs shafts and bearings**
+**02.04 Output hubs shafts and bearings**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -301,7 +301,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: chain-reduction
 
-**External chain reduction and keys**
+**02.05 External chain reduction and keys**
 
 | Item / cumulative quantity | 48 V total / basis | 72 V total / basis |
 | --- | ---: | ---: |

@@ -14,7 +14,7 @@ identifies evidence still needed before purchasing or use.
 [Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes) ·
 [Itemized costs](workshop.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Workshop cost totals](../cost-breakdown.md#workshop-and-support) ·
+[Workshop cost totals](../cost-breakdown.md#07--workshop-and-support) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -136,7 +136,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: loose-handling
 
-**Loose slings straps shackles and service supports**
+**07.01 Loose slings straps shackles and service supports**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -148,7 +148,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: bench-fixture
 
-**Bench fixture guards and pendant**
+**07.02 Bench fixture guards and pendant**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -160,7 +160,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: dynamometer
 
-**Dynamometer torque measurement and adapters**
+**07.03 Dynamometer torque measurement and adapters**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -172,7 +172,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: bench-tools
 
-**Meters instruments hand tools and crimp tooling**
+**07.04 Meters instruments hand tools and crimp tooling**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -187,7 +187,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: consumables
 
-**Fabrication consumables and initial spares**
+**07.05 Fabrication consumables and initial spares**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -200,7 +200,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: ppe-support
 
-**PPE barriers charging surface fire and cleaning supplies**
+**07.06 PPE barriers charging surface fire and cleaning supplies**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

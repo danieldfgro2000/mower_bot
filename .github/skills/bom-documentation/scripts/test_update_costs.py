@@ -52,9 +52,9 @@ class CostDocumentationTest(unittest.TestCase):
         )
         for expected in [
             "€18,322.82", "€20,611.48", "€23,343.38", "€26,689.78",
-            "| **[Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |",
-            "| **[Structure](bom/frame.md) and [running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |",
-            "| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |",
+            "| **[02 — Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |",
+            "| **[01 — Structure](bom/frame.md) and [01 — Running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |",
+            "| **[05 — Power cables](bom/cables-connectors.md) and [05 — Electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |",
             "ALT-DRV-001", "€482.36",
         ]:
             self.assertIn(expected, text)
@@ -87,22 +87,22 @@ class CostDocumentationTest(unittest.TestCase):
         self.assertNotIn("bom/propulsion.md#cost-motors", text)
         breakdown = (self.engineering / "cost-breakdown.md").read_text()
         self.assertIn(
-            "| **[Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |",
+            "| **[02 — Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |",
             breakdown,
         )
         self.assertIn(
-            "| **[Structure](bom/frame.md) and [running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |",
+            "| **[01 — Structure](bom/frame.md) and [01 — Running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |",
             breakdown,
         )
         self.assertIn("bom/propulsion.md#cost-motors", breakdown)
         self.assertIn("bom/batteries.md#cost-chargers", breakdown)
-        self.assertIn("| **Drive train subtotal** | €3,781.66 | €3,520.00 |", breakdown)
+        self.assertIn("| **02 — Drive train subtotal** | €3,781.66 | €3,520.00 |", breakdown)
         self.assertIn(
-            "| [Battery enclosures restraints and insulation](bom/batteries.md#cost-battery-housing) | €270.00 | Same as 48 V |",
+            "| [04.02 Battery enclosures restraints and insulation](bom/batteries.md#cost-battery-housing) | €270.00 | Same as 48 V |",
             breakdown,
         )
         self.assertIn(
-            "| [Output hubs shafts and bearings](bom/propulsion.md#cost-output-support) | €210.00 | Same as 48 V |",
+            "| [02.04 Output hubs shafts and bearings](bom/propulsion.md#cost-output-support) | €210.00 | Same as 48 V |",
             breakdown,
         )
         self.assertIn(
@@ -123,21 +123,21 @@ class CostDocumentationTest(unittest.TestCase):
             "| Item / cumulative quantity | 48 V total / basis | 72 V total / basis |",
             running_gear,
         )
-        structure = breakdown.split("### Structure and running gear", 1)[1].split(
-            "### Drive train", 1
+        structure = breakdown.split("### 01 — Structure and running gear", 1)[1].split(
+            "### 02 — Drive train", 1
         )[0]
         self.assertIn(
             "| Module / detailed BOM | Total (both variants) |",
             structure,
         )
         self.assertIn(
-            "| **Structure and running gear subtotal** | €2,213.00 |",
+            "| **01 — Structure and running gear subtotal** | €2,213.00 |",
             structure,
         )
         self.assertNotIn("€2,213.00 | €2,213.00", structure)
         self.assertIn(
             "| Module / detailed BOM | 48 V / 2 kW | 72 V / 4 kW |",
-            breakdown.split("### Drive train", 1)[1].split("### Width adjustment", 1)[0],
+            breakdown.split("### 02 — Drive train", 1)[1].split("### 03 — Width adjustment", 1)[0],
         )
         batteries = (self.engineering / "bom/batteries.md").read_text()
         housing = batteries.split("### Cost: battery-housing", 1)[1].split(
@@ -157,6 +157,41 @@ class CostDocumentationTest(unittest.TestCase):
             propulsion,
         )
 
+    def test_module_and_submodule_numbers_follow_module_map(self):
+        self.run_generator()
+        main = (self.engineering / "chassis-bom.md").read_text()
+        breakdown = (self.engineering / "cost-breakdown.md").read_text()
+        running_gear = (self.engineering / "bom/running-gear.md").read_text()
+        propulsion = (self.engineering / "bom/propulsion.md").read_text()
+
+        self.assertIn(
+            "| **[01 — Structure](bom/frame.md) and "
+            "[01 — Running gear](bom/running-gear.md)** |",
+            main,
+        )
+        self.assertIn("| **[02 — Drive train](bom/propulsion.md)** |", main)
+        self.assertIn("### 01 — Structure and running gear", breakdown)
+        self.assertIn(
+            "| [01.01 Rubber tracks](bom/running-gear.md#cost-tracks) |",
+            breakdown,
+        )
+        self.assertIn(
+            "| [01.04 Frame stock and mounting plates](bom/frame.md#cost-frame-stock) |",
+            breakdown,
+        )
+        self.assertIn("**01.01 Rubber tracks**", running_gear)
+        self.assertIn("**02.01 Traction motors and included planetary where applicable**", propulsion)
+
+    def test_rejects_submodule_number_outside_its_parent_module(self):
+        path = self.engineering / "bom/cost-modules.csv"
+        path.write_text(
+            path.read_text().replace("tracks,01.01 ", "tracks,02.01 ", 1),
+        )
+        self.assertIn(
+            "number",
+            self.run_generator(success=False).stderr.lower(),
+        )
+
     def test_cost_change_updates_scope_module_and_overall_totals(self):
         self.change_row("chassis-bom.csv", "PWR-008",
                         unit_eur_48v="10.00", extended_eur_48v="100.00")
@@ -165,11 +200,11 @@ class CostDocumentationTest(unittest.TestCase):
         self.assertIn("€18,332.82", text)
         self.assertIn("€23,355.38", text)
         self.assertIn(
-            "| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,689.00 | €1,679.00 |",
+            "| **[05 — Power cables](bom/cables-connectors.md) and [05 — Electronics](bom/electronics.md)** | €1,689.00 | €1,679.00 |",
             text,
         )
         self.assertIn(
-            "| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,689.00 | €1,679.00 |",
+            "| **[05 — Power cables](bom/cables-connectors.md) and [05 — Electronics](bom/electronics.md)** | €1,689.00 | €1,679.00 |",
             (self.engineering / "cost-breakdown.md").read_text(),
         )
         self.assertIn("€100.00", (self.engineering / "bom/cables-connectors.md").read_text())
@@ -216,7 +251,9 @@ class CostDocumentationTest(unittest.TestCase):
 
     def test_duplicate_module_ownership_is_rejected(self):
         path = self.engineering / "bom/cost-modules.csv"
-        text = path.read_text().replace("PWR-008,Power", "PWR-008|PWR-009,Power")
+        text = path.read_text().replace(
+            "PWR-008,05 — Power", "PWR-008|PWR-009,05 — Power",
+        )
         self.assertNotEqual(text, path.read_text())
         path.write_text(text)
         self.assertIn("coverage", self.run_generator(success=False).stderr.lower())

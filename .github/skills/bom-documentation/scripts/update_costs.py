@@ -14,13 +14,13 @@ TARGET = Decimal("5000")
 CONTINGENCY = Decimal(".20")
 ROOT = Path(__file__).resolve().parents[4]
 MULTI_SCOPE_CATEGORY_LINKS = {
-    "Structure and running gear": (
-        ("Structure", "frame"),
-        ("running gear", "running-gear"),
+    "01 — Structure and running gear": (
+        ("01 — Structure", "frame"),
+        ("01 — Running gear", "running-gear"),
     ),
-    "Power cables and electronics": (
-        ("Power cables", "cables-connectors"),
-        ("electronics", "electronics"),
+    "05 — Power cables and electronics": (
+        ("05 — Power cables", "cables-connectors"),
+        ("05 — Electronics", "electronics"),
     ),
 }
 
@@ -89,7 +89,22 @@ def load(base):
     if len(module_ids) != len(set(module_ids)) or set(coverage) != set(ids) or any(
             count != 1 for count in coverage.values()):
         raise ValueError("Module coverage must own every ledger item exactly once")
+    category_numbers, submodule_numbers = {}, set()
     for module in modules:
+        category_match = re.fullmatch(r"(\d{2}) — .+", module["category"])
+        submodule_match = re.fullmatch(r"(\d{2})\.(\d{2}) .+", module["label"])
+        if not category_match or not submodule_match:
+            raise ValueError(f"Invalid module numbering: {module['module_id']}")
+        category_number = category_match.group(1)
+        submodule_number = ".".join(submodule_match.groups())
+        if submodule_match.group(1) != category_number:
+            raise ValueError(f"Submodule number does not match module: {module['module_id']}")
+        if category_number in category_numbers and category_numbers[category_number] != module["category"]:
+            raise ValueError(f"Duplicate module number: {category_number}")
+        if submodule_number in submodule_numbers:
+            raise ValueError(f"Duplicate submodule number: {submodule_number}")
+        category_numbers[category_number] = module["category"]
+        submodule_numbers.add(submodule_number)
         if module["disposition"] not in ("installed", "bench", "support"):
             raise ValueError(f"Invalid disposition: {module['module_id']}")
         path = base / "bom" / f"{module['scope']}.md"

@@ -1,42 +1,42 @@
 module_id,label,scope,items,category,disposition
-tracks,Rubber tracks,running-gear,RUN-001,Structure and running gear,installed
-track-hardware,Sprockets idlers rollers and tensioners,running-gear,RUN-002:RUN-006,Structure and running gear,installed
-track-support,Track axles bearings guides and scrapers,running-gear,RUN-007:RUN-009,Structure and running gear,installed
-frame-stock,Frame stock and mounting plates,frame,CHS-001:CHS-006,Structure and running gear,installed
-frame-pivots,Scissor pivots locks and hard stops,frame,CHS-007:CHS-011,Structure and running gear,installed
-frame-finish,Guards fasteners coatings and labels,frame,CHS-012:CHS-016,Structure and running gear,installed
-handling-points,Installed lifting and recovery points,frame,MNT-001:MNT-002,Structure and running gear,installed
-motors,Traction motors and included planetary where applicable,propulsion,DRV-001,Drive train,installed
-motor-controllers,Traction motor controllers,propulsion,DRV-002,Drive train,installed
-brakes,Mechanical holding brakes,propulsion,DRV-003,Drive train,installed
-output-support,Output hubs shafts and bearings,propulsion,DRV-004:DRV-006,Drive train,installed
-chain-reduction,External chain reduction and keys,propulsion,DRV-007:DRV-012,Drive train,installed
-width-mechanics,Width motor screw bearings mounts and guard,width-adjustment,WID-001:WID-005|WID-014,Width adjustment,installed
-width-power,Width converter driver and protected enable,width-adjustment,WID-006:WID-008,Width adjustment,installed
-width-sensors,Width encoder limits current and reference sensors,width-adjustment,WID-009:WID-012,Width adjustment,installed
-width-harness,Width actuator harness and strain relief,width-adjustment,WID-013,Width adjustment,installed
-packs,Battery packs with integrated BMS,batteries,BAT-001,Battery and charging,installed
-battery-housing,Battery enclosures restraints and insulation,batteries,BAT-002:BAT-004,Battery and charging,installed
-chargers,Matched battery chargers,batteries,BAT-005,Battery and charging,installed
-charge-harness,Charge connectors fuse holders and interlock harness,batteries,BAT-006:BAT-007,Battery and charging,installed
-power-cables,High-current cable,cables-connectors,PWR-008,Power cables and electronics,installed
-power-connectors,Power lugs connectors and terminal insulation,cables-connectors,PWR-009:PWR-011,Power cables and electronics,installed
-signal-cables,Control and communications cables,cables-connectors,PWR-017:PWR-018,Power cables and electronics,installed
-signal-connectors,Signal connectors conduit clips and labels,cables-connectors,PWR-019:PWR-020,Power cables and electronics,installed
-switchgear,Main fuses disconnects contactors and feedback,electronics,PWR-001:PWR-005,Power cables and electronics,installed
-precharge,Precharge discharge and voltage-test hardware,electronics,PWR-006:PWR-007,Power cables and electronics,installed
-control-supplies,Control DC/DC logic supplies and branch protection,electronics,PWR-012:PWR-014,Power cables and electronics,installed
-enclosures,Electronics enclosures glands cooling and mounting,electronics,PWR-015:PWR-016|PWR-021:PWR-024,Power cables and electronics,installed
-stop-controls,Independent safety relay E-stops and reset controls,electronics,SAF-001:SAF-003,Safety controls and sensors,installed
-remote,Industrial operator remote and stop provision,electronics,SAF-004,Safety controls and sensors,installed
-control-boards,Local control boards communications and service display,electronics,SAF-005:SAF-006|SAF-008,Safety controls and sensors,installed
-status,Status beacon and buzzer,electronics,SAF-007,Safety controls and sensors,installed
-tilt-interlocks,Tilt sensing and pod or guard interlocks,electronics,SAF-009:SAF-010,Safety controls and sensors,installed
-drive-sensors,Drive current voltage temperature and speed sensors,electronics,INS-001:INS-004,Safety controls and sensors,installed
-logging,Data logger storage and reader,electronics,INS-005:INS-006,Safety controls and sensors,installed
-loose-handling,Loose slings straps shackles and service supports,workshop,MNT-003:MNT-006,Workshop and support,support
-bench-fixture,Bench fixture guards and pendant,workshop,TST-001:TST-004,Workshop and support,bench
-dynamometer,Dynamometer torque measurement and adapters,workshop,TST-005:TST-008,Workshop and support,bench
-bench-tools,Meters instruments hand tools and crimp tooling,workshop,TST-009:TST-015,Workshop and support,bench
-consumables,Fabrication consumables and initial spares,workshop,CON-001:CON-005,Workshop and support,support
-ppe-support,PPE barriers charging surface fire and cleaning supplies,workshop,CON-006:CON-010,Workshop and support,support
+tracks,01.01 Rubber tracks,running-gear,RUN-001,01 — Structure and running gear,installed
+track-hardware,01.02 Sprockets idlers rollers and tensioners,running-gear,RUN-002:RUN-006,01 — Structure and running gear,installed
+track-support,01.03 Track axles bearings guides and scrapers,running-gear,RUN-007:RUN-009,01 — Structure and running gear,installed
+frame-stock,01.04 Frame stock and mounting plates,frame,CHS-001:CHS-006,01 — Structure and running gear,installed
+frame-pivots,01.05 Scissor pivots locks and hard stops,frame,CHS-007:CHS-011,01 — Structure and running gear,installed
+frame-finish,01.06 Guards fasteners coatings and labels,frame,CHS-012:CHS-016,01 — Structure and running gear,installed
+handling-points,01.07 Installed lifting and recovery points,frame,MNT-001:MNT-002,01 — Structure and running gear,installed
+motors,02.01 Traction motors and included planetary where applicable,propulsion,DRV-001,02 — Drive train,installed
+motor-controllers,02.02 Traction motor controllers,propulsion,DRV-002,02 — Drive train,installed
+brakes,02.03 Mechanical holding brakes,propulsion,DRV-003,02 — Drive train,installed
+output-support,02.04 Output hubs shafts and bearings,propulsion,DRV-004:DRV-006,02 — Drive train,installed
+chain-reduction,02.05 External chain reduction and keys,propulsion,DRV-007:DRV-012,02 — Drive train,installed
+width-mechanics,03.01 Width motor screw bearings mounts and guard,width-adjustment,WID-001:WID-005|WID-014,03 — Width adjustment,installed
+width-power,03.02 Width converter driver and protected enable,width-adjustment,WID-006:WID-008,03 — Width adjustment,installed
+width-sensors,03.03 Width encoder limits current and reference sensors,width-adjustment,WID-009:WID-012,03 — Width adjustment,installed
+width-harness,03.04 Width actuator harness and strain relief,width-adjustment,WID-013,03 — Width adjustment,installed
+packs,04.01 Battery packs with integrated BMS,batteries,BAT-001,04 — Battery and charging,installed
+battery-housing,04.02 Battery enclosures restraints and insulation,batteries,BAT-002:BAT-004,04 — Battery and charging,installed
+chargers,04.03 Matched battery chargers,batteries,BAT-005,04 — Battery and charging,installed
+charge-harness,04.04 Charge connectors fuse holders and interlock harness,batteries,BAT-006:BAT-007,04 — Battery and charging,installed
+power-cables,05.01 High-current cable,cables-connectors,PWR-008,05 — Power cables and electronics,installed
+power-connectors,05.02 Power lugs connectors and terminal insulation,cables-connectors,PWR-009:PWR-011,05 — Power cables and electronics,installed
+signal-cables,05.03 Control and communications cables,cables-connectors,PWR-017:PWR-018,05 — Power cables and electronics,installed
+signal-connectors,05.04 Signal connectors conduit clips and labels,cables-connectors,PWR-019:PWR-020,05 — Power cables and electronics,installed
+switchgear,05.05 Main fuses disconnects contactors and feedback,electronics,PWR-001:PWR-005,05 — Power cables and electronics,installed
+precharge,05.06 Precharge discharge and voltage-test hardware,electronics,PWR-006:PWR-007,05 — Power cables and electronics,installed
+control-supplies,05.07 Control DC/DC logic supplies and branch protection,electronics,PWR-012:PWR-014,05 — Power cables and electronics,installed
+enclosures,05.08 Electronics enclosures glands cooling and mounting,electronics,PWR-015:PWR-016|PWR-021:PWR-024,05 — Power cables and electronics,installed
+stop-controls,06.01 Independent safety relay E-stops and reset controls,electronics,SAF-001:SAF-003,06 — Safety controls and sensors,installed
+remote,06.02 Industrial operator remote and stop provision,electronics,SAF-004,06 — Safety controls and sensors,installed
+control-boards,06.03 Local control boards communications and service display,electronics,SAF-005:SAF-006|SAF-008,06 — Safety controls and sensors,installed
+status,06.04 Status beacon and buzzer,electronics,SAF-007,06 — Safety controls and sensors,installed
+tilt-interlocks,06.05 Tilt sensing and pod or guard interlocks,electronics,SAF-009:SAF-010,06 — Safety controls and sensors,installed
+drive-sensors,06.06 Drive current voltage temperature and speed sensors,electronics,INS-001:INS-004,06 — Safety controls and sensors,installed
+logging,06.07 Data logger storage and reader,electronics,INS-005:INS-006,06 — Safety controls and sensors,installed
+loose-handling,07.01 Loose slings straps shackles and service supports,workshop,MNT-003:MNT-006,07 — Workshop and support,support
+bench-fixture,07.02 Bench fixture guards and pendant,workshop,TST-001:TST-004,07 — Workshop and support,bench
+dynamometer,07.03 Dynamometer torque measurement and adapters,workshop,TST-005:TST-008,07 — Workshop and support,bench
+bench-tools,07.04 Meters instruments hand tools and crimp tooling,workshop,TST-009:TST-015,07 — Workshop and support,bench
+consumables,07.05 Fabrication consumables and initial spares,workshop,CON-001:CON-005,07 — Workshop and support,support
+ppe-support,07.06 PPE barriers charging surface fire and cleaning supplies,workshop,CON-006:CON-010,07 — Workshop and support,support

@@ -18,7 +18,7 @@ limits are not established. See the
 [Interfaces](width-adjustment.md#interfaces-with-other-scopes) ·
 [Itemized costs](width-adjustment.md#detailed-module-costs) |
 [Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
-[Width-adjustment cost totals](../cost-breakdown.md#width-adjustment) ·
+[Width-adjustment cost totals](../cost-breakdown.md#03--width-adjustment) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
 [Supplier register](sources.md#source-id-lookup)
 
@@ -160,7 +160,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: width-mechanics
 
-**Width motor screw bearings mounts and guard**
+**03.01 Width motor screw bearings mounts and guard**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -174,7 +174,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: width-power
 
-**Width converter driver and protected enable**
+**03.02 Width converter driver and protected enable**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -185,7 +185,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: width-sensors
 
-**Width encoder limits current and reference sensors**
+**03.03 Width encoder limits current and reference sensors**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |
@@ -197,7 +197,7 @@ N/A never means an unknown purchase is free.
 
 ### Cost: width-harness
 
-**Width actuator harness and strain relief**
+**03.04 Width actuator harness and strain relief**
 
 | Item / cumulative quantity | Total / basis (both variants) |
 | --- | ---: |

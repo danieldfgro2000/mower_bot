@@ -10,6 +10,8 @@ actions.
 [Regenerate and verify](updating-linked-costs.md#regenerate-and-verify) ·
 [Reference checks](updating-linked-costs.md#reference-checks) ·
 [Validation history](updating-linked-costs.md#validation-history) |
+[Engineering BOM agent guide](agent-guide.md) ·
+[Agent index](agent-index.md) |
 [Chassis BOM](../chassis-bom.md) ·
 [BOM Cost Breakdown](../cost-breakdown.md) ·
 [Supplier register](sources.md)
@@ -21,7 +23,7 @@ Edit numeric costs in their authoritative CSV, not in generated Markdown tables:
 | Input file | What it owns |
 | --- | --- |
 | [Cost ledger](../chassis-bom.csv) | Item quantities, scenario unit/extended costs, basis codes, source IDs and assumptions |
-| [Module mapping](cost-modules.csv) | Exactly-once item ownership, scope documents, cost categories and accounting disposition |
+| [Module mapping](cost-modules.csv) | Exactly-once item ownership, module/submodule numbering, scope documents, cost categories and accounting disposition |
 | [Budget allowances](budget-allowances.csv) | Non-material cash provisions |
 | [Propulsion alternatives](propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals |
 
@@ -148,8 +150,9 @@ TDD evidence, 2026-10-26: regression fixtures first exposed accepted missing
 cross-file anchors and headings hidden in comments or code fences, plus a
 false failure for a valid underlined heading. After rendered-target validation,
 all 15 reference regressions passed. A temporary copy of
-[Chassis BOM](../chassis-bom.md) passes before removing `### Drive train` and
-reports the broken `#drive-train` afterward; the live repository-test entry point
-also rejects a missing cross-file fragment.
+[BOM Cost Breakdown](../cost-breakdown.md) passes before removing
+`### 02 — Drive train` and reports the broken
+`cost-breakdown.md#02--drive-train` afterward; the live repository-test entry
+point also rejects a missing cross-file fragment.
 
 [↑ Back to document overview](updating-linked-costs.md#document-overview)

@@ -9,6 +9,8 @@ description: Maintain MowerBot repository documentation and linked module BOM co
 
 Read `docs/index.md`, `docs/agents/project-guardrails.md` and
 `docs/agents/documentation-guardrails.md` before work, then only the owning scope.
+For engineering BOM routing and module numbering, use
+`docs/engineering/bom/agent-index.md` and `agent-guide.md`.
 Read `docs/project/overview.md` and relevant `plan.md` sections for product,
 hardware, safety or operating-envelope decisions. Preserve evidence labels,
 release holds and unrelated edits. Documentation does not authorize purchasing,
