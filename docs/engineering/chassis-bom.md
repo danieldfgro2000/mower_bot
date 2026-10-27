@@ -28,13 +28,13 @@ through Stage 2; it is not a per-pod or per-motor price.
 <!-- BEGIN GENERATED: overview -->
 | Module | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **[Structure](bom/frame.md#document-overview) and [running gear](bom/running-gear.md#document-overview)** | €2,213.00 | €2,213.00 |
-| **[Drive train](bom/propulsion.md#document-overview)** | €3,781.66 | €3,520.00 |
-| **[Width adjustment](bom/width-adjustment.md#document-overview)** | €407.00 | €407.00 |
-| **[Battery and charging](bom/batteries.md#document-overview)** | €3,148.16 | €5,698.48 |
-| **[Power cables](bom/cables-connectors.md#document-overview) and [electronics](bom/electronics.md#document-overview)** | €1,679.00 | €1,679.00 |
-| **[Safety controls and sensors](bom/electronics.md#document-overview)** | €2,580.00 | €2,580.00 |
-| **[Workshop and support](bom/workshop.md#document-overview)** | €4,514.00 | €4,514.00 |
+| **[Structure](bom/frame.md) and [running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |
+| **[Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |
+| **[Width adjustment](bom/width-adjustment.md)** | €407.00 | Same as 48 V |
+| **[Battery and charging](bom/batteries.md)** | €3,148.16 | €5,698.48 |
+| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |
+| **[Safety controls and sensors](bom/electronics.md)** | €2,580.00 | Same as 48 V |
+| **[Workshop and support](bom/workshop.md)** | €4,514.00 | Same as 48 V |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: overview -->
 
@@ -51,9 +51,9 @@ costed planetary drive.
 | Materials/equipment | €18,322.82 | €20,611.48 |
 | Freight/import/brokerage provision | €500.00 | €700.00 |
 | Outsourced precision machining provision | €350.00 | €650.00 |
-| DIY fabrication/printing energy | €30.00 | €30.00 |
-| Instrument calibration/setup service | €250.00 | €250.00 |
-| Owner fabrication labor | N/A - owner supplied | N/A - owner supplied |
+| DIY fabrication/printing energy | €30.00 | Same as 48 V |
+| Instrument calibration/setup service | €250.00 | Same as 48 V |
+| Owner fabrication labor | N/A - owner supplied | Same as 48 V |
 | **Budget before contingency** | €19,452.82 | €22,241.48 |
 | Uncertainty contingency (20%) | €3,890.56 | €4,448.30 |
 | **Indicative build budget** | €23,343.38 | €26,689.78 |
@@ -175,7 +175,7 @@ procurement or manufacture by this package.
 | Calculated public-price references (C) | 4 / €6,009.82 | N/A - no lines |
 | Engineering allowances (A) | 119 / €12,313.00 | 128 / €20,611.48 |
 | Included / no separate purchase (I) | 5 / N/A | N/A - no lines |
-| Reused inventory (R) | 1 / N/A | 1 / N/A |
+| Reused inventory (R) | 1 / N/A | Same as 48 V |
 | **Total (129 lines)** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: readiness -->
 

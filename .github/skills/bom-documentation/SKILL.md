@@ -44,6 +44,11 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   remaining navigation for other useful destinations. In variant tables, use
   one shared column only when every displayed item cost and basis matches
   across scenarios; retain separate columns if any displayed value differs.
+  Within a two-column table, show a matching row value once and mark the 72 V
+  cell `Same as 48 V`; keep both values when the displayed cost or basis differs.
+  For generated overview links, use file-only links to open scope summaries;
+  avoid fragments to raw HTML overview IDs because heading-only readers may not
+  resolve them. Use fragments only for Markdown headings.
   Do not edit generated blocks by hand.
 - Write engineering scope pages for human readers first: open with a concise
   summary and complete contents map, then flow from design intent or

@@ -25,13 +25,13 @@ to add together.
 <!-- BEGIN GENERATED: overview -->
 | Module | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| **[Structure](bom/frame.md#document-overview) and [running gear](bom/running-gear.md#document-overview)** | €2,213.00 | €2,213.00 |
-| **[Drive train](bom/propulsion.md#document-overview)** | €3,781.66 | €3,520.00 |
-| **[Width adjustment](bom/width-adjustment.md#document-overview)** | €407.00 | €407.00 |
-| **[Battery and charging](bom/batteries.md#document-overview)** | €3,148.16 | €5,698.48 |
-| **[Power cables](bom/cables-connectors.md#document-overview) and [electronics](bom/electronics.md#document-overview)** | €1,679.00 | €1,679.00 |
-| **[Safety controls and sensors](bom/electronics.md#document-overview)** | €2,580.00 | €2,580.00 |
-| **[Workshop and support](bom/workshop.md#document-overview)** | €4,514.00 | €4,514.00 |
+| **[Structure](bom/frame.md) and [running gear](bom/running-gear.md)** | €2,213.00 | Same as 48 V |
+| **[Drive train](bom/propulsion.md)** | €3,781.66 | €3,520.00 |
+| **[Width adjustment](bom/width-adjustment.md)** | €407.00 | Same as 48 V |
+| **[Battery and charging](bom/batteries.md)** | €3,148.16 | €5,698.48 |
+| **[Power cables](bom/cables-connectors.md) and [electronics](bom/electronics.md)** | €1,679.00 | Same as 48 V |
+| **[Safety controls and sensors](bom/electronics.md)** | €2,580.00 | Same as 48 V |
+| **[Workshop and support](bom/workshop.md)** | €4,514.00 | Same as 48 V |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: overview -->
 
@@ -63,7 +63,7 @@ Each row links to its itemized scope table and sourcing assumptions.
 | [Traction motors and included planetary where applicable](bom/propulsion.md#cost-motors) | €2,071.88 | €1,300.00 |
 | [Traction motor controllers](bom/propulsion.md#cost-motor-controllers) | €1,023.24 | €1,000.00 |
 | [Mechanical holding brakes](bom/propulsion.md#cost-brakes) | €446.54 | €500.00 |
-| [Output hubs shafts and bearings](bom/propulsion.md#cost-output-support) | €210.00 | €210.00 |
+| [Output hubs shafts and bearings](bom/propulsion.md#cost-output-support) | €210.00 | Same as 48 V |
 | [External chain reduction and keys](bom/propulsion.md#cost-chain-reduction) | €30.00 | €510.00 |
 | **Drive train subtotal** | €3,781.66 | €3,520.00 |
 
@@ -82,10 +82,10 @@ Each row links to its itemized scope table and sourcing assumptions.
 | Module / detailed BOM | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
 | [Battery packs with integrated BMS](bom/batteries.md#cost-packs) | €2,468.16 | €4,898.48 |
-| [BMS: included in pack; not separately priced](bom/batteries.md#cost-packs) | N/A - included | N/A - included |
-| [Battery enclosures restraints and insulation](bom/batteries.md#cost-battery-housing) | €270.00 | €270.00 |
+| [BMS: included in pack; not separately priced](bom/batteries.md#cost-packs) | N/A - included | Same as 48 V |
+| [Battery enclosures restraints and insulation](bom/batteries.md#cost-battery-housing) | €270.00 | Same as 48 V |
 | [Matched battery chargers](bom/batteries.md#cost-chargers) | €320.00 | €440.00 |
-| [Charge connectors fuse holders and interlock harness](bom/batteries.md#cost-charge-harness) | €90.00 | €90.00 |
+| [Charge connectors fuse holders and interlock harness](bom/batteries.md#cost-charge-harness) | €90.00 | Same as 48 V |
 | **Battery and charging subtotal** | €3,148.16 | €5,698.48 |
 
 ### Power cables and electronics
@@ -132,8 +132,8 @@ Each row links to its itemized scope table and sourcing assumptions.
 | Accounting scope | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
 | **Installed-machine materials** | €13,808.82 | €16,097.48 |
-| **Reusable bench equipment** | €3,720.00 | €3,720.00 |
-| **Loose handling / consumables / support** | €794.00 | €794.00 |
+| **Reusable bench equipment** | €3,720.00 | Same as 48 V |
+| **Loose handling / consumables / support** | €794.00 | Same as 48 V |
 | **All listed materials/equipment** | €18,322.82 | €20,611.48 |
 | Above €5,000 materials/equipment target | €13,322.82 | €15,611.48 |
 <!-- END GENERATED: modules -->

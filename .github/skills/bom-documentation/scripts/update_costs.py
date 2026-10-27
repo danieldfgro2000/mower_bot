@@ -126,7 +126,17 @@ def cost_row(label, rows, shared=False):
     values = [money(total(rows, scenario)) for scenario in SCENARIOS]
     if shared and values[0] != values[1]:
         raise ValueError(f"Different scenario totals cannot share a column: {label}")
-    return f"| {label} | " + " | ".join(values[:1] if shared else values) + " |"
+    return variant_row(label, values, shared)
+
+
+def variant_row(label, values, shared=False):
+    if shared:
+        if values[0] != values[1]:
+            raise ValueError(f"Different scenario values cannot share a column: {label}")
+        values = values[:1]
+    elif values[0] == values[1]:
+        values = [values[0], "Same as 48 V"]
+    return f"| {label} | " + " | ".join(values) + " |"
 
 
 def displayed_cost(row, scenario):
@@ -153,7 +163,7 @@ def category_label(category, category_modules):
     elif set(scope for _, scope in links) != set(scopes):
         raise ValueError(f"Category scope links do not match modules: {category}")
     linked_names = " and ".join(
-        f"[{label}](bom/{scope}.md#document-overview)" for label, scope in links
+        f"[{label}](bom/{scope}.md)" for label, scope in links
     )
     return f"**{linked_names}**"
 
@@ -198,13 +208,14 @@ def render(base):
             link = f"[{module['label']}](bom/{module['scope']}.md#cost-{module['module_id']})"
             summary.append(cost_row(link, groups[module["module_id"]], shared))
             if module["module_id"] == "packs":
-                bms_values = ["N/A - included"] if shared else [
+                bms_values = [
                     "N/A - included", "N/A - included",
                 ]
-                summary.append(
-                    "| [BMS: included in pack; not separately priced](bom/batteries.md#cost-packs) | "
-                    + " | ".join(bms_values)
-                    + " |"
+                summary.append(variant_row(
+                    "[BMS: included in pack; not separately priced](bom/batteries.md#cost-packs)",
+                    bms_values,
+                    shared,
+                )
                 )
         summary.append(cost_row(f"**{category} subtotal**", category_rows, shared))
         summary.append("")
@@ -216,15 +227,18 @@ def render(base):
                     for r in groups[m["module_id"]]]
         summary.append(cost_row(f"**{label}**", selected))
     summary.append(cost_row("**All listed materials/equipment**", rows))
-    summary.append("| Above €5,000 materials/equipment target | " + " | ".join(
-        money(max(Decimal(0), total(rows, s) - TARGET)) for s in SCENARIOS) + " |")
+    summary.append(variant_row(
+        "Above €5,000 materials/equipment target",
+        [money(max(Decimal(0), total(rows, scenario) - TARGET))
+         for scenario in SCENARIOS],
+    ))
     phases = table("Acquisition phase")
     for label, values in [
         ("Stage 1: one-drive bench", [total(rows, s, True) for s in SCENARIOS]),
         ("Stage 2: additional purchases only", [total(rows, s) - total(rows, s, True) for s in SCENARIOS]),
         ("**Cumulative Stage 1-2**", [total(rows, s) for s in SCENARIOS]),
     ]:
-        phases.append(f"| {label} | " + " | ".join(map(money, values)) + " |")
+        phases.append(variant_row(label, list(map(money, values))))
     text = block(text, "phases", "\n".join(phases))
     readiness = table("Cost basis: lines / EUR")
     for basis, label in [("C", "Calculated public-price references"), ("A", "Engineering allowances"),
@@ -233,7 +247,7 @@ def render(base):
         for scenario in SCENARIOS:
             selected = [r for r in rows if r[f"basis_{scenario}"] == basis]
             cells.append(f"{len(selected)} / {money(total(selected, scenario))}" if selected else "N/A - no lines")
-        readiness.append(f"| {label} ({basis}) | " + " | ".join(cells) + " |")
+        readiness.append(variant_row(f"{label} ({basis})", cells))
     readiness.append(cost_row(f"**Total ({len(rows)} lines)**", rows))
     text = block(text, "readiness", "\n".join(readiness))
     allowances = read_csv(base / "bom/budget-allowances.csv")
@@ -243,14 +257,17 @@ def render(base):
     for allowance in allowances:
         values = [number(allowance[f"eur_{s}"]) for s in SCENARIOS]
         before = [a + b for a, b in zip(before, values)]
-        budget.append(f"| {allowance['label']} | " + " | ".join(map(money, values)) + " |")
-    budget.append("| Owner fabrication labor | N/A - owner supplied | N/A - owner supplied |")
+        budget.append(variant_row(allowance["label"], list(map(money, values))))
+    budget.append(variant_row(
+        "Owner fabrication labor",
+        ["N/A - owner supplied", "N/A - owner supplied"],
+    ))
     reserve = [(v * CONTINGENCY).quantize(CENT, rounding=ROUND_HALF_UP) for v in before]
     for label, values in [
         ("**Budget before contingency**", before), ("Uncertainty contingency (20%)", reserve),
         ("**Indicative build budget**", [a + b for a, b in zip(before, reserve)]),
     ]:
-        budget.append(f"| {label} | " + " | ".join(map(money, values)) + " |")
+        budget.append(variant_row(label, list(map(money, values))))
     text = block(text, "budget", "\n".join(budget))
     alternatives = read_csv(base / "bom/propulsion-alternatives.csv")
     alt_lines = ["| Alternative (excluded from totals) | Unit reference | Cumulative reference |",
@@ -291,9 +308,7 @@ def render(base):
             for row in selected:
                 label = f"{row['item_id']} - {row['description']} ({row['qty_stage_2_total']} {row['unit']})"
                 cells = [displayed_detail(row, scenario) for scenario in SCENARIOS]
-                if shared:
-                    cells = cells[:1]
-                detail.append(f"| {label} | " + " | ".join(cells) + " |")
+                detail.append(variant_row(label, cells, shared))
             detail.extend([cost_row("**Module subtotal**", selected, shared), ""])
         shared = scenarios_match(owned, displayed_detail)
         detail.extend(comparison_table("Scope total", shared, "Total"))

@@ -310,7 +310,7 @@ N/A never means an unknown purchase is free.
 | DRV-009 - Intermediate reduction shafts (2 each) | N/A / I | €70.00 / A |
 | DRV-010 - Intermediate reduction bearings (4 each) | N/A / I | €80.00 / A |
 | DRV-011 - Reduction chain tensioners (2 each) | N/A / I | €50.00 / A |
-| DRV-012 - Keys bushes and reduction fasteners (2 pod set) | €30.00 / A | €30.00 / A |
+| DRV-012 - Keys bushes and reduction fasteners (2 pod set) | €30.00 / A | Same as 48 V |
 | **Module subtotal** | €30.00 | €510.00 |
 
 | Scope total | 48 V / 2 kW | 72 V / 4 kW |
