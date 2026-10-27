@@ -10,7 +10,7 @@ narrowest applicable scope below.
 
 1. Start with the [Chassis BOM](engineering/chassis-bom.md) for what is in the
    estimate, what it costs, and what is explicitly excluded.
-2. Use the [Build and Procurement Checklist](engineering/chassis-build-requirements.md)
+2. Use the [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md)
    to follow the evidence and release holds before any purchase or build.
 3. Open the linked [BOM scope](engineering/chassis-bom.md#bom-by-scope) for a
    part family's requirements, cost detail, and inspection evidence. Use the
@@ -36,9 +36,9 @@ another route.
 | Flutter UI, BLoCs, use cases, repositories, local checks | [Flutter development](flutter/development.md) |
 | App implementation review and proposed module/package improvements | [App improvement plan](flutter/implementation-improvement-plan.md) |
 | ESP32/Mega ownership, wire/storage contracts, build prerequisites | [Firmware development](firmware/development.md) |
-| Chassis parts, itemized costs and 48 V / 72 V comparison | [Chassis BOM and Cost Breakdown](engineering/chassis-bom.md) · [Itemized CSV](engineering/chassis-bom.csv) |
-| Module cost tables and detailed requirements | [Cost breakdown](engineering/cost-breakdown.md) · [Drive train](engineering/bom/propulsion.md) · [Batteries and charging](engineering/bom/batteries.md) · [Cables](engineering/bom/cables-connectors.md) · [Electronics and safety](engineering/bom/electronics.md) |
-| Scoped BOM: running gear, propulsion, frame, width adjustment, batteries, wiring, electronics and workshop | [Scope directory in the BOM overview](engineering/chassis-bom.md#bom-by-scope) |
+| Chassis cost summary and 48 V / 72 V comparison | [Chassis BOM](engineering/chassis-bom.md) · [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Cost ledger](engineering/chassis-bom.csv) |
+| Module cost tables and detailed requirements | [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Drive train](engineering/bom/propulsion.md) · [Batteries and charging](engineering/bom/batteries.md) · [Cables](engineering/bom/cables-connectors.md) · [Electronics and safety](engineering/bom/electronics.md) |
+| Scoped BOM: running gear, propulsion, frame, width adjustment, batteries, wiring, electronics and workshop | [Scope directory in Chassis BOM](engineering/chassis-bom.md#bom-by-scope) |
 | Drawings, supplier evidence and inspections still required before purchase/build | [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md) |
 | Width packaging, 40° site target, and preliminary stability/traction calculations | [Width and slope feasibility screen](engineering/width-and-slope-sizing.md) |
 

@@ -10,8 +10,8 @@ actions.
 [Regenerate and verify](updating-linked-costs.md#regenerate-and-verify) ·
 [Reference checks](updating-linked-costs.md#reference-checks) ·
 [Validation history](updating-linked-costs.md#validation-history) |
-[BOM overview](../chassis-bom.md) ·
-[Cost breakdown](../cost-breakdown.md) ·
+[Chassis BOM](../chassis-bom.md) ·
+[BOM Cost Breakdown](../cost-breakdown.md) ·
 [Supplier register](sources.md)
 
 ## Cost inputs
@@ -20,12 +20,12 @@ Edit numeric costs in their authoritative CSV, not in generated Markdown tables:
 
 | Input file | What it owns |
 | --- | --- |
-| [Baseline item ledger](../chassis-bom.csv) | Item quantities, scenario unit/extended costs, basis codes, source IDs and assumptions |
+| [Cost ledger](../chassis-bom.csv) | Item quantities, scenario unit/extended costs, basis codes, source IDs and assumptions |
 | [Module mapping](cost-modules.csv) | Exactly-once item ownership, scope documents, cost categories and accounting disposition |
 | [Budget allowances](budget-allowances.csv) | Non-material cash provisions |
 | [Propulsion alternatives](propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals |
 
-Keep the [supplier evidence](sources.md) and affected scope requirements in
+Keep the [Supplier register](sources.md) and affected scope requirements in
 step with the inputs. Follow the [estimate rules](../chassis-bom.md#estimate-rules)
 and the [BOM documentation skill](../../../.github/skills/bom-documentation/SKILL.md).
 A sourcing request alone does not select a new hardware configuration.
@@ -42,8 +42,8 @@ python3 .github/skills/bom-documentation/scripts/update_costs.py
 python3 .github/skills/bom-documentation/scripts/update_costs.py --check
 ```
 
-This updates the dedicated cost breakdown, module/category totals, accounting
-totals, stages, cost-basis snapshot, candidate cost table, broader budget and
+This updates BOM Cost Breakdown, module/category totals, accounting totals,
+stage acquisitions, cost-basis snapshot, candidate cost table, broader budget and
 all eight scoped item-cost tables in one pass. Extensions must reconcile with
 unit costs and quantities; missing purchase prices and missing/duplicate module
 ownership fail explicitly. The 20% contingency is applied after the separately
@@ -146,7 +146,7 @@ TDD evidence, 2026-10-26: regression fixtures first exposed accepted missing
 cross-file anchors and headings hidden in comments or code fences, plus a
 false failure for a valid underlined heading. After rendered-target validation,
 all 15 reference regressions passed. A temporary copy of
-[the main BOM](../chassis-bom.md) passes before removing `### Drive train` and
+[Chassis BOM](../chassis-bom.md) passes before removing `### Drive train` and
 reports the broken `#drive-train` afterward; the live repository-test entry point
 also rejects a missing cross-file fragment.
 

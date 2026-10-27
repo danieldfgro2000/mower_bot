@@ -13,10 +13,10 @@ identifies evidence still needed before purchasing or use.
 **Navigate:** [Requirements](workshop.md#specification-and-inspection-requirements) ·
 [Sourcing](workshop.md#sourcing) · [Interfaces](workshop.md#interfaces-with-other-scopes) ·
 [Itemized costs](workshop.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Workshop cost totals](../cost-breakdown.md#workshop-and-support) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 

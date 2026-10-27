@@ -50,6 +50,10 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   avoid fragments to raw HTML overview IDs because heading-only readers may not
   resolve them. Use fragments only for Markdown headings.
   Do not edit generated blocks by hand.
+- Use established canonical document and build-stage names from `docs/index.md`
+  and `plan.md` consistently in titles, navigation/link labels, and generated
+  tables. When a generated label changes, update its generator tests and
+  regenerate; keep technical scope titles and cost-module labels distinct.
 - Write engineering scope pages for human readers first: open with a concise
   summary and complete contents map, then flow from design intent or
   requirements to supplier evidence, interfaces and itemized costs. Remove

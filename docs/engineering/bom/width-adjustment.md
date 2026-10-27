@@ -17,10 +17,10 @@ limits are not established. See the
 [Sourcing](width-adjustment.md#sourcing) ·
 [Interfaces](width-adjustment.md#interfaces-with-other-scopes) ·
 [Itemized costs](width-adjustment.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Width-adjustment cost totals](../cost-breakdown.md#width-adjustment) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Powered rolling width adjustment
 

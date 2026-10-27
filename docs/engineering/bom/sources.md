@@ -1,4 +1,4 @@
-# BOM supplier source register
+# Supplier register
 
 <a id="document-overview"></a>
 
@@ -11,12 +11,12 @@ price proxies cited by the BOM. Source IDs map to the
 claim is not a quote, qualification, or approval.
 
 **Navigate:** [Source ID lookup](sources.md#source-id-lookup) ·
-[Source register](sources.md#source-register) ·
+[Supplier register](sources.md#source-register) ·
 [Link verification](sources.md#link-verification) |
-[BOM overview](../chassis-bom.md) ·
+[Chassis BOM](../chassis-bom.md) ·
 [Cost ledger](../chassis-bom.csv) ·
 [Feedback decisions](feedback.md#feedback-decisions) ·
-[Build checklist](../chassis-build-requirements.md)
+[Chassis Build and Procurement Checklist](../chassis-build-requirements.md)
 
 ## Source ID lookup
 
@@ -54,7 +54,9 @@ to identify the evidence before opening the detailed entry.
 [↑ Back to document overview](sources.md#document-overview)
 
 
-## Source register
+<a id="source-register"></a>
+
+## Supplier evidence
 
 Research checked 2026-10-26. Simplified page readers hid several prices and
 specifications; those were checked in public HTML/structured product data.

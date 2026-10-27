@@ -14,11 +14,11 @@ selected or safety-qualified components.
 **Navigate:** [Requirements](electronics.md#specification-and-inspection-requirements) ·
 [Sourcing](electronics.md#sourcing) · [Interfaces](electronics.md#interfaces-with-other-scopes) ·
 [Itemized costs](electronics.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Power cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
 [Safety cost totals](../cost-breakdown.md#safety-controls-and-sensors) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 

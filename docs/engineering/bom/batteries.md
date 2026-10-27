@@ -15,11 +15,11 @@ controller/charger compatibility; compare them with the
 [Requirements](batteries.md#specification-and-inspection-requirements) ·
 [Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes) ·
 [Itemized costs](batteries.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Cost totals](../cost-breakdown.md#battery-and-charging) ·
 [Ledger](../chassis-bom.csv) ·
 [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Battery alternatives
 

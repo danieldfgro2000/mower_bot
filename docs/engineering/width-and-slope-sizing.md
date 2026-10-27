@@ -20,7 +20,7 @@ no safe width, slope, or speed.
 [Traction and holding](width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates) ·
 [Design implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom) |
 [Product authority](../../plan.md#42-variable-width-scissor-frame) ·
-[Cost breakdown](cost-breakdown.md) ·
+[BOM Cost Breakdown](cost-breakdown.md) ·
 [Feedback decisions](bom/feedback.md#feedback-decisions) ·
 [Width-adjustment scope](bom/width-adjustment.md)
 

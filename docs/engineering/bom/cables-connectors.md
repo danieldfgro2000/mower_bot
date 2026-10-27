@@ -15,11 +15,11 @@ acceptance limits remain unqualified.
 [Sourcing](cables-connectors.md#sourcing) ·
 [Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
 [Itemized costs](cables-connectors.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Cost totals](../cost-breakdown.md#power-cables-and-electronics) ·
 [Ledger](../chassis-bom.csv) ·
 [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 

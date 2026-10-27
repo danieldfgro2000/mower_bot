@@ -15,10 +15,10 @@ for the evidence needed to select them.
 [Sourcing](running-gear.md#sourcing) ·
 [Interfaces](running-gear.md#interfaces-with-other-scopes) ·
 [Itemized costs](running-gear.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Structure cost totals](../cost-breakdown.md#structure-and-running-gear) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 

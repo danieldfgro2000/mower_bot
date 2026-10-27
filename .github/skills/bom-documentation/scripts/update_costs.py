@@ -232,11 +232,12 @@ def render(base):
         [money(max(Decimal(0), total(rows, scenario) - TARGET))
          for scenario in SCENARIOS],
     ))
-    phases = table("Acquisition phase")
+    phases = table("Acquisition stage")
     for label, values in [
-        ("Stage 1: one-drive bench", [total(rows, s, True) for s in SCENARIOS]),
-        ("Stage 2: additional purchases only", [total(rows, s) - total(rows, s, True) for s in SCENARIOS]),
-        ("**Cumulative Stage 1-2**", [total(rows, s) for s in SCENARIOS]),
+        ("Stage 1 — bench propulsion prototype", [total(rows, s, True) for s in SCENARIOS]),
+        ("Stage 2 — rolling two-pod chassis (additional purchases only)",
+         [total(rows, s) - total(rows, s, True) for s in SCENARIOS]),
+        ("**Stages 1–2 cumulative**", [total(rows, s) for s in SCENARIOS]),
     ]:
         phases.append(variant_row(label, list(map(money, values))))
     text = block(text, "phases", "\n".join(phases))

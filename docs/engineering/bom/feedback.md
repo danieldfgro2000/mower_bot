@@ -12,10 +12,10 @@ component approval or operating authorization.
 
 **Navigate:** [Feedback decisions](feedback.md#feedback-decisions) ·
 [Qualification loops](feedback.md#feedback-and-qualification-loops) |
-[BOM overview](../chassis-bom.md) ·
+[Chassis BOM](../chassis-bom.md) ·
 [Cost ledger](../chassis-bom.csv) ·
 [Supplier register](sources.md#source-id-lookup) ·
-[Build checklist](../chassis-build-requirements.md)
+[Chassis Build and Procurement Checklist](../chassis-build-requirements.md)
 
 ## Feedback decisions
 

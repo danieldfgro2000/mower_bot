@@ -5,14 +5,14 @@
 **Status:** generated cost view; **not released for purchase, fabrication, or operation**.
 
 **Summary:** Generated module estimates and installed/bench/support totals.
-The [main BOM](chassis-bom.md) owns scope and alternatives; cost rows link to
+The [Chassis BOM](chassis-bom.md) owns scope and alternatives; cost rows link to
 the technical scopes. Tables come from the
 [cost ledger](chassis-bom.csv) and [module map](bom/cost-modules.csv).
 
 **Navigate:** [Major estimates](cost-breakdown.md#major-module-estimates) ·
 [Detailed costs](cost-breakdown.md#detailed-module-costs) ·
 [Purchase totals](cost-breakdown.md#purchase-totals) |
-[Main BOM](chassis-bom.md) · [Cost ledger](chassis-bom.csv) ·
+[Chassis BOM](chassis-bom.md) · [Cost ledger](chassis-bom.csv) ·
 [Update procedure](bom/updating-linked-costs.md)
 
 Do not edit generated tables by hand.

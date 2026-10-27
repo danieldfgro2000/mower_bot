@@ -19,10 +19,10 @@ brakes, or operating limits. Exact listings are in the
 [Sourcing](propulsion.md#sourcing) ·
 [Interfaces](propulsion.md#interfaces-with-other-scopes) ·
 [Itemized costs](propulsion.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Drive-train cost totals](../cost-breakdown.md#drive-train) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Drive alternatives
 

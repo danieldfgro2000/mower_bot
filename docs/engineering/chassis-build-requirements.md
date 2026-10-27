@@ -13,7 +13,8 @@ before purchasing, fabricating, energizing, or releasing chassis parts.
 not a released manufacturing BOM, approved component selection, or certification.
 No purchase, fabrication, energizing, upload, or physical test is authorized.
 
-**References:** [BOM scope and estimates](chassis-bom.md) ·
+**References:** [Chassis BOM](chassis-bom.md) ·
+[BOM Cost Breakdown](cost-breakdown.md) ·
 [Cost ledger](chassis-bom.csv) ·
 [Width/slope limitations](width-and-slope-sizing.md) ·
 [Product direction and build gates](../../plan.md)
@@ -22,7 +23,7 @@ No purchase, fabrication, energizing, upload, or physical test is authorized.
 
 | Question | Current answer | Go to |
 | --- | --- | --- |
-| What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM cost breakdown](cost-breakdown.md) |
+| What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM Cost Breakdown](cost-breakdown.md) |
 | Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) |
 | Are manufacturing drawings released? | No | [Required deliverables](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) |
 | Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) |
@@ -205,7 +206,7 @@ Prepare these requests only; **sending supplier requests needs separate user
 approval**. Each response must identify exact MPN/options and its included
 children, plus quantity, net/VAT/gross price, delivery to Romania, freight,
 lead time, validity, warranty, drawings and technical exceptions. Use the
-[source register](bom/sources.md#source-register); its catalogs are not quotes.
+[Supplier register](bom/sources.md#source-register); its catalogs are not quotes.
 
 ### Q01: complete running gear
 
@@ -346,10 +347,10 @@ review
 
 **Must close before:** Commercial machine use
 
-**Closure evidence / responsible review role:** Stage 3 supervised mower
+**Closure evidence / responsible review role:** Stage 3 — supervised mower
 integration, including the mower, guarding and safety integration; applicable
 legal/conformity review, technical file and service/operator documentation.
-Qualified product/compliance review is outside this Stage 1-2 estimate.
+Qualified product/compliance review is outside the Stages 1–2 estimate.
 
 H05 requires a review and an approved sequence before energizing, not a claim
 that live stop tests have already passed before power is first applied.
@@ -395,7 +396,7 @@ recurring calibration/inspection separately
 
 ### Finished mowing product and commercial support
 
-**Reconciliation required:** Stage 3 supervised mower integration (mower,
+**Reconciliation required:** Stage 3 — supervised mower integration (mower,
 mounts/guards), later autonomy, packaging, operator training, warranty stock,
 transport and ongoing service remain outside this chassis estimate
 

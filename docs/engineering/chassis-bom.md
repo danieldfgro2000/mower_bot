@@ -1,4 +1,4 @@
-# Chassis BOM and Cost Breakdown
+# Chassis BOM
 
 <a id="document-overview"></a>
 
@@ -7,14 +7,15 @@
 **Status:** Costed engineering estimate; **not released for purchase,
 fabrication, or operation**.
 
-**Summary:** This estimate covers the Stage 1 bench propulsion prototype and
-Stage 2 rolling two-pod chassis. The 48 V and 72 V columns are alternative
-configurations, not additive purchases. Stage 3 mower integration and autonomy
-are excluded. The summary below shows module costs and the indicative build
-budget; [itemized costs](cost-breakdown.md) and the [CSV ledger](chassis-bom.csv)
-hold the line-level detail. Module links open technical scopes. Use the
-[Build and Procurement Checklist](chassis-build-requirements.md) for evidence,
-inspections, and release holds.
+**Summary:** This estimate covers **Stage 1 — bench propulsion prototype** and
+**Stage 2 — rolling two-pod chassis**. The 48 V and 72 V columns are alternative
+configurations, not additive purchases. **Stage 3 — supervised mower
+integration** and later autonomy are excluded. The summary below shows module
+costs and the indicative build budget; [BOM Cost Breakdown](cost-breakdown.md)
+and the [Cost ledger](chassis-bom.csv) hold the line-level detail. Module links
+open technical scopes. Use the
+[Chassis Build and Procurement Checklist](chassis-build-requirements.md) for
+evidence, inspections, and release holds.
 
 **Evidence and upkeep:** [Supplier register](bom/sources.md) ·
 [Feedback decisions](bom/feedback.md) ·
@@ -70,11 +71,11 @@ costed planetary drive.
 
 ## Scope and decisions
 
-The estimate follows two build phases: **Stage 1 — bench propulsion
+The estimate follows two build stages: **Stage 1 — bench propulsion
 prototype**, where one drive is tested on a bench, then **Stage 2 — rolling
 two-pod chassis**, where both pods, the scissor frame, and spine are assembled.
 Stage 2 quantities are cumulative, not additional to Stage 1. Bench equipment
-is retained separately, not installed on the chassis. These phases do not cover
+is retained separately, not installed on the chassis. These stages do not cover
 the complete mower product. The [plan](../../plan.md) remains the product
 authority; its 48 V / approximately 2 kW continuous-per-drive baseline has not
 changed.
@@ -148,9 +149,9 @@ overview, or open its specification section directly:
 | [Electronics, distribution, and safety](bom/electronics.md) | Switchgear, supplies, controls, independent stop hardware, sensors, and logging | [Specification](bom/electronics.md#specification-and-inspection-requirements) |
 | [Workshop and support](bom/workshop.md) | Bench equipment, tools, handling gear, consumables, spares, and PPE | [Specification](bom/workshop.md#specification-and-inspection-requirements) |
 
-Shared references: [Supplier sources](bom/sources.md) ·
+Shared references: [Supplier register](bom/sources.md) ·
 [Feedback and qualification loops](bom/feedback.md) ·
-[Build and procurement checklist](chassis-build-requirements.md) ·
+[Chassis Build and Procurement Checklist](chassis-build-requirements.md) ·
 [Cost update guide](bom/updating-linked-costs.md).
 
 [↑ Back to document overview](chassis-bom.md#document-overview)
@@ -159,7 +160,7 @@ Shared references: [Supplier sources](bom/sources.md) ·
 
 The module summary above is for scanning. For category detail, line totals,
 and the installed/bench/support split, use the generated
-[cost breakdown](cost-breakdown.md). The [CSV ledger](chassis-bom.csv) is the
+[BOM Cost Breakdown](cost-breakdown.md). The [Cost ledger](chassis-bom.csv) is the
 authoritative source for quantities, scenario costs, basis codes, and
 assumptions. `I` and `R` rows do not add separate purchase costs; unknown
 qualification exposure is not treated as free.
@@ -188,7 +189,7 @@ numeric inspection limits, or signed first-article records.
 
 ### Installed, bench, and support totals
 
-The [purchase totals in the cost breakdown](cost-breakdown.md#purchase-totals)
+The [purchase totals in BOM Cost Breakdown](cost-breakdown.md#purchase-totals)
 separate installed-machine materials, reusable bench equipment, and loose
 handling/consumables/support. The width-adjustment estimate includes a reused
 donor motor: its purchase cost is N/A because it is already owned, not because
@@ -199,14 +200,14 @@ Consumables/support includes initial spares and PPE. The €224 of loose slings,
 straps, shackles, and service supports is classified as support; this changes
 neither the purchase total nor stage acquisitions.
 
-### Stage phasing — no double-counting
+### Stage acquisitions — no double-counting
 
 <!-- BEGIN GENERATED: phases -->
-| Acquisition phase | 48 V / 2 kW | 72 V / 4 kW |
+| Acquisition stage | 48 V / 2 kW | 72 V / 4 kW |
 | --- | ---: | ---: |
-| Stage 1: one-drive bench | €9,240.91 | €10,385.24 |
-| Stage 2: additional purchases only | €9,081.91 | €10,226.24 |
-| **Cumulative Stage 1-2** | €18,322.82 | €20,611.48 |
+| Stage 1 — bench propulsion prototype | €9,240.91 | €10,385.24 |
+| Stage 2 — rolling two-pod chassis (additional purchases only) | €9,081.91 | €10,226.24 |
+| **Stages 1–2 cumulative** | €18,322.82 | €20,611.48 |
 <!-- END GENERATED: phases -->
 
 This assumes one instrumented bench setup is reused, not a dynamometer per
@@ -238,7 +239,7 @@ pendant.
   reduction; their 48 V costs are `N/A` because DRV-001 budgets planetary
   reduction. WID-001 retains an installed quantity although its purchase cost
   is `N/A`.
-- Source IDs resolve to the [source register](bom/sources.md). A category,
+- Source IDs resolve to the [Supplier register](bom/sources.md). A category,
   manufacturer page, or price proxy is a sourcing lead, not an exact qualified
   SKU or proof that an allowance can buy it. Most rows are allowances.
 - Quantities, steel mass, bearing count, cable lengths, and bought assemblies
@@ -268,7 +269,7 @@ pendant.
 
 The build-budget table is at the top. Its provisions are not material prices:
 
-- **Materials/equipment:** sum of the CSV ledger.
+- **Materials/equipment:** sum of the Cost ledger.
 - **Freight/import/brokerage:** an allowance, not a landed quote or statutory
   duty calculation; pack transport and Romania delivery must be quoted.
 - **Owner fabrication labor:** no purchased labor applies because the owner
@@ -302,9 +303,9 @@ CSVs, regenerate linked tables, and verify freshness and references. Edit
 inputs, not generated tables. A cost update does not authorize a hardware
 selection, purchase, fabrication, or operation.
 
-### Source register
+### Supplier register
 
-Use the [shared supplier source register](bom/sources.md) for source IDs and
+Use the [Supplier register](bom/sources.md) for source IDs and
 dated evidence. Catalog leads are not component qualification.
 
 ### Feedback and qualification loops

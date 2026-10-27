@@ -13,10 +13,10 @@ dimensions, materials, loads, and inspection limits remain unqualified.
 **Navigate:** [Requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
 [Itemized costs](frame.md#detailed-module-costs) |
-[BOM estimate](../chassis-bom.md#scope-and-decisions) ·
+[Chassis BOM](../chassis-bom.md#scope-and-decisions) ·
 [Structure cost totals](../cost-breakdown.md#structure-and-running-gear) ·
 [Ledger](../chassis-bom.csv) · [Release checklist](../chassis-build-requirements.md) ·
-[Source register](sources.md#source-id-lookup)
+[Supplier register](sources.md#source-id-lookup)
 
 ## Specification and inspection requirements
 

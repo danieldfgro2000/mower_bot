@@ -67,6 +67,22 @@ class CostDocumentationTest(unittest.TestCase):
             "| Reused inventory (R) | 1 / N/A | Same as 48 V |",
             text,
         )
+        self.assertIn(
+            "| Acquisition stage | 48 V / 2 kW | 72 V / 4 kW |",
+            text,
+        )
+        self.assertIn(
+            "| Stage 1 — bench propulsion prototype | €9,240.91 | €10,385.24 |",
+            text,
+        )
+        self.assertIn(
+            "| Stage 2 — rolling two-pod chassis (additional purchases only) | €9,081.91 | €10,226.24 |",
+            text,
+        )
+        self.assertIn(
+            "| **Stages 1–2 cumulative** | €18,322.82 | €20,611.48 |",
+            text,
+        )
         self.assertNotIn("<!-- BEGIN GENERATED: modules -->", text)
         self.assertNotIn("bom/propulsion.md#cost-motors", text)
         breakdown = (self.engineering / "cost-breakdown.md").read_text()
