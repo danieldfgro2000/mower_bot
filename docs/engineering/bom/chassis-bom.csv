@@ -1,117 +1,112 @@
-item_id,assembly,description,unit,qty_stage_1,qty_stage_2_total,unit_eur_48v,unit_eur_72v,extended_eur_48v,extended_eur_72v,basis_48v,basis_72v,source_ids,qualification_or_assumption
-RUN-001,Running gear,Rubber track 200x72x36,each,0,2,140.00,140.00,280.00,280.00,A,A,S01,Round allowance above observed single-track price; exact guide profile and load rating unqualified
-RUN-002,Running gear,Track drive sprocket and hub,each,0,2,90.00,90.00,180.00,180.00,A,A,S02,Must match selected track internal geometry; not selected by pitch alone
-RUN-003,Running gear,Front idler assembly,each,0,2,75.00,75.00,150.00,150.00,A,A,S02|S26,Two assumed; Cohidrex S26 is a Trabber-track idler lead only; no PowerTrack fit or dimensions verified
-RUN-004,Running gear,Lower support roller,each,0,8,25.00,25.00,200.00,200.00,A,A,S02,Four per pod is a layout allowance not a released undercarriage design
-RUN-005,Running gear,Upper return guide roller,each,0,2,20.00,20.00,40.00,40.00,A,A,S02,One per pod provision; confirm need from track path
-RUN-006,Running gear,Track tension adjuster,each,0,2,45.00,45.00,90.00,90.00,A,A,S02,Owner concept: custom spring tensioner using motorcycle fork/spring hardware; allowance remains provisional and exact fork; spring; travel; loads; and mounting are undefined
-RUN-007,Running gear,Undercarriage axle stock and spacers,pod set,0,2,45.00,45.00,90.00,90.00,A,A,S03,Allowance for shafts not already supplied with roller assemblies
-RUN-008,Running gear,Undercarriage sealed bearings and seals,each,0,12,12.00,12.00,144.00,144.00,A,A,S03,Provisional spares and bearing positions; deduct bearings included in bought assemblies at quotation
-RUN-009,Running gear,Track retention guides and scrapers,pod set,0,2,25.00,25.00,50.00,50.00,A,A,S06,Custom material allowance; not proven track-retention performance
-CHS-001,Structure,Pod frame tube stock,kg,0,30,3.50,3.50,105.00,105.00,A,A,S06,Mass allowance only; grade and section depend on structural calculations
-CHS-002,Structure,Scissor frame tube stock,kg,0,25,3.50,3.50,87.50,87.50,A,A,S06,Mass allowance not a minimum-strength specification
-CHS-003,Structure,Longitudinal spine tube stock,kg,0,15,3.50,3.50,52.50,52.50,A,A,S06,Implement interface envelope remains to be measured
-CHS-004,Structure,Motor and reducer mounting plate stock,kg,0,12,4.00,4.00,48.00,48.00,A,A,S06,Plate thickness and mounting holes not yet released
-CHS-005,Structure,Pod side and base plate stock,kg,0,20,4.00,4.00,80.00,80.00,A,A,S06,Raw material; cutting and welding labor excluded here
-CHS-006,Structure,Scissor link and gusset plate stock,kg,0,10,4.00,4.00,40.00,40.00,A,A,S06,Raw material; no four-column cage
-CHS-007,Structure,Pivot shaft stock,kg,0,4,8.00,8.00,32.00,32.00,A,A,S04,Diameter and material remain drawing-dependent
-CHS-008,Structure,Scissor pivot bushings,each,0,12,4.00,4.00,48.00,48.00,A,A,S04,Provisional pivot count and wear allowance
-CHS-009,Structure,Scissor pivot pins and retainers,each,0,6,8.00,8.00,48.00,48.00,A,A,S04,Not an approved pin shear or bearing-load rating
-CHS-010,Structure,Unresolved positive width-lock provision,each,0,4,12.00,12.00,48.00,48.00,A,A,S04,Retained pin-budget reserve not selected hardware; owner proposes worm-only holding but plan requirement remains unresolved
-CHS-011,Structure,Width hard-stop material,set,0,1,20.00,20.00,20.00,20.00,A,A,S06,End stops and mounting material allowance
-CHS-012,Structure,Guard sheet and mesh,m2,0,3,35.00,35.00,105.00,105.00,A,A,S06,Scissor and drive guards only; cutting implement excluded
-CHS-013,Structure,Guard edge trim,m,0,5,3.00,3.00,15.00,15.00,A,A,S07,Routing and pinch-clearance assessment required
-CHS-014,Structure,Structural bolts nuts washers and retainers,lot,0,1,90.00,90.00,90.00,90.00,A,A,S04,Grades and locking method set by drawings
-CHS-015,Structure,Primer topcoat and corrosion-preparation materials,kit,0,1,60.00,60.00,60.00,60.00,A,A,S06,Does not include painting labor
-CHS-016,Structure,Width markings and identification labels,set,0,1,10.00,10.00,10.00,10.00,A,A,S07,Not a declaration of conformity
-WID-001,Width adjustment,Existing 12 V windshield motor with worm reduction,each,0,1,N/A,N/A,N/A,N/A,R,R,U01,Already owned; no new purchase applies; replacement value not estimated; owner estimates 3-5 A; torque speed stall current duty and holding unverified
-WID-002,Width adjustment,Screw and mating nut mechanism,set,0,1,60.00,60.00,60.00,60.00,A,A,S04,Lead length thrust wear buckling and retention need design; not an approved generic bolt or self-locking claim
-WID-003,Width adjustment,Screw thrust and radial bearings,set,0,1,35.00,35.00,35.00,35.00,A,A,S03,Separate from track and scissor bearings; shaft thrust must not be assumed acceptable at motor gearbox
-WID-004,Width adjustment,Motor-to-screw coupling and adapter,set,0,1,25.00,25.00,25.00,25.00,A,A,S04,Positive drive and retention required; sensor should detect actual screw rotation rather than motor motion alone
-WID-005,Width adjustment,Actuator brackets and bearing mounts,set,0,1,15.00,15.00,15.00,15.00,A,A,S06,Additional small hardware allowance; frame manufactured by owner
-WID-006,Width adjustment,Traction-pack-to-12 V actuator converter,each,0,1,90.00,90.00,90.00,90.00,A,A,S07,Separate from logic converters; starting stall surge full-pack voltage and safe isolation require verification
-WID-007,Width adjustment,Reversible DC motor driver,each,0,1,35.00,35.00,35.00,35.00,A,A,S07,Select after stall current; original wiper park wiring must not cause unintended movement
-WID-008,Width adjustment,Actuator branch fuse and independent enable provision,set,0,1,30.00,30.00,30.00,30.00,A,A,S07,Width drive must participate in independently testable stop path
-WID-009,Width adjustment,Hall or optical turn encoder and target,set,0,1,25.00,25.00,25.00,25.00,A,A,S07,Directional pulse counting on screw; pulses per turn and missed-count detection unqualified
-WID-010,Width adjustment,Width end-of-travel limit switch,each,0,2,12.00,12.00,24.00,24.00,A,A,S07,Minimum and maximum limits not replaced by pulse counting; hard stops already in CHS-011
-WID-011,Width adjustment,Width-drive current sensing provision,set,0,1,20.00,20.00,20.00,20.00,A,A,S07,Overload or jam indication; threshold and response require validation
-WID-012,Width adjustment,Known-position reference sensor,set,0,1,8.00,8.00,8.00,8.00,A,A,S07,Reference recovery requires explicit supervised action; no automatic homing or resume after power loss
-WID-013,Width adjustment,Width mechanism harness and strain relief,set,0,1,20.00,20.00,20.00,20.00,A,A,S07,Additional actuator harness not included in pod harness length allowances
-WID-014,Width adjustment,Actuator screw guard and local cable cover materials,set,0,1,20.00,20.00,20.00,20.00,A,A,S06,Specific screw guarding beyond main scissor and propulsion guards
-DRV-001,Propulsion,Traction motor with scenario-specific gearbox basis,each,1,2,1035.94,650.00,2071.88,1300.00,C,A,S11|S13|S15,48 V includes 16:1 planetary; 72 V is a 4 kW motor-only allowance using a 5 kW price proxy
-DRV-002,Propulsion,Matched motor controller,each,1,2,511.62,500.00,1023.24,1000.00,C,A,S12|S14,48 V supplier-recommended BD100; 72 V matched controller not yet selected
-DRV-003,Propulsion,Mechanical holding brake provision,each,1,2,223.27,250.00,446.54,500.00,C,A,S11|S07,Owner direction is default-applied stationary hold; 48 V optional 24 V brake price is reference only; type and holding torque unconfirmed; dynamic braking is a motor/controller selection and field-test decision
-DRV-004,Propulsion,Output shaft couplings or mounting hubs,each,1,2,30.00,30.00,60.00,60.00,A,A,S04,Separate track-interface hardware; verify radial load does not overload gearbox
-DRV-005,Propulsion,External output shaft stock,each,1,2,35.00,35.00,70.00,70.00,A,A,S04,Budget provision for independently supported sprocket shaft
-DRV-006,Propulsion,Output shaft bearing blocks,each,2,4,20.00,20.00,80.00,80.00,A,A,S03,Independent track load support not confirmed by this allowance
-DRV-007,Propulsion,Reduction sprockets for two-stage 72 V drive,each,4,8,N/A,20.00,N/A,160.00,I,A,S05,48 V external reduction not applicable; planetary provision in DRV-001; quantities apply to 72 V only; ratio about 10:1 is a screening example
-DRV-008,Propulsion,Reduction chain,m,3,6,N/A,20.00,N/A,120.00,I,A,S05,48 V external reduction not applicable; planetary provision in DRV-001; quantities apply to 72 V only; chain size and service factor not selected
-DRV-009,Propulsion,Intermediate reduction shafts,each,1,2,N/A,35.00,N/A,70.00,I,A,S04,48 V external reduction not applicable; planetary provision in DRV-001; quantities apply to 72 V only; adjust after ratio and shaft design
-DRV-010,Propulsion,Intermediate reduction bearings,each,2,4,N/A,20.00,N/A,80.00,I,A,S03,48 V external reduction not applicable; planetary provision in DRV-001; quantities apply to 72 V only; not duplicated output bearings
-DRV-011,Propulsion,Reduction chain tensioners,each,1,2,N/A,25.00,N/A,50.00,I,A,S05,48 V external reduction not applicable; planetary provision in DRV-001; quantities apply to 72 V only; drive guards in CHS-012
-DRV-012,Propulsion,Keys bushes and reduction fasteners,pod set,1,2,15.00,15.00,30.00,30.00,A,A,S04,Separate from chassis structural fasteners
-BAT-001,Battery and charging,Battery module with integrated BMS,each,1,2,1234.08,2449.24,2468.16,4898.48,C,A,S16|S17,48 V observed price plus conditional 21 percent tax reserve; 72 V 70 Ah battery-only allowance scaled from 60 Ah reference
-BAT-002,Battery and charging,Battery enclosure and terminal cover,each,1,2,90.00,90.00,180.00,180.00,A,A,S06,Mechanical debris protection and drainage; no assumed fire containment
-BAT-003,Battery and charging,Battery restraint and vibration-isolation hardware,pod set,1,2,30.00,30.00,60.00,60.00,A,A,S04,Restraint loads and vibration suitability need engineering review
-BAT-004,Battery and charging,Drain sealing and terminal-insulation materials,pod set,1,2,15.00,15.00,30.00,30.00,A,A,S07,Washdown strategy remains open
-BAT-005,Battery and charging,Matched battery charger,each,1,2,160.00,220.00,320.00,440.00,A,A,S16|S17,48 V and 72 V chemistry-specific chargers; deduct this line if included in final battery quotation
-BAT-006,Battery and charging,Charge connector and protective cap,pair,1,2,20.00,20.00,40.00,40.00,A,A,S07,Touch protection and DC ratings need verification at full-charge voltage
-BAT-007,Battery and charging,Charge fuse holder and interlock harness,pod set,1,2,25.00,25.00,50.00,50.00,A,A,S07,Interlock must inhibit operation during charging
-PWR-001,Power distribution,DC main fuse,each,1,2,25.00,25.00,50.00,50.00,A,A,S07,DC interrupt rating coordinated with pack fault current; ampere rating not chosen
-PWR-002,Power distribution,Touch-protected main fuse holder,each,1,2,25.00,25.00,50.00,50.00,A,A,S07,Must match selected fuse and full pack voltage
-PWR-003,Power distribution,DC service disconnect,each,1,2,55.00,55.00,110.00,110.00,A,A,S07,Not an AC-only switch or an assumed emergency braking device
-PWR-004,Power distribution,Monitored DC contactor provision,each,2,4,110.00,110.00,440.00,440.00,A,A,S07|S18,Two per pod is a budget provision pending safe-state design; S18 is only a price-class reference
-PWR-005,Power distribution,Contactor feedback and coil protection provision,each,2,4,15.00,15.00,60.00,60.00,A,A,S07,Confirm positively linked feedback where required and coil suppression response
-PWR-006,Power distribution,Pre-charge relay resistor and mounting,pod set,1,2,35.00,35.00,70.00,70.00,A,A,S07,Resistance energy duty and sequencing require controller capacitance data
-PWR-007,Power distribution,Controlled discharge and voltage-test provision,pod set,1,2,10.00,10.00,20.00,20.00,A,A,S07,No implied safe discharge time without measurement
-PWR-008,Power distribution,High-current cable,m,5,10,9.00,9.00,90.00,90.00,A,A,S07,Cable section temperature and routing calculations required; length is a cost allowance
-PWR-009,Power distribution,Power cable lugs,each,12,24,2.00,2.00,48.00,48.00,A,A,S07,Match conductor and stud size after selection
-PWR-010,Power distribution,High-current sealed connector,pair,2,4,25.00,25.00,100.00,100.00,A,A,S07,Cost provision only; phase and battery connectors counted by final harness drawing
-PWR-011,Power distribution,Power insulation heat-shrink and terminal boots,lot,1,1,20.00,20.00,20.00,20.00,A,A,S07,Includes test fixture wiring material
-PWR-012,Power distribution,Protected traction-to-control DC/DC converter,each,1,2,90.00,90.00,180.00,180.00,A,A,S07,Input must cover full pack operating range and transients; control rail not frozen
-PWR-013,Power distribution,Logic step-down supply,each,1,2,15.00,15.00,30.00,30.00,A,A,S07,5 V logic allowance; isolation and grounding review required
-PWR-014,Power distribution,Low-voltage fuse blocks fuses and terminals,pod set,1,2,25.00,25.00,50.00,50.00,A,A,S07,Protect safety and normal controls as required by the independent architecture
-PWR-015,Power distribution,Filament for DIY electronics enclosures and cable covers,kg,1,2,25.00,25.00,50.00,50.00,A,A,S06,Existing printer; polymer UV heat flame and ingress suitability unqualified; not structural or battery containment
-PWR-016,Power distribution,Cable glands vent and strain relief,lot,1,1,35.00,35.00,35.00,35.00,A,A,S07,Provisional quantity; pack and electronics ventilation require review
-PWR-017,Power distribution,Low-voltage control wire,m,25,50,0.80,0.80,40.00,40.00,A,A,S07,Length not a released harness cut list
-PWR-018,Power distribution,Shielded communications cable,m,8,15,3.00,3.00,45.00,45.00,A,A,S07,Communication topology and flexible scissor crossing not selected
-PWR-019,Power distribution,Sealed signal connectors,pair,6,12,5.00,5.00,60.00,60.00,A,A,S07,Connector pin counts require electrical drawings
-PWR-020,Power distribution,Conduit loom P-clips ties and wire labels,lot,1,1,35.00,35.00,35.00,35.00,A,A,S07,Retain service access and protect moving cable crossings
-PWR-021,Power distribution,Controller heat spreaders and thermal interface,pod set,1,2,25.00,25.00,50.00,50.00,A,A,S06|S07,Sealed-box dissipation must be checked under actual duty
-PWR-022,Power distribution,DIY enclosure mounting backplates,each,1,2,10.00,10.00,20.00,20.00,A,A,S06,Nonprinted mounting provision; not the thermal spreaders in PWR-021
-PWR-023,Power distribution,DIY enclosure gaskets and lid fasteners,pod set,1,2,8.00,8.00,16.00,16.00,A,A,S07,No IP or washdown rating established by a gasket allowance
-PWR-024,Power distribution,Threaded inserts for printed enclosures,pod set,1,2,5.00,5.00,10.00,10.00,A,A,S07,Pull-out and vibration retention to be verified
-SAF-001,Safety and control,Independent safety relay or controller allowance,set,1,1,300.00,300.00,300.00,300.00,A,A,S08,S08 is an illustrative 24 V relay not a selected complete safety architecture
-SAF-002,Safety and control,General emergency-stop assembly reused across build stages,each,1,1,35.00,35.00,35.00,35.00,A,A,S07,One assembly budgeted from bench through pod checks to final bot; required final stop count and placement remain subject to hazard review
-SAF-003,Safety and control,Manual reset enable and status controls,set,1,1,45.00,45.00,45.00,45.00,A,A,S07,No automatic rearming after reboot reconnection or stop recovery
-SAF-005,Safety and control,Local non-safety control board,each,1,2,25.00,25.00,50.00,50.00,A,A,S07,No tracked-pod firmware implementation is implied
-SAF-006,Safety and control,Isolated control communications interfaces,each,1,2,20.00,20.00,40.00,40.00,A,A,S07,Bus and command fault semantics remain design decisions
-SAF-007,Safety and control,Status beacon and buzzer,set,1,1,30.00,30.00,30.00,30.00,A,A,S07,Not a substitute for guarding or stop functions
-SAF-008,Safety and control,Service display USB interface and connectors,set,1,1,30.00,30.00,30.00,30.00,A,A,S07,Diagnostic use only
-SAF-009,Safety and control,Tilt and rollover sensing provision,set,0,1,120.00,120.00,120.00,120.00,A,A,S07,Architecture and trip thresholds require hazard review; not a qualified safety sensor
-SAF-010,Safety and control,Pod disconnect and guard interlock provision,set,0,1,80.00,80.00,80.00,80.00,A,A,S07,Count and safety function to be established; width sensors are in WID rows and implement interlocks excluded at Stage 2
-INS-001,Installed instrumentation,Isolated DC current transducer,each,1,2,50.00,50.00,100.00,100.00,A,A,S07,Range accuracy and isolation set after drive limits; no precision claimed
-INS-002,Installed instrumentation,Isolated pack-voltage measurement,each,1,2,20.00,20.00,40.00,40.00,A,A,S07,Must cover full-charge voltage and transients
-INS-003,Installed instrumentation,Temperature probes and harnesses,each,4,8,5.00,5.00,40.00,40.00,A,A,S07,Provisional motor controller pack and enclosure sensing positions
-INS-004,Installed instrumentation,Output shaft speed sensor and target,each,1,2,30.00,30.00,60.00,60.00,A,A,S07,Separate from internal motor Hall sensors; track speed still depends on sprocket geometry
-INS-005,Installed instrumentation,Non-safety test data logger,set,1,1,60.00,60.00,60.00,60.00,A,A,S07,Timestamped current voltage speed temperature and fault capture required
-INS-006,Installed instrumentation,Logger storage and reader,set,1,1,15.00,15.00,15.00,15.00,A,A,S07,No RTK receiver or autonomy computer included
-MNT-001,Handling and service,Chassis lifting and tie-down eyes,each,0,4,15.00,15.00,60.00,60.00,A,A,S04,Attachments and structure must be rated together after mass is known
-MNT-002,Handling and service,Prototype recovery towing bracket,set,0,1,40.00,40.00,40.00,40.00,A,A,S06,No passive trailer or road towing approval included
-MNT-004,Handling and service,Transport tie-down straps,each,0,2,N/A,N/A,N/A,N/A,R,R,U02,Owner reports two straps marked 500 kg; verify exact rating label condition and lashing arrangement before use
-MNT-006,Handling and service,Machine service supports,each,0,2,N/A,N/A,N/A,N/A,R,R,U02,Owner reports two existing supports; verify capacity stability and compatibility with the actual machine before use
-TST-001,Bench equipment,Guarded bench fixture steel,kg,20,20,3.50,3.50,70.00,70.00,A,A,S06,Reusable fixture retained separately from installed chassis structure
-TST-002,Bench equipment,Fixture feet anchors and fasteners,set,1,1,30.00,30.00,30.00,30.00,A,A,S04,Fixture strength and restraint need independent design
-TST-003,Bench equipment,Fixture guarding and protective screen,m2,1,1,35.00,35.00,35.00,35.00,A,A,S06,Material allowance only; no impact containment rating implied
-TST-010,Bench equipment,DC-capable clamp meter,each,1,1,100.00,100.00,100.00,100.00,A,A,S21,Independent workshop cross-check of installed current logging; select DC capability and range
-TST-011,Bench equipment,Infrared spot thermometer,each,1,1,50.00,50.00,50.00,50.00,A,A,S07,Supplementary external reading; not a winding temperature measurement
-TST-013,Bench equipment,Torque wrench,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tool available; verify range condition and calibration status for selected fasteners
-TST-014,Bench equipment,Insulated hand tools,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tool set available; condition and rating checks required; tools do not authorize live work
-TST-015,Bench equipment,Cable crimp tool dies and continuity accessories,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports tooling available; verify dies match selected lugs and contacts
-CON-001,Consumables and support,Coated welding electrode allowance,lot,0,1,30.00,30.00,30.00,30.00,A,A,S06,Owner reports a 20–160 A Daewoo MOSFET welder and coated electrodes; likely stick/MMA process needs model/manual confirmation
-CON-003,Consumables and support,Cutting grinding and drilling consumables,lot,1,1,40.00,40.00,40.00,40.00,A,A,S06,Not cutting or machining labor
-CON-004,Consumables and support,Thread locking sealant and grease,lot,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports suitable stock available; verify grade condition and compatibility against released drawings
-CON-005,Consumables and support,Initial electrical and mechanical spares,lot,1,1,100.00,100.00,100.00,100.00,A,A,S07|S04,Fuses connectors pins and fasteners; no complete spare battery track or motor included
-CON-006,Consumables and support,Non-welding starter PPE allowance,set,1,1,100.00,100.00,100.00,100.00,A,A,S06,Starter allowance for hearing protection grinding face shield paint-vapour respirator and task-appropriate gloves only where safe; no gloves near rotating machinery; glasses footwear and welding PPE reported available; hazard and product-SDS review required
-CON-009,Consumables and support,Deferred general workshop fire equipment allowance,set,1,1,60.00,60.00,60.00,60.00,A,A,S06,Retained provision pending competent fire-safety review; no battery-fire extinguishing capability claimed
-CON-010,Consumables and support,Cleaning and inspection kit,set,1,1,N/A,N/A,N/A,N/A,R,R,U02,Owner reports suitable supplies available; inspect condition and compatibility before use; no pressure-wash rating implied
+item_id,assembly,description,unit,qty_stage_1,qty_stage_2_total,unit_eur_48v,extended_eur_48v,basis_48v,source_ids,qualification_or_assumption
+RUN-001,Running gear,Rubber track 200x72x36,each,0,2,140.00,280.00,A,S01,Round allowance above observed single-track price; exact guide profile and load rating unqualified
+RUN-002,Running gear,Track drive sprocket and hub,each,0,2,90.00,180.00,A,S02,Must match selected track internal geometry; not selected by pitch alone
+RUN-003,Running gear,Front idler assembly,each,0,2,75.00,150.00,A,S02|S26,Two assumed; Cohidrex S26 is a Trabber-track idler lead only; no PowerTrack fit or dimensions verified
+RUN-004,Running gear,Lower support roller,each,0,8,25.00,200.00,A,S02,Four per pod is a layout allowance not a released undercarriage design
+RUN-005,Running gear,Upper return guide roller,each,0,2,20.00,40.00,A,S02,One per pod provision; confirm need from track path
+RUN-006,Running gear,Track tension adjuster,each,0,2,45.00,90.00,A,S02,Owner concept: custom spring tensioner using motorcycle fork/spring hardware; allowance remains provisional and exact fork; spring; travel; loads; and mounting are undefined
+RUN-007,Running gear,Undercarriage axle stock and spacers,pod set,0,2,45.00,90.00,A,S03,Allowance for shafts not already supplied with roller assemblies
+RUN-008,Running gear,Undercarriage sealed bearings and seals,each,0,12,12.00,144.00,A,S03,Provisional spares and bearing positions; deduct bearings included in bought assemblies at quotation
+RUN-009,Running gear,Track retention guides and scrapers,pod set,0,2,25.00,50.00,A,S06,Custom material allowance; not proven track-retention performance
+CHS-001,Structure,Pod frame tube stock,kg,0,30,3.50,105.00,A,S06,Mass allowance only; grade and section depend on structural calculations
+CHS-002,Structure,Scissor frame tube stock,kg,0,25,3.50,87.50,A,S06,Mass allowance not a minimum-strength specification
+CHS-003,Structure,Longitudinal spine tube stock,kg,0,15,3.50,52.50,A,S06,Implement interface envelope remains to be measured
+CHS-004,Structure,Motor and reducer mounting plate stock,kg,0,12,4.00,48.00,A,S06,Plate thickness and mounting holes not yet released
+CHS-005,Structure,Pod side and base plate stock,kg,0,20,4.00,80.00,A,S06,Raw material; cutting and welding labor excluded here
+CHS-006,Structure,Scissor link and gusset plate stock,kg,0,10,4.00,40.00,A,S06,Raw material; no four-column cage
+CHS-007,Structure,Pivot shaft stock,kg,0,4,8.00,32.00,A,S04,Diameter and material remain drawing-dependent
+CHS-008,Structure,Scissor pivot bushings,each,0,12,4.00,48.00,A,S04,Provisional pivot count and wear allowance
+CHS-009,Structure,Scissor pivot pins and retainers,each,0,6,8.00,48.00,A,S04,Not an approved pin shear or bearing-load rating
+CHS-010,Structure,Unresolved positive width-lock provision,each,0,4,12.00,48.00,A,S04,Retained pin-budget reserve not selected hardware; owner proposes worm-only holding but plan requirement remains unresolved
+CHS-011,Structure,Width hard-stop material,set,0,1,20.00,20.00,A,S06,End stops and mounting material allowance
+CHS-012,Structure,Guard sheet and mesh,m2,0,3,35.00,105.00,A,S06,Scissor and drive guards only; cutting implement excluded
+CHS-013,Structure,Guard edge trim,m,0,5,3.00,15.00,A,S07,Routing and pinch-clearance assessment required
+CHS-014,Structure,Structural bolts nuts washers and retainers,lot,0,1,90.00,90.00,A,S04,Grades and locking method set by drawings
+CHS-015,Structure,Primer topcoat and corrosion-preparation materials,kit,0,1,60.00,60.00,A,S06,Does not include painting labor
+CHS-016,Structure,Width markings and identification labels,set,0,1,10.00,10.00,A,S07,Not a declaration of conformity
+WID-001,Width adjustment,Existing 12 V windshield motor with worm reduction,each,0,1,N/A,N/A,R,U01,Already owned; no new purchase applies; replacement value not estimated; owner estimates 3-5 A; torque speed stall current duty and holding unverified
+WID-002,Width adjustment,Screw and mating nut mechanism,set,0,1,60.00,60.00,A,S04,Lead length thrust wear buckling and retention need design; not an approved generic bolt or self-locking claim
+WID-003,Width adjustment,Screw thrust and radial bearings,set,0,1,35.00,35.00,A,S03,Separate from track and scissor bearings; shaft thrust must not be assumed acceptable at motor gearbox
+WID-004,Width adjustment,Motor-to-screw coupling and adapter,set,0,1,25.00,25.00,A,S04,Positive drive and retention required; sensor should detect actual screw rotation rather than motor motion alone
+WID-005,Width adjustment,Actuator brackets and bearing mounts,set,0,1,15.00,15.00,A,S06,Additional small hardware allowance; frame manufactured by owner
+WID-006,Width adjustment,Traction-pack-to-12 V actuator converter,each,0,1,90.00,90.00,A,S07,Separate from logic converters; starting stall surge full-pack voltage and safe isolation require verification
+WID-007,Width adjustment,Reversible DC motor driver,each,0,1,35.00,35.00,A,S07,Select after stall current; original wiper park wiring must not cause unintended movement
+WID-008,Width adjustment,Actuator branch fuse and independent enable provision,set,0,1,30.00,30.00,A,S07,Width drive must participate in independently testable stop path
+WID-009,Width adjustment,Hall or optical turn encoder and target,set,0,1,25.00,25.00,A,S07,Directional pulse counting on screw; pulses per turn and missed-count detection unqualified
+WID-010,Width adjustment,Width end-of-travel limit switch,each,0,2,12.00,24.00,A,S07,Minimum and maximum limits not replaced by pulse counting; hard stops already in CHS-011
+WID-011,Width adjustment,Width-drive current sensing provision,set,0,1,20.00,20.00,A,S07,Overload or jam indication; threshold and response require validation
+WID-012,Width adjustment,Known-position reference sensor,set,0,1,8.00,8.00,A,S07,Reference recovery requires explicit supervised action; no automatic homing or resume after power loss
+WID-013,Width adjustment,Width mechanism harness and strain relief,set,0,1,20.00,20.00,A,S07,Additional actuator harness not included in pod harness length allowances
+WID-014,Width adjustment,Actuator screw guard and local cable cover materials,set,0,1,20.00,20.00,A,S06,Specific screw guarding beyond main scissor and propulsion guards
+DRV-001,Propulsion,Traction motor with planetary gearbox provision,each,1,2,1035.94,2071.88,C,S11,48 V includes a 16:1 planetary provision; exact ratio and output ratings remain unqualified
+DRV-002,Propulsion,Matched motor controller,each,1,2,511.62,1023.24,C,S12,Supplier-recommended BD100; exact limits and motor compatibility remain unqualified
+DRV-003,Propulsion,Mechanical holding brake provision,each,1,2,223.27,446.54,C,S11|S07,Owner direction is default-applied stationary hold; 48 V optional 24 V brake price is reference only; type and holding torque unconfirmed; dynamic braking is a motor/controller selection and field-test decision
+DRV-004,Propulsion,Output shaft couplings or mounting hubs,each,1,2,30.00,60.00,A,S04,Separate track-interface hardware; verify radial load does not overload gearbox
+DRV-005,Propulsion,External output shaft stock,each,1,2,35.00,70.00,A,S04,Budget provision for independently supported sprocket shaft
+DRV-006,Propulsion,Output shaft bearing blocks,each,2,4,20.00,80.00,A,S03,Independent track load support not confirmed by this allowance
+DRV-012,Propulsion,Keys bushes and reduction fasteners,pod set,1,2,15.00,30.00,A,S04,Separate from chassis structural fasteners
+BAT-001,Battery and charging,Ultimatron UBL-48-100H 51.2 V 100 Ah pack with BMS,each,1,2,1727.55,3455.10,C,S27,Public EUR 1699 including 19 percent VAT normalized by /1.19*1.21; battery only; per-pod fit and vehicle/regen/current qualifications remain open
+BAT-002,Battery and charging,Battery enclosure and terminal cover,each,1,2,90.00,180.00,A,S06,Mechanical debris protection and drainage; no assumed fire containment
+BAT-003,Battery and charging,Battery restraint and vibration-isolation hardware,pod set,1,2,30.00,60.00,A,S04,Restraint loads and vibration suitability need engineering review
+BAT-004,Battery and charging,Drain sealing and terminal-insulation materials,pod set,1,2,15.00,30.00,A,S07,Washdown strategy remains open
+BAT-005,Battery and charging,Retailer-listed 48 V 10 A LiFePO4 charger,each,1,2,161.67,323.34,C,S27,Separately listed EUR 159 including 19 percent VAT normalized by /1.19*1.21; not bundled with pack; exact model profile connectors and mains compatibility unqualified
+BAT-006,Battery and charging,Charge connector and protective cap,pair,1,2,20.00,40.00,A,S07,Touch protection and DC ratings need verification at full-charge voltage
+BAT-007,Battery and charging,Charge fuse holder and interlock harness,pod set,1,2,25.00,50.00,A,S07,Interlock must inhibit operation during charging
+PWR-001,Power distribution,DC main fuse,each,1,2,25.00,50.00,A,S07,DC interrupt rating coordinated with pack fault current; ampere rating not chosen
+PWR-002,Power distribution,Touch-protected main fuse holder,each,1,2,25.00,50.00,A,S07,Must match selected fuse and full pack voltage
+PWR-003,Power distribution,DC service disconnect,each,1,2,55.00,110.00,A,S07,Not an AC-only switch or an assumed emergency braking device
+PWR-004,Power distribution,Monitored DC contactor provision,each,2,4,110.00,440.00,A,S07|S18,Two per pod is a budget provision pending safe-state design; S18 is only a price-class reference
+PWR-005,Power distribution,Contactor feedback and coil protection provision,each,2,4,15.00,60.00,A,S07,Confirm positively linked feedback where required and coil suppression response
+PWR-006,Power distribution,Pre-charge relay resistor and mounting,pod set,1,2,35.00,70.00,A,S07,Resistance energy duty and sequencing require controller capacitance data
+PWR-007,Power distribution,Controlled discharge and voltage-test provision,pod set,1,2,10.00,20.00,A,S07,No implied safe discharge time without measurement
+PWR-008,Power distribution,High-current cable,m,5,10,9.00,90.00,A,S07,Cable section temperature and routing calculations required; length is a cost allowance
+PWR-009,Power distribution,Power cable lugs,each,12,24,2.00,48.00,A,S07,Match conductor and stud size after selection
+PWR-010,Power distribution,High-current sealed connector,pair,2,4,25.00,100.00,A,S07,Cost provision only; phase and battery connectors counted by final harness drawing
+PWR-011,Power distribution,Power insulation heat-shrink and terminal boots,lot,1,1,20.00,20.00,A,S07,Includes test fixture wiring material
+PWR-012,Power distribution,Protected traction-to-control DC/DC converter,each,1,2,90.00,180.00,A,S07,Input must cover full pack operating range and transients; control rail not frozen
+PWR-013,Power distribution,Logic step-down supply,each,1,2,15.00,30.00,A,S07,5 V logic allowance; isolation and grounding review required
+PWR-014,Power distribution,Low-voltage fuse blocks fuses and terminals,pod set,1,2,25.00,50.00,A,S07,Protect safety and normal controls as required by the independent architecture
+PWR-015,Power distribution,Filament for DIY electronics enclosures and cable covers,kg,1,2,25.00,50.00,A,S06,Existing printer; polymer UV heat flame and ingress suitability unqualified; not structural or battery containment
+PWR-016,Power distribution,Cable glands vent and strain relief,lot,1,1,35.00,35.00,A,S07,Provisional quantity; pack and electronics ventilation require review
+PWR-017,Power distribution,Low-voltage control wire,m,25,50,0.80,40.00,A,S07,Length not a released harness cut list
+PWR-018,Power distribution,Shielded communications cable,m,8,15,3.00,45.00,A,S07,Communication topology and flexible scissor crossing not selected
+PWR-019,Power distribution,Sealed signal connectors,pair,6,12,5.00,60.00,A,S07,Connector pin counts require electrical drawings
+PWR-020,Power distribution,Conduit loom P-clips ties and wire labels,lot,1,1,35.00,35.00,A,S07,Retain service access and protect moving cable crossings
+PWR-021,Power distribution,Controller heat spreaders and thermal interface,pod set,1,2,25.00,50.00,A,S06|S07,Sealed-box dissipation must be checked under actual duty
+PWR-022,Power distribution,DIY enclosure mounting backplates,each,1,2,10.00,20.00,A,S06,Nonprinted mounting provision; not the thermal spreaders in PWR-021
+PWR-023,Power distribution,DIY enclosure gaskets and lid fasteners,pod set,1,2,8.00,16.00,A,S07,No IP or washdown rating established by a gasket allowance
+PWR-024,Power distribution,Threaded inserts for printed enclosures,pod set,1,2,5.00,10.00,A,S07,Pull-out and vibration retention to be verified
+SAF-001,Safety and control,Independent safety relay or controller allowance,set,1,1,300.00,300.00,A,S08,S08 is an illustrative 24 V relay not a selected complete safety architecture
+SAF-002,Safety and control,General emergency-stop assembly reused across build stages,each,1,1,35.00,35.00,A,S07,One assembly budgeted from bench through pod checks to final bot; required final stop count and placement remain subject to hazard review
+SAF-003,Safety and control,Manual reset enable and status controls,set,1,1,45.00,45.00,A,S07,No automatic rearming after reboot reconnection or stop recovery
+SAF-005,Safety and control,Local non-safety control board,each,1,2,25.00,50.00,A,S07,No tracked-pod firmware implementation is implied
+SAF-006,Safety and control,Isolated control communications interfaces,each,1,2,20.00,40.00,A,S07,Bus and command fault semantics remain design decisions
+SAF-007,Safety and control,Status beacon and buzzer,set,1,1,30.00,30.00,A,S07,Not a substitute for guarding or stop functions
+SAF-008,Safety and control,Service display USB interface and connectors,set,1,1,30.00,30.00,A,S07,Diagnostic use only
+SAF-009,Safety and control,Tilt and rollover sensing provision,set,0,1,120.00,120.00,A,S07,Architecture and trip thresholds require hazard review; not a qualified safety sensor
+SAF-010,Safety and control,Pod disconnect and guard interlock provision,set,0,1,80.00,80.00,A,S07,Count and safety function to be established; width sensors are in WID rows and implement interlocks excluded at Stage 2
+INS-001,Installed instrumentation,Isolated DC current transducer,each,1,2,50.00,100.00,A,S07,Range accuracy and isolation set after drive limits; no precision claimed
+INS-002,Installed instrumentation,Isolated pack-voltage measurement,each,1,2,20.00,40.00,A,S07,Must cover full-charge voltage and transients
+INS-003,Installed instrumentation,Temperature probes and harnesses,each,4,8,5.00,40.00,A,S07,Provisional motor controller pack and enclosure sensing positions
+INS-004,Installed instrumentation,Output shaft speed sensor and target,each,1,2,30.00,60.00,A,S07,Separate from internal motor Hall sensors; track speed still depends on sprocket geometry
+INS-005,Installed instrumentation,Non-safety test data logger,set,1,1,60.00,60.00,A,S07,Timestamped current voltage speed temperature and fault capture required
+INS-006,Installed instrumentation,Logger storage and reader,set,1,1,15.00,15.00,A,S07,No RTK receiver or autonomy computer included
+MNT-001,Handling and service,Chassis lifting and tie-down eyes,each,0,4,15.00,60.00,A,S04,Attachments and structure must be rated together after mass is known
+MNT-002,Handling and service,Prototype recovery towing bracket,set,0,1,40.00,40.00,A,S06,No passive trailer or road towing approval included
+MNT-004,Handling and service,Transport tie-down straps,each,0,2,N/A,N/A,R,U02,Owner reports two straps marked 500 kg; verify exact rating label condition and lashing arrangement before use
+MNT-006,Handling and service,Machine service supports,each,0,2,N/A,N/A,R,U02,Owner reports two existing supports; verify capacity stability and compatibility with the actual machine before use
+TST-001,Bench equipment,Guarded bench fixture steel,kg,20,20,3.50,70.00,A,S06,Reusable fixture retained separately from installed chassis structure
+TST-002,Bench equipment,Fixture feet anchors and fasteners,set,1,1,30.00,30.00,A,S04,Fixture strength and restraint need independent design
+TST-003,Bench equipment,Fixture guarding and protective screen,m2,1,1,35.00,35.00,A,S06,Material allowance only; no impact containment rating implied
+TST-010,Bench equipment,DC-capable clamp meter,each,1,1,100.00,100.00,A,S21,Independent workshop cross-check of installed current logging; select DC capability and range
+TST-011,Bench equipment,Infrared spot thermometer,each,1,1,50.00,50.00,A,S07,Supplementary external reading; not a winding temperature measurement
+TST-013,Bench equipment,Torque wrench,set,1,1,N/A,N/A,R,U02,Owner reports tool available; verify range condition and calibration status for selected fasteners
+TST-014,Bench equipment,Insulated hand tools,set,1,1,N/A,N/A,R,U02,Owner reports tool set available; condition and rating checks required; tools do not authorize live work
+TST-015,Bench equipment,Cable crimp tool dies and continuity accessories,set,1,1,N/A,N/A,R,U02,Owner reports tooling available; verify dies match selected lugs and contacts
+CON-001,Consumables and support,Coated welding electrode allowance,lot,0,1,30.00,30.00,A,S06,Owner reports a 20–160 A Daewoo MOSFET welder and coated electrodes; likely stick/MMA process needs model/manual confirmation
+CON-003,Consumables and support,Cutting grinding and drilling consumables,lot,1,1,40.00,40.00,A,S06,Not cutting or machining labor
+CON-004,Consumables and support,Thread locking sealant and grease,lot,1,1,N/A,N/A,R,U02,Owner reports suitable stock available; verify grade condition and compatibility against released drawings
+CON-005,Consumables and support,Initial electrical and mechanical spares,lot,1,1,100.00,100.00,A,S07|S04,Fuses connectors pins and fasteners; no complete spare battery track or motor included
+CON-006,Consumables and support,Non-welding starter PPE allowance,set,1,1,100.00,100.00,A,S06,Starter allowance for hearing protection grinding face shield paint-vapour respirator and task-appropriate gloves only where safe; no gloves near rotating machinery; glasses footwear and welding PPE reported available; hazard and product-SDS review required
+CON-009,Consumables and support,Deferred general workshop fire equipment allowance,set,1,1,60.00,60.00,A,S06,Retained provision pending competent fire-safety review; no battery-fire extinguishing capability claimed
+CON-010,Consumables and support,Cleaning and inspection kit,set,1,1,N/A,N/A,R,U02,Owner reports suitable supplies available; inspect condition and compatibility before use; no pressure-wash rating implied

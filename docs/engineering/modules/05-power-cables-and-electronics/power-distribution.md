@@ -5,19 +5,25 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**Summary:** Cost allowances and unqualified requirements for switchgear,
-precharge, control supplies, power distribution, and electronics enclosures.
-The [requirements section](power-distribution.md#specification-and-inspection-requirements)
-links each item family to evidence still needed. The listed examples are not
-selected or qualified components.
+**Summary:** Follow power from the battery through protection to the drive
+and control supplies, then inspect enclosure and cooling interfaces. This is
+a requirements map, not a released schematic; no rated device is selected.
 
-**Navigate:** [Requirements](power-distribution.md#specification-and-inspection-requirements) ·
+## Parts at a glance
+
+| Part to inspect | Current choice / status | Cost and specifications | Connects to / mounting detail |
+| --- | --- | --- | --- |
+| [Main fuse, disconnect and contactors](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) | Allowances; DC-CON-72V400A is only a price example | [Switchgear costs](power-distribution.md#0505-main-fuses-disconnects-contactors-and-feedback) · [Ratings/feedback requirements](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) | [Pack/BMS](../04-battery-and-charging/batteries.md#ps18-battery-packs-and-bms) · [Independent stop](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
+| [Precharge and discharge hardware](power-distribution.md#ps22-precharge-and-discharge) | Resistance, energy, sequence and timing open | [Precharge/discharge costs](power-distribution.md#0506-precharge-discharge-and-voltage-test-hardware) · [Required data](power-distribution.md#ps22-precharge-and-discharge) | [Controller input](../02-drive-train/propulsion.md#ps14-traction-motor-and-controller) |
+| [Control DC/DC and branch protection](power-distribution.md#ps24-control-supplies-and-branch-protection) | Control-rail loads and exact converters unselected | [Supply costs](power-distribution.md#0507-control-dcdc-logic-supplies-and-branch-protection) · [Supply requirements](power-distribution.md#ps24-control-supplies-and-branch-protection) | [Brake coils](../02-drive-train/propulsion.md#ps15-mechanical-brakes) · [Control boards](../06-safety-controls-and-sensors/safety-controls.md#ps29-normal-control-and-diagnostics) |
+| [Printed covers and glands](power-distribution.md#ps25-printed-enclosures-and-cable-glands) | DIY electronics packaging, not approved battery containment | [Enclosure costs](power-distribution.md#0508-electronics-enclosures-glands-cooling-and-mounting) · [Material/ingress requirements](power-distribution.md#ps25-printed-enclosures-and-cable-glands) | [Cable entry and strain relief](cables-connectors.md#ps23-high-current-harness) · [Heat spreaders](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) |
+| [Heat spreaders, backplates and seals](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) | Thermal interfaces and insert retention unqualified | [Thermal/mounting costs](power-distribution.md#0508-electronics-enclosures-glands-cooling-and-mounting) · [Thermal requirements](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) | [Controller losses and limits](../02-drive-train/propulsion.md#ps14-traction-motor-and-controller) · [Printed enclosure](power-distribution.md#ps25-printed-enclosures-and-cable-glands) |
+
+**Further detail:** [Release requirements](power-distribution.md#specification-and-inspection-requirements) ·
 [Sourcing](power-distribution.md#sourcing) · [Interfaces](power-distribution.md#interfaces-with-other-scopes) ·
-[Itemized costs](power-distribution.md#detailed-module-costs) |
-[Chassis BOM](../../bom/chassis-bom.md#scope-and-decisions) ·
-[Cost totals](../../cost-breakdown.md#05--power-cables-and-electronics) ·
-[Ledger](../../bom/chassis-bom.csv) · [Release checklist](../../chassis-build-requirements.md) ·
-[Supplier register](../../bom/sources.md#source-id-lookup) ·
+[Itemized costs](power-distribution.md#detailed-module-costs)
+
+**Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
 [Module 05 overview](README.md)
 
 ## Specification and inspection requirements
@@ -28,6 +34,11 @@ completed tests. Cost-ledger ranges are inclusive.
 ### PS21: Main fuses, disconnects and contactors
 
 **Cost-ledger coverage:** PWR-001:PWR-005
+
+**Part links:** [Switchgear costs](power-distribution.md#0505-main-fuses-disconnects-contactors-and-feedback) ·
+[Pack fault-current/voltage limits](../04-battery-and-charging/batteries.md#ps18-battery-packs-and-bms) ·
+[Cable/fuse coordination](cables-connectors.md#ps23-high-current-harness) ·
+[Stop-chain feedback](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control).
 
 **Required purchasing/manufacturing definition:** Fuse time-current curve, DC breaking
 capacity and fault coordination; holder/disconnect DC ratings; contactor
@@ -42,6 +53,10 @@ feedback records; welded-contact fault response evidence
 
 **Cost-ledger coverage:** PWR-006:PWR-007
 
+**Part links:** [Precharge/discharge costs](power-distribution.md#0506-precharge-discharge-and-voltage-test-hardware) ·
+[Controller input requirements](../02-drive-train/propulsion.md#ps14-traction-motor-and-controller) ·
+[Voltage sensing](../06-safety-controls-and-sensors/safety-controls.md#ps31-installed-instrumentation-and-logging).
+
 **Required purchasing/manufacturing definition:** Controller input capacitance and
 charging limits; precharge resistance/energy/duty and relay sequence; discharge energy,
 component ratings, voltage-test points and isolation criteria
@@ -53,6 +68,11 @@ safe discharge interval
 ### PS24: Control supplies and branch protection
 
 **Cost-ledger coverage:** PWR-012:PWR-014
+
+**Part links:** [Control-supply costs](power-distribution.md#0507-control-dcdc-logic-supplies-and-branch-protection) ·
+[Brake-coil requirements](../02-drive-train/propulsion.md#ps15-mechanical-brakes) ·
+[Control-board loads](../06-safety-controls-and-sensors/safety-controls.md#ps29-normal-control-and-diagnostics) ·
+[Separately budgeted width-drive supply](../03-width-adjustment/width-adjustment.md#ps11-width-drive-power-and-protection).
 
 **Required purchasing/manufacturing definition:** Actual control-rail/load budget
 including brakes, safety coils and startup loads; DC/DC input range/isolation/thermal
@@ -66,6 +86,11 @@ automatic restart
 
 **Cost-ledger coverage:** PWR-015:PWR-016
 
+**Part links:** [Enclosure/gland costs](power-distribution.md#0508-electronics-enclosures-glands-cooling-and-mounting) ·
+[Cable entry](cables-connectors.md#ps23-high-current-harness) ·
+[Thermal backplates and inserts](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) ·
+[Separate battery containment](../04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints).
+
 **Required purchasing/manufacturing definition:** Enclosure CAD/revision, resin grade
 and batch, print orientation/walls/infill/process, heat/UV/flame suitability, gland
 cable diameter ranges, vent/drain and sealing strategy
@@ -78,6 +103,10 @@ IP rating inferred from nominal filament type
 
 **Cost-ledger coverage:** PWR-021:PWR-024
 
+**Part links:** [Thermal/mounting costs](power-distribution.md#0508-electronics-enclosures-glands-cooling-and-mounting) ·
+[Controller data](../02-drive-train/propulsion.md#ps14-traction-motor-and-controller) ·
+[Printed-box material limits](power-distribution.md#ps25-printed-enclosures-and-cable-glands).
+
 **Required purchasing/manufacturing definition:** Heat-flow/loss budget,
 backplate/spreader material/thickness/contact area, thermal interface, gasket
 compression, lid fastener spacing and insert retention at service temperature
@@ -86,87 +115,95 @@ compression, lid fastener spacing and insert retention at service temperature
 inspection; thermal and insert-retention evidence on actual printed configuration; no
 enclosure thermal/ingress rating claimed before qualification
 
-[↑ Back to document overview](power-distribution.md#document-overview)
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
 
 
 ## Sourcing
 
-[S06](../../bom/sources.md#s06) · [S07](../../bom/sources.md#s07) ·
-[S18](../../bom/sources.md#s18).
+[Dedeman fabrication supplies (S06)](../../bom/sources.md#s06-dedeman-fabrication-supplies) ·
+[RS electrical components (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools) ·
+[DOLD DC-CON-72V400A contactor example (S18)](../../bom/sources.md#s18-dc-con-72v400a-contactor-example).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
 
-[↑ Back to document overview](power-distribution.md#document-overview)
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
 
 
 ## Interfaces with other scopes
 
-- [Cables, connectors and harnesses](cables-connectors.md)
-- [Safety controls and sensors](../06-safety-controls-and-sensors/safety-controls.md)
-- [Propulsion, reductions and brakes](../02-drive-train/propulsion.md)
-- [Batteries and charging](../04-battery-and-charging/batteries.md)
+| Interface | Owning detail |
+| --- | --- |
+| Conductor, connector and crimp sizing | [High-current harness](cables-connectors.md#ps23-high-current-harness) |
+| Isolation sequence, braking and restart prevention | [Independent stopping](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
+| Controller input range and regeneration | [Drive compatibility and duty](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
+| Full-charge voltage, fault current and BMS opening | [Battery packs and BMS](../04-battery-and-charging/batteries.md#ps18-battery-packs-and-bms) |
 
-[↑ Back to document overview](power-distribution.md#document-overview)
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
 
 ## Detailed module costs
+
+**Cost context:** [Module 05 totals](../../cost-breakdown.md#05--power-cables-and-electronics) ·
+[Ledger and assumptions](../../bom/chassis-bom.csv) ·
+[Release checklist](../../chassis-build-requirements.md).
 
 <!-- BEGIN GENERATED: details -->
 Generated from the [cost ledger](../../bom/chassis-bom.csv).
 Quantities are cumulative Stage 2; prices are line totals, not unit prices.
+Item links open the purchasing and inspection requirements.
 C = calculated reference; A = allowance; I = included; R = reused.
 N/A never means an unknown purchase is free.
 
-### Cost: switchgear
+<a id="cost-switchgear"></a>
 
-**05.05 Main fuses disconnects contactors and feedback**
+### 05.05 Main fuses disconnects contactors and feedback
 
-| Item / cumulative quantity | Total / basis (both variants) |
+| Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| PWR-001 - DC main fuse (2 each) | €50.00 / A |
-| PWR-002 - Touch-protected main fuse holder (2 each) | €50.00 / A |
-| PWR-003 - DC service disconnect (2 each) | €110.00 / A |
-| PWR-004 - Monitored DC contactor provision (4 each) | €440.00 / A |
-| PWR-005 - Contactor feedback and coil protection provision (4 each) | €60.00 / A |
+| [PWR-001 - DC main fuse](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) (2 each) | €50.00 / A |
+| [PWR-002 - Touch-protected main fuse holder](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) (2 each) | €50.00 / A |
+| [PWR-003 - DC service disconnect](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) (2 each) | €110.00 / A |
+| [PWR-004 - Monitored DC contactor provision](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) (4 each) | €440.00 / A |
+| [PWR-005 - Contactor feedback and coil protection provision](power-distribution.md#ps21-main-fuses-disconnects-and-contactors) (4 each) | €60.00 / A |
 | **Module subtotal** | €710.00 |
 
-### Cost: precharge
+<a id="cost-precharge"></a>
 
-**05.06 Precharge discharge and voltage-test hardware**
+### 05.06 Precharge discharge and voltage-test hardware
 
-| Item / cumulative quantity | Total / basis (both variants) |
+| Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| PWR-006 - Pre-charge relay resistor and mounting (2 pod set) | €70.00 / A |
-| PWR-007 - Controlled discharge and voltage-test provision (2 pod set) | €20.00 / A |
+| [PWR-006 - Pre-charge relay resistor and mounting](power-distribution.md#ps22-precharge-and-discharge) (2 pod set) | €70.00 / A |
+| [PWR-007 - Controlled discharge and voltage-test provision](power-distribution.md#ps22-precharge-and-discharge) (2 pod set) | €20.00 / A |
 | **Module subtotal** | €90.00 |
 
-### Cost: control-supplies
+<a id="cost-control-supplies"></a>
 
-**05.07 Control DC/DC logic supplies and branch protection**
+### 05.07 Control DC/DC logic supplies and branch protection
 
-| Item / cumulative quantity | Total / basis (both variants) |
+| Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| PWR-012 - Protected traction-to-control DC/DC converter (2 each) | €180.00 / A |
-| PWR-013 - Logic step-down supply (2 each) | €30.00 / A |
-| PWR-014 - Low-voltage fuse blocks fuses and terminals (2 pod set) | €50.00 / A |
+| [PWR-012 - Protected traction-to-control DC/DC converter](power-distribution.md#ps24-control-supplies-and-branch-protection) (2 each) | €180.00 / A |
+| [PWR-013 - Logic step-down supply](power-distribution.md#ps24-control-supplies-and-branch-protection) (2 each) | €30.00 / A |
+| [PWR-014 - Low-voltage fuse blocks fuses and terminals](power-distribution.md#ps24-control-supplies-and-branch-protection) (2 pod set) | €50.00 / A |
 | **Module subtotal** | €260.00 |
 
-### Cost: enclosures
+<a id="cost-enclosures"></a>
 
-**05.08 Electronics enclosures glands cooling and mounting**
+### 05.08 Electronics enclosures glands cooling and mounting
 
-| Item / cumulative quantity | Total / basis (both variants) |
+| Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| PWR-015 - Filament for DIY electronics enclosures and cable covers (2 kg) | €50.00 / A |
-| PWR-016 - Cable glands vent and strain relief (1 lot) | €35.00 / A |
-| PWR-021 - Controller heat spreaders and thermal interface (2 pod set) | €50.00 / A |
-| PWR-022 - DIY enclosure mounting backplates (2 each) | €20.00 / A |
-| PWR-023 - DIY enclosure gaskets and lid fasteners (2 pod set) | €16.00 / A |
-| PWR-024 - Threaded inserts for printed enclosures (2 pod set) | €10.00 / A |
+| [PWR-015 - Filament for DIY electronics enclosures and cable covers](power-distribution.md#ps25-printed-enclosures-and-cable-glands) (2 kg) | €50.00 / A |
+| [PWR-016 - Cable glands vent and strain relief](power-distribution.md#ps25-printed-enclosures-and-cable-glands) (1 lot) | €35.00 / A |
+| [PWR-021 - Controller heat spreaders and thermal interface](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) (2 pod set) | €50.00 / A |
+| [PWR-022 - DIY enclosure mounting backplates](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) (2 each) | €20.00 / A |
+| [PWR-023 - DIY enclosure gaskets and lid fasteners](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) (2 pod set) | €16.00 / A |
+| [PWR-024 - Threaded inserts for printed enclosures](power-distribution.md#ps27-thermal-paths-and-enclosure-hardware) (2 pod set) | €10.00 / A |
 | **Module subtotal** | €181.00 |
 
-| Scope total | Total (both variants) |
+| Scope total | 48 V |
 | --- | ---: |
 | **All items owned by this scope** | €1,241.00 |
 <!-- END GENERATED: details -->
 
-[↑ Back to document overview](power-distribution.md#document-overview)
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)

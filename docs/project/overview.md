@@ -12,11 +12,18 @@ self-contained tracked pods joined by a variable-width scissor frame, with a
 longitudinal implement spine. The first implement is the DAC 9100 underbody
 mower. A washable conveyor, passive trailer, and front fruit drum are planned
 attachments, not implemented software features. The four-column cage is excluded.
+The first mower configuration retains the DAC 9100's own combustion engine;
+the traction batteries do not supply blade-driving power. The
+[operating cases](../../plan.md#provisional-engineering-targets) now use a
+4 km/h maximum V1 travel target and an eight-hour preferred battery-runtime
+target, not demonstrated capabilities.
 
-The plan's approximate 48 V, 8 kWh, two 2 kW continuous drives, 70-80 Nm per
-track, and 4 km/h mowing figures are provisional sizing targets, not accepted
-component specifications or firmware limits. Pricing and utilization are
-business hypotheses. Preserve the full evidence distinctions in the plan.
+The confirmed battery direction is two independent 51.2 V / 100 Ah LiFePO4
+packs: 10.24 kWh nominal and 8.192 kWh at the assumed 80% usable fraction,
+before reserves. The recommended budget pack is not a qualified vehicle
+selection. The drive, torque and 4 km/h figures remain sizing inputs rather
+than accepted component specifications or firmware limits; pricing and
+utilization are business hypotheses.
 
 ## What the repository contains
 

@@ -1,4 +1,4 @@
-allowance_id,label,eur_48v,eur_72v
-freight,Freight/import/brokerage provision,500.00,700.00
-machining,Outsourced precision machining provision,350.00,650.00
-energy,DIY fabrication/printing energy,30.00,30.00
+allowance_id,label,eur_48v
+freight,Freight/import/brokerage provision,500.00
+machining,Outsourced precision machining provision,350.00
+energy,DIY fabrication/printing energy,30.00

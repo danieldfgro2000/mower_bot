@@ -5,13 +5,14 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**Summary:** A dated record of user inputs that changed estimate assumptions,
-followed by [qualification loops](feedback.md#feedback-and-qualification-loops)
-that identify technical evidence still needed. Decisions in this log are not
-component approval or operating authorization.
+**Summary:** Why a part or estimating assumption changed, and what remains
+open. Use the current-component links beside each decision to inspect today's
+price, specifications, and fit; the dated record itself is not approval.
 
-**Navigate:** [Feedback decisions](feedback.md#feedback-decisions) ·
-[Qualification loops](feedback.md#feedback-and-qualification-loops) |
+**On this page:** [Decision map and history](feedback.md#feedback-decisions) ·
+[Qualification loops](feedback.md#feedback-and-qualification-loops)
+
+**Related documents:**
 [Chassis BOM](chassis-bom.md) ·
 [Cost ledger](chassis-bom.csv) ·
 [Supplier register](sources.md#source-id-lookup) ·
@@ -19,12 +20,29 @@ component approval or operating authorization.
 
 ## Feedback decisions
 
+Read each date and correction together. Current requirements live in the
+linked engineering scopes, not in an earlier proposal.
+
+| Decision record | Current component / working view |
+| --- | --- |
+| [Propulsion comparison (F01)](feedback.md#f01-propulsion) | [Motor choices, prices and specifications](../modules/02-drive-train/propulsion.md#parts-at-a-glance) |
+| [Budget target (F02)](feedback.md#f02-budget) | [Estimate rules and scope](chassis-bom.md#estimate-rules) |
+| [Existing inventory and fabrication (F03)](feedback.md#f03-existing-inventory-and-fabrication) | [Workshop buy/reuse choices](../modules/07-workshop-and-support/workshop.md#parts-at-a-glance) |
+| [Rolling adjustment and donor motor (F04)](feedback.md#f04-adjustment-mode-and-actuator) | [Motor data and mechanical drive path](../modules/03-width-adjustment/width-adjustment.md#donor-motor-and-allowance) |
+| [Worm-only holding and position proposal (F05)](feedback.md#f05-holding-and-position-proposal) | [Unresolved holding and stopping](../modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) |
+| [Packaging and site targets (F06)](feedback.md#f06-packaging-and-site-targets) | [Width and slope inputs](../width-and-slope-sizing.md#inputs-and-unresolved-definitions) |
+| [Slope orientation and reduced speed (F07)](feedback.md#f07-slope-orientation-and-speed) | [Reduced-speed implications](../width-and-slope-sizing.md#effect-of-accepting-reduced-speed) |
+| [Bare motor and HPM5000B sourcing (F08)](feedback.md#f08-bare-motor-two-stage-chains-and-hpm5000b-sourcing) | [HPM5000B price and exclusions](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) · [Later in-drum study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study) |
+| [Rear motor position (F09)](feedback.md#f09-rear-traction-motor-position) | [Motor/drum layout and mounting interfaces](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| [Workshop, test method and app control (F10)](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control) | [Tool-by-tool price/reuse table](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools) · [Independent stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
+| [Motor braking and stationary hold (F11)](feedback.md#f11-motor-braking-and-stationary-hold) | [Braking direction](../modules/02-drive-train/propulsion.md#owner-braking-direction-2026-10-27) |
+
 ### F01: propulsion
 
 **Decision recorded on 2026-10-26:** Compare 48 V / approximately 2 kW and 72 V /
 approximately 4 kW per motor before selecting.
 
-**Effect on estimate:** Two alternative cost columns; never buy or add both scenarios
+**Historical effect on estimate (superseded by F12):** Two alternative cost columns; never buy or add both scenarios
 together.
 
 ### F02: budget
@@ -42,8 +60,9 @@ frame and electronics/cable enclosures will be manufactured by the user.
 
 **Effect on estimate:** No welder/printer purchase; purchased frame labor N/A,
 retain steel/consumables, and replace bought electronics boxes with
-filament/backplates/seals/inserts. Precision machining and test equipment remain
-unconfirmed.
+filament/backplates/seals/inserts. Precision machining and test equipment were
+unconfirmed at this date; later inventory/access inputs are in
+[Workshop, test method and app control (F10)](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control).
 
 ### F04: adjustment mode and actuator
 
@@ -61,7 +80,8 @@ reused with purchase cost N/A (already owned). No adjustment speed is yet valida
 lock and incremental Hall/optical turn counting converted to width.
 
 **Effect on estimate:** Record the proposal and reference/limit provisions; **do not yet
-remove the plan's positive-locking requirement**. CHS-010 retains a €48 pin-cost
+remove the [plan's positive-locking requirement](../../../plan.md#42-variable-width-scissor-frame)**.
+The [width-lock provision (CHS-010)](../modules/01-structure-and-running-gear/frame.md#0105-scissor-pivots-locks-and-hard-stops) retains a €48 pin-cost
 reserve, not a selected or integrated automatic locking design. Holding remains a
 release blocker.
 
@@ -94,7 +114,8 @@ two-stage chain reduction rather than the planetary package. Initially retain
 approximately 2 kW per drive with a €500 tax-inclusive bare-motor allowance;
 subsequently requested a sourced HPM5000B with price and link.
 
-**Effect on estimate:** ALT-DRV-001 records a 48 V HPM5000B candidate at
+**Effect on estimate:** [HPM5000B alternative ALT-DRV-001](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
+records a 48 V candidate at
 US$446 / €482.36 each under existing FX and provisional VAT assumptions,
 excluding delivery/duty/brokerage. This is a sourced alternative, not a selected
 5 kW machine-power upgrade or an extra motor added to baseline totals.
@@ -102,10 +123,14 @@ The main CSV still costs the former planetary scenario: a complete replacement
 must re-cost reduction hardware, compatible controller/brake, machining and any
 affected battery/electrical/cooling provisions. No updated total is claimed yet.
 
-**2026-10-27 correction:** The current HPM5000B CAD study uses three custom
+**2026-10-27 correction:** The [HPM5000B CAD study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study) uses three custom
 planetary stages inside a 350 mm drive drum, replacing the earlier two-stage
 chain concept for this candidate only. The custom gearbox remains unpriced and
 unqualified; this does not change the baseline drive or its totals.
+
+**Continue with the current candidate:** [HPM5000B price](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price) ·
+[Specifications](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) ·
+[Mounting to the track](../modules/02-drive-train/propulsion.md#motor-to-track-mounting).
 
 ### F09: rear traction-motor position
 
@@ -118,7 +143,20 @@ layout direction only; the distance datum, tool reactions, complete-machine CG,
 and track support loads remain unverified. This does not change the CAD
 orientation, baseline BOM quantities, or costs.
 
+**2026-10-28 clarification:** The roughly 1 m forward distance is not a fixed
+requirement. Choose the tool position through packaging and stability
+analysis, then define its actual CG and working-force datums. The
+[plan's fore-aft direction](../../../plan.md#52-motor-and-gearbox-target)
+retains the up-to-50 kg tool case without claiming a validated counterbalance.
+
 ### F10: workshop equipment, test method, and mobile-app control
+
+**Detail:** [Test-method decision](feedback.md#test-method-decision) ·
+[App control and E-stop intent](feedback.md#app-control-and-e-stop-decision) ·
+[Workshop inventory](feedback.md#workshop-inventory-and-fabrication) ·
+[Cost-scope changes](feedback.md#workshop-cost-scope-changes).
+
+#### Test-method decision
 
 **Decision recorded on 2026-10-27:** Use bench checks before field checks.
 Torque will be calculated from the selected motor/reduction data and will remain
@@ -130,6 +168,8 @@ observations will use onboard logs plus observer notes. Initial field checks are
 for a bare rolling chassis on flat, controlled ground, without a mower or
 attachment.
 
+#### App control and E-stop decision
+
 **Control intent:** The owner intends a mobile app as the only normal operator
 control, expects loss of connection to stop the bot, and proposes one general
 emergency stop that interrupts current to all modules. This is a proposed
@@ -140,6 +180,9 @@ standalone bench-pendant allowances are removed; the app is not treated as the
 independent emergency stop. One general E-stop assembly is budgeted and reused
 from the bench through individual pod checks to the final bot; the final
 machine's required stop count and placement remain subject to hazard review.
+See the [independent stopping requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control).
+
+#### Workshop inventory and fabrication
 
 **Workshop and fabrication inputs:** The owner reports two transport straps
 described as 500 kg, two service supports, a torque wrench, insulated tools,
@@ -160,6 +203,8 @@ available. Use off-the-shelf gears where possible; general lathe/mill access is
 available but no gear-cutting capability. Retain the outsourced machining
 provision for parts that cannot be made in-house.
 
+#### Workshop cost-scope changes
+
 **Effect on estimate:** Remove the dynamometer/torque package and separate
 multimeter, tachometer, bench pendant, industrial remote, lifting slings,
 shackles, portable test-area barriers, and charging-surface allowance. Retain
@@ -169,6 +214,8 @@ bench testing remains unauthorized until the relevant safety and test gates are
 released. Remove the separate €250 calibration/setup service allowance and
 rely on supplier calibration data where provided; end-to-end sensor scaling,
 channel mapping, and measurement checks remain required.
+Current [workshop parts, requirements and costs](../modules/07-workshop-and-support/workshop.md#parts-at-a-glance)
+separate reused inventory from new allowances.
 
 ### F11: motor braking and stationary hold
 
@@ -183,22 +230,54 @@ has been set.
 
 **Effect on design and estimate:** Motor, controller, and reduction selection
 must establish braking torque and speed, electrical energy handling, and
-thermal limits as well as propulsion performance. The existing DRV-003
-provision remains a stationary-hold allowance, not a qualified dynamic brake;
+thermal limits as well as propulsion performance. The existing
+[mechanical brake provision (DRV-003)](../modules/02-drive-train/propulsion.md#0203-mechanical-holding-brakes)
+remains a stationary-hold allowance, not a qualified dynamic brake;
 its quantities and scenario costs do not change. No motor, controller, brake,
 or gearbox is selected, and the HPM5000B alternative still excludes its
 controller, brake, and custom gearbox. Field observations can inform the
 additional dynamic-brake decision but do not by themselves qualify fault or
 power-loss stopping. Test and safety release remain open.
 
-[↑ Back to document overview](feedback.md#document-overview)
+[↑ Back to document overview](feedback.md#bom-feedback-and-qualification-loops)
 
+
+### F12: 48 V battery baseline and scenario retirement
+
+**Decision recorded on 2026-10-28:** Use two 48 V-class / 51.2 V, 100 Ah
+LiFePO4 packs, one per pod; assess current capability separately from capacity.
+Prioritize European-stocked mobile/traction packs and consider worthwhile
+direct imports. Document three publicly priced options and use the recommended
+option as the budget reference. Remove the 72 V scenario from all active BOM
+and cost-comparison tables; this does not change the retained 48 V drive scenario.
+
+**Budget recommendation:** [Ultimatron UBL-48-100H](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive),
+with the separately listed 10 A charger, replaces the former Elker reference.
+The other two [priced packs](../modules/04-battery-and-charging/batteries.md#battery-alternatives)
+are non-additive alternatives. This is a recommended estimating baseline,
+not a purchased or mower-qualified assembly. Pack fit, current/regen, cold
+charging and supplier-rating conflicts remain HOLD.
+
+**Effect on estimate:** Retire the 72 V CSV columns and its five external-drive
+lines DRV-007–011, which had no 48 V purchase cost. Preserve all other 48 V
+costs before the battery update. The new pack/charger references add €990.28
+to materials: €13,879.10 total and €17,710.92 including the existing provisions
+and contingency. Freight remains a provision, not a confirmed delivery price.
 
 ## Feedback and qualification loops
 
 Each loop records **input → proposed revision → user review → BOM/total update**.
 A decision can close an estimating assumption; only evidence can close a
 component qualification. A failed check reopens downstream selections and costs.
+
+| Qualification loop | Evidence owner |
+| --- | --- |
+| [Inventory and cost scope (L1)](feedback.md#l1-inventory-and-cost-scope) | [Workshop tools and qualification](../modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) |
+| [Drive operating points (L2)](feedback.md#l2-drive-operating-points) | [Drive compatibility and duty](../modules/02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
+| [Energy and battery (L3)](feedback.md#l3-energy-and-battery) | [Packs and BMS requirements](../modules/04-battery-and-charging/batteries.md#ps18-battery-packs-and-bms) |
+| [Running gear and structure (L4)](feedback.md#l4-running-gear-and-structure) | [Module 01 requirements](../modules/01-structure-and-running-gear/README.md) · [Width-adjustment requirements](../modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements) |
+| [Stopping and electrical safety (L5)](feedback.md#l5-stopping-and-electrical-safety) | [Independent stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
+| [Supplier and price convergence (L6)](feedback.md#l6-supplierprice-convergence) | [Supplier request packages](../chassis-build-requirements.md#4-prepare-procurement-work-packages) · [Cost-update procedure](updating-linked-costs.md) |
 
 ### L1: inventory and cost scope
 
@@ -210,16 +289,22 @@ outsourcing. Exact component drawings and tool/inventory suitability checks rema
 **What changes:** DIY labor and printing materials now reflected; replace other new-buy
 allowances only after confirmed inventory/suitability
 
-**Closure evidence:** Partially closed by F03 and F10; required measurement and
+**Closure evidence:** Partially closed by
+[existing-inventory decision (F03)](feedback.md#f03-existing-inventory-and-fabrication)
+and [workshop decision (F10)](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control);
+required measurement and
 safety functions remain subject to exact selection, design, and qualification.
 
 ### L2: drive operating points
 
-**Inputs needed / next feedback:** Required continuous output torque **at** working rpm;
-acceptable transport speed; measured/estimated loaded mass and terrain
+**Inputs needed / next feedback:** Derive continuous and short-duty output
+torque **at** the rpm implied by the [current operating cases](../../../plan.md#51-duty-requirement)
+and confirmed track geometry. The V1 maximum travel target is now 4 km/h;
+measure configuration mass, resistance and duty rather than reusing the
+withdrawn higher-speed/rpm assumptions.
 
-**What changes:** Compare matched 48 V / 2 kW and 72 V / 4 kW packages; review any plan
-change before selection
+**What changes:** Qualify the 48 V drive and its non-additive motor/reduction
+candidates against the current operating cases; review any plan change before selection
 
 **Closure evidence:** Supplier torque-speed/thermal curves and reduction load ratings;
 one-drive bench results remain a later authorized gate
@@ -278,4 +363,4 @@ No supplier contact, order, fabrication, upload, energizing, or field test has
 been authorized by these feedback decisions. No component, braking arrangement,
 controller topology, or operating envelope is approved by this estimate.
 
-[↑ Back to document overview](feedback.md#document-overview)
+[↑ Back to document overview](feedback.md#bom-feedback-and-qualification-loops)

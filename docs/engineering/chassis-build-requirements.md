@@ -2,10 +2,9 @@
 
 <a id="document-overview"></a>
 
-**Summary:** All purchase/build holds remain open. Check the
-[current status](chassis-build-requirements.md#current-status), then follow the
-[evidence and approval path](chassis-build-requirements.md#how-to-use-this-checklist)
-before purchasing, fabricating, energizing, or releasing chassis parts.
+**Summary:** Evidence needed before chassis purchasing, fabrication, or
+energizing. All holds remain open; the workflow below links named requirements,
+manufacturing packs, supplier requests, and release evidence.
 
 **Document:** MBR-ENG-BOM-002 | **Revision:** E | **Date:** 2026-10-26
 
@@ -13,7 +12,12 @@ before purchasing, fabricating, energizing, or releasing chassis parts.
 not a released manufacturing BOM, approved component selection, or certification.
 No purchase, fabrication, energizing, upload, or physical test is authorized.
 
-**References:** [Chassis BOM](bom/chassis-bom.md) ·
+**On this page:** [Current status](chassis-build-requirements.md#current-status) ·
+[Release workflow](chassis-build-requirements.md#how-to-use-this-checklist) ·
+[Named requirements](chassis-build-requirements.md#2-confirm-item-family-specifications) ·
+[Open release holds](chassis-build-requirements.md#5-close-release-hold-points)
+
+**Related documents:** [Chassis BOM](bom/chassis-bom.md) ·
 [BOM Cost Breakdown](cost-breakdown.md) ·
 [Cost ledger](bom/chassis-bom.csv) ·
 [Width/slope limitations](width-and-slope-sizing.md) ·
@@ -24,24 +28,26 @@ No purchase, fabrication, energizing, upload, or physical test is authorized.
 | Question | Current answer | Go to |
 | --- | --- | --- |
 | What does the chassis cost? | Cost estimate available; not a released purchase list | [BOM Cost Breakdown](cost-breakdown.md) |
-| Are parts technically specified? | 39 PS families defined; all remain **HOLD** | [Item-family specifications](chassis-build-requirements.md#2-confirm-item-family-specifications) |
+| Are parts technically specified? | 39 requirement families defined; all remain **HOLD** | [Named requirement families](chassis-build-requirements.md#2-confirm-item-family-specifications) |
 | Are manufacturing drawings released? | No | [Required deliverables](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables) |
 | Are supplier quotes approved? | No; catalog pages are sourcing leads only | [RFQ packages](chassis-build-requirements.md#4-prepare-procurement-work-packages) |
-| Can purchasing or fabrication begin? | No; H01-H08 are open | [Release holds](chassis-build-requirements.md#5-close-release-hold-points) |
+| Can purchasing or fabrication begin? | No; all eight release holds are open | [Release holds and their scope](chassis-build-requirements.md#5-close-release-hold-points) |
 | Is hardware operation authorized? | No | [Status and safety boundary](chassis-build-requirements.md#chassis-build-and-procurement-checklist) |
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## How to use this checklist
 
-Work through the document in order. Do not treat a later section as permission
-to skip an earlier gate.
+You can [inspect any part](chassis-build-requirements.md#2-confirm-item-family-specifications)
+without reading this checklist front to back. For **release decisions**, complete
+the gates below in order; opening a later section is not permission to skip one.
 
 1. [Freeze the configuration](chassis-build-requirements.md#1-freeze-the-configuration-and-establish-control):
-   choose one voltage scenario and define assemblies and released-line records.
+   choose one voltage scenario and define assemblies and
+   [released-line records](chassis-build-requirements.md#required-released-line-record).
 2. [Confirm specifications](chassis-build-requirements.md#2-confirm-item-family-specifications): open the
-   linked scope document for each PS family being purchased or manufactured.
+   linked requirement family for each item being purchased or manufactured.
 3. [Prepare manufacturing evidence](chassis-build-requirements.md#3-prepare-manufacturing-and-inspection-deliverables):
    complete the applicable drawing, harness, traveler, verification, and service packs.
 4. [Prepare supplier requests](chassis-build-requirements.md#4-prepare-procurement-work-packages): assemble
@@ -53,8 +59,9 @@ to skip an earlier gate.
 
 ## 1. Freeze the configuration and establish control
 
-The cost ledger has 129 estimating lines. This companion owns shared document
-control, manufacturing deliverables, procurement packages and release holds.
+The [cost ledger](bom/chassis-bom.csv) owns current estimating lines. This
+checklist owns shared document control, manufacturing deliverables, procurement
+packages and release holds.
 The linked scope documents own technical definitions and inspection evidence.
 Every line maps to one primary PS family; several families can share an
 assembly drawing or safety review. PS IDs are requirement references, not
@@ -65,8 +72,8 @@ rolling two-pod chassis** only. **Stage 3 — supervised mower integration** and
 later autonomy/service work need their own requirements, costs and release
 evidence; they are not authorized by closing this checklist.
 
-The two voltage scenarios are alternatives. Freeze one approved configuration
-before issuing a manufacturing BOM; retain the other only as an estimate.
+The active estimate uses only the 48 V direction. Freeze an approved pack,
+drive and interface configuration before issuing a manufacturing BOM.
 Stage 2 quantities are cumulative. Installed parts, reusable bench equipment,
 and consumables must remain separate in production and accounting records.
 
@@ -111,26 +118,35 @@ pack rounding; do not change the installed quantity to conceal excess stock.
 Record each half of a connector pair, including contacts, seals, wedges,
 backshells and caps; two housings alone are not a complete mating pair.
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## 2. Confirm item-family specifications
 
-All 39 PS families remain **HOLD**. Their definitions and inspection evidence now
-live in the scope documents; each of the 129 cost lines has one primary owner.
-Cross-scope interfaces are linked, not copied.
+All 39 requirement families remain **HOLD**. Each current cost line has one
+primary owner; calculated-torque evidence has no equipment purchase.
+Choose the physical part below. Its part view groups costs, available data,
+open specifications, and fit/connection links; the complete inspection
+requirements remain in that scope's PS sections. PS codes are stable
+cross-references, not extra parts.
 
-- [Tracks and running gear](modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements) — PS01, PS02, PS03
-- [Propulsion, reductions and brakes](modules/02-drive-train/propulsion.md#specification-and-inspection-requirements) — PS14, PS15, PS16, PS17
-- [Frame, scissor and spine](modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements) — PS04, PS05, PS06, PS07, PS08, PS32
-- [Powered width adjustment](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements) — PS09, PS10, PS11, PS12, PS13
-- [Batteries, enclosures and charging](modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements) — PS18, PS19, PS20
-- [Cables, connectors and harnesses](modules/05-power-cables-and-electronics/cables-connectors.md#specification-and-inspection-requirements) — PS23, PS26
-- [Power distribution and enclosures](modules/05-power-cables-and-electronics/power-distribution.md#specification-and-inspection-requirements) — PS21, PS22, PS24, PS25, PS27
-- [Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements) — PS28, PS29, PS30, PS31
-- [Workshop, bench equipment and service supplies](modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements) — PS33, PS34, PS35, PS36, PS37, PS38, PS39
+| Part being considered | Inspect the part and its interfaces | Relevant release evidence |
+| --- | --- | --- |
+| Motor, controller, reduction or brake | [Drive choices and costs](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Motor-to-track mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) | [Drive/braking sizing](chassis-build-requirements.md#h02-drive-and-braking-sizing) |
+| Track, drum, roller or tensioner | [Running-gear parts](modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) · [Track engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) | [Configuration/package fit](chassis-build-requirements.md#h01-configuration-and-package-fit) |
+| Frame, mounting plates, pivots or lifting points | [Frame parts](modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) · [Motor mounting plates](modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) | [Mechanical drawing pack](chassis-build-requirements.md#mechanical-drawing-pack) |
+| Width motor, screw, driver or limits | [Width-drive parts](modules/03-width-adjustment/width-adjustment.md#parts-at-a-glance) · [Holding conflict](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) | [Width holding/adjustment](chassis-build-requirements.md#h03-width-holding-and-adjustment) |
+| Pack, BMS, enclosure or charger | [Battery/charging parts](modules/04-battery-and-charging/batteries.md#parts-at-a-glance) · [Battery-to-pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) | [Bus/protection coordination](chassis-build-requirements.md#h04-bus-and-protection-coordination) |
+| Cable, lug or connector | [Harness parts and tooling connections](modules/05-power-cables-and-electronics/cables-connectors.md#parts-at-a-glance) | [Electrical/harness pack](chassis-build-requirements.md#electricalharness-pack) |
+| Fuse, contactor, converter or electronics box | [Power-distribution parts](modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) | [Bus/protection coordination](chassis-build-requirements.md#h04-bus-and-protection-coordination) · [Printed enclosure pack](chassis-build-requirements.md#printed-enclosure-pack) |
+| E-stop, board, interlock or sensor | [Control/sensor parts and connections](modules/06-safety-controls-and-sensors/safety-controls.md#parts-at-a-glance) | [Independent stopping](chassis-build-requirements.md#h05-independent-stopping) |
+| Bench fixture, tools or handling equipment | [Workshop buy/reuse choices](modules/07-workshop-and-support/workshop.md#parts-at-a-glance) · [Test-method limits](modules/07-workshop-and-support/workshop.md#test-method-and-evidence) | [Verification plan](chassis-build-requirements.md#verification-plan) |
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+These are entry points, not an exhaustive allocation of holds to parts.
+The [complete release-hold table](chassis-build-requirements.md#5-close-release-hold-points)
+and applicable manufacturing/inspection packs still govern every release.
+
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## 3. Prepare manufacturing and inspection deliverables
@@ -138,6 +154,15 @@ Cross-scope interfaces are linked, not copied.
 Before fabricated parts or harnesses can be released, the responsible designer
 must set numerical acceptance limits and inspection methods. A blank tolerance,
 generic "good weld", or "works on bench" result is not an acceptance criterion.
+
+| Deliverable | Purpose |
+| --- | --- |
+| [Mechanical drawing pack](chassis-build-requirements.md#mechanical-drawing-pack) | Dimensions, materials, joints, alignment and service clearance |
+| [Printed enclosure pack](chassis-build-requirements.md#printed-enclosure-pack) | Controlled CAD/process, thermal and ingress evidence |
+| [Electrical and harness pack](chassis-build-requirements.md#electricalharness-pack) | Schematics, wire/connector schedule and installation checks |
+| [Assembly traveler](chassis-build-requirements.md#assembly-traveler) | Traceable build, inspection and deviation record |
+| [Verification plan](chassis-build-requirements.md#verification-plan) | Acceptance limits, safe fixtures and measured evidence |
+| [Service pack](chassis-build-requirements.md#service-pack) | Isolation, handling, inspection and maintenance instructions |
 
 ### Mechanical drawing pack
 
@@ -181,8 +206,10 @@ cost claimed for a completed traveler
 fixture/containment; calibrated instruments; worst-case
 load/temperature/SOC/configuration; independent observation and result references
 
-**Existing cost coverage / residual gap:** TST and calibration allowance are
-provisional; environmental/EMC/specialist tests are not fully budgeted
+**Existing cost coverage / residual gap:** [Bench and instrument provisions](modules/07-workshop-and-support/workshop.md#test-method-and-evidence)
+are provisional; no separate calibration-service allowance is included.
+Required calibration evidence remains open, and environmental/EMC/specialist
+tests are not fully budgeted
 
 ### Service pack
 
@@ -198,7 +225,7 @@ amps, braking energy, or safety-performance category simply to make this checkli
 look complete. They depend on the frozen geometry, load cases and hazard review.
 Reused equipment requires the same suitability evidence as a new item.
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## 4. Prepare procurement work packages
@@ -207,11 +234,23 @@ Prepare these requests only; **sending supplier requests needs separate user
 approval**. Each response must identify exact MPN/options and its included
 children, plus quantity, net/VAT/gross price, delivery to Romania, freight,
 lead time, validity, warranty, drawings and technical exceptions. Use the
-[Supplier register](bom/sources.md#source-register); its catalogs are not quotes.
+[Supplier register](bom/sources.md#supplier-evidence); its catalogs are not quotes.
+
+| Supplier request | Scope |
+| --- | --- |
+| [Complete running gear (Q01)](chassis-build-requirements.md#q01-complete-running-gear) | Matched tracks, rollers, shafts and bearings |
+| [Alternative complete drives (Q02)](chassis-build-requirements.md#q02-alternative-complete-drives) | Motor, controller, reduction and braking |
+| [Battery and charging alternatives (Q03)](chassis-build-requirements.md#q03-batterycharging-alternatives) | Matched pack/BMS and charger definitions |
+| [Local fabrication and machining (Q04)](chassis-build-requirements.md#q04-local-fabricationmachining) | Quote against released drawings |
+| [Electrical and safety (Q05)](chassis-build-requirements.md#q05-electrical-and-safety) | Protection, wiring and independent stop hardware |
+| [Bench and service assets (Q06)](chassis-build-requirements.md#q06-benchservice-assets) | Fixture, selected instruments and support equipment |
 
 ### Q01: complete running gear
 
-**Families / sourcing leads:** PS01-03; S01/S02, S03 for excluded bearings
+**Requirements:** [Tracks, rollers, tensioners and axles](modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements).
+**Leads:** [PowerTrack tracks](bom/sources.md#s01-powertrack-rubber-tracks) ·
+[TVH undercarriages](bom/sources.md#s02-tvh-undercarriage-parts) ·
+[DOLD bearings](bom/sources.md#s03-dold-bearing-housings) where excluded from a quoted kit.
 
 **Specific response needed:** Two matched tracks/undercarriages with sprocket drawings,
 load/speed/tension data and every included axle/bearing/roller; quote service spares
@@ -219,30 +258,50 @@ separately
 
 ### Q02: alternative complete drives
 
-**Families / sourcing leads:** PS14-17; S11/S12 versus S13, with S10/S05 alternatives
+**Requirements:** [Motor, controller, brake and reduction](modules/02-drive-train/propulsion.md#specification-and-inspection-requirements).
+**Leads:** [BLDC planetary motor](bom/sources.md#s11-bldc-2-kw-planetary-motor) and
+[BD100/C100 controller](bom/sources.md#s12-bldc-bd100c100-controller) versus
+[Volcano VOL-BL400C72](bom/sources.md#s13-volcano-vol-bl400c72-motor); alternative
+[planetary gearboxes](bom/sources.md#s10-dold-planetary-gearbox-alternatives) or [chain components](bom/sources.md#s05-dold-chain-drives).
 
 **Specific response needed:** One bench drive with second identical drive priced
 separately; documented operating-point curves, reduction and brake ratings, controller
 configuration and all wiring/interfaces; flag present voltage/current contradictions
 
 **Additional non-additive candidate:** [HPM5000B ALT-DRV-001](modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals),
-S23/S24 with S25 as an EU fallback. Confirm 48 V air-cooled winding/shaft and
+[marketplace evidence](bom/sources.md#s23-golden-motor-hpm5000b-marketplace-price) and
+[manufacturer data](bom/sources.md#s24-golden-motor-hpm5000b-family-specification), with
+[KellyControllers.eu](bom/sources.md#s25-kellycontrollerseu-hpm5000b-fallback) as an EU fallback.
+Confirm 48 V air-cooled winding/shaft and
 motor-only contents at the published quantity tier. Price a compatible controller,
 independent holding/stopping solution and custom planetary gearbox separately;
-the in-drum gearbox concept is unpriced. Do not transfer S11/S12 compatibility
+the [in-drum gearbox concept](modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
+is unpriced. Do not transfer the BLDC planetary-package compatibility
 or infer approval of a 5 kW power increase.
 
 ### Q03: battery/charging alternatives
 
-**Families / sourcing leads:** PS18-20; S16/S17
+**Requirements:** [Packs, BMS, enclosures and charging](modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements).
+**Leads:** [Ultimatron and charger (S27)](bom/sources.md#s27-ultimatron-ubl-48-100h-and-charger) ·
+[GBS metal pack (S28)](bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack) ·
+[ACES (S29)](bom/sources.md#s29-aces-al48v100hfa-bt).
 
 **Specific response needed:** Pack drawing/mass, cell/series/BMS details,
 vehicle/regen/current limits, charger and shipment documentation; price matched
-battery-only and charger-bundled offers separately; no unquoted 70 Ah substitute
+battery-only and charger-bundled offers separately. Confirm two 51.2 V / 100 Ah
+packs, actual continuous/peak and regen ratings, cold-charge inhibition,
+Romania freight/tax and the unresolved enclosure/IP claims; a maximum-current
+number or heating feature is not qualification.
 
 ### Q04: local fabrication/machining
 
-**Families / sourcing leads:** PS04-10, PS16/19/25/27; S06/S04
+**Requirements:** [Frame and holding](modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements),
+[width motor/screw interfaces](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
+[drive shafts](modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings),
+[battery containment](modules/04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints), and
+[electronics packaging](modules/05-power-cables-and-electronics/power-distribution.md#ps25-printed-enclosures-and-cable-glands)
+with [thermal hardware](modules/05-power-cables-and-electronics/power-distribution.md#ps27-thermal-paths-and-enclosure-hardware).
+**Leads:** [Dedeman](bom/sources.md#s06-dedeman-fabrication-supplies) · [DOLD mechanical parts](bom/sources.md#s04-dold-mechanical-parts).
 
 **Specific response needed:** Quote only against released drawings: stock/cut yield,
 outsourced precision operations and material/inspection documentation; owner
@@ -250,25 +309,40 @@ welding/printing labor stays separate
 
 ### Q05: electrical and safety
 
-**Families / sourcing leads:** PS11-13, PS21-31; S07/S08/S09/S18
+**Requirements:** [Width-drive power, feedback and harness](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
+[main power distribution](modules/05-power-cables-and-electronics/power-distribution.md),
+[cables and connectors](modules/05-power-cables-and-electronics/cables-connectors.md), and
+[independent stop/control/sensor requirements](modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements).
+**Leads:** [RS electrical parts](bom/sources.md#s07-rs-electrical-parts-and-tools),
+[Schneider relay example](bom/sources.md#s08-schneider-xpsuaf13ap-safety-relay-example), and
+[DOLD contactor example](bom/sources.md#s18-dc-con-72v400a-contactor-example). The
+[industrial remote](bom/sources.md#s09-tele-radio-tiger-g2-remote-alternative) is historical research, not a current purchase.
 
 **Specific response needed:** Exact full-voltage-rated protective devices, complete
-connector/harness children, independent stop/remote configuration and evidence; no
+connector/harness children, independent stop configuration and evidence; no
 automatic approval of catalog examples
 
 ### Q06: bench/service assets
 
-**Families / sourcing leads:** PS32-39; S19-22, S04/S06/S07
+**Requirements:** [Installed handling points](modules/01-structure-and-running-gear/frame.md#ps32-installed-lifting-and-recovery-points) and
+[bench fixture, workshop tools and service supplies](modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements).
+**Leads:** [DOLD mechanical parts](bom/sources.md#s04-dold-mechanical-parts),
+[Dedeman supplies](bom/sources.md#s06-dedeman-fabrication-supplies), [RS tools](bom/sources.md#s07-rs-electrical-parts-and-tools), and
+[ATO DC clamp meters](bom/sources.md#s21-ato-clamp-meter-catalog); reconcile
+[owner inventory](bom/sources.md#u02-owner-reported-workshop-inventory) before buying replacements.
 
-**Specific response needed:** Complete matched load/measurement setup, fixture
-interfaces, continuous absorption/heat rejection and calibration; separately quote
-rental/outsourcing without dropping required measurements
+**Specific response needed:** Guarded-fixture materials, interfaces, selected
+instruments, ratings and calibration evidence; separately quote any required
+rental or specialist support. The
+[current test method](modules/07-workshop-and-support/workshop.md#test-method-and-evidence)
+does not include a dynamometer or direct torque measurement. Do not present
+instrument quotes as proof of load absorption, heat rejection, or torque capability.
 
 No claimed second source is interchangeable until form, fit, function, ratings,
 firmware/interfaces and acceptance evidence are reviewed. A supplier "equivalent"
 or marketplace stock substitution is a change request, not purchasing discretion.
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## 5. Close release hold points
@@ -279,14 +353,14 @@ Engineering approval is not operational authorization.
 
 | Hold | What it blocks | Evidence theme |
 | --- | --- | --- |
-| [H01](chassis-build-requirements.md#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
-| [H02](chassis-build-requirements.md#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
-| [H03](chassis-build-requirements.md#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
-| [H04](chassis-build-requirements.md#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
-| [H05](chassis-build-requirements.md#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
-| [H06](chassis-build-requirements.md#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
-| [H07](chassis-build-requirements.md#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
-| [H08](chassis-build-requirements.md#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
+| [Configuration and package fit (H01)](chassis-build-requirements.md#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
+| [Drive and braking sizing (H02)](chassis-build-requirements.md#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
+| [Width holding and adjustment (H03)](chassis-build-requirements.md#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
+| [Bus and protection coordination (H04)](chassis-build-requirements.md#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
+| [Independent stopping (H05)](chassis-build-requirements.md#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
+| [Drawings and purchased-part qualification (H06)](chassis-build-requirements.md#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
+| [First article and environment (H07)](chassis-build-requirements.md#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
+| [Completed-product release (H08)](chassis-build-requirements.md#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
 
 ### H01: configuration and package fit
 
@@ -354,30 +428,44 @@ integration, including the mower, guarding and safety integration; applicable
 legal/conformity review, technical file and service/operator documentation.
 Qualified product/compliance review is outside the Stages 1–2 estimate.
 
-H05 requires a review and an approved sequence before energizing, not a claim
+The [independent stopping hold (H05)](chassis-build-requirements.md#h05-independent-stopping)
+requires a review and an approved sequence before energizing, not a claim
 that live stop tests have already passed before power is first applied.
 Commissioning must progress through separately authorized controlled steps.
-Do not use the 40-degree site aspiration as an initial test angle or an accepted
+Do not use the [40-degree site aspiration](width-and-slope-sizing.md#inputs-and-unresolved-definitions)
+as an initial test angle or an accepted
 tilt threshold. Production readiness needs actual evidence, not closed cells.
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
 
 ## 6. Reconcile unresolved cost exposure
 
-This revision changes technical detail, **not the 129-line prices or totals**.
+This checklist does not alter the [cost ledger's prices or totals](bom/chassis-bom.csv).
 An allowance is not evidence that all children of a released design are funded.
 The following remain explicit, unpriced exposures outside any claim of a final
 production price; the 20% contingency is not proof that they are covered.
 
+**Open exposure:** [Drives and stop hardware](chassis-build-requirements.md#different-reduction-higher-rated-brake-or-independent-stopping-hardware) ·
+[Width holding](chassis-build-requirements.md#powered-compatible-positive-width-lock-and-monitoring) ·
+[Detailed part breakdown](chassis-build-requirements.md#full-connectorfastenerharness-and-made-part-breakdown) ·
+[Cooling and extra safety hardware](chassis-build-requirements.md#cooling-brake-energy-dissipation-extra-sensors-or-safety-hardware) ·
+[Qualification and repeat manufacture](chassis-build-requirements.md#qualification-and-repeat-manufacture) ·
+[Finished mower and support](chassis-build-requirements.md#finished-mowing-product-and-commercial-support).
+
 ### Different reduction, higher-rated brake or independent stopping hardware
 
-**Reconciliation required:** Replace affected DRV/PWR/SAF provisions after H02/H04/H05,
+**Reconciliation required:** Replace affected drive, power and safety provisions after
+[drive/braking sizing (H02)](chassis-build-requirements.md#h02-drive-and-braking-sizing),
+[bus/protection coordination (H04)](chassis-build-requirements.md#h04-bus-and-protection-coordination), and
+[independent stopping (H05)](chassis-build-requirements.md#h05-independent-stopping),
 not add an arbitrary performance premium
 
 ### Powered compatible positive-width lock and monitoring
 
-**Reconciliation required:** Replace CHS-010 reserve and add exact actuator/interlock
+**Reconciliation required:** Replace the
+[width-lock reserve (CHS-010)](modules/01-structure-and-running-gear/frame.md#0105-scissor-pivots-locks-and-hard-stops)
+and add exact actuator/interlock
 children if required; current EUR 48 is not a complete solution
 
 ### Full connector/fastener/harness and made-part breakdown
@@ -408,4 +496,4 @@ stock/work in progress. Update CSV, totals and package definitions together.
 After assembly, preserve an as-built BOM with serial/lot identities and approved
 deviations; do not overwrite it with a later design revision.
 
-[↑ Back to document overview](chassis-build-requirements.md#document-overview)
+[↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)

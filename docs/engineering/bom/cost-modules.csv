@@ -10,7 +10,7 @@ motors,02.01 Traction motors and included planetary where applicable,02-drive-tr
 motor-controllers,02.02 Traction motor controllers,02-drive-train/propulsion,DRV-002,02 — Drive train,installed
 brakes,02.03 Mechanical holding brakes,02-drive-train/propulsion,DRV-003,02 — Drive train,installed
 output-support,02.04 Output hubs shafts and bearings,02-drive-train/propulsion,DRV-004:DRV-006,02 — Drive train,installed
-chain-reduction,02.05 External chain reduction and keys,02-drive-train/propulsion,DRV-007:DRV-012,02 — Drive train,installed
+chain-reduction,02.05 Reduction keys and fasteners,02-drive-train/propulsion,DRV-012,02 — Drive train,installed
 width-mechanics,03.01 Width motor screw bearings mounts and guard,03-width-adjustment/width-adjustment,WID-001:WID-005|WID-014,03 — Width adjustment,installed
 width-power,03.02 Width converter driver and protected enable,03-width-adjustment/width-adjustment,WID-006:WID-008,03 — Width adjustment,installed
 width-sensors,03.03 Width encoder limits current and reference sensors,03-width-adjustment/width-adjustment,WID-009:WID-012,03 — Width adjustment,installed

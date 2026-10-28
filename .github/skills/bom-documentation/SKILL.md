@@ -22,7 +22,7 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
 ## BOM ownership
 
 - `docs/engineering/bom/chassis-bom.csv`: authoritative baseline quantities,
-  scenario unit/extended costs, basis codes, source IDs and assumptions.
+  48 V unit/extended costs, basis codes, source IDs and assumptions.
 - `docs/engineering/bom/cost-modules.csv`: exactly-once item ownership, module
   labels, scope links, display grouping and installed/bench/support disposition.
   Its `scope` values route to authoritative documents under the numbered
@@ -45,11 +45,12 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   cost summary before broader budget allowances and contingency so readers see
   what each module costs. Link the module/category labels to their engineering
   scope documents and omit a duplicate Contents entry for the summary; reserve
-  remaining navigation for other useful destinations. In variant tables, use
-  one shared column only when every displayed item cost and basis matches
-  across scenarios; retain separate columns if any displayed value differs.
-  Within a two-column table, show a matching row value once and mark the 72 V
-  cell `Same as 48 V`; keep both values when the displayed cost or basis differs.
+  remaining navigation for other useful destinations. Generated baseline cost
+  tables use one active 48 V value column. Keep alternative products in
+  non-additive comparisons with appropriate unit/cumulative price columns.
+  Do not restore retired voltage columns, `both variants`, or `Same as 48 V`
+  placeholders without an explicit new configuration decision and corresponding
+  input, generator and regression-test changes.
   For generated overview links, use file-only links to open scope summaries;
   avoid fragments to raw HTML overview IDs because heading-only readers may not
   resolve them. Use fragments only for Markdown headings.
@@ -58,11 +59,14 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
   and `plan.md` consistently in titles, navigation/link labels, and generated
   tables. When a generated label changes, update its generator tests and
   regenerate; keep technical scope titles and cost-module labels distinct.
-- Write engineering scope pages for human readers first: open with a concise
-  summary and complete contents map, then flow from design intent or
-  requirements to supplier evidence, interfaces and itemized costs. Remove
-  duplicate, unlabelled opening prose while preserving technical details and
-  source links.
+- When restructuring engineering scope pages, use a concise summary and a
+  component-first scan view: current choice/status, cost and specification
+  links, and mounting/connection routes. Follow the
+  [component reading paths](../../../docs/engineering/bom/updating-linked-costs.md#component-reading-paths).
+  Keep these routes beside component details and walk representative
+  price/specification-to-fit journeys; valid links alone are insufficient.
+  Remove overlapping navigation maps while preserving technical requirements,
+  source evidence and release holds.
 
 ## Editing workflow
 

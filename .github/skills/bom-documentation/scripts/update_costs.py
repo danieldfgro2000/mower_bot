@@ -8,7 +8,6 @@ from pathlib import Path
 import re
 
 
-SCENARIOS = ("48v", "72v")
 CENT = Decimal(".01")
 TARGET = Decimal("5000")
 CONTINGENCY = Decimal(".20")
@@ -65,24 +64,26 @@ def load(base):
     ids = [row["item_id"] for row in rows]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate ledger item ID")
-    sources = set(re.findall(r"^### ([SU]\d+)$", (base / "bom/sources.md").read_text(), re.M))
+    sources = set(re.findall(
+        r"^### ([SU]\d+)(?:: [^\n]+)?$",
+        (base / "bom/sources.md").read_text(), re.M,
+    ))
     for row in rows:
         if not set(row["source_ids"].split("|")) <= sources:
             raise ValueError(f"Unknown source for {row['item_id']}")
         q1, q2 = number(row["qty_stage_1"]), number(row["qty_stage_2_total"])
         if q1 > q2 or q2 <= 0:
             raise ValueError(f"Invalid cumulative quantity: {row['item_id']}")
-        for scenario in SCENARIOS:
-            unit, extended = row[f"unit_eur_{scenario}"], row[f"extended_eur_{scenario}"]
-            basis = row[f"basis_{scenario}"]
-            if basis in ("I", "R"):
-                if unit != "N/A" or extended != "N/A":
-                    raise ValueError(f"Expected explained N/A for {row['item_id']}")
-            elif basis not in ("A", "C") or unit == "N/A" or extended == "N/A":
-                raise ValueError(f"Missing purchase price: {row['item_id']}")
-            elif number(unit) <= 0 or number(extended) != (number(unit) * q2).quantize(
-                    CENT, rounding=ROUND_HALF_UP):
-                raise ValueError(f"Invalid extension: {row['item_id']} / {scenario}")
+        unit, extended = row["unit_eur_48v"], row["extended_eur_48v"]
+        basis = row["basis_48v"]
+        if basis in ("I", "R"):
+            if unit != "N/A" or extended != "N/A":
+                raise ValueError(f"Expected explained N/A for {row['item_id']}")
+        elif basis not in ("A", "C") or unit == "N/A" or extended == "N/A":
+            raise ValueError(f"Missing purchase price: {row['item_id']}")
+        elif number(unit) <= 0 or number(extended) != (number(unit) * q2).quantize(
+                CENT, rounding=ROUND_HALF_UP):
+            raise ValueError(f"Invalid extension: {row['item_id']} / 48v")
     modules = read_csv(base / "bom/cost-modules.csv")
     module_ids = [module["module_id"] for module in modules]
     coverage = Counter(item for module in modules for item in select_ids(module["items"]))
@@ -118,59 +119,31 @@ def load(base):
     return rows, modules
 
 
-def total(rows, scenario, stage=False):
-    return sum((number(row[f"unit_eur_{scenario}"]) * number(row["qty_stage_1"])
-                if stage else number(row[f"extended_eur_{scenario}"])
-                for row in rows if row[f"unit_eur_{scenario}"] != "N/A"), Decimal(0))
+def total(rows, stage=False):
+    return sum((number(row["unit_eur_48v"]) * number(row["qty_stage_1"])
+                if stage else number(row["extended_eur_48v"])
+                for row in rows if row["unit_eur_48v"] != "N/A"), Decimal(0))
 
 
-def table(title):
-    return [f"| {title} | 48 V / 2 kW | 72 V / 4 kW |", "| --- | ---: | ---: |"]
+def table(title, value_header="48 V"):
+    return [f"| {title} | {value_header} |", "| --- | ---: |"]
 
 
-def comparison_table(title, shared, value_header, scenario_headers=None):
-    if shared:
-        return [
-            f"| {title} | {value_header} (both variants) |",
-            "| --- | ---: |",
-        ]
-    if scenario_headers:
-        return [
-            f"| {title} | {scenario_headers[0]} | {scenario_headers[1]} |",
-            "| --- | ---: | ---: |",
-        ]
-    return table(title)
+def cost_row(label, rows):
+    return value_row(label, money(total(rows)))
 
 
-def cost_row(label, rows, shared=False):
-    values = [money(total(rows, scenario)) for scenario in SCENARIOS]
-    if shared and values[0] != values[1]:
-        raise ValueError(f"Different scenario totals cannot share a column: {label}")
-    return variant_row(label, values, shared)
+def value_row(label, value):
+    return f"| {label} | {value} |"
 
 
-def variant_row(label, values, shared=False):
-    if shared:
-        if values[0] != values[1]:
-            raise ValueError(f"Different scenario values cannot share a column: {label}")
-        values = values[:1]
-    elif values[0] == values[1]:
-        values = [values[0], "Same as 48 V"]
-    return f"| {label} | " + " | ".join(values) + " |"
-
-
-def displayed_cost(row, scenario):
-    value = row[f"extended_eur_{scenario}"]
+def displayed_cost(row):
+    value = row["extended_eur_48v"]
     return value if value == "N/A" else money(number(value))
 
 
-def displayed_detail(row, scenario):
-    return f"{displayed_cost(row, scenario)} / {row[f'basis_{scenario}']}"
-
-
-def scenarios_match(rows, formatter):
-    return all(formatter(row, SCENARIOS[0]) == formatter(row, SCENARIOS[1])
-               for row in rows)
+def displayed_detail(row):
+    return f"{displayed_cost(row)} / {row['basis_48v']}"
 
 
 def category_label(category, category_modules, module_root):
@@ -211,6 +184,28 @@ def block(text, name, content):
     return text[:start] + begin + "\n" + content + "\n" + end + text[stop:]
 
 
+def heading_id(title):
+    return re.sub(r"[^\w -]", "", title.lower()).replace(" ", "-")
+
+
+def specification_links(text, filename, item_ids):
+    coverage, links = Counter(), {}
+    for spec_id, title, expression in re.findall(
+        r"^### (PS\d+): ([^\n]+)\n\n\*\*Cost-ledger coverage:\*\* ([^\n]+)$",
+        text, re.M,
+    ):
+        if expression.startswith("None;"):
+            continue
+        ids = select_ids(expression)
+        coverage.update(ids)
+        heading = heading_id(f"{spec_id}: {title}")
+        for item_id in ids:
+            links[item_id] = f"{filename}#{heading}"
+    if set(coverage) != set(item_ids) or any(count != 1 for count in coverage.values()):
+        raise ValueError(f"Specification coverage must own each scope item exactly once: {filename}")
+    return links
+
+
 def render(base):
     rows, modules = load(base)
     items = {row["item_id"]: row for row in rows}
@@ -224,29 +219,20 @@ def render(base):
         category_rows = []
         for module in (m for m in modules if m["category"] == category):
             category_rows.extend(groups[module["module_id"]])
-        shared = scenarios_match(
-            category_rows,
-            lambda row, scenario: money(total([row], scenario)),
-        )
         summary.extend([
             f"### {category}", "",
-            *comparison_table("Module / detailed BOM", shared, "Total"),
+            *table("Module / detailed BOM"),
         ])
         for module in (m for m in modules if m["category"] == category):
-            link = f"[{module['label']}](modules/{module['scope']}.md#cost-{module['module_id']})"
-            summary.append(cost_row(link, groups[module["module_id"]], shared))
+            target = f"modules/{module['scope']}.md#{heading_id(module['label'])}"
+            link = f"[{module['label']}]({target})"
+            summary.append(cost_row(link, groups[module["module_id"]]))
             if module["module_id"] == "packs":
-                bms_values = [
-                    "N/A - included", "N/A - included",
-                ]
-                summary.append(variant_row(
-                    "[BMS: included in pack; not separately priced]"
-                    "(modules/04-battery-and-charging/batteries.md#cost-packs)",
-                    bms_values,
-                    shared,
-                )
-                )
-        summary.append(cost_row(f"**{category} subtotal**", category_rows, shared))
+                summary.append(value_row(
+                    f"[BMS: included in pack; not separately priced]({target})",
+                    "N/A - included",
+                ))
+        summary.append(cost_row(f"**{category} subtotal**", category_rows))
         summary.append("")
     summary.extend(["### Purchase totals", "", *table("Accounting scope")])
     for disposition, label in [("installed", "Installed-machine materials"),
@@ -256,48 +242,45 @@ def render(base):
                     for r in groups[m["module_id"]]]
         summary.append(cost_row(f"**{label}**", selected))
     summary.append(cost_row("**All listed materials/equipment**", rows))
-    summary.append(variant_row(
+    summary.append(value_row(
         "Above €5,000 materials/equipment target",
-        [money(max(Decimal(0), total(rows, scenario) - TARGET))
-         for scenario in SCENARIOS],
+        money(max(Decimal(0), total(rows) - TARGET)),
     ))
     phases = table("Acquisition stage")
-    for label, values in [
-        ("Stage 1 — bench propulsion prototype", [total(rows, s, True) for s in SCENARIOS]),
+    for label, value in [
+        ("Stage 1 — bench propulsion prototype", total(rows, True)),
         ("Stage 2 — rolling two-pod chassis (additional purchases only)",
-         [total(rows, s) - total(rows, s, True) for s in SCENARIOS]),
-        ("**Stages 1–2 cumulative**", [total(rows, s) for s in SCENARIOS]),
+         total(rows) - total(rows, True)),
+        ("**Stages 1–2 cumulative**", total(rows)),
     ]:
-        phases.append(variant_row(label, list(map(money, values))))
+        phases.append(value_row(label, money(value)))
     text = block(text, "phases", "\n".join(phases))
     readiness = table("Cost basis: lines / EUR")
     for basis, label in [("C", "Calculated public-price references"), ("A", "Engineering allowances"),
                          ("I", "Included / no separate purchase"), ("R", "Reused inventory")]:
-        cells = []
-        for scenario in SCENARIOS:
-            selected = [r for r in rows if r[f"basis_{scenario}"] == basis]
-            cells.append(f"{len(selected)} / {money(total(selected, scenario))}" if selected else "N/A - no lines")
-        readiness.append(variant_row(f"{label} ({basis})", cells))
+        selected = [r for r in rows if r["basis_48v"] == basis]
+        value = f"{len(selected)} / {money(total(selected))}" if selected else "N/A - no lines"
+        readiness.append(value_row(f"{label} ({basis})", value))
     readiness.append(cost_row(f"**Total ({len(rows)} lines)**", rows))
     text = block(text, "readiness", "\n".join(readiness))
     allowances = read_csv(base / "bom/budget-allowances.csv")
     budget = table("Budget line")
     budget.append(cost_row("Materials/equipment", rows))
-    before = [total(rows, s) for s in SCENARIOS]
+    before = total(rows)
     for allowance in allowances:
-        values = [number(allowance[f"eur_{s}"]) for s in SCENARIOS]
-        before = [a + b for a, b in zip(before, values)]
-        budget.append(variant_row(allowance["label"], list(map(money, values))))
-    budget.append(variant_row(
+        value = number(allowance["eur_48v"])
+        before += value
+        budget.append(value_row(allowance["label"], money(value)))
+    budget.append(value_row(
         "Owner fabrication labor",
-        ["N/A - owner supplied", "N/A - owner supplied"],
+        "N/A - owner supplied",
     ))
-    reserve = [(v * CONTINGENCY).quantize(CENT, rounding=ROUND_HALF_UP) for v in before]
-    for label, values in [
+    reserve = (before * CONTINGENCY).quantize(CENT, rounding=ROUND_HALF_UP)
+    for label, value in [
         ("**Budget before contingency**", before), ("Uncertainty contingency (20%)", reserve),
-        ("**Indicative build budget**", [a + b for a, b in zip(before, reserve)]),
+        ("**Indicative build budget**", before + reserve),
     ]:
-        budget.append(variant_row(label, list(map(money, values))))
+        budget.append(value_row(label, money(value)))
     text = block(text, "budget", "\n".join(budget))
     alternatives = read_csv(base / "bom/propulsion-alternatives.csv")
     alt_lines = ["| Alternative (excluded from totals) | Unit reference | Cumulative reference |",
@@ -310,7 +293,12 @@ def render(base):
             raise ValueError(f"Invalid alternative extension: {alt['candidate_id']}")
         if alt["replaces_item_id"] not in items or alt["source_currency"] != "USD":
             raise ValueError(f"Invalid alternative reference: {alt['candidate_id']}")
-        label = f"[{alt['candidate_id']}: {alt['description']}](propulsion-alternatives.csv)"
+        reference = alt["technical_reference"]
+        if not re.fullmatch(
+            r"\.\./modules/\d{2}-[a-z0-9-]+/[a-z0-9-]+\.md#[a-z0-9-]+", reference,
+        ) or not (main.parent / reference.split("#", 1)[0]).is_file():
+            raise ValueError(f"Invalid alternative technical reference: {alt['candidate_id']}")
+        label = f"[{alt['candidate_id']}: {alt['description']}]({reference})"
         alt_lines.append(f"| {label} | {money(unit)} | {money(extended)} |")
     text = block(text, "alternatives", "\n".join(alt_lines))
     breakdown = base / "cost-breakdown.md"
@@ -323,31 +311,37 @@ def render(base):
     outputs = {main: text, breakdown: breakdown_text}
     for scope in dict.fromkeys(m["scope"] for m in modules):
         path = base / "modules" / f"{scope}.md"
+        scope_text = path.read_text()
+        scope_modules = [m for m in modules if m["scope"] == scope]
+        requirements = specification_links(
+            scope_text, path.name,
+            [item for module in scope_modules for item in select_ids(module["items"])],
+        )
         detail = ["Generated from the [cost ledger](../../bom/chassis-bom.csv).",
                   "Quantities are cumulative Stage 2; prices are line totals, not unit prices.",
+                  "Item links open the purchasing and inspection requirements.",
                   "C = calculated reference; A = allowance; I = included; R = reused.",
                   "N/A never means an unknown purchase is free.", ""]
         owned = []
-        for module in (m for m in modules if m["scope"] == scope):
+        for module in scope_modules:
             selected = groups[module["module_id"]]
             owned.extend(selected)
-            shared = scenarios_match(selected, displayed_detail)
-            detail.extend([f"### Cost: {module['module_id']}", "", f"**{module['label']}**", "",
-                           *comparison_table(
+            detail.extend([f'<a id="cost-{module["module_id"]}"></a>', "",
+                           f"### {module['label']}", "",
+                           *table(
                                "Item / cumulative quantity",
-                               shared,
-                               "Total / basis",
-                               ("48 V total / basis", "72 V total / basis"),
+                               "48 V total / basis",
                            )])
             for row in selected:
-                label = f"{row['item_id']} - {row['description']} ({row['qty_stage_2_total']} {row['unit']})"
-                cells = [displayed_detail(row, scenario) for scenario in SCENARIOS]
-                detail.append(variant_row(label, cells, shared))
-            detail.extend([cost_row("**Module subtotal**", selected, shared), ""])
-        shared = scenarios_match(owned, displayed_detail)
-        detail.extend(comparison_table("Scope total", shared, "Total"))
-        detail.append(cost_row("**All items owned by this scope**", owned, shared))
-        outputs[path] = block(path.read_text(), "details", "\n".join(detail))
+                label = (
+                    f"[{row['item_id']} - {row['description']}]({requirements[row['item_id']]})"
+                    f" ({row['qty_stage_2_total']} {row['unit']})"
+                )
+                detail.append(value_row(label, displayed_detail(row)))
+            detail.extend([cost_row("**Module subtotal**", selected), ""])
+        detail.extend(table("Scope total"))
+        detail.append(cost_row("**All items owned by this scope**", owned))
+        outputs[path] = block(scope_text, "details", "\n".join(detail))
     return outputs
 
 

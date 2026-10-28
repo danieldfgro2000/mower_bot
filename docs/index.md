@@ -9,22 +9,27 @@ narrowest applicable scope below.
 ## Chassis engineering reading path
 
 1. Start with the [Chassis BOM](engineering/bom/chassis-bom.md) for what is in the
-   estimate, what it costs, and what is explicitly excluded.
-2. Use the [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md)
-   to follow the evidence and release holds before any purchase or build.
-3. Open the linked [BOM scope](engineering/bom/chassis-bom.md#bom-by-scope) for a
-   part family's requirements, cost detail, and inspection evidence. Use the
-   [supplier register](engineering/bom/sources.md) and
-   [feedback decisions](engineering/bom/feedback.md) for sourcing context and
-   dated decisions.
-4. For a cost change, follow [Updating linked costs](engineering/bom/updating-linked-costs.md);
+   estimate, or jump straight to its [component routes](engineering/bom/chassis-bom.md#bom-by-scope).
+2. Choose a part in **Parts at a glance**, then open its price, specifications,
+   or mounting/connection link. For example:
+   [HPM5000B](engineering/modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
+   → [price](engineering/modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price)
+   / [specifications](engineering/modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits)
+   → [motor-to-track mounting](engineering/modules/02-drive-train/propulsion.md#motor-to-track-mounting).
+3. Use **Part links** or **Continue** in the detail to move to the adjoining
+   component without returning to an index. The [supplier register](engineering/bom/sources.md)
+   and [feedback decisions](engineering/bom/feedback.md) retain evidence/history.
+4. Before any purchase or build, use the
+   [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md)
+   for the required evidence and release holds; browsing is not authorization.
+5. For a cost change, follow [Updating linked costs](engineering/bom/updating-linked-costs.md);
    do not edit generated tables directly.
 
-On a scope page, start with its summary, then follow the design or requirements
-through supplier evidence, interfaces, and itemized costs. Use the opening
-navigation links to jump to a topic or its estimate context; section-end
-**Back to document overview** links return to the summary so you can choose
-another route.
+Cost-item names link to their purchasing and inspection requirements, with
+component links at that destination. References use descriptive names such as
+[Workshop tools (PS36)](engineering/modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
+not codes alone. **Back to document overview** remains an optional reset, not
+the required route between a part's cost, data, and fit.
 
 | Scope | Authoritative starting point |
 | --- | --- |
@@ -37,7 +42,7 @@ another route.
 | Flutter UI, BLoCs, use cases, repositories, local checks | [Flutter development](flutter/development.md) |
 | App implementation review and proposed module/package improvements | [App improvement plan](flutter/implementation-improvement-plan.md) |
 | ESP32/Mega ownership, wire/storage contracts, build prerequisites | [Firmware development](firmware/development.md) |
-| Chassis cost summary and 48 V / 72 V comparison | [Chassis BOM](engineering/bom/chassis-bom.md) · [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Cost ledger](engineering/bom/chassis-bom.csv) |
+| Chassis cost summary and active 48 V baseline | [Chassis BOM](engineering/bom/chassis-bom.md) · [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Cost ledger](engineering/bom/chassis-bom.csv) |
 | Numbered engineering modules and their technical scopes | [Module directory](engineering/modules/README.md) |
 | Module cost tables and detailed requirements | [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Drive train](engineering/modules/02-drive-train/propulsion.md) · [Batteries and charging](engineering/modules/04-battery-and-charging/batteries.md) · [Cables](engineering/modules/05-power-cables-and-electronics/cables-connectors.md) · [Power distribution](engineering/modules/05-power-cables-and-electronics/power-distribution.md) · [Safety controls](engineering/modules/06-safety-controls-and-sensors/safety-controls.md) |
 | Scoped BOM: running gear, propulsion, frame, width adjustment, batteries, wiring, electronics and workshop | [Scope directory in Chassis BOM](engineering/bom/chassis-bom.md#bom-by-scope) |
