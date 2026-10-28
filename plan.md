@@ -63,8 +63,9 @@ The following numbers are useful for sizing but are not yet validated on the com
   obstacle and turning cases rather than treating these as accepted ratings;
 - track-output rpm: derive from confirmed pitch geometry and the requested
   ground speeds, not an independent working/transport rpm target;
-- battery sizing direction: **two 48 V-class / 51.2 V, 100 Ah LiFePO4 packs**,
-  one per independent pod; **10.24 kWh nominal / 8.192 kWh at the assumed
+- battery sizing direction: **two 48 V-class / 51.2 V, approximately 100 Ah
+  LiFePO4 packs**, one per independent pod; modestly higher capacity such as
+  105 Ah is acceptable. The 100 Ah baseline gives **10.24 kWh nominal / 8.192 kWh at the assumed
   80% usable fraction**, before additional reserves. Ah is capacity, not a
   required discharge-current rating;
 - electrical autonomy: **eight hours without battery swaps is a preferred
@@ -408,19 +409,23 @@ No candidate is accepted from a web listing alone. Require:
 
 ### Provisional battery baseline
 
-**Owner-confirmed direction:** two ready-made **51.2 V / 100 Ah LiFePO4 packs**,
-one per independent pod in the 48 V-class architecture. Do not series-connect
-them into a higher-voltage bank. Assess discharge, peak-duration and charge
-current separately from Ah capacity.
+**Owner-confirmed direction:** two ready-made **51.2 V / approximately 100 Ah
+LiFePO4 packs**, one per independent pod in the 48 V-class architecture.
+Small capacity variations are accepted, preferably upward; 105 Ah is within
+scope. Do not series-connect them into a higher-voltage bank. Assess discharge,
+peak-duration and charge current separately from Ah capacity.
 
-The [three priced options and budget recommendation](docs/engineering/modules/04-battery-and-charging/batteries.md#battery-alternatives)
-use **Ultimatron UBL-48-100H** as the estimating reference, not a released
-purchase or proven fit. Its published pair mass is 98.4 kg, versus 72 kg for
-the former Elker pair; the mass/CG and pod layout need revision. The old CAD
-has not been resized. The higher-voltage comparison is retired from the active BOM.
+The [priced options and budget recommendation](docs/engineering/modules/04-battery-and-charging/batteries.md#battery-alternatives)
+use the **DC HOUSE 100 Ah / 18 A charger bundle** as conditional first choice
+and estimating reference, not a released purchase or proven fit. Its published
+pair mass is 89.8 kg, versus 72 kg for the former Elker pair; the mass/CG and
+pod layout need revision. The old CAD has not been resized. The higher-voltage
+comparison remains retired from the active BOM.
 
-Nominal energy is 10.24 kWh; the retained 80% usable-energy assumption gives
-8.192 kWh before operational reserve, cold and aging margins. Verify the
+For the 100 Ah baseline, nominal energy is 10.24 kWh; the retained 80%
+usable-energy assumption gives 8.192 kWh before operational reserve, cold and
+aging margins. Two 105 Ah alternatives give 10.752 kWh nominal / 8.6016 kWh
+at the same usable fraction, not a proven runtime increase. Verify the
 usable-energy budget and expected runtime from logged job consumption:
 
 `usable battery energy ≥ measured job energy × reserve factor + cold/aging margin`
@@ -519,15 +524,16 @@ mass, CG, traction demand and pod packaging rather than retaining the 300 kg
 machine estimate unchanged. This former stationary-oriented reference is no
 longer the active budget pack and was not vehicle-qualified.
 
-The [retailer-listed charger budget](docs/engineering/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
-uses one 10 A charger per 100 Ah pack. Returning an assumed 80 Ah per pack
-takes approximately **eight hours**, with both chargers working concurrently,
+The [DC HOUSE charger bundle budget](docs/engineering/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
+includes one 18 A charger per 100 Ah pack. Returning an assumed 80 Ah per
+pack takes approximately **4.44 hours**, with both chargers working concurrently,
 before taper/balancing or warm-up delays; near-empty to full is approximately
-ten hours before those effects. This is arithmetic, not measured charging.
-At an illustrative 58.4 V and 90% efficiency, combined AC demand would be
-about **1.30 kW**. Confirm the actual charger model, CV voltage, current,
-efficiency, power factor and mains rating instead of treating these
-assumptions as its specifications.
+5.56 hours before those effects. This is arithmetic, not measured charging.
+At 58.4 V / 18 A and an assumed 90% efficiency, combined AC demand would be
+about **2.34 kW**. The linked charger also claims only 900 W output,
+inconsistent with 58.4 V × 18 A = 1,051.2 W. Confirm the supplied model,
+actual output curve, efficiency, power factor and mains rating rather than
+treating this screen as its specifications.
 
 At 220 V / 25 A the **whole-house** apparent-power ceiling is 5.5 kVA, or
 approximately 5.5 kW at unity power factor. Other household loads reduce
@@ -535,7 +541,7 @@ what is available for charging, and the outlet/branch circuit may impose a
 lower limit; 5.5 kW is **not established as available charger power**. Lower
 power factor also increases input current. Confirm the actual outlet, circuit,
 wiring and available continuous supply with a qualified electrician. The 25 A
-main breaker does not establish a 25 A wall-socket rating. The retailer-listed
+main breaker does not establish a 25 A wall-socket rating. The supplier-listed
 charger current supports budget arithmetic, not verified pack/charger/mains
 compatibility; the battery scope owns the current pricing update.
 
@@ -762,7 +768,8 @@ This is a planning BOM, not a purchasing BOM. Quantities and prices require supp
 
 - 2 motor/gearbox assemblies;
 - 2 motor controllers;
-- 48 V battery modules, provisional ~8 kWh total;
+- two 48 V-class battery modules, 10.24 kWh nominal / 8.192 kWh at the
+  assumed 80% usable fraction for the current 100 Ah baseline, before reserves;
 - BMS, fuses, contactors and pre-charge;
 - service disconnects;
 - charger;
@@ -988,7 +995,8 @@ Exit condition: reliability and contribution margin support a deliberate second 
 
 Proceed with a **two-pod, variable-width tracked prototype** centered on the
 DAC 9100 mower, retaining its own combustion engine. Use the confirmed two
-51.2 V / 100 Ah LiFePO4 sizing direction and keep two approximately 2 kW
+51.2 V / approximately 100 Ah LiFePO4 sizing direction (105 Ah also acceptable)
+and keep two approximately 2 kW
 continuous traction drives as provisional inputs. The V1 maximum self-propelled travel target is
 4 km/h, with 1 km/h steep-section study points. Derive required output torque,
 rpm and duration from the current operating cases and confirmed track

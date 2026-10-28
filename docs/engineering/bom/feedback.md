@@ -36,6 +36,8 @@ linked engineering scopes, not in an earlier proposal.
 | [Rear motor position (F09)](feedback.md#f09-rear-traction-motor-position) | [Motor/drum layout and mounting interfaces](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
 | [Workshop, test method and app control (F10)](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control) | [Tool-by-tool price/reuse table](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools) · [Independent stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 | [Motor braking and stationary hold (F11)](feedback.md#f11-motor-braking-and-stationary-hold) | [Braking direction](../modules/02-drive-train/propulsion.md#owner-braking-direction-2026-10-27) |
+| [48 V baseline and scenario retirement (F12)](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) | [Active cost configuration](chassis-bom.md#propulsionbattery-comparison) |
+| [Value battery shortlist and charger bundles (F13)](feedback.md#f13-value-battery-shortlist-and-bundled-chargers) | [DC HOUSE first choice and priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
 
 ### F01: propulsion
 
@@ -251,18 +253,50 @@ direct imports. Document three publicly priced options and use the recommended
 option as the budget reference. Remove the 72 V scenario from all active BOM
 and cost-comparison tables; this does not change the retained 48 V drive scenario.
 
-**Budget recommendation:** [Ultimatron UBL-48-100H](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive),
+**Historical budget recommendation, superseded by F13:** [Ultimatron UBL-48-100H](sources.md#s27-ultimatron-ubl-48-100h-and-charger),
 with the separately listed 10 A charger, replaces the former Elker reference.
 The other two [priced packs](../modules/04-battery-and-charging/batteries.md#battery-alternatives)
 are non-additive alternatives. This is a recommended estimating baseline,
 not a purchased or mower-qualified assembly. Pack fit, current/regen, cold
 charging and supplier-rating conflicts remain HOLD.
 
-**Effect on estimate:** Retire the 72 V CSV columns and its five external-drive
+**Historical effect on estimate:** Retire the 72 V CSV columns and its five external-drive
 lines DRV-007–011, which had no 48 V purchase cost. Preserve all other 48 V
 costs before the battery update. The new pack/charger references add €990.28
 to materials: €13,879.10 total and €17,710.92 including the existing provisions
 and contingency. Freight remains a provision, not a confirmed delivery price.
+
+### F13: value battery shortlist and bundled chargers
+
+**Decision recorded on 2026-10-28:** Retain only the €1,199 Greenboatsolutions
+offer from the previous shortlist and research other suppliers. Capacity is
+approximately 100 Ah, with modest upward variation such as 105 Ah accepted.
+The owner initially approved GBS as the provisional budget reference, then
+preferred DC HOUSE's charger bundle as first option if suitable while
+continuing research.
+
+**Conditional recommendation:** [DC HOUSE's non-DE EU €849.99 bundle](sources.md#s30-dc-house-100-ah-charger-bundle)
+passes a voltage/load/envelope candidate screen, not vehicle qualification.
+Use it first and as the estimating reference; preserve GBS and add Vatrer's
+priced 105 Ah mobile variants. LiTime's inspected 100 Ah offer is unavailable.
+Ultimatron/ACES remain only dated source history, not active recommendations.
+The GBS/DC HOUSE SKU relationship does not prove independent pack designs.
+
+**Effect on estimate:** BAT-001 includes an 18 A charger and BMS per pack.
+Apply the disclosed conditional 21% tax reserve to €849.99: **€1,028.49
+per bundle / €2,056.98 for two**. Destination VAT inclusion is unresolved;
+replace the reserve once confirmed, without double taxation. BAT-005 becomes
+included (`I / N/A`), avoiding a duplicate charger purchase. Other component
+costs and the retired 72 V status are unchanged. Materials decrease by
+**€1,721.46 to €12,157.64**; battery/charging costs become **€2,416.98**;
+the indicative budget with unchanged provisions and 20% contingency becomes
+**€15,645.17**.
+
+**Open holds:** Exact revision and dimensions, contradictory peak/charger
+ratings, regen/BMS behavior, cell-temperature protection, environmental and
+vibration evidence, 89.8 kg pair mass/CG and full pod fit, household charger
+capacity, Romania shipment/tax and warranty. No hardware, purchasing or
+supplier-contact authorization is implied.
 
 ## Feedback and qualification loops
 

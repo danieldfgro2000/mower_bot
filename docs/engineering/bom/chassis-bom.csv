@@ -45,11 +45,11 @@ DRV-004,Propulsion,Output shaft couplings or mounting hubs,each,1,2,30.00,60.00,
 DRV-005,Propulsion,External output shaft stock,each,1,2,35.00,70.00,A,S04,Budget provision for independently supported sprocket shaft
 DRV-006,Propulsion,Output shaft bearing blocks,each,2,4,20.00,80.00,A,S03,Independent track load support not confirmed by this allowance
 DRV-012,Propulsion,Keys bushes and reduction fasteners,pod set,1,2,15.00,30.00,A,S04,Separate from chassis structural fasteners
-BAT-001,Battery and charging,Ultimatron UBL-48-100H 51.2 V 100 Ah pack with BMS,each,1,2,1727.55,3455.10,C,S27,Public EUR 1699 including 19 percent VAT normalized by /1.19*1.21; battery only; per-pod fit and vehicle/regen/current qualifications remain open
+BAT-001,Battery and charging,DC HOUSE 51.2 V 100 Ah pack with BMS and 18 A charger,bundle,1,2,1028.49,2056.98,C,S30,Non-DE EU SKU S-DE-L131211800094-1-C-1 public EUR 849.99 plus conditional 21 percent tax reserve; not established net price; replace reserve with confirmed destination tax without double counting; Romania delivery fit and vehicle/regen/current qualification open
 BAT-002,Battery and charging,Battery enclosure and terminal cover,each,1,2,90.00,180.00,A,S06,Mechanical debris protection and drainage; no assumed fire containment
 BAT-003,Battery and charging,Battery restraint and vibration-isolation hardware,pod set,1,2,30.00,60.00,A,S04,Restraint loads and vibration suitability need engineering review
 BAT-004,Battery and charging,Drain sealing and terminal-insulation materials,pod set,1,2,15.00,30.00,A,S07,Washdown strategy remains open
-BAT-005,Battery and charging,Retailer-listed 48 V 10 A LiFePO4 charger,each,1,2,161.67,323.34,C,S27,Separately listed EUR 159 including 19 percent VAT normalized by /1.19*1.21; not bundled with pack; exact model profile connectors and mains compatibility unqualified
+BAT-005,Battery and charging,DC HOUSE bundled 18 A LiFePO4 charger,each,1,2,N/A,N/A,I,S30,One charger included per BAT-001 bundle; no separate purchase; exact model 900 W versus 58.4 V times 18 A conflict connectors and mains compatibility unqualified
 BAT-006,Battery and charging,Charge connector and protective cap,pair,1,2,20.00,40.00,A,S07,Touch protection and DC ratings need verification at full-charge voltage
 BAT-007,Battery and charging,Charge fuse holder and interlock harness,pod set,1,2,25.00,50.00,A,S07,Interlock must inhibit operation during charging
 PWR-001,Power distribution,DC main fuse,each,1,2,25.00,50.00,A,S07,DC interrupt rating coordinated with pack fault current; ampere rating not chosen

@@ -29,11 +29,11 @@ through Stage 2; it is not a per-pod or per-motor price.
 | **[01 — Structure](../modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](../modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 |
 | **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €3,781.66 |
 | **[03 — Width adjustment](../modules/03-width-adjustment/width-adjustment.md)** | €407.00 |
-| **[04 — Battery and charging](../modules/04-battery-and-charging/batteries.md)** | €4,138.44 |
+| **[04 — Battery and charging](../modules/04-battery-and-charging/batteries.md)** | €2,416.98 |
 | **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 |
 | **[06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 |
 | **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €615.00 |
-| **All listed materials/equipment** | €13,879.10 |
+| **All listed materials/equipment** | €12,157.64 |
 <!-- END GENERATED: overview -->
 
 ### Build budget
@@ -47,14 +47,14 @@ is excluded; it has not replaced the costed planetary drive.
 <!-- BEGIN GENERATED: budget -->
 | Budget line | 48 V |
 | --- | ---: |
-| Materials/equipment | €13,879.10 |
+| Materials/equipment | €12,157.64 |
 | Freight/import/brokerage provision | €500.00 |
 | Outsourced precision machining provision | €350.00 |
 | DIY fabrication/printing energy | €30.00 |
 | Owner fabrication labor | N/A - owner supplied |
-| **Budget before contingency** | €14,759.10 |
-| Uncertainty contingency (20%) | €2,951.82 |
-| **Indicative build budget** | €17,710.92 |
+| **Budget before contingency** | €13,037.64 |
+| Uncertainty contingency (20%) | €2,607.53 |
+| **Indicative build budget** | €15,645.17 |
 <!-- END GENERATED: budget -->
 
 **On this page:** [Find a component](chassis-bom.md#bom-by-scope) ·
@@ -152,14 +152,16 @@ remain separately budgeted pending their own mechanical/environmental design.
 
 ## Propulsion/battery comparison
 
-The active estimate uses the 48 V drive and two 51.2 V / 100 Ah LiFePO4 packs.
+The active estimate uses the 48 V drive and two DC HOUSE 51.2 V / 100 Ah
+LiFePO4 pack/charger bundles; modest capacity increases such as 105 Ah remain
+acceptable alternatives, not extra purchases.
 The [owner's retirement decision](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement)
 removes the former higher-voltage scenario from active inputs and reports.
 This is a budget configuration, not hardware approval; nominal voltage is not compatibility.
 
 | Costed scenario | Drive detail | Battery detail |
 | --- | --- | --- |
-| 48 V / approximately 2 kW per drive | [BLDC planetary motor and BD100/C100 controller](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | [Ultimatron UBL-48-100H budget reference](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Two priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
+| 48 V / approximately 2 kW per drive | [BLDC planetary motor and BD100/C100 controller](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | [DC HOUSE bundle budget reference](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
 
 **Separate motor candidate, excluded from the baseline:**
 
@@ -212,11 +214,11 @@ procurement or manufacture by this package.
 <!-- BEGIN GENERATED: readiness -->
 | Cost basis: lines / EUR | 48 V |
 | --- | ---: |
-| Calculated public-price references (C) | 5 / €7,320.10 |
+| Calculated public-price references (C) | 4 / €5,598.64 |
 | Engineering allowances (A) | 98 / €6,559.00 |
-| Included / no separate purchase (I) | N/A - no lines |
+| Included / no separate purchase (I) | 1 / N/A |
 | Reused inventory (R) | 8 / N/A |
-| **Total (111 lines)** | €13,879.10 |
+| **Total (111 lines)** | €12,157.64 |
 <!-- END GENERATED: readiness -->
 
 Every current cost line maps to a primary owner within the
@@ -247,9 +249,9 @@ are reused inventory with no new purchase cost; slings and shackles are excluded
 <!-- BEGIN GENERATED: phases -->
 | Acquisition stage | 48 V |
 | --- | ---: |
-| Stage 1 — bench propulsion prototype | €6,111.05 |
-| Stage 2 — rolling two-pod chassis (additional purchases only) | €7,768.05 |
-| **Stages 1–2 cumulative** | €13,879.10 |
+| Stage 1 — bench propulsion prototype | €5,250.32 |
+| Stage 2 — rolling two-pod chassis (additional purchases only) | €6,907.32 |
+| **Stages 1–2 cumulative** | €12,157.64 |
 <!-- END GENERATED: phases -->
 
 This assumes one [instrumented, guarded bench fixture](../modules/07-workshop-and-support/workshop.md#ps34-bench-fixture-and-controls)
@@ -301,12 +303,16 @@ are not yet verified safety behavior.
   Allowances are intended as tax-inclusive cash provisions; no VAT recovery
   is assumed. Import duty, freight VAT, and actual seller tax treatment require
   checkout/RFQ.
-- The [Ultimatron pack and separate charger](sources.md#s27-ultimatron-ubl-48-100h-and-charger)
-  list €1,699 and €159 including German 19% VAT. The 48 V ledger uses
-  `displayed price / 1.19 × 1.21`, giving **€1,727.55 per pack** and
-  **€161.67 per charger**, rounded half-up before quantity multiplication.
-  This replaces the former Elker conditional-tax reserve; do not add VAT again.
-  Destination checkout tax and two-pack freight remain unconfirmed.
+- The [DC HOUSE EU/non-DE bundle](sources.md#s30-dc-house-100-ah-charger-bundle)
+  displays €849.99 with an 18 A charger. Destination VAT inclusion is unclear;
+  the ledger uses `849.99 × 1.21 = €1,028.49` per bundle, rounded half-up,
+  as a **conditional 21% tax-reserved provision**, not proof of a net price.
+  Replace that reserve with confirmed destination treatment rather than taxing
+  an inclusive price twice. BAT-005 is included in BAT-001 (`I / N/A`).
+  The German solar-use 0%-VAT offer is not an entitlement for this mower.
+  Romania shipment, two-pack freight and actual tax remain unconfirmed.
+  The retained GBS alternative explicitly includes 19% VAT and therefore uses
+  `/1.19 × 1.21` for comparison instead; it does not enter baseline totals.
 - The **20% contingency** is a separate budget reserve, not a statistical
   confidence interval or a guarantee that design changes or quotations fit it.
 

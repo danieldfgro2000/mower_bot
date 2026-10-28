@@ -33,7 +33,7 @@ which sources were recorded. IDs remain stable for the ledgers.
 | Reduction hardware | [DOLD chain drives (S05)](sources.md#s05-dold-chain-drives) · [Planetary gearboxes (S10)](sources.md#s10-dold-planetary-gearbox-alternatives) | [Reduction requirements and costs](../modules/02-drive-train/propulsion.md#ps17-reduction-and-transmission-hardware) |
 | Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
 | Bearings, shafts and frame hardware | [DOLD bearings (S03)](sources.md#s03-dold-bearing-housings) · [Mechanical parts (S04)](sources.md#s04-dold-mechanical-parts) | [Drive output supports](../modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) · [Frame/mounting parts](../modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) |
-| Battery and charger | [Ultimatron and charger (S27)](sources.md#s27-ultimatron-ubl-48-100h-and-charger) · [GBS metal pack (S28)](sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [ACES (S29)](sources.md#s29-aces-al48v100hfa-bt) | [Three priced options](../modules/04-battery-and-charging/batteries.md#battery-alternatives) · [Pod fit](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
+| Battery and charger | [DC HOUSE bundle (S30)](sources.md#s30-dc-house-100-ah-charger-bundle) · [GBS metal pack (S28)](sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [Vatrer (S31)](sources.md#s31-vatrer-105-ah-mobile-packs) | [Priced options](../modules/04-battery-and-charging/batteries.md#battery-alternatives) · [Pod fit](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
 | Electrical parts and contactors | [RS catalog (S07)](sources.md#s07-rs-electrical-parts-and-tools) · [DC-CON-72V400A example (S18)](sources.md#s18-dc-con-72v400a-contactor-example) | [Power parts](../modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) · [Connectors](../modules/05-power-cables-and-electronics/cables-connectors.md#parts-at-a-glance) |
 | Independent stopping | [Schneider relay example (S08)](sources.md#s08-schneider-xpsuaf13ap-safety-relay-example) · [Retired industrial-remote option (S09)](sources.md#s09-tele-radio-tiger-g2-remote-alternative) | [Current stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 | Workshop instruments | [Clamp-meter catalog (S21)](sources.md#s21-ato-clamp-meter-catalog) | [Tools, prices and intended use](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools) |
@@ -278,7 +278,8 @@ the 4 kW estimating scenario or the HPM5000B marketplace model.
 
 ### S16: Elker LFP10048LCD battery
 
-**Status:** Former budget/packaging reference, superseded by S27. The recorded
+**Status:** Former budget/packaging reference, superseded first by S27 and now
+by S30. The recorded
 price below is historical, not reverified for this shortlist.
 
 **Source / source type:** [Elker
@@ -456,6 +457,9 @@ before selection.
 
 ### S27: Ultimatron UBL-48-100H and charger
 
+**Status:** Historical, removed from the active shortlist; S30 supersedes its
+pack/charger budget. The dated evidence below is retained for traceability.
+
 **Checked:** 2026-10-28. **Source / source type:** [Greenboatsolutions product
 page](https://greenboatsolutions.com/shop/battery/lithium/ultimatron-lithium-battery-48-v-100-ah-with-bluetooth),
 retailer listing and structured Product/Offer data.
@@ -478,8 +482,8 @@ two-unit stock or Romania delivery. The [shipping policy](https://greenboatsolut
 advertises EU shipment with different parcel/oversize/hazardous-freight rates;
 exact class, freight charge and destination tax require confirmation.
 
-**Engineering detail:** [Recommended budget pack](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) ·
-[Packaging hold](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit).
+**Decision history:** [Original selection (F12)](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) ·
+[Replacement (F13)](feedback.md#f13-value-battery-shortlist-and-bundled-chargers).
 
 <a id="s28"></a>
 
@@ -501,11 +505,19 @@ without direct rain/water and warns about inverter connection. OEM identity,
 continuous/peak duty, cold-charge inhibition and regen remain unverified.
 Listed available/immediate dispatch is not a two-unit Romania delivery quote.
 
-**Engineering detail:** [Lower-cost alternative](../modules/04-battery-and-charging/batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack).
+**Offer relationship:** The SKU stem matches the DC HOUSE family and product
+image URLs contain “48V 100Ah DC House Metall”. This suggests related hardware,
+not confirmed OEM/revision equivalence. Do not copy S30 ratings to this pack;
+published dimensions, mass and warranty differ.
+
+**Engineering detail:** [Retained retailer alternative](../modules/04-battery-and-charging/batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack).
 
 <a id="s29"></a>
 
 ### S29: ACES AL48V100HFA-BT
+
+**Status:** Historical, removed from the active shortlist; not a current
+recommendation or cost input.
 
 **Checked:** 2026-10-28. **Source / source type:** [Exact ACES product
 variant](https://greenboatsolutions.com/shop/battery/lithium/ACES-48V-100Ah-lithium-battery?v=6796),
@@ -522,7 +534,89 @@ peak-duration or regen definitions. The seller prohibits charging below 0°C;
 automatic inhibition still needs evidence. Listed available but 3-4 weeks
 dispatch, not immediate warehouse stock or a confirmed Romania quote.
 
-**Engineering detail:** [Premium alternative](../modules/04-battery-and-charging/batteries.md#premium-alternative-aces-al48v100hfa-bt).
+**Decision history:** [Replacement shortlist (F13)](feedback.md#f13-value-battery-shortlist-and-bundled-chargers).
+
+<a id="s30"></a>
+
+### S30: DC HOUSE 100 Ah charger bundle
+
+**Checked:** 2026-10-28. **Source / source type:** Manufacturer storefront,
+public product HTML, linked option matrix and structured product data.
+The [EU/non-DE bundle](https://de.dchousepower.com/products/5-tage-bearbeitungszeit48v-100ah-lifepo4-batterie-mit-metallgehause-bluetooth-und-niedertemperaturschutz-ladegerat-ausserhalb-de)
+is SKU **S-DE-L131211800094-1-C-1**, **€849.99**, marked available, five-day
+processing in the title. Includes one 18 A charger, LCD and 5 m cable;
+battery and charger may ship separately. Two bundles are **€1,699.98** before
+unconfirmed destination tax/freight, not a pair discount.
+
+**Tax distinction:** The [initial €879.99 listing](https://de.dchousepower.com/products/48v-100ah-lithium-batterie-mit-metallgehause-ladegerat)
+defaults to the German 0%-VAT option; its public selector links the non-DE
+offer above. The separate [German taxed bundle](https://de.dchousepower.com/products/5-tage-bearbeitungszeit-inkl-mwst-48v-100ah-lifepo4-batterie-mit-metallgehause-bluetooth-und-niedertemperaturschutz-ladegerat-inkl-mwst)
+also shows €879.99 but has a different SKU, S-DE-L131211800130-1-C-1.
+Do not infer identical revisions or Romanian taxation from those pages.
+The non-DE offer is marked `taxable: true`, which does not establish net
+versus gross price. BAT-001 uses `849.99 × 1.21 = €1,028.49` per bundle
+as a **conditional tax-reserved provision**, not a confirmed net-price
+conversion. Replace that reserve with actual destination treatment; never
+add VAT again to an already tax-inclusive price. No solar tax exemption is assumed.
+
+**Technical claims / conflicts:** 51.2 V / 100 Ah / 5.12 kWh, operating
+40–58.4 V, charge 58.4 V, standard charge/discharge 50/50 A and claimed
+maximum continuous 200/200 A. Table peaks 280 A / 30 s and 670 A / 0.5 s
+conflict with marketing's 250 A / 30 s and 700 A / 1 s. The exact non-DE
+table says 504 × 268 × 233 mm and 44.9 kg, versus 501 mm length on the
+initial page; imperial equivalents also disagree. M8 terminals, metal case,
+Bluetooth, cold-charge inhibition below 0°C and discharge inhibition below
+−20°C are claimed. No battery IP rating or exact-model regen behavior was
+established. Listed 3+2-year warranty is not confirmed mower-duty coverage.
+
+**Manual and charger:** The linked
+[battery user guide](https://cdn.shopify.com/s/files/1/0690/2621/8213/files/DC_HOUSE_Golf_Cart_Battery_User_Guide_1.pdf?v=1792575243)
+is generic. It prohibits cold-cell charging and warns about SOC-estimate
+drift/sudden zero indication; it does not resolve exact-model ratings, IP,
+vibration or regen. The [18 A charger listing](https://de.dchousepower.com/products/48v-18a-ac-zu-dc-lifepo4-tragbares-batterieladegerat)
+states 100–240 VAC, 58.4 V / 18 A, IP65 and 900 W maximum power; the output
+product is 1,051.2 W, an unresolved inconsistency. Its IP claim is not the
+battery's rating. BAT-005 is included in BAT-001, not a second purchase.
+
+**Supply hold:** The [shipping policy](https://de.dchousepower.com/policies/shipping-policy)
+says “only DE” but later lists DE/FR/ES/IT and other EU destinations with
+extra charges. Product-page EU shipping claims do not resolve this conflict.
+Two-unit availability, Romania delivery, freight, tax, supplied revision and
+return/warranty arrangements require confirmation.
+
+**Engineering detail:** [Conditional first choice and load screen](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) ·
+[Fit hold](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit).
+
+<a id="s31"></a>
+
+### S31: Vatrer 105 Ah mobile packs
+
+**Checked:** 2026-10-28. **Source / source type:** German manufacturer storefront
+HTML and public structured product variants; not the US-store shipping policy.
+
+| Exact offer | Displayed price / contents | Published body / current claims |
+| --- | --- | --- |
+| [UTV/ATV](https://www.vatrerpower.de/products/vatrer-48v-105ah-utv-atv-lithium-batterie), 51.2V-105AH-UTV-DE-1-KB | €1,519.99 each / €3,039.98 for two; 58.4 V / 20 A charger and monitor included; marked available | 493 × 318 × 232 mm, 45.5 kg, 300 A continuous discharge; 600 A peak is 35 s in prose but 3 s in table |
+| [Standard golf-cart](https://www.vatrerpower.de/products/vatrer-48v-105ah-lifepo4-golfwagen-akku), D-51.2V-105AH-V-20A-EU | €1,499.99 single; explicit two-pack variant €2,989.99; 58.4 V / 20 A charger per pack; listed in stock | 509 × 334 × 230 mm, 46.5 kg, 200 A continuous discharge / 100 A continuous charge, 400 A / 35 s peak |
+| [Mini golf-cart](https://www.vatrerpower.de/products/vatrer-48v-105ah-mini-lithium-batterie-200-a-bms), 51.2V-105AH-EB-DE-Z | €1,499.99 single; €2,999.98 for two; 58.4 V / 20 A charger included; title says **preorder**, despite structured availability | 335 × 310 × 255 mm, 41.08 kg, 200 A continuous discharge, 400 A / 35 s table peak |
+
+All list 51.2 V / 105 Ah / 5.376 kWh, 58.4 V charge and 40 V discharge
+cut-off, IP67 and low-temperature charge protection. UTV/mini tables label
+300/200 A maximum charging and 55 A continuous charging; these require
+exact-model clarification, not transfer to regen acceptance. Cold-charge
+prose says cut-off below 0°C / recovery above 5°C; UTV/mini tables also give
+a ±4°C cut-off tolerance. Establish safe cell-temperature control rather
+than treating that tolerance as permission for subzero charging.
+UL/IP, vibration and mower-use warranty claims remain unverified.
+
+**Price/delivery limits:** Prices are EUR and product variants marked taxable,
+but destination VAT inclusion/rate is not established by that flag. The
+[German-store shipping policy](https://www.vatrerpower.de/policies/shipping-policy)
+claims free shipping to Germany/EU, generally 2–9 working days plus 1–2
+processing days. Confirm two-pack Romanian acceptance, stock, tax and
+transport documents; no delivered quote or purchase was obtained.
+
+**Engineering detail:** [Vatrer comparison and energy](../modules/04-battery-and-charging/batteries.md#vatrer-105-ah-alternatives).
 
 <a id="u01"></a>
 

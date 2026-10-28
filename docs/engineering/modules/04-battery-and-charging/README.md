@@ -8,8 +8,8 @@ suitability or compatibility.
 
 | Start with a part | Then inspect its connection |
 | --- | --- |
-| [Three priced 100 Ah packs](batteries.md#battery-alternatives) | [Recommended Ultimatron budget reference](batteries.md#48-v--approximately-2-kw-per-drive) · [Battery-to-pod fit](batteries.md#battery-to-pod-fit) |
-| [Lower-cost pack](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) and [premium ACES option](batteries.md#premium-alternative-aces-al48v100hfa-bt) | [Required pack/BMS definition](batteries.md#ps18-battery-packs-and-bms) · [Motor/controller compatibility](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
+| [Priced 100–105 Ah packs](batteries.md#battery-alternatives) | [Conditional DC HOUSE first choice](batteries.md#48-v--approximately-2-kw-per-drive) · [Battery-to-pod fit](batteries.md#battery-to-pod-fit) |
+| [Retained Greenboatsolutions offer](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) and [Vatrer alternatives](batteries.md#vatrer-105-ah-alternatives) | [Required pack/BMS definition](batteries.md#ps18-battery-packs-and-bms) · [Motor/controller compatibility](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
 | [BMS and pack terminals](batteries.md#ps18-battery-packs-and-bms) | [Main fuse/disconnect](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Power connectors](../05-power-cables-and-electronics/cables-connectors.md#ps23-high-current-harness) |
 | [Charger and charge connector](batteries.md#ps20-charging-and-charge-interlocks) | [Charger costs](batteries.md#0403-matched-battery-chargers) · [Charge interlock and stopping](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 

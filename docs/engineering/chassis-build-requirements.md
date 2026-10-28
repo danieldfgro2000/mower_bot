@@ -282,16 +282,19 @@ or infer approval of a 5 kW power increase.
 ### Q03: battery/charging alternatives
 
 **Requirements:** [Packs, BMS, enclosures and charging](modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements).
-**Leads:** [Ultimatron and charger (S27)](bom/sources.md#s27-ultimatron-ubl-48-100h-and-charger) ·
+**Leads:** [DC HOUSE bundle (S30)](bom/sources.md#s30-dc-house-100-ah-charger-bundle) ·
 [GBS metal pack (S28)](bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack) ·
-[ACES (S29)](bom/sources.md#s29-aces-al48v100hfa-bt).
+[Vatrer mobile packs (S31)](bom/sources.md#s31-vatrer-105-ah-mobile-packs).
 
 **Specific response needed:** Pack drawing/mass, cell/series/BMS details,
 vehicle/regen/current limits, charger and shipment documentation; price matched
-battery-only and charger-bundled offers separately. Confirm two 51.2 V / 100 Ah
-packs, actual continuous/peak and regen ratings, cold-charge inhibition,
-Romania freight/tax and the unresolved enclosure/IP claims; a maximum-current
-number or heating feature is not qualification.
+battery-only and charger-bundled offers separately. Confirm two 51.2 V /
+approximately 100 Ah packs (105 Ah accepted), exact revision/drawing,
+continuous/peak and regen ratings, cold-charge inhibition/recovery,
+Romania freight/tax and enclosure/IP claims. Resolve the DC HOUSE peak,
+dimensions and charger-power conflicts before selection; its bundled charger
+must not be bought twice. A maximum-current number or heating feature is not
+qualification.
 
 ### Q04: local fabrication/machining
 

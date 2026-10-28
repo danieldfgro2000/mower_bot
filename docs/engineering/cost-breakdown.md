@@ -31,11 +31,11 @@ documented separately and are not additive purchases.
 | **[01 — Structure](modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 |
 | **[02 — Drive train](modules/02-drive-train/propulsion.md)** | €3,781.66 |
 | **[03 — Width adjustment](modules/03-width-adjustment/width-adjustment.md)** | €407.00 |
-| **[04 — Battery and charging](modules/04-battery-and-charging/batteries.md)** | €4,138.44 |
+| **[04 — Battery and charging](modules/04-battery-and-charging/batteries.md)** | €2,416.98 |
 | **[05 — Power cables](modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 |
 | **[06 — Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 |
 | **[07 — Workshop and support](modules/07-workshop-and-support/workshop.md)** | €615.00 |
-| **All listed materials/equipment** | €13,879.10 |
+| **All listed materials/equipment** | €12,157.64 |
 <!-- END GENERATED: overview -->
 
 [↑ Back to document overview](cost-breakdown.md#bom-cost-breakdown)
@@ -102,12 +102,12 @@ is a separate non-additive alternative, not the motor cost included below.
 
 | Module / detailed BOM | 48 V |
 | --- | ---: |
-| [04.01 Battery packs with integrated BMS](modules/04-battery-and-charging/batteries.md#0401-battery-packs-with-integrated-bms) | €3,455.10 |
+| [04.01 Battery packs with integrated BMS](modules/04-battery-and-charging/batteries.md#0401-battery-packs-with-integrated-bms) | €2,056.98 |
 | [BMS: included in pack; not separately priced](modules/04-battery-and-charging/batteries.md#0401-battery-packs-with-integrated-bms) | N/A - included |
 | [04.02 Battery enclosures restraints and insulation](modules/04-battery-and-charging/batteries.md#0402-battery-enclosures-restraints-and-insulation) | €270.00 |
-| [04.03 Matched battery chargers](modules/04-battery-and-charging/batteries.md#0403-matched-battery-chargers) | €323.34 |
+| [04.03 Matched battery chargers](modules/04-battery-and-charging/batteries.md#0403-matched-battery-chargers) | N/A |
 | [04.04 Charge connectors fuse holders and interlock harness](modules/04-battery-and-charging/batteries.md#0404-charge-connectors-fuse-holders-and-interlock-harness) | €90.00 |
-| **04 — Battery and charging subtotal** | €4,138.44 |
+| **04 — Battery and charging subtotal** | €2,416.98 |
 
 ### 05 — Power cables and electronics
 
@@ -150,11 +150,11 @@ is a separate non-additive alternative, not the motor cost included below.
 
 | Accounting scope | 48 V |
 | --- | ---: |
-| **Installed-machine materials** | €13,264.10 |
+| **Installed-machine materials** | €11,542.64 |
 | **Reusable bench equipment** | €285.00 |
 | **Loose handling / consumables / support** | €330.00 |
-| **All listed materials/equipment** | €13,879.10 |
-| Above €5,000 materials/equipment target | €8,879.10 |
+| **All listed materials/equipment** | €12,157.64 |
+| Above €5,000 materials/equipment target | €7,157.64 |
 <!-- END GENERATED: modules -->
 
 [↑ Back to document overview](cost-breakdown.md#bom-cost-breakdown)

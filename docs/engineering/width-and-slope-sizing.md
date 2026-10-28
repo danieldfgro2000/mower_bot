@@ -71,9 +71,10 @@ Overhanging pods could make outside-track width smaller than overall body
 width, but would not produce a genuinely 400 mm-wide finished machine.
 Alternative cells/packs could change packaging and must be re-costed.
 
-The new [Ultimatron budget reference](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
-is **420 × 320 × 260 mm**, 49.2 kg per pack. Side-by-side pack bodies alone
-span 640 mm before enclosures or central clearance. The former 600–800 mm
+The current [DC HOUSE budget reference](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
+is **504 × 268 × 233 mm**, 44.9 kg per pack according to the non-DE EU offer;
+the exact-revision drawing remains required. Side-by-side pack bodies alone
+span 536 mm before enclosures or central clearance. The former 600–800 mm
 study range is not a current sizing decision. Derive a complete narrowed
 transport configuration within the owner's 1 m-wide deck constraint.
 Determine the actual minimum from a layout of **both complete pods**, spine,
@@ -146,10 +147,12 @@ For the **historical Elker envelope**, with the model's assumed 20 mm belt,
 clearance. The assumed 2,592 mm pitch loop leaves about **193 mm total** along
 the straight run around a centered 522 mm pack. Both margins depend on the
 unverified track-code interpretation and placeholder geometry; neither proves
-fit. The new pack is 43 mm taller, consuming that entire nominal vertical
-margin; it is also wider and heavier. Repackage the carrier, track return and
-tensioner envelope before claiming fit. The CAD has not been changed and the
-old 72 kg pair is not the current 98.4 kg battery mass.
+fit. The current DC HOUSE pack is 16 mm taller, leaving **27 mm nominal
+arithmetic vertical margin**, not qualified installation or tensioner clearance.
+Its listed body is 18 mm shorter and 1 mm narrower, but heavier. Check the
+complete carrier, track return and tensioner envelope before claiming fit.
+The CAD has not been changed and the old 72 kg pair is not the current
+89.8 kg battery mass.
 
 **Continue with the part:** [Battery-to-pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) ·
 [Spring tensioner](modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) ·

@@ -235,7 +235,7 @@ EUR references use `USD / 1.1188 × 1.21`; they are not delivered package quotes
 approximately 86.6 Nm and 187.5 rpm at rated motor speed. Gearbox output torque, peak
 load, radial load, and skid-steer duty must be documented.
 
-**Two motors + two controllers + two packs only:** **€6,550.22** using the
+**Two motors + two controllers + two pack/charger bundles only:** **€5,152.10** using the
 [current battery tax basis](../../bom/chassis-bom.md#estimate-rules);
 excludes brakes and all other materials. Pack assumptions are in the
 [48 V battery scenario](../04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive).

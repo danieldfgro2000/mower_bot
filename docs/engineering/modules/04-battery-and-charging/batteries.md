@@ -5,21 +5,22 @@
 **Status:** DRAFT / HOLD; engineering estimate and unqualified requirements.
 No procurement, fabrication, energizing or operation is authorized.
 
-**Summary:** Two independent 51.2 V / 100 Ah LiFePO4 packs are the sizing
-baseline. Ultimatron UBL-48-100H is the recommended budget reference, with two
-priced alternatives below. None is qualified for the mower; inspect the
-electrical and packaging holds before treating a price as a purchase decision.
+**Summary:** Two independent 51.2 V / approximately 100 Ah LiFePO4 packs are
+the sizing baseline; modestly higher capacity, including 105 Ah, is acceptable.
+DC HOUSE's 100 Ah / 18 A charger bundle is the conditional first choice and
+budget reference. Greenboatsolutions and Vatrer remain priced alternatives.
+None is qualified for the mower; electrical, packaging and delivery holds remain.
 
 ## Parts at a glance
 
 | Part to inspect | Current choice / status | Cost and specifications | Fit / next component |
 | --- | --- | --- | --- |
-| [Ultimatron UBL-48-100H](batteries.md#48-v--approximately-2-kw-per-drive) | Recommended budget reference; pack fit and duty remain HOLD | [Three priced options](batteries.md#battery-alternatives) · [Baseline costs](batteries.md#0401-battery-packs-with-integrated-bms) | [Battery-to-pod fit](batteries.md#battery-to-pod-fit) |
-| [Greenboatsolutions metal pack](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) | Lower-cost alternative; conflicting current/power data | [Price and limitations](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) | [Pack/BMS requirements](batteries.md#ps18-battery-packs-and-bms) |
-| [ACES AL48V100HFA-BT](batteries.md#premium-alternative-aces-al48v100hfa-bt) | Lighter premium alternative; excluded from totals | [Price and data](batteries.md#premium-alternative-aces-al48v100hfa-bt) | [Controller compatibility](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
+| [DC HOUSE 100 Ah bundle](batteries.md#48-v--approximately-2-kw-per-drive) | First-choice budget candidate; qualification HOLD | [Prices](batteries.md#battery-alternatives) · [Baseline costs](batteries.md#0401-battery-packs-with-integrated-bms) | [Battery-to-pod fit](batteries.md#battery-to-pod-fit) |
+| [Greenboatsolutions metal pack](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) | Retained €1,199 battery-only alternative; conflicting ratings | [Price and limitations](batteries.md#lower-cost-alternative-greenboatsolutions-metal-pack) | [Pack/BMS requirements](batteries.md#ps18-battery-packs-and-bms) |
+| [Vatrer 105 Ah mobile packs](batteries.md#vatrer-105-ah-alternatives) | Separate supplier, bundled 20 A charger; excluded from totals | [UTV, standard and mini prices](batteries.md#vatrer-105-ah-alternatives) | [Controller compatibility](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
 | [BMS](batteries.md#ps18-battery-packs-and-bms) | Included in pack costs; limits and vehicle/regen behavior unqualified | [Pack/BMS requirements](batteries.md#ps18-battery-packs-and-bms) · [Included-cost treatment](batteries.md#0401-battery-packs-with-integrated-bms) | [Main protection](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) |
 | [Battery enclosure and restraints](batteries.md#ps19-battery-enclosures-and-restraints) | Separate allowance; containment design open | [Enclosure costs](batteries.md#0402-battery-enclosures-restraints-and-insulation) · [Mechanical requirements](batteries.md#ps19-battery-enclosures-and-restraints) | [Pod, track and tensioner clearance](batteries.md#battery-to-pod-fit) |
-| [Charger and charge connector](batteries.md#ps20-charging-and-charge-interlocks) | Matched chargers not selected; avoid duplicate bundle costs | [Chargers](batteries.md#0403-matched-battery-chargers) · [Connectors/interlock harness](batteries.md#0404-charge-connectors-fuse-holders-and-interlock-harness) · [Charge requirements](batteries.md#ps20-charging-and-charge-interlocks) | [Motion-inhibit/stop interface](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
+| [Charger and charge connector](batteries.md#ps20-charging-and-charge-interlocks) | 18 A chargers included in pack budget; interfaces unqualified | [Chargers](batteries.md#0403-matched-battery-chargers) · [Connectors/interlock harness](batteries.md#0404-charge-connectors-fuse-holders-and-interlock-harness) · [Charge requirements](batteries.md#ps20-charging-and-charge-interlocks) | [Motion-inhibit/stop interface](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 
 **Further detail:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Release requirements](batteries.md#specification-and-inspection-requirements) ·
@@ -34,28 +35,29 @@ electrical and packaging holds before treating a price as a purchase decision.
 Prices follow the [estimate rules](../../bom/chassis-bom.md#estimate-rules).
 Nominal voltage alone does not establish controller or charger compatibility.
 
-**Confirmed direction:** two 48 V-class / **51.2 V, 100 Ah LiFePO4 packs**, one
-per independent pod, not a series-connected higher-voltage bank. Capacity in
-Ah does not specify the required current in A. All three options include a
-reported BMS and are marketed for mobile/boat-motor use, not merely rack storage.
+**Confirmed direction:** two 48 V-class / **51.2 V, approximately 100 Ah
+LiFePO4 packs**, one per independent pod, not a series-connected higher-voltage
+bank. Small capacity variations are accepted, preferably upward; 105 Ah is
+within scope. Capacity in Ah does not specify required current in A.
 
-**Public-price snapshot, 2026-10-28:** these are three distinct packs sold by
-the German retailer Greenboatsolutions. Prices below include its displayed
-**19% VAT**, exclude shipping and chargers, and use single-pack prices
-multiplied by two, not an assumed pair discount.
+**Public-price snapshot, 2026-10-28:** three supplier options, all marketed for
+mobile use. Prices are displayed offers, **not comparable landed quotes**:
+GBS explicitly includes 19% VAT; destination tax for DC HOUSE and Vatrer is
+unconfirmed. Pair figures below are twice the single-unit price. Only the
+DC HOUSE bundle enters totals. Alternatives are replacements, not additions.
 
-| Rank / option | Direct product and exact reference | Public price each | Two packs | Body dimensions / pair mass |
+| Rank / option | Direct product and exact reference | Public price each | Two packs / bundles | Body dimensions / pair mass |
 | --- | --- | ---: | ---: | --- |
-| 1 - recommended budget reference | [Ultimatron UBL-48-100H](https://greenboatsolutions.com/shop/battery/lithium/ultimatron-lithium-battery-48-v-100-ah-with-bluetooth) | **€1,699.00** | **€3,398.00** | 420 × 320 × 260 mm / 98.4 kg |
-| 2 - lower-cost alternative | [Greenboatsolutions metal pack, S-EU-L131211800094-1](https://greenboatsolutions.com/shop/battery/lithium/48v-100ah-metal-blue?v=a75f) | **€1,199.00** | **€2,398.00** | 504 × 280 × 233 mm / 86 kg |
-| 3 - lighter premium alternative | [ACES AL48V100HFA-BT](https://greenboatsolutions.com/shop/battery/lithium/ACES-48V-100Ah-lithium-battery?v=6796) | **€2,899.00** | **€5,798.00** | 522 × 267 × 218 mm / 78 kg |
+| 1 - conditional first choice / budget reference | [DC HOUSE non-DE EU bundle, S-DE-L131211800094-1-C-1](https://de.dchousepower.com/products/5-tage-bearbeitungszeit48v-100ah-lifepo4-batterie-mit-metallgehause-bluetooth-und-niedertemperaturschutz-ladegerat-ausserhalb-de) | **€849.99**, 18 A charger included | **€1,699.98** | 504 × 268 × 233 mm / 89.8 kg |
+| 2 - retained retailer alternative | [Greenboatsolutions metal pack, S-EU-L131211800094-1](https://greenboatsolutions.com/shop/battery/lithium/48v-100ah-metal-blue?v=a75f) | **€1,199.00**, charger excluded | **€2,398.00**, chargers excluded | 504 × 280 × 233 mm / 86 kg |
+| 3 - different mobile-pack supplier | [Vatrer UTV/ATV 105 Ah, 51.2V-105AH-UTV-DE-1-KB](https://www.vatrerpower.de/products/vatrer-48v-105ah-utv-atv-lithium-batterie) | **€1,519.99**, 20 A charger included | **€3,039.98** | 493 × 318 × 232 mm / 91 kg |
 
-The recommendation balances an identified manufacturer, advertised five-year
-warranty, integrated heating and price. It is **conditional on repackaging and
-qualification**, not a claim that the heavier/taller Ultimatron already fits.
-The lower-cost pack has weaker model-specific evidence and conflicting ratings;
-ACES offers the closest envelope to the former pack at a substantial price premium.
-Alternatives are not additive purchases and do not enter baseline totals.
+DC HOUSE is the best-value **candidate**, not a released vehicle battery:
+the nominal voltage, listed discharge capability, low-temperature charge
+protection and lower-height case justify investigating it first. Its bundled
+charger also removes a separate purchase. The unresolved specification
+conflicts, delivery/tax basis and mower-duty evidence prevent purchase approval.
+Heating is not mandatory for the owner's sheltered charging case.
 
 ### 48 V / approximately 2 kW per drive
 
@@ -63,36 +65,54 @@ Alternatives are not additive purchases and do not enter baseline totals.
 [Mounting in the pod](batteries.md#battery-to-pod-fit) ·
 [Charger and connector](batteries.md#ps20-charging-and-charge-interlocks).
 
-| Attribute | Ultimatron UBL-48-100H budget reference |
+| Attribute | DC HOUSE 100 Ah / 18 A charger bundle |
 | --- | --- |
-| Planning price per pack | **€1,727.55**; **€3,455.10 for two**, using `1699 / 1.19 × 1.21` for the Romanian cash-budget comparison; not a checkout/delivered quote |
+| Planning price per bundle | **€1,028.49**; **€2,056.98 for two**, using `849.99 × 1.21` as a conditional tax-reserved cash provision, not a verified net-price conversion |
 | Capacity | **51.2 V / 100 Ah / 5.12 kWh** per pack; **10.24 kWh nominal** for two |
-| Current / BMS claims | Product table: **200 A maximum discharge**, **50 A maximum charge**, integrated BMS; continuous rating, peak duration and regen limits not established |
-| Packaging | **420 × 320 × 260 mm**, **49.2 kg** per pack; **98.4 kg** per pair, before enclosures/restraints |
-| Protection / support claims | Bluetooth, integrated heating, five-year warranty. Table says **IP64**, generic prose says **IP65**; protection rating and mower-duty warranty coverage need confirmation |
-| Listing availability | Marked available, advertised dispatch 3-5 days; not proof of two-unit stock or Romania delivery |
+| Voltage / current claims | Operating **40–58.4 V**, charging **58.4 V**; standard charge/discharge **50/50 A**; table claims maximum continuous **200/200 A**, integrated BMS |
+| Packaging | **504 × 268 × 233 mm**, **44.9 kg** per pack; **89.8 kg** per pair, before enclosures/restraints; M8 terminals |
+| Protection / support claims | Bluetooth, LCD and 5 m cable, low-temperature charge cut-off below 0°C, discharge cut-off below −20°C; advertised 3+2-year warranty; exact coverage and enclosure rating unconfirmed |
+| Listing availability | Non-DE EU offer marked available, title says five-day processing; not proof of two-unit stock or accepted Romania shipment |
 
-Evidence: [Ultimatron and charger evidence (S27)](../../bom/sources.md#s27-ultimatron-ubl-48-100h-and-charger).
+Evidence: [DC HOUSE exact offer, manual and charger (S30)](../../bom/sources.md#s30-dc-house-100-ah-charger-bundle).
 
 **Equal-energy budgeting:** Planning assumption of 80% usable gives **8.192 kWh** from
 two packs, before additional operational reserve, cold and aging margins. It
 does not prove the preferred operating duration.
 
-**Electrical hold:** The generic seller prose also mentions 150 A, unlike the
-200 A product table. Obtain an exact-model datasheet with full/cutoff voltage,
-continuous/peak duty and duration, charge/regen limits versus SOC/temperature,
-BMS opening/recovery and cold-charge behavior. Heating is a listed feature,
-not an accepted cold-charge strategy. Marine marketing, CE claims and an IP
-label do not qualify off-road vibration, shocks, mounting or mower use.
+**Load plausibility, not qualification:** At 2 kW mechanical per pod, an
+illustrative 85% battery-to-shaft efficiency gives approximately **46 A at
+51.2 V**, or **59 A at 40 V**, before auxiliaries and transient loads. This
+is below the claimed 200 A continuous discharge rating, but exceeds the
+50 A standard-current example at low voltage. The controller's battery-side
+current limit, low-speed/skid-steer duty, thermal derating and actual BMS
+settings must be matched; motor phase current is not pack current.
 
-**Charger budget:** The product configurator separately lists a **48 V / 10 A
-LiFePO4 charger at €159 including 19% VAT**. It is not included in the €1,699
-battery price. Budget two at **€161.67 each / €323.34 total**, using the same
-19%-to-21% tax normalization. This replaces the former €160 allowance with a
-public-price reference, not a qualified charger selection: model, CV voltage,
-connectors, mains demand and charge interlocks remain open. Restoring an
-assumed 80 Ah per pack at 10 A takes about eight hours before taper/balancing
-and any warm-up delay, with both chargers operating concurrently.
+**Unresolved electrical/mechanical evidence:** The table gives **280 A / 30 s
+and 670 A / 0.5 s** peaks; marketing instead gives **250 A / 30 s and
+700 A / 1 s**. Do not select either as an accepted transient rating. The
+non-DE offer says 504 mm long, while the initial generic offer said 501 mm;
+imperial dimensions also disagree. Obtain the exact supplied revision's
+drawing, continuous/peak and charge/regen limits versus SOC/temperature,
+BMS opening/recovery behavior, environmental/vibration evidence, transport
+documentation and mower-use warranty. No battery enclosure IP rating was
+established from the inspected DC HOUSE evidence.
+
+The linked user guide is generic, not that missing exact-model datasheet.
+It prohibits charging cold cells and warns that SOC can suddenly fall to zero
+when its estimate drifts; establish reserve and low-voltage handling
+independently of the app display. BMS recovery must not restart motion, and
+neither a BMS nor regenerative braking replaces independent stopping.
+
+**Charger budget:** One **18 A charger is included per bundle** in BAT-001;
+BAT-005 is `I / N/A`, not another charger purchase. The linked charger lists
+100–240 VAC input and 58.4 V output, but its **900 W** maximum-power claim
+conflicts with `58.4 × 18 = 1,051.2 W`. Confirm the actual bundled model,
+current-versus-voltage curve, AC demand, plug, connectors and interlocks.
+Restoring an assumed 80 Ah at 18 A is **4.44 hours** before taper/balancing
+and warm-up; near-empty to full is **5.56 hours** before these effects.
+Two chargers at 58.4 V / 18 A and an assumed 90% efficiency would draw
+**2.34 kW AC**, not a verified input rating or available household capacity.
 
 ### Lower-cost alternative: greenboatsolutions metal pack
 
@@ -107,49 +127,87 @@ states **5.12 kW maximum discharge power**, inconsistent with 200 A at 51.2 V.
 Continuous/peak definitions, cold-charge inhibition and regen acceptance are
 unconfirmed. The inverter-connection warning also requires interface review.
 Listed available/immediately dispatchable; a 10 A charger is separately €159.
-Its lower price and smaller envelope are attractive, but these evidence gaps
-prevent it from displacing the branded budget reference.
+With two separate 10 A chargers, the public pair reference is **€2,716**
+including the displayed 19% VAT, before freight. The price is retained as
+requested, but is no longer the cheapest offer in the wider comparison.
 
 Evidence: [Seller-branded pack (S28)](../../bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack).
-Its 21%-VAT planning equivalent would be €1,219.15 each, excluded from totals.
+Its 21%-VAT planning equivalent is €1,219.15 per pack plus €161.67 per
+charger, or €2,761.64 for two of each, excluded from totals.
+The SKU stem and seller image names containing “DC House” suggest related
+hardware to S30; they do **not** establish identical cells, BMS, revisions,
+dimensions or warranty. Treat this as a different seller offer, not proven
+independent battery engineering.
 
-### Premium alternative: ACES AL48V100HFA-BT
+### Vatrer 105 Ah alternatives
 
-ACES Energy is identified as a Netherlands supplier. Listed 51.2 V / 100 Ah /
-5.12 kWh, **39 kg**, **522 × 267 × 218 mm**, integrated BMS, Bluetooth, IP65,
-no heater and a five-year warranty. Seller maxima are **200 A discharge /
-100 A charge**, not established continuous/peak-duration or regen ratings.
-The seller explicitly says not to charge below 0°C; automatic BMS inhibition
-and exact temperature limits still require manufacturer evidence.
+The **UTV/ATV 300 A BMS** pack is a candidate for its explicit mobile/off-road
+application, 232 mm height and included **58.4 V / 20 A charger**. It claims
+51.2 V / 105 Ah, 300 A continuous discharge, IP67, cold-charge cut-off below
+0°C with recovery above 5°C, and 45.5 kg. Its **600 A peak duration conflicts:
+35 s in prose versus 3 s in the table**; charge-current labels also need
+clarification. Off-road marketing and UL/IP claims are not independently
+verified mower qualification or permission to expose the assembly to water.
 
-Listed available with **3-4 weeks** dispatch, not immediate warehouse stock.
-The configurator separately lists an ACES 48 V / 10 A charger at **€279**
-including 19% VAT; it is not included in the €2,899 pack price. The compact
-envelope and 78 kg pair are advantages, but the substantial premium is not
-justified for the current budget without stronger application-specific evidence.
-Evidence: [ACES pack (S29)](../../bom/sources.md#s29-aces-al48v100hfa-bt).
-Its 21%-VAT planning equivalent would be €2,947.72 each, excluded from totals.
+The 105 Ah pair provides **10.752 kWh nominal / 8.6016 kWh at assumed 80%
+usable**, 5% more than the baseline, not a large endurance increase.
+The higher current rating is not itself a reason to increase motor power.
+
+Further priced variants from the same supplier:
+
+| Variant | Public single / pair offer | Packaging and decision |
+| --- | --- | --- |
+| [Standard golf-cart 200 A BMS](https://www.vatrerpower.de/products/vatrer-48v-105ah-lifepo4-golfwagen-akku), D-51.2V-105AH-V-20A-EU | €1,499.99 each; explicit two-pack variant **€2,989.99**; 20 A charger per pack | 509 × 334 × 230 mm, 46.5 kg each; listed in stock. Only €20 cheaper per single pack than UTV, but wider/heavier; retains electrical and fit holds |
+| [Mini 200 A BMS](https://www.vatrerpower.de/products/vatrer-48v-105ah-mini-lithium-batterie-200-a-bms), 51.2V-105AH-EB-DE-Z | €1,499.99 each / €2,999.98 for two; 20 A charger per pack | 335 × 310 × 255 mm, 41.08 kg each; **preorder**, despite structured `available` status. Taller body leaves only 5 mm of the historical illustrative upper clearance before all other needs |
+
+The standard listing claims 200 A continuous discharge, 100 A continuous
+charge, 400 A / 35 s peak, IP67 and cold-charge inhibition. Mini claims must
+not be copied to the standard or UTV revisions. All need exact-model BMS,
+regen, thermal, mounting and transport evidence.
+Evidence and delivery limitations: [Vatrer German-store offers (S31)](../../bom/sources.md#s31-vatrer-105-ah-mobile-packs).
 
 ### Tax and delivery basis
 
-The public prices include German 19% VAT. The ledger removes that tax and
-applies the existing Romanian 21% planning rate, rounding unit costs half-up
-before multiplying by quantity. This is a disclosed cash-budget calculation,
-not another VAT addition or a verified destination checkout price.
+**DC HOUSE:** The initially found €879.99 page defaults to “0% VAT (DE only)”;
+that solar-use exemption is not a mower entitlement. Its selector links a
+separate **EU/non-DE €849.99 bundle**, used here. That offer is marked taxable,
+but this does not establish whether destination VAT is included. Budget
+`849.99 × 1.21`, rounded half-up per unit, as an explicit **conditional
+21% tax reserve**, not a claim that €849.99 is net. Remove/replace this reserve
+once tax-inclusive Romanian pricing is confirmed; do not charge VAT twice.
+The [shipping policy](https://de.dchousepower.com/policies/shipping-policy)
+says “only DE” in one section but lists other EU destinations with extra
+charges later. Romania delivery and freight remain unconfirmed.
 
-The seller's [shipping policy](https://greenboatsolutions.com/shipping)
-advertises EU delivery, with different charges for battery parcels, oversize
-parcels and hazardous-goods freight (including a €299 EU freight category).
-The correct class and total for two heavy packs delivered to Romania are
-unconfirmed; do not assume the lower €39 battery-parcel rate covers this order.
-Keep freight outside the pack prices. The existing provision is unchanged and
-not proven adequate for this order; an actual delivery quote remains necessary.
-No order or supplier message has been sent.
+**Greenboatsolutions:** Retain its explicit 19%-inclusive offer and compare
+using `price / 1.19 × 1.21`, not the DC HOUSE tax-reserve method. Its
+[shipping policy](https://greenboatsolutions.com/shipping) advertises EU
+delivery but the parcel/oversize/hazardous-freight class is unconfirmed.
 
-Direct-import leads were considered, not automatically treated as available in
-Romania. For example, the [WattCycle shipping policy](https://www.wattcycle.com/policies/shipping-policy)
-limits delivery to the continental US, contrary to a search summary suggesting
-European delivery. No such unsupported shipping claim enters this shortlist.
+**Vatrer:** Use the German store, not US-only `.com` shipping assumptions.
+Its [shipping policy](https://www.vatrerpower.de/policies/shipping-policy)
+claims free shipping to Germany/EU countries, generally 2–9 working days
+plus 1–2 processing days. Exact two-pack Romanian acceptance, stock and
+destination tax still need confirmation; do not call the displayed prices
+verified landed costs.
+
+Keep freight outside pack prices. The existing freight provision is unchanged,
+not proven adequate. No checkout transaction, order or supplier message was made.
+
+### Other screened and historical options
+
+[LiTime's 51.2 V / 100 Ah listing](https://www.litime.de/products/litime-51-2v-100ah-lifepo4-lithium-batterie)
+showed **€899.99**, but its normal single-pack variant was **unavailable**.
+The cheaper €756.29 0%-VAT variant was also unavailable and is not a mower
+price basis. A 100 A BMS claim alone does not establish vehicle/regen or
+cold-charge suitability; no included charger was established. Do not promote
+this as an available bundle. Stationary rack-battery and unverified marketplace
+leads are not substitutes for a documented mobile pack.
+
+Ultimatron and ACES are removed from the active shortlist at the owner's
+request. Their dated [S27](../../bom/sources.md#s27-ultimatron-ubl-48-100h-and-charger)
+and [S29](../../bom/sources.md#s29-aces-al48v100hfa-bt) records remain historical;
+neither supplies current prices, dimensions or recommendations.
 
 ### Historical Elker study reference
 
@@ -208,11 +266,11 @@ containment or fire-containment assumption
 #### Battery-to-pod fit
 
 The [recommended pack](batteries.md#48-v--approximately-2-kw-per-drive)
-is 420 × 320 × 260 mm and 49.2 kg; no complete pod fit is established.
+is 504 × 268 × 233 mm and 44.9 kg; no complete pod fit is established.
 The old CAD envelope was 522 × 269 × 217 mm and 36 kg. Its nominal 43 mm
-vertical margin is entirely consumed by the new pack's additional 43 mm
-height, before installation, guarding or tensioner clearance. This is a
-repackaging hold, not a claim that the new pack fits the unchanged study.
+vertical margin is reduced by the new pack's additional 16 mm height to
+**27 mm arithmetic margin**, before installation, guarding or tensioner
+clearance. This is a packaging hold, not proven fit in the unchanged study.
 The [minimum-width calculation](../../width-and-slope-sizing.md#minimum-width-and-packaging)
 checks lateral packaging; the
 [battery-clearance calculation](../../width-and-slope-sizing.md#provisional-battery-clearance)
@@ -220,7 +278,7 @@ checks the illustrative track path and carrier. Neither is a released layout.
 
 Also reconcile the [spring-tensioner sweep](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept),
 restraint/load path, terminal protection, ventilation/drainage, cable clearance,
-and outboard removal path. Update the mass/CG budget for the 98.4 kg pair;
+and outboard removal path. Update the mass/CG budget for the 89.8 kg pair;
 the former 72 kg pair is not the current configuration. Do not silently
 substitute new battery dimensions into the old CAD or infer a usable width.
 
@@ -254,7 +312,7 @@ ordering
 
 | Evidence scope | Named sources |
 | --- | --- |
-| Pack and charger references | [Ultimatron and charger (S27)](../../bom/sources.md#s27-ultimatron-ubl-48-100h-and-charger) · [Lower-cost pack (S28)](../../bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [ACES pack (S29)](../../bom/sources.md#s29-aces-al48v100hfa-bt) |
+| Pack and charger references | [DC HOUSE bundle (S30)](../../bom/sources.md#s30-dc-house-100-ah-charger-bundle) · [GBS pack (S28)](../../bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [Vatrer mobile packs (S31)](../../bom/sources.md#s31-vatrer-105-ah-mobile-packs) |
 | Containment, restraints and wiring | [DOLD mechanical parts (S04)](../../bom/sources.md#s04-dold-mechanical-parts) · [Dedeman fabrication supplies (S06)](../../bom/sources.md#s06-dedeman-fabrication-supplies) · [RS electrical parts (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools) |
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
@@ -292,8 +350,8 @@ N/A never means an unknown purchase is free.
 
 | Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| [BAT-001 - Ultimatron UBL-48-100H 51.2 V 100 Ah pack with BMS](batteries.md#ps18-battery-packs-and-bms) (2 each) | €3,455.10 / C |
-| **Module subtotal** | €3,455.10 |
+| [BAT-001 - DC HOUSE 51.2 V 100 Ah pack with BMS and 18 A charger](batteries.md#ps18-battery-packs-and-bms) (2 bundle) | €2,056.98 / C |
+| **Module subtotal** | €2,056.98 |
 
 <a id="cost-battery-housing"></a>
 
@@ -312,8 +370,8 @@ N/A never means an unknown purchase is free.
 
 | Item / cumulative quantity | 48 V total / basis |
 | --- | ---: |
-| [BAT-005 - Retailer-listed 48 V 10 A LiFePO4 charger](batteries.md#ps20-charging-and-charge-interlocks) (2 each) | €323.34 / C |
-| **Module subtotal** | €323.34 |
+| [BAT-005 - DC HOUSE bundled 18 A LiFePO4 charger](batteries.md#ps20-charging-and-charge-interlocks) (2 each) | N/A / I |
+| **Module subtotal** | N/A |
 
 <a id="cost-charge-harness"></a>
 
@@ -327,7 +385,7 @@ N/A never means an unknown purchase is free.
 
 | Scope total | 48 V |
 | --- | ---: |
-| **All items owned by this scope** | €4,138.44 |
+| **All items owned by this scope** | €2,416.98 |
 <!-- END GENERATED: details -->
 
 [↑ Back to document overview](batteries.md#batteries-enclosures-and-charging)
