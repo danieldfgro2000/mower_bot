@@ -29,13 +29,13 @@ documented separately and are not additive purchases.
 | Module | 48 V |
 | --- | ---: |
 | **[01 — Structure](modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 |
-| **[02 — Drive train](modules/02-drive-train/propulsion.md)** | €3,781.66 |
+| **[02 — Drive train](modules/02-drive-train/propulsion.md)** | €2,208.12 |
 | **[03 — Width adjustment](modules/03-width-adjustment/width-adjustment.md)** | €407.00 |
 | **[04 — Battery and charging](modules/04-battery-and-charging/batteries.md)** | €2,416.98 |
 | **[05 — Power cables](modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 |
 | **[06 — Safety controls and sensors](modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 |
 | **[07 — Workshop and support](modules/07-workshop-and-support/workshop.md)** | €615.00 |
-| **All listed materials/equipment** | €12,157.64 |
+| **All listed materials/equipment** | €10,584.10 |
 <!-- END GENERATED: overview -->
 
 [↑ Back to document overview](cost-breakdown.md#bom-cost-breakdown)
@@ -53,7 +53,9 @@ For a part-first view instead of an accounting breakdown, open
 [battery choices](modules/04-battery-and-charging/batteries.md#parts-at-a-glance), or
 [workshop buy/reuse choices](modules/07-workshop-and-support/workshop.md#parts-at-a-glance).
 The [HPM5000B price](modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price)
-is a separate non-additive alternative, not the motor cost included below.
+is now the bare-motor cost included below, with EZ-A48500 controllers and
+FDB 13 C brakes. **Custom reduction and brake installation remain unpriced**;
+the module and budget totals are not a complete installed-drive quotation.
 
 **Jump to costs:** [Structure and running gear](cost-breakdown.md#01--structure-and-running-gear) ·
 [Drive train](cost-breakdown.md#02--drive-train) ·
@@ -81,12 +83,12 @@ is a separate non-additive alternative, not the motor cost included below.
 
 | Module / detailed BOM | 48 V |
 | --- | ---: |
-| [02.01 Traction motors and included planetary where applicable](modules/02-drive-train/propulsion.md#0201-traction-motors-and-included-planetary-where-applicable) | €2,071.88 |
-| [02.02 Traction motor controllers](modules/02-drive-train/propulsion.md#0202-traction-motor-controllers) | €1,023.24 |
-| [02.03 Mechanical holding brakes](modules/02-drive-train/propulsion.md#0203-mechanical-holding-brakes) | €446.54 |
+| [02.01 Traction motors and included planetary where applicable](modules/02-drive-train/propulsion.md#0201-traction-motors-and-included-planetary-where-applicable) | €964.72 |
+| [02.02 Traction motor controllers](modules/02-drive-train/propulsion.md#0202-traction-motor-controllers) | €618.62 |
+| [02.03 Mechanical holding brakes](modules/02-drive-train/propulsion.md#0203-mechanical-holding-brakes) | €384.78 |
 | [02.04 Output hubs shafts and bearings](modules/02-drive-train/propulsion.md#0204-output-hubs-shafts-and-bearings) | €210.00 |
 | [02.05 Reduction keys and fasteners](modules/02-drive-train/propulsion.md#0205-reduction-keys-and-fasteners) | €30.00 |
-| **02 — Drive train subtotal** | €3,781.66 |
+| **02 — Drive train subtotal** | €2,208.12 |
 
 ### 03 — Width adjustment
 
@@ -150,11 +152,11 @@ is a separate non-additive alternative, not the motor cost included below.
 
 | Accounting scope | 48 V |
 | --- | ---: |
-| **Installed-machine materials** | €11,542.64 |
+| **Installed-machine materials** | €9,969.10 |
 | **Reusable bench equipment** | €285.00 |
 | **Loose handling / consumables / support** | €330.00 |
-| **All listed materials/equipment** | €12,157.64 |
-| Above €5,000 materials/equipment target | €7,157.64 |
+| **All listed materials/equipment** | €10,584.10 |
+| Above €5,000 materials/equipment target | €5,584.10 |
 <!-- END GENERATED: modules -->
 
 [↑ Back to document overview](cost-breakdown.md#bom-cost-breakdown)

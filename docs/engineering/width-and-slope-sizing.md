@@ -271,6 +271,12 @@ nominal voltage or kW.
 
 ### Downhill stopping and holding
 
+The [FDB 13 C motor-side static screen](modules/02-drive-train/propulsion.md#precima-fdb-13-c-holding-brake-candidate)
+reflects 165.53 Nm per track to 2.51 Nm at ideal 66:1 versus a nominal
+20 Nm brake. This is not a certified safety margin or dynamic-stop rating;
+[shaft, mounting and axial fit](modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment)
+also remain unresolved.
+
 For descent, slowing reduces gravitational power to dissipate at a given
 instant, but not the gravitational energy over the same vertical drop or the
 static holding requirement. Braking must remain effective with a full battery,

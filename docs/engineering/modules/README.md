@@ -32,12 +32,12 @@ Use **Parts at a glance** to choose a component, then its **price/specification*
 and **fit/connection** links. Once inside a detail, **Part links** or
 **Continue** leads to the adjoining part without returning to this directory.
 
-For example: [HPM5000B](02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
+For example: [HPM5000B](02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
 → [price](02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price)
 or [specifications](02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits)
 → [motor-to-track mounting](02-drive-train/propulsion.md#motor-to-track-mounting)
 → [frame-side plates](01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates).
-The HPM5000B remains a study candidate; these links do not select it.
+The HPM5000B is the main cost/study candidate, not qualified hardware.
 
 Requirement IDs remain secondary references. Generated cost-item links open
 their requirement family, where the component links continue the same route.

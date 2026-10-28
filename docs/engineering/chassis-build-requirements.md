@@ -259,25 +259,36 @@ separately
 ### Q02: alternative complete drives
 
 **Requirements:** [Motor, controller, brake and reduction](modules/02-drive-train/propulsion.md#specification-and-inspection-requirements).
-**Leads:** [BLDC planetary motor](bom/sources.md#s11-bldc-2-kw-planetary-motor) and
-[BD100/C100 controller](bom/sources.md#s12-bldc-bd100c100-controller) versus
-[Volcano VOL-BL400C72](bom/sources.md#s13-volcano-vol-bl400c72-motor); alternative
+**Current leads:** [HPM5000B](bom/sources.md#s23-golden-motor-hpm5000b-marketplace-price),
+[EZ-A48500](bom/sources.md#s32-golden-motor-ez-a48500-controller) and
+[FDB 13 C](bom/sources.md#s33-precima-fdb-13-c-holding-brake).
+The former [BLDC planetary motor](bom/sources.md#s11-bldc-2-kw-planetary-motor) /
+[BD100/C100 controller](bom/sources.md#s12-bldc-bd100c100-controller) is a
+non-additive alternative; other reduction leads are
 [planetary gearboxes](bom/sources.md#s10-dold-planetary-gearbox-alternatives) or [chain components](bom/sources.md#s05-dold-chain-drives).
 
 **Specific response needed:** One bench drive with second identical drive priced
 separately; documented operating-point curves, reduction and brake ratings, controller
 configuration and all wiring/interfaces; flag present voltage/current contradictions
 
-**Additional non-additive candidate:** [HPM5000B ALT-DRV-001](modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals),
+**Main motor cost candidate:** [HPM5000B DRV-001](modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate),
 [marketplace evidence](bom/sources.md#s23-golden-motor-hpm5000b-marketplace-price) and
 [manufacturer data](bom/sources.md#s24-golden-motor-hpm5000b-family-specification), with
 [KellyControllers.eu](bom/sources.md#s25-kellycontrollerseu-hpm5000b-fallback) as an EU fallback.
 Confirm 48 V air-cooled winding/shaft and
-motor-only contents at the published quantity tier. Price a compatible controller,
-independent holding/stopping solution and custom planetary gearbox separately;
+motor-only contents at the published quantity tier. Confirm EZ-A48500 compatibility,
+command interface, bus/phase limits, thermal path and full-SOC/BMS-open braking.
+Obtain a complete installed holding/stopping and custom gearbox quote;
 the [in-drum gearbox concept](modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 is unpriced. Do not transfer the BLDC planetary-package compatibility
 or infer approval of a 5 kW power increase.
+
+**Brake fit response:** Resolve the selected FDB 13 C 19H7 hub versus the
+published motor Ø22.3 mm / 5 mm-key shaft and mismatched mounting patterns.
+Require an approved hub or separately supported shaft, reaction-flange drawing,
+axial fit/retention, regulated release supply and default-applied fault behavior.
+Confirm exact SKU dimensions, coil voltage range and torque/dynamic-work ratings;
+the €159 component price does not cover this integration.
 
 ### Q03: battery/charging alternatives
 

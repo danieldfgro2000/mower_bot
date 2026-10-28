@@ -2,14 +2,15 @@
 
 <a id="document-overview"></a>
 
-**Document:** MBR-ENG-BOM-001 | **Revision:** M | **Revised:** 2026-10-28
+**Document:** MBR-ENG-BOM-001 | **Revision:** N | **Revised:** 2026-10-28
 
 **Status:** Costed engineering estimate; **not released for purchase,
 fabrication, or operation**.
 
 **Summary:** Estimate for **Stage 1 — bench propulsion prototype** and
 **Stage 2 — rolling two-pod chassis** only, using the active 48 V baseline.
-Candidate alternatives are excluded from totals. Scan the module totals, then use
+The HPM5000B/EZ-A48500/FDB 13 C components are costed; custom reduction and
+brake installation remain **unpriced**. Other alternatives are excluded. Scan the module totals, then use
 [component routes](chassis-bom.md#bom-by-scope) to open a part's price,
 specifications, and fit. Mower integration and autonomy are excluded; release holds remain open.
 
@@ -27,13 +28,13 @@ through Stage 2; it is not a per-pod or per-motor price.
 | Module | 48 V |
 | --- | ---: |
 | **[01 — Structure](../modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](../modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 |
-| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €3,781.66 |
+| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €2,208.12 |
 | **[03 — Width adjustment](../modules/03-width-adjustment/width-adjustment.md)** | €407.00 |
 | **[04 — Battery and charging](../modules/04-battery-and-charging/batteries.md)** | €2,416.98 |
 | **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 |
 | **[06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md)** | €1,045.00 |
 | **[07 — Workshop and support](../modules/07-workshop-and-support/workshop.md)** | €615.00 |
-| **All listed materials/equipment** | €12,157.64 |
+| **All listed materials/equipment** | €10,584.10 |
 <!-- END GENERATED: overview -->
 
 ### Build budget
@@ -41,20 +42,23 @@ through Stage 2; it is not a per-pod or per-motor price.
 This adds non-material allowances and contingency to the module costs.
 Materials/equipment includes installed parts, reusable bench equipment, and
 support supplies. The
-[HPM5000B candidate](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
-is excluded; it has not replaced the costed planetary drive.
+[HPM5000B candidate](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
+has replaced the former geared-motor reference. The **€1,573.54 materials
+reduction is not a like-for-like complete-drive saving**: custom reduction,
+brake adaptation/reaction mounting and release-power integration are unpriced.
+Generic machining and contingency provisions are not quotes for that missing scope.
 
 <!-- BEGIN GENERATED: budget -->
 | Budget line | 48 V |
 | --- | ---: |
-| Materials/equipment | €12,157.64 |
+| Materials/equipment | €10,584.10 |
 | Freight/import/brokerage provision | €500.00 |
 | Outsourced precision machining provision | €350.00 |
 | DIY fabrication/printing energy | €30.00 |
 | Owner fabrication labor | N/A - owner supplied |
-| **Budget before contingency** | €13,037.64 |
-| Uncertainty contingency (20%) | €2,607.53 |
-| **Indicative build budget** | €15,645.17 |
+| **Budget before contingency** | €11,464.10 |
+| Uncertainty contingency (20%) | €2,292.82 |
+| **Indicative build budget** | €13,756.92 |
 <!-- END GENERATED: budget -->
 
 **On this page:** [Find a component](chassis-bom.md#bom-by-scope) ·
@@ -75,8 +79,10 @@ Shared links do not add quantities or costs.
 
 | Part to inspect | Cost and current technical data | Continue to fitting / connections |
 | --- | --- | --- |
-| [HPM5000B study motor](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) — excluded from totals | [Bare-motor price](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price) · [Supplier specifications](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) | [Motor-to-track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
-| Costed traction package | [48 V BLDC planetary package](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | [Output shafts and bearings](../modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) · [Mounting plates](../modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
+| [HPM5000B main candidate](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) — bare motor costed | [Bare-motor price](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price) · [Supplier specifications](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) | [Motor-to-track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| EZ-A48500 controller | [Price, ratings and alternatives](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) | [Compatibility and duty](../modules/02-drive-train/propulsion.md#compatibility-and-duty-limitations) |
+| Precima FDB 13 C brake | [€159 supplier offer and specifications](../modules/02-drive-train/propulsion.md#precima-fdb-13-c-holding-brake-candidate) | [HPM shaft/mounting mismatch](../modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment) |
+| Former traction package, excluded | [48 V BLDC planetary package](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | [Output shafts and bearings](../modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) · [Mounting plates](../modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
 | Tracks, drum, idlers and rollers | [Running-gear parts, allowances and data](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) | [Drum engagement](../modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Spring tensioner](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) |
 | Frame, pivots, locks and guards | [Frame parts and costs](../modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) | [Motor mounting plates](../modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) · [Screw-to-scissor connection](../modules/03-width-adjustment/width-adjustment.md#ps10-screw-drive-and-supports) |
 | Width motor, screw, driver and feedback | [Width-drive parts and costs](../modules/03-width-adjustment/width-adjustment.md#parts-at-a-glance) | [Mechanical drive path](../modules/03-width-adjustment/width-adjustment.md#donor-motor-and-allowance) · [Holding and limits](../modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) |
@@ -116,6 +122,10 @@ unmeasured.
 
 **Excluded scope and resources:**
 
+- **Unpriced required drive integration:** custom reduction, motor/brake
+  shaft and reaction-flange adaptation, release-power supply/control and
+  any additional independently justified stopping hardware. Existing general
+  hardware allowances do not establish coverage of these designs.
 - **Mower and later attachments:** Stage 3 — supervised mower integration,
   including the [DAC 9100, mounts and cutting guards](../../../plan.md#71-underbody-dac-9100-mower);
   [conveyor](../../../plan.md#72-washable-conveyor),
@@ -161,25 +171,23 @@ This is a budget configuration, not hardware approval; nominal voltage is not co
 
 | Costed scenario | Drive detail | Battery detail |
 | --- | --- | --- |
-| 48 V / approximately 2 kW per drive | [BLDC planetary motor and BD100/C100 controller](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | [DC HOUSE bundle budget reference](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
+| 48 V / approximately 2 kW per-drive operating target | [HPM5000B](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate), [EZ-A48500](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) and [FDB 13 C](../modules/02-drive-train/propulsion.md#precima-fdb-13-c-holding-brake-candidate); custom reduction unpriced | [DC HOUSE bundle budget reference](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
 
-**Separate motor candidate, excluded from the baseline:**
+**Former motor/planetary reference, excluded from the baseline:**
 
 <!-- BEGIN GENERATED: alternatives -->
 | Alternative (excluded from totals) | Unit reference | Cumulative reference |
 | --- | ---: | ---: |
-| [ALT-DRV-001: Golden Motor HPM5000B bare motor 48 V advertised 5 kW](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) | €482.36 | €964.72 |
+| [ALT-DRV-002: BLDC D110BLD2000 48 V motor with planetary provision](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) | €1,035.94 | €2,071.88 |
 <!-- END GENERATED: alternatives -->
 
-This candidate could replace the
-[traction motor (DRV-001)](../modules/02-drive-train/propulsion.md#ps14-traction-motor-and-controller);
-it is not an additive purchase or an
-approved change from the approximately 2 kW-per-drive baseline. The estimate
-still costs the baseline planetary package, not the
-[HPM5000B/custom planetary-in-drum study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study);
-the latter's gearbox is unpriced. References exclude
-freight, duty, and brokerage; see the
-[supplier and integration details](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
+ALT-DRV-002 preserves the former motor/planetary reference, not its controller
+or brake and not an additional purchase. HPM5000B was promoted from
+ALT-DRV-001 to DRV-001; [F14](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline)
+records the change. The
+[custom planetary-in-drum gearbox](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
+and brake installation remain unpriced. Neither the new motor's advertised
+power nor controller's hardware current limits changes the operating target.
 
 **Continue with HPM5000B:** [Price](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price) ·
 [Specifications](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) ·
@@ -214,11 +222,11 @@ procurement or manufacture by this package.
 <!-- BEGIN GENERATED: readiness -->
 | Cost basis: lines / EUR | 48 V |
 | --- | ---: |
-| Calculated public-price references (C) | 4 / €5,598.64 |
+| Calculated public-price references (C) | 4 / €4,025.10 |
 | Engineering allowances (A) | 98 / €6,559.00 |
 | Included / no separate purchase (I) | 1 / N/A |
 | Reused inventory (R) | 8 / N/A |
-| **Total (111 lines)** | €12,157.64 |
+| **Total (111 lines)** | €10,584.10 |
 <!-- END GENERATED: readiness -->
 
 Every current cost line maps to a primary owner within the
@@ -249,9 +257,9 @@ are reused inventory with no new purchase cost; slings and shackles are excluded
 <!-- BEGIN GENERATED: phases -->
 | Acquisition stage | 48 V |
 | --- | ---: |
-| Stage 1 — bench propulsion prototype | €5,250.32 |
-| Stage 2 — rolling two-pod chassis (additional purchases only) | €6,907.32 |
-| **Stages 1–2 cumulative** | €12,157.64 |
+| Stage 1 — bench propulsion prototype | €4,463.55 |
+| Stage 2 — rolling two-pod chassis (additional purchases only) | €6,120.55 |
+| **Stages 1–2 cumulative** | €10,584.10 |
 <!-- END GENERATED: phases -->
 
 This assumes one [instrumented, guarded bench fixture](../modules/07-workshop-and-support/workshop.md#ps34-bench-fixture-and-controls)
@@ -283,9 +291,10 @@ are not yet verified safety behavior.
   exposures remain disclosed separately.
 - Quantities remain numeric: Stage 1 quantity `0` means acquisition is
   deferred until Stage 2. The
-  [48 V motor package](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive)
-  budgets planetary reduction; retired external-drive rows are not additional
-  purchases. The [reused width motor (WID-001)](../modules/03-width-adjustment/width-adjustment.md#ps09-reused-wiper-motor)
+  [HPM5000B bare motor](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price)
+  does **not** include planetary reduction; the custom reduction is unpriced.
+  Retired external-drive rows are not additional purchases.
+  The [reused width motor (WID-001)](../modules/03-width-adjustment/width-adjustment.md#ps09-reused-wiper-motor)
   retains an installed quantity although its purchase cost is `N/A`.
 - Source IDs resolve to the [named supplier register](sources.md#source-id-lookup). A category,
   manufacturer page, or price proxy is a sourcing lead, not an exact qualified
@@ -299,7 +308,8 @@ are not yet verified safety behavior.
   is **€1 = US$1.1188 = RON 5.3473**; USD amounts use `USD / 1.1188`.
   Bank/card spreads are uncertainty, not supplier prices.
 - The [Romanian standard VAT reference](https://europa.eu/youreurope/business/finance-and-tax/vat/vat-rules-rates/index_en.htm)
-  is **21%**. USD motor/controller/brake references add 21% for planning.
+  is **21%**. USD motor/controller references add 21% after FX conversion;
+  the EUR159 brake excluding tax uses `159 × 1.21`, without USD conversion.
   Allowances are intended as tax-inclusive cash provisions; no VAT recovery
   is assumed. Import duty, freight VAT, and actual seller tax treatment require
   checkout/RFQ.

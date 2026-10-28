@@ -68,6 +68,36 @@ class CostDocumentationTest(unittest.TestCase):
                     fields = csv.DictReader(stream).fieldnames
                 self.assertFalse(any("72v" in field for field in fields), fields)
 
+    def test_selected_drive_components_and_battery_accounting(self):
+        with (self.engineering / "bom/chassis-bom.csv").open() as stream:
+            rows = {row["item_id"]: row for row in csv.DictReader(stream)}
+        expected = {
+            "DRV-001": ("HPM5000B", "482.36", "964.72", "S23|S24"),
+            "DRV-002": ("EZ-A48500", "309.31", "618.62", "S32"),
+            "DRV-003": ("FDB 13 C", "192.39", "384.78", "S33"),
+        }
+        for item, (model, unit, total, sources) in expected.items():
+            with self.subTest(item=item):
+                row = rows[item]
+                self.assertIn(model, row["description"])
+                self.assertEqual(row["unit_eur_48v"], unit)
+                self.assertEqual(row["extended_eur_48v"], total)
+                self.assertEqual(row["source_ids"], sources)
+                self.assertEqual(row["qty_stage_1"], "1")
+                self.assertEqual(row["qty_stage_2_total"], "2")
+                self.assertEqual(row["basis_48v"], "C")
+        self.assertIn("unpriced", rows["DRV-001"]["qualification_or_assumption"])
+        self.assertIn("unpriced", rows["DRV-003"]["qualification_or_assumption"])
+        self.assertEqual(rows["BAT-001"]["extended_eur_48v"], "2056.98")
+        self.assertEqual(rows["BAT-005"]["basis_48v"], "I")
+        self.assertEqual(rows["BAT-005"]["extended_eur_48v"], "N/A")
+        self.assertEqual(self.baseline_total, Decimal("10584.10"))
+        self.assertEqual(self.baseline_budget, Decimal("13756.92"))
+        with (self.engineering / "bom/propulsion-alternatives.csv").open() as stream:
+            alternatives = list(csv.DictReader(stream))
+        self.assertNotIn("ALT-DRV-001", [row["candidate_id"] for row in alternatives])
+        self.assertTrue(all("HPM5000B" not in row["description"] for row in alternatives))
+
     def test_48v_only_inputs_generate_single_scenario_tables(self):
         for filename in ("bom/chassis-bom.csv", "bom/budget-allowances.csv"):
             path = self.engineering / filename
@@ -133,9 +163,9 @@ class CostDocumentationTest(unittest.TestCase):
             main,
         )
         self.assertIn(
-            "[ALT-DRV-001: Golden Motor HPM5000B bare motor 48 V advertised 5 kW]"
+            "[ALT-DRV-002: BLDC D110BLD2000 48 V motor with planetary provision]"
             "(../modules/02-drive-train/propulsion.md"
-            "#hpm5000b-sourced-alternative--not-added-to-baseline-totals)",
+            "#48-v--approximately-2-kw-per-drive)",
             main,
         )
         breakdown = (self.engineering / "cost-breakdown.md").read_text()
@@ -156,10 +186,10 @@ class CostDocumentationTest(unittest.TestCase):
         )
         for expected in [
             f"€{self.baseline_total:,.2f}", f"€{self.baseline_budget:,.2f}",
-            "| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €3,781.66 |",
+            "| **[02 — Drive train](../modules/02-drive-train/propulsion.md)** | €2,208.12 |",
             "| **[01 — Structure](../modules/01-structure-and-running-gear/frame.md) and [01 — Running gear](../modules/01-structure-and-running-gear/running-gear.md)** | €2,213.00 |",
             "| **[05 — Power cables](../modules/05-power-cables-and-electronics/cables-connectors.md) and [05 — Power distribution](../modules/05-power-cables-and-electronics/power-distribution.md)** | €1,679.00 |",
-            "ALT-DRV-001", "€482.36",
+            "ALT-DRV-002", "€1,035.94",
         ]:
             self.assertIn(expected, text)
         self.assertNotIn("modules/01-structure-and-running-gear/frame.md#document-overview", text)
@@ -205,7 +235,7 @@ class CostDocumentationTest(unittest.TestCase):
         )
         breakdown = (self.engineering / "cost-breakdown.md").read_text()
         self.assertIn(
-            "| **[02 — Drive train](modules/02-drive-train/propulsion.md)** | €3,781.66 |",
+            "| **[02 — Drive train](modules/02-drive-train/propulsion.md)** | €2,208.12 |",
             breakdown,
         )
         self.assertIn(
@@ -222,7 +252,7 @@ class CostDocumentationTest(unittest.TestCase):
             breakdown,
         )
         self.assertNotIn(".md#cost-", breakdown)
-        self.assertIn("| **02 — Drive train subtotal** | €3,781.66 |", breakdown)
+        self.assertIn("| **02 — Drive train subtotal** | €2,208.12 |", breakdown)
         self.assertIn(
             "| [04.02 Battery enclosures restraints and insulation]"
             "(modules/04-battery-and-charging/batteries.md"
@@ -445,7 +475,7 @@ class CostDocumentationTest(unittest.TestCase):
         self.assertIn("coverage", self.run_generator(success=False).stderr.lower())
 
     def test_alternative_updates_without_entering_baseline(self):
-        self.change_row("bom/propulsion-alternatives.csv", "ALT-DRV-001",
+        self.change_row("bom/propulsion-alternatives.csv", "ALT-DRV-002",
                         source_unit_price="500.00", unit_eur_reference="540.76",
                         extended_eur_reference="1081.52")
         self.run_generator()

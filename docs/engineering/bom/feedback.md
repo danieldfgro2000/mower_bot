@@ -32,12 +32,13 @@ linked engineering scopes, not in an earlier proposal.
 | [Worm-only holding and position proposal (F05)](feedback.md#f05-holding-and-position-proposal) | [Unresolved holding and stopping](../modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) |
 | [Packaging and site targets (F06)](feedback.md#f06-packaging-and-site-targets) | [Width and slope inputs](../width-and-slope-sizing.md#inputs-and-unresolved-definitions) |
 | [Slope orientation and reduced speed (F07)](feedback.md#f07-slope-orientation-and-speed) | [Reduced-speed implications](../width-and-slope-sizing.md#effect-of-accepting-reduced-speed) |
-| [Bare motor and HPM5000B sourcing (F08)](feedback.md#f08-bare-motor-two-stage-chains-and-hpm5000b-sourcing) | [HPM5000B price and exclusions](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) · [Later in-drum study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study) |
+| [Bare motor and HPM5000B sourcing (F08)](feedback.md#f08-bare-motor-two-stage-chains-and-hpm5000b-sourcing) | [HPM5000B price and exclusions](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) · [Later in-drum study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study) |
 | [Rear motor position (F09)](feedback.md#f09-rear-traction-motor-position) | [Motor/drum layout and mounting interfaces](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
 | [Workshop, test method and app control (F10)](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control) | [Tool-by-tool price/reuse table](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools) · [Independent stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 | [Motor braking and stationary hold (F11)](feedback.md#f11-motor-braking-and-stationary-hold) | [Braking direction](../modules/02-drive-train/propulsion.md#owner-braking-direction-2026-10-27) |
 | [48 V baseline and scenario retirement (F12)](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) | [Active cost configuration](chassis-bom.md#propulsionbattery-comparison) |
 | [Value battery shortlist and charger bundles (F13)](feedback.md#f13-value-battery-shortlist-and-bundled-chargers) | [DC HOUSE first choice and priced alternatives](../modules/04-battery-and-charging/batteries.md#battery-alternatives) |
+| [HPM5000B, controller and brake baseline (F14)](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline) | [Current component references](../modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Brake fitment](../modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment) |
 
 ### F01: propulsion
 
@@ -110,6 +111,9 @@ scenario is qualified for this site target; repricing follows the reviewed sizin
 an assumed safe speed.
 
 ### F08: bare motor, two-stage chains and HPM5000B sourcing
+
+**Historical estimating status:** The alternative-only status below is
+superseded by [F14](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline).
 
 **Decision recorded on 2026-10-26:** Owner prefers a cheaper bare motor and
 two-stage chain reduction rather than the planetary package. Initially retain
@@ -221,6 +225,11 @@ separate reused inventory from new allowances.
 
 ### F11: motor braking and stationary hold
 
+**Historical estimating status:** The unchanged old brake allowance and
+unselected component status below are superseded by
+[F14](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline);
+the holding/stopping qualification requirements remain.
+
 **Decision recorded on 2026-10-27:** Use controlled motor/controller braking
 for dynamic deceleration, through regeneration or another supported
 reverse-current braking mode. Use a mechanical brake that is applied by
@@ -297,6 +306,44 @@ ratings, regen/BMS behavior, cell-temperature protection, environmental and
 vibration evidence, 89.8 kg pair mass/CG and full pod fit, household charger
 capacity, Romania shipment/tax and warranty. No hardware, purchasing or
 supplier-contact authorization is implied.
+
+### F14: HPM5000B, controller and brake cost baseline
+
+**Decision recorded on 2026-10-28:** Use the recorded HPM5000B bare-motor price
+as the main cost candidate; select Golden Motor EZ-A48500 for controller
+costing and Precima FDB 13 C 48 V / 20 Nm / 19H7 for holding-brake costing.
+Add the brake supplier link/price and investigate its HPM5000B fit.
+These decisions do not increase the approximately 2 kW-per-pod operating target.
+
+| Replaced ledger reference | New unit / pair | Evidence |
+| --- | --- | --- |
+| DRV-001 motor/planetary package | HPM5000B **€482.36 / €964.72** | Recorded US$446, S23/S24 |
+| DRV-002 BD100/C100 | EZ-A48500 **€309.31 / €618.62** | US$286, S32 |
+| DRV-003 former optional brake | FDB 13 C **€192.39 / €384.78** | €159 excluding taxes/delivery, S33 |
+
+USD references use `USD / 1.1188 × 1.21`; the EUR brake uses `159 × 1.21`.
+Unit amounts round before extension. Stage 1 remains one each and cumulative
+Stage 2 two each. DC HOUSE bundle costs and included-charger treatment are
+unchanged. Former HPM alternative ID ALT-DRV-001 is retained in history, not
+as an extra purchase; ALT-DRV-002 now holds the former BLDC motor/planetary
+reference only, excluded from totals.
+
+**Estimate effect:** Drive train **€2,208.12**, materials **€10,584.10** and
+indicative budget **€13,756.92**, with unchanged €880 non-material provisions
+and 20% contingency. Materials fall by **€1,573.54**, but this is not a
+like-for-like completed-drive saving. The custom reduction, brake adaptation/
+reaction mount, release-power/control integration and any further required
+stopping hardware are **unpriced**, not included/free.
+
+**Fitment result:** Published motor drawing shows Ø22.3 mm shaft with 5 mm
+keyway; the selected brake is 19H7. Mounting patterns also differ, and the
+brake body alone exceeds the CAD study's nominal 14 mm axial remainder.
+Manufacturer-approved hub/support integration and repackaging are required;
+the €159 variant is not qualified as a bolt-on motor accessory.
+The [20 Nm static screen](../modules/02-drive-train/propulsion.md#precima-fdb-13-c-holding-brake-candidate)
+is favorable at ideal 66:1, but does not qualify dynamic stopping, transmission
+capacity or slope safety. No purchase, modification, energizing or field test
+is authorized.
 
 ## Feedback and qualification loops
 

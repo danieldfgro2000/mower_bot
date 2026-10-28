@@ -27,8 +27,9 @@ which sources were recorded. IDs remain stable for the ledgers.
 
 | Component | Evidence entries | Return to the part |
 | --- | --- | --- |
-| HPM5000B motor | [Marketplace price (S23)](sources.md#s23-golden-motor-hpm5000b-marketplace-price) · [Family specification (S24)](sources.md#s24-golden-motor-hpm5000b-family-specification) · [EU fallback (S25)](sources.md#s25-kellycontrollerseu-hpm5000b-fallback) | [Price/specifications](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) · [Track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
-| 48 V planetary motor/controller | [BLDC motor (S11)](sources.md#s11-bldc-2-kw-planetary-motor) · [BD100/C100 (S12)](sources.md#s12-bldc-bd100c100-controller) | [Costed package](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) |
+| HPM5000B motor | [Marketplace price (S23)](sources.md#s23-golden-motor-hpm5000b-marketplace-price) · [Family specification (S24)](sources.md#s24-golden-motor-hpm5000b-family-specification) · [EU fallback (S25)](sources.md#s25-kellycontrollerseu-hpm5000b-fallback) | [Price/specifications](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) · [Track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| Selected controller and brake references | [EZ-A48500 (S32)](sources.md#s32-golden-motor-ez-a48500-controller) · [FDB 13 C (S33)](sources.md#s33-precima-fdb-13-c-holding-brake) | [Controller comparison](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Brake fitment](../modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment) |
+| Former 48 V planetary motor/controller | [BLDC motor (S11)](sources.md#s11-bldc-2-kw-planetary-motor) · [BD100/C100 (S12)](sources.md#s12-bldc-bd100c100-controller) | [Non-additive package comparison](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) |
 | Retired higher-voltage study, excluded | [Volcano (S13)](sources.md#s13-volcano-vol-bl400c72-motor) · [Controller proxy (S14)](sources.md#s14-ez-a72500-controller-price-proxy) · [Motor proxy (S15)](sources.md#s15-hpm5000a-72-motor-price-proxy) · [Battery proxy (S17)](sources.md#s17-tzi-72-v-battery-proxy) | [Retirement decision](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) |
 | Reduction hardware | [DOLD chain drives (S05)](sources.md#s05-dold-chain-drives) · [Planetary gearboxes (S10)](sources.md#s10-dold-planetary-gearbox-alternatives) | [Reduction requirements and costs](../modules/02-drive-train/propulsion.md#ps17-reduction-and-transmission-hardware) |
 | Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
@@ -272,7 +273,7 @@ price proxy
 the 4 kW estimating scenario or the HPM5000B marketplace model.
 
 **Decision history:** [Scenario retirement](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) ·
-[Distinct HPM5000B alternative](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals).
+[Distinct HPM5000B current candidate](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate).
 
 <a id="s16"></a>
 
@@ -392,8 +393,10 @@ use US$446. Title identifies HPM5000B 48 V / 4,000 rpm; table claims 5 kW rated,
 options and included scope need an exact quote; controller is not presumed
 included. Existing FX and provisional 21% VAT yield €482.36 per bare motor,
 excluding delivery, duty, brokerage and taxes on those charges.
-Only [HPM5000B alternative ALT-DRV-001](propulsion-alternatives.csv) uses this price;
-neither baseline scenario is re-costed or qualified by this listing.
+**2026-10-28 promotion:** This recorded price now supplies DRV-001,
+replacing the former ALT-DRV-001 record; the motor price itself has not been
+freshly rechecked. [F14](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline)
+records owner selection and downstream re-costing. Qualification is unchanged.
 
 **Continue with HPM5000B:** [Planning price](../modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price) ·
 [Specifications and conflicts](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) ·
@@ -416,6 +419,16 @@ thermal duty and permissible shaft loads. The dimensions are the published
 motor envelope only; this source does not specify a planetary reducer. No price
 or machine approval here.
 
+**Drawing checked 2026-10-28:** The manufacturer's linked
+[HPM5000B air-cooled drawing GD-JS-03000001](https://www.goldenmotor.com/hubmotors/hubmotor-imgs/HPM5000B%20Drawing.pdf)
+shows nominal Ø22.3 mm output shaft, 5 mm keyway width, 43 mm keyed length,
+53 mm shaft projection, 179 mm overall length and four M8 mounting holes
+on Ø148 mm circle. The 19 mm cross-section dimension is keyway geometry,
+not shaft diameter. It does not match the selected brake's 19H7 bore.
+Confirm the drawing revision against the actual 48 V air-cooled order and
+obtain controlled tolerances before designing any adaptation. This is newly
+read drawing evidence, not a released motor/brake assembly.
+
 **Continue with HPM5000B:** [Specification comparison](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) ·
 [Motor/drum mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting) ·
 [Gearbox study](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study).
@@ -430,7 +443,7 @@ cooling](https://www.kellycontrollers.eu/hpm5000b-5kw-48v-leghuteses), EU retail
 **Evidence or limitation:** Checked 2026-10-26 in public HTML: €994.33 and
 availability "Out of stock, inquire!". Page shows €28.19 shipping, not verified
 for Romania; VAT basis and delivered price remain unconfirmed. The motor is
-explicitly HPM5000B, not HPM5000A. Not the basis for ALT-DRV-001's lower import
+explicitly HPM5000B, not HPM5000A. Not the basis for DRV-001's lower import
 reference and not evidence of immediate availability.
 
 **Continue with HPM5000B:** [Ratings and sourcing limits](../modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits) ·
@@ -617,6 +630,74 @@ processing days. Confirm two-pack Romanian acceptance, stock, tax and
 transport documents; no delivered quote or purchase was obtained.
 
 **Engineering detail:** [Vatrer comparison and energy](../modules/04-battery-and-charging/batteries.md#vatrer-105-ah-alternatives).
+
+<a id="s32"></a>
+
+### S32: Golden Motor EZ-A48500 controller
+
+**Checked:** 2026-10-28. **Source / source type:**
+[Golden Motor controller catalogue](https://www.goldenmotor.com/frame-controllers.htm),
+manufacturer public price/specification table, and
+[EZkontrol manual](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf).
+
+**Evidence:** EZ-A48500 nominal 48 V, advertised 3–5 kW, **US$286**.
+`286 / 1.1188 × 1.21 = €309.31` each, **€618.62 for two**,
+rounded per unit. Controller only; excludes delivery, duty, brokerage and
+taxes on those charges. Exact stock, revision, kit contents and Romania
+delivery are unconfirmed. Owner-selected DRV-002 budget candidate, not an
+approved motor/controller package.
+
+The page lists **500 A maximum phase**, **200 A rated phase** and
+**250 A maximum bus current**. These are distinct supplier limits, not
+configuration values or evidence of safe battery/motor currents. Maximum
+voltage conflicts: **72 V on the page / 75 V in the manual**. Both require
+exact revision confirmation and neither is an allowed pack regeneration voltage.
+The family advertises Hall/encoder support, regeneration, Bluetooth configuration,
+CAN/RS485/UART and IP66; exact-model command protocol, torque/speed behavior,
+motor sensor match, thermal installation and fault response remain HOLD.
+
+**Engineering detail:** [Controller price and integration](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate).
+
+<a id="s33"></a>
+
+### S33: Precima FDB 13 C holding brake
+
+**Checked:** 2026-10-28. **Source / source type:** [BJ-Gear FDB 13 C listing](https://shop.bj-gear.com/en_eur/precima-spring-applied-brake-fdb-adjustable-13-48vdc-19h7o),
+European distributor public product page; exact SKU **HV2052113232S**,
+designation **FDB 13 C S 20NM-48VDC-19H7**.
+
+**Price:** **€159 excluding taxes and delivery**; listed in stock, without
+confirmed two-unit availability or Romanian delivery. Existing 21% planning
+VAT gives **€192.39 each / €384.78 pair**. This prices the brake component,
+not a complete installed or delivered assembly. It replaces the former
+S11 optional motor-brake price in DRV-003.
+
+**Specification claims:** Spring-applied/electrically released, 48 V DC,
+20 Nm, 19H7 hub bore, adjustable torque, seller IP54/55 claim.
+Confirm exact enclosure options, shaft/key/retention fit, reaction mounting,
+torque over wear/temperature, switching time, release monitoring and coil
+voltage limits. Do not equate 48 V nominal with direct 58.4 V battery compatibility.
+Mounting, shaft adaptation, regulated release supply and associated integration
+remain unpriced. Motor-side holding depends on an intact transmission.
+
+**Manufacturer material supplied by the distributor:**
+[FDB brochure](https://sabjgearweuprodmedia.blob.core.windows.net/pim-perfion-files/product-assets/HV2052113232S/en-GB-brochure.pdf) ·
+[FDB installation manual](https://sabjgearweuprodmedia.blob.core.windows.net/pim-perfion-files/product-assets/HV2052113232S/en-GB-installationManual.pdf).
+The manual's PDF page 13 lists 6,000 rpm maximum rotor speed for size 13.
+That is not proof of permitted dynamic-stop energy/duty at that speed, nor
+confirmation of the delivered revision.
+
+The linked April 2017 family brochure gives size-13 body Ø130 mm,
+outer envelope Ø135 mm, axial body dimension g = 53.1 mm, three M6 mounts
+on Ø112 mm circle, and 34 W coil power at 20°C. C-version adjustment
+projection p is 3.5 mm, pmax 9.5 mm. These are family drawing observations,
+not an exact SKU assembly envelope. The motor drawing has Ø22.3 mm shaft
+and four M8 mounts on Ø148 mm; neither shaft nor mounting pattern is a direct
+match. Price any approved alternative hub or supported-shaft integration
+separately. The brochure's torque tolerances and operating conditions prevent
+treating nominal 20 Nm as a guaranteed minimum or certified safety margin.
+
+**Engineering detail:** [Price, static-holding screen and integration limits](../modules/02-drive-train/propulsion.md#precima-fdb-13-c-holding-brake-candidate).
 
 <a id="u01"></a>
 

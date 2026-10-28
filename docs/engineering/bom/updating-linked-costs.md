@@ -93,7 +93,7 @@ A complete contents list and valid links alone do not satisfy this use case.
 Before handoff, walk real reading paths from the rendered sections, not only
 whole-file link presence. The minimum checks for this package are:
 
-- [HPM5000B](../modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
+- [HPM5000B](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
   → price/specifications → [motor-to-track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting)
   → [frame plates](../modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
   and [drum engagement](../modules/01-structure-and-running-gear/running-gear.md#drive-drum-study).
@@ -304,6 +304,24 @@ This follow-up changed no executable logic or CSV inputs. The 15 generator
 checks, regeneration/freshness, and full 18-test reference suite passed; legacy
 anchors, generated monetary values, and all four input-file fingerprints were
 preserved. These are navigation and preservation checks, not hardware evidence.
+
+### HPM5000B drivetrain baseline evidence
+
+2026-10-28: `CostDocumentationTest.test_selected_drive_components_and_battery_accounting`
+first failed on the old motor/controller/brake identities and missing unpriced
+reduction disclosure. After the approved DRV-001:DRV-003 substitutions, all
+18 generator tests passed. Regeneration and `--check` passed for all eleven
+outputs; the full 18-test reference suite and `git diff --check` passed.
+No generator logic or schema changed.
+
+The ledger comparison confirmed only those three rows changed, with battery
+bundle/included-charger accounting and every other row preserved. USD conversion,
+EUR brake VAT, rounded unit extensions, €10,584.10 materials and €13,756.92
+indicative budget were checked. ALT-DRV-002 remains excluded from baseline
+totals. Reading paths now connect the selected motor/controller/brake prices
+to motor-to-track and motor-to-brake fit, with the old HPM heading retained as
+a historical anchor. These checks do not qualify hardware; custom reduction
+and brake integration remain unpriced.
 
 ### Reference validation evidence
 

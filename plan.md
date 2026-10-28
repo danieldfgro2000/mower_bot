@@ -373,6 +373,18 @@ counterbalance or authorize adding that mass outside the configuration budget.
 
 ### 5.3 Candidate market options
 
+**2026-10-28 estimating direction:** Use HPM5000B bare motors, EZ-A48500
+controllers and Precima FDB 13 C 48 V / 20 Nm holding brakes as the main
+[cost references](docs/engineering/modules/02-drive-train/propulsion.md#parts-at-a-glance),
+not approved hardware or a power increase. The
+[brake offer](https://shop.bj-gear.com/en_eur/precima-spring-applied-brake-fdb-adjustable-13-48vdc-19h7o)
+is €159 excluding taxes/delivery (€192.39 planning unit, €384.78 pair).
+Its 19H7 hub does not fit the published Ø22.3 mm HPM shaft directly;
+[mounting/axial integration](docs/engineering/modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment)
+and the custom reduction remain unpriced. The ideal 66:1 static holding screen
+is favorable, but does not qualify stopping, transmission strength or slope
+safety. Existing power, operating-case and independent-stopping requirements remain.
+
 The following options came from an earlier market screen. Prices and seller specifications must be rechecked before purchase; retailer reviews are not independent durability validation.
 
 | Candidate | Earlier observation | Main issue to verify |
@@ -381,7 +393,7 @@ The following options came from an earlier market screen. Prices and seller spec
 | ATO D130BLD2000 | About $816; 2 kW; 2,000 rpm; advertised 10 Nm continuous / 30 Nm peak; IP65; retailer rating 4.9/5 from 13 reviews | Review independence, gearbox/controller cost, continuous thermal performance |
 | BLDC.com D110BLD2000 planetary | About $958; 48 V; 3,000 rpm; configurable planetary reduction | Actual gearbox torque limit, duty cycle, shaft/bearing life and total landed cost |
 | Motenergy ME0907 | About $399 in the earlier listing; Hall sensors and temperature sensor; external reduction | Mechanical torque/performance curve, controller match and environmental packaging |
-| Golden Motor HPM5000B 48 V, bare | [2026-10-26 sourced alternative](docs/engineering/modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals): US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
+| Golden Motor HPM5000B 48 V, bare | [Main cost candidate](docs/engineering/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate): recorded 2026-10-26 US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
 
 Potential reduction strategies:
 

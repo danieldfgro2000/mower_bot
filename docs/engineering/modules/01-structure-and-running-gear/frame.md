@@ -56,16 +56,22 @@ mounting-face drawing is established by its budgeted mass.
 
 For the [HPM5000B in-drum concept](../02-drive-train/propulsion.md#motor-to-track-mounting),
 the motor housing and stationary ring gears need defined attachment and load
-paths to the pod, while the final carrier drives the drum. The costed
+paths to the pod, while the final carrier drives the drum. The former
 [48 V planetary package](../02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive)
 requires its own mounting geometry; it is not interchangeable with this concept.
+
+The [FDB 13 C fit screen](../02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment)
+also requires a stationary brake reaction mount: motor and brake hole circles
+differ, and the 19H7 brake hub does not fit the published Ø22.3 mm motor shaft.
+The brake is not included in the existing CAD axial stack. Any approved adapter,
+supported shaft and revised packaging remain unpriced beyond generic stock.
 
 The released drawing must reconcile the exact motor/gearhead face and shaft
 projection, output-bearing datums, frame load path, joint definition, cooling
 clearance, and assembly/service access. Those inputs remain open; the CAD
 envelope is not a fabrication drawing.
 
-**Continue:** [HPM5000B price and specifications](../02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) ·
+**Continue:** [HPM5000B price and specifications](../02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) ·
 [Track-side connection](running-gear.md#drive-drum-study) ·
 [Mounting-plate cost allowance](frame.md#0104-frame-stock-and-mounting-plates).
 

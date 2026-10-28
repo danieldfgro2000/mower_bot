@@ -12,7 +12,7 @@ narrowest applicable scope below.
    estimate, or jump straight to its [component routes](engineering/bom/chassis-bom.md#bom-by-scope).
 2. Choose a part in **Parts at a glance**, then open its price, specifications,
    or mounting/connection link. For example:
-   [HPM5000B](engineering/modules/02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals)
+   [HPM5000B](engineering/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
    → [price](engineering/modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price)
    / [specifications](engineering/modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits)
    → [motor-to-track mounting](engineering/modules/02-drive-train/propulsion.md#motor-to-track-mounting).

@@ -101,7 +101,7 @@ shows one possible reduction layout only;
 [PowerTrack track engagement geometry](../../bom/sources.md#s01-powertrack-rubber-tracks) and the
 drum's sprocket profile remain unverified.
 
-**Part links:** [Motor price and specifications](../02-drive-train/propulsion.md#hpm5000b-sourced-alternative--not-added-to-baseline-totals) ·
+**Part links:** [Motor price and specifications](../02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) ·
 [Motor-to-drum attachment](../02-drive-train/propulsion.md#motor-to-track-mounting) ·
 [Output shaft/bearings](../02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) ·
 [Baseline sprocket/hub allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners).
