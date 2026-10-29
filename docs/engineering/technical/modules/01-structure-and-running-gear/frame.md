@@ -22,9 +22,11 @@ not released. Start with the physical part, then follow its attachment.
 
 **3D study:** The tray and connected frame below are custom fit proposals, not
 released weldments or mounting drawings. Open them in the [local CAD reader](../../cad/README.md).
-The revised 524 x 288 x 10 mm tray sits at Y = 140-150 mm, leaving 10 mm
-above the unchanged 120 mm lower wheels. It has 10 mm battery-edge margins
-and puts its extra width outboard, not into the central adjustment space.
+The fixed 524 x 288 x 10 mm carrier sits at Y = 140-150 mm, leaving 10 mm
+above the unchanged 120 mm lower wheels. It is locally relieved for the
+idler's complete geometric stroke. The new
+[8 mm moving tray and boxed cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+sit above it; outboard guide towers transfer the extended load into this frame.
 The frame now connects the motor reaction plate, tray, roller brackets and
 front-idler guides/reaction seat. Joint details, restraint, strength and
 shock-load capacity remain unqualified; see the
@@ -67,11 +69,14 @@ records against approved criteria
 
 #### Connected pod frame proposal
 
-**Custom CAD proposal, 2026-10-29:** retain the 524 x 288 x 10 mm tray and
+**Custom CAD proposal, 2026-10-29:** retain the 524 x 288 x 10 mm fixed carrier and
 extend its structure from the stationary motor mount to the sliding front idler.
 Two diagonal 8 mm plates run in the drum's central relief at Z = -25 to -17 mm,
-ending at the tray's rear edge, below the battery removal prism. They connect
-to the motor flange, not the rotating drum shell.
+ending 40 mm further rearward than the former arms; a 50 x 10 x 8 mm low tie
+then joins the carrier below the moving cassette. This clears its enlarged
+terminal alcove without disconnecting the frame. They connect to the motor
+flange, not the rotating drum shell. The carrier front is locally relieved
+5 mm beyond the idler's worst-case wheel envelope.
 
 Longitudinal side rails occupy Z = 90-100 / -100 to -90 mm. Their rear portions
 run at Y = 110-140 mm; the front portions step up to Y = 137-150 mm, overlapping
@@ -81,6 +86,15 @@ Front guide blocks carry two 10 mm rods at Y = 120, Z = +/-104 mm. Proposed
 20 mm stop collars limit the 48 mm sleeves to +/-15 mm longitudinal movement.
 A transverse member at X = 225-233, Y = 134-140 mm joins the spring reaction
 seat to both rails, with 4 mm over the lower wheel tops.
+
+The [cassette guides](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+mount on proposed 6 mm towers outboard of the belt (Z = 120-205 mm), with
+low ties into the carrier. Vertical guide sections sit at Y = 285-361.2 mm;
+rear and front stages are mirrored so the tray brackets attach to the
+inner sections without crossing the fixed ones. The pin's moving bridge
+passes at Y = 365 mm, 3.8 mm above the guide top and fixed tower.
+Guide mounting holes, welds and end-stop details remain open. The 85 kg /
+1.5 g extraction screen is **not** a frame or joint capacity proof.
 
 The [fixed upper support](running-gear.md#fixed-upper-roller-support) joins the
 tray/frame with an inboard mast; it extends **16 mm inside the track edge**.

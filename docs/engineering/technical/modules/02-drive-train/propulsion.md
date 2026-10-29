@@ -23,7 +23,8 @@ remain **unpriced**; the lower total is not a complete-drive saving.
 **3D study:** These thumbnails select components in the
 [local CAD reader](../../cad/README.md); selecting a mesh opens its owning
 section here. The motor is the body envelope only; reduction stages are pitch
-circles, not designed gears. The holding brake and controller are not modeled.
+circles, not designed gears. The controller now uses the published A-series
+envelope; its terminal centers are approximate. The holding brake is not modeled.
 
 | Motor body | Planetary study | Output carrier |
 | --- | --- | --- |
@@ -31,6 +32,10 @@ circles, not designed gears. The holding brake and controller are not modeled.
 
 Separate reduction exports: [3D stage 2](../../../presentation/viewer/index.html?component=planetary-2) ·
 [3D stage 3](../../../presentation/viewer/index.html?component=planetary-3).
+
+| EZ-A48500 on battery-box side |
+| --- |
+| [![3D controller](../../../presentation/viewer/previews/controller.png)](../../../presentation/viewer/index.html?component=controller) |
 
 **Further detail:** [Drive studies](propulsion.md#drive-alternatives) ·
 [Mounting interfaces](propulsion.md#motor-to-track-mounting) ·
@@ -159,6 +164,23 @@ The selected EZ-A48500 and FDB 13 C references below do not establish
 HPM5000B/controller braking compatibility or mechanical fit.
 
 ### EZ-A48500 controller candidate
+
+**CAD envelope evidence, 2026-10-29:** the manufacturer's
+[EZkontrol manual](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf),
+PDF page 11 / printed page 10, gives the **A-series 200 x 164 x 70.47 mm**
+envelope and **180 x 150.50 mm** mounting centers with **four 7 mm holes**.
+The model retains these dimensions, using a simplified base/cover and five
+power-terminal pads in the drawn **B+, U, V, W, B-** order. Pad center offsets
+are approximated from the drawing; they are not dimensioned manufacturer
+datums. The [battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+carries the controller on its outboard wall, with a provisional 12 mm mounting
+gap. Standoffs do not establish cooling: provide a reviewed heat-spreader/
+thermal path and cable bend/boot clearance before release.
+
+The [harness routing study](../05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+connects those terminal faces to the photographed battery terminal end and a
+provisional HPM pigtail landing. Exact motor exit geometry is still missing.
+No CAD route establishes electrical compatibility or safe wire size.
 
 **Selected estimating reference:** [Golden Motor EZ-A48500](https://www.goldenmotor.com/frame-controllers.htm),
 **US$286 / €309.31 each / €618.62 pair**, checked 2026-10-28.

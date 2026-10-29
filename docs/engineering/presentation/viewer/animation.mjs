@@ -6,31 +6,41 @@ export function validateAnimations(animations, components) {
   const known = new Set(components.map(part => part.id));
   const seen = new Set();
   for (const animation of animations) {
-    const { id, label, durationMs, components: moved, keyframes } = animation ?? {};
+    const { id, label, durationMs, components: moved, keyframes, tracks = {} } = animation ?? {};
     if (!/^[a-z][a-z0-9-]*$/.test(id ?? '') || !label) throw new Error(`Invalid animation: ${id}`);
     if (seen.has(id)) throw new Error(`Duplicate animation: ${id}`);
     seen.add(id);
     if (!finite(durationMs) || durationMs <= 0) throw new Error(`Invalid animation duration: ${id}`);
     if (!Array.isArray(moved) || !moved.length) throw new Error(`Animation needs components: ${id}`);
-    for (const part of moved) {
+    if (!tracks || typeof tracks !== 'object' || Array.isArray(tracks)) {
+      throw new Error(`Invalid animation tracks: ${id}`);
+    }
+    if (new Set(moved).size !== moved.length || Object.keys(tracks).some(part => moved.includes(part))) {
+      throw new Error(`Duplicate animated component: ${id}`);
+    }
+    for (const part of [...moved, ...Object.keys(tracks)]) {
       if (!known.has(part)) throw new Error(`Unknown animated component: ${part}`);
     }
-    if (!Array.isArray(keyframes) || keyframes.length < 2) {
-      throw new Error(`Animation needs at least two keyframes: ${id}`);
-    }
-    keyframes.forEach((frame, i) => {
-      if (!Array.isArray(frame.offset) || frame.offset.length !== 3 || !frame.offset.every(finite)) {
-        throw new Error(`Invalid keyframe offset: ${id}`);
-      }
-      if (!finite(frame.at) || (i && frame.at <= keyframes[i - 1].at)) {
-        throw new Error(`Keyframe times must be increasing: ${id}`);
-      }
-    });
-    if (keyframes[0].at !== 0 || keyframes[0].offset.some(value => value !== 0)) {
-      throw new Error(`Animation must start at 0 in the assembled position: ${id}`);
-    }
-    if (keyframes.at(-1).at !== 1) throw new Error(`Animation must end at 1: ${id}`);
+    for (const frames of [keyframes, ...Object.values(tracks)]) validateKeyframes(frames, id);
   }
+}
+
+function validateKeyframes(keyframes, id) {
+  if (!Array.isArray(keyframes) || keyframes.length < 2) {
+    throw new Error(`Animation needs at least two keyframes: ${id}`);
+  }
+  keyframes.forEach((frame, i) => {
+    if (!Array.isArray(frame?.offset) || frame.offset.length !== 3 || !frame.offset.every(finite)) {
+      throw new Error(`Invalid keyframe offset: ${id}`);
+    }
+    if (!finite(frame.at) || (i && frame.at <= keyframes[i - 1].at)) {
+      throw new Error(`Keyframe times must be increasing: ${id}`);
+    }
+  });
+  if (keyframes[0].at !== 0 || keyframes[0].offset.some(value => value !== 0)) {
+    throw new Error(`Animation must start at 0 in the assembled position: ${id}`);
+  }
+  if (keyframes.at(-1).at !== 1) throw new Error(`Animation must end at 1: ${id}`);
 }
 
 export function poseAt(animation, t) {

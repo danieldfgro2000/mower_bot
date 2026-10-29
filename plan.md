@@ -216,6 +216,11 @@ and [connected tray frame](docs/engineering/technical/modules/01-structure-and-r
 represent U supports, motor reaction plate and spring/carriage geometry.
 Their loads, spring specification, joints and complete-machine fit remain
 unqualified; no purchasing or fabrication decision follows from the model.
+The [boxed battery cassette proposal](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+adds a loaded extraction tray, telescopic ball guides and positive WORK /
+EXTRACT pin positions. The controller moves on the box; isolate and disconnect
+motor/sensor harnesses before movement. This service concept does not authorize
+operation or demonstrate the 1 m transport layout, dynamic capacity or stability.
 
 ### 4.2 Variable-width scissor frame
 
@@ -441,7 +446,8 @@ use the **DC HOUSE 100 Ah / 18 A charger bundle** as conditional first choice
 and estimating reference, not a released purchase or proven fit. Its published
 pair mass is 89.8 kg, versus 72 kg for the former Elker pair; the mass/CG and
 pod layout need revision. The candidate CAD now represents the listing body
-and clears it using a raised return and revised tray; terminals, restraints,
+and clears it using a raised return and an enclosed sliding tray/controller
+proposal; exact terminal datums, restraints,
 complete-machine packaging and mass/CG remain unqualified. See the
 [CAD fit limits](docs/engineering/technical/cad/README.md#modeled-dimensions-and-limits).
 The higher-voltage comparison remains retired from the active BOM.

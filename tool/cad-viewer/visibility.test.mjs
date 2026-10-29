@@ -17,7 +17,7 @@ test('viewer groups cover every component once under engineering modules and sub
   config.groups.forEach(collect);
   assert.deepEqual(ids.toSorted(), config.components.map(part => part.id).toSorted());
   assert.deepEqual(config.groups.map(group => group.id),
-    ['structure-and-running-gear', 'drive-train', 'battery-and-charging', 'annotations']);
+    ['structure-and-running-gear', 'drive-train', 'battery-and-charging', 'power-harnesses', 'annotations']);
 });
 
 test('invalid grouping cannot leave missing, duplicate or unknown geometry in the tree', () => {

@@ -14,6 +14,9 @@ raised fixed upper return and revised battery tray. U supports/axles, connected
 tray frame, motor reaction plate and a spring-loaded sliding front idler are
 now represented custom proposals. This is not a complete qualified machine:
 brake, reducer supports, joints and actual spring specification remain open.
+The battery now has a proposed enclosure and loaded sliding cassette with
+telescopic ball guides, a two-position pin, an actual-size controller envelope
+and provisional harness routing. See the [cassette load/evidence boundary](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette).
 The BOM baseline is not changed by this candidate study.
 
 ## Modeled dimensions and limits
@@ -24,33 +27,37 @@ The BOM baseline is not changed by this candidate study.
 | Drive drum | Flexible 350 mm OD, 200 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 50 mm guide channel are placeholders |
 | Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 160 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
 | Lower rollers | Four paired assemblies, unchanged 120 x 50 mm wheels; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 50 mm tread-face guide gap and 1 mm bearing recess are study values, not print tolerances |
-| Upper roller / support | Fixed paired 120 x 50 mm assembly at X = 200, Y = 515 mm; 6 mm U cheeks, 20 mm axle and bridge below wheels; inboard mast to Z = -116 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). Capacity/joints unqualified; mast takes 16 mm of central space per pod |
+| Upper roller / support | Fixed paired 120 x 50 mm assembly at X = 200, Y = 535 mm; 6 mm U cheeks, 20 mm axle and bridge below wheels; inboard mast to Z = -116 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). Capacity/joints unqualified; mast takes 16 mm of central space per pod |
 | Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
 | Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
-| Tray / battery position | 524 x 288 x 10 mm plate at Y = 140-150 mm; battery X = 35, Z = 44 mm, bottom Y = 150 mm | Custom proposal; 10 mm body-edge margins. Tray inboard edge matches the track at Z = -100 mm; extra width goes outboard |
+| Carrier / battery position | Fixed 524 x 288 x 10 mm plate at Y = 140-150 mm, locally relieved for full idler stroke; battery X = 35, Z = 44 mm, bottom Y = 158 mm | Custom proposal; fixed carrier plus 8 mm moving tray. Inboard tray edge stays Z = -100 mm |
+| Battery service cassette | 3 mm box, 8 mm steel tray, 305 mm telescopic ball guides; 12 mm pin and two 12.5 mm bores | [Geometry, 85 kg load screen and S40 price](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette). Pin is not a vertical-load support; rails and joints remain unqualified |
+| Controller / harness | EZ-A48500 A-series 200 x 164 x 70.47 mm; B+/U/V/W/B- pads, two battery leads and three phase leads | [Drawing evidence](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate), [terminal/harness assumptions](../modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness). Exact battery offsets / motor cable exit unverified; service disconnect shown unplugged |
 | Lower U supports | Four pairs of 6 mm cheeks, 20 mm axles, 6 mm top bridges at Y = 134-140 mm | [Support details](../modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers); 5 mm tire-side and 4 mm bridge/tread gaps; bearing fits, retention and loads unqualified |
 | Tray frame / motor plate | Rear arms through drum relief, stepped side rails to front guide blocks; 250 mm OD x 12 mm motor plate, 148 mm mounting PCD | [Frame proposal](../modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal); motor moves 12 mm outboard, reducer positions unchanged; fixed-ring and brake mounts still absent |
-| Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 72.356 mm nominal seat gap, 57.356-87.356 mm geometric range; no rate/preload or selected commercial spring |
+| Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 57.036 mm nominal seat gap, 42.036-72.036 mm geometric range; no rate/preload or selected commercial spring |
 
-Drive and idler axes are at X = -440 and +419.356 mm: **859.356 mm spacing**.
+Drive and idler axes are at X = -440 and +404.036 mm: **844.036 mm spacing**.
 The exact three-circle external tangents and wrap arcs close the nominal loop
 to within 0.02 mm; guide positions follow actual segment lengths, not an
 equal-wheel approximation. The belt-body longitudinal envelope is approximately
-**1,174 mm**, before tread projections. Overall track height is about **617 mm**.
+**1,159 mm**, before tread projections. Overall track height is about **637 mm**.
 
 | Clearance / change | Revised result | Provisional requirement |
 | --- | ---: | --- |
-| Battery to front / rear continuous guide-tip return envelopes | 40.1 / 36.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
-| Conservative return clearance after both allowances | **21.0 mm minimum** | 20 mm; assumptions need actual track data |
-| Fixed upper wheel to battery | 72 mm | 20 mm |
-| Lower rollers to tray / battery | 10 / 20 mm | 10 / 20 mm |
-| Adjacent lower rollers | 23.1 mm; last axle 15 mm rearward for idler yoke | 10 mm |
-| Battery to drive / idler physical envelopes | 48.0 / 38.3 mm | 20 mm |
+| Battery to front / rear continuous guide-tip return envelopes | 38.2 / 35.8 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
+| Conservative return clearance after both allowances | **20.8 mm minimum** | 20 mm; assumptions need actual track data |
+| Fixed upper wheel to battery | 84 mm | 20 mm |
+| Lower rollers to fixed carrier / battery | 10 / 28 mm | 10 / 20 mm |
+| Adjacent lower rollers | At least 10 mm; locations recalculate with the idler | 10 mm |
+| Battery to drive / idler physical envelopes | At least 20 mm | 20 mm |
 | Guide lateral gap, each side | 13 mm at lower/upper wheels and drum; 8 mm at idler hubs | 5 mm |
 | Motor + reaction plate + stages + carrier | 206 mm stack; 12 mm outboard projection, **6 mm inboard remainder** | 5 mm; excludes brake/reducer supports |
-| U bridges to lower / upper wheels | 4 / 9 mm | 3 / 5 mm provisional running gaps |
+| U bridges to lower / upper wheels | 4 / 29 mm | 3 / 5 mm provisional running gaps |
 | Front stepped rails to moving yoke | 5 mm vertical | 5 mm provisional; checked through +/-15 mm X stroke |
 | Guide rod to sleeve bore | 0.5 mm radial | Study clearance only; not a selected sliding-bearing fit |
+| Cassette enclosure sweep to fixed gear/frame | At least 5 mm, checked by expanded solid sweep | Provisional geometry screen only; dynamic boxed-cassette allowance not qualified |
+| Lock-bridge to fixed guide tower | 3.8 mm vertical | 3 mm provisional; rail profiles/fixings still require actual drawings |
 
 The axial stack includes 2 mm between the motor reaction plate and first stage, between
 stages, and before the 6 mm output carrier. The 53 mm shaft shares the sun-bore
@@ -72,11 +79,14 @@ demonstrated usable spring travel**. Belt elasticity/slack, setup, spring
 rate/preload and tension loads must be established before release. No
 commercial belt was stretched or purchasable loop length invented to claim fit.
 
-The outboard battery-body extraction prism clears represented running gear,
-frame, U supports, mast and spring/carriage; terminals, restraints, handles,
-guards and the rest of the machine are excluded. The battery bottom rises
-from 100 to 150 mm versus the previous
-clashing study, raising its body CG 50 mm. The outboard offset and track mass
+The 305 mm cassette extraction clears represented running gear and frame;
+the motor harness is shown disconnected, while the battery/controller leads
+move together. Pin withdrawal and middle-stage half travel are independent
+animation tracks. Remaining interfaces include rated restraints, signal
+harnesses, guards, exact terminal/connector datums and the rest of the machine.
+The battery bottom rises
+from 100 to 158 mm versus the previous
+clashing study, raising its body CG 58 mm. The cassette mass, outboard offset and track mass
 change require a new complete-machine mass/CG and transport assessment; see
 the [width screen](../width-and-slope-sizing.md#minimum-width-and-packaging).
 No printed-wheel load rating or safe slope is inferred from clearance.
@@ -139,15 +149,17 @@ The same thumbnail route is available beside the motor in its owning scope.
   coordinates, in millimetres. Planetary pitch-circle studies are grouped by
   stage; the four lower rollers are separate exports. The removal arrow is
   explicitly an annotation, not a physical part.
-- **Animate** plays a configured motion. **Battery removal** slides the battery
-  body and its removal arrow 400 mm outboard. **Play**/**Pause**/**Replay**
+- **Animate** plays a configured motion. **Battery cassette** withdraws the
+  pin 45 mm, slides the box/tray/controller 305 mm outboard with middle guides
+  at half travel, then reengages the pin. The service connector is already
+  unplugged; the animation is not an electrical disconnect procedure. **Play**/**Pause**/**Replay**
   run it; the slider scrubs to any point. Choosing an animation frames the whole
   path. Inspection, visibility and layout are unchanged; if every animated
   part is hidden the viewer says so. **Reset assembly** clears the animation.
   `animation=<id>` and progress `t=0..1` persist in the URL; selecting an
   animation adds a history entry, while playback and scrubbing replace it.
   The animation is a geometric sequence, not a demonstrated handling
-  procedure: terminals, cables, restraints and lifting remain unmodeled.
+  procedure: terminal datums, complete harness protection, restraints and lifting remain unqualified.
 - **Split**, **CAD focus** and **Docs focus** in the header choose the pane
   layout. CAD focus collapses the documentation so the model uses the full
   width; Docs focus collapses the model for reading. Focus views keep the
@@ -167,10 +179,14 @@ plus the module/subassembly hierarchy. Every modeled component must occur
 exactly once in the hierarchy; startup rejects unknown, duplicate or ungrouped
 components. These display groups do not change BOM cost ownership or quantities.
 The same map owns `animations`: keyframed offsets in SCAD millimetres for
-listed components, starting at the assembled position. Each animation needs a
-Markdown entry point (`index.html?animation=<id>`); the export test sweeps the
-physical components of the battery removal path against every other physical
-component, so the viewer cannot show an unchecked removal path.
+listed components, starting at the assembled position. An optional
+`tracks` map supplies independent keyframes (such as the
+lock pin or half-speed guides); track IDs cannot duplicate the shared group.
+Each animation needs a Markdown entry point (`index.html?animation=<id>`).
+Export tests cover the battery/cassette path against fixed gear, telescopic
+stages against stationary mounts, and pin/strip alignment at both ends and
+during travel. They explicitly distinguish intended bearing/mount interfaces
+from forbidden interference; they do not prove every unmodeled interface.
 The [presentation catalog](../../presentation/catalog.json) owns concise
 pitch facts, which are checked against technical evidence during generation.
 The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
@@ -178,7 +194,21 @@ components have no invented mesh.
 
 ## Refresh and verify
 
-**Battery removal animation test-first update (2026-10-29):**
+**Loaded battery cassette test-first update (2026-10-29):**
+new export tests first failed on absent enclosure/tray/controller IDs, and
+animation validation failed to reject unknown independent tracks. Subsequent
+solid checks exposed the enlarged rear box against the motor arms, the
+shortened idler sweep against the fixed carrier, and a lock/rail mounting
+conflict. Motor arms now connect below the moving cassette, both carriers
+clear the idler's full stroke, guide sections are mirrored correctly and the
+lock bridge passes above the fixed tower. Tests cover enclosure/terminal
+clearance, actual steel mass versus the 85 kg screen, plate stress/deflection,
+both lock bores, pin sequencing, half-travel stages, full extraction and a
+5 mm expanded enclosure sweep. `npm test --prefix tool/cad-viewer` and the
+browser suite exercise the resulting geometry/configuration and state.
+These checks do not qualify joints, dynamic loads, wiring or vehicle stability.
+
+**Earlier body-only animation test-first update (2026-10-29, superseded by cassette):**
 `node --test tool/cad-viewer/animation.test.mjs` first failed on the missing
 animation module, and the new export test failed because no animation path was
 configured. After implementation, 26 node tests pass, including an OpenSCAD

@@ -3,6 +3,138 @@
 **Concise, generated component cards.** For assumptions, requirements,
 interfaces and release holds, follow the linked technical detail.
 
+<a id="battery-box"></a>
+
+### Battery box and controller standoffs (3 mm proposal)
+
+**Status:** 3 mm steel enclosure proposal with rear terminal alcove and shaped roof; restraints, lid retention and protection remain HOLD.
+
+[![Battery box and controller standoffs (3 mm proposal)](viewer/previews/battery-box.png)](viewer/index.html?component=battery-box&mode=presentation)
+| | |
+| --- | --- |
+| Outer study envelope | 542 × 278 × 241 mm; roof locally sloped |
+
+**Read more:** [Battery box and controller standoffs (3 mm proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="battery-tray"></a>
+
+### Moving battery tray (8 mm steel proposal)
+
+**Status:** Custom 8 mm steel tray proposal. Plate load screen is not qualification of brackets, joints or service stability.
+
+[![Moving battery tray (8 mm steel proposal)](viewer/previews/battery-tray.png)](viewer/index.html?component=battery-tray&mode=presentation)
+| | |
+| --- | --- |
+| Tray / load screen | 8 mm S235; 85 kg at 1.5 g; 305 mm extraction |
+
+**Read more:** [Moving battery tray (8 mm steel proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="slide-fixed"></a>
+
+### Fixed ball-guide stages and frame towers
+
+**Status:** Accuride envelope / custom mount study; catalog capacity is not a mower shock or fatigue rating. Excluded from baseline costs.
+
+[![Fixed ball-guide stages and frame towers](viewer/previews/slide-fixed.png)](viewer/index.html?component=slide-fixed&mode=presentation)
+| | |
+| --- | --- |
+| Guide | 305 mm travel; 76.2 × 19.1 mm section, vertical mounting |
+| Public price | €119.19 net per pair; €238.38 net for two pods |
+
+**Read more:** [Fixed ball-guide stages and frame towers technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [RS Ireland priced pair](https://ie.rs-online.com/web/p/drawer-runners/1886905) · [Accuride datasheet](https://hs-europe.accuride.com/hubfs/Datasheets/9301U-E_en.pdf) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#s40-accuride-battery-extraction-guides)
+
+<a id="slide-middle"></a>
+
+### Intermediate ball-guide stages (half travel)
+
+**Status:** See technical scope; this is a study element.
+
+[![Intermediate ball-guide stages (half travel)](viewer/previews/slide-middle.png)](viewer/index.html?component=slide-middle&mode=presentation)
+
+
+**Read more:** [Intermediate ball-guide stages (half travel) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="slide-inner"></a>
+
+### Inner ball-guide stages and tray brackets
+
+**Status:** See technical scope; this is a study element.
+
+[![Inner ball-guide stages and tray brackets](viewer/previews/slide-inner.png)](viewer/index.html?component=slide-inner&mode=presentation)
+
+
+**Read more:** [Inner ball-guide stages and tray brackets technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="tray-lock-pin"></a>
+
+### Tray locking pin (work / extract)
+
+**Status:** Two-position positive pin proposal; retention, end stops and engagement indication are not released.
+
+[![Tray locking pin (work / extract)](viewer/previews/tray-lock-pin.png)](viewer/index.html?component=tray-lock-pin&mode=presentation)
+| | |
+| --- | --- |
+| WORK / EXTRACT | 12 mm pin; 12.5 mm bores, 305 mm apart; 45 mm release |
+
+**Read more:** [Tray locking pin (work / extract) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="tray-lock-strike"></a>
+
+### Moving locking strip (two 12.5 mm bores)
+
+**Status:** See technical scope; this is a study element.
+
+[![Moving locking strip (two 12.5 mm bores)](viewer/previews/tray-lock-strike.png)](viewer/index.html?component=tray-lock-strike&mode=presentation)
+
+
+**Read more:** [Moving locking strip (two 12.5 mm bores) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="controller"></a>
+
+### EZ-A48500 (200 x 164 x 70.47 mm)
+
+**Status:** Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.
+
+[![EZ-A48500 (200 x 164 x 70.47 mm)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
+| | |
+| --- | --- |
+| Drawing envelope | 200 × 164 × 70.47 mm; mounted on moving battery box |
+
+**Read more:** [EZ-A48500 (200 x 164 x 70.47 mm) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+
+<a id="battery-harness"></a>
+
+### Battery to controller (protected routing proposal)
+
+**Status:** See technical scope; this is a study element.
+
+[![Battery to controller (protected routing proposal)](viewer/previews/battery-harness.png)](viewer/index.html?component=battery-harness&mode=presentation)
+
+
+**Read more:** [Battery to controller (protected routing proposal) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+
+<a id="controller-harness"></a>
+
+### Controller phase leads / moving disconnect half
+
+**Status:** See technical scope; this is a study element.
+
+[![Controller phase leads / moving disconnect half](viewer/previews/controller-harness.png)](viewer/index.html?component=controller-harness&mode=presentation)
+
+
+**Read more:** [Controller phase leads / moving disconnect half technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+
+<a id="motor-harness"></a>
+
+### Motor phase leads / fixed disconnect half
+
+**Status:** See technical scope; this is a study element.
+
+[![Motor phase leads / fixed disconnect half](viewer/previews/motor-harness.png)](viewer/index.html?component=motor-harness&mode=presentation)
+
+
+**Read more:** [Motor phase leads / fixed disconnect half technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+
 <a id="track"></a>
 
 ### Rubber track (200x72x40 candidate fit study)
@@ -156,7 +288,7 @@ interfaces and release holds, follow the linked technical detail.
 [![Fixed upper roller (paired 120x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
 | | |
 | --- | --- |
-| Return wheel concept | Paired 120 × 50 mm PC/TPU wheels; axis Y = 515 mm |
+| Return wheel concept | Paired 120 × 50 mm PC/TPU wheels; axis Y = 535 mm |
 
 **Read more:** [Fixed upper roller (paired 120x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
@@ -232,7 +364,7 @@ interfaces and release holds, follow the linked technical detail.
 [![Idler spring, guide and reaction seat (proposal)](viewer/previews/idler-spring.png)](viewer/index.html?component=idler-spring&mode=presentation)
 | | |
 | --- | --- |
-| Coil proposal | 36 mm OD, 4 mm wire; 72.356 mm nominal installed envelope |
+| Coil proposal | 36 mm OD, 4 mm wire; 57.036 mm nominal installed envelope |
 
 **Read more:** [Idler spring, guide and reaction seat (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept)
 
@@ -245,7 +377,7 @@ interfaces and release holds, follow the linked technical detail.
 [![Fixed upper U support and inboard mast (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
 | | |
 | --- | --- |
-| Packaging | 9 mm wheel/bridge gap; 16 mm intrusion into central space |
+| Packaging | 29 mm wheel/bridge gap; 16 mm intrusion into central space |
 
 **Read more:** [Fixed upper U support and inboard mast (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 

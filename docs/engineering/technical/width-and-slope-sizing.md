@@ -83,21 +83,33 @@ scissor/lock/screw swept envelopes, guards, and moving harness. Keep body width,
 outside-track width, track centre spacing, and inner clearance as separate
 dimensions. No width-specific safe slope is currently known.
 
-**Revised single-pod CAD screen, 2026-10-29:** the 200 mm track carries a
-288 mm-wide proposed tray with its inboard edge aligned to the track and an
-88 mm outboard overhang. Two mirrored trays therefore need **576 mm plus the
-inner-track gap**, before guards and restraint clearances. The new
+**Current boxed-cassette CAD screen, 2026-10-29:** the 200 mm track carries a
+288 mm-wide tray, with its inboard edge aligned to the track and an 88 mm
+outboard overhang. Tray-only arithmetic was 576 mm plus inner-track gap,
+but **is no longer the complete represented envelope**. The box-side
+controller and unplugged service connector now reach Z = **318 mm** outboard,
+versus the track's -100 to +100 mm. Thus two mirrored pods need at least
+**836 mm plus the inner-track gap**, before guards, restraints and tolerance.
+The locking strip reaches Z = -125 mm, or **25 mm inboard per pod**. The
 [fixed upper-support mast](modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
-projects 16 mm inward on each pod: usable structural clearance between the
-mirrored masts is **inner-track gap minus 32 mm**. For a 1,000 mm deck,
-the arithmetic ceiling on the inner-track gap is 424 mm, leaving at most
-**392 mm between those masts**; equivalently, outside-track
-width must not exceed 824 mm before those excluded parts. This is not a
-demonstrated transport configuration. The approximately 1.18 m single-pod
+still projects 16 mm inward, but the strip is now more restrictive:
+usable conservative central clearance is **inner-track gap minus 50 mm**.
+For a 1,000 mm deck, the arithmetic ceiling on the inner-track gap is
+**164 mm**, leaving at most **114 mm** between mirrored strip envelopes;
+outside-track width must be at most **564 mm** before excluded parts.
+No spine/scissor/mower fit within that remaining space is established:
+the 1 m transport layout remains **HOLD**, not a solved configuration.
+Extracting one tray adds another 305 mm laterally; the service envelope is
+not a 1 m deck configuration. The approximately 1.16 m single-pod
 length does not prove the fitted mower/spine fits a 2 m deck.
 
-The battery body bottom rises from Y = 100 to 150 mm versus the clashing CAD,
-raising its body CG 50 mm; its center moves 44 mm outboard. The 40-link track
+The battery body bottom rises from Y = 100 to 158 mm versus the clashing CAD,
+raising its body CG 58 mm; its center stays 44 mm outboard. The
+[cassette load screen](modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+uses **85 kg per moving assembly**, not a measured assembly mass. At full
+extension its battery body center moves to Z = **349 mm**. Complete chassis
+support/tipping and lifting arrangements are unmodeled; plate stress and
+guide catalog ratings cannot establish service stability. The 40-link track
 candidate adds 24 kg per pair versus the initial 180 mm candidate, or 8 kg
 versus the 200 x 72 x 36 baseline reference. Recalculate full-machine CG,
 support footprint, frame loads and transport payload with actual parts; no

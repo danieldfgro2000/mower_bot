@@ -18,7 +18,11 @@ test('battery removal is a validated keyframed animation of the battery and its 
   const config = loadConfig();
   const animation = config.animations.find(item => item.id === 'battery-removal');
   assert.ok(animation, 'battery removal animation is configured');
-  assert.deepEqual(animation.components, ['battery', 'removal-arrow']);
+  for (const id of ['battery', 'battery-tray', 'battery-box', 'controller', 'removal-arrow']) {
+    assert.ok(animation.components.includes(id), `${id} follows the service cassette`);
+  }
+  assert.ok(animation.tracks['tray-lock-pin'], 'pin releases before sliding and reengages at the stop');
+  assert.ok(animation.tracks['slide-middle'], 'telescopic middle stages move at half stroke');
   assert.deepEqual(animation.keyframes[0], { at: 0, offset: [0, 0, 0] });
   assert.equal(animation.keyframes.at(-1).at, 1);
   assert.ok(animation.keyframes.at(-1).offset[2] > 0, 'battery leaves outboard (+Z)');
@@ -42,6 +46,9 @@ test('invalid animations are rejected instead of silently moving geometry', () =
   assert.throws(bad({ keyframes: [valid.keyframes[0], valid.keyframes[1], valid.keyframes[1],
     valid.keyframes[2]] }), /increasing/);
   assert.throws(bad({ keyframes: [valid.keyframes[0], { at: 1, offset: [0, 'x', 0] }] }), /offset/);
+  assert.throws(bad({ tracks: { missing: valid.keyframes } }), /Unknown animated component/);
+  assert.throws(bad({ tracks: { box: valid.keyframes } }), /Duplicate animated component/);
+  assert.throws(bad({ tracks: { frame: [{ at: 0, offset: [0, 0, 0] }] } }), /keyframes/);
 });
 
 test('poses interpolate linearly between keyframes and clamp to the path ends', () => {

@@ -62,7 +62,11 @@ async function start() {
     const animation = animations.get(state.id);
     if (!animation) return {};
     const offset = poseAt(animation, state.t);
-    return Object.fromEntries(animation.components.map(id => [id, offset]));
+    return Object.fromEntries([
+      ...animation.components.map(id => [id, offset]),
+      ...Object.entries(animation.tracks ?? {}).map(([id, keyframes]) =>
+        [id, poseAt({ keyframes }, state.t)]),
+    ]);
   }
   function updateAnimationStatus(shown) {
     const animation = animations.get(animationState.id);

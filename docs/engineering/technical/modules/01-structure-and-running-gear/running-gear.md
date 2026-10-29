@@ -141,13 +141,13 @@ assumed pitch; these are **not supplier dimensions**. Confirm lug and rolling-pa
 dimensions before using any groove, spacer, bearing fit or printed geometry.
 
 With the assumed 20 mm belt and mid-thickness pitch line, the raised upper pair
-at X = 200, Y = 515 mm gives **859.356 mm horizontal end-axis spacing**.
-Drive X stays -440 mm; the idler is at X = +419.356 mm. The actual three-circle
+at X = 200, Y = 535 mm gives **844.036 mm horizontal end-axis spacing**.
+Drive X stays -440 mm; the idler is at X = +404.036 mm. The actual three-circle
 tangents and arcs close the 40-link loop. The 504 x 268 x 233 mm battery
-is at X = 35, Z = 44 mm with bottom Y = 150 mm; its tray underside is Y = 140 mm,
-10 mm above the lower wheels. Nominal guide-tip clearances are 40.1 / 36.0 mm
+is at X = 35, Z = 44 mm with bottom Y = 158 mm; the fixed carrier underside is Y = 140 mm,
+10 mm above the lower wheels. Nominal body guide-tip clearances are 38.2 / 35.8 mm
 normal to the front/rear return runs. Reserving 10 mm for motion and 5 mm for
-deflection/tolerances leaves at least **21.0 mm** versus a provisional 20 mm
+deflection/tolerances leaves at least **20.8 mm** versus a provisional 20 mm
 running requirement. See the [CAD dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits)
 for mesh checks, extraction, transverse fit and remaining holds.
 
@@ -249,16 +249,17 @@ reaction plate; brake and reducer-bearing integration are still open.
 **Owner-selected revision, 2026-10-29:** use a **spring-loaded sliding front
 idler and a fixed upper roller**. This supersedes the earlier spring-upper /
 motorcycle-fork direction. The front idler keeps its 200 mm bought-wheel
-envelopes and nominal axis at X = 419.356, Y = 110 mm. Its proposed yoke runs on
+envelopes and nominal axis at X = 404.036, Y = 110 mm. Its proposed yoke runs on
 two longitudinal guides, with +/-15 mm geometric stop positions; the upper
-axis remains fixed at X = 200, Y = 515 mm.
+axis remains fixed at X = 200, Y = 535 mm.
 
 The nominal belt stays at 2,880 mm. The ideal tangent path changes when the
 idler moves; the modeled 30 mm carriage stroke is not proof of usable travel
 for that commercial belt. Wear/slack/compliance, initial setup, preload,
-force limits and retention must be established. The body-only battery
-extraction prism clears the represented supports and spring hardware.
-Terminals, restraints, guards and complete-machine removal remain unchecked.
+force limits and retention must be established. The
+[sliding battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+clears the represented supports and spring hardware; terminal datums,
+restraints, guards and complete-machine removal remain unqualified.
 See the [roller and spring-tensioner concept](running-gear.md#ps02-sprockets-rollers-and-tensioners)
 for the required mechanical definition.
 
@@ -380,7 +381,7 @@ historical, not the current modeled arrangement.
 between the fixed reaction face X = 233 mm and the moving yoke seat. The
 schematic spring is **36 mm OD, 4 mm wire, six active turns plus two end rings**,
 on a 12 mm guide rod through a 14 mm moving-seat aperture. Installed seat
-separation is 72.356 mm nominal, or **57.356-87.356 mm** over the geometric
+separation is 57.036 mm nominal, or **42.036-72.036 mm** over the geometric
 +/-15 mm idler stroke. The shortest envelope exceeds the rough eight-wire
 solid-height screen of 32 mm; this is not a real spring specification.
 The 40 mm moving seat leaves 5 mm to the wheel tread faces, and the coil
@@ -392,13 +393,13 @@ remains unqualified for S01.
 
 #### Fixed upper roller support
 
-**Current return-route CAD proposal:** paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm.
+**Current return-route CAD proposal:** paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm.
 This reuses the already-planned upper assembly, not an additional purchase.
-Its approximately 74.7° track deflection gives a nominal reaction about
-**1.21 times belt tension** under equal-tension assumptions, not merely return
+Its approximately 79.1° track deflection gives a nominal reaction about
+**1.27 times belt tension** under equal-tension assumptions, not merely return
 belt weight. A fixed U support has 6 mm cheeks with 5 mm wheel-side gaps,
 a 20 mm axle and a bridge below the wheels at Y = 440-446 mm, leaving
-**9 mm running clearance**. A 10 mm inboard mast and diagonal brace connect
+**29 mm running clearance**. A 10 mm inboard mast and diagonal brace connect
 it to the tray/frame; its inner face is at Z = -116 mm, 6 mm outside the belt
 edge and 16 mm from the battery body. The upper support is not spring-loaded.
 Printed wheels, axle, support and joints are not load-rated. Its 16 mm inboard

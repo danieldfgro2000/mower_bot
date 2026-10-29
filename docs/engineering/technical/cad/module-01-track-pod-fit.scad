@@ -12,8 +12,9 @@
  Motor: HPM5000B 206x126 body, 22.3x53 shaft, 5x43 keyway and four M8
  openings on 148 PCD from GD-JS-03000001; hole depth, keyway axial offset
  and clocking are illustrative. No thread, thermal or structural detail.
- Battery: DC HOUSE listing body 504x268x233; terminals/cables/restraints
- are excluded because their positions/envelopes are not established.
+ Battery: DC HOUSE listing body 504x268x233. Box, 8 mm steel tray, vertical
+ telescopic ball guides and two-position pin are proposals. Harness routes
+ use photographed/drawn terminal faces; undimensioned offsets remain assumptions.
  Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
  interstage bearing supports, coupling or brake installation. U supports, tray
  frame, motor reaction plate and fixed upper mast are custom proposals.
@@ -34,7 +35,10 @@ viewer_components = [
     "lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4",
     "upper-roller", "pod-carrier", "battery", "removal-arrow",
     "lower-roller-supports", "pod-frame", "motor-mount",
-    "idler-carriage", "idler-spring", "upper-roller-support"
+    "idler-carriage", "idler-spring", "upper-roller-support",
+    "battery-box", "battery-tray", "slide-fixed", "slide-middle", "slide-inner",
+    "tray-lock-pin", "tray-lock-strike", "controller", "battery-harness",
+    "controller-harness", "motor-harness"
 ];
 
 track_width = 200;
@@ -99,7 +103,7 @@ roller_speed_study_kmh =
 lower_support_roller_count = 4; // User-selected study layout per track.
 lower_support_roller_diameter = 120; // Owner-selected S38 concept, not qualified.
 upper_support_roller_diameter = 120;
-upper_roller_center = [200, 515];
+upper_roller_center = [200, 535];
 printed_tread_thickness = 8;
 bearing_outer_diameter = 42;
 bearing_width = 12;
@@ -120,6 +124,33 @@ battery_length = 504; // S30 listing; supplied revision has conflicting dimensio
 battery_width = 268;
 battery_height = 233;
 battery_center_x = 35;
+service_stroke = 305; // Accuride DZ9301-0012U-E supplier SL/TR.
+service_tray_thickness = 8; // Proposed S235 steel; see conservative load screen.
+service_mass_screen_kg = 85; // Includes battery, tray, box, controller and moving hardware.
+box_wall = 3;
+box_min_x = -247; // 30 mm terminal alcove at battery's rear short end.
+box_max_x = 295;
+box_min_z = -95;
+box_max_z = 183;
+box_top_y = 399;
+slide_length = 305;
+slide_height = 76.2;
+slide_thickness = 19.1;
+slide_bottom_y = 285;
+slide_min_z = -100;
+slide_rear_x = -276.5;
+slide_front_x = 297.4;
+controller_origin = [-65, 190, 195];
+controller_length = 200;
+controller_height = 164;
+controller_depth = 70.47;
+// B+, U, V, W, B- order from A-series drawing; undimensioned centers approximated.
+controller_terminal_x = [-40, -14, 35, 86, 112];
+controller_terminal_y = 290;
+controller_terminal_z = controller_origin[2] + controller_depth;
+battery_terminal_y = 348; // Photo-based rear-face landing, not a released stud datum.
+battery_terminal_z = [-35, 123]; // P- / P+; verify exact supplied battery.
+motor_landing = [-440, 265, 118]; // Unverified pigtail exit; not a motor terminal drawing.
 carrier_length = battery_length + 2 * carrier_edge_margin;
 carrier_width = battery_width + 2 * carrier_edge_margin;
 carrier_center_z = (carrier_width - track_width) / 2;
@@ -167,7 +198,7 @@ loop_envelope_length = roller_center_spacing + roller_radius + idler_path_radius
 lower_belt_inner_face_y = belt_thickness / 2;
 carrier_underside_y =
     lower_belt_inner_face_y + lower_support_roller_diameter + roller_carrier_clearance;
-battery_bottom_y = carrier_underside_y + carrier_thickness;
+battery_bottom_y = carrier_underside_y + carrier_thickness + service_tray_thickness;
 function return_guide_clearance(edge) =
     let(n = tangent_normal(edge, roller_center_spacing),
         c = path_centers(roller_center_spacing)[edge],
@@ -449,10 +480,14 @@ module lower_support_roller(i) {
 }
 
 module pod_carrier() {
-    translate([battery_center_x - carrier_length / 2,
-               carrier_underside_y, carrier_center_z - carrier_width / 2])
-        color([0.3, 0.45, 0.6])
-            cube([carrier_length, carrier_thickness, carrier_width]);
+    color([0.3, 0.45, 0.6])
+        difference() {
+            translate([battery_center_x - carrier_length / 2,
+                       carrier_underside_y, carrier_center_z - carrier_width / 2])
+                cube([carrier_length, carrier_thickness, carrier_width]);
+            translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
+                cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
+        }
 }
 
 module x_cylinder(diameter, length) {
@@ -519,10 +554,12 @@ module pod_frame() {
             hull() {
                 translate([drive_center[0] + 110, drive_center[1] + dy, -21])
                     cube([20, 20, 8], center = true);
-                translate([battery_center_x - battery_length / 2 - 10,
+                translate([battery_center_x - battery_length / 2 - 50,
                            carrier_underside_y + 5, -21])
                     cube([20, 10, 8], center = true);
             }
+        translate([battery_center_x - battery_length / 2 - 50, 140, -25])
+            cube([50, 10, 8]);
         for (side = [-1, 1]) {
             rail_z = side > 0 ? 90 : -100;
             translate([tray_rear, 110, rail_z])
@@ -627,6 +664,173 @@ module battery_envelope() {
             cube([battery_length, battery_height, battery_width]);
 }
 
+module battery_service_tray() {
+    color([0.38, 0.45, 0.52]) {
+        difference() {
+            translate([-253, battery_bottom_y - service_tray_thickness, -100])
+                cube([550, service_tray_thickness, 288]);
+            translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
+                cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
+        }
+        translate([297, battery_bottom_y - service_tray_thickness, 120])
+            cube([6, service_tray_thickness, 60]);
+    }
+}
+
+module battery_box() {
+    color([0.55, 0.62, 0.66, 0.55])
+        difference() {
+            intersection() {
+                translate([box_min_x, battery_bottom_y, box_min_z])
+                    cube([box_max_x - box_min_x, box_top_y - battery_bottom_y,
+                          box_max_z - box_min_z]);
+                translate([0, 0, box_min_z])
+                    linear_extrude(box_max_z - box_min_z)
+                        polygon([[box_min_x, battery_bottom_y], [box_max_x, battery_bottom_y],
+                                 [box_max_x, box_top_y], [-222, box_top_y], [box_min_x, 375]]);
+            }
+            translate([0, 0, box_min_z + box_wall])
+                linear_extrude(box_max_z - box_min_z - 2 * box_wall)
+                    polygon([[box_min_x + box_wall, battery_bottom_y - 0.1],
+                             [box_max_x - box_wall, battery_bottom_y - 0.1],
+                             [box_max_x - box_wall, box_top_y - box_wall],
+                             [-221, box_top_y - box_wall], [box_min_x + box_wall, 373]]);
+            // Protected cable glands through the outboard wall, not through the lid.
+            for (y = [330, 366])
+                translate([-235, y, box_max_z - box_wall - 0.1])
+                    cylinder(d = 18, h = box_wall + 0.2);
+        }
+}
+
+module battery_service_mounts() {
+    color([0.3, 0.45, 0.6])
+        for (x = [slide_rear_x - 6, slide_front_x + slide_thickness]) {
+            // Towers are outboard of the belt and end wheels.
+            for (z = [120, 185])
+                translate([x, 140, z]) cube([6, slide_bottom_y + slide_height - 140, 20]);
+            translate([x, slide_bottom_y, slide_min_z]) cube([6, slide_height, slide_length]);
+            translate([x < 0 ? x : 287, 140, 120])
+                cube([x < 0 ? -217 - x : x - 287 + 6, 10, 85]);
+        }
+    // Fixed pin guide: the pin arrests travel; it is not the vertical load support.
+    translate([321, 140, 180]) cube([18, 123, 20]);
+    difference() {
+        translate([321, 257, 180]) cube([35, 8, 24]);
+        translate([348, 256, 190]) rotate([-90, 0, 0]) cylinder(d = 12.5, h = 10);
+    }
+}
+
+module slide_stage(stage = 0, sweep = 0) {
+    // Simplified nested C sections: bearing running surfaces are intentional interfaces.
+    for (side = [-1, 1])
+        color(stage == 0 ? [0.35, 0.4, 0.45] : [0.68, 0.7, 0.73])
+            translate([side < 0 ? slide_rear_x : slide_front_x + slide_thickness,
+                       slide_bottom_y, slide_min_z])
+            scale([side < 0 ? 1 : -1, 1, 1])
+            translate([stage * 6.3, stage * 5, 0])
+                union() {
+                    cube([2, slide_height - stage * 10, slide_length + sweep]);
+                    for (dy = [0, slide_height - stage * 10 - 2])
+                        translate([0, dy, 0]) cube([6.1, 2, slide_length + sweep]);
+                }
+    if (stage == 2) {
+        for (x = [-258, 297])
+            translate([x, battery_bottom_y - 8, 120])
+                cube([x < 0 ? 10 : 6, slide_bottom_y + 15 - battery_bottom_y, 60 + sweep]);
+        // Bridge above the fixed tower, then down to the outboard locking strip.
+        translate([298, 345, 170]) cube([5, 28, 20 + sweep]);
+        translate([298, 365, 170]) cube([58, 8, 20 + sweep]);
+        translate([348, 268, 170]) cube([8, 105, 20 + sweep]);
+    }
+}
+
+module battery_lock_strike() {
+    color([0.65, 0.45, 0.18])
+        difference() {
+            translate([340, 268, -125]) cube([16, 8, 330]);
+            for (z = [190, 190 - service_stroke])
+                translate([348, 267.9, z]) rotate([-90, 0, 0]) cylinder(d = 12.5, h = 8.2);
+        }
+}
+
+module battery_lock_pin() {
+    color([0.85, 0.55, 0.15]) {
+        translate([348, 250, 190]) rotate([-90, 0, 0]) cylinder(d = 12, h = 43);
+        translate([348, 293, 190]) rotate([-90, 0, 0]) cylinder(d = 25, h = 6);
+    }
+}
+
+module traction_controller() {
+    color([0.23, 0.25, 0.28])
+        difference() {
+            union() {
+                translate(controller_origin) cube([controller_length, controller_height, 5]);
+                translate(controller_origin + [16, 14, 5])
+                    cube([controller_length - 32, controller_height - 28, controller_depth - 15]);
+                for (x = controller_terminal_x)
+                    translate([x, controller_terminal_y, controller_terminal_z - 10])
+                        cylinder(d = 16, h = 10);
+            }
+            // Published 150.50 x 180 mounting centers / four 7 mm holes.
+            for (x = [controller_origin[0] + 10, controller_origin[0] + 190])
+                for (y = [controller_origin[1] + 6.75, controller_origin[1] + 157.25])
+                    translate([x, y, controller_origin[2] - 0.1])
+                        cylinder(d = 7, h = controller_depth + 0.2);
+        }
+}
+
+module controller_standoffs() {
+    for (x = [controller_origin[0] + 10, controller_origin[0] + 190])
+        for (y = [controller_origin[1] + 6.75, controller_origin[1] + 157.25])
+            translate([x, y, box_max_z])
+                difference() {
+                    cylinder(d = 14, h = controller_origin[2] - box_max_z);
+                    translate([0, 0, -0.1]) cylinder(d = 7, h = 13);
+                }
+}
+
+module cable_path(points, diameter = 12) {
+    for (i = [1 : len(points) - 1])
+        hull() {
+            translate(points[i - 1]) sphere(d = diameter, $fn = 12);
+            translate(points[i]) sphere(d = diameter, $fn = 12);
+        }
+}
+
+module battery_power_harness() {
+    // Short-end terminals, routed in the rear alcove then through a side gland.
+    for (i = [0, 1]) {
+        z = battery_terminal_z[i];
+        color(i == 1 ? [0.8, 0.08, 0.04] : [0.08, 0.08, 0.09]) {
+            translate([-229, battery_terminal_y, z]) x_cylinder(16, 12);
+            cable_path([[-235, battery_terminal_y, z], [-235, 330 + i * 36, z],
+                [-235, 330 + i * 36, 175], [-235, 330 + i * 36, 280 + i * 18],
+                [i == 1 ? controller_terminal_x[0] : controller_terminal_x[4],
+                 330 + i * 36, 280 + i * 18],
+                [i == 1 ? controller_terminal_x[0] : controller_terminal_x[4],
+                 controller_terminal_y, controller_terminal_z + 6]]);
+        }
+    }
+}
+
+module controller_motor_harness() {
+    for (i = [0 : 2])
+        color(i == 0 ? [0.8, 0.65, 0.05] : i == 1 ? [0.12, 0.55, 0.18] : [0.08, 0.3, 0.8])
+            cable_path([[controller_terminal_x[i + 1], controller_terminal_y, controller_terminal_z + 6],
+                [controller_terminal_x[i + 1], 230 - i * 18, 300],
+                [-235, 230 - i * 18, 300], [-255, 230 - i * 18, 300]]);
+    translate([-273, 175, 282]) cube([18, 70, 36]); // Moving unplugged connector half.
+}
+
+module motor_power_harness() {
+    for (i = [0 : 2])
+        color(i == 0 ? [0.8, 0.65, 0.05] : i == 1 ? [0.12, 0.55, 0.18] : [0.08, 0.3, 0.8])
+            cable_path([[motor_landing[0] + i * 18, motor_landing[1], motor_landing[2]],
+                [-440 + i * 18, 265, 150], [-340, 230 - i * 18, 260],
+                [-295, 230 - i * 18, 300]]);
+    translate([-295, 175, 282]) cube([18, 70, 36]); // Fixed half, 4 mm disconnected gap.
+}
+
 module removal_arrow() {
     // Annotation only, not a physical component.
     translate([battery_center_x, battery_bottom_y + battery_height / 2,
@@ -658,6 +862,17 @@ module pod_component(id) {
     else if (id == "idler-carriage") idler_carriage();
     else if (id == "idler-spring") idler_spring();
     else if (id == "battery") battery_envelope();
+    else if (id == "battery-tray") battery_service_tray();
+    else if (id == "battery-box") { battery_box(); controller_standoffs(); }
+    else if (id == "slide-fixed") { slide_stage(0); battery_service_mounts(); }
+    else if (id == "slide-middle") slide_stage(1);
+    else if (id == "slide-inner") slide_stage(2);
+    else if (id == "tray-lock-pin") battery_lock_pin();
+    else if (id == "tray-lock-strike") battery_lock_strike();
+    else if (id == "controller") traction_controller();
+    else if (id == "battery-harness") battery_power_harness();
+    else if (id == "controller-harness") controller_motor_harness();
+    else if (id == "motor-harness") motor_power_harness();
     else if (id == "removal-arrow") removal_arrow();
     else {
         for (stage = [0 : planetary_stage_count - 1])

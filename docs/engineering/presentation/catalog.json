@@ -1,6 +1,64 @@
 {
   "components": [
     {
+      "id": "controller",
+      "status": "Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.",
+      "facts": [
+        { "label": "Drawing envelope", "value": "200 × 164 × 70.47 mm; mounted on moving battery box", "evidence": "A-series 200 x 164 x 70.47 mm" }
+      ],
+      "evidence": [
+        { "target": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "quotes": ["A-series 200 x 164 x 70.47 mm"] }
+      ],
+      "sources": [
+        { "label": "Golden Motor manual, A-series drawing", "url": "https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf" }
+      ]
+    },
+    {
+      "id": "battery-tray",
+      "status": "Custom 8 mm steel tray proposal. Plate load screen is not qualification of brackets, joints or service stability.",
+      "facts": [
+        { "label": "Tray / load screen", "value": "8 mm S235; 85 kg at 1.5 g; 305 mm extraction", "evidence": "8 mm S235 steel proposal" }
+      ],
+      "evidence": [
+        { "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "quotes": ["8 mm S235 steel proposal", "305 mm outboard"] }
+      ]
+    },
+    {
+      "id": "battery-box",
+      "status": "3 mm steel enclosure proposal with rear terminal alcove and shaped roof; restraints, lid retention and protection remain HOLD.",
+      "facts": [
+        { "label": "Outer study envelope", "value": "542 × 278 × 241 mm; roof locally sloped", "evidence": "outer X = -247 to +295, Z = -95 to +183, Y = 158-399 mm" }
+      ],
+      "evidence": [
+        { "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "quotes": ["outer X = -247 to +295, Z = -95 to +183, Y = 158-399 mm"] }
+      ]
+    },
+    {
+      "id": "slide-fixed",
+      "status": "Accuride envelope / custom mount study; catalog capacity is not a mower shock or fatigue rating. Excluded from baseline costs.",
+      "facts": [
+        { "label": "Guide", "value": "305 mm travel; 76.2 × 19.1 mm section, vertical mounting", "evidence": "305 mm length and travel" },
+        { "label": "Public price", "value": "€119.19 net per pair; €238.38 net for two pods", "evidence": "EUR119.19 excluding VAT" }
+      ],
+      "evidence": [
+        { "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#s40-accuride-battery-extraction-guides", "quotes": ["305 mm length and travel", "EUR119.19 excluding VAT"] }
+      ],
+      "sources": [
+        { "label": "RS Ireland priced pair", "url": "https://ie.rs-online.com/web/p/drawer-runners/1886905" },
+        { "label": "Accuride datasheet", "url": "https://hs-europe.accuride.com/hubfs/Datasheets/9301U-E_en.pdf" }
+      ]
+    },
+    {
+      "id": "tray-lock-pin",
+      "status": "Two-position positive pin proposal; retention, end stops and engagement indication are not released.",
+      "facts": [
+        { "label": "WORK / EXTRACT", "value": "12 mm pin; 12.5 mm bores, 305 mm apart; 45 mm release", "evidence": "12 mm pin / two 12.5 mm bores" }
+      ],
+      "evidence": [
+        { "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "quotes": ["12 mm pin / two 12.5 mm bores", "withdraw 45 mm"] }
+      ]
+    },
+    {
       "id": "track",
       "status": "Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified.",
       "facts": [
@@ -108,14 +166,14 @@
       "facts": [
         {
           "label": "Return wheel concept",
-          "value": "Paired 120 × 50 mm PC/TPU wheels; axis Y = 515 mm",
-          "evidence": "paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm"
+          "value": "Paired 120 × 50 mm PC/TPU wheels; axis Y = 535 mm",
+          "evidence": "paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
-          "quotes": ["paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm"]
+          "quotes": ["paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm"]
         }
       ]
     },
@@ -193,14 +251,14 @@
       "facts": [
         {
           "label": "Coil proposal",
-          "value": "36 mm OD, 4 mm wire; 72.356 mm nominal installed envelope",
+          "value": "36 mm OD, 4 mm wire; 57.036 mm nominal installed envelope",
           "evidence": "36 mm OD, 4 mm wire, six active turns plus two end rings"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
-          "quotes": ["36 mm OD, 4 mm wire, six active turns plus two end rings", "72.356 mm nominal"]
+          "quotes": ["36 mm OD, 4 mm wire, six active turns plus two end rings", "57.036 mm nominal"]
         }
       ]
     },
@@ -210,14 +268,14 @@
       "facts": [
         {
           "label": "Packaging",
-          "value": "9 mm wheel/bridge gap; 16 mm intrusion into central space",
-          "evidence": "9 mm running clearance"
+          "value": "29 mm wheel/bridge gap; 16 mm intrusion into central space",
+          "evidence": "29 mm running clearance"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
-          "quotes": ["9 mm running clearance", "16 mm inboard"]
+          "quotes": ["29 mm running clearance", "16 mm inboard"]
         }
       ]
     },

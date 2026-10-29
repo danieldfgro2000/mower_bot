@@ -18,6 +18,13 @@ parts, and routing remain unselected; quantities are not a harness cut list.
 | [Signal cable and connectors](cables-connectors.md#ps26-signal-harness-and-communications) | Pin maps, shielding and moving-loop geometry open | [Cable costs](cables-connectors.md#0503-control-and-communications-cables) · [Connectors/routing costs](cables-connectors.md#0504-signal-connectors-conduit-clips-and-labels) · [Signal requirements](cables-connectors.md#ps26-signal-harness-and-communications) | [Control boards](../06-safety-controls-and-sensors/safety-controls.md#ps29-normal-control-and-diagnostics) · [Sensors/logger](../06-safety-controls-and-sensors/safety-controls.md#ps31-installed-instrumentation-and-logging) |
 | Charge and width-drive harnesses | Owned and budgeted in their respective scopes, not added here | [Charge harness](../04-battery-and-charging/batteries.md#ps20-charging-and-charge-interlocks) · [Width harness](../03-width-adjustment/width-adjustment.md#ps13-width-harness-and-screw-guard) | [Charge interlock](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) · [Moving scissor mechanism](../01-structure-and-running-gear/frame.md#ps05-scissor-pivots) |
 
+**3D routing study:** simplified 12 mm cable envelopes, not selected conductor
+sizes. Battery/controller travel together; motor-side harness stays fixed.
+
+| Battery to controller | Controller to service disconnect | Disconnect to motor |
+| --- | --- | --- |
+| [![Battery harness](../../../presentation/viewer/previews/battery-harness.png)](../../../presentation/viewer/index.html?component=battery-harness) | [![Controller harness](../../../presentation/viewer/previews/controller-harness.png)](../../../presentation/viewer/index.html?component=controller-harness) | [![Motor harness](../../../presentation/viewer/previews/motor-harness.png)](../../../presentation/viewer/index.html?component=motor-harness) |
+
 **Further detail:** [Release requirements](cables-connectors.md#specification-and-inspection-requirements) ·
 [Sourcing](cables-connectors.md#sourcing) ·
 [Interfaces](cables-connectors.md#interfaces-with-other-scopes) ·
@@ -65,6 +72,43 @@ radius/flex life, clips/labels and protected service loops
 **Receiving or first-article evidence:** Pin-to-pin record, shield/ground inspection,
 full-travel routing check and defined communications fault evidence; separate safety and
 normal control as designed
+
+### Battery cassette harness
+
+**Routing proposal, not an electrical assembly drawing:** the
+[DC HOUSE S30](../04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle)
+offer photograph shows P- and P+ on the same short end beside a handle.
+The CAD orients that end toward negative X, with **provisional** landing
+Y = 348, Z = -35 / +123 mm. M8 is evidenced; exact centers, stud/boot
+envelopes and torques are not. Two 18 mm side-wall gland apertures carry the
+12 mm cable envelopes through the rear terminal alcove, with positive and
+negative routes spatially separated.
+
+The [controller manual](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf)
+establishes B+/U/V/W/B- order and the three motor-phase connections (PDF pages
+7 and 11); terminal centers in the model remain approximate. B+ and B- routes
+land at those pads; yellow/green/blue phase envelopes reach a two-part
+**unplugged service connector**. The box/controller half travels with the
+tray, while the motor half stays on the frame; a 4 mm visible separation at
+the seated pose denotes the isolated service state. This is not a
+motor-running configuration. The motor endpoint at X = -440, Y = 265,
+Z = 118 mm is a **provisional outboard-face pigtail landing**, not an evidenced
+HPM terminal position. Do not drill or cut a harness from these coordinates.
+
+The cable tubes are routing/space reservations, **not direct unfused wiring
+instructions**. The required fuse, service isolation, contactor and precharge
+belong to [power distribution](power-distribution.md#ps21-main-fuses-disconnects-and-contactors);
+they are not packaged by this model. Sensor/Hall, temperature, control,
+charge, bonding and interlock wiring remain unmodeled, but must also disconnect
+or remain protected before tray movement. Connector voltage/current/IP,
+touch protection, keyed polarity/phase mapping, strain relief, clips,
+edge protection and terminal boots remain HOLD.
+
+Cable bends are deliberately simple capsules, not proof of minimum bend radius,
+flex life, thermal derating or ampacity. There is no dynamic motor service loop:
+isolate, discharge and verify absence of voltage, disconnect phase/sensor
+harnesses, release the pin, extract, and positively re-pin before handling.
+The CAD sequence is not authorization to energize or handle a battery.
 
 [↑ Back to document overview](cables-connectors.md#cables-connectors-and-harnesses)
 

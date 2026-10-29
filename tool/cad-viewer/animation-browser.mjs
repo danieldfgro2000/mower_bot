@@ -6,7 +6,10 @@ export async function checkAnimation(page, origin, config) {
   const ready = () => page.waitForSelector('#viewport[data-ready="true"]', { state: 'attached' });
   const pose = () => page.evaluate(() => JSON.parse(document.querySelector('canvas').dataset.pose));
   const param = name => new URL(page.url()).searchParams.get(name);
-  const expected = t => ({ battery: poseAt(animation, t), 'removal-arrow': poseAt(animation, t) });
+  const expected = t => Object.fromEntries([
+    ...animation.components.map(id => [id, poseAt(animation, t)]),
+    ...Object.entries(animation.tracks ?? {}).map(([id, keyframes]) => [id, poseAt({ keyframes }, t)]),
+  ].filter(([, offset]) => offset.some(value => value !== 0)));
   const close = (actual, wanted) => {
     assert.deepEqual(Object.keys(actual).toSorted(), Object.keys(wanted).toSorted());
     for (const id of Object.keys(wanted)) {
@@ -28,8 +31,15 @@ export async function checkAnimation(page, origin, config) {
   assert.equal(param('component'), 'motor', 'animation keeps the inspected component');
   assert.deepEqual(await pose(), {}, 'a newly selected animation starts assembled');
 
+  await page.locator('#animation-progress').fill('100');
+  close(await pose(), expected(0.1));
+  assert.equal((await pose())['tray-lock-pin'][1], 45, 'pin is withdrawn before the tray moves');
+  assert.equal((await pose()).battery, undefined, 'cassette is still seated while unlocking');
   await page.locator('#animation-progress').fill('500');
   close(await pose(), expected(0.5));
+  assert.equal((await pose())['slide-middle'][2], (await pose()).battery[2] / 2,
+    'middle guide stage has half the tray travel');
+  assert.equal((await pose())['motor-harness'], undefined, 'motor-side disconnect remains stationary');
   await page.waitForFunction(() => new URL(location.href).searchParams.get('t') === '0.5');
   await page.reload();
   await ready();
@@ -42,6 +52,7 @@ export async function checkAnimation(page, origin, config) {
     null, { timeout: animation.durationMs * 3 });
   assert.equal(await page.locator('#animation-play').textContent(), 'Replay');
   close(await pose(), expected(1));
+  assert.equal((await pose())['tray-lock-pin'], undefined, 'pin reengages at full extraction');
   assert.equal(param('t'), '1', 'end of playback is bookmarkable');
 
   await page.selectOption('#component', 'battery');
