@@ -28,6 +28,9 @@ The battery now uses the DC HOUSE listing's **504 x 268 x 233 mm body**, not
 the historical Elker envelope. The revised return and tray clear the body
 with provisional margins; terminals/restraints are not modeled. Outboard
 body-only extraction is checked, not complete installed-battery removal.
+[Play the battery removal animation](../../../presentation/viewer/index.html?animation=battery-removal):
+the viewer slides the body 400 mm outboard along the same keyframed path that
+the CAD test sweeps against every represented physical part.
 
 | DC HOUSE listing envelope | Removal-direction annotation |
 | --- | --- |

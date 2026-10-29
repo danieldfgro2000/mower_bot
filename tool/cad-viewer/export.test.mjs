@@ -4,6 +4,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { test } from 'node:test';
+import { groupComponents } from '../../docs/engineering/presentation/viewer/visibility.mjs';
 
 const meshes = new Map();
 const source = 'docs/engineering/technical/cad/module-01-track-pod-fit.scad';
@@ -352,6 +353,34 @@ test('new structure preserves nominal running clearance and outboard battery ext
     hull() { battery_envelope(); translate([0, 0, 400]) battery_envelope(); }
     union() { ${structure} }
   }`) <= 0.01, 'new mast, spring and frame preserve body-only extraction');
+});
+
+test('configured battery removal animation sweeps clear of every physical component', () => {
+  const config = JSON.parse(readFileSync('docs/engineering/presentation/viewer/components.json'));
+  const animation = config.animations?.find(item => item.id === 'battery-removal');
+  assert.ok(animation, 'the viewer animation path is the clash-checked path');
+  const annotations = new Set(groupComponents(config.groups.find(group => group.id === 'annotations')));
+  const moving = animation.components.filter(id => !annotations.has(id));
+  assert.deepEqual(moving, ['battery']);
+  const battery = boundsFor('battery');
+  // The hull of two poses is the exact linear sweep only for a convex body.
+  assert.ok(Math.abs(solidVolume('battery_envelope();')
+    - battery.size.reduce((product, value) => product * value, 1)) < 1, 'battery is a convex box');
+  const fixed = config.components.map(part => part.id)
+    .filter(id => !annotations.has(id) && !animation.components.includes(id));
+  const fixedUnion = fixed.map(id => `pod_component("${id}");`).join('\n');
+  const frames = animation.keyframes;
+  for (let i = 1; i < frames.length; i++) {
+    const [a, b] = [frames[i - 1].offset, frames[i].offset];
+    assert.ok(solidVolume(`intersection() {
+      hull() { translate([${a}]) battery_envelope(); translate([${b}]) battery_envelope(); }
+      union() { ${fixedUnion} }
+    }`) <= 0.01, `segment ${i} (${a} -> ${b}) has no solid intersection; tray contact is coincident`);
+  }
+  const end = frames.at(-1).offset;
+  const fixedMaxZ = Math.max(...fixed.map(id => boundsFor(id).max[2]));
+  assert.ok(battery.min[2] + end[2] - fixedMaxZ >= 20,
+    'final pose leaves the battery at least 20 mm outboard of all represented structure');
 });
 
 test('unknown SCAD component names fail instead of producing an assembly', () => {

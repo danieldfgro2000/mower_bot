@@ -1,6 +1,7 @@
 import { createScene } from './scene.js';
 import { createVisibilityPanel } from './visibility-panel.js';
 import { readDisplay, writeDisplay, displayedIds } from './visibility.mjs';
+import { poseAt, readAnimation, writeAnimation } from './animation.mjs';
 
 const byId = id => document.getElementById(id);
 function showError(error) {
@@ -28,8 +29,14 @@ async function start() {
   const parts = new Map(config.components.map(part => [part.id, part]));
   const ids = [...parts.keys()];
   let display = { visible: new Set(ids), isolated: false };
+  const animations = new Map((config.animations ?? []).map(item => [item.id, item]));
+  let animationState = { id: '', t: 0 };
+  let playing = 0;
   for (const part of config.components) {
     byId('component').add(new Option(part.label, part.id));
+  }
+  for (const animation of animations.values()) {
+    byId('animation').add(new Option(animation.label, animation.id));
   }
   const panel = createVisibilityPanel(byId('visibility'), config.groups, parts,
     visible => changeDisplay({ visible, isolated: false }),
@@ -48,6 +55,65 @@ async function start() {
       + (shown.includes(selected) ? '' : ' (hidden; use Isolate selection to inspect)')
       : 'No component inspected';
     scene.display(shown);
+    updateAnimationStatus(shown);
+  }
+
+  function animationPose(state = animationState) {
+    const animation = animations.get(state.id);
+    if (!animation) return {};
+    const offset = poseAt(animation, state.t);
+    return Object.fromEntries(animation.components.map(id => [id, offset]));
+  }
+  function updateAnimationStatus(shown) {
+    const animation = animations.get(animationState.id);
+    const hidden = animation?.components.every(id => !shown.includes(id));
+    byId('animation-status').textContent = hidden
+      ? `Animated parts are hidden; display ${animation.components.map(id => parts.get(id).label)
+        .join(' or ')} to watch the motion.` : '';
+  }
+  function applyAnimation() {
+    const animation = animations.get(animationState.id);
+    scene.pose(animationPose(), animationState.t);
+    byId('animation').value = animationState.id;
+    byId('animation-progress').value = String(Math.round(animationState.t * 1000));
+    byId('animation-value').textContent = `${Math.round(animationState.t * 100)}%`;
+    byId('animation-progress').disabled = !animation;
+    byId('animation-play').disabled = !animation;
+    byId('animation-play').textContent = playing ? 'Pause' : animationState.t >= 1 ? 'Replay' : 'Play';
+    updateAnimationStatus(displayedIds(ids, display, byId('component').value));
+  }
+  function stopPlayback() {
+    cancelAnimationFrame(playing);
+    playing = 0;
+  }
+  // Progress is view state: replace the entry so playback does not flood history.
+  function saveProgress() {
+    currentUrl = writeAnimation(currentUrl, animationState);
+    history.replaceState(null, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
+  }
+  function togglePlayback() {
+    const animation = animations.get(animationState.id);
+    if (!animation) return;
+    if (playing) {
+      stopPlayback();
+      applyAnimation();
+      saveProgress();
+      return;
+    }
+    if (animationState.t >= 1) animationState = { ...animationState, t: 0 };
+    let last = performance.now();
+    const step = now => {
+      const t = Math.min(1, animationState.t + Math.max(0, now - last) / animation.durationMs);
+      last = now;
+      animationState = { ...animationState, t };
+      if (t >= 1) {
+        playing = 0;
+        saveProgress();
+      } else playing = requestAnimationFrame(step);
+      applyAnimation();
+    };
+    playing = requestAnimationFrame(step);
+    applyAnimation();
   }
 
   function changeDisplay(next) {
@@ -123,11 +189,16 @@ async function start() {
     byId('mode').value = currentMode;
     const id = url.searchParams.get('component') || '';
     display = readDisplay(url, ids);
+    stopPlayback();
+    animationState = readAnimation(url, config.animations);
+    applyAnimation();
     setSelection(id, true);
     currentUrl = new URL(url);
+    const animationDocument = animations.get(animationState.id)?.document;
     const target = url.searchParams.get('doc') || (id
       ? parts.get(id)[currentMode === 'presentation' ? 'presentation' : 'document']
-      : currentMode === 'presentation' ? config.defaultPresentation : config.defaultDocument);
+      : animationDocument || (currentMode === 'presentation'
+        ? config.defaultPresentation : config.defaultDocument));
     await showDocument(target, url.hash);
     if (request !== navigationRequest) return;
     if (push) history.pushState(null, '', url.pathname + url.search + url.hash);
@@ -137,7 +208,8 @@ async function start() {
     const url = new URL('/', location.origin);
     if (id) url.searchParams.set('component', id);
     url.searchParams.set('mode', currentMode);
-    await navigate(writeLayout(writeDisplay(url, display, ids), currentLayout));
+    await navigate(writeAnimation(writeLayout(writeDisplay(url, display, ids), currentLayout),
+      animationState));
   }
 
   scene = await createScene(byId('viewport'), config.components,
@@ -162,6 +234,8 @@ async function start() {
   byId('component-search').addEventListener('input', event => panel.search(event.target.value));
   byId('assembly').addEventListener('click', () => {
     display = { visible: new Set(ids), isolated: false };
+    stopPlayback();
+    animationState = { id: '', t: 0 };
     byId('component-search').value = '';
     panel.search('');
     selectPart('').catch(showError);
@@ -186,13 +260,33 @@ async function start() {
       if (url.searchParams.has('doc') && byId('component').value) {
         url.searchParams.set('component', byId('component').value);
       }
-      // A 3D thumbnail asks to see the model, so documentation focus opens split view.
-      const opensModel = url.searchParams.has('component') && !url.searchParams.has('doc');
+      // A 3D thumbnail or animation link asks to see the model, so documentation focus opens split view.
+      const opensModel = (url.searchParams.has('component') || url.searchParams.has('animation'))
+        && !url.searchParams.has('doc');
       const layout = url.searchParams.has('layout') ? url.searchParams.get('layout')
         : opensModel && currentLayout === 'docs' ? 'split' : currentLayout;
-      navigate(writeLayout(writeDisplay(url, display, ids), layout)).catch(showError);
+      const next = writeLayout(writeDisplay(url, display, ids), layout);
+      navigate(url.searchParams.has('animation') ? next : writeAnimation(next, animationState))
+        .catch(showError);
     }
   });
+  byId('animation').addEventListener('change', event => {
+    stopPlayback();
+    ++navigationRequest;
+    animationState = { id: event.target.value, t: 0 };
+    applyAnimation();
+    const animation = animations.get(animationState.id);
+    if (animation) scene.fit(true, [animationPose({ id: animation.id, t: 1 })]);
+    currentUrl = writeAnimation(currentUrl, animationState);
+    history.pushState(null, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
+  });
+  byId('animation-play').addEventListener('click', togglePlayback);
+  byId('animation-progress').addEventListener('input', event => {
+    stopPlayback();
+    animationState = { ...animationState, t: Number(event.target.value) / 1000 };
+    applyAnimation();
+  });
+  byId('animation-progress').addEventListener('change', saveProgress);
   for (const button of document.querySelectorAll('.layout-switch button')) {
     button.addEventListener('click', () => {
       if (button.dataset.layout === currentLayout) return;

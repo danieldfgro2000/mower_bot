@@ -48,17 +48,26 @@ export async function createScene(container, components, onSelect) {
   }
   let pendingFit = null;
   const hasArea = () => container.clientWidth > 0 && container.clientHeight > 0;
-  function fit(allVisible = false) {
+  function applyPose(offsets) {
+    for (const [id, mesh] of meshes) mesh.position.fromArray(offsets[id] ?? [0, 0, 0]);
+  }
+  let currentPose = {};
+  function fit(allVisible = false, poses = []) {
     // A collapsed pane has no aspect ratio; fit once it is shown again.
     if (!hasArea()) {
-      pendingFit = allVisible;
+      pendingFit = [allVisible, poses];
       return;
     }
     pendingFit = null;
     const box = new THREE.Box3();
-    for (const [id, mesh] of meshes) {
-      if (mesh.visible && (allVisible || !selected || id === selected)) box.expandByObject(mesh);
+    // Frame every requested pose so animated parts stay in view.
+    for (const pose of [currentPose, ...poses]) {
+      applyPose(pose);
+      for (const [id, mesh] of meshes) {
+        if (mesh.visible && (allVisible || !selected || id === selected)) box.expandByObject(mesh);
+      }
     }
+    applyPose(currentPose);
     if (box.isEmpty()) return;
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
@@ -78,7 +87,7 @@ export async function createScene(container, components, onSelect) {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
-    if (pendingFit !== null) fit(pendingFit);
+    if (pendingFit !== null) fit(...pendingFit);
     else render();
   });
   observer.observe(container);
@@ -98,12 +107,22 @@ export async function createScene(container, components, onSelect) {
     if (hit) onSelect(hit.object.userData.id);
   });
   fit();
+  renderer.domElement.dataset.pose = '{}';
+  renderer.domElement.dataset.progress = '0';
   return {
     select(id) {
       selected = id;
       update();
     },
     display(ids) { displayed = new Set(ids); update(); },
+    pose(offsets, progress) {
+      currentPose = Object.fromEntries(Object.entries(offsets)
+        .filter(([, offset]) => offset.some(value => value !== 0)));
+      applyPose(currentPose);
+      renderer.domElement.dataset.pose = JSON.stringify(currentPose);
+      renderer.domElement.dataset.progress = String(progress);
+      render();
+    },
     fit,
     dispose() {
       observer.disconnect();

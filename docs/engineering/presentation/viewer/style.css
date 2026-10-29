@@ -21,6 +21,11 @@ main[data-layout="cad"] .model-pane { border-right: 0; }
 .toolbar label { font-size: .85rem; }
 button, select { font: inherit; padding: .35rem; max-width: 100%; }
 #component { max-width: 260px; }
+.animation-toolbar { margin-top: .4rem; }
+#animation { max-width: 260px; }
+#animation-progress { flex: 1; min-width: 120px; }
+#animation-value { font-size: .8rem; min-width: 3ch; }
+#animation-status { font-size: .8rem; color: #861b1b; }
 #viewport { flex: 1; min-height: 240px; position: relative; }
 canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 .hint, #selection { margin: .4rem 0; font-size: .8rem; }

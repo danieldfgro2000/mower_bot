@@ -43,7 +43,7 @@ export function createViewerServer() {
       }
       let file;
       if (url.pathname === '/') file = `${viewerDirectory}/index.html`;
-      else if (/^\/viewer\/(app\.js|scene\.js|visibility-panel\.js|visibility\.mjs|style\.css)$/.test(url.pathname)) {
+      else if (/^\/viewer\/(app\.js|scene\.js|visibility-panel\.js|visibility\.mjs|animation\.mjs|style\.css)$/.test(url.pathname)) {
         file = `${viewerDirectory}/${path.basename(url.pathname)}`;
       } else if (url.pathname.startsWith('/models/')) {
         const id = url.pathname.slice('/models/'.length).replace(/\.stl$/, '');

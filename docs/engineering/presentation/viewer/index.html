@@ -38,6 +38,14 @@
         <button id="fit-visible" type="button">Fit displayed</button>
         <button id="assembly" type="button">Reset assembly</button>
       </div>
+      <div class="toolbar animation-toolbar">
+        <label>Animate <select id="animation"><option value="">No animation</option></select></label>
+        <button id="animation-play" type="button" disabled>Play</button>
+        <input id="animation-progress" type="range" min="0" max="1000" step="1" value="0" disabled
+          aria-label="Animation progress">
+        <output id="animation-value" for="animation-progress">0%</output>
+        <span id="animation-status" role="status" aria-live="polite"></span>
+      </div>
       <div id="viewport" tabindex="0" aria-label="3D model: drag to orbit, scroll to zoom, click a part for documentation"></div>
       <p class="hint">Drag: orbit &middot; Scroll: zoom &middot; Right drag: pan &middot;
         Click a part: documentation. Use the list or hide outer parts to reach enclosed components.</p>

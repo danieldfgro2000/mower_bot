@@ -5,6 +5,7 @@ import { createViewerServer } from './server.mjs';
 import { loadConfig } from './assets.mjs';
 import { checkVisibility } from './visibility-browser.mjs';
 import { checkLayout } from './layout-browser.mjs';
+import { checkAnimation } from './animation-browser.mjs';
 
 const server = createViewerServer();
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -108,6 +109,7 @@ try {
 
   await checkVisibility(page, origin, loadConfig());
   await checkLayout(page, origin);
+  await checkAnimation(page, origin, loadConfig());
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForFunction(() => document.documentElement.scrollWidth <= innerWidth);
@@ -128,10 +130,16 @@ try {
   await page.goto(`${origin}/?layout=wide`);
   await page.waitForSelector('#error:not([hidden])');
   assert.match(await page.locator('#error').textContent(), /Invalid layout/);
+  await page.goto(`${origin}/?animation=does-not-exist`);
+  await page.waitForSelector('#error:not([hidden])');
+  assert.match(await page.locator('#error').textContent(), /Unknown animation/);
+  await page.goto(`${origin}/?t=0.5`);
+  await page.waitForSelector('#error:not([hidden])');
+  assert.match(await page.locator('#error').textContent(), /without an animation/);
   await page.goto(`${origin}/?doc=docs%2Fdoes-not-exist.md`);
   await page.waitForSelector('#error:not([hidden])');
   assert.match(await page.locator('#error').textContent(), /404: File not found/);
-  console.log(`Browser checks passed: grouped visibility, isolation restore, display bookmarks/history, split/focus layouts, thumbnails, mesh raycast, all ${loadConfig().components.length} routes, rapid navigation, errors and mobile layout`);
+  console.log(`Browser checks passed: grouped visibility, isolation restore, display bookmarks/history, split/focus layouts, battery removal animation, thumbnails, mesh raycast, all ${loadConfig().components.length} routes, rapid navigation, errors and mobile layout`);
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

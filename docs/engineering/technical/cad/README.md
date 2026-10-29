@@ -139,6 +139,15 @@ The same thumbnail route is available beside the motor in its owning scope.
   coordinates, in millimetres. Planetary pitch-circle studies are grouped by
   stage; the four lower rollers are separate exports. The removal arrow is
   explicitly an annotation, not a physical part.
+- **Animate** plays a configured motion. **Battery removal** slides the battery
+  body and its removal arrow 400 mm outboard. **Play**/**Pause**/**Replay**
+  run it; the slider scrubs to any point. Choosing an animation frames the whole
+  path. Inspection, visibility and layout are unchanged; if every animated
+  part is hidden the viewer says so. **Reset assembly** clears the animation.
+  `animation=<id>` and progress `t=0..1` persist in the URL; selecting an
+  animation adds a history entry, while playback and scrubbing replace it.
+  The animation is a geometric sequence, not a demonstrated handling
+  procedure: terminals, cables, restraints and lifting remain unmodeled.
 - **Split**, **CAD focus** and **Docs focus** in the header choose the pane
   layout. CAD focus collapses the documentation so the model uses the full
   width; Docs focus collapses the model for reading. Focus views keep the
@@ -157,12 +166,27 @@ selectable ID, label, technical target and generated presentation target,
 plus the module/subassembly hierarchy. Every modeled component must occur
 exactly once in the hierarchy; startup rejects unknown, duplicate or ungrouped
 components. These display groups do not change BOM cost ownership or quantities.
+The same map owns `animations`: keyframed offsets in SCAD millimetres for
+listed components, starting at the assembled position. Each animation needs a
+Markdown entry point (`index.html?animation=<id>`); the export test sweeps the
+physical components of the battery removal path against every other physical
+component, so the viewer cannot show an unchecked removal path.
 The [presentation catalog](../../presentation/catalog.json) owns concise
 pitch facts, which are checked against technical evidence during generation.
 The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
 components have no invented mesh.
 
 ## Refresh and verify
+
+**Battery removal animation test-first update (2026-10-29):**
+`node --test tool/cad-viewer/animation.test.mjs` first failed on the missing
+animation module, and the new export test failed because no animation path was
+configured. After implementation, 26 node tests pass, including an OpenSCAD
+hull sweep of each keyframe segment (exact for the convex battery body)
+against all represented physical parts and a final pose 20 mm or more outboard.
+Browser checks cover selection, scrubbing, reload, playback to the end, pause
+and replay, history, kept inspection, hidden-part notice, Reset assembly, the
+Markdown animation link from Docs focus and invalid parameters.
 
 **Split/focus layout test-first update (2026-10-29):**
 `npm run test:browser --prefix tool/cad-viewer` first failed on the missing

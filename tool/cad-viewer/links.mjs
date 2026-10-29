@@ -2,6 +2,7 @@ import { readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const componentLink = /(?:presentation\/)?viewer\/index\.html\?component=([a-z0-9-]+)/g;
+const animationLink = /(?:presentation\/)?viewer\/index\.html\?animation=([a-z0-9-]+)/g;
 const thumbnail = /(?:presentation\/)?viewer\/previews\/([a-z0-9-]+)\.png/g;
 const linkedThumbnail =
   /\[!\[[^\]]*\]\([^)]*(?:presentation\/)?viewer\/previews\/([a-z0-9-]+)\.png\)\]\([^)]*(?:presentation\/)?viewer\/index\.html\?component=([a-z0-9-]+)\)/g;
@@ -27,6 +28,17 @@ export function checkDocumentationLinks(config, documents) {
   }
   for (const id of ids) {
     if (!linked.has(id)) errors.push(`Component "${id}" has no Markdown entry point`);
+  }
+  const animations = new Set((config.animations ?? []).map(animation => animation.id));
+  const played = new Set();
+  for (const [file, markdown] of Object.entries(documents)) {
+    for (const [, id] of markdown.matchAll(animationLink)) {
+      if (animations.has(id)) played.add(id);
+      else errors.push(`${file}: link to unknown animation "${id}"`);
+    }
+  }
+  for (const id of animations) {
+    if (!played.has(id)) errors.push(`Animation "${id}" has no Markdown entry point`);
   }
   return errors;
 }

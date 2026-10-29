@@ -3,6 +3,19 @@
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
   "notice": "Unqualified 200x72x40 candidate fit study. Connected frame, U supports, fixed upper mast and sliding spring idler are modeled with provisional clearances. Track profile, structural loads/joints, spring rate/preload/travel, brake and reducer supports remain unqualified.",
+  "animations": [
+    {
+      "id": "battery-removal",
+      "label": "Battery removal (outboard body slide)",
+      "durationMs": 4000,
+      "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#battery-to-pod-fit",
+      "components": ["battery", "removal-arrow"],
+      "keyframes": [
+        { "at": 0, "offset": [0, 0, 0] },
+        { "at": 1, "offset": [0, 0, 400] }
+      ]
+    }
+  ],
   "groups": [
     {
       "id": "structure-and-running-gear",
