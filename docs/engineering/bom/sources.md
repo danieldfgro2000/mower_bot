@@ -118,6 +118,14 @@ Classic Line tracks and rollers.
 ahead of excavator-specific S36 rollers and idlers. This is a sourcing
 direction, not a released design or a BOM baseline change.
 
+**Owner selection, 2026-10-29:** Use
+[3D-printed 120 mm PC-core/TPU 95A roller wheels](sources.md#s38-3d-printed-roller-wheels-owner-proposed)
+for the lower and upper rollers. Keep the Interwheel 160 mm wheels from
+[S37](sources.md#s37-bearing-wheel-roller-and-idler-candidates) as the
+fallback if print time becomes a bottleneck. Idlers stay as bought Interwheel
+200 mm wheels. The 120 mm size still needs a guide-lug clearance check.
+This is a sourcing preference, not a baseline change.
+
 #### PowerTrack track comparison
 
 **Rechecked 2026-10-29:** Both listings show
@@ -157,7 +165,7 @@ which sources were recorded. IDs remain stable for the ledgers.
 | Former 48 V planetary motor/controller | [BLDC motor (S11)](sources.md#s11-bldc-2-kw-planetary-motor) · [BD100/C100 (S12)](sources.md#s12-bldc-bd100c100-controller) | [Non-additive package comparison](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) |
 | Retired higher-voltage study, excluded | [Volcano (S13)](sources.md#s13-volcano-vol-bl400c72-motor) · [Controller proxy (S14)](sources.md#s14-ez-a72500-controller-price-proxy) · [Motor proxy (S15)](sources.md#s15-hpm5000a-72-motor-price-proxy) · [Battery proxy (S17)](sources.md#s17-tzi-72-v-battery-proxy) | [Retirement decision](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) |
 | Reduction hardware | [DOLD chain drives (S05)](sources.md#s05-dold-chain-drives) · [Planetary gearboxes (S10)](sources.md#s10-dold-planetary-gearbox-alternatives) | [Reduction requirements and costs](../modules/02-drive-train/propulsion.md#ps17-reduction-and-transmission-hardware) |
-| Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) · [Priced K008-3 candidates (S36)](sources.md#s36-priced-kubota-k008-3-undercarriage-candidates) · [Bearing-wheel candidates (S37)](sources.md#s37-bearing-wheel-roller-and-idler-candidates) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
+| Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) · [Priced K008-3 candidates (S36)](sources.md#s36-priced-kubota-k008-3-undercarriage-candidates) · [Bearing-wheel candidates (S37)](sources.md#s37-bearing-wheel-roller-and-idler-candidates) · [3D-printed roller wheels (S38)](sources.md#s38-3d-printed-roller-wheels-owner-proposed) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
 | Bearings, shafts and frame hardware | [DOLD bearings (S03)](sources.md#s03-dold-bearing-housings) · [Mechanical parts (S04)](sources.md#s04-dold-mechanical-parts) | [Drive output supports](../modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) · [Frame/mounting parts](../modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) |
 | Battery and charger | [DC HOUSE bundle (S30)](sources.md#s30-dc-house-100-ah-charger-bundle) · [GBS metal pack (S28)](sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [Vatrer (S31)](sources.md#s31-vatrer-105-ah-mobile-packs) | [Priced options](../modules/04-battery-and-charging/batteries.md#battery-alternatives) · [Pod fit](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
 | Electrical parts and contactors | [RS catalog (S07)](sources.md#s07-rs-electrical-parts-and-tools) · [DC-CON-72V400A example (S18)](sources.md#s18-dc-con-72v400a-contactor-example) | [Power parts](../modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) · [Connectors](../modules/05-power-cables-and-electronics/cables-connectors.md#parts-at-a-glance) |
@@ -357,6 +365,85 @@ width and rolling-path width must be measured before confirming that a
 50 mm wheel pair fits. Polyurethane heat build-up, debris, wear on the rubber
 track, and side loads require testing. Supplier stock and rating claims are
 not independent evidence.
+
+**Engineering detail:** [Running-gear interfaces and inspection](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
+
+### S38: 3D-printed roller wheels (owner-proposed)
+
+**Source / source type:** Public 3DJake, Prusa and Kugellager-Express
+product and shipping pages, checked 2026-10-29; owner-proposed cost-saving
+alternative, non-baseline and excluded from BOM sums.
+
+**Concept:** Print the 20 roller wheels (eight lower and two upper roller
+assemblies, paired as in [S37](sources.md#s37-bearing-wheel-roller-and-idler-candidates))
+on the owner's Prusa MK3S+. Owner-preferred build: polycarbonate (PC) core
+with two pressed-in 6004-2RS bearings (20 x 42 x 12 mm) and a TPU 95A
+outer tread. Idlers stay as bought Interwheel 200 mm wheels because idler
+track-tension load is unknown. PC and ASA both need an enclosure; the owner
+may build one (not priced). Elegoo PC lists 260-290 C nozzle and 90-110 C bed,
+near the MK3S+ limits and prone to warping; Prusament PC Blend is the
+easier-printing fallback.
+
+**Material estimate (assumption, not measured):** 50 mm wide wheel, 8 mm TPU
+tread, 42 mm bearing bore and about 35% effective core fill, with 10% waste
+for 20 wheels:
+
+| Wheel OD | TPU per wheel | PC core per wheel | 20 wheels + 10% | Rough print time |
+| ---: | ---: | ---: | --- | --- |
+| 160 mm | 230 g | 313 g | 5.1 kg TPU, 6.9 kg PC | 30-35 h per wheel |
+| 120 mm | 170 g | 149 g | 3.7 kg TPU, 3.3 kg PC | about half |
+
+**Owner selection, 2026-10-29:** 120 mm is the roller sourcing preference;
+the 160 mm Interwheel route remains the fallback if print time becomes a
+bottleneck. The minimum diameter depends on the unpublished track guide-lug
+height when a wheel pair shares one shaft, so measure the lug height before
+printing the full set.
+
+**Cheapest listed option, 3DJake (niceshops GmbH, Austria):** Romanian
+prices include 21% VAT; standard delivery to Romania is free from 470.34 lei.
+Sale prices shown; the regular price is in brackets.
+
+| Item | Offer | Listed price, lei incl. VAT | 160 mm qty | 120 mm qty |
+| --- | --- | ---: | ---: | ---: |
+| PC core | [Elegoo PC Black 1 kg](https://www.3djake.com/elegoo/pc-black-4), in stock | 129.42 (161.80) | 7 | 4 |
+| TPU tread | [Elegoo TPU 95A 1 kg](https://www.3djake.com/elegoo/tpu-95a-blue-2), in stock | 77.63 (97.05) | 6 | 4 |
+| Wheel bearings | [Kugellager-Express 6004-2RS](https://www.kugellager-express.de/rillenkugellager-6004-2rs-20x42x12-mm), DE | EUR1.24 each at 10+ incl. 19% DE VAT | 40 | 40 |
+| Bearing delivery | [DHL Express Worldwide Zone IV, up to 3 kg](https://www.kugellager-express.de/Zahlungsarten-Versand) | EUR12.85 excl. VAT | 1 | 1 |
+
+| 20 printed wheels, net EUR | Filament | Bearings + delivery | Total | Regular-price total |
+| --- | ---: | ---: | ---: | ---: |
+| PC/TPU, 160 mm, 3DJake | 211.87 | 54.53 | **266.40** | 319.40 |
+| PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45** | 214.45 |
+| ASA/TPU, 160 mm, Prusa (8 x ASA 800 g at EUR24.79, 11 x TPU 500 g at EUR29.24 incl. VAT) | 429.72 | 54.53 | 484.25 + Prusa delivery | 613.88 |
+
+Lei converted at the ECB 2026-10-28 rate of 5.3508 RON per EUR. The
+[Prusament ASA](https://www.prusa3d.com/category/prusament-asa/) and
+[Prusament TPU](https://www.prusa3d.com/category/prusament-tpu/) prices
+were shown with VAT for a Romania-detected session; Prusa delivery is
+calculated at checkout. Prusa also lists
+[PC Blend 900 g](https://www.prusa3d.com/category/pc-polycarbonate/) at
+EUR30.59 and PC Blend Carbon Fiber 800 g at EUR52.79 incl. VAT.
+
+The equivalent 20 Interwheel 161.535 wheels cost **EUR457.60** net, and their
+shipping is already paid by the idler order in the same 0-75 kg band. The
+160 mm PC/TPU route saves about **EUR191** at sale prices or EUR138 at regular
+prices. No bought 120-125 mm wheel with a 20 mm bore and listed delivery to
+Romania was found. Shafts, spacers and brackets are common to both routes
+and excluded, as are electricity, nozzle wear, failed prints and an enclosure.
+
+| Option, 20 roller wheels | Price | Quality | Availability | Europe | Weighted |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Interwheel 161.535 (S37) | 5.82 | 6 | 7 | 10 | **6.85** |
+| Printed PC/TPU 160 mm, 3DJake sale | 10 | 2 | 5 | 10 | **6.43** |
+| Printed ASA/TPU 160 mm, Prusa sale | 5.50 | 2 | 5 | 10 | **5.14** |
+
+Quality 2: no construction evidence or load rating for printed wheels.
+Availability 5: materials in stock, but several hundred printer hours.
+
+**Evidence or limitation:** Printed cores risk creep and flat-spotting under
+sustained load, warping or residual stress in PC printed without an enclosure,
+grit wear of the TPU tread, tread-to-core bonding and bearing-seat loosening.
+These are untested. The mass and print-time figures are geometric estimates.
 
 **Engineering detail:** [Running-gear interfaces and inspection](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
 
