@@ -25,7 +25,7 @@ production readiness are not claimed.
 | [Inner ball-guide stages and tray brackets](parts.md#slide-inner) | See technical scope; this is a study element. |
 | [Tray locking pin (work / extract)](parts.md#tray-lock-pin) | Two-position positive pin proposal; retention, end stops and engagement indication are not released. |
 | [Moving locking strip (two 12.5 mm bores)](parts.md#tray-lock-strike) | See technical scope; this is a study element. |
-| [EZ-A48500 (200 x 164 x 70.47 mm)](parts.md#controller) | Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation. |
+| [EZ-A48500 on protected-width battery roof (published case envelope)](parts.md#controller) | Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation. |
 | [Battery to controller (protected routing proposal)](parts.md#battery-harness) | See technical scope; this is a study element. |
 | [Controller phase leads / moving disconnect half](parts.md#controller-harness) | See technical scope; this is a study element. |
 | [Motor phase leads / fixed disconnect half](parts.md#motor-harness) | See technical scope; this is a study element. |

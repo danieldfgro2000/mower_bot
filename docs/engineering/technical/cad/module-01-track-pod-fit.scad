@@ -140,17 +140,21 @@ slide_bottom_y = 285;
 slide_min_z = -100;
 slide_rear_x = -276.5;
 slide_front_x = 297.4;
-controller_origin = [-65, 190, 195];
+// Protected roof fallback: the inboard short-end position crosses the drum/return.
+controller_origin = [-35, 411, 82];
 controller_length = 200;
 controller_height = 164;
 controller_depth = 70.47;
-// B+, U, V, W, B- order from A-series drawing; undimensioned centers approximated.
-controller_terminal_x = [-40, -14, 35, 86, 112];
-controller_terminal_y = 290;
-controller_terminal_z = controller_origin[2] + controller_depth;
+// B+, U, V, W, B- order from the A-series drawing; local centers are approximate.
+controller_terminal_offset = [25, 51, 100, 151, 177];
+controller_terminal_x = [for (offset = controller_terminal_offset)
+    controller_origin[0] + offset];
+controller_terminal_face_y = controller_origin[1] + controller_depth;
+controller_harness_y = controller_terminal_face_y + 6;
+controller_terminal_z = controller_origin[2] - 100;
 battery_terminal_y = 348; // Photo-based rear-face landing, not a released stud datum.
 battery_terminal_z = [-35, 123]; // P- / P+; verify exact supplied battery.
-motor_landing = [-440, 265, 118]; // Unverified pigtail exit; not a motor terminal drawing.
+motor_landing = [-440, 265, 118]; // 12 mm cable envelope tangent to assumed Z=112 motor face.
 carrier_length = battery_length + 2 * carrier_edge_margin;
 carrier_width = battery_width + 2 * carrier_edge_margin;
 carrier_center_z = (carrier_width - track_width) / 2;
@@ -695,10 +699,10 @@ module battery_box() {
                              [box_max_x - box_wall, battery_bottom_y - 0.1],
                              [box_max_x - box_wall, box_top_y - box_wall],
                              [-221, box_top_y - box_wall], [box_min_x + box_wall, 373]]);
-            // Protected cable glands through the outboard wall, not through the lid.
-            for (y = [330, 366])
-                translate([-235, y, box_max_z - box_wall - 0.1])
-                    cylinder(d = 18, h = box_wall + 0.2);
+            // Vertical gland apertures through the sloped terminal-alcove roof.
+            for (z = battery_terminal_z)
+                translate([-235, 370, z])
+                    rotate([-90, 0, 0]) cylinder(d = 18, h = 40);
         }
 }
 
@@ -762,73 +766,87 @@ module battery_lock_pin() {
 
 module traction_controller() {
     color([0.23, 0.25, 0.28])
+        translate(controller_origin)
+        rotate([-90, 0, 0])
         difference() {
             union() {
-                translate(controller_origin) cube([controller_length, controller_height, 5]);
-                translate(controller_origin + [16, 14, 5])
+                cube([controller_length, controller_height, 5]);
+                translate([16, 14, 5])
                     cube([controller_length - 32, controller_height - 28, controller_depth - 15]);
-                for (x = controller_terminal_x)
-                    translate([x, controller_terminal_y, controller_terminal_z - 10])
+                for (x = controller_terminal_offset)
+                    translate([x, 100, controller_depth - 10])
                         cylinder(d = 16, h = 10);
             }
             // Published 150.50 x 180 mounting centers / four 7 mm holes.
-            for (x = [controller_origin[0] + 10, controller_origin[0] + 190])
-                for (y = [controller_origin[1] + 6.75, controller_origin[1] + 157.25])
-                    translate([x, y, controller_origin[2] - 0.1])
+            for (x = [10, 190])
+                for (y = [6.75, 157.25])
+                    translate([x, y, -0.1])
                         cylinder(d = 7, h = controller_depth + 0.2);
         }
 }
 
 module controller_standoffs() {
-    for (x = [controller_origin[0] + 10, controller_origin[0] + 190])
-        for (y = [controller_origin[1] + 6.75, controller_origin[1] + 157.25])
-            translate([x, y, box_max_z])
+    for (x = [10, 190])
+        for (y = [6.75, 157.25]) {
+            translate([controller_origin[0] + x, box_top_y, controller_origin[2] - y])
+                rotate([-90, 0, 0])
                 difference() {
-                    cylinder(d = 14, h = controller_origin[2] - box_max_z);
-                    translate([0, 0, -0.1]) cylinder(d = 7, h = 13);
+                    cylinder(d = 14, h = controller_origin[1] - box_top_y);
+                    cylinder(d = 7, h = controller_origin[1] - box_top_y + 0.2);
                 }
-}
-
-module cable_path(points, diameter = 12) {
-    for (i = [1 : len(points) - 1])
-        hull() {
-            translate(points[i - 1]) sphere(d = diameter, $fn = 12);
-            translate(points[i]) sphere(d = diameter, $fn = 12);
         }
 }
 
-module battery_power_harness() {
-    // Short-end terminals, routed in the rear alcove then through a side gland.
+module cable_path(points, diameter = 12, sweep = 0) {
+    for (i = [1 : len(points) - 1])
+        hull() {
+            for (travel = [0, sweep]) {
+                translate(points[i - 1] + [0, 0, travel]) sphere(d = diameter, $fn = 12);
+                translate(points[i] + [0, 0, travel]) sphere(d = diameter, $fn = 12);
+            }
+        }
+}
+
+module battery_power_harness(sweep = 0) {
     for (i = [0, 1]) {
         z = battery_terminal_z[i];
+        terminal = i == 0 ? 4 : 0;
+        lane_z = i == 0 ? 172 : 176;
+        lane_y = i == 0 ? 430 : 450;
+        exit_y = i == 0 ? 412 : 400;
+        exit_x = i == 0 ? -215 : -235;
         color(i == 1 ? [0.8, 0.08, 0.04] : [0.08, 0.08, 0.09]) {
-            translate([-229, battery_terminal_y, z]) x_cylinder(16, 12);
-            cable_path([[-235, battery_terminal_y, z], [-235, 330 + i * 36, z],
-                [-235, 330 + i * 36, 175], [-235, 330 + i * 36, 280 + i * 18],
-                [i == 1 ? controller_terminal_x[0] : controller_terminal_x[4],
-                 330 + i * 36, 280 + i * 18],
-                [i == 1 ? controller_terminal_x[0] : controller_terminal_x[4],
-                 controller_terminal_y, controller_terminal_z + 6]]);
+            hull()
+                for (travel = [0, sweep])
+                    translate([-229, battery_terminal_y, z + travel]) x_cylinder(16, 12);
+            cable_path([[-235, battery_terminal_y, z], [-235, exit_y, z],
+                [exit_x, exit_y, z], [exit_x, exit_y, lane_z], [exit_x, lane_y, lane_z],
+                [controller_terminal_x[terminal], lane_y, lane_z],
+                [controller_terminal_x[terminal], controller_harness_y, lane_z],
+                [controller_terminal_x[terminal], controller_harness_y, controller_terminal_z]],
+                sweep = sweep);
         }
     }
 }
 
-module controller_motor_harness() {
+module controller_motor_harness(sweep = 0) {
     for (i = [0 : 2])
         color(i == 0 ? [0.8, 0.65, 0.05] : i == 1 ? [0.12, 0.55, 0.18] : [0.08, 0.3, 0.8])
-            cable_path([[controller_terminal_x[i + 1], controller_terminal_y, controller_terminal_z + 6],
-                [controller_terminal_x[i + 1], 230 - i * 18, 300],
-                [-235, 230 - i * 18, 300], [-255, 230 - i * 18, 300]]);
-    translate([-273, 175, 282]) cube([18, 70, 36]); // Moving unplugged connector half.
+            cable_path([[controller_terminal_x[i + 1], controller_harness_y, controller_terminal_z],
+                [controller_terminal_x[i + 1], controller_harness_y, 118 + i * 18],
+                [controller_terminal_x[i + 1], 430, 118 + i * 18],
+                [-297, 430, 118 + i * 18], [-297, 356, 118 + i * 18]], sweep = sweep);
+    translate([-306, 310, 112]) cube([18, 40, 48 + sweep]); // Moving unplugged half.
 }
 
 module motor_power_harness() {
     for (i = [0 : 2])
         color(i == 0 ? [0.8, 0.65, 0.05] : i == 1 ? [0.12, 0.55, 0.18] : [0.08, 0.3, 0.8])
             cable_path([[motor_landing[0] + i * 18, motor_landing[1], motor_landing[2]],
-                [-440 + i * 18, 265, 150], [-340, 230 - i * 18, 260],
-                [-295, 230 - i * 18, 300]]);
-    translate([-295, 175, 282]) cube([18, 70, 36]); // Fixed half, 4 mm disconnected gap.
+            [-440 + i * 18, 300, 118], [-440 + i * 18, 300, 118 + i * 18],
+            [-440 + i * 18, 390, 118 + i * 18], [-319, 390, 118 + i * 18],
+            [-319, 356, 118 + i * 18]]);
+    translate([-328, 310, 112]) cube([18, 40, 48]); // Fixed half, 4 mm disconnected gap.
 }
 
 module removal_arrow() {

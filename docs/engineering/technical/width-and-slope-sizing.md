@@ -86,17 +86,19 @@ dimensions. No width-specific safe slope is currently known.
 **Current boxed-cassette CAD screen, 2026-10-29:** the 200 mm track carries a
 288 mm-wide tray, with its inboard edge aligned to the track and an 88 mm
 outboard overhang. Tray-only arithmetic was 576 mm plus inner-track gap,
-but **is no longer the complete represented envelope**. The box-side
-controller and unplugged service connector now reach Z = **318 mm** outboard,
+but **is no longer the complete represented envelope**. After moving the
+controller onto the roof and bringing its harnesses inside the box's lateral
+envelope, the fixed guide towers now set Z = **205 mm** outboard,
 versus the track's -100 to +100 mm. Thus two mirrored pods need at least
-**836 mm plus the inner-track gap**, before guards, restraints and tolerance.
+**610 mm plus the inner-track gap**, before guards, restraints and tolerance
+(previous exposed-controller study: 836 mm plus gap).
 The locking strip reaches Z = -125 mm, or **25 mm inboard per pod**. The
 [fixed upper-support mast](modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 still projects 16 mm inward, but the strip is now more restrictive:
 usable conservative central clearance is **inner-track gap minus 50 mm**.
 For a 1,000 mm deck, the arithmetic ceiling on the inner-track gap is
-**164 mm**, leaving at most **114 mm** between mirrored strip envelopes;
-outside-track width must be at most **564 mm** before excluded parts.
+**390 mm**, leaving at most **340 mm** between mirrored strip envelopes;
+outside-track width must be at most **790 mm** before excluded parts.
 No spine/scissor/mower fit within that remaining space is established:
 the 1 m transport layout remains **HOLD**, not a solved configuration.
 Extracting one tray adds another 305 mm laterally; the service envelope is

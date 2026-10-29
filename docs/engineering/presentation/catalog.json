@@ -4,7 +4,7 @@
       "id": "controller",
       "status": "Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.",
       "facts": [
-        { "label": "Drawing envelope", "value": "200 × 164 × 70.47 mm; mounted on moving battery box", "evidence": "A-series 200 x 164 x 70.47 mm" }
+        { "label": "Drawing envelope", "value": "200 × 164 × 70.47 mm; roof-mounted within battery-box width", "evidence": "A-series 200 x 164 x 70.47 mm" }
       ],
       "evidence": [
         { "target": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "quotes": ["A-series 200 x 164 x 70.47 mm"] }

@@ -20,6 +20,11 @@ parts, and routing remain unselected; quantities are not a harness cut list.
 
 **3D routing study:** simplified 12 mm cable envelopes, not selected conductor
 sizes. Battery/controller travel together; motor-side harness stays fixed.
+Battery leads exit the terminal-alcove roof and route to the roof-mounted
+controller; phase leads return along its side to the moving, unplugged
+connector half. Controller and all three harness envelopes remain within
+the box's Z = -95 to +183 mm side envelope. These are not impact guards,
+bend-radius or support designs.
 
 | Battery to controller | Controller to service disconnect | Disconnect to motor |
 | --- | --- | --- |
@@ -80,17 +85,24 @@ normal control as designed
 offer photograph shows P- and P+ on the same short end beside a handle.
 The CAD orients that end toward negative X, with **provisional** landing
 Y = 348, Z = -35 / +123 mm. M8 is evidenced; exact centers, stud/boot
-envelopes and torques are not. Two 18 mm side-wall gland apertures carry the
+envelopes and torques are not. Two 18 mm vertical roof gland apertures carry the
 12 mm cable envelopes through the rear terminal alcove, with positive and
 negative routes spatially separated.
 
 The [controller manual](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf)
 establishes B+/U/V/W/B- order and the three motor-phase connections (PDF pages
 7 and 11); terminal centers in the model remain approximate. B+ and B- routes
-land at those pads; yellow/green/blue phase envelopes reach a two-part
+go from the roof glands through separated side lanes to the controller's
+upward-facing terminals. Battery routing levels are Y = 430/450 mm; the
+terminal approach centerline is Y = 487.47 mm. Yellow/green/blue phase
+envelopes use Z = 118/136/154 mm side lanes and return to a two-part
 **unplugged service connector**. The box/controller half travels with the
 tray, while the motor half stays on the frame; a 4 mm visible separation at
-the seated pose denotes the isolated service state. This is not a
+the seated pose denotes the isolated service state. Both halves lie at
+Y = 310-350, Z = 112-160 mm, inside the box's side silhouette; their
+dimensions are custom routing reservations, not a selected connector.
+Exact per-segment linear sweeps check moving routes through extraction
+without filling the voids between cable branches. This is not a
 motor-running configuration. The motor endpoint at X = -440, Y = 265,
 Z = 118 mm is a **provisional outboard-face pigtail landing**, not an evidenced
 HPM terminal position. Do not drill or cut a harness from these coordinates.

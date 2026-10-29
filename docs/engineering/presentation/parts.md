@@ -91,16 +91,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="controller"></a>
 
-### EZ-A48500 (200 x 164 x 70.47 mm)
+### EZ-A48500 on protected-width battery roof (published case envelope)
 
 **Status:** Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.
 
-[![EZ-A48500 (200 x 164 x 70.47 mm)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
+[![EZ-A48500 on protected-width battery roof (published case envelope)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
 | | |
 | --- | --- |
-| Drawing envelope | 200 × 164 × 70.47 mm; mounted on moving battery box |
+| Drawing envelope | 200 × 164 × 70.47 mm; roof-mounted within battery-box width |
 
-**Read more:** [EZ-A48500 (200 x 164 x 70.47 mm) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+**Read more:** [EZ-A48500 on protected-width battery roof (published case envelope) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
 
 <a id="battery-harness"></a>
 

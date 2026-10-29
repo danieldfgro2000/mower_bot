@@ -218,7 +218,9 @@ Their loads, spring specification, joints and complete-machine fit remain
 unqualified; no purchasing or fabrication decision follows from the model.
 The [boxed battery cassette proposal](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 adds a loaded extraction tray, telescopic ball guides and positive WORK /
-EXTRACT pin positions. The controller moves on the box; isolate and disconnect
+EXTRACT pin positions. The controller moves on the box roof, inside its lateral
+envelope; the preferred protected motor/battery gap conflicts with the current
+drum/return geometry. Isolate and disconnect
 motor/sensor harnesses before movement. This service concept does not authorize
 operation or demonstrate the 1 m transport layout, dynamic capacity or stability.
 

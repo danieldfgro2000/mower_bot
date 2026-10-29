@@ -292,9 +292,11 @@ containment or fire-containment assumption
 #### Sliding battery cassette
 
 **Owner direction, 2026-10-29:** the battery sits in a box on a bearing-guided
-tray. The controller travels on the box's outboard side; disconnect the motor
-and sensor harnesses before extraction, rather than dragging a live service
-loop. This is a custom fit proposal, not a released battery drawer.
+tray. The controller travels on top of the box, inside its lateral envelope,
+after the preferred protected motor/battery gap failed the fit assessment;
+disconnect the motor and sensor harnesses before extraction, rather than
+dragging a live service loop. This is a custom fit proposal, not a released
+battery drawer.
 
 | Moving assembly | Geometry / evidence |
 | --- | --- |
@@ -304,7 +306,7 @@ loop. This is a custom fit proposal, not a released battery drawer.
 | Ball guides | Two vertically mounted **305 x 76.2 x 19.1 mm** telescopic guides, based on the priced [Accuride DZ9301-0012U-E reference (S40)](batteries.md#s40-accuride-battery-extraction-guides). Three nested sections are simplified; actual raceways, balls, fixings and tolerances are not reverse-engineered |
 | Extraction | **305 mm outboard**, not the previous unsupported 400 mm body-only animation. Middle stages move 152.5 mm; inner stages carry the tray. The battery ends 115 mm outside the track edge, still supported |
 | Positive lock | Proposed **12 mm pin / two 12.5 mm bores**, 305 mm apart in a moving strip. Fixed pin guide engages at WORK and EXTRACT; withdraw 45 mm before travel, then reengage at the end. Pin arrests translation; slides and frame carry the vertical load |
-| Controller | [EZ-A48500 drawing envelope](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), 200 x 164 x 70.47 mm, on 12 mm box-side standoffs; thermal path is not qualified |
+| Controller | [EZ-A48500 drawing envelope and position assessment](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), 200 x 164 x 70.47 mm; flat on 12 mm roof standoffs at X = -35 to +165, Z = -82 to +82, base Y = 411 mm. A 5 mm expanded sweep clears all fixed components. Rear guide restored to X = -276.5 mm; exposed end-wall extensions removed |
 
 **Conservative load screen, not structural qualification:** use **85 kg**
 for battery, modeled steel, controller and moving hardware. The test verifies
@@ -323,8 +325,9 @@ rough-terrain or rollover rating.
 parallelism, bracket moment capacity, mechanical end stops, positive pin
 retention/engagement indication, battery restraints, removable lid retention,
 terminal boots, drainage/corrosion, cooling and full-machine stability. The
-roof is represented in the box export, not animated separately; remove its
-retained fastenings before any subsequent lifting of the battery. Guide
+roof is represented in the box export, not animated separately; the roof-mounted
+controller and its connections must be made safe and supported before removing
+the retained lid fastenings for any subsequent lifting of the battery. Guide
 end travel is schematic, not a released stop design. Service must be on a
 stable supported chassis with the implement stopped and energy isolated;
 disconnect only after the specified discharge/absence-of-voltage procedure.

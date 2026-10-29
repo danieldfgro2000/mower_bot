@@ -131,6 +131,11 @@ must preserve that selection while switching between the two document targets.
    Replace tests that require the current assembly to collide with positive
    clearance regressions; preserve an old collision as a separate historical
    fixture only if useful. Keep valid component-dimension assertions.
+   For multi-branch harnesses, do not hull disconnected cable paths into one
+   swept solid: it fills empty space and can create false clashes. For linear
+   motion, sweep each convex cable segment separately. Pose samples are only
+   an approximate screen unless their union is proven to contain the continuous
+   sweep; overlap alone is insufficient.
 7. **Synchronize the result.** Update parameter relationships, SCAD, component
    map, thumbnails, owning module dimensions, fit notes and affected cost
    evidence together, then run the workflow's sync and verification steps.

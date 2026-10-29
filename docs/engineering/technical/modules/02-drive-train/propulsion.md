@@ -33,7 +33,7 @@ envelope; its terminal centers are approximate. The holding brake is not modeled
 Separate reduction exports: [3D stage 2](../../../presentation/viewer/index.html?component=planetary-2) ·
 [3D stage 3](../../../presentation/viewer/index.html?component=planetary-3).
 
-| EZ-A48500 on battery-box side |
+| EZ-A48500 on battery roof, within box width |
 | --- |
 | [![3D controller](../../../presentation/viewer/previews/controller.png)](../../../presentation/viewer/index.html?component=controller) |
 
@@ -173,9 +173,22 @@ The model retains these dimensions, using a simplified base/cover and five
 power-terminal pads in the drawn **B+, U, V, W, B-** order. Pad center offsets
 are approximated from the drawing; they are not dimensioned manufacturer
 datums. The [battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
-carries the controller on its outboard wall, with a provisional 12 mm mounting
-gap. Standoffs do not establish cooling: provide a reviewed heat-spreader/
-thermal path and cable bend/boot clearance before release.
+carries the controller flat above its roof on **12 mm standoffs**, rather
+than on the exposed outer side. The preferred protected motor/battery gap was
+assessed first: moving the previous end mount inboard intersects the drive
+drum, while raising it encounters the return track. The top fallback retains
+the current battery, motor and commercial 40-link belt dimensions.
+Controller X = **-35 to +165**, Z = **-82 to +82**, mounting plane Y = **411 mm**;
+the simplified cover ends at Y = 471.47 and the provisional pads at
+Y = 481.47 mm. The manufacturer's 70.47 mm overall depth includes the
+terminal projections; they are not added on top of that envelope.
+Its complete extraction sweep retains at least a provisional **5 mm** to
+all fixed modeled components. The rear guide returns to X = -276.5 mm;
+the former outboard mounting extensions are removed. Standoffs and roof
+attachments remain proposals, not a qualified load path or impact guard.
+The reduced lateral exposure does not protect against overhead strikes.
+Standoffs do not establish cooling: provide a reviewed
+heat-spreader/thermal path and cable bend/boot clearance before release.
 
 The [harness routing study](../05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
 connects those terminal faces to the photographed battery terminal end and a

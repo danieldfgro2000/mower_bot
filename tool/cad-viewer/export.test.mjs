@@ -422,19 +422,53 @@ test('battery service cassette has a real enclosure, supported tray and two lock
   assert.ok(deflection < 2, `service-load screen ${deflection} mm < 2 mm`);
 });
 
-test('controller uses the published A-series body and service cassette clears fixed gear', () => {
+test('controller uses the protected roof fallback and service cassette clears fixed gear', () => {
   const controller = boundsFor('controller');
-  assert.deepEqual(controller.size, [200, 164, 70], '200 x 164 x 70.47 mm supplier envelope');
-  const fixed = ['track', 'drive-drum', 'motor', 'motor-mount', 'pod-frame', 'idler',
-    'idler-carriage', 'idler-spring', 'upper-roller-support', 'upper-roller',
-    'lower-roller-supports', ...[1, 2, 3, 4].map(i => `lower-roller-${i}`)];
+  assert.deepEqual(controller.size, [200, 70, 164],
+    'published 70.47 mm overall depth already includes terminal projections');
+  assert.ok(Math.abs(controller.max[1] - controller.min[1] - 70.47) < 0.001,
+    'controller is not oversized by adding pads beyond its published envelope');
+  assert.equal(controller.min[1], 411, '12 mm standoffs above the 399 mm box roof');
+  assert.deepEqual([controller.min[0], controller.max[0]], [-35, 165],
+    'roof position clears the rear return and the fixed upper roller');
+  for (const id of ['controller', 'battery-harness', 'controller-harness', 'motor-harness']) {
+    const mesh = boundsFor(id);
+    assert.ok(mesh.min[2] >= -95 && mesh.max[2] <= 183,
+      `${id} stays inside the battery-box lateral envelope, not the exposed outer side`);
+  }
+  assert.equal(solidVolume('intersection() { traction_controller(); hpm5000b_motor_envelope(-440); }'), 0,
+    'the controller terminal side has no solid interference with the motor envelope');
+  assert.ok(solidVolume('intersection() { traction_controller(); battery_box(); }') <= 0.01,
+    'roof standoffs terminate at the controller mounting face');
+  const config = JSON.parse(readFileSync('docs/engineering/presentation/viewer/components.json'));
+  const animation = config.animations.find(item => item.id === 'battery-removal');
+  const physical = config.components.filter(part => part.id !== 'removal-arrow')
+    .map(part => boundsFor(part.id));
+  assert.equal(Math.max(...physical.map(mesh => mesh.max[2])), 205,
+    'guide towers, not exposed controller hardware, set the seated outboard envelope');
+  assert.equal(Math.min(...physical.map(mesh => mesh.min[2])), -125,
+    'protected routing does not consume extra central-frame space');
+  const fixed = config.components.map(part => part.id).filter(id =>
+    !animation.components.includes(id) && !Object.hasOwn(animation.tracks, id));
   const parts = fixed.map(id => `pod_component("${id}");`).join('\n');
+  const runningGear = fixed.filter(id => !['slide-fixed', 'pod-carrier', 'tray-lock-pin'].includes(id))
+    .map(id => `pod_component("${id}");`).join('\n');
   for (const id of ['battery-box', 'battery-tray', 'controller', 'battery-harness', 'controller-harness']) {
+    const sweep = id.endsWith('harness')
+      ? `${id === 'battery-harness' ? 'battery_power_harness' : 'controller_motor_harness'}(305);`
+      : `hull() { pod_component("${id}"); translate([0,0,305]) pod_component("${id}"); }`;
     assert.ok(solidVolume(`intersection() {
-      hull() { pod_component("${id}"); translate([0,0,305]) pod_component("${id}"); }
+      ${sweep}
       union() { ${parts} }
     }`) <= 0.01, `${id} complete linear sweep clears actual fixed gear`);
   }
+  assert.ok(solidVolume(`intersection() {
+    minkowski() {
+      hull() { traction_controller(); translate([0,0,305]) traction_controller(); }
+      sphere(r=5.1, $fn=32);
+    }
+    union() { ${parts} }
+  }`) <= 0.01, 'controller sweep retains at least 5 mm to all fixed components');
   assert.ok(solidVolume(`intersection() {
     minkowski() {
       hull() { battery_box(); translate([0,0,305]) battery_box(); }
@@ -448,21 +482,24 @@ test('controller uses the published A-series body and service cassette clears fi
     }
   }`) <= 0.01, 'enclosure sweep retains at least a provisional 5 mm fixed-gear margin');
   assert.ok(solidVolume(`intersection() {
-    battery_service_mounts(); union() { ${parts.replace('pod_component("pod-frame");', '')} }
+    battery_service_mounts(); union() { ${runningGear.replace('pod_component("pod-frame");', '')} }
   }`) <= 0.01, 'fixed slide towers do not cut through running gear');
   for (const stage of [0, 1, 2]) {
     assert.ok(solidVolume(`intersection() {
       slide_stage(${stage}, ${stage * 152.5});
-      union() { ${parts} }
+      union() { ${runningGear} }
     }`) <= 0.01, `guide stage ${stage} and moving brackets clear actual running gear throughout travel`);
   }
 });
 
 test('harnesses reach the proposed terminal faces without crossing the box or each other', () => {
   for (const id of ['battery-harness', 'controller-harness', 'motor-harness']) {
-    assert.ok(solidVolume(`intersection() {
-      pod_component("${id}"); union() { battery_box(); battery_envelope(); traction_controller(); }
-    }`) <= 0.01, `${id} passes through glands / lands at faces instead of cutting through bodies`);
+    for (const body of ['battery_box()', 'battery_envelope()', 'traction_controller()',
+      'hpm5000b_motor_envelope(-440)']) {
+      const overlap = solidVolume(`intersection() { pod_component("${id}"); ${body}; }`);
+      assert.ok(overlap <= 0.01,
+        `${id} passes through glands / lands at faces instead of cutting through ${body} (overlap ${overlap})`);
+    }
   }
   assert.ok(solidVolume(`intersection() { battery_power_harness(); controller_motor_harness(); }`) <= 0.01,
     'battery polarity routing is separated from phase routing');
