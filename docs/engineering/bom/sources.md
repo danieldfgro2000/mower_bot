@@ -118,13 +118,15 @@ Classic Line tracks and rollers.
 ahead of excavator-specific S36 rollers and idlers. This is a sourcing
 direction, not a released design or a BOM baseline change.
 
-**Owner selection, 2026-10-29:** Use
-[3D-printed 120 mm PC-core/TPU 95A roller wheels](sources.md#s38-3d-printed-roller-wheels-owner-proposed)
-for the lower and upper rollers. Keep the Interwheel 160 mm wheels from
-[S37](sources.md#s37-bearing-wheel-roller-and-idler-candidates) as the
-fallback if print time becomes a bottleneck. Idlers stay as bought Interwheel
-200 mm wheels. The 120 mm size still needs a guide-lug clearance check.
-This is a sourcing preference, not a baseline change.
+**Owner selection, 2026-10-29:** The owner considers 3D-printing the
+suggested rollers and idlers feasible for cost savings, and selected the
+[120 mm PC-core/TPU 95A printed roller wheel](sources.md#s38-3d-printed-roller-wheels-owner-proposed)
+for the lower and upper rollers. The Interwheel 160 mm wheels from
+[S37](sources.md#s37-bearing-wheel-roller-and-idler-candidates) remain the
+fallback. Recommendation, not an owner decision: keep idlers as bought
+Interwheel 200 mm wheels until idler tension load is known. The 120 mm size
+still needs a guide-lug clearance check. This is a sourcing selection, not a
+baseline change.
 
 #### PowerTrack track comparison
 
@@ -376,9 +378,10 @@ alternative, non-baseline and excluded from BOM sums.
 
 **Concept:** Print the 20 roller wheels (eight lower and two upper roller
 assemblies, paired as in [S37](sources.md#s37-bearing-wheel-roller-and-idler-candidates))
-on the owner's Prusa MK3S+. Owner-preferred build: polycarbonate (PC) core
-with two pressed-in 6004-2RS bearings (20 x 42 x 12 mm) and a TPU 95A
-outer tread. Idlers stay as bought Interwheel 200 mm wheels because idler
+on the owner's Prusa MK3S+. Owner-selected build (2026-10-29): polycarbonate
+(PC) core with two pressed-in 6004-2RS bearings (20 x 42 x 12 mm) and a
+TPU 95A outer tread. The owner also proposed printing idlers; this assessment
+recommends keeping them as bought Interwheel 200 mm wheels because idler
 track-tension load is unknown. PC and ASA both need an enclosure; the owner
 may build one (not priced). Elegoo PC lists 260-290 C nozzle and 90-110 C bed,
 near the MK3S+ limits and prone to warping; Prusament PC Blend is the
@@ -393,9 +396,9 @@ for 20 wheels:
 | 160 mm | 230 g | 313 g | 5.1 kg TPU, 6.9 kg PC | 30-35 h per wheel |
 | 120 mm | 170 g | 149 g | 3.7 kg TPU, 3.3 kg PC | about half |
 
-**Owner selection, 2026-10-29:** 120 mm is the roller sourcing preference;
-the 160 mm Interwheel route remains the fallback if print time becomes a
-bottleneck. The minimum diameter depends on the unpublished track guide-lug
+**Owner selection, 2026-10-29:** 120 mm, which roughly halves material and
+print time versus 160 mm; the 160 mm Interwheel route remains the fallback
+if print time becomes a bottleneck. The minimum diameter depends on the unpublished track guide-lug
 height when a wheel pair shares one shaft, so measure the lug height before
 printing the full set.
 
