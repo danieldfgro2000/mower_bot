@@ -16,7 +16,7 @@ specifications, and fit. Mower integration and autonomy are excluded; release ho
 
 **Evidence and upkeep:** [Supplier register](sources.md) ·
 [Feedback decisions](feedback.md) ·
-[Cost update guide](updating-linked-costs.md)
+[Cost update guide](../../agents/updating-linked-costs.md)
 
 ## Estimate at a glance
 
@@ -102,13 +102,13 @@ and [feedback record](feedback.md), not a part's short summary alone.
 ## Scope and decisions
 
 The estimate follows
-[Stage 1 — bench propulsion prototype](../../../plan.md#stage-1--bench-propulsion-prototype),
+[Stage 1 — bench propulsion prototype](../../../../plan.md#stage-1--bench-propulsion-prototype),
 where one drive is tested on a bench, then
-[Stage 2 — rolling two-pod chassis](../../../plan.md#stage-2--rolling-two-pod-chassis),
+[Stage 2 — rolling two-pod chassis](../../../../plan.md#stage-2--rolling-two-pod-chassis),
 where both pods, the scissor frame, and spine are assembled.
 Stage 2 quantities are cumulative, not additional to Stage 1. Bench equipment
 is retained separately, not installed on the chassis. These stages do not cover
-the complete mower product. The [plan](../../../plan.md) remains the product
+the complete mower product. The [plan](../../../../plan.md) remains the product
 authority; its 48 V / approximately 2 kW continuous-per-drive baseline has not
 changed.
 
@@ -127,14 +127,14 @@ unmeasured.
   any additional independently justified stopping hardware. Existing general
   hardware allowances do not establish coverage of these designs.
 - **Mower and later attachments:** Stage 3 — supervised mower integration,
-  including the [DAC 9100, mounts and cutting guards](../../../plan.md#71-underbody-dac-9100-mower);
-  [conveyor](../../../plan.md#72-washable-conveyor),
-  [trailer](../../../plan.md#73-passive-trailer),
-  [fruit drum](../../../plan.md#74-front-fruit-drum), and
-  [RTK/autonomy equipment and subscriptions](../../../plan.md#82-rtk-teach--repeat).
+  including the [DAC 9100, mounts and cutting guards](../../../../plan.md#71-underbody-dac-9100-mower);
+  [conveyor](../../../../plan.md#72-washable-conveyor),
+  [trailer](../../../../plan.md#73-passive-trailer),
+  [fruit drum](../../../../plan.md#74-front-fruit-drum), and
+  [RTK/autonomy equipment and subscriptions](../../../../plan.md#82-rtk-teach--repeat).
 - **Removed options:** [Dynamometer/direct torque measurement and industrial
   operator remote](../modules/07-workshop-and-support/workshop.md#f10-workshop-equipment-test-method-and-mobile-app-control).
-  The four-column cage remains excluded by the [machine architecture](../../../plan.md#4-machine-architecture).
+  The four-column cage remains excluded by the [machine architecture](../../../../plan.md#4-machine-architecture).
 - **Professional and commercial work:** design/risk assessment, software
   development, certification, insurance, field commissioning, workshop rent,
   and a road transport vehicle.
@@ -370,7 +370,7 @@ gates.
 
 ### Updating linked costs
 
-Use the [cost update guide](updating-linked-costs.md) to edit the owning
+Use the [cost update guide](../../agents/updating-linked-costs.md) to edit the owning
 CSVs, regenerate linked tables, and verify freshness and references. Edit
 inputs, not generated tables. A cost update does not authorize a hardware
 selection, purchase, fabrication, or operation.

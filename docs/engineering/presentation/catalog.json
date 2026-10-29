@@ -1,0 +1,174 @@
+{
+  "components": [
+    {
+      "id": "track",
+      "status": "Owner-accepted candidate; compatibility and fit remain open.",
+      "facts": [
+        {
+          "label": "Candidate dimensions",
+          "value": "200 × 72 × 40 (listed size)",
+          "evidence": "200 x 72 x 40, product 2055"
+        },
+        {
+          "label": "Listed price",
+          "value": "€119.27 each; €110.92 each at 2+ (incl. listed Italian VAT)",
+          "evidence": "EUR119.27 | EUR110.92"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates",
+          "quotes": [
+            "200 x 72 x 40, product 2055",
+            "EUR119.27 | EUR110.92"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "PowerTrack product 2055",
+          "url": "https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html"
+        }
+      ]
+    },
+    {
+      "id": "idler",
+      "status": "Priced wheel candidate; track profile and load fit unverified.",
+      "facts": [
+        {
+          "label": "Wheel envelope",
+          "value": "200 mm OD × 50 mm tread; paired study",
+          "evidence": "500 kg; 50 mm tread; 20 mm bore; 60 mm hub"
+        },
+        {
+          "label": "Listed price",
+          "value": "€26.55 per wheel; €53.10 per pair, ex VAT",
+          "evidence": "26.55"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates",
+          "quotes": [
+            "Idler wheel | [Interwheel 161.540, 200 mm stainless-bearing PU wheel]",
+            "500 kg; 50 mm tread; 20 mm bore; 60 mm hub",
+            "26.55"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "Interwheel 161.540",
+          "url": "https://www.interwheel.eu/en/stainless-steel-pu-wheel-200-mm-500-kg.html"
+        }
+      ]
+    },
+    {
+      "id": "lower-roller-1",
+      "status": "Owner-selected printed concept; loading and durability unqualified.",
+      "facts": [
+        {
+          "label": "Wheel concept",
+          "value": "120 mm OD × 50 mm; PC core, TPU 95A tread",
+          "evidence": "Owner selection, 2026-10-29:** 120 mm"
+        },
+        {
+          "label": "Material estimate",
+          "value": "€182.45 net for 20 wheels at recorded sale prices",
+          "evidence": "PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45**"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed",
+          "quotes": [
+            "Owner selection, 2026-10-29:** 120 mm",
+            "PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45**"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "Elegoo PC filament",
+          "url": "https://www.3djake.com/elegoo/pc-black-4"
+        },
+        {
+          "label": "Elegoo TPU 95A filament",
+          "url": "https://www.3djake.com/elegoo/tpu-95a-blue-2"
+        },
+        {
+          "label": "6004-2RS bearings",
+          "url": "https://www.kugellager-express.de/rillenkugellager-6004-2rs-20x42x12-mm"
+        }
+      ]
+    },
+    {
+      "id": "motor",
+      "status": "Main cost/study candidate; exact configuration and duty unqualified.",
+      "facts": [
+        {
+          "label": "Supplier family envelope",
+          "value": "206 mm diameter × 126 mm length",
+          "evidence": "206 mm diameter × 126 mm length"
+        },
+        {
+          "label": "Planning price",
+          "value": "€482.36 each; €964.72 for two bare motors",
+          "evidence": "US$446 / €482.36"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits",
+          "quotes": [
+            "206 mm diameter × 126 mm length"
+          ]
+        },
+        {
+          "target": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-purchase-scope-and-price",
+          "quotes": [
+            "US$446 / €482.36",
+            "€964.72"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "Golden Motor listing",
+          "url": "https://goldenmotorcz.en.made-in-china.com/product/CwmnvfujhxVi/China-HPM5000B-48V-4000RPM-Brushless-DC-Motor-with-CE-Certificate.html"
+        }
+      ]
+    },
+    {
+      "id": "battery",
+      "status": "Conditional budget candidate; technical, delivery and fit holds remain.",
+      "facts": [
+        {
+          "label": "Pack envelope",
+          "value": "504 × 268 × 233 mm per pack",
+          "evidence": "504 × 268 × 233 mm"
+        },
+        {
+          "label": "Bundle price",
+          "value": "€849.99 each incl. listed 18 A charger; tax/delivery unconfirmed",
+          "evidence": "€849.99"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle",
+          "quotes": [
+            "€849.99",
+            "504 × 268 × 233 mm"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "DC HOUSE EU/non-DE bundle",
+          "url": "https://de.dchousepower.com/products/5-tage-bearbeitungszeit48v-100ah-lifepo4-batterie-mit-metallgehause-bluetooth-und-niedertemperaturschutz-ladegerat-ausserhalb-de"
+        }
+      ]
+    }
+  ]
+}

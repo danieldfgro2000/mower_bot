@@ -21,7 +21,25 @@ try {
   await page.goto(origin);
   await page.waitForSelector('#viewport[data-ready="true"]');
 
-  // Markdown thumbnail -> selected geometry + exact owning documentation.
+  // The mode toggle switches the same component between pitch and technical detail.
+  await page.goto(`${origin}/?component=track&mode=presentation`);
+  await page.waitForSelector('#viewport[data-ready="true"]');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.path
+    === 'docs/engineering/presentation/parts.md');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.anchor === '#track');
+  await page.selectOption('#mode', 'engineering');
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('mode') === 'engineering');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.path
+    === 'docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.anchor
+    === '#pod-fit-cad-assumptions');
+  await page.selectOption('#mode', 'presentation');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.anchor === '#track');
+
+  // Markdown thumbnail -> selected geometry and the current engineering section.
+  await page.goto(`${origin}/?doc=docs%2Fengineering%2Ftechnical%2Fcad%2FREADME.md&mode=engineering`);
+  await page.waitForFunction(() => document.querySelector('#document').dataset.path
+    === 'docs/engineering/technical/cad/README.md');
   await page.locator('#document a[href="/?component=motor"]').click();
   await page.waitForFunction(() => document.querySelector('canvas').dataset.selected === 'motor');
   await page.waitForFunction(() => document.querySelector('#document').dataset.anchor
@@ -39,9 +57,10 @@ try {
 
   // Every separately exported mesh has a reachable, rendered documentation section.
   for (const component of loadConfig().components) {
+    await page.selectOption('#mode', 'presentation');
     await page.selectOption('#component', component.id);
     await page.waitForFunction(id => document.querySelector('canvas').dataset.selected === id, component.id);
-    const [file, fragment] = component.document.split('#');
+    const [file, fragment] = component.presentation.split('#');
     await page.waitForFunction(({ file, fragment }) => {
       const article = document.querySelector('#document');
       return article.dataset.path === file && article.dataset.anchor === `#${fragment}`;
@@ -56,11 +75,12 @@ try {
   await page.goto(`${origin}/?component=motor`);
   await page.waitForSelector('#viewport[data-ready="true"]');
   await page.selectOption('#component', 'battery');
-  await page.waitForFunction(() => document.querySelector('#document').dataset.anchor === '#provisional-battery-clearance');
+  await page.waitForFunction(() => document.querySelector('#document').dataset.anchor === '#battery');
   await page.goBack();
   await page.waitForFunction(() => document.querySelector('canvas').dataset.selected === 'motor');
   await page.goForward();
   await page.waitForFunction(() => document.querySelector('canvas').dataset.selected === 'battery');
+  await page.selectOption('#mode', 'engineering');
 
   // A slow previous document must not overwrite the latest address or selection.
   let release;

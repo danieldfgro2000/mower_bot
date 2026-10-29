@@ -3,13 +3,13 @@ import { test } from 'node:test';
 import { checkDocumentationLinks } from './links.mjs';
 
 const config = { components: [{ id: 'motor' }, { id: 'battery' }] };
-const viewer = '../../cad/viewer';
+const viewer = '../../../presentation/viewer';
 
 test('every component has a Markdown entry point and every link names a known component', () => {
   const documents = {
-    'docs/engineering/modules/02-drive-train/propulsion.md':
+    'docs/engineering/technical/modules/02-drive-train/propulsion.md':
       `[![3D motor](${viewer}/previews/motor.png)](${viewer}/index.html?component=motor)`,
-    'docs/engineering/modules/04-battery-and-charging/batteries.md':
+    'docs/engineering/technical/modules/04-battery-and-charging/batteries.md':
       `[3D battery](${viewer}/index.html?component=battery)`,
   };
   assert.deepEqual(checkDocumentationLinks(config, documents), []);

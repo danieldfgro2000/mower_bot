@@ -69,7 +69,7 @@ component qualification. A failed check reopens downstream selections and costs.
 | [Energy and battery (L3)](../modules/04-battery-and-charging/batteries.md#l3-energy-and-battery) | [Packs and BMS requirements](../modules/04-battery-and-charging/batteries.md#ps18-battery-packs-and-bms) |
 | [Running gear and structure (L4)](../modules/01-structure-and-running-gear/running-gear.md#l4-running-gear-and-structure) | [Running-gear requirements](../modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements) · [Frame requirements](../modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements) · [Width-adjustment requirements](../modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements) |
 | [Stopping and electrical safety (L5)](../modules/06-safety-controls-and-sensors/safety-controls.md#l5-stopping-and-electrical-safety) | [Independent stop requirements](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
-| [Supplier and price convergence (L6)](feedback.md#l6-supplierprice-convergence) | [Supplier request packages](../chassis-build-requirements.md#4-prepare-procurement-work-packages) · [Cost-update procedure](updating-linked-costs.md) |
+| [Supplier and price convergence (L6)](feedback.md#l6-supplierprice-convergence) | [Supplier request packages](../chassis-build-requirements.md#4-prepare-procurement-work-packages) · [Cost-update procedure](../../agents/updating-linked-costs.md) |
 
 
 ### L6: supplier/price convergence

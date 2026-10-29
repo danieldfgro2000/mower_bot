@@ -17,8 +17,8 @@ For documentation or BOM changes, load the project skill
 does not list it, read that file directly. BOM edits must regenerate linked
 cost tables and pass the skill's freshness check before handoff.
 For engineering BOM-specific ownership and module routing, use the
-[BOM agent index](docs/engineering/bom/agent-index.md) and
-[agent guide](docs/engineering/bom/agent-guide.md).
+[BOM agent index](docs/engineering/agents/agent-index.md) and
+[agent guide](docs/engineering/agents/agent-guide.md).
 
 All implementation slices in the
 [app improvement plan](docs/flutter/implementation-improvement-plan.md) must

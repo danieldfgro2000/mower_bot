@@ -9,7 +9,7 @@ description: Keep MowerBot engineering documentation, OpenSCAD drawings and the 
 
 Read `docs/index.md`, `docs/agents/project-guardrails.md` and
 `docs/agents/documentation-guardrails.md`, then the
-[CAD viewer guide](../../../docs/engineering/cad/README.md) and only the owning
+[CAD viewer guide](../../../docs/engineering/technical/cad/README.md) and only the owning
 module page. Load the [bom-documentation skill](../bom-documentation/SKILL.md)
 for any Markdown or BOM edit; its regeneration and link checks still apply.
 
@@ -29,13 +29,15 @@ links and export freshness; it does **not** solve or certify physical fit.
 
 | Layer | Owner | Must agree with |
 | --- | --- | --- |
-| Geometry | `docs/engineering/cad/*.scad`: `viewer_components` list and `pod_component(id)` dispatcher | Component map IDs |
-| Component map | `docs/engineering/cad/viewer/components.json`: ID, label, color, `document#anchor` | SCAD IDs and real Markdown headings |
-| Documentation | Module pages: **3D study** thumbnail tables after *Parts at a glance*; `viewer/previews/<id>.png` | Component map IDs |
+| Geometry | `docs/engineering/technical/cad/*.scad`: `viewer_components` list and `pod_component(id)` dispatcher | Component map IDs |
+| Component map | `docs/engineering/presentation/viewer/components.json`: ID, label, color, `document#anchor`, and generated `presentation#anchor` | SCAD IDs and real technical/presentation headings |
+| Technical detail | `docs/engineering/technical/modules/`: requirements, sourcing, fit and release holds | Component map technical targets |
+| Presentation | `docs/engineering/presentation/catalog.json` plus generated `README.md` and `parts.md`; `viewer/previews/<id>.png` | Evidence excerpts, supplier links and component map presentation targets |
 
 Every component needs at least one Markdown entry point
-(`cad/viewer/index.html?component=<id>`), and a linked thumbnail must show the
-same component it opens.
+(`presentation/viewer/index.html?component=<id>`), and a linked thumbnail must
+show the same component it opens. The viewer's presentation/engineering toggle
+must preserve that selection while switching between the two document targets.
 
 ## Workflow
 
@@ -43,8 +45,8 @@ same component it opens.
    - *Geometry or component dimensions*: run the fit-adjustment loop below,
      edit dependent SCAD geometry and documentation, then regenerate exports.
    - *Component added, removed or renamed*: change the SCAD list, dispatcher
-     and component map together; add, remove or rename its 3D study
-     thumbnail in the owning module page.
+     and component map together; add, remove or rename its generated
+     presentation target and 3D study thumbnail in the owning module page.
    - *Heading moved or renamed, or section moved to another file*: update the
      component map `document#anchor`; keep same-file links filename-qualified.
    - *Decision or status change* (for example track width, wheel material,
@@ -63,13 +65,16 @@ same component it opens.
 5. **Sync** from the repository root:
 
    ```sh
+   python3 .github/skills/bom-documentation/scripts/update_costs.py
    npm run sync --prefix tool/cad-viewer
    ```
 
-   It validates SCAD ↔ component map ↔ Markdown anchors and entry points,
-   re-exports STL/PNG only when inputs are stale, then verifies freshness.
-   Fix every reported mismatch at its owner; do not edit generated previews
-   or `build/cad-viewer/state.json` by hand.
+   The presentation generator validates curated facts against technical
+   evidence and refreshes the generated cards. CAD sync validates SCAD ↔
+   component map ↔ both document targets and entry points, re-exports STL/PNG
+   only when inputs are stale, then verifies freshness. Fix every reported
+   mismatch at its owner; do not edit generated previews, pitch pages or
+   `build/cad-viewer/state.json` by hand.
 6. **Verify** before handoff:
 
    ```sh

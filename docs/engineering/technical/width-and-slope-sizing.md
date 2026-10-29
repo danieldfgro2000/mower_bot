@@ -29,7 +29,7 @@ inputs, not approved limits; this screen establishes no safe width, slope, or sp
 
 **Related documents:** [Pod-fit CAD](cad/module-01-track-pod-fit.scad) ·
 [Cohidrex idler lead](modules/01-structure-and-running-gear/running-gear.md#s26-cohidrex-idler-wheel-family) ·
-[Product authority](../../plan.md#42-variable-width-scissor-frame) ·
+[Product authority](../../../plan.md#42-variable-width-scissor-frame) ·
 [BOM Cost Breakdown](cost-breakdown.md) ·
 [All decision records](bom/feedback.md#feedback-decisions) ·
 [Width-adjustment scope](modules/03-width-adjustment/width-adjustment.md)
@@ -39,14 +39,14 @@ inputs, not approved limits; this screen establishes no safe width, slope, or sp
 | Input | Value / evidence status |
 | --- | --- |
 | Track | [PowerTrack listing (S01)](modules/01-structure-and-running-gear/running-gear.md#s01-powertrack-rubber-tracks): `200×72×36` / `200X72X36`, a price/study reference, not a mandatory size. No notation definition or dimensional drawing/table; usual 200 mm width × 72 mm pitch × 36 links interpretation is unverified |
-| Minimum outside-track width | [Original owner aspiration](width-and-slope-sizing.md#f06-packaging-and-site-targets): **400 mm**, subject to mechanical limitations, not a released width. [Current access requirement](../../plan.md#42-variable-width-scissor-frame): no fixed gate opening; minimize complete-machine width where practical |
+| Minimum outside-track width | [Original owner aspiration](width-and-slope-sizing.md#f06-packaging-and-site-targets): **400 mm**, subject to mechanical limitations, not a released width. [Current access requirement](../../../plan.md#42-variable-width-scissor-frame): no fixed gate opening; minimize complete-machine width where practical |
 | Maximum outside-track width | [Owner study target](width-and-slope-sizing.md#f06-packaging-and-site-targets): **1,600 mm**, not demonstrated stability |
-| Transport packaging | [Assembled transport target](../../plan.md#42-variable-width-scissor-frame): usable platform 2 m long × 1 m wide; include the narrowed bot, fitted mower, guards and restraint clearances. Platform capacity and ramp/loading geometry remain unqualified |
+| Transport packaging | [Assembled transport target](../../../plan.md#42-variable-width-scissor-frame): usable platform 2 m long × 1 m wide; include the narrowed bot, fitted mower, guards and restraint clearances. Platform capacity and ramp/loading geometry remain unqualified |
 | Suggested width/length ratio | Owner suggested about 2:1; **not a stability criterion** and does not establish an 800 mm finished machine length |
 | Site inclination | Owner expects up to **40°** for the mower-only configuration, including uphill/downhill and cross-slope travel; the 450 kg bot-and-trailer combination is limited to **15°** in the study; neither is an approved operating limit |
-| V1 maximum self-propelled travel | [Current speed target](../../plan.md#provisional-engineering-targets): **4 km/h**, prioritizing the low-speed drive; earlier higher-speed aspirations are withdrawn, not retained as gearing requirements |
-| Slope duty | [Requested mower-only duty](../../plan.md#51-duty-requirement): 1 km/h minimum useful speed at the steepest target, up to 25 m per steep climb/descent, occasional sections separated by gentler mowing, wet grass on firm soil included, gradual moving turns without stationary pivots. These are sizing inputs, not safe operating limits |
-| Mass/load configuration | [Plan's provisional mass and load cases](../../plan.md#provisional-engineering-targets): 300 kg mower-only proxy up to 40°; the 450 kg / 15° combination is 300 kg bot plus 150 kg loaded trailer, including payloads. Hitch reactions and actual masses remain unverified; 450 kg is not all carried on the tracks |
+| V1 maximum self-propelled travel | [Current speed target](../../../plan.md#provisional-engineering-targets): **4 km/h**, prioritizing the low-speed drive; earlier higher-speed aspirations are withdrawn, not retained as gearing requirements |
+| Slope duty | [Requested mower-only duty](../../../plan.md#51-duty-requirement): 1 km/h minimum useful speed at the steepest target, up to 25 m per steep climb/descent, occasional sections separated by gentler mowing, wet grass on firm soil included, gradual moving turns without stationary pivots. These are sizing inputs, not safe operating limits |
+| Mass/load configuration | [Plan's provisional mass and load cases](../../../plan.md#provisional-engineering-targets): 300 kg mower-only proxy up to 40°; the 450 kg / 15° combination is 300 kg bot plus 150 kg loaded trailer, including payloads. Hitch reactions and actual masses remain unverified; 450 kg is not all carried on the tracks |
 | CG height/offset | Unknown in every configuration; example values below are not measurements or design approval |
 | Width actuation | [Reused 12 V worm-reduction motor and screw concept](modules/03-width-adjustment/width-adjustment.md#powered-rolling-width-adjustment), estimated 3–5 A with incremental turns-to-width proposal; load/holding/speed unqualified |
 

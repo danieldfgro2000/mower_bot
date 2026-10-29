@@ -95,7 +95,7 @@ and their payloads, with a study allocation of 300 kg bot plus 150 kg loaded
 trailer. See the [trailer load case](plan.md#73-passive-trailer). Hitch load
 redistributes support between the bot and trailer; it is not additional mass.
 These are packaging/feasibility inputs, **not validated machine dimensions or
-operating limits**. See the [width and slope screen](docs/engineering/width-and-slope-sizing.md)
+operating limits**. See the [width and slope screen](docs/engineering/technical/width-and-slope-sizing.md)
 for clearance, CG, traction, torque, and track-length limitations.
 
 ### Operating environment and cleaning
@@ -238,7 +238,7 @@ fault behavior through engineering review before releasing this mechanism.
 Hard travel stops, travel limits, guarding, independent stopping, and explicit
 restart/reference recovery remain required. No adjustment speed or hardware
 operation is approved by this design direction. The
-[costed BOM](docs/engineering/bom/chassis-bom.md) records the prototype allowances
+[costed BOM](docs/engineering/technical/bom/chassis-bom.md) records the prototype allowances
 and qualification gaps.
 
 The current width study targets are an aspirational 400 mm minimum and
@@ -306,7 +306,7 @@ performance points, not qualified operating speeds.
 **2026-10-26 slope clarification:** 4 km/h is a normal-condition target, not a
 requirement at the owner's aspirational 40° site incline. Speed may be reduced,
 but no safe slope/speed envelope has been established. The
-[slope screen](docs/engineering/width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
+[slope screen](docs/engineering/technical/width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates)
 shows that gravity alone can require more than the provisional 70–80 Nm per
 track. Revisit output torque, reduction, and working rpm against actual
 sprocket radius and load before selecting either BOM scenario. Lower speed
@@ -376,12 +376,12 @@ counterbalance or authorize adding that mass outside the configuration budget.
 
 **2026-10-28 estimating direction:** Use HPM5000B bare motors, EZ-A48500
 controllers and Precima FDB 13 C 48 V / 20 Nm holding brakes as the main
-[cost references](docs/engineering/modules/02-drive-train/propulsion.md#parts-at-a-glance),
+[cost references](docs/engineering/technical/modules/02-drive-train/propulsion.md#parts-at-a-glance),
 not approved hardware or a power increase. The
 [brake offer](https://shop.bj-gear.com/en_eur/precima-spring-applied-brake-fdb-adjustable-13-48vdc-19h7o)
 is €159 excluding taxes/delivery (€192.39 planning unit, €384.78 pair).
 Its 19H7 hub does not fit the published Ø22.3 mm HPM shaft directly;
-[mounting/axial integration](docs/engineering/modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment)
+[mounting/axial integration](docs/engineering/technical/modules/02-drive-train/propulsion.md#fdb-13-c-to-hpm5000b-fitment)
 and the custom reduction remain unpriced. The ideal 66:1 static holding screen
 is favorable, but does not qualify stopping, transmission strength or slope
 safety. Existing power, operating-case and independent-stopping requirements remain.
@@ -394,7 +394,7 @@ The following options came from an earlier market screen. Prices and seller spec
 | ATO D130BLD2000 | About $816; 2 kW; 2,000 rpm; advertised 10 Nm continuous / 30 Nm peak; IP65; retailer rating 4.9/5 from 13 reviews | Review independence, gearbox/controller cost, continuous thermal performance |
 | BLDC.com D110BLD2000 planetary | About $958; 48 V; 3,000 rpm; configurable planetary reduction | Actual gearbox torque limit, duty cycle, shaft/bearing life and total landed cost |
 | Motenergy ME0907 | About $399 in the earlier listing; Hall sensors and temperature sensor; external reduction | Mechanical torque/performance curve, controller match and environmental packaging |
-| Golden Motor HPM5000B 48 V, bare | [Main cost candidate](docs/engineering/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate): recorded 2026-10-26 US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
+| Golden Motor HPM5000B 48 V, bare | [Main cost candidate](docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate): recorded 2026-10-26 US$446 at 1–9 pieces; €482.36 with existing FX/provisional VAT, excluding delivery/duty/brokerage | Advertised 5 kW is not a baseline power change; exact winding, continuous curve, cooling, controller and braking remain unqualified; the 2026-10-27 in-drum planetary concept is unpriced |
 
 Potential reduction strategies:
 
@@ -428,7 +428,7 @@ Small capacity variations are accepted, preferably upward; 105 Ah is within
 scope. Do not series-connect them into a higher-voltage bank. Assess discharge,
 peak-duration and charge current separately from Ah capacity.
 
-The [priced options and budget recommendation](docs/engineering/modules/04-battery-and-charging/batteries.md#battery-alternatives)
+The [priced options and budget recommendation](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#battery-alternatives)
 use the **DC HOUSE 100 Ah / 18 A charger bundle** as conditional first choice
 and estimating reference, not a released purchase or proven fit. Its published
 pair mass is 89.8 kg, versus 72 kg for the former Elker pair; the mass/CG and
@@ -529,7 +529,7 @@ If both traction motors continuously deliver 2 kW mechanical output, their
 eight-hour output energy alone is 32 kWh: nominal battery capacity must exceed
 40 kWh at 80% usable once electrical losses and auxiliary loads are included.
 
-The [former Elker study reference](docs/engineering/modules/04-battery-and-charging/batteries.md#historical-elker-study-reference)
+The [former Elker study reference](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#historical-elker-study-reference)
 weighed 36 kg per pack. At that historical energy-to-mass ratio, two 200 Ah packs would
 weigh approximately 144 kg rather than the reference pair's 72 kg. This is
 linear screening, not an actual 200 Ah product specification. Revisit total
@@ -537,7 +537,7 @@ mass, CG, traction demand and pod packaging rather than retaining the 300 kg
 machine estimate unchanged. This former stationary-oriented reference is no
 longer the active budget pack and was not vehicle-qualified.
 
-The [DC HOUSE charger bundle budget](docs/engineering/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
+The [DC HOUSE charger bundle budget](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
 includes one 18 A charger per 100 Ah pack. Returning an assumed 80 Ah per
 pack takes approximately **4.44 hours**, with both chargers working concurrently,
 before taper/balancing or warm-up delays; near-empty to full is approximately

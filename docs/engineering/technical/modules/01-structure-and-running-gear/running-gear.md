@@ -28,11 +28,11 @@ battery/carrier clashes are unresolved. Upper rollers/tensioners are not modeled
 
 | Track | Drive drum | Idler | Lower rollers |
 | --- | --- | --- | --- |
-| [![3D track](../../cad/viewer/previews/track.png)](../../cad/viewer/index.html?component=track) | [![3D drum](../../cad/viewer/previews/drive-drum.png)](../../cad/viewer/index.html?component=drive-drum) | [![3D idler](../../cad/viewer/previews/idler.png)](../../cad/viewer/index.html?component=idler) | [![3D lower roller](../../cad/viewer/previews/lower-roller-1.png)](../../cad/viewer/index.html?component=lower-roller-1) |
+| [![3D track](../../../presentation/viewer/previews/track.png)](../../../presentation/viewer/index.html?component=track) | [![3D drum](../../../presentation/viewer/previews/drive-drum.png)](../../../presentation/viewer/index.html?component=drive-drum) | [![3D idler](../../../presentation/viewer/previews/idler.png)](../../../presentation/viewer/index.html?component=idler) | [![3D lower roller](../../../presentation/viewer/previews/lower-roller-1.png)](../../../presentation/viewer/index.html?component=lower-roller-1) |
 
-Other individual rollers: [3D roller 2](../../cad/viewer/index.html?component=lower-roller-2) ·
-[3D roller 3](../../cad/viewer/index.html?component=lower-roller-3) ·
-[3D roller 4](../../cad/viewer/index.html?component=lower-roller-4).
+Other individual rollers: [3D roller 2](../../../presentation/viewer/index.html?component=lower-roller-2) ·
+[3D roller 3](../../../presentation/viewer/index.html?component=lower-roller-3) ·
+[3D roller 4](../../../presentation/viewer/index.html?component=lower-roller-4).
 
 **Further detail:** [Prices found](running-gear.md#prices-found-tracks-rollers-and-idlers) ·
 [Track length check](running-gear.md#track-length-check) ·
@@ -251,9 +251,9 @@ completed tests. Cost-ledger ranges are inclusive.
 
 **2026-10-28 owner clarification:** `200×72×36` is not a mandatory size. It
 remains the existing price/study reference while the actual track and matched
-undercarriage are selected against the [operating cases](../../../../plan.md#provisional-engineering-targets)
+undercarriage are selected against the [operating cases](../../../../../plan.md#provisional-engineering-targets)
 and complete-pod packaging, including the separate
-[obstacle-crossing request](../../../../plan.md#raised-mower-obstacle-crossing).
+[obstacle-crossing request](../../../../../plan.md#raised-mower-obstacle-crossing).
 The current allowance does not quote a new size or qualify that requested mode.
 
 **Required purchasing/manufacturing definition:** Matched track MPN with
@@ -739,7 +739,7 @@ tracks with four lower rollers each gives 37.5 kg static per roller. An
 assumed 3x slope/shock factor gives about 112.5 kg per roller, or about 56 kg
 per wheel in a pair. Supplier ratings below are flat-floor ratings at up to
 4 km/h, which matches the V1 maximum speed in
-[plan.md](../../../../plan.md#provisional-engineering-targets).
+[plan.md](../../../../../plan.md#provisional-engineering-targets).
 
 | Use | Offer | Rating / geometry | Net EUR | Delivery to Romania |
 | --- | --- | --- | ---: | --- |

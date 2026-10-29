@@ -272,7 +272,7 @@ class BomReferenceRegressionTest(unittest.TestCase):
         shutil.copytree(ROOT / "docs/engineering", self.root / "docs/engineering")
         for relative in ("plan.md", ".github/skills/bom-documentation/SKILL.md"):
             self.write_document(relative, (ROOT / relative).read_text(encoding="utf-8"))
-        document = self.root / "docs/engineering/cost-breakdown.md"
+        document = self.root / "docs/engineering/technical/cost-breakdown.md"
         original = "[Drive train](cost-breakdown.md#02--drive-train)\n\n" + document.read_text(
             encoding="utf-8",
         )
@@ -287,7 +287,7 @@ class BomReferenceRegressionTest(unittest.TestCase):
         errors, _ = local_reference_errors(document, root=self.root)
         self.assertEqual(len(errors), 1, errors)
         self.assertIn(
-            "docs/engineering/cost-breakdown.md: cost-breakdown.md#02--drive-train "
+            "docs/engineering/technical/cost-breakdown.md: cost-breakdown.md#02--drive-train "
             "-> missing anchor '#02--drive-train'",
             errors[0],
         )

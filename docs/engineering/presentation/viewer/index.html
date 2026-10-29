@@ -12,8 +12,13 @@
 </head>
 <body>
   <header>
-    <strong>MowerBot <span>CAD + documentation</span></strong>
-    <a href="/?doc=docs%2Fengineering%2Fcad%2FREADME.md">Viewer guide</a>
+    <strong>MowerBot <span>CAD + presentation + engineering</span></strong>
+    <label for="mode">View</label>
+    <select id="mode" aria-label="Documentation mode">
+      <option value="presentation">Presentation</option>
+      <option value="engineering">Engineering</option>
+    </select>
+    <a href="/?doc=docs%2Fengineering%2Ftechnical%2Fcad%2FREADME.md">Viewer guide</a>
     <a id="source" href="#" download>Editable SCAD</a>
     <a id="export" href="#" download>Selected STL</a>
   </header>
@@ -36,7 +41,7 @@
       </details>
       <p id="selection" role="status">Loading separate component models...</p>
     </section>
-    <section class="document-pane" aria-label="Rendered engineering documentation">
+    <section class="document-pane" aria-label="Rendered presentation or engineering documentation">
       <div class="document-toolbar">
         <span id="document-path"></span>
         <a id="markdown-source" href="#">Markdown source</a>

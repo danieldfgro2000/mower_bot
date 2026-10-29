@@ -26,7 +26,7 @@ to select the plate; clicking its mesh opens the frame requirements here.
 Its retained 90-100 mm vertical placement intersects the updated 120 mm
 lower rollers; see the [candidate fit holds](../../cad/README.md#modeled-dimensions-and-limits).
 
-[![3D pod carrier plate](../../cad/viewer/previews/pod-carrier.png)](../../cad/viewer/index.html?component=pod-carrier)
+[![3D pod carrier plate](../../../presentation/viewer/previews/pod-carrier.png)](../../../presentation/viewer/index.html?component=pod-carrier)
 
 **Further detail:** [Release requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·

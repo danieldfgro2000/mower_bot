@@ -10,7 +10,7 @@ description: Maintain MowerBot repository documentation and linked module BOM co
 Read `docs/index.md`, `docs/agents/project-guardrails.md` and
 `docs/agents/documentation-guardrails.md` before work, then only the owning scope.
 For engineering BOM routing and module numbering, use
-`docs/engineering/bom/agent-index.md` and `agent-guide.md`.
+`docs/engineering/agents/agent-index.md` and `agent-guide.md`.
 Read `docs/project/overview.md` and relevant `plan.md` sections for product,
 hardware, safety or operating-envelope decisions. Preserve evidence labels,
 release holds and unrelated edits. Documentation does not authorize purchasing,
@@ -19,41 +19,52 @@ fabricating, uploading, energizing or operating the machine.
 For non-BOM documentation, maintain its authoritative owner and inbound links;
 do not restructure unrelated documents or run BOM generation unnecessarily.
 
-When a change touches `docs/engineering/cad/`, a CAD-targeted heading or a
+Engineering documentation is split by audience: detailed facts and evidence
+belong under `docs/engineering/technical/`, agent routing and procedures under
+`docs/engineering/agents/`, and concise generated pitch pages under
+`docs/engineering/presentation/`. `presentation/catalog.json` is the curated
+presentation input; its facts must remain supported by linked technical
+sections. Do not edit generated `presentation/README.md` or `parts.md` by hand.
+
+When a change touches `docs/engineering/technical/cad/`, a CAD-targeted heading or a
 3D study table, also follow the
 [CAD documentation sync skill](../cad-documentation-sync/SKILL.md).
 
 ## BOM ownership
 
-- `docs/engineering/bom/chassis-bom.csv`: authoritative baseline quantities,
+- `docs/engineering/technical/bom/chassis-bom.csv`: authoritative baseline quantities,
   48 V unit/extended costs, basis codes, source IDs and assumptions.
-- `docs/engineering/bom/cost-modules.csv`: exactly-once item ownership, module
+- `docs/engineering/technical/bom/cost-modules.csv`: exactly-once item ownership, module
   labels, scope links, display grouping and installed/bench/support disposition.
   Its `scope` values route to authoritative documents under the numbered
-  `docs/engineering/modules/` folders.
+  `docs/engineering/technical/modules/` folders.
   Inclusive `PREFIX-001:PREFIX-003` ranges and `|` unions are supported.
-- `docs/engineering/bom/budget-allowances.csv`: non-material cash provisions.
-- `docs/engineering/bom/propulsion-alternatives.csv`: candidate replacements,
+- `docs/engineering/technical/bom/budget-allowances.csv`: non-material cash provisions.
+- `docs/engineering/technical/bom/propulsion-alternatives.csv`: candidate replacements,
   not additional purchases. Never merge into baseline sums without an explicit
   configuration decision and complete downstream re-costing.
-- Module scope pages (`docs/engineering/modules/NN-name/*.md`): self-contained
+- Module scope pages (`docs/engineering/technical/modules/NN-name/*.md`): self-contained
   owners of single-scope supplier evidence (`### S##:` / `### U##:`), decision
   records (F/L), procurement packages (Q) and release holds (H), in the order
   Parts at a glance → studies → requirements → Sourcing → Procurement and
   release holds → Interfaces → generated costs → Decision records → Supplier
   evidence. Add new single-scope evidence there, not centrally.
-- `docs/engineering/bom/sources.md`: sourcing weights and eligibility policy,
+- `docs/engineering/technical/bom/sources.md`: sourcing weights and eligibility policy,
   the source-ID lookup, shared multi-module catalogs (S04, S06, S07) and link
   verification. Source IDs must be unique across `sources.md` and module pages;
   the generator fails on duplicates or missing IDs.
-- `docs/engineering/bom/feedback.md` and `docs/engineering/chassis-build-requirements.md`:
+- `docs/engineering/technical/bom/feedback.md` and `docs/engineering/technical/chassis-build-requirements.md`:
   cross-module decisions/holds plus index tables linking to module-owned records.
-- `docs/engineering/bom/updating-linked-costs.md`: human-facing maintenance
+- `docs/engineering/agents/updating-linked-costs.md`: human-facing maintenance
   procedure, input ownership, regeneration, reference checks and validation history.
-- `docs/engineering/cost-breakdown.md`: generated focused view of detailed
+- `docs/engineering/technical/cost-breakdown.md`: generated focused view of detailed
   module costs and installed/bench/support totals. The main BOM remains estimate
   owner; keep its generated module totals and budget concise and link to this
   detailed view and technical scopes instead of duplicating itemized tables.
+- `docs/engineering/presentation/catalog.json`: concise presentation facts and
+  their technical evidence excerpts. `presentation/README.md` and `parts.md`
+  are generated outputs; component IDs and pitch targets are linked to the
+  presentation viewer's `components.json`.
 - Scope Markdown files: technical requirements and generated detailed costs.
   The main BOM contains generated linked module totals, evidence counts, stage
   costs, alternatives and broader budget. Present its generated major-module
@@ -77,7 +88,7 @@ When a change touches `docs/engineering/cad/`, a CAD-targeted heading or a
 - When restructuring engineering scope pages, use a concise summary and a
   component-first scan view: current choice/status, cost and specification
   links, and mounting/connection routes. Follow the
-  [component reading paths](../../../docs/engineering/bom/updating-linked-costs.md#component-reading-paths).
+  [component reading paths](../../../docs/engineering/agents/updating-linked-costs.md#component-reading-paths).
   Keep these routes beside component details and walk representative
   price/specification-to-fit journeys; valid links alone are insufficient.
   Remove overlapping navigation maps while preserving technical requirements,
@@ -113,9 +124,12 @@ When a change touches `docs/engineering/cad/`, a CAD-targeted heading or a
    python3 .github/skills/bom-documentation/scripts/update_costs.py --check
    ```
 
-   Generation updates eleven Markdown documents from the CSV owners. It refuses
-   malformed prices, inconsistent extensions, missing/duplicate item coverage
-   and missing generated-region markers. Fix the input; never suppress errors.
+   Generation updates technical cost views and the two presentation pages.
+   Presentation generation also verifies each fact and supplier URL against its
+   linked technical evidence section. The command refuses malformed prices,
+   inconsistent extensions, missing/duplicate item coverage, stale pitch
+   evidence and missing generated-region markers. Fix the input; never suppress
+   errors.
 7. Review narrative amounts outside generated blocks in all affected scopes,
    source/feedback records and the main BOM. Update current statements or label
    historical figures rather than leaving contradictory costs. Generation
@@ -126,8 +140,12 @@ When a change touches `docs/engineering/cad/`, a CAD-targeted heading or a
    against rendered GitHub-style headings and explicit anchors, and delegates
    only external URL reachability to the pinned HTTP checker. Every HTTP 4xx
    response is a failure. Follow the
-   [reference-check setup](../../../docs/engineering/bom/updating-linked-costs.md#reference-checks)
+   [reference-check setup](../../../docs/engineering/agents/updating-linked-costs.md#reference-checks)
    before the first run:
+
+   Show local development URLs as inline code when they are examples rather
+   than live destinations; Markdown autolinks make the external checker probe
+   localhost and fail when the documented server is not running.
 
    ```sh
    python3 .github/skills/bom-documentation/scripts/test_bom_links.py
@@ -163,6 +181,7 @@ Follow repository TDD rules before changing executable logic. Run:
 
 ```sh
 python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_update_costs.py'
+python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_presentation.py'
 ```
 
 The tests cover module links, source-to-summary propagation, preserved totals,

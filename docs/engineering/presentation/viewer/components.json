@@ -1,0 +1,113 @@
+{
+  "source": "docs/engineering/technical/cad/module-01-track-pod-fit.scad",
+  "defaultDocument": "docs/engineering/technical/cad/README.md",
+  "defaultPresentation": "docs/engineering/presentation/README.md",
+  "notice": "Unqualified candidate fit study, not fabrication geometry. Battery/return-run and roller/carrier clashes are intentional visible holds; drum teeth, brake, tensioner and structural mounts remain undesigned.",
+  "components": [
+    {
+      "id": "track",
+      "label": "Rubber track (200x72x40 candidate; 180x72x37 fit study)",
+      "color": "#303038",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions",
+      "presentation": "docs/engineering/presentation/parts.md#track"
+    },
+    {
+      "id": "drive-drum",
+      "label": "Drive drum (350 mm placeholder)",
+      "color": "#b86e1f",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study",
+      "presentation": "docs/engineering/presentation/parts.md#drive-drum"
+    },
+    {
+      "id": "idler",
+      "label": "Idler (paired 200x50 wheels; candidate)",
+      "color": "#626270",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#tensioner-and-idler-interfaces",
+      "presentation": "docs/engineering/presentation/parts.md#idler"
+    },
+    {
+      "id": "motor",
+      "label": "HPM5000B (body, shaft and mounting pattern)",
+      "color": "#2659b8",
+      "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate",
+      "presentation": "docs/engineering/presentation/parts.md#motor"
+    },
+    {
+      "id": "planetary-1",
+      "label": "Planetary stage 1 (pitch circles)",
+      "color": "#39946b",
+      "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
+      "presentation": "docs/engineering/presentation/parts.md#planetary-1"
+    },
+    {
+      "id": "planetary-2",
+      "label": "Planetary stage 2 (pitch circles)",
+      "color": "#438b79",
+      "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
+      "presentation": "docs/engineering/presentation/parts.md#planetary-2"
+    },
+    {
+      "id": "planetary-3",
+      "label": "Planetary stage 3 (pitch circles)",
+      "color": "#527c80",
+      "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
+      "presentation": "docs/engineering/presentation/parts.md#planetary-3"
+    },
+    {
+      "id": "output-carrier",
+      "label": "Final carrier to drum (schematic)",
+      "color": "#b86e1f",
+      "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#motor-to-track-mounting",
+      "presentation": "docs/engineering/presentation/parts.md#output-carrier"
+    },
+    {
+      "id": "lower-roller-1",
+      "label": "Lower roller 1 (paired 120x50 PC/TPU study)",
+      "color": "#388c57",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+      "presentation": "docs/engineering/presentation/parts.md#lower-roller-1"
+    },
+    {
+      "id": "lower-roller-2",
+      "label": "Lower roller 2 (paired 120x50 PC/TPU study)",
+      "color": "#388c57",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+      "presentation": "docs/engineering/presentation/parts.md#lower-roller-2"
+    },
+    {
+      "id": "lower-roller-3",
+      "label": "Lower roller 3 (paired 120x50 PC/TPU study)",
+      "color": "#388c57",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+      "presentation": "docs/engineering/presentation/parts.md#lower-roller-3"
+    },
+    {
+      "id": "lower-roller-4",
+      "label": "Lower roller 4 (paired 120x50 PC/TPU study)",
+      "color": "#388c57",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+      "presentation": "docs/engineering/presentation/parts.md#lower-roller-4"
+    },
+    {
+      "id": "pod-carrier",
+      "label": "Pod carrier plate (placeholder)",
+      "color": "#4d7399",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments",
+      "presentation": "docs/engineering/presentation/parts.md#pod-carrier"
+    },
+    {
+      "id": "battery",
+      "label": "DC HOUSE battery (504x268x233 listing envelope)",
+      "color": "#e68c1f",
+      "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#provisional-battery-clearance",
+      "presentation": "docs/engineering/presentation/parts.md#battery"
+    },
+    {
+      "id": "removal-arrow",
+      "label": "Battery removal arrow (annotation)",
+      "color": "#1973d9",
+      "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#battery-to-pod-fit",
+      "presentation": "docs/engineering/presentation/parts.md#removal-arrow"
+    }
+  ]
+}

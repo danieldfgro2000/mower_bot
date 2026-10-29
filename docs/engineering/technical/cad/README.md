@@ -1,9 +1,10 @@
 # Interactive CAD and engineering documentation
 
-**Summary:** Browse the current pod-fit SCAD study and its owning Markdown
-sections side by side in a local browser. Click a component in the 3D view to
-open its documentation; click a **3D thumbnail** in the rendered documentation
-to select and frame that component. No hosting or publishing is required.
+**Summary:** Browse the current pod-fit SCAD study and its documentation side by
+side in a local browser. The **Presentation / Engineering** selector switches
+the selected component between its concise generated pitch card and detailed
+technical section. Click a **3D thumbnail** in either view to select and frame
+that component. No hosting or publishing is required.
 
 **Status:** Unqualified sourcing-candidate fit study, not fabrication geometry
 or authorization to build. It represents the 180 mm track, paired 120 mm printed
@@ -44,7 +45,7 @@ From the repository root, with Node.js 20+ and the `openscad` executable install
 
 ```sh
 npm ci --prefix tool/cad-viewer --ignore-scripts
-npm run export --prefix tool/cad-viewer
+npm run sync --prefix tool/cad-viewer
 npm start --prefix tool/cad-viewer
 ```
 
@@ -62,7 +63,7 @@ the images but cannot run the viewer HTML; open the local reader first.
 
 ## Inspect components
 
-[![3D motor body](viewer/previews/motor.png)](viewer/index.html?component=motor)
+[![3D motor body](../../presentation/viewer/previews/motor.png)](../../presentation/viewer/index.html?component=motor)
 
 **Click the motor thumbnail above** to frame the HPM5000B and open its
 [price, specification and mounting documentation](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate).
@@ -79,30 +80,35 @@ The same thumbnail route is available beside the motor in its owning scope.
   coordinates, in millimetres. Planetary pitch-circle studies are grouped by
   stage; the four lower rollers are separate exports. The removal arrow is
   explicitly an annotation, not a physical part.
-- Markdown links keep their scope and fragment in the reader. Browser Back and
-  Forward restore the document/selection; the address can be bookmarked.
+- Markdown links keep their scope and fragment in the reader. Presentation and
+  engineering modes persist in the URL, and Browser Back/Forward restore the
+  document/selection; the address can be bookmarked.
 
-The [component map](viewer/components.json) owns each selectable ID, label,
-color and exact documentation section. The
-[SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
+The [component map](../../presentation/viewer/components.json) owns each
+selectable ID, label, technical target and generated presentation target.
+The [presentation catalog](../../presentation/catalog.json) owns concise
+pitch facts, which are checked against technical evidence during generation.
+The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
 components have no invented mesh.
 
 ## Refresh and verify
 
-After changing SCAD geometry, the component map, a targeted documentation
-heading or a 3D study table, follow the
-[CAD documentation sync skill](../../../.github/skills/cad-documentation-sync/SKILL.md)
-and run one command:
+After changing SCAD geometry, the component map, pitch facts, a targeted
+documentation heading or a 3D study table, follow the
+[CAD documentation sync skill](../../../../.github/skills/cad-documentation-sync/SKILL.md)
+and regenerate the presentation followed by the CAD exports:
 
 ```sh
+python3 .github/skills/bom-documentation/scripts/update_costs.py
 npm run sync --prefix tool/cad-viewer
 ```
 
-It checks that SCAD selectors, the component map, documentation anchors and
-Markdown 3D links agree. Each component must have a Markdown entry point, and
-each linked thumbnail must open its own component. It re-exports only when
-stale: separate binary STL files and a freshness manifest go to ignored
-`build/cad-viewer/`, and thumbnails go to `viewer/previews/`. `npm run check`
+The generator checks presentation facts against their technical evidence.
+CAD sync checks that SCAD selectors, component map, both documentation modes
+and Markdown 3D links agree. Each component must have both document targets and
+a Markdown entry point; each linked thumbnail must open its own component. It
+re-exports only when stale: separate binary STL files and a freshness manifest
+go to ignored `build/cad-viewer/`, and thumbnails go to `viewer/previews/`. `npm run check`
 performs the same validation without writing. The server refuses stale or
 incomplete exports at startup. Restart it after a component-map or geometry
 change; nothing hot-reloads automatically.

@@ -12,21 +12,21 @@ for the required editing and validation procedure.
 
 **Related documents:**
 [Agent index](agent-index.md) ·
-[Chassis BOM](chassis-bom.md) ·
+[Chassis BOM](../technical/bom/chassis-bom.md) ·
 [Cost update procedure](updating-linked-costs.md)
 
 ## Authority map
 
 | Information | Source of truth |
 | --- | --- |
-| Baseline item quantities, scenario prices, basis, source IDs, assumptions | [Cost ledger](chassis-bom.csv) |
-| Cost-module ownership, display order, module/submodule numbers and scope links | [Cost module map](cost-modules.csv); scope paths route to the numbered folders in the [module directory](../modules/README.md) |
-| Non-material provisions | [Budget allowances](budget-allowances.csv) |
-| Supplier evidence and price limits | Single-scope evidence: the owning module page's **Supplier evidence** section. Weights, lookup and shared catalogs: [Sources](sources.md) |
-| Candidate propulsion replacements, excluded from baseline totals | [Propulsion alternatives and technical-reference links](propulsion-alternatives.csv) |
-| Generated module totals and cost tables | [Chassis BOM](chassis-bom.md), [BOM Cost Breakdown](../cost-breakdown.md), and generated scope tables |
-| Technical requirements and interfaces | [Module directory](../modules/README.md) and [named requirement families](../chassis-build-requirements.md#2-confirm-item-family-specifications) |
-| Procurement and release evidence | [Supplier request packages](../chassis-build-requirements.md#4-prepare-procurement-work-packages) and [release holds](../chassis-build-requirements.md#5-close-release-hold-points) |
+| Baseline item quantities, scenario prices, basis, source IDs, assumptions | [Cost ledger](../technical/bom/chassis-bom.csv) |
+| Cost-module ownership, display order, module/submodule numbers and scope links | [Cost module map](../technical/bom/cost-modules.csv); scope paths route to the numbered folders in the [module directory](../technical/modules/README.md) |
+| Non-material provisions | [Budget allowances](../technical/bom/budget-allowances.csv) |
+| Supplier evidence and price limits | Single-scope evidence: the owning module page's **Supplier evidence** section. Weights, lookup and shared catalogs: [Sources](../technical/bom/sources.md) |
+| Candidate propulsion replacements, excluded from baseline totals | [Propulsion alternatives and technical-reference links](../technical/bom/propulsion-alternatives.csv) |
+| Generated module totals and cost tables | [Chassis BOM](../technical/bom/chassis-bom.md), [BOM Cost Breakdown](../technical/cost-breakdown.md), and generated scope tables |
+| Technical requirements and interfaces | [Module directory](../technical/modules/README.md) and [named requirement families](../technical/chassis-build-requirements.md#2-confirm-item-family-specifications) |
+| Procurement and release evidence | [Supplier request packages](../technical/chassis-build-requirements.md#4-prepare-procurement-work-packages) and [release holds](../technical/chassis-build-requirements.md#5-close-release-hold-points) |
 | Human-readable headings and stable navigation | [Navigation maintenance rules](updating-linked-costs.md#navigation-labels-and-stable-references) |
 | Scan-to-part and part-to-mounting reading paths | [Component navigation contract](updating-linked-costs.md#component-reading-paths); each technical owner keeps its local part links |
 
@@ -44,16 +44,16 @@ scope cost tables.
 
 | Module | Submodule cost detail |
 | --- | --- |
-| 01 — Structure and running gear: [frame](../modules/01-structure-and-running-gear/frame.md) · [running gear](../modules/01-structure-and-running-gear/running-gear.md) | [01.01–01.07 Structure and running-gear costs](../cost-breakdown.md#01--structure-and-running-gear) |
-| [02 — Drive train](../modules/02-drive-train/propulsion.md) | [02.01–02.05 Drive-train costs](../cost-breakdown.md#02--drive-train) |
-| [03 — Width adjustment](../modules/03-width-adjustment/width-adjustment.md) | [03.01–03.04 Width-adjustment costs](../cost-breakdown.md#03--width-adjustment) |
-| [04 — Battery and charging](../modules/04-battery-and-charging/batteries.md) | [04.01–04.04 Battery and charging costs](../cost-breakdown.md#04--battery-and-charging) |
-| 05 — Power cables and electronics: [cables and connectors](../modules/05-power-cables-and-electronics/cables-connectors.md) · [power distribution](../modules/05-power-cables-and-electronics/power-distribution.md) | [05.01–05.08 Wiring and power-distribution costs](../cost-breakdown.md#05--power-cables-and-electronics) |
-| [06 — Safety controls and sensors](../modules/06-safety-controls-and-sensors/safety-controls.md) | [06.01, 06.03–06.07 Safety and sensing costs](../cost-breakdown.md#06--safety-controls-and-sensors) |
-| [07 — Workshop and support](../modules/07-workshop-and-support/workshop.md) | [07.01–07.02, 07.04–07.06 Workshop and support costs](../cost-breakdown.md#07--workshop-and-support) |
+| 01 — Structure and running gear: [frame](../technical/modules/01-structure-and-running-gear/frame.md) · [running gear](../technical/modules/01-structure-and-running-gear/running-gear.md) | [01.01–01.07 Structure and running-gear costs](../technical/cost-breakdown.md#01--structure-and-running-gear) |
+| [02 — Drive train](../technical/modules/02-drive-train/propulsion.md) | [02.01–02.05 Drive-train costs](../technical/cost-breakdown.md#02--drive-train) |
+| [03 — Width adjustment](../technical/modules/03-width-adjustment/width-adjustment.md) | [03.01–03.04 Width-adjustment costs](../technical/cost-breakdown.md#03--width-adjustment) |
+| [04 — Battery and charging](../technical/modules/04-battery-and-charging/batteries.md) | [04.01–04.04 Battery and charging costs](../technical/cost-breakdown.md#04--battery-and-charging) |
+| 05 — Power cables and electronics: [cables and connectors](../technical/modules/05-power-cables-and-electronics/cables-connectors.md) · [power distribution](../technical/modules/05-power-cables-and-electronics/power-distribution.md) | [05.01–05.08 Wiring and power-distribution costs](../technical/cost-breakdown.md#05--power-cables-and-electronics) |
+| [06 — Safety controls and sensors](../technical/modules/06-safety-controls-and-sensors/safety-controls.md) | [06.01, 06.03–06.07 Safety and sensing costs](../technical/cost-breakdown.md#06--safety-controls-and-sensors) |
+| [07 — Workshop and support](../technical/modules/07-workshop-and-support/workshop.md) | [07.01–07.02, 07.04–07.06 Workshop and support costs](../technical/cost-breakdown.md#07--workshop-and-support) |
 
 Each module has its own folder under
-[`docs/engineering/modules/`](../modules/README.md), listed in the single
+[`docs/engineering/technical/modules/`](../technical/modules/README.md), listed in the single
 module directory. Scope documents live in their owning module folder. Module 05's power and wiring requirements and
 Module 06's safety controls are separate technical documents; the cost module
 map still owns item numbering and exactly-once cost ownership.
@@ -66,8 +66,8 @@ can span multiple technical scopes, and one scope can own several submodules.
 Preserve established numbers when editing labels; assign the next available
 submodule within its module when adding a genuinely new cost submodule.
 The gaps are the retired
-[industrial remote (06.02)](../modules/06-safety-controls-and-sensors/safety-controls.md#decision-records)
-and [dynamometer/torque measurement (07.03)](../modules/07-workshop-and-support/workshop.md#decision-records);
+[industrial remote (06.02)](../technical/modules/06-safety-controls-and-sensors/safety-controls.md#decision-records)
+and [dynamometer/torque measurement (07.03)](../technical/modules/07-workshop-and-support/workshop.md#decision-records);
 do not reuse those numbers for unrelated scope.
 
 [↑ Back to document overview](agent-guide.md#engineering-bom-agent-guide)

@@ -16,7 +16,7 @@ mounting, and connected components without returning to this table. The
 **Related documents:** [Chassis BOM](bom/chassis-bom.md) ·
 [Module directory](modules/README.md) ·
 [Cost ledger](bom/chassis-bom.csv) · [Module map](bom/cost-modules.csv) ·
-[Update procedure](bom/updating-linked-costs.md)
+[Update procedure](../agents/updating-linked-costs.md)
 
 Do not edit generated tables by hand.
 

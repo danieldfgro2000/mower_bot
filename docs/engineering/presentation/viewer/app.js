@@ -18,6 +18,7 @@ async function start() {
   byId('source').href = `/files/${config.source}`;
   let scene;
   let currentDocument = '';
+  let currentMode = 'presentation';
   let documentRequest = 0;
   let navigationRequest = 0;
   const visibilityInputs = new Map();
@@ -70,9 +71,17 @@ async function start() {
   async function navigate(url, push = true) {
     const request = ++navigationRequest;
     byId('error').hidden = true;
+    const requestedMode = url.searchParams.get('mode');
+    const requestedDocument = url.searchParams.get('doc') || '';
+    currentMode = requestedMode === 'engineering'
+      || (!requestedMode && requestedDocument.includes('/technical/'))
+      ? 'engineering' : 'presentation';
+    byId('mode').value = currentMode;
     const id = url.searchParams.get('component') || '';
     setSelection(id, true);
-    const target = url.searchParams.get('doc') || (id ? parts.get(id).document : config.defaultDocument);
+    const target = url.searchParams.get('doc') || (id
+      ? parts.get(id)[currentMode === 'presentation' ? 'presentation' : 'document']
+      : currentMode === 'presentation' ? config.defaultPresentation : config.defaultDocument);
     await showDocument(target, url.hash);
     if (request !== navigationRequest) return;
     if (push) history.pushState(null, '', url.pathname + url.search + url.hash);
@@ -81,6 +90,7 @@ async function start() {
   async function selectPart(id) {
     const url = new URL('/', location.origin);
     if (id) url.searchParams.set('component', id);
+    url.searchParams.set('mode', currentMode);
     await navigate(url);
   }
 
@@ -88,6 +98,12 @@ async function start() {
     id => { selectPart(id).catch(showError); });
   byId('component').addEventListener('change', event => {
     selectPart(event.target.value).catch(showError);
+  });
+  byId('mode').addEventListener('change', event => {
+    const url = new URL(location.href);
+    url.searchParams.delete('doc');
+    url.searchParams.set('mode', event.target.value);
+    navigate(url).catch(showError);
   });
   byId('isolate').addEventListener('change', event => scene.isolate(event.target.checked));
   byId('fit').addEventListener('click', () => scene.fit());
@@ -109,6 +125,13 @@ async function start() {
       window.open(url.href, '_blank', 'noopener,noreferrer');
     } else if (url.pathname === '/') {
       event.preventDefault();
+      if (!url.searchParams.has('mode')) {
+        const target = url.searchParams.get('doc') || '';
+        url.searchParams.set('mode',
+          target
+            ? target.includes('/technical/') ? 'engineering' : 'presentation'
+            : currentMode);
+      }
       // Reading adjacent sections keeps the current model selection.
       if (url.searchParams.has('doc') && byId('component').value) {
         url.searchParams.set('component', byId('component').value);

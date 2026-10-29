@@ -16,9 +16,9 @@ actions.
 **Related documents:**
 [Engineering BOM agent guide](agent-guide.md) ·
 [Agent index](agent-index.md) ·
-[Chassis BOM](chassis-bom.md) ·
-[BOM Cost Breakdown](../cost-breakdown.md) ·
-[Supplier register](sources.md)
+[Chassis BOM](../technical/bom/chassis-bom.md) ·
+[BOM Cost Breakdown](../technical/cost-breakdown.md) ·
+[Supplier register](../technical/bom/sources.md)
 
 ## Cost inputs
 
@@ -26,13 +26,13 @@ Edit numeric costs in their authoritative CSV, not in generated Markdown tables:
 
 | Input file | What it owns |
 | --- | --- |
-| [Cost ledger](chassis-bom.csv) | Item quantities, active 48 V unit/extended costs, basis codes, source IDs and assumptions |
-| [Module mapping](cost-modules.csv) | Exactly-once item ownership, module/submodule numbering, module-folder scope routes, cost categories and accounting disposition |
-| [Budget allowances](budget-allowances.csv) | Non-material cash provisions |
-| [Propulsion alternatives](propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals; `technical_reference` links to the owning engineering detail |
+| [Cost ledger](../technical/bom/chassis-bom.csv) | Item quantities, active 48 V unit/extended costs, basis codes, source IDs and assumptions |
+| [Module mapping](../technical/bom/cost-modules.csv) | Exactly-once item ownership, module/submodule numbering, module-folder scope routes, cost categories and accounting disposition |
+| [Budget allowances](../technical/bom/budget-allowances.csv) | Non-material cash provisions |
+| [Propulsion alternatives](../technical/bom/propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals; `technical_reference` links to the owning engineering detail |
 
-Keep supplier evidence (in the owning module page, or [Sources](sources.md)
-for shared catalogs) and affected scope requirements in step with the inputs. Follow the [estimate rules](chassis-bom.md#estimate-rules)
+Keep supplier evidence (in the owning module page, or [Sources](../technical/bom/sources.md)
+for shared catalogs) and affected scope requirements in step with the inputs. Follow the [estimate rules](../technical/bom/chassis-bom.md#estimate-rules)
 and the [BOM documentation skill](../../../.github/skills/bom-documentation/SKILL.md).
 A sourcing request alone does not select a new hardware configuration.
 
@@ -52,9 +52,9 @@ Open each engineering document with a short summary. Technical scopes then
 show **Parts at a glance**; maintenance/history pages keep task or evidence
 routes appropriate to their purpose. Keep secondary local jumps under
 **Further detail** or **On this page**, not ahead of the useful part view.
-The [module directory](../modules/README.md#module-directory) shows
+The [module directory](../technical/modules/README.md#module-directory) shows
 component-to-component routes rather than repeating the specification index. Link the topic itself:
-[Workshop tools (PS36)](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
+[Workshop tools (PS36)](../technical/modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
 not just its requirement code. Supplier, decision, request, and hold references
 also need meaningful names.
 
@@ -64,11 +64,11 @@ navigation targets.
 
 | Navigation surface | Owner and maintenance rule |
 | --- | --- |
-| Generated cost headings | The [module map](cost-modules.csv) owns human-readable numbered labels. Generated links target those headings; legacy `cost-<module_id>` anchors remain for existing links. |
+| Generated cost headings | The [module map](../technical/bom/cost-modules.csv) owns human-readable numbered labels. Generated links target those headings; legacy `cost-<module_id>` anchors remain for existing links. |
 | Cost-item links to requirements | Each scope owns plain-text `### PS##: Name` headings and the following `**Cost-ledger coverage:**` line. The generator derives the heading link and requires every scope item to have exactly one requirement owner. |
 | Requirement coverage | Use inclusive item ranges and `\|` unions, as in the module map. A family without purchases uses `None;` followed by its explanation; it must not claim priced items. |
-| Supplier names and IDs | Descriptive `### S##: Name` / `### U##: Name` headings live in the owning module page's **Supplier evidence** section, or in [Sources](sources.md#source-id-lookup) for shared catalogs; IDs must be unique across both. Link to the named headings and preserve `s##` / `u##` aliases for existing source links. |
-| Alternative technical detail | `technical_reference` in the [alternatives CSV](propulsion-alternatives.csv) is relative to that CSV's `bom/` directory and points to a module Markdown section. Keep `product_url` for supplier evidence; neither field changes the non-additive cost treatment. |
+| Supplier names and IDs | Descriptive `### S##: Name` / `### U##: Name` headings live in the owning module page's **Supplier evidence** section, or in [Sources](../technical/bom/sources.md#source-id-lookup) for shared catalogs; IDs must be unique across both. Link to the named headings and preserve `s##` / `u##` aliases for existing source links. |
+| Alternative technical detail | `technical_reference` in the [alternatives CSV](../technical/bom/propulsion-alternatives.csv) is relative to that CSV's `bom/` directory and points to a module Markdown section. Keep `product_url` for supplier evidence; neither field changes the non-additive cost treatment. |
 | New or renamed detail sections | Update the local topic map and inbound links together; link a section for a specific topic and a file for a scope overview. |
 
 Keep detailed requirements, supplier limitations, calculations, and release
@@ -93,18 +93,18 @@ A complete contents list and valid links alone do not satisfy this use case.
 Before handoff, walk real reading paths from the rendered sections, not only
 whole-file link presence. The minimum checks for this package are:
 
-- [HPM5000B](../modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
-  → price/specifications → [motor-to-track mounting](../modules/02-drive-train/propulsion.md#motor-to-track-mounting)
-  → [frame plates](../modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
-  and [drum engagement](../modules/01-structure-and-running-gear/running-gear.md#drive-drum-study).
-- [Battery](../modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
-  → cost/data → [pod fit and restraints](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit).
-- [Width motor](../modules/03-width-adjustment/width-adjustment.md#ps09-reused-wiper-motor)
+- [HPM5000B](../technical/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate)
+  → price/specifications → [motor-to-track mounting](../technical/modules/02-drive-train/propulsion.md#motor-to-track-mounting)
+  → [frame plates](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
+  and [drum engagement](../technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study).
+- [Battery](../technical/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
+  → cost/data → [pod fit and restraints](../technical/modules/04-battery-and-charging/batteries.md#battery-to-pod-fit).
+- [Width motor](../technical/modules/03-width-adjustment/width-adjustment.md#ps09-reused-wiper-motor)
   → cost/data → screw supports → scissor pivots/holding.
-- [Power connector](../modules/05-power-cables-and-electronics/cables-connectors.md#ps23-high-current-harness)
-  → cost/requirements → [crimp tooling](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
+- [Power connector](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#ps23-high-current-harness)
+  → cost/requirements → [crimp tooling](../technical/modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
   with a route back to the connector.
-- [E-stop](../modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control)
+- [E-stop](../technical/modules/06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control)
   → hardware cost/requirements → contactor and brake interfaces.
 
 Confirm that the destination actually explains the requested detail and leaves
@@ -123,12 +123,15 @@ python3 .github/skills/bom-documentation/scripts/update_costs.py --check
 ```
 
 This updates BOM Cost Breakdown, module/category totals, accounting totals,
-stage acquisitions, cost-basis snapshot, candidate cost table, broader budget and
-all nine scoped item-cost tables and their requirement links in one pass.
+stage acquisitions, cost-basis snapshot, candidate cost table, broader budget,
+all nine scoped item-cost tables and their requirement links, plus the generated
+presentation pitch and component cards in one pass. Presentation facts come
+from `docs/engineering/presentation/catalog.json`; each fact and supplier URL
+must remain supported by its linked technical evidence section.
 Extensions must reconcile with unit costs and quantities; missing purchase
 prices, missing/duplicate module ownership, and missing/duplicate specification
-coverage fail explicitly. The 20% contingency is applied after the separately
-sourced cash provisions.
+coverage, stale presentation facts and missing evidence fail explicitly. The
+20% contingency is applied after the separately sourced cash provisions.
 
 **This is not a live spreadsheet or watcher.** Edits outside this workflow need
 the same command before tables are current. `--check` reports stale documents
@@ -143,6 +146,7 @@ When changing the generator, also run its regression suite:
 
 ```sh
 python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_update_costs.py'
+python3 -m unittest discover -s .github/skills/bom-documentation/scripts -p 'test_presentation.py'
 ```
 
 [↑ Back to document overview](updating-linked-costs.md#updating-linked-costs)
@@ -329,7 +333,7 @@ TDD evidence, 2026-10-26: regression fixtures first exposed accepted missing
 cross-file anchors and headings hidden in comments or code fences, plus a
 false failure for a valid underlined heading. After rendered-target validation,
 all 15 reference regressions passed. A temporary copy of
-[BOM Cost Breakdown](../cost-breakdown.md) passes before removing
+[BOM Cost Breakdown](../technical/cost-breakdown.md) passes before removing
 `### 02 — Drive train` and reports the broken
 `cost-breakdown.md#02--drive-train` afterward; the live repository-test entry
 point also rejects a missing cross-file fragment.
@@ -342,7 +346,7 @@ into a module page, a duplicate entry across documents and a missing entry.
 every module page and rejects duplicates. Single-scope supplier evidence,
 decision records, procurement packages and release holds then moved into
 their module pages; the per-module README overviews were folded into the
-[module directory](../modules/README.md#module-directory). Central pages keep
+[module directory](../technical/modules/README.md#module-directory). Central pages keep
 policy, ID indexes and cross-module records. Costs and the baseline ledger
 were unchanged.
 

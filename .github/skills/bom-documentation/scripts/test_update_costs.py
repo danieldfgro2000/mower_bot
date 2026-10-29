@@ -21,7 +21,7 @@ class CostDocumentationTest(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         shutil.copytree(ROOT / "docs/engineering", self.root / "docs/engineering")
-        self.engineering = self.root / "docs/engineering"
+        self.engineering = self.root / "docs/engineering/technical"
         with (self.engineering / "bom/chassis-bom.csv").open() as stream:
             purchases = [row for row in csv.DictReader(stream)
                          if row["unit_eur_48v"] != "N/A"]
@@ -501,6 +501,18 @@ class CostDocumentationTest(unittest.TestCase):
                         unit_eur_48v="10.00", extended_eur_48v="100.00")
         self.assertIn("stale", self.run_generator("--check", success=False).stderr.lower())
         self.assertEqual(path.read_text(), before)
+
+    def test_presentation_is_generated_and_freshness_checked(self):
+        self.run_generator()
+        presentation = self.root / "docs/engineering/presentation"
+        pitch = presentation / "README.md"
+        parts = presentation / "parts.md"
+        self.assertTrue(pitch.is_file())
+        self.assertTrue(parts.is_file())
+        self.assertIn("200 × 72 × 40", parts.read_text())
+        parts.write_text(parts.read_text() + "\nStale edit.\n")
+        result = self.run_generator("--check", success=False)
+        self.assertIn("presentation", result.stderr.lower())
 
     def test_rejects_missing_price_and_incorrect_extensions(self):
         self.change_row("bom/chassis-bom.csv", "PWR-008", unit_eur_48v="N/A")

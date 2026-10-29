@@ -12,7 +12,7 @@ function boundsFor(component) {
     execFileSync(process.env.OPENSCAD || 'openscad', [
       '--export-format', 'binstl', '-o', output,
       '-D', `viewer_component="${component}"`,
-      'docs/engineering/cad/module-01-track-pod-fit.scad',
+      'docs/engineering/technical/cad/module-01-track-pod-fit.scad',
     ], { stdio: 'pipe' });
     const data = readFileSync(output);
     const triangles = [];

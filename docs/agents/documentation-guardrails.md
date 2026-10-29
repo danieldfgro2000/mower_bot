@@ -8,6 +8,10 @@
 | Human entry point | [README.md](../../README.md) |
 | Product, engineering/business assumptions, open decisions, build gates | [plan.md](../../plan.md) |
 | Documentation navigation | [docs/index.md](../index.md) |
+| Engineering audience/category routing | [Engineering documentation hub](../engineering/README.md) |
+| Concise engineering pitch and 3D viewer | [Generated presentation](../engineering/presentation/README.md) |
+| Detailed engineering facts, requirements, BOM and CAD | [Technical index](../engineering/technical/README.md) |
+| Engineering-agent routing and maintenance procedures | [Engineering agent guide](../engineering/agents/README.md) |
 | Agent behavior and safety constraints | [Project guardrails](project-guardrails.md) |
 | Documentation policy and reuse provenance | This document |
 | Current implementation versus product direction | [Project overview](../project/overview.md) |
@@ -18,6 +22,15 @@
 Maintain one authoritative owner per topic and link from other scopes. Split a
 topic into a dedicated document only when its size or independent ownership
 justifies it; update the index at the same time.
+
+Engineering documentation uses three audience categories. Technical documents
+own detailed facts and evidence; presentation pages are concise generated views
+of technical evidence and `presentation/catalog.json`; agent documents own
+repository-specific workflows and routing. Do not hand-edit generated
+presentation Markdown or copy detailed evidence into pitch and agent pages.
+Keep the engineering hub and category indices linked, and run their generation
+and freshness checks after changing technical sources, pitch data or viewer
+routes.
 
 ## Placement and updates
 

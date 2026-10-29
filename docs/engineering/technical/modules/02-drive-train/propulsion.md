@@ -27,10 +27,10 @@ circles, not designed gears. The holding brake and controller are not modeled.
 
 | Motor body | Planetary study | Output carrier |
 | --- | --- | --- |
-| [![3D HPM5000B](../../cad/viewer/previews/motor.png)](../../cad/viewer/index.html?component=motor) | [![3D planetary stage](../../cad/viewer/previews/planetary-1.png)](../../cad/viewer/index.html?component=planetary-1) | [![3D output carrier](../../cad/viewer/previews/output-carrier.png)](../../cad/viewer/index.html?component=output-carrier) |
+| [![3D HPM5000B](../../../presentation/viewer/previews/motor.png)](../../../presentation/viewer/index.html?component=motor) | [![3D planetary stage](../../../presentation/viewer/previews/planetary-1.png)](../../../presentation/viewer/index.html?component=planetary-1) | [![3D output carrier](../../../presentation/viewer/previews/output-carrier.png)](../../../presentation/viewer/index.html?component=output-carrier) |
 
-Separate reduction exports: [3D stage 2](../../cad/viewer/index.html?component=planetary-2) ·
-[3D stage 3](../../cad/viewer/index.html?component=planetary-3).
+Separate reduction exports: [3D stage 2](../../../presentation/viewer/index.html?component=planetary-2) ·
+[3D stage 3](../../../presentation/viewer/index.html?component=planetary-3).
 
 **Further detail:** [Drive studies](propulsion.md#drive-alternatives) ·
 [Mounting interfaces](propulsion.md#motor-to-track-mounting) ·
@@ -802,7 +802,7 @@ orientation, baseline BOM quantities, or costs.
 **2026-10-28 clarification:** The roughly 1 m forward distance is not a fixed
 requirement. Choose the tool position through packaging and stability
 analysis, then define its actual CG and working-force datums. The
-[plan's fore-aft direction](../../../../plan.md#52-motor-and-gearbox-target)
+[plan's fore-aft direction](../../../../../plan.md#52-motor-and-gearbox-target)
 retains the up-to-50 kg tool case without claiming a validated counterbalance.
 
 ### F11: motor braking and stationary hold
@@ -876,7 +876,7 @@ is authorized.
 ### L2: drive operating points
 
 **Inputs needed / next feedback:** Derive continuous and short-duty output
-torque **at** the rpm implied by the [current operating cases](../../../../plan.md#51-duty-requirement)
+torque **at** the rpm implied by the [current operating cases](../../../../../plan.md#51-duty-requirement)
 and confirmed track geometry. The V1 maximum travel target is now 4 km/h;
 measure configuration mass, resistance and duty rather than reusing the
 withdrawn higher-speed/rpm assumptions.

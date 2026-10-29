@@ -1,10 +1,10 @@
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
 
-const componentLink = /cad\/viewer\/index\.html\?component=([a-z0-9-]+)/g;
-const thumbnail = /cad\/viewer\/previews\/([a-z0-9-]+)\.png/g;
+const componentLink = /(?:presentation\/)?viewer\/index\.html\?component=([a-z0-9-]+)/g;
+const thumbnail = /(?:presentation\/)?viewer\/previews\/([a-z0-9-]+)\.png/g;
 const linkedThumbnail =
-  /\[!\[[^\]]*\]\([^)]*cad\/viewer\/previews\/([a-z0-9-]+)\.png\)\]\([^)]*cad\/viewer\/index\.html\?component=([a-z0-9-]+)\)/g;
+  /\[!\[[^\]]*\]\([^)]*(?:presentation\/)?viewer\/previews\/([a-z0-9-]+)\.png\)\]\([^)]*(?:presentation\/)?viewer\/index\.html\?component=([a-z0-9-]+)\)/g;
 
 // Pure check: SCAD/manifest components versus Markdown 3D entry points.
 export function checkDocumentationLinks(config, documents) {

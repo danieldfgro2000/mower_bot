@@ -21,7 +21,7 @@ No purchase, fabrication, energizing, upload, or physical test is authorized.
 [BOM Cost Breakdown](cost-breakdown.md) ·
 [Cost ledger](bom/chassis-bom.csv) ·
 [Width/slope limitations](width-and-slope-sizing.md) ·
-[Product direction and build gates](../../plan.md)
+[Product direction and build gates](../../../plan.md)
 
 ## Current status
 

@@ -14,7 +14,7 @@ selections.
 **Related documents:** [Chassis BOM](../bom/chassis-bom.md) ·
 [BOM Cost Breakdown](../cost-breakdown.md) ·
 [Chassis BOM scope directory](../bom/chassis-bom.md#bom-by-scope) ·
-[Engineering BOM agent index](../bom/agent-index.md)
+[Engineering BOM agent index](../../agents/agent-index.md)
 
 ## Module directory
 

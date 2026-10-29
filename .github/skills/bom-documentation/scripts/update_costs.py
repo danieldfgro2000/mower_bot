@@ -7,6 +7,8 @@ from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 import re
 
+from presentation import render as render_presentation
+
 
 CENT = Decimal(".01")
 TARGET = Decimal("5000")
@@ -355,8 +357,10 @@ def main():
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     try:
-        outputs = render(args.root / "docs/engineering")
-        stale = [path for path, text in outputs.items() if path.read_text() != text]
+        outputs = render(args.root / "docs/engineering/technical")
+        outputs.update(render_presentation(args.root / "docs/engineering"))
+        stale = [path for path, text in outputs.items()
+                 if not path.is_file() or path.read_text() != text]
         if args.check and stale:
             raise ValueError("Stale BOM tables: " + ", ".join(str(p) for p in stale))
         if not args.check:

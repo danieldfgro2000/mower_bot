@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { isDocumentPath, renderDocument } from './core.mjs';
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-export const viewerDirectory = 'docs/engineering/cad/viewer';
+export const viewerDirectory = 'docs/engineering/presentation/viewer';
 export const outputDirectory = 'build/cad-viewer';
 
 export function readRepositoryFile(relative) {
@@ -16,7 +16,7 @@ export function readRepositoryFile(relative) {
 
 export function loadConfig() {
   const config = JSON.parse(readRepositoryFile(`${viewerDirectory}/components.json`));
-  if (!config.source.startsWith('docs/engineering/cad/') || !config.source.endsWith('.scad')) {
+  if (!config.source.startsWith('docs/engineering/technical/cad/') || !config.source.endsWith('.scad')) {
     throw new Error('Component source must be an engineering SCAD file');
   }
   const ids = new Set();
@@ -27,6 +27,10 @@ export function loadConfig() {
     if (!/^#[a-f\d]{6}$/i.test(component.color) || !component.label) {
       throw new Error(`Missing label or invalid color: ${component.id}`);
     }
+    if (component.presentation
+        !== `docs/engineering/presentation/parts.md#${component.id}`) {
+      throw new Error(`Invalid presentation target: ${component.id}`);
+    }
     ids.add(component.id);
   }
   const source = readRepositoryFile(config.source).toString();
@@ -35,7 +39,11 @@ export function loadConfig() {
   if (!selectors || selectors.length !== ids.size || selectors.some(id => !ids.has(id))) {
     throw new Error('SCAD component selectors and documentation manifest differ');
   }
-  for (const target of [config.defaultDocument, ...config.components.map(part => part.document)]) {
+  for (const target of [
+    config.defaultDocument,
+    config.defaultPresentation,
+    ...config.components.flatMap(part => [part.document, part.presentation]),
+  ]) {
     const [document, anchor] = target.split('#');
     if (!isDocumentPath(document) || !document.endsWith('.md')) {
       throw new Error(`Invalid component documentation path: ${target}`);

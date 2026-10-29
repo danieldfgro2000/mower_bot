@@ -85,7 +85,7 @@ study targets and why 40° site inclines cannot be accepted from width alone.
 
 **Holding conflict remains open:** worm geometry alone is not a validated
 positive lock under vibration, wear, lubrication, load reversals, or power loss.
-The [plan's locking requirement](../../../../plan.md#42-variable-width-scissor-frame)
+The [plan's locking requirement](../../../../../plan.md#42-variable-width-scissor-frame)
 is retained. The [width-lock provision (CHS-010)](../01-structure-and-running-gear/frame.md#0105-scissor-pivots-locks-and-hard-stops)
 is a €48 estimating reserve while that requirement and the
 worm-only proposal are reviewed; it is not proof of a feasible automatic lock.
@@ -314,7 +314,7 @@ reused with purchase cost N/A (already owned). No adjustment speed is yet valida
 lock and incremental Hall/optical turn counting converted to width.
 
 **Effect on estimate:** Record the proposal and reference/limit provisions; **do not yet
-remove the [plan's positive-locking requirement](../../../../plan.md#42-variable-width-scissor-frame)**.
+remove the [plan's positive-locking requirement](../../../../../plan.md#42-variable-width-scissor-frame)**.
 The [width-lock provision (CHS-010)](../01-structure-and-running-gear/frame.md#0105-scissor-pivots-locks-and-hard-stops) retains a €48 pin-cost
 reserve, not a selected or integrated automatic locking design. Holding remains a
 release blocker.

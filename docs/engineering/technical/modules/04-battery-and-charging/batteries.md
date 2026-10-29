@@ -30,7 +30,7 @@ terminals/restraints are not modeled. The arrow is not verified removal access.
 
 | DC HOUSE listing envelope | Removal-direction annotation |
 | --- | --- |
-| [![3D DC HOUSE battery](../../cad/viewer/previews/battery.png)](../../cad/viewer/index.html?component=battery) | [![3D removal arrow](../../cad/viewer/previews/removal-arrow.png)](../../cad/viewer/index.html?component=removal-arrow) |
+| [![3D DC HOUSE battery](../../../presentation/viewer/previews/battery.png)](../../../presentation/viewer/index.html?component=battery) | [![3D removal arrow](../../../presentation/viewer/previews/removal-arrow.png)](../../../presentation/viewer/index.html?component=removal-arrow) |
 
 **Further detail:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Release requirements](batteries.md#specification-and-inspection-requirements) ·
@@ -247,8 +247,8 @@ completed tests. Cost-ledger ranges are inclusive.
 [Cumulative pack costs](batteries.md#0401-battery-packs-with-integrated-bms) ·
 [Pod fit](batteries.md#battery-to-pod-fit) ·
 [Motor/controller load](../02-drive-train/propulsion.md#compatibility-and-duty-limitations) ·
-[Preferred runtime and energy cases](../../../../plan.md#eight-hour-runtime-and-charging-study) ·
-[Flat-mowing draw screen](../../../../plan.md#flat-terrain-mowing-draw-at-4-kmh).
+[Preferred runtime and energy cases](../../../../../plan.md#eight-hour-runtime-and-charging-study) ·
+[Flat-mowing draw screen](../../../../../plan.md#flat-terrain-mowing-draw-at-4-kmh).
 
 **Required purchasing/manufacturing definition:** Exact chemistry/series count,
 full/cutoff voltage, usable energy, continuous/peak discharge and charge/regen limits
@@ -339,8 +339,8 @@ The old 72 kg pair is not the current **89.8 kg** body mass, before restraints.
 [Connector/interlock costs](batteries.md#0404-charge-connectors-fuse-holders-and-interlock-harness) ·
 [Pack/BMS limits](batteries.md#ps18-battery-packs-and-bms) ·
 [Independent stop interface](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) ·
-[Cold-shelter charging requirement](../../../../plan.md#charging-environment) ·
-[Shared household supply and charging study](../../../../plan.md#eight-hour-runtime-and-charging-study).
+[Cold-shelter charging requirement](../../../../../plan.md#charging-environment) ·
+[Shared household supply and charging study](../../../../../plan.md#eight-hour-runtime-and-charging-study).
 
 **Required purchasing/manufacturing definition:** Exact charge
 profile/voltage/current/temperature restrictions, mains input/plug, BMS compatibility,

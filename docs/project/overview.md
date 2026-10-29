@@ -22,7 +22,7 @@ The confirmed battery direction is two independent 51.2 V / approximately
 100 Ah LiFePO4 packs; small upward variations such as 105 Ah are accepted.
 The 100 Ah baseline gives 10.24 kWh nominal and 8.192 kWh at the assumed
 80% usable fraction, before reserves. The
-[conditional DC HOUSE budget recommendation](../engineering/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
+[conditional DC HOUSE budget recommendation](../engineering/technical/modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive)
 is not a qualified vehicle selection. The drive, torque and 4 km/h figures remain sizing inputs rather
 than accepted component specifications or firmware limits; pricing and
 utilization are business hypotheses.

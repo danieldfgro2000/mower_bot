@@ -2,7 +2,7 @@ import path from 'node:path';
 import { Marked } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 
-const viewerPath = 'docs/engineering/cad/viewer/index.html';
+const viewerPath = 'docs/engineering/presentation/viewer/index.html';
 const allowedExtensions = new Set(['.md', '.png', '.jpg', '.jpeg', '.svg', '.pdf',
   '.scad', '.csv', '.json', '.html', '.js', '.css', '.stl']);
 const escapeHtml = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;')
