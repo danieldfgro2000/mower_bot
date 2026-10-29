@@ -9,6 +9,13 @@ a { color: #135ba4; }
 #notice { margin: 0; padding: .65rem 1rem; background: #fff0c8; font-size: .85rem; }
 #error { margin: 0; padding: 1rem; background: #ffd9d9; color: #861b1b; white-space: pre-wrap; }
 main { display: grid; grid-template-columns: minmax(360px, 48%) minmax(0, 1fr); height: calc(100dvh - 130px); }
+main[data-layout="cad"], main[data-layout="docs"] { grid-template-columns: minmax(0, 1fr); }
+main[data-layout="cad"] .document-pane, main[data-layout="docs"] .model-pane { display: none; }
+main[data-layout="cad"] .model-pane { border-right: 0; }
+.layout-switch { display: flex; }
+.layout-switch button { border: 1px solid #8fa8c2; background: #22394f; color: white; font-size: .85rem; }
+.layout-switch button + button { border-left: 0; }
+.layout-switch button[aria-pressed="true"] { background: #d3e7ff; color: #172a3d; font-weight: 600; }
 .model-pane { display: flex; flex-direction: column; min-height: 0; padding: .75rem; border-right: 1px solid #cad4de; }
 .toolbar { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
 .toolbar label { font-size: .85rem; }
@@ -49,5 +56,7 @@ article :target { background: #fff0c8; }
   .model-pane { height: auto; min-height: 450px; border-right: 0; }
   #viewport { flex: none; height: 45dvh; }
   .document-pane { height: 80dvh; }
+  main[data-layout="cad"] #viewport { height: 65dvh; }
+  main[data-layout="docs"] .document-pane { height: calc(100dvh - 150px); min-height: 400px; }
   header { gap: .7rem; font-size: .85rem; }
 }

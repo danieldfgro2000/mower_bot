@@ -21,6 +21,7 @@ async function start() {
   let scene;
   let currentDocument = '';
   let currentMode = 'presentation';
+  let currentLayout = 'split';
   let documentRequest = 0;
   let navigationRequest = 0;
   let currentUrl = new URL(location.href);
@@ -91,9 +92,29 @@ async function start() {
     if (id) byId('export').href = `/models/${id}.stl`;
   }
 
+  function readLayout(url) {
+    const layout = url.searchParams.get('layout') ?? 'split';
+    if (!['split', 'cad', 'docs'].includes(layout)) throw new Error(`Invalid layout: ${layout}`);
+    return layout;
+  }
+  function writeLayout(url, layout) {
+    const next = new URL(url);
+    if (layout === 'split') next.searchParams.delete('layout');
+    else next.searchParams.set('layout', layout);
+    return next;
+  }
+  function applyLayout(layout) {
+    currentLayout = layout;
+    document.querySelector('main').dataset.layout = layout;
+    for (const button of document.querySelectorAll('.layout-switch button')) {
+      button.setAttribute('aria-pressed', String(button.dataset.layout === layout));
+    }
+  }
+
   async function navigate(url, push = true) {
     const request = ++navigationRequest;
     byId('error').hidden = true;
+    applyLayout(readLayout(url));
     const requestedMode = url.searchParams.get('mode');
     const requestedDocument = url.searchParams.get('doc') || '';
     currentMode = requestedMode === 'engineering'
@@ -116,7 +137,7 @@ async function start() {
     const url = new URL('/', location.origin);
     if (id) url.searchParams.set('component', id);
     url.searchParams.set('mode', currentMode);
-    await navigate(writeDisplay(url, display, ids));
+    await navigate(writeLayout(writeDisplay(url, display, ids), currentLayout));
   }
 
   scene = await createScene(byId('viewport'), config.components,
@@ -165,9 +186,22 @@ async function start() {
       if (url.searchParams.has('doc') && byId('component').value) {
         url.searchParams.set('component', byId('component').value);
       }
-      navigate(writeDisplay(url, display, ids)).catch(showError);
+      // A 3D thumbnail asks to see the model, so documentation focus opens split view.
+      const opensModel = url.searchParams.has('component') && !url.searchParams.has('doc');
+      const layout = url.searchParams.has('layout') ? url.searchParams.get('layout')
+        : opensModel && currentLayout === 'docs' ? 'split' : currentLayout;
+      navigate(writeLayout(writeDisplay(url, display, ids), layout)).catch(showError);
     }
   });
+  for (const button of document.querySelectorAll('.layout-switch button')) {
+    button.addEventListener('click', () => {
+      if (button.dataset.layout === currentLayout) return;
+      ++navigationRequest;
+      applyLayout(button.dataset.layout);
+      currentUrl = writeLayout(currentUrl, currentLayout);
+      history.pushState(null, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
+    });
+  }
   window.addEventListener('popstate', () => navigate(new URL(location.href), false).catch(showError));
   window.addEventListener('pagehide', () => scene.dispose(), { once: true });
   await navigate(new URL(location.href), false);

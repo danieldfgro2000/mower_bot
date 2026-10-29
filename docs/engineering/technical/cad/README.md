@@ -139,12 +139,18 @@ The same thumbnail route is available beside the motor in its owning scope.
   coordinates, in millimetres. Planetary pitch-circle studies are grouped by
   stage; the four lower rollers are separate exports. The removal arrow is
   explicitly an annotation, not a physical part.
+- **Split**, **CAD focus** and **Docs focus** in the header choose the pane
+  layout. CAD focus collapses the documentation so the model uses the full
+  width; Docs focus collapses the model for reading. Focus views keep the
+  inspected part, display set and open section. Clicking a 3D thumbnail while
+  in Docs focus returns to Split so the selected part is visible.
 - Markdown links keep their scope and fragment in the reader. Presentation and
-  engineering modes, inspected part, custom visibility and temporary isolation
-  persist in the URL. Reload and Browser Back/Forward restore them; the address
-  can be bookmarked. A missing `visible` parameter means all components;
-  `visible=` explicitly means none. Unknown visibility IDs are reported as
-  errors, not silently discarded.
+  engineering modes, inspected part, custom visibility, temporary isolation
+  and pane layout persist in the URL. Reload and Browser Back/Forward restore
+  them; the address can be bookmarked. A missing `visible` parameter means all
+  components; `visible=` explicitly means none. A missing `layout` means split;
+  `layout=cad` or `layout=docs` selects a focus view. Unknown visibility IDs or
+  layouts are reported as errors, not silently discarded.
 
 The [component map](../../presentation/viewer/components.json) owns each
 selectable ID, label, technical target and generated presentation target,
@@ -157,6 +163,14 @@ The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
 components have no invented mesh.
 
 ## Refresh and verify
+
+**Split/focus layout test-first update (2026-10-29):**
+`npm run test:browser --prefix tool/cad-viewer` first failed on the missing
+layout control. The implementation also defers camera fitting while the model
+pane is collapsed, because a zero-size pane would otherwise produce an invalid
+camera aspect. Browser checks cover both focus views, widened canvas, kept
+inspection/display, reload, Back/Forward, documentation links, thumbnail
+return to split, invalid layout and narrow screens.
 
 **Grouped visibility test-first update (2026-10-29):**
 `node --test tool/cad-viewer/visibility.test.mjs` first failed because the

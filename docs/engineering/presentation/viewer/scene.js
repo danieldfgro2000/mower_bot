@@ -30,7 +30,11 @@ export async function createScene(container, components, onSelect) {
   }));
   let selected = '';
   let displayed = new Set(components.map(part => part.id));
-  const render = () => renderer.render(scene, camera);
+  const render = () => {
+    renderer.domElement.dataset.camera = [camera.position.x, camera.position.y, camera.position.z,
+      camera.aspect].every(Number.isFinite) && camera.aspect > 0 ? 'finite' : 'invalid';
+    renderer.render(scene, camera);
+  };
   function update() {
     for (const [id, mesh] of meshes) {
       mesh.visible = displayed.has(id);
@@ -42,7 +46,15 @@ export async function createScene(container, components, onSelect) {
     renderer.domElement.dataset.visible = JSON.stringify([...meshes.keys()].filter(id => meshes.get(id).visible));
     render();
   }
+  let pendingFit = null;
+  const hasArea = () => container.clientWidth > 0 && container.clientHeight > 0;
   function fit(allVisible = false) {
+    // A collapsed pane has no aspect ratio; fit once it is shown again.
+    if (!hasArea()) {
+      pendingFit = allVisible;
+      return;
+    }
+    pendingFit = null;
     const box = new THREE.Box3();
     for (const [id, mesh] of meshes) {
       if (mesh.visible && (allVisible || !selected || id === selected)) box.expandByObject(mesh);
@@ -61,11 +73,13 @@ export async function createScene(container, components, onSelect) {
     render();
   }
   const observer = new ResizeObserver(() => {
+    if (!hasArea()) return;
     const { width, height } = container.getBoundingClientRect();
-    camera.aspect = width / Math.max(height, 1);
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
-    render();
+    if (pendingFit !== null) fit(pendingFit);
+    else render();
   });
   observer.observe(container);
   controls.addEventListener('change', render);
