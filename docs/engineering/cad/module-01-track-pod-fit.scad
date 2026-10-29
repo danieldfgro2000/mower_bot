@@ -5,10 +5,10 @@
  release for purchase/build. S01 identifies the listing as 200x72x36 but does
  not define that code or provide a dimensional drawing. The code interpretation,
  belt thickness and pitch-line offset, battery envelope, and carrier are
- assumptions requiring supplier/engineering confirmation. The owner-selected
- 350 mm value means physical roller outside diameter. The speed screen
- temporarily treats that as the effective rolling diameter; the track
- pitch-line diameter is unknown. The HPM5000B body is modeled at the
+ assumptions requiring supplier/engineering confirmation. The 350 mm physical
+ roller outside diameter is a flexible starting placeholder, not a required
+ dimension. The speed screen temporarily treats it as the effective rolling
+ diameter; the track pitch-line diameter is unknown. The HPM5000B body is modeled at the
  manufacturer's 206 mm diameter x 126 mm length;
  the published envelope does not include a selected gearbox. The motor is
  coaxial with the drive drum and extends inward from its outboard face. Three
@@ -34,7 +34,7 @@ track_pitch = 72;
 track_links = 36;
 nominal_pitch_loop = track_pitch * track_links;
 
-roller_outer_diameter = 350; // Owner-selected physical outside-diameter study.
+roller_outer_diameter = 350; // Flexible physical-OD study placeholder, not a requirement.
 effective_rolling_diameter_placeholder = 350; // Track pitch-line diameter is unknown.
 belt_thickness = 20; // Illustrative only; S01 does not publish this dimension.
 track_path_diameter = roller_outer_diameter + belt_thickness;

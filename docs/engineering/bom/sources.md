@@ -9,7 +9,12 @@ No procurement, fabrication, energizing or operation is authorized.
 specifications, or fit. The entries retain dated claims and source IDs;
 catalog leads, stock claims, and owner-reported inventory are not approvals.
 
-**On this page:** [Named reference lookup](sources.md#source-id-lookup) ·
+**Looking for track, roller and idler prices?** Open the
+[highlighted price table](../modules/01-structure-and-running-gear/running-gear.md#prices-found-tracks-rollers-and-idlers)
+for direct product links, per-piece/assembly prices and the wheel-kit subtotal.
+
+**On this page:** [Common sourcing weights](sources.md#common-sourcing-weights) ·
+[Named reference lookup](sources.md#source-id-lookup) ·
 [Supplier evidence](sources.md#supplier-evidence) ·
 [Owner inventory](sources.md#u01-owner-reported-windshield-motor) ·
 [Link verification history](sources.md#link-verification)
@@ -19,6 +24,126 @@ catalog leads, stock claims, and owner-reported inventory are not approvals.
 [Cost ledger](chassis-bom.csv) ·
 [Feedback decisions](feedback.md#feedback-decisions) ·
 [Chassis Build and Procurement Checklist](../chassis-build-requirements.md)
+
+## Common sourcing weights
+
+**Owner-approved policy, 2026-10-29:** Apply these weights to sourcing
+comparisons for all project parts, not just running gear. The weights total
+2.1; normalization preserves their relative importance.
+
+| Criterion | Weight | Normalized share | Higher scores mean |
+| --- | ---: | ---: | --- |
+| Low price | 0.6 | 28.57% | Lower delivered cost for the required quantity, including VAT, shipping, import charges and required extras |
+| Quality | 0.5 | 23.81% | Better documented durability, suitable materials/seals/bearings where applicable, warranty and credible manufacturer evidence |
+| Availability | 0.7 | 33.33% | Verified stock, shorter delivery time and dependable replacement supply |
+| Parts in Europe | 0.3 | 14.29% | Verified European dispatch stock, accessible regional support and spares |
+
+Score each criterion from 0 to 10, higher being better:
+
+`overall = (0.6 * price + 0.5 * quality + 0.7 * availability + 0.3 * Europe) / 2.1`
+
+Availability therefore ranks ahead of price, quality and European stock.
+Record dated evidence and the reason for each score; agree concrete scoring
+thresholds before assigning numerical rankings. Unknown evidence remains
+**unverified**, not an assumed positive score or a complete overall ranking.
+Compare equivalent quantities and included contents. Confirm delivery
+destination before claiming comparable delivered prices.
+
+European stock means dispatch location, not merely a European website or
+manufacturer origin. Distinguish EU from non-EU dispatch; account for import
+charges in delivered price rather than assuming Europe is customs-free.
+
+**Eligibility, owner decision 2026-10-29:** Only offers with a publicly
+listed numeric price are scored. `Quote required`, `Enquiry`, zero-price or
+contact-for-price listings are excluded; the project will not request quotes
+from multiple suppliers. Excluded leads stay documented as context only.
+
+Compatibility and adequate load capacity are prerequisites, not weighted
+trade-offs. Candidates with missing interface or capacity evidence may remain
+research leads but are not qualified selections. Dimensions are flexible
+sourcing references, including the existing `200 x 72 x 36` track and 350 mm
+drive-drum studies; neither is a hard choice. Select drum diameter and
+engagement geometry against the chosen track pitch, reduction and packaging.
+Confirm the complete track/sprocket/idler/roller match rather than rejecting
+alternatives solely for differing nominal dimensions. See
+[running-gear requirements](../modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements).
+This policy changes no baseline quantities, prices, configuration or release holds.
+
+### Running-gear sourcing session
+
+**2026-10-29, in progress:** Owner confirmed delivery to Cluj County, Romania.
+Dimensions may vary; investigate tracks together with compatible idlers,
+rollers and sprockets before selecting individual components. Owner selected
+**no fixed budget ceiling; compare best-value options**. No configuration
+changes have been made.
+
+**Provisional scoring scale (proposed 2026-10-29, pending owner confirmation):**
+
+| Criterion | 10 | 8-9 | 6-7 | 3-5 | 0-2 |
+| --- | --- | --- | --- | --- | --- |
+| Price | Lowest net EUR in the part group; others scale as `10 * lowest / offer` | | | | |
+| Quality | | Genuine OEM line | Named aftermarket brand with stated bearings/seals and 12-month warranty | Generic supplier claims only | No construction evidence |
+| Availability | | Listed in stock, same/next-day dispatch | Stated lead time up to 10 working days | Stock or cross-border delivery unconfirmed | Out of stock |
+| Parts in Europe | EU dispatch | | | Non-EU European dispatch (for example UK: customs/import VAT) | Outside Europe or unknown |
+
+Compare net prices (before VAT) because EU distance sales to Romania are
+expected to carry Romanian VAT; delivery charges remain unconfirmed. GBP
+offers use the ECB 2026-10-28 reference rate of 0.83785 GBP per EUR.
+
+The [PowerTrack track comparison](sources.md#powertrack-track-comparison)
+below records the latest 2026-10-29 price and discount recheck, superseding
+the initial expired/conflicting metadata observations. Steel-cord construction
+and durability statements are supplier claims, not independent quality evidence.
+
+[TVH](sources.md#s02-tvh-undercarriage-parts) remains a matched-component
+enquiry lead; [Cohidrex](sources.md#s26-cohidrex-idler-wheel-family) remains
+an application-specific idler lead. Both are excluded from scoring under the
+price-listed-only rule. Neither has a verified compatible set,
+current itemized price or delivery promise for this project. Research search
+service timeouts and limited supplier-page extraction prevented a broader
+priced comparison in this first pass. Do not treat those access limitations
+as evidence of unavailable stock or poor component quality.
+
+Subsequent direct catalog inspection found the
+[smaller PowerTrack candidate](sources.md#s34-powertrack-180-x-72-x-37-candidate)
+and [Astrak K008-family components](sources.md#s35-astrak-k008-family-candidates).
+These improve the research shortlist, but do not establish a matched set or
+a complete delivered-price comparison. Upper return rollers remain unselected.
+The [priced K008-3 retail candidates](sources.md#s36-priced-kubota-k008-3-undercarriage-candidates)
+list the same Astrak part numbers with public prices, plus genuine Kubota
+Classic Line tracks and rollers.
+
+**Owner preference, 2026-10-29:** Pursue the
+[bearing-wheel roller and idler route](sources.md#s37-bearing-wheel-roller-and-idler-candidates)
+ahead of excavator-specific S36 rollers and idlers. This is a sourcing
+direction, not a released design or a BOM baseline change.
+
+#### PowerTrack track comparison
+
+**Rechecked 2026-10-29:** Both listings show
+`InStock`, roller type `R1`, a 12-month warranty, a 7% two-piece discount
+and price validity until 2026-12-03. Romania is not on PowerTrack's
+[free-shipping country list](https://www.powertrack.it/en/content/1-delivery),
+so delivery is calculated at checkout for both.
+
+| Track | Pair price incl. 22% IT VAT | Pair net EUR | Mass each | Loop length | Score |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [180 x 72 x 37](sources.md#s34-powertrack-180-x-72-x-37-candidate) | 169.92 | 139.28 | 24 kg | 2,664 mm | 8.05 |
+| [200 x 72 x 36](sources.md#s01-powertrack-rubber-tracks) | 257.64 | 211.18 | 32 kg | 2,592 mm | 7.08 |
+
+Scores use the provisional scale: price 10 and 6.60; quality 6 for both
+(same supplier claims); availability 7 for both (stock listed, Romanian
+delivery unconfirmed); Europe 10 for both (Italian dispatch). Weighted scores do
+not include width-dependent engineering effects. The 200 mm track gives about
+11% more nominal contact width and about 10 mm more rolling-path width on each
+side of the guide lugs for wheel pairs; the
+180 mm track reduces outside-track width by 40 mm and saves 16 kg per pair.
+Guide-lug dimensions are not published for either track.
+
+**Owner selection, 2026-10-29:** PowerTrack 180 x 72 x 37 is the track
+sourcing choice for the bearing-wheel route. The baseline still describes
+the 200 mm track until width sizing, CAD fit and the RUN-001 allowance are
+updated together.
 
 ## Source ID lookup
 
@@ -32,7 +157,7 @@ which sources were recorded. IDs remain stable for the ledgers.
 | Former 48 V planetary motor/controller | [BLDC motor (S11)](sources.md#s11-bldc-2-kw-planetary-motor) · [BD100/C100 (S12)](sources.md#s12-bldc-bd100c100-controller) | [Non-additive package comparison](../modules/02-drive-train/propulsion.md#48-v--approximately-2-kw-per-drive) |
 | Retired higher-voltage study, excluded | [Volcano (S13)](sources.md#s13-volcano-vol-bl400c72-motor) · [Controller proxy (S14)](sources.md#s14-ez-a72500-controller-price-proxy) · [Motor proxy (S15)](sources.md#s15-hpm5000a-72-motor-price-proxy) · [Battery proxy (S17)](sources.md#s17-tzi-72-v-battery-proxy) | [Retirement decision](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement) |
 | Reduction hardware | [DOLD chain drives (S05)](sources.md#s05-dold-chain-drives) · [Planetary gearboxes (S10)](sources.md#s10-dold-planetary-gearbox-alternatives) | [Reduction requirements and costs](../modules/02-drive-train/propulsion.md#ps17-reduction-and-transmission-hardware) |
-| Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
+| Tracks, rollers and idlers | [PowerTrack (S01)](sources.md#s01-powertrack-rubber-tracks) · [TVH (S02)](sources.md#s02-tvh-undercarriage-parts) · [Cohidrex idler lead (S26)](sources.md#s26-cohidrex-idler-wheel-family) · [Priced K008-3 candidates (S36)](sources.md#s36-priced-kubota-k008-3-undercarriage-candidates) · [Bearing-wheel candidates (S37)](sources.md#s37-bearing-wheel-roller-and-idler-candidates) | [Running-gear parts and fit](../modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) |
 | Bearings, shafts and frame hardware | [DOLD bearings (S03)](sources.md#s03-dold-bearing-housings) · [Mechanical parts (S04)](sources.md#s04-dold-mechanical-parts) | [Drive output supports](../modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) · [Frame/mounting parts](../modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) |
 | Battery and charger | [DC HOUSE bundle (S30)](sources.md#s30-dc-house-100-ah-charger-bundle) · [GBS metal pack (S28)](sources.md#s28-greenboatsolutions-100-ah-metal-pack) · [Vatrer (S31)](sources.md#s31-vatrer-105-ah-mobile-packs) | [Priced options](../modules/04-battery-and-charging/batteries.md#battery-alternatives) · [Pod fit](../modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
 | Electrical parts and contactors | [RS catalog (S07)](sources.md#s07-rs-electrical-parts-and-tools) · [DC-CON-72V400A example (S18)](sources.md#s18-dc-con-72v400a-contactor-example) | [Power parts](../modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) · [Connectors](../modules/05-power-cables-and-electronics/cables-connectors.md#parts-at-a-glance) |
@@ -67,10 +192,13 @@ listing as `200×72×36` / SKU `200X72X36`, but the page does not define those
 dimensions or provide a dimensional drawing/table. Interpreting this as
 200 mm width × 72 mm pitch × 36 links gives a **calculated nominal pitch-line
 length of 2,592 mm**; this is not a verified physical loop length or track
-profile. Rechecked 2026-10-27 in the public HTML/structured data. The page
-displays €138.52 VAT included; structured data also has a €128.82 quantity
-price. A price-validity field is already past its date. Budget €140 each
-pending a live pair/delivery quote, not the old discount.
+profile. The latest 2026-10-29
+[comparison](sources.md#powertrack-track-comparison) records EUR138.52 each
+including 22% Italian VAT, or EUR257.64 per pair after the advertised 7%
+discount (EUR211.18 net). Listed stock is `InStock`, mass is 32 kg each,
+roller type is `R1`, and price validity is 2026-12-03. This supersedes the
+2026-10-27 expired metadata observation. Romanian checkout tax and delivery
+remain unconfirmed; the baseline EUR140-per-track allowance is unchanged.
 
 **Engineering detail:** [Rubber-track requirements](../modules/01-structure-and-running-gear/running-gear.md#ps01-rubber-tracks) ·
 [Track-length screen](../width-and-slope-sizing.md#track-length-check).
@@ -88,6 +216,149 @@ tensioning groups and rubber tracks, but no MowerBot-compatible set, price or
 interface is verified. Ask a supplier for a matched undercarriage component.
 
 **Engineering detail:** [Sprockets, rollers and tensioners](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
+
+### S34: PowerTrack 180 x 72 x 37 candidate
+
+**Source / source type:** [PowerTrack 180 x 72 x 37](https://www.powertrack.it/en/powertrack-rubber-tracks/2001-rubber-tracks-for-miniexcavators-180x72x37-0793596791918.html),
+product; checked 2026-10-29, alternative lead only, excluded from baseline sums.
+
+**Evidence or limitation:** The latest 2026-10-29
+[comparison](sources.md#powertrack-track-comparison) records EUR91.35 each
+including 22% Italian VAT, or EUR169.92 per pair after the advertised 7%
+discount (EUR139.28 net). Metadata claims `InStock` and 24 kg each, roller type
+is `R1`, and the description advertises a 12-month warranty. The recheck
+resolved the initial conflicting price-validity fields to 2026-12-03.
+Romanian checkout tax and delivery remain unconfirmed. The applications list includes
+Kubota K008.2 and U008, not proof of compatibility with K008-3 components.
+Width, pitch/link interpretation, guide geometry, capacity, tension and
+running-gear match require drawings and supplier confirmation.
+
+Compared with S01, the discounted pair saves EUR87.72 including advertised
+Italian VAT before delivered-cost adjustments; this is not a whole-system
+saving. The owner selected this as the sourcing preference, not a qualified
+baseline replacement. The lower price alone does not establish better value.
+
+**Engineering detail:** [Track requirements and fit](../modules/01-structure-and-running-gear/running-gear.md#ps01-rubber-tracks).
+
+### S35: Astrak K008-family candidates
+
+**Source / source type:** Product pages and their public catalog descriptions;
+checked 2026-10-29, enquiry-only candidates excluded from baseline sums.
+
+| Candidate | Catalog identity / supplier claims | Price |
+| --- | --- | --- |
+| [K008 rubber track](https://astrak.com/products/kubota-k008-rubber-track) | TerraTrack; continuous high-tensile steel cords; advertised 24-month warranty | Quote required |
+| [K008-3 front idler](https://astrak.com/products/kubota-k008-3-idler-assembly) | DuraTrack `ID072/293/00`; advertised 12-month warranty | Quote required |
+| [K008-3 bottom roller](https://astrak.com/products/kubota-k008-3-bottom-roller) | DuraTrack `TR072/297/00`; hardened steel and sealed/lubricated bearings; advertised 12-month warranty | Quote required |
+
+**Evidence or limitation:** Public catalog `Enquiry`/zero-price fields are
+not free components or valid numeric quotes. Catalog availability flags and
+generic next-working-day wording for stocked products do not prove physical
+stock, dispatch country or delivery time to Cluj County. Obtain itemized
+quantity prices, VAT, freight/import treatment, exact warehouse, warranty terms
+and replacement lead times. Supplier construction/quality claims are not
+independently verified.
+
+K008, K008.2, K008-3 and K008-5 labels must not be treated as interchangeable.
+Confirm the exact track, sprocket and wheel profiles as one system, including
+shaft/bearing interfaces, loads and packaging. No match with S01 or S34 is
+established. No suitable upper return roller has yet been identified.
+
+Astrak's own catalog is quote-only and is excluded from scoring; the same part
+numbers are priced by the retailers in
+[S36](sources.md#s36-priced-kubota-k008-3-undercarriage-candidates).
+
+**Engineering detail:** [Running-gear interfaces and inspection](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
+
+### S36: Priced Kubota K008-3 undercarriage candidates
+
+**Source / source type:** Public product pages and storefront product data,
+checked 2026-10-29; alternative leads only, excluded from baseline sums.
+Prices are per piece, net of VAT unless stated.
+
+| Part | Offer | Listed price | Net EUR | Stock / dispatch claim |
+| --- | --- | --- | ---: | --- |
+| Track 180 x 72 x 37K | [BaggerteileShop24 (DE), Astrak `RT180/117/10`](https://baggerteileshop24.de/products/kubota-k008-3-gummikette) | EUR143.43 | 143.43 | Available; DE storefront |
+| Track 180 x 72 x 37K | [Officine Fabbri (IT), genuine Kubota Classic Line](https://www.officinefabbri.it/it/cingoli-in-gomma/470-cingolo-gomma-180x37x72k-originali-kubota-classic-line-0806812095339.html) | EUR159.57 incl. 22% IT VAT | 130.79 | In warehouse |
+| Track 180 x 72 x 37K | [Excavator Parts Direct (UK), Astrak `RT180/117/10`](https://excavatorpartsdirect.co.uk/products/kubota-k008-3-rubber-track) | GBP115.00 | 137.26 | Available; UK dispatch |
+| Front idler with bracket | [BaggerteileShop24 (DE), Astrak `ID072/293/00`](https://baggerteileshop24.de/products/kubota-k008-3-leitrad-mit-halter) | EUR186.00 | 186.00 | Available; same-day dispatch before 16:00 |
+| Front idler | [Excavator Parts Direct (UK), Astrak `ID072/293/00`](https://excavatorpartsdirect.co.uk/products/kubota-k008-3-idler-assembly) | GBP158.96 | 189.72 | Available; UK dispatch |
+| Track roller | [Officine Fabbri (IT), genuine Kubota Classic Line, listed for lower and upper positions](https://www.officinefabbri.it/it/k0083-cingoli-rulli/2700-rullo-inferiore-superiore-originale-kubota-classic-line-k008-3-e-u10-3.html) | EUR86.98 incl. 22% IT VAT | 71.29 | 10 working days from order |
+| Track roller | [BaggerteileShop24 (DE), Astrak `TR072/297/00`](https://baggerteileshop24.de/products/kubota-k008-3-laufrolle) | EUR82.00 exc. VAT (EUR97.58 inc.) | 82.00 | In stock; same-day dispatch before 16:00 |
+| Track roller | [Excavator Parts Direct (UK), Astrak `TR072/297/00`](https://excavatorpartsdirect.co.uk/products/kubota-k008-3-bottom-roller) | GBP68.00 | 81.16 | Available; UK dispatch |
+| Track roller | [PJS Hire (IE)](https://www.pjshireltd.ie/kubota-k008-3-bottom-roller.html) | EUR107.00 exc. VAT | 107.00 | Stock unconfirmed |
+| Drive sprocket | [BaggerteileShop24 (DE), Astrak `SP072/289/00`](https://baggerteileshop24.de/products/kubota-k008-3-antriebsrad) | EUR112.00 | 112.00 | Available |
+
+**Evidence or limitation:** The BaggerteileShop24 roller page states its price
+excludes VAT; other BaggerteileShop24 prices are assumed to share that basis.
+Excavator Parts Direct GBP prices are storefront variant prices assumed to
+exclude UK VAT; its published delivery rates cover UK mainland only. UK
+dispatch to Romania adds customs and import VAT. Delivery charges to Cluj
+County are unconfirmed for every offer. The Officine Fabbri K008-5 idler
+(EUR335.55 net) is a different model and is not listed above. Stock flags,
+warranties and construction descriptions are supplier claims.
+
+Matched-family pricing does not establish compatibility with this project's
+drive drum, frame, roller count or loads. The K008-3 sprocket does not establish
+compatibility with the current drum study; drum diameter and engagement
+geometry remain flexible and must match the selected track. Track guide
+geometry, roller and idler shaft interfaces, and load capacity still require
+drawings or measurements.
+
+**Engineering detail:** [Running-gear interfaces and inspection](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
+
+### S37: Bearing-wheel roller and idler candidates
+
+**Source / source type:** Public product, shipping and storefront pages,
+checked 2026-10-29; owner-requested low-cost alternative concept, excluded
+from baseline sums.
+
+**Concept:** Each roller or idler uses two industrial polyurethane wheels on
+one shared shaft, one wheel either side of the track guide lugs. This replaces
+excavator-specific rollers and idlers with project-fabricated shafts and
+brackets. It is a sourcing concept, not a released design.
+
+**Load screen (not a qualification):** 300 kg mower-only proxy over two
+tracks with four lower rollers each gives 37.5 kg static per roller. An
+assumed 3x slope/shock factor gives about 112.5 kg per roller, or about 56 kg
+per wheel in a pair. Supplier ratings below are flat-floor ratings at up to
+4 km/h, which matches the V1 maximum speed in
+[plan.md](../../../plan.md#provisional-engineering-targets).
+
+| Use | Offer | Rating / geometry | Net EUR | Delivery to Romania |
+| --- | --- | --- | ---: | --- |
+| Lower/upper roller wheel | [Interwheel 161.535, 160 mm stainless-bearing PU wheel](https://www.interwheel.eu/en/stainless-steel-pu-wheel-160-mm-450-kg.html) | 450 kg; 50 mm tread; 20 mm bore; 60 mm hub; PA6 rim | 22.88 | Listed: lei380 for 0-75 kg, 4-6 business days from NL ([shipping table](https://www.interwheel.eu/en/service/shipping-returns/)) |
+| Idler wheel | [Interwheel 161.540, 200 mm stainless-bearing PU wheel](https://www.interwheel.eu/en/stainless-steel-pu-wheel-200-mm-500-kg.html) | 500 kg; 50 mm tread; 20 mm bore; 60 mm hub; PA6 rim | 26.55 | Same shipment |
+| Light roller wheel | [Interwheel 161.420, 125 mm stainless-bearing PU wheel](https://www.interwheel.eu/en/stainless-steel-pu-wheel-125-mm-200-kg.html) | 200 kg; 36 mm tread; 10 mm bore | 7.73 | Same shipment |
+| Roller wheel | [rollen.shop Cascoo 125 mm](https://rollen.shop/p/cascoo-rad-schwerlast-polyurethan-braun-125-mm-300-kg-doppel-kugellager/) | 300 kg; 45 mm tread; 20 mm bore; PA rim; twin ball bearings | 10.50 | Excluded: foreign shipping only on request |
+| Idler wheel | [rollen.shop Cascoo 200 mm](https://rollen.shop/p/cascoo-rad-schwerlast-polyurethan-braun-200-mm-500-kg-doppel-kugellager/) | 500 kg; 45 mm tread; 20 mm bore | 17.06 | Excluded: foreign shipping only on request |
+| Idler wheel | [Rollenplus CRP-93117, 200 mm aluminium-core PU](https://www.rollenplus.de/Schwerlastrad-800-kg-200-mm-Rad-Kugellager-PU-Laufflaeche_1) | 800 kg; 50 mm tread; 12 mm axle | 33.61 | Excluded: EU shipping outside DE/AT suspended ([shipping info](https://www.rollenplus.de/Informationen-zu-Versand-und-Lieferung)) |
+
+Interwheel shipping converts to about EUR71.02 at the ECB 2026-10-28 rate of
+5.3508 RON per EUR. The 10 mm-bore wheel is retained only as a price reference:
+a shared 10 mm shaft spanning a wheel pair is unlikely to be adequate without
+short supported spans, which still require calculation.
+[Industrial Wheels Trade, Cluj](https://iwtcluj.ro/produs/roata-cu-bandaj-de-poliuretan-0zpk200025/)
+lists a suitable 200 mm Gino Nerviani wheel without a price and is excluded.
+
+**Indicative wheel kit, net EUR:** 20 x 160 mm roller wheels (8 lower and
+2 upper rollers per machine, paired) = 457.60; 4 x 200 mm idler wheels =
+106.20; Interwheel shipping about 71.02; total about **634.82** before VAT.
+With two [S34](sources.md#s34-powertrack-180-x-72-x-37-candidate) tracks
+(139.28 net after the advertised pair discount, delivery unconfirmed), the set
+is about **774.10** net, compared
+with **1,478.86** net for the all-Astrak S36 set before delivery. Shafts,
+bearings for idler pivots, brackets, spacers, and fabrication are not included;
+RUN-007 currently provides an axle/spacer allowance.
+
+**Evidence or limitation:** The wheels are rated for smooth industrial floors,
+not track interiors, mud, grit, or lateral guide loads. The track guide-lug
+width and rolling-path width must be measured before confirming that a
+50 mm wheel pair fits. Polyurethane heat build-up, debris, wear on the rubber
+track, and side loads require testing. Supplier stock and rating claims are
+not independent evidence.
+
+**Engineering detail:** [Running-gear interfaces and inspection](../modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners).
 
 <a id="s03"></a>
 

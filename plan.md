@@ -74,12 +74,13 @@ The following numbers are useful for sizing but are not yet validated on the com
   energy use. See the [runtime study](plan.md#eight-hour-runtime-and-charging-study).
 
 The earlier 140–280 rpm working and 500–700 rpm transport figures are
-historical study inputs, not V1 requirements. Temporarily treating the 350 mm
-physical drum outside diameter as the effective rolling diameter gives about
-**60.6 track rpm at 4 km/h** and **15.2 track rpm at 1 km/h**. The actual
-track pitch-line diameter is unknown. Reconcile output torque, speed and duty
-against confirmed geometry before choosing a reduction; these figures do not
-release a gearing or operating limit.
+historical study inputs, not V1 requirements. For a provisional screen only,
+temporarily treating a 350 mm physical drum outside diameter as the effective
+rolling diameter gives about **60.6 track rpm at 4 km/h** and **15.2 track rpm
+at 1 km/h**. The 350 mm value is not a required drum size; actual track
+pitch-line diameter is unknown. Select drum diameter and engagement geometry
+with the track, then reconcile output torque, speed and duty before choosing a
+reduction. These figures do not release a gearing or operating limit.
 
 The 2026-10-26 BOM feedback adds an aspirational **400 mm minimum / 1,600 mm
 maximum outside-track width** and sites with inclines up to **40°**.

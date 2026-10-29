@@ -15,7 +15,7 @@ inputs, not approved limits; this screen establishes no safe width, slope, or sp
 | Part / question | Current screening result | Open the calculation | Return to the component |
 | --- | --- | --- | --- |
 | Will the budget battery fit the pod? | The new 420 × 320 × 260 mm pack consumes the old model's vertical margin; no complete fit is established and CAD still uses the former Elker envelope | [Minimum width](width-and-slope-sizing.md#minimum-width-and-packaging) · [Battery clearance](width-and-slope-sizing.md#provisional-battery-clearance) | [Pack price/data](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
-| Does the track fit the proposed drum layout? | The 2,592 mm pitch loop is an unverified code interpretation; 350 mm is physical drum OD, not confirmed pitch diameter | [Track loop and CAD assumptions](width-and-slope-sizing.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| Does the track fit the proposed drum layout? | The 2,592 mm pitch loop is an unverified code interpretation; 350 mm is a flexible physical-drum-OD study placeholder, not confirmed pitch diameter or a requirement | [Track loop and CAD assumptions](width-and-slope-sizing.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
 | What torque does the slope screen require? | At assumed 175 mm radius: gravity-only **165.5 Nm/track** for 300 kg mower-only / 40° and **100.0 Nm/track** for the 450 kg bot-and-trailer combination / 15°; not design ratings | [Climb torque](width-and-slope-sizing.md#climb-torque) · [Reduced-speed power](width-and-slope-sizing.md#effect-of-accepting-reduced-speed) | [Motor choices and ratings](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Reduction study](modules/02-drive-train/propulsion.md#speed-and-ratio-screen) |
 | Does wider mean safe on a cross-slope? | No approved angle; CG, effective support, traction and dynamic effects remain unresolved | [Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) · [Slip requirement](width-and-slope-sizing.md#slip-requirement) | [Width holding](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) · [Tilt/interlock requirements](modules/06-safety-controls-and-sensors/safety-controls.md#ps30-tilt-sensing-and-interlocks) |
 
@@ -112,9 +112,10 @@ geometry, track pitch line and wrap determine the envelope.
 
 ### Pod-fit CAD assumptions
 
-The [editable pod-fit concept](cad/module-01-track-pod-fit.scad) still uses the
-owner-selected **350 mm physical roller outside diameter**, the listing-code
-interpretation, and the former Elker battery envelope, not the new budget pack.
+The [editable pod-fit concept](cad/module-01-track-pod-fit.scad) still uses a
+**350 mm physical roller outside-diameter placeholder**, not an owner-selected
+dimension. It also retains the listing-code interpretation and former Elker
+battery envelope, not the new budget pack.
 With the illustrative 20 mm belt
 thickness, its simplified model estimates a 370 mm track-path diameter by
 placing the path at the belt mid-thickness. This offset is an assumption, not
@@ -216,9 +217,11 @@ For **straight uphill** travel, ignoring rolling resistance and losses:
 
 `F = m g sin(θ)`; equal per-track output torque `T = F r / 2`.
 
-For this screening table only, `r = 0.175 m` is derived from the user-selected
-350 mm physical roller OD as if it were the effective rolling diameter. The
-actual track pitch-line radius is unknown.
+For this screening table only, `r = 0.175 m` is derived from the provisional
+350 mm physical roller OD placeholder as if it were the effective rolling
+diameter. The value is not a required drum size; the actual track pitch-line
+radius is unknown and the calculation must be revisited with the selected
+track/drum geometry.
 
 | Study configuration | Assumed mass | Uphill angle | Gravity force, whole machine | Gravity-only torque per track |
 | --- | ---: | ---: | ---: | ---: |
@@ -264,10 +267,10 @@ yields about 86.6 Nm at assumed 85%
 mechanical efficiency, below both gravity-only cases, before any margin or resistance.
 The [HPM5000B speed-and-ratio study](modules/02-drive-train/propulsion.md#speed-and-ratio-screen) uses 66:1 to
 approach 4 km/h at 4,000 motor rpm by temporarily treating the 350 mm physical
-roller OD as the effective rolling diameter; the track pitch-line diameter is
-unknown. This is a speed-driven concept, not a gearbox rating or approved
-ratio. Revisit output speed, torque, and duty together rather than selecting by
-nominal voltage or kW.
+roller OD placeholder as the effective rolling diameter; the drum size is not
+fixed and the track pitch-line diameter is unknown. This is a speed-driven
+concept, not a gearbox rating or approved ratio. Revisit output speed, torque,
+and duty together rather than selecting by nominal voltage or kW.
 
 ### Downhill stopping and holding
 

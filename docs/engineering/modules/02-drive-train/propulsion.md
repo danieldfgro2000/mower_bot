@@ -289,9 +289,10 @@ is fixed, what rotates, and which attachment details are still missing.
 
 #### Speed and ratio screen
 
-Temporarily treating the user-selected 350 mm
-physical drum outside diameter as the effective rolling diameter, 4 km/h
-requires about **60.6 rpm** at the drum. At the listing's 4,000 rpm motor
+Temporarily treating the 350 mm physical drum outside-diameter study
+placeholder as the effective rolling diameter, 4 km/h requires about
+**60.6 rpm** at the drum. The 350 mm value is not a required drum size. At the
+listing's 4,000 rpm motor
 speed, that implies **65.97:1**, rounded to a 66:1 study ratio. The physical
 track pitch-line diameter is unknown, so this is not a verified ground speed.
 The sketch divides it into 4:1 × 4:1 × 4.125:1 fixed-ring stages:
@@ -399,7 +400,7 @@ or track-engagement profile in this package.
 | Motor housing to pod structure | Motor body coaxial with the drum; attachment face, bracket and cooling clearance are not defined | [Motor and reducer mounting plates](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
 | Motor shaft through reduction to drum | Three planetary stages; final carrier drives the drum | [Ratio and tooth-count study](propulsion.md#speed-and-ratio-screen) · [Carrier/package envelope](propulsion.md#cad-package-envelope) |
 | Stationary ring gears to pod | Rings remain fixed while the carrier/drum rotates; supports and reaction-load attachments are not designed | [Frame definition](../01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments) |
-| Drum to track | 350 mm physical drum OD is a study input, not confirmed track pitch geometry | [Drum/sprocket engagement](../01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Track profile](../01-structure-and-running-gear/running-gear.md#ps01-rubber-tracks) |
+| Drum to track | 350 mm physical drum OD is a flexible study placeholder, not a required size or confirmed track pitch geometry | [Drum/sprocket engagement](../01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Track profile](../01-structure-and-running-gear/running-gear.md#ps01-rubber-tracks) |
 | Track side loads to structure | Shaft, bearing and retention design must carry the actual loads; gearhead suitability is not assumed | [Output shafts and bearings](propulsion.md#ps16-output-shafts-and-bearings) |
 
 The former **48 V planetary** package needs its own motor/gearhead mounting
@@ -411,9 +412,12 @@ do not price or qualify a completed custom in-drum assembly.
 
 ### Motor and drum layout
 
-**Owner-selected study direction (2026-10-27):** Use the HPM5000B as the
-provisional motor envelope, coaxial with the 350 mm outside-diameter drive drum
-and extending into it as far as packaging allows. Place the motor/drive drum at
+**Provisional study direction (2026-10-27):** Use the HPM5000B as the
+provisional motor envelope, coaxial with the drive drum and extending into it
+as far as packaging allows. The 350 mm outside diameter is a flexible starting
+placeholder, not an owner-selected dimension; choose the drum diameter and
+tooth/profile geometry with the selected track, reduction, and packaging. Place
+the motor/drive drum at
 the rear of the bot, behind the front-mounted implement zone. House three
 planetary stages inside the drum; hold each ring gear stationary to the pod and
 connect the final carrier to the rotating drum. This fore-aft location is a

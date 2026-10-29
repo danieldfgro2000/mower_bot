@@ -9,15 +9,46 @@ No procurement, fabrication, energizing or operation is authorized.
 and tensioner. Nominal track size and layout choices are study inputs;
 matched profiles, bearings, clearances, and load ratings remain unqualified.
 
+## Prices found: tracks, rollers and idlers
+
+**Public prices recorded 2026-10-29, not BOM allowances.** Product names below
+open the supplier listings. These are unqualified sourcing candidates;
+dimensions, including drum diameter, remain flexible.
+
+| Part / supplier | Price per purchased piece | Pair / assembly price | Price basis |
+| --- | ---: | ---: | --- |
+| **Track: PowerTrack 180 x 72 x 37**, sourcing preference ([buy / price](https://www.powertrack.it/en/powertrack-rubber-tracks/2001-rubber-tracks-for-miniexcavators-180x72x37-0793596791918.html)) | **EUR91.35** | **EUR169.92 for two tracks**, after 7% pair discount | Includes 22% Italian VAT; pair is EUR139.28 net |
+| Track alternative: PowerTrack 200 x 72 x 36 ([buy / price](https://www.powertrack.it/en/powertrack-rubber-tracks/2023-Rubber-tracks-for-miniexcavators-200x72x36-0793596792038.html)) | **EUR138.52** | **EUR257.64 for two tracks**, after 7% pair discount | Includes 22% Italian VAT; pair is EUR211.18 net |
+| **Roller wheel: Interwheel 161.535**, 160 mm PU, 20 mm bore ([buy / price](https://www.interwheel.eu/en/stainless-steel-pu-wheel-160-mm-450-kg.html)) | **EUR22.88** | **EUR45.76 per two-wheel roller** | Excludes VAT, shaft, spacers and bracket |
+| **Idler wheel: Interwheel 161.540**, 200 mm PU, 20 mm bore ([buy / price](https://www.interwheel.eu/en/stainless-steel-pu-wheel-200-mm-500-kg.html)) | **EUR26.55** | **EUR53.10 per two-wheel idler** | Excludes VAT, shaft, spacers and bracket |
+| Light roller price reference: Interwheel 161.420, 125 mm PU, 10 mm bore ([buy / price](https://www.interwheel.eu/en/stainless-steel-pu-wheel-125-mm-200-kg.html)) | **EUR7.73** | **EUR15.46 per two-wheel roller** | Excludes VAT and mounting parts; shared-shaft suitability unresolved |
+| Excavator roller alternative: genuine Kubota, Officine Fabbri ([buy / price](https://www.officinefabbri.it/it/k0083-cingoli-rulli/2700-rullo-inferiore-superiore-originale-kubota-classic-line-k008-3-e-u10-3.html)) | **EUR71.29 net** | One complete roller, not a wheel pair | EUR86.98 including 22% Italian VAT |
+| Excavator idler alternative: Astrak ID072/293/00, BaggerteileShop24 ([buy / price](https://baggerteileshop24.de/products/kubota-k008-3-leitrad-mit-halter)) | **EUR186.00 net** | One idler with bracket, not a wheel pair | VAT excluded on the recorded retailer basis |
+
+**Bearing-wheel route, required quantities:** 20 x 160 mm wheels for eight
+lower and two upper roller assemblies = **EUR457.60 net**; four x 200 mm
+wheels for two idlers = **EUR106.20 net**. With the discounted 180 mm track
+pair, the component subtotal is **EUR703.08 net**. Listed Interwheel shipping
+to Romania is approximately **EUR71.02**, giving **EUR774.10 before VAT,
+track delivery and fabrication/mounting parts**. This is not a delivered
+complete-undercarriage price.
+
+**Evidence and limitations:** [Track prices and discount](../../bom/sources.md#powertrack-track-comparison) ·
+[Bearing-wheel prices, shipping and fit](../../bom/sources.md#s37-bearing-wheel-roller-and-idler-candidates) ·
+[All priced excavator alternatives](../../bom/sources.md#s36-priced-kubota-k008-3-undercarriage-candidates).
+Romanian checkout VAT and PowerTrack delivery remain unconfirmed.
+The [generated costs below](running-gear.md#detailed-module-costs) are the
+unchanged baseline allowances, not these found prices.
+
 ## Parts at a glance
 
 | Part to inspect | Current choice / status | Cost and specifications | Fit / next component |
 | --- | --- | --- | --- |
-| [Rubber track](running-gear.md#ps01-rubber-tracks) | PowerTrack `200×72×36` price/study reference only; size unselected and dimensional interpretation unverified | [Track-pair cost](running-gear.md#0101-rubber-tracks) · [Track requirements](running-gear.md#ps01-rubber-tracks) | [Drive drum engagement](running-gear.md#drive-drum-study) |
-| [Drive drum / sprocket](running-gear.md#drive-drum-study) | 350 mm physical OD study; tooth/profile match open | [Baseline sprocket/hub allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Drum study](running-gear.md#drive-drum-study) | [Motor-to-track mounting](../02-drive-train/propulsion.md#motor-to-track-mounting) |
-| [Lower support rollers](running-gear.md#lower-support-rollers) | Four per track in the study; dimensions and capacity unselected | [Roller allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Roller definition](running-gear.md#lower-support-rollers) | [Axles and bearings](running-gear.md#ps03-axles-bearings-and-track-guides) |
+| [Rubber track](running-gear.md#ps01-rubber-tracks) | PowerTrack `180×72×37` sourcing preference; `200×72×36` remains the unchanged baseline study reference | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Baseline allowance](running-gear.md#0101-rubber-tracks) · [Track requirements](running-gear.md#ps01-rubber-tracks) | [Drive drum engagement](running-gear.md#drive-drum-study) |
+| [Drive drum / sprocket](running-gear.md#drive-drum-study) | 350 mm physical OD is a flexible study placeholder; tooth/profile match open | [Baseline sprocket/hub allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Drum study](running-gear.md#drive-drum-study) | [Motor-to-track mounting](../02-drive-train/propulsion.md#motor-to-track-mounting) |
+| [Lower support rollers](running-gear.md#lower-support-rollers) | Bearing-wheel route preferred; four assemblies per track in the study; fit and capacity unqualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Roller allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Roller definition](running-gear.md#lower-support-rollers) | [Axles and bearings](running-gear.md#ps03-axles-bearings-and-track-guides) |
 | [Upper rollers and spring tensioner](running-gear.md#spring-tensioner-concept) | Motorcycle-fork/spring concept; no qualified fork selected | [Roller/tensioner allowances](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Travel/load requirements](running-gear.md#ps02-sprockets-rollers-and-tensioners) | [Battery and carrier clearance](../../width-and-slope-sizing.md#tensioner-and-idler-interfaces) |
-| Front idler | Cohidrex family is a lead, not a confirmed fit | [Idler allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Supplier limitations](../../bom/sources.md#s26-cohidrex-idler-wheel-family) | [Track compatibility](running-gear.md#ps01-rubber-tracks) |
+| Front idler | Bearing-wheel route preferred; priced excavator alternative also recorded; neither fit qualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Idler allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Supplier limitations](../../bom/sources.md#s37-bearing-wheel-roller-and-idler-candidates) | [Track compatibility](running-gear.md#ps01-rubber-tracks) |
 | [Axles, bearings and guides](running-gear.md#ps03-axles-bearings-and-track-guides) | Sizes, fits and retained assembly open | [Support costs](running-gear.md#0103-track-axles-bearings-guides-and-scrapers) · [Required data](running-gear.md#ps03-axles-bearings-and-track-guides) | [Pod frame](frame.md#ps04-frame-stock-and-weldments) |
 
 **Further detail:** [Release requirements](running-gear.md#specification-and-inspection-requirements) ·
@@ -95,7 +126,10 @@ validation. See the [pod-fit sketch](../../cad/module-01-track-pod-fit.scad).
 
 #### Drive drum study
 
-The 350 mm outside-diameter drum is the track-drive output.
+The track-drive drum outside diameter is unselected; 350 mm is a starting
+study value, not a fixed requirement. Choose its pitch/tooth geometry to match
+the selected track and set its diameter with the required reduction, torque,
+speed and pod packaging.
 The [HPM5000B planetary-in-drum study](../02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 shows one possible reduction layout only;
 [PowerTrack track engagement geometry](../../bom/sources.md#s01-powertrack-rubber-tracks) and the
@@ -146,6 +180,10 @@ assembly; no binding or prohibited track contact against reviewed limits
 
 
 ## Sourcing
+
+Use the [common sourcing weights](../../bom/sources.md#common-sourcing-weights)
+for candidate comparisons. Dimensions are flexible; matched interfaces and
+adequate load capacity remain prerequisites.
 
 | Evidence needed | Supplier lead |
 | --- | --- |
