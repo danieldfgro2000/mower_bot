@@ -14,32 +14,33 @@ inputs, not approved limits; this screen establishes no safe width, slope, or sp
 
 | Part / question | Current screening result | Open the calculation | Return to the component |
 | --- | --- | --- | --- |
-| Will the budget battery fit the pod? | The new 420 × 320 × 260 mm pack consumes the old model's vertical margin; no complete fit is established and CAD still uses the former Elker envelope | [Minimum width](width-and-slope-sizing.md#minimum-width-and-packaging) · [Battery clearance](width-and-slope-sizing.md#provisional-battery-clearance) | [Pack price/data](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
-| Does the track fit the proposed drum layout? | The 2,592 mm pitch loop is an unverified code interpretation; 350 mm is a flexible physical-drum-OD study placeholder, not confirmed pitch diameter or a requirement | [Track loop and CAD assumptions](width-and-slope-sizing.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| Will the budget battery fit the pod? | The new 420 × 320 × 260 mm pack consumes the old model's vertical margin; no complete fit is established and CAD still uses the former Elker envelope | [Minimum width](width-and-slope-sizing.md#minimum-width-and-packaging) · [Battery clearance](modules/04-battery-and-charging/batteries.md#provisional-battery-clearance) | [Pack price/data](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
+| Does the track fit the proposed drum layout? | The 2,592 mm pitch loop is an unverified code interpretation; 350 mm is a flexible physical-drum-OD study placeholder, not confirmed pitch diameter or a requirement | [Track loop and CAD assumptions](modules/01-structure-and-running-gear/running-gear.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
 | What torque does the slope screen require? | At assumed 175 mm radius: gravity-only **165.5 Nm/track** for 300 kg mower-only / 40° and **100.0 Nm/track** for the 450 kg bot-and-trailer combination / 15°; not design ratings | [Climb torque](width-and-slope-sizing.md#climb-torque) · [Reduced-speed power](width-and-slope-sizing.md#effect-of-accepting-reduced-speed) | [Motor choices and ratings](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Reduction study](modules/02-drive-train/propulsion.md#speed-and-ratio-screen) |
 | Does wider mean safe on a cross-slope? | No approved angle; CG, effective support, traction and dynamic effects remain unresolved | [Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) · [Slip requirement](width-and-slope-sizing.md#slip-requirement) | [Width holding](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) · [Tilt/interlock requirements](modules/06-safety-controls-and-sensors/safety-controls.md#ps30-tilt-sensing-and-interlocks) |
 
 **Further detail:** [Inputs](width-and-slope-sizing.md#inputs-and-unresolved-definitions) ·
 [Packaging](width-and-slope-sizing.md#minimum-width-and-packaging) ·
-[Track length and pod fit](width-and-slope-sizing.md#track-length-check) ·
+[Track length and pod fit (running-gear page)](modules/01-structure-and-running-gear/running-gear.md#track-length-check) ·
 [Tipping](width-and-slope-sizing.md#lateral-static-tipping-screen) ·
 [Traction and holding](width-and-slope-sizing.md#traction-climbing-and-holding-are-separate-gates) ·
-[Design implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom)
+[Design implications](width-and-slope-sizing.md#consequences-for-the-design-and-bom) ·
+[Site-target decisions (F06, F07)](width-and-slope-sizing.md#decision-records)
 
 **Related documents:** [Pod-fit CAD](cad/module-01-track-pod-fit.scad) ·
-[Cohidrex idler lead](bom/sources.md#s26-cohidrex-idler-wheel-family) ·
+[Cohidrex idler lead](modules/01-structure-and-running-gear/running-gear.md#s26-cohidrex-idler-wheel-family) ·
 [Product authority](../../plan.md#42-variable-width-scissor-frame) ·
 [BOM Cost Breakdown](cost-breakdown.md) ·
-[Feedback decisions](bom/feedback.md#feedback-decisions) ·
+[All decision records](bom/feedback.md#feedback-decisions) ·
 [Width-adjustment scope](modules/03-width-adjustment/width-adjustment.md)
 
 ## Inputs and unresolved definitions
 
 | Input | Value / evidence status |
 | --- | --- |
-| Track | [PowerTrack listing (S01)](bom/sources.md#s01-powertrack-rubber-tracks): `200×72×36` / `200X72X36`, a price/study reference, not a mandatory size. No notation definition or dimensional drawing/table; usual 200 mm width × 72 mm pitch × 36 links interpretation is unverified |
-| Minimum outside-track width | [Original owner aspiration](bom/feedback.md#f06-packaging-and-site-targets): **400 mm**, subject to mechanical limitations, not a released width. [Current access requirement](../../plan.md#42-variable-width-scissor-frame): no fixed gate opening; minimize complete-machine width where practical |
-| Maximum outside-track width | [Owner study target](bom/feedback.md#f06-packaging-and-site-targets): **1,600 mm**, not demonstrated stability |
+| Track | [PowerTrack listing (S01)](modules/01-structure-and-running-gear/running-gear.md#s01-powertrack-rubber-tracks): `200×72×36` / `200X72X36`, a price/study reference, not a mandatory size. No notation definition or dimensional drawing/table; usual 200 mm width × 72 mm pitch × 36 links interpretation is unverified |
+| Minimum outside-track width | [Original owner aspiration](width-and-slope-sizing.md#f06-packaging-and-site-targets): **400 mm**, subject to mechanical limitations, not a released width. [Current access requirement](../../plan.md#42-variable-width-scissor-frame): no fixed gate opening; minimize complete-machine width where practical |
+| Maximum outside-track width | [Owner study target](width-and-slope-sizing.md#f06-packaging-and-site-targets): **1,600 mm**, not demonstrated stability |
 | Transport packaging | [Assembled transport target](../../plan.md#42-variable-width-scissor-frame): usable platform 2 m long × 1 m wide; include the narrowed bot, fitted mower, guards and restraint clearances. Platform capacity and ramp/loading geometry remain unqualified |
 | Suggested width/length ratio | Owner suggested about 2:1; **not a stability criterion** and does not establish an 800 mm finished machine length |
 | Site inclination | Owner expects up to **40°** for the mower-only configuration, including uphill/downhill and cross-slope travel; the 450 kg bot-and-trailer combination is limited to **15°** in the study; neither is an approved operating limit |
@@ -61,7 +62,7 @@ For track width `t` and clear gap `g` between their inner edges,
 requires **g = 0**. That is a geometric lower bound, not usable central
 clearance for the spine, scissor links, guards, cable movement, or debris.
 
-The **historical** [Elker LFP10048LCD battery reference](bom/sources.md#s16-elker-lfp10048lcd-battery)
+The **historical** [Elker LFP10048LCD battery reference](modules/04-battery-and-charging/batteries.md#s16-elker-lfp10048lcd-battery)
 is listed as **522 × 269 × 217 mm**, 36 kg. In its low-height orientation,
 two 269 mm-wide pod interiors alone require 538 mm before walls and central
 clearance. Even the smallest listed dimension exceeds the 200 mm track width.
@@ -84,80 +85,6 @@ dimensions. No width-specific safe slope is currently known.
 
 **Continue with the part:** [Pack price and specifications](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) ·
 [Enclosure and restraints](modules/04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints).
-
-[↑ Back to document overview](width-and-slope-sizing.md#width-and-slope-feasibility-screen)
-
-
-## Track length check
-
-**Detail:** [Pitch-loop geometry](width-and-slope-sizing.md#pitch-loop-geometry) ·
-[Pod-fit CAD assumptions](width-and-slope-sizing.md#pod-fit-cad-assumptions) ·
-[Tensioner and idler interfaces](width-and-slope-sizing.md#tensioner-and-idler-interfaces) ·
-[Battery clearance](width-and-slope-sizing.md#provisional-battery-clearance).
-
-### Pitch-loop geometry
-
-If the listing code follows the usual convention, nominal pitch-loop length is
-`72 × 36 = 2,592 mm`. The [PowerTrack page](bom/sources.md#s01-powertrack-rubber-tracks) does not confirm that interpretation or
-publish the track's measured loop length. For an illustrative two-equal-wheel
-oval path with radius `r` and wheel-centre separation `a`:
-
-`2,592 = 2a + 2πr`; longitudinal pitch envelope `E = a + 2r`.
-
-At **r = 100 mm**, `a ≈ 981.8 mm` and `E ≈ 1,181.8 mm`, before actual tread
-thickness and structural overhangs. This is **not** the selected sprocket size
-or layout. It shows why an 800 mm complete pod length must not be inferred
-from the proposed 1,600 mm width or a width/length ratio. Actual roller/idler
-geometry, track pitch line and wrap determine the envelope.
-
-### Pod-fit CAD assumptions
-
-The [editable pod-fit concept](cad/module-01-track-pod-fit.scad) still uses a
-**350 mm physical roller outside-diameter placeholder**, not an owner-selected
-dimension. It also retains the listing-code interpretation and former Elker
-battery envelope, not the new budget pack.
-With the illustrative 20 mm belt
-thickness, its simplified model estimates a 370 mm track-path diameter by
-placing the path at the belt mid-thickness. This offset is an assumption, not
-the supplier's confirmed pitch-line position. The belt and carrier thicknesses
-are also assumptions. The model is not a dimensional drawing or evidence that
-the battery fits; obtain the supplier track drawing and confirm the complete
-carrier, guard, and extraction clearances first.
-
-### Tensioner and idler interfaces
-
-The selected concept spring-loads the **upper-return support rollers**, pushing
-them outward against the upper run to tension the track. Their number/spacing,
-spring setting, travel, stops, loads, and motion envelope remain undefined and
-are not represented in the model or clearance figures below. Check that motion
-against the battery, carrier, guards, and outboard extraction path before
-treating the packaging as viable.
-See the [roller and spring-tensioner concept](modules/01-structure-and-running-gear/running-gear.md#ps02-sprockets-rollers-and-tensioners)
-for the required mechanical definition.
-
-The [Cohidrex idler-wheel family](bom/sources.md#s26-cohidrex-idler-wheel-family) is a review lead only: it
-is described for Trabber tracks, with no dimensions or confirmed compatibility
-for the [PowerTrack track](bom/sources.md#s01-powertrack-rubber-tracks). The concept sketch marks the idler as unresolved and does not imply
-that this product fits.
-
-### Provisional battery clearance
-
-For the **historical Elker envelope**, with the model's assumed 20 mm belt,
-80 mm frame gap, and 10 mm carrier, only
-**43 mm** remains above the 217 mm pack before installation or service
-clearance. The assumed 2,592 mm pitch loop leaves about **193 mm total** along
-the straight run around a centered 522 mm pack. Both margins depend on the
-unverified track-code interpretation and placeholder geometry; neither proves
-fit. The current DC HOUSE pack is 16 mm taller, leaving **27 mm nominal
-arithmetic vertical margin**, not qualified installation or tensioner clearance.
-Its listed body is 18 mm shorter and 1 mm narrower, but heavier. Check the
-complete carrier, track return and tensioner envelope before claiming fit.
-The CAD has not been changed and the old 72 kg pair is not the current
-89.8 kg battery mass.
-
-**Continue with the part:** [Battery-to-pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) ·
-[Spring tensioner](modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) ·
-[Frame definition](modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments).
 
 [↑ Back to document overview](width-and-slope-sizing.md#width-and-slope-feasibility-screen)
 
@@ -314,5 +241,34 @@ dimensions, and CG/load
 model, followed by competent design review. Any physical tests need separate
 explicit authorization and a reviewed progressive test plan; this note
 does **not** authorize approaching 40° with the prototype.
+
+[↑ Back to document overview](width-and-slope-sizing.md#width-and-slope-feasibility-screen)
+
+
+## Decision records
+
+Dated owner decisions and qualification loops for this scope. Read each date with its later corrections; a decision closes an estimating assumption, not a component qualification. Cross-module decisions remain in [BOM feedback](bom/feedback.md#feedback-decisions).
+
+### F06: packaging and site targets
+
+**Decision recorded on 2026-10-26:** Aspirational 400 mm minimum outside-track width,
+allowing mechanical adjustment; 1,600 mm maximum suggested for stability; expected
+inclines up to 40°.
+
+**Effect on estimate:** Record as unvalidated targets. [Feasibility
+screen](width-and-slope-sizing.md) shows zero gap at 400 mm, battery packaging conflict,
+and separate lateral/longitudinal/traction requirements. Material quantities remain
+provisional; 40° is not an operating limit.
+
+### F07: slope orientation and speed
+
+**Decision recorded on 2026-10-26:** The 40° site target includes both uphill/downhill
+and cross-slope travel. Speed reduction below the normal-condition 4 km/h target is
+accepted.
+
+**Effect on estimate:** Reassess both drive ratios, continuous torque, braking/holding,
+and stability. Lower speed reduces power demand, not gravitational torque. Neither cost
+scenario is qualified for this site target; repricing follows the reviewed sizing, not
+an assumed safe speed.
 
 [↑ Back to document overview](width-and-slope-sizing.md#width-and-slope-feasibility-screen)

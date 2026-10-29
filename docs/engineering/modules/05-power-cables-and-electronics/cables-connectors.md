@@ -24,7 +24,7 @@ parts, and routing remain unselected; quantities are not a harness cut list.
 [Itemized costs](cables-connectors.md#detailed-module-costs)
 
 **Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
-[Module 05 overview](README.md)
+[All modules](../README.md#module-directory)
 
 ## Specification and inspection requirements
 

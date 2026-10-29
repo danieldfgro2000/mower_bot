@@ -21,10 +21,12 @@ a requirements map, not a released schematic; no rated device is selected.
 
 **Further detail:** [Release requirements](power-distribution.md#specification-and-inspection-requirements) ·
 [Sourcing](power-distribution.md#sourcing) · [Interfaces](power-distribution.md#interfaces-with-other-scopes) ·
-[Itemized costs](power-distribution.md#detailed-module-costs)
+[Itemized costs](power-distribution.md#detailed-module-costs) ·
+[Procurement and holds](power-distribution.md#procurement-and-release-holds) ·
+[Supplier evidence](power-distribution.md#supplier-evidence)
 
 **Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
-[Module 05 overview](README.md)
+[All modules](../README.md#module-directory)
 
 ## Specification and inspection requirements
 
@@ -122,9 +124,39 @@ enclosure thermal/ingress rating claimed before qualification
 
 [Dedeman fabrication supplies (S06)](../../bom/sources.md#s06-dedeman-fabrication-supplies) ·
 [RS electrical components (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools) ·
-[DOLD DC-CON-72V400A contactor example (S18)](../../bom/sources.md#s18-dc-con-72v400a-contactor-example).
+[DOLD DC-CON-72V400A contactor example (S18)](power-distribution.md#s18-dc-con-72v400a-contactor-example).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
+
+
+## Procurement and release holds
+
+Prepared supplier requests and release holds owned by this scope. Sending a request needs separate user approval; every hold is **OPEN**. Shared document control, manufacturing packs and cross-cutting holds stay in the [Chassis Build and Procurement Checklist](../../chassis-build-requirements.md#chassis-build-and-procurement-checklist).
+
+### Q05: electrical and safety
+
+**Requirements:** [Width-drive power, feedback and harness](../03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
+[main power distribution](power-distribution.md),
+[cables and connectors](cables-connectors.md), and
+[independent stop/control/sensor requirements](../06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements).
+**Leads:** [RS electrical parts](../../bom/sources.md#s07-rs-electrical-parts-and-tools),
+[Schneider relay example](../06-safety-controls-and-sensors/safety-controls.md#s08-schneider-xpsuaf13ap-safety-relay-example), and
+[DOLD contactor example](power-distribution.md#s18-dc-con-72v400a-contactor-example). The
+[industrial remote](../06-safety-controls-and-sensors/safety-controls.md#s09-tele-radio-tiger-g2-remote-alternative) is historical research, not a current purchase.
+
+**Specific response needed:** Exact full-voltage-rated protective devices, complete
+connector/harness children, independent stop configuration and evidence; no
+automatic approval of catalog examples
+
+### H04: bus and protection coordination
+
+**Must close before:** Pack, controller, switchgear and harness release
+
+**Closure evidence / responsible review role:** Full-charge/cutoff/regen and
+fault-current compatibility, precharge/branch protection, DC/DC/coil loads and
+schematics; electrical review
 
 [↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
 
@@ -205,5 +237,27 @@ N/A never means an unknown purchase is free.
 | --- | ---: |
 | **All items owned by this scope** | €1,241.00 |
 <!-- END GENERATED: details -->
+
+[↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)
+
+
+## Supplier evidence
+
+Dated supplier claims for this scope, recorded under the [common sourcing weights](../../bom/sources.md#common-sourcing-weights). Catalog listings are leads, not quotes or qualification. Source IDs stay stable for the [cost ledger](../../bom/chassis-bom.csv).
+
+<a id="s18"></a>
+
+### S18: DC-CON-72V400A contactor example
+
+**Source / source type:** [DOLD
+DC-CON-72V400A](https://www.dold-mechatronik.de/DC-CONTACTOR-DC-CON-72V400A),
+price-class example
+
+**Evidence or limitation:** €62.23 displayed in HTML. “72V400A” alone does not establish
+coil voltage, full-charge DC breaking ability, auxiliary feedback, or safety
+suitability; not the selected contactor. CSV allows €110 each for a properly reviewed
+alternative.
+
+**Engineering detail:** [Main fuses, disconnects and contactors](power-distribution.md#ps21-main-fuses-disconnects-and-contactors).
 
 [↑ Back to document overview](power-distribution.md#power-distribution-and-enclosures)

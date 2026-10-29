@@ -32,7 +32,18 @@ do not restructure unrelated documents or run BOM generation unnecessarily.
 - `docs/engineering/bom/propulsion-alternatives.csv`: candidate replacements,
   not additional purchases. Never merge into baseline sums without an explicit
   configuration decision and complete downstream re-costing.
-- `docs/engineering/bom/sources.md`: dated supplier evidence and price limits.
+- Module scope pages (`docs/engineering/modules/NN-name/*.md`): self-contained
+  owners of single-scope supplier evidence (`### S##:` / `### U##:`), decision
+  records (F/L), procurement packages (Q) and release holds (H), in the order
+  Parts at a glance → studies → requirements → Sourcing → Procurement and
+  release holds → Interfaces → generated costs → Decision records → Supplier
+  evidence. Add new single-scope evidence there, not centrally.
+- `docs/engineering/bom/sources.md`: sourcing weights and eligibility policy,
+  the source-ID lookup, shared multi-module catalogs (S04, S06, S07) and link
+  verification. Source IDs must be unique across `sources.md` and module pages;
+  the generator fails on duplicates or missing IDs.
+- `docs/engineering/bom/feedback.md` and `docs/engineering/chassis-build-requirements.md`:
+  cross-module decisions/holds plus index tables linking to module-owned records.
 - `docs/engineering/bom/updating-linked-costs.md`: human-facing maintenance
   procedure, input ownership, regeneration, reference checks and validation history.
 - `docs/engineering/cost-breakdown.md`: generated focused view of detailed

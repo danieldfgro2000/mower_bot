@@ -24,10 +24,13 @@ interface it must serve.
 [Owner control and stop intent](safety-controls.md#ps28-independent-stopping-and-normal-control) ·
 [Sourcing](safety-controls.md#sourcing) ·
 [Interfaces](safety-controls.md#interfaces-with-other-scopes) ·
-[Itemized costs](safety-controls.md#detailed-module-costs)
+[Itemized costs](safety-controls.md#detailed-module-costs) ·
+[Procurement and holds](safety-controls.md#procurement-and-release-holds) ·
+[Decision records](safety-controls.md#decision-records) ·
+[Supplier evidence](safety-controls.md#supplier-evidence)
 
 **Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
-[Module 06 overview](README.md)
+[All modules](../README.md#module-directory)
 
 ## Specification and inspection requirements
 
@@ -146,13 +149,28 @@ not a safety substitute
 ## Sourcing
 
 [RS controls and sensors (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools) ·
-[Schneider XPSUAF13AP relay example (S08)](../../bom/sources.md#s08-schneider-xpsuaf13ap-safety-relay-example).
+[Schneider XPSUAF13AP relay example (S08)](safety-controls.md#s08-schneider-xpsuaf13ap-safety-relay-example).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
-The [Tele Radio Tiger G2 remote family (S09)](../../bom/sources.md#s09-tele-radio-tiger-g2-remote-alternative) remains historical
+The [Tele Radio Tiger G2 remote family (S09)](safety-controls.md#s09-tele-radio-tiger-g2-remote-alternative) remains historical
 research; it is not part of the current baseline.
 
 [↑ Back to document overview](safety-controls.md#safety-controls-and-sensors)
+
+## Procurement and release holds
+
+Prepared supplier requests and release holds owned by this scope. Sending a request needs separate user approval; every hold is **OPEN**. Shared document control, manufacturing packs and cross-cutting holds stay in the [Chassis Build and Procurement Checklist](../../chassis-build-requirements.md#chassis-build-and-procurement-checklist).
+
+### H05: independent stopping
+
+**Must close before:** Energizing any bench or chassis configuration
+
+**Closure evidence / responsible review role:** Hazard assessment, reviewed stop-state
+diagram, selected hardware/firmware configuration and approved test plan; safety review,
+followed by separately authorized commissioning
+
+[↑ Back to document overview](safety-controls.md#safety-controls-and-sensors)
+
 
 ## Interfaces with other scopes
 
@@ -246,5 +264,69 @@ N/A never means an unknown purchase is free.
 | --- | ---: |
 | **All items owned by this scope** | €1,045.00 |
 <!-- END GENERATED: details -->
+
+[↑ Back to document overview](safety-controls.md#safety-controls-and-sensors)
+
+
+## Decision records
+
+Dated owner decisions and qualification loops for this scope. Read each date with its later corrections; a decision closes an estimating assumption, not a component qualification. Cross-module decisions remain in [BOM feedback](../../bom/feedback.md#feedback-decisions).
+
+**Retired cost number:** 06.02 was the industrial operator remote purchase
+allowance. It is intentionally left unused after the
+[mobile-app control decision](../07-workshop-and-support/workshop.md#f10-workshop-equipment-test-method-and-mobile-app-control);
+remaining submodule numbers are retained for stable cross-references.
+The app is not the independent emergency stop.
+
+### L5: stopping and electrical safety
+
+**Inputs needed / next feedback:** Hazard review, safe-state sequence, independent
+remote-stop/heartbeat path, motor/controller dynamic-braking mode and energy
+handling at full SOC or BMS cutoff, default-applied stationary brake, power-loss
+response, reset/charge/width interlocks
+
+**What changes:** Select braking and stop sequence, switching, fusing, pre-charge,
+DC/DC, stop chain and cable sizes; revise all affected costs
+
+**Closure evidence:** Competent design review and independently observed
+motor-braking, holding and fault tests under separately authorized commissioning;
+decide from evidence whether an additional mechanical dynamic brake is needed;
+no firmware-only substitute
+
+[↑ Back to document overview](safety-controls.md#safety-controls-and-sensors)
+
+
+## Supplier evidence
+
+Dated supplier claims for this scope, recorded under the [common sourcing weights](../../bom/sources.md#common-sourcing-weights). Catalog listings are leads, not quotes or qualification. Source IDs stay stable for the [cost ledger](../../bom/chassis-bom.csv).
+
+<a id="s08"></a>
+
+### S08: Schneider XPSUAF13AP safety-relay example
+
+**Source / source type:** [Schneider XPSUAF13AP at
+RS](https://uk.rs-online.com/web/p/safety-relays/2006133/), product example
+
+**Evidence or limitation:** 24 V AC/DC safety relay, IP20; public page exposes no usable
+price. €300 is an allowance for a reviewed safety solution, not its quote or a machine
+certification.
+
+**Engineering detail:** [Independent stop requirements](safety-controls.md#ps28-independent-stopping-and-normal-control).
+
+<a id="s09"></a>
+
+### S09: Tele Radio Tiger G2 remote alternative
+
+**Source / source type:** [Tele Radio Tiger
+G2](https://www.tele-radio.com/products/tiger-g2/), manufacturer
+
+**Evidence or limitation:** Manufacturer describes certified stop functions on specified
+configurations. Exact transmitter/receiver, EU frequency, motion interface, and
+delivered price were unselected. The owner has since specified a mobile app for normal
+control and removed this industrial-remote allowance from the current baseline. This
+family remains a considered alternative, not a selected or qualified safety system.
+
+**Current scope:** [Mobile-app control decision](../07-workshop-and-support/workshop.md#f10-workshop-equipment-test-method-and-mobile-app-control) ·
+[Independent stop requirements](safety-controls.md#ps28-independent-stopping-and-normal-control).
 
 [↑ Back to document overview](safety-controls.md#safety-controls-and-sensors)

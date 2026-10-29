@@ -22,10 +22,11 @@ not released. Start with the physical part, then follow its attachment.
 
 **Further detail:** [Release requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
-[Itemized costs](frame.md#detailed-module-costs)
+[Itemized costs](frame.md#detailed-module-costs) ·
+[Procurement and holds](frame.md#procurement-and-release-holds)
 
 **Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
-[Module 01 overview](README.md)
+[All modules](../README.md#module-directory)
 
 ## Specification and inspection requirements
 
@@ -163,6 +164,27 @@ a certified lifting point by default
 [RS hardware and tools (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](frame.md#frame-scissor-and-spine)
+
+
+## Procurement and release holds
+
+Prepared supplier requests and release holds owned by this scope. Sending a request needs separate user approval; every hold is **OPEN**. Shared document control, manufacturing packs and cross-cutting holds stay in the [Chassis Build and Procurement Checklist](../../chassis-build-requirements.md#chassis-build-and-procurement-checklist).
+
+### Q04: local fabrication/machining
+
+**Requirements:** [Frame and holding](frame.md#specification-and-inspection-requirements),
+[width motor/screw interfaces](../03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
+[drive shafts](../02-drive-train/propulsion.md#ps16-output-shafts-and-bearings),
+[battery containment](../04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints), and
+[electronics packaging](../05-power-cables-and-electronics/power-distribution.md#ps25-printed-enclosures-and-cable-glands)
+with [thermal hardware](../05-power-cables-and-electronics/power-distribution.md#ps27-thermal-paths-and-enclosure-hardware).
+**Leads:** [Dedeman](../../bom/sources.md#s06-dedeman-fabrication-supplies) · [DOLD mechanical parts](../../bom/sources.md#s04-dold-mechanical-parts).
+
+**Specific response needed:** Quote only against released drawings: stock/cut yield,
+outsourced precision operations and material/inspection documentation; owner
+welding/printing labor stays separate
 
 [↑ Back to document overview](frame.md#frame-scissor-and-spine)
 

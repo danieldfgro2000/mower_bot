@@ -24,10 +24,13 @@ holding mechanism; loads, feedback accuracy, and motion limits remain open.
 [Release requirements](width-adjustment.md#specification-and-inspection-requirements) ·
 [Sourcing](width-adjustment.md#sourcing) ·
 [Interfaces](width-adjustment.md#interfaces-with-other-scopes) ·
-[Itemized costs](width-adjustment.md#detailed-module-costs)
+[Itemized costs](width-adjustment.md#detailed-module-costs) ·
+[Procurement and holds](width-adjustment.md#procurement-and-release-holds) ·
+[Decision records](width-adjustment.md#decision-records) ·
+[Supplier evidence](width-adjustment.md#supplier-evidence)
 
 **Related documents:** [Chassis BOM](../../bom/chassis-bom.md) ·
-[Module 03 overview](README.md)
+[All modules](../README.md#module-directory)
 
 ## Powered rolling width adjustment
 
@@ -186,13 +189,28 @@ through full approved travel, no trapping or rubbing; guard attachment inspectio
 
 ## Sourcing
 
-[DOLD bearings (S03)](../../bom/sources.md#s03-dold-bearing-housings) ·
+[DOLD bearings (S03)](../01-structure-and-running-gear/running-gear.md#s03-dold-bearing-housings) ·
 [DOLD mechanical parts (S04)](../../bom/sources.md#s04-dold-mechanical-parts) ·
 [Dedeman fabrication supplies (S06)](../../bom/sources.md#s06-dedeman-fabrication-supplies) ·
 [RS electrical components (S07)](../../bom/sources.md#s07-rs-electrical-parts-and-tools) ·
-[Owner-reported wiper motor (U01)](../../bom/sources.md#u01-owner-reported-windshield-motor).
+[Owner-reported wiper motor (U01)](width-adjustment.md#u01-owner-reported-windshield-motor).
 
 Catalog links and price proxies are not approved suppliers or delivered quotes.
+
+[↑ Back to document overview](width-adjustment.md#powered-width-adjustment)
+
+
+## Procurement and release holds
+
+Prepared supplier requests and release holds owned by this scope. Sending a request needs separate user approval; every hold is **OPEN**. Shared document control, manufacturing packs and cross-cutting holds stay in the [Chassis Build and Procurement Checklist](../../chassis-build-requirements.md#chassis-build-and-procurement-checklist).
+
+### H03: width holding and adjustment
+
+**Must close before:** Width mechanism fabrication/actuation
+
+**Closure evidence / responsible review role:** Positive-holding conflict resolved
+through explicit plan decision and engineering evidence; screw/load/guard/reference/stop
+definitions; mechanical and safety review
 
 [↑ Back to document overview](width-adjustment.md#powered-width-adjustment)
 
@@ -272,5 +290,54 @@ N/A never means an unknown purchase is free.
 | --- | ---: |
 | **All items owned by this scope** | €407.00 |
 <!-- END GENERATED: details -->
+
+[↑ Back to document overview](width-adjustment.md#powered-width-adjustment)
+
+
+## Decision records
+
+Dated owner decisions and qualification loops for this scope. Read each date with its later corrections; a decision closes an estimating assumption, not a component qualification. Cross-module decisions remain in [BOM feedback](../../bom/feedback.md#feedback-decisions).
+
+### F04: adjustment mode and actuator
+
+**Decision recorded on 2026-10-26:** Operator enters width; chassis rolls at a
+predefined calculated speed during powered adjustment. Existing windshield motor is 12
+V, estimated 3–5 A; user confirms worm-and-wheel reduction.
+
+**Effect on estimate:** Add €407 of screw, driver, converter, feedback, limits, and
+associated materials per machine, identical in both traction scenarios. Donor motor is
+reused with purchase cost N/A (already owned). No adjustment speed is yet validated.
+
+### F05: holding and position proposal
+
+**Decision recorded on 2026-10-26:** User proposes worm-only holding without another
+lock and incremental Hall/optical turn counting converted to width.
+
+**Effect on estimate:** Record the proposal and reference/limit provisions; **do not yet
+remove the [plan's positive-locking requirement](../../../../plan.md#42-variable-width-scissor-frame)**.
+The [width-lock provision (CHS-010)](../01-structure-and-running-gear/frame.md#0105-scissor-pivots-locks-and-hard-stops) retains a €48 pin-cost
+reserve, not a selected or integrated automatic locking design. Holding remains a
+release blocker.
+
+[↑ Back to document overview](width-adjustment.md#powered-width-adjustment)
+
+
+## Supplier evidence
+
+Dated supplier claims for this scope, recorded under the [common sourcing weights](../../bom/sources.md#common-sourcing-weights). Catalog listings are leads, not quotes or qualification. Source IDs stay stable for the [cost ledger](../../bom/chassis-bom.csv).
+
+<a id="u01"></a>
+
+### U01: Owner-reported windshield motor
+
+**Source / source type:** Owner feedback, 2026-10-26; existing inventory, not an online
+purchase source
+
+**Evidence or limitation:** Available windshield motor; owner reports 12 V, estimates
+3–5 A, and confirms worm-and-wheel type. Model, current measurement, torque, speed,
+duty, and non-backdrive evidence not supplied. Purchase cost N/A (already owned); not free capability
+validation.
+
+**Engineering detail:** [Reused wiper-motor qualification](width-adjustment.md#ps09-reused-wiper-motor).
 
 [↑ Back to document overview](width-adjustment.md#powered-width-adjustment)

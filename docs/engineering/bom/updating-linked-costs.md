@@ -31,8 +31,8 @@ Edit numeric costs in their authoritative CSV, not in generated Markdown tables:
 | [Budget allowances](budget-allowances.csv) | Non-material cash provisions |
 | [Propulsion alternatives](propulsion-alternatives.csv) | Candidate replacements excluded from baseline totals; `technical_reference` links to the owning engineering detail |
 
-Keep the [Supplier register](sources.md) and affected scope requirements in
-step with the inputs. Follow the [estimate rules](chassis-bom.md#estimate-rules)
+Keep supplier evidence (in the owning module page, or [Sources](sources.md)
+for shared catalogs) and affected scope requirements in step with the inputs. Follow the [estimate rules](chassis-bom.md#estimate-rules)
 and the [BOM documentation skill](../../../.github/skills/bom-documentation/SKILL.md).
 A sourcing request alone does not select a new hardware configuration.
 
@@ -52,8 +52,8 @@ Open each engineering document with a short summary. Technical scopes then
 show **Parts at a glance**; maintenance/history pages keep task or evidence
 routes appropriate to their purpose. Keep secondary local jumps under
 **Further detail** or **On this page**, not ahead of the useful part view.
-Small module overviews show component-to-component routes rather than repeat
-the entire specification index. Link the topic itself:
+The [module directory](../modules/README.md#module-directory) shows
+component-to-component routes rather than repeating the specification index. Link the topic itself:
 [Workshop tools (PS36)](../modules/07-workshop-and-support/workshop.md#ps36-instruments-and-workshop-tools),
 not just its requirement code. Supplier, decision, request, and hold references
 also need meaningful names.
@@ -67,7 +67,7 @@ navigation targets.
 | Generated cost headings | The [module map](cost-modules.csv) owns human-readable numbered labels. Generated links target those headings; legacy `cost-<module_id>` anchors remain for existing links. |
 | Cost-item links to requirements | Each scope owns plain-text `### PS##: Name` headings and the following `**Cost-ledger coverage:**` line. The generator derives the heading link and requires every scope item to have exactly one requirement owner. |
 | Requirement coverage | Use inclusive item ranges and `\|` unions, as in the module map. A family without purchases uses `None;` followed by its explanation; it must not claim priced items. |
-| Supplier names and IDs | The [supplier register](sources.md#source-id-lookup) owns descriptive `### S##: Name` / `### U##: Name` headings. Link to the named headings and preserve `s##` / `u##` aliases for existing source links. |
+| Supplier names and IDs | Descriptive `### S##: Name` / `### U##: Name` headings live in the owning module page's **Supplier evidence** section, or in [Sources](sources.md#source-id-lookup) for shared catalogs; IDs must be unique across both. Link to the named headings and preserve `s##` / `u##` aliases for existing source links. |
 | Alternative technical detail | `technical_reference` in the [alternatives CSV](propulsion-alternatives.csv) is relative to that CSV's `bom/` directory and points to a module Markdown section. Keep `product_url` for supplier evidence; neither field changes the non-additive cost treatment. |
 | New or renamed detail sections | Update the local topic map and inbound links together; link a section for a specific topic and a file for a scope overview. |
 
@@ -333,5 +333,17 @@ all 15 reference regressions passed. A temporary copy of
 `### 02 — Drive train` and reports the broken
 `cost-breakdown.md#02--drive-train` afterward; the live repository-test entry
 point also rejects a missing cross-file fragment.
+
+### Module-owned evidence regrouping
+
+TDD evidence, 2026-10-29: generator tests first failed for a source entry moved
+into a module page, a duplicate entry across documents and a missing entry.
+`load()` now collects `### S##:` / `### U##:` headings from `sources.md` and
+every module page and rejects duplicates. Single-scope supplier evidence,
+decision records, procurement packages and release holds then moved into
+their module pages; the per-module README overviews were folded into the
+[module directory](../modules/README.md#module-directory). Central pages keep
+policy, ID indexes and cross-module records. Costs and the baseline ledger
+were unchanged.
 
 [↑ Back to document overview](updating-linked-costs.md#updating-linked-costs)

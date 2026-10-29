@@ -150,9 +150,10 @@ class CostDocumentationTest(unittest.TestCase):
             "06-safety-controls-and-sensors": ("safety-controls.md",),
             "07-workshop-and-support": ("workshop.md",),
         }
+        self.assertTrue((self.engineering / "modules/README.md").is_file())
         for folder, documents in module_docs.items():
             directory = self.engineering / "modules" / folder
-            self.assertTrue((directory / "README.md").is_file(), folder)
+            self.assertFalse((directory / "README.md").exists(), folder)
             for document in documents:
                 self.assertTrue((directory / document).is_file(), f"{folder}/{document}")
 
@@ -393,7 +394,8 @@ class CostDocumentationTest(unittest.TestCase):
         )
 
     def test_descriptive_source_headings_preserve_source_ids(self):
-        path = self.engineering / "bom/sources.md"
+        path = self.engineering / "modules/01-structure-and-running-gear/running-gear.md"
+        self.assertRegex(path.read_text(), r"(?m)^### S01: ")
         path.write_text(re.sub(
             r"^### S01(?::[^\n]+)?$",
             "### S01: PowerTrack rubber tracks",
@@ -402,6 +404,42 @@ class CostDocumentationTest(unittest.TestCase):
         ))
         self.run_generator()
         self.run_generator("--check")
+
+    def move_source_entry(self, source_id, destination, keep_original=False):
+        register = self.engineering / "bom/sources.md"
+        text = register.read_text()
+        match = re.search(
+            rf"^### {source_id}(?::[^\n]+)?\n.*?(?=^#{{1,3}} |\Z)", text, re.M | re.S
+        )
+        self.assertIsNotNone(match, source_id)
+        if not keep_original:
+            register.write_text(text[:match.start()] + text[match.end():])
+        scope = self.engineering / destination
+        scope.write_text(scope.read_text() + "\n## Supplier evidence\n\n" + match.group(0))
+
+    def test_source_entries_may_live_in_owning_module_scope(self):
+        self.move_source_entry(
+            "S04", "modules/01-structure-and-running-gear/frame.md"
+        )
+        self.run_generator()
+        self.run_generator("--check")
+
+    def test_source_defined_in_two_documents_fails_without_writes(self):
+        main = self.engineering / "bom/chassis-bom.md"
+        before = main.read_text()
+        self.move_source_entry(
+            "S04", "modules/01-structure-and-running-gear/frame.md",
+            keep_original=True,
+        )
+        result = self.run_generator(success=False)
+        self.assertIn("duplicate source", result.stderr.lower())
+        self.assertEqual(main.read_text(), before)
+
+    def test_missing_source_entry_fails(self):
+        register = self.engineering / "bom/sources.md"
+        register.write_text(re.sub(r"^### S04(?::[^\n]+)?$", "### Removed", register.read_text(), flags=re.M))
+        result = self.run_generator(success=False)
+        self.assertIn("unknown source", result.stderr.lower())
 
     def test_missing_or_duplicate_specification_coverage_fails_without_writes(self):
         path = self.engineering / "modules/01-structure-and-running-gear/frame.md"

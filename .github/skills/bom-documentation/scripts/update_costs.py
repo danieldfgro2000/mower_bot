@@ -64,12 +64,16 @@ def load(base):
     ids = [row["item_id"] for row in rows]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate ledger item ID")
-    sources = set(re.findall(
-        r"^### ([SU]\d+)(?:: [^\n]+)?$",
-        (base / "bom/sources.md").read_text(), re.M,
-    ))
+    sources = Counter()
+    for document in [base / "bom/sources.md", *sorted((base / "modules").glob("*/*.md"))]:
+        sources.update(re.findall(
+            r"^### ([SU]\d+)(?:: [^\n]+)?$", document.read_text(), re.M,
+        ))
+    duplicates = sorted(source for source, count in sources.items() if count > 1)
+    if duplicates:
+        raise ValueError(f"Duplicate source entry: {', '.join(duplicates)}")
     for row in rows:
-        if not set(row["source_ids"].split("|")) <= sources:
+        if not set(row["source_ids"].split("|")) <= set(sources):
             raise ValueError(f"Unknown source for {row['item_id']}")
         q1, q2 = number(row["qty_stage_1"]), number(row["qty_stage_2_total"])
         if q1 > q2 or q2 <= 0:

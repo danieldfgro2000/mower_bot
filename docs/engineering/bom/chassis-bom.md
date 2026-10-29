@@ -133,7 +133,7 @@ unmeasured.
   [fruit drum](../../../plan.md#74-front-fruit-drum), and
   [RTK/autonomy equipment and subscriptions](../../../plan.md#82-rtk-teach--repeat).
 - **Removed options:** [Dynamometer/direct torque measurement and industrial
-  operator remote](feedback.md#f10-workshop-equipment-test-method-and-mobile-app-control).
+  operator remote](../modules/07-workshop-and-support/workshop.md#f10-workshop-equipment-test-method-and-mobile-app-control).
   The four-column cage remains excluded by the [machine architecture](../../../plan.md#4-machine-architecture).
 - **Professional and commercial work:** design/risk assessment, software
   development, certification, insurance, field commissioning, workshop rent,
@@ -165,7 +165,7 @@ remain separately budgeted pending their own mechanical/environmental design.
 The active estimate uses the 48 V drive and two DC HOUSE 51.2 V / 100 Ah
 LiFePO4 pack/charger bundles; modest capacity increases such as 105 Ah remain
 acceptable alternatives, not extra purchases.
-The [owner's retirement decision](feedback.md#f12-48-v-battery-baseline-and-scenario-retirement)
+The [owner's retirement decision](../modules/04-battery-and-charging/batteries.md#f12-48-v-battery-baseline-and-scenario-retirement)
 removes the former higher-voltage scenario from active inputs and reports.
 This is a budget configuration, not hardware approval; nominal voltage is not compatibility.
 
@@ -183,7 +183,7 @@ This is a budget configuration, not hardware approval; nominal voltage is not co
 
 ALT-DRV-002 preserves the former motor/planetary reference, not its controller
 or brake and not an additional purchase. HPM5000B was promoted from
-ALT-DRV-001 to DRV-001; [F14](feedback.md#f14-hpm5000b-controller-and-brake-cost-baseline)
+ALT-DRV-001 to DRV-001; [F14](../modules/02-drive-train/propulsion.md#f14-hpm5000b-controller-and-brake-cost-baseline)
 records the change. The
 [custom planetary-in-drum gearbox](../modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 and brake installation remain unpriced. Neither the new motor's advertised
@@ -313,7 +313,7 @@ are not yet verified safety behavior.
   Allowances are intended as tax-inclusive cash provisions; no VAT recovery
   is assumed. Import duty, freight VAT, and actual seller tax treatment require
   checkout/RFQ.
-- The [DC HOUSE EU/non-DE bundle](sources.md#s30-dc-house-100-ah-charger-bundle)
+- The [DC HOUSE EU/non-DE bundle](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle)
   displays €849.99 with an 18 A charger. Destination VAT inclusion is unclear;
   the ledger uses `849.99 × 1.21 = €1,028.49` per bundle, rounded half-up,
   as a **conditional 21% tax-reserved provision**, not proof of a net price.
@@ -377,8 +377,10 @@ selection, purchase, fabrication, or operation.
 
 ### Supplier register
 
-Use the [Supplier register](sources.md) for source IDs and
-dated evidence. Catalog leads are not component qualification.
+Dated supplier evidence lives at the end of each module page; the
+[source lookup](sources.md#source-id-lookup) maps every ID to its page, and
+[Sources](sources.md) keeps sourcing weights and shared catalogs. Catalog
+leads are not component qualification.
 
 ### Feedback and qualification loops
 

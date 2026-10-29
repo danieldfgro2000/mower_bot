@@ -17,8 +17,10 @@ narrowest applicable scope below.
    / [specifications](engineering/modules/02-drive-train/propulsion.md#hpm5000b-ratings-and-sourcing-limits)
    → [motor-to-track mounting](engineering/modules/02-drive-train/propulsion.md#motor-to-track-mounting).
 3. Use **Part links** or **Continue** in the detail to move to the adjoining
-   component without returning to an index. The [supplier register](engineering/bom/sources.md)
-   and [feedback decisions](engineering/bom/feedback.md) retain evidence/history.
+   component without returning to an index. Each module page also holds
+   its own supplier evidence, decision records and release holds; the
+   [source lookup](engineering/bom/sources.md#source-id-lookup) and
+   [feedback index](engineering/bom/feedback.md) list every record by ID.
 4. Before any purchase or build, use the
    [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md)
    for the required evidence and release holds; browsing is not authorization.

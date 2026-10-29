@@ -132,14 +132,14 @@ cross-references, not extra parts.
 
 | Part being considered | Inspect the part and its interfaces | Relevant release evidence |
 | --- | --- | --- |
-| Motor, controller, reduction or brake | [Drive choices and costs](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Motor-to-track mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) | [Drive/braking sizing](chassis-build-requirements.md#h02-drive-and-braking-sizing) |
+| Motor, controller, reduction or brake | [Drive choices and costs](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Motor-to-track mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) | [Drive/braking sizing](modules/02-drive-train/propulsion.md#h02-drive-and-braking-sizing) |
 | Track, drum, roller or tensioner | [Running-gear parts](modules/01-structure-and-running-gear/running-gear.md#parts-at-a-glance) · [Track engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) | [Configuration/package fit](chassis-build-requirements.md#h01-configuration-and-package-fit) |
 | Frame, mounting plates, pivots or lifting points | [Frame parts](modules/01-structure-and-running-gear/frame.md#parts-at-a-glance) · [Motor mounting plates](modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) | [Mechanical drawing pack](chassis-build-requirements.md#mechanical-drawing-pack) |
-| Width motor, screw, driver or limits | [Width-drive parts](modules/03-width-adjustment/width-adjustment.md#parts-at-a-glance) · [Holding conflict](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) | [Width holding/adjustment](chassis-build-requirements.md#h03-width-holding-and-adjustment) |
-| Pack, BMS, enclosure or charger | [Battery/charging parts](modules/04-battery-and-charging/batteries.md#parts-at-a-glance) · [Battery-to-pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) | [Bus/protection coordination](chassis-build-requirements.md#h04-bus-and-protection-coordination) |
+| Width motor, screw, driver or limits | [Width-drive parts](modules/03-width-adjustment/width-adjustment.md#parts-at-a-glance) · [Holding conflict](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) | [Width holding/adjustment](modules/03-width-adjustment/width-adjustment.md#h03-width-holding-and-adjustment) |
+| Pack, BMS, enclosure or charger | [Battery/charging parts](modules/04-battery-and-charging/batteries.md#parts-at-a-glance) · [Battery-to-pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) | [Bus/protection coordination](modules/05-power-cables-and-electronics/power-distribution.md#h04-bus-and-protection-coordination) |
 | Cable, lug or connector | [Harness parts and tooling connections](modules/05-power-cables-and-electronics/cables-connectors.md#parts-at-a-glance) | [Electrical/harness pack](chassis-build-requirements.md#electricalharness-pack) |
-| Fuse, contactor, converter or electronics box | [Power-distribution parts](modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) | [Bus/protection coordination](chassis-build-requirements.md#h04-bus-and-protection-coordination) · [Printed enclosure pack](chassis-build-requirements.md#printed-enclosure-pack) |
-| E-stop, board, interlock or sensor | [Control/sensor parts and connections](modules/06-safety-controls-and-sensors/safety-controls.md#parts-at-a-glance) | [Independent stopping](chassis-build-requirements.md#h05-independent-stopping) |
+| Fuse, contactor, converter or electronics box | [Power-distribution parts](modules/05-power-cables-and-electronics/power-distribution.md#parts-at-a-glance) | [Bus/protection coordination](modules/05-power-cables-and-electronics/power-distribution.md#h04-bus-and-protection-coordination) · [Printed enclosure pack](chassis-build-requirements.md#printed-enclosure-pack) |
+| E-stop, board, interlock or sensor | [Control/sensor parts and connections](modules/06-safety-controls-and-sensors/safety-controls.md#parts-at-a-glance) | [Independent stopping](modules/06-safety-controls-and-sensors/safety-controls.md#h05-independent-stopping) |
 | Bench fixture, tools or handling equipment | [Workshop buy/reuse choices](modules/07-workshop-and-support/workshop.md#parts-at-a-glance) · [Test-method limits](modules/07-workshop-and-support/workshop.md#test-method-and-evidence) | [Verification plan](chassis-build-requirements.md#verification-plan) |
 
 These are entry points, not an exhaustive allocation of holds to parts.
@@ -233,128 +233,23 @@ Reused equipment requires the same suitability evidence as a new item.
 Prepare these requests only; **sending supplier requests needs separate user
 approval**. Each response must identify exact MPN/options and its included
 children, plus quantity, net/VAT/gross price, delivery to Romania, freight,
-lead time, validity, warranty, drawings and technical exceptions. Use the
-[Supplier register](bom/sources.md#supplier-evidence); its catalogs are not quotes.
+lead time, validity, warranty, drawings and technical exceptions. Each
+package lives in its owning module page, beside that scope's requirements and
+supplier evidence; catalogs are not quotes.
 
 | Supplier request | Scope |
 | --- | --- |
-| [Complete running gear (Q01)](chassis-build-requirements.md#q01-complete-running-gear) | Matched tracks, rollers, shafts and bearings |
-| [Alternative complete drives (Q02)](chassis-build-requirements.md#q02-alternative-complete-drives) | Motor, controller, reduction and braking |
-| [Battery and charging alternatives (Q03)](chassis-build-requirements.md#q03-batterycharging-alternatives) | Matched pack/BMS and charger definitions |
-| [Local fabrication and machining (Q04)](chassis-build-requirements.md#q04-local-fabricationmachining) | Quote against released drawings |
-| [Electrical and safety (Q05)](chassis-build-requirements.md#q05-electrical-and-safety) | Protection, wiring and independent stop hardware |
-| [Bench and service assets (Q06)](chassis-build-requirements.md#q06-benchservice-assets) | Fixture, selected instruments and support equipment |
-
-### Q01: complete running gear
-
-**Requirements:** [Tracks, rollers, tensioners and axles](modules/01-structure-and-running-gear/running-gear.md#specification-and-inspection-requirements).
-**Leads:** [PowerTrack tracks](bom/sources.md#s01-powertrack-rubber-tracks) ·
-[TVH undercarriages](bom/sources.md#s02-tvh-undercarriage-parts) ·
-[DOLD bearings](bom/sources.md#s03-dold-bearing-housings) where excluded from a quoted kit.
-
-**Specific response needed:** Two matched tracks/undercarriages with sprocket drawings,
-load/speed/tension data and every included axle/bearing/roller; quote service spares
-separately
-
-### Q02: alternative complete drives
-
-**Requirements:** [Motor, controller, brake and reduction](modules/02-drive-train/propulsion.md#specification-and-inspection-requirements).
-**Current leads:** [HPM5000B](bom/sources.md#s23-golden-motor-hpm5000b-marketplace-price),
-[EZ-A48500](bom/sources.md#s32-golden-motor-ez-a48500-controller) and
-[FDB 13 C](bom/sources.md#s33-precima-fdb-13-c-holding-brake).
-The former [BLDC planetary motor](bom/sources.md#s11-bldc-2-kw-planetary-motor) /
-[BD100/C100 controller](bom/sources.md#s12-bldc-bd100c100-controller) is a
-non-additive alternative; other reduction leads are
-[planetary gearboxes](bom/sources.md#s10-dold-planetary-gearbox-alternatives) or [chain components](bom/sources.md#s05-dold-chain-drives).
-
-**Specific response needed:** One bench drive with second identical drive priced
-separately; documented operating-point curves, reduction and brake ratings, controller
-configuration and all wiring/interfaces; flag present voltage/current contradictions
-
-**Main motor cost candidate:** [HPM5000B DRV-001](modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate),
-[marketplace evidence](bom/sources.md#s23-golden-motor-hpm5000b-marketplace-price) and
-[manufacturer data](bom/sources.md#s24-golden-motor-hpm5000b-family-specification), with
-[KellyControllers.eu](bom/sources.md#s25-kellycontrollerseu-hpm5000b-fallback) as an EU fallback.
-Confirm 48 V air-cooled winding/shaft and
-motor-only contents at the published quantity tier. Confirm EZ-A48500 compatibility,
-command interface, bus/phase limits, thermal path and full-SOC/BMS-open braking.
-Obtain a complete installed holding/stopping and custom gearbox quote;
-the [in-drum gearbox concept](modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
-is unpriced. Do not transfer the BLDC planetary-package compatibility
-or infer approval of a 5 kW power increase.
-
-**Brake fit response:** Resolve the selected FDB 13 C 19H7 hub versus the
-published motor Ø22.3 mm / 5 mm-key shaft and mismatched mounting patterns.
-Require an approved hub or separately supported shaft, reaction-flange drawing,
-axial fit/retention, regulated release supply and default-applied fault behavior.
-Confirm exact SKU dimensions, coil voltage range and torque/dynamic-work ratings;
-the €159 component price does not cover this integration.
-
-### Q03: battery/charging alternatives
-
-**Requirements:** [Packs, BMS, enclosures and charging](modules/04-battery-and-charging/batteries.md#specification-and-inspection-requirements).
-**Leads:** [DC HOUSE bundle (S30)](bom/sources.md#s30-dc-house-100-ah-charger-bundle) ·
-[GBS metal pack (S28)](bom/sources.md#s28-greenboatsolutions-100-ah-metal-pack) ·
-[Vatrer mobile packs (S31)](bom/sources.md#s31-vatrer-105-ah-mobile-packs).
-
-**Specific response needed:** Pack drawing/mass, cell/series/BMS details,
-vehicle/regen/current limits, charger and shipment documentation; price matched
-battery-only and charger-bundled offers separately. Confirm two 51.2 V /
-approximately 100 Ah packs (105 Ah accepted), exact revision/drawing,
-continuous/peak and regen ratings, cold-charge inhibition/recovery,
-Romania freight/tax and enclosure/IP claims. Resolve the DC HOUSE peak,
-dimensions and charger-power conflicts before selection; its bundled charger
-must not be bought twice. A maximum-current number or heating feature is not
-qualification.
-
-### Q04: local fabrication/machining
-
-**Requirements:** [Frame and holding](modules/01-structure-and-running-gear/frame.md#specification-and-inspection-requirements),
-[width motor/screw interfaces](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
-[drive shafts](modules/02-drive-train/propulsion.md#ps16-output-shafts-and-bearings),
-[battery containment](modules/04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints), and
-[electronics packaging](modules/05-power-cables-and-electronics/power-distribution.md#ps25-printed-enclosures-and-cable-glands)
-with [thermal hardware](modules/05-power-cables-and-electronics/power-distribution.md#ps27-thermal-paths-and-enclosure-hardware).
-**Leads:** [Dedeman](bom/sources.md#s06-dedeman-fabrication-supplies) · [DOLD mechanical parts](bom/sources.md#s04-dold-mechanical-parts).
-
-**Specific response needed:** Quote only against released drawings: stock/cut yield,
-outsourced precision operations and material/inspection documentation; owner
-welding/printing labor stays separate
-
-### Q05: electrical and safety
-
-**Requirements:** [Width-drive power, feedback and harness](modules/03-width-adjustment/width-adjustment.md#specification-and-inspection-requirements),
-[main power distribution](modules/05-power-cables-and-electronics/power-distribution.md),
-[cables and connectors](modules/05-power-cables-and-electronics/cables-connectors.md), and
-[independent stop/control/sensor requirements](modules/06-safety-controls-and-sensors/safety-controls.md#specification-and-inspection-requirements).
-**Leads:** [RS electrical parts](bom/sources.md#s07-rs-electrical-parts-and-tools),
-[Schneider relay example](bom/sources.md#s08-schneider-xpsuaf13ap-safety-relay-example), and
-[DOLD contactor example](bom/sources.md#s18-dc-con-72v400a-contactor-example). The
-[industrial remote](bom/sources.md#s09-tele-radio-tiger-g2-remote-alternative) is historical research, not a current purchase.
-
-**Specific response needed:** Exact full-voltage-rated protective devices, complete
-connector/harness children, independent stop configuration and evidence; no
-automatic approval of catalog examples
-
-### Q06: bench/service assets
-
-**Requirements:** [Installed handling points](modules/01-structure-and-running-gear/frame.md#ps32-installed-lifting-and-recovery-points) and
-[bench fixture, workshop tools and service supplies](modules/07-workshop-and-support/workshop.md#specification-and-inspection-requirements).
-**Leads:** [DOLD mechanical parts](bom/sources.md#s04-dold-mechanical-parts),
-[Dedeman supplies](bom/sources.md#s06-dedeman-fabrication-supplies), [RS tools](bom/sources.md#s07-rs-electrical-parts-and-tools), and
-[ATO DC clamp meters](bom/sources.md#s21-ato-clamp-meter-catalog); reconcile
-[owner inventory](bom/sources.md#u02-owner-reported-workshop-inventory) before buying replacements.
-
-**Specific response needed:** Guarded-fixture materials, interfaces, selected
-instruments, ratings and calibration evidence; separately quote any required
-rental or specialist support. The
-[current test method](modules/07-workshop-and-support/workshop.md#test-method-and-evidence)
-does not include a dynamometer or direct torque measurement. Do not present
-instrument quotes as proof of load absorption, heat rejection, or torque capability.
+| [Complete running gear (Q01)](modules/01-structure-and-running-gear/running-gear.md#q01-complete-running-gear) | Matched tracks, rollers, shafts and bearings |
+| [Alternative complete drives (Q02)](modules/02-drive-train/propulsion.md#q02-alternative-complete-drives) | Motor, controller, reduction and braking |
+| [Battery and charging alternatives (Q03)](modules/04-battery-and-charging/batteries.md#q03-batterycharging-alternatives) | Matched pack/BMS and charger definitions |
+| [Local fabrication and machining (Q04)](modules/01-structure-and-running-gear/frame.md#q04-local-fabricationmachining) | Quote against released drawings |
+| [Electrical and safety (Q05)](modules/05-power-cables-and-electronics/power-distribution.md#q05-electrical-and-safety) | Protection, wiring and independent stop hardware |
+| [Bench and service assets (Q06)](modules/07-workshop-and-support/workshop.md#q06-benchservice-assets) | Fixture, selected instruments and support equipment |
 
 No claimed second source is interchangeable until form, fit, function, ratings,
 firmware/interfaces and acceptance evidence are reviewed. A supplier "equivalent"
 or marketplace stock substitution is a change request, not purchasing discretion.
+
 
 [↑ Back to document overview](chassis-build-requirements.md#chassis-build-and-procurement-checklist)
 
@@ -363,15 +258,16 @@ or marketplace stock substitution is a change request, not purchasing discretion
 
 All hold points below are **OPEN**; required approval roles are not yet assigned.
 An approval record must identify its scope, configuration, reviewer and evidence.
-Engineering approval is not operational authorization.
+Engineering approval is not operational authorization. Module-specific holds
+(H02–H05) live in their owning module pages; cross-cutting holds follow the table.
 
 | Hold | What it blocks | Evidence theme |
 | --- | --- | --- |
 | [Configuration and package fit (H01)](chassis-build-requirements.md#h01-configuration-and-package-fit) | Long-lead purchase and dimension-dependent fabrication | Frozen configuration, package layout, mass/CG and load cases |
-| [Drive and braking sizing (H02)](chassis-build-requirements.md#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
-| [Width holding and adjustment (H03)](chassis-build-requirements.md#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
-| [Bus and protection coordination (H04)](chassis-build-requirements.md#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
-| [Independent stopping (H05)](chassis-build-requirements.md#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
+| [Drive and braking sizing (H02)](modules/02-drive-train/propulsion.md#h02-drive-and-braking-sizing) | Drive, reduction and brake purchase | Torque-speed duty, stopping, holding and power-loss strategy |
+| [Width holding and adjustment (H03)](modules/03-width-adjustment/width-adjustment.md#h03-width-holding-and-adjustment) | Width mechanism fabrication or actuation | Positive holding, screw/load definition, guarding and limits |
+| [Bus and protection coordination (H04)](modules/05-power-cables-and-electronics/power-distribution.md#h04-bus-and-protection-coordination) | Battery, controller, switchgear and harness release | Voltage/current compatibility, protection and schematics |
+| [Independent stopping (H05)](modules/06-safety-controls-and-sensors/safety-controls.md#h05-independent-stopping) | Energizing any bench or chassis configuration | Hazard review, stop-state design and approved test plan |
 | [Drawings and purchased-part qualification (H06)](chassis-build-requirements.md#h06-drawings-and-purchased-part-qualification) | Production purchase or fabrication release | Released records, drawings, exact MPNs and valid quotes |
 | [First article and environment (H07)](chassis-build-requirements.md#h07-first-article-and-environment) | Replication or production-readiness claims | First-article evidence, environment assessment and closed defects |
 | [Completed-product release (H08)](chassis-build-requirements.md#h08-completed-product-release) | Commercial machine use | Mower/safety integration, legal review and operating documentation |
@@ -384,37 +280,6 @@ Engineering approval is not operational authorization.
 pod/track/spine/width layouts; mass/CG budget and load cases; mechanical/electrical
 design review
 
-### H02: drive and braking sizing
-
-**Must close before:** Drive/reduction/brake purchase
-
-**Closure evidence / responsible review role:** Torque-speed/duty and stopping/holding
-assessment using actual radius, loaded mass and terrain; qualified full-SOC/power-loss
-strategy; drivetrain and safety review
-
-### H03: width holding and adjustment
-
-**Must close before:** Width mechanism fabrication/actuation
-
-**Closure evidence / responsible review role:** Positive-holding conflict resolved
-through explicit plan decision and engineering evidence; screw/load/guard/reference/stop
-definitions; mechanical and safety review
-
-### H04: bus and protection coordination
-
-**Must close before:** Pack, controller, switchgear and harness release
-
-**Closure evidence / responsible review role:** Full-charge/cutoff/regen and
-fault-current compatibility, precharge/branch protection, DC/DC/coil loads and
-schematics; electrical review
-
-### H05: independent stopping
-
-**Must close before:** Energizing any bench or chassis configuration
-
-**Closure evidence / responsible review role:** Hazard assessment, reviewed stop-state
-diagram, selected hardware/firmware configuration and approved test plan; safety review,
-followed by separately authorized commissioning
 
 ### H06: drawings and purchased-part qualification
 
@@ -442,7 +307,7 @@ integration, including the mower, guarding and safety integration; applicable
 legal/conformity review, technical file and service/operator documentation.
 Qualified product/compliance review is outside the Stages 1–2 estimate.
 
-The [independent stopping hold (H05)](chassis-build-requirements.md#h05-independent-stopping)
+The [independent stopping hold (H05)](modules/06-safety-controls-and-sensors/safety-controls.md#h05-independent-stopping)
 requires a review and an approved sequence before energizing, not a claim
 that live stop tests have already passed before power is first applied.
 Commissioning must progress through separately authorized controlled steps.
@@ -470,9 +335,9 @@ production price; the 20% contingency is not proof that they are covered.
 ### Different reduction, higher-rated brake or independent stopping hardware
 
 **Reconciliation required:** Replace affected drive, power and safety provisions after
-[drive/braking sizing (H02)](chassis-build-requirements.md#h02-drive-and-braking-sizing),
-[bus/protection coordination (H04)](chassis-build-requirements.md#h04-bus-and-protection-coordination), and
-[independent stopping (H05)](chassis-build-requirements.md#h05-independent-stopping),
+[drive/braking sizing (H02)](modules/02-drive-train/propulsion.md#h02-drive-and-braking-sizing),
+[bus/protection coordination (H04)](modules/05-power-cables-and-electronics/power-distribution.md#h04-bus-and-protection-coordination), and
+[independent stopping (H05)](modules/06-safety-controls-and-sensors/safety-controls.md#h05-independent-stopping),
 not add an arbitrary performance premium
 
 ### Powered compatible positive-width lock and monitoring
