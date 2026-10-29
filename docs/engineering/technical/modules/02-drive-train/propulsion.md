@@ -266,7 +266,7 @@ not be mistaken for a 19 mm shaft.
 | Brake hub | Exact purchased reference is **19H7**; [FDB family brochure](https://sabjgearweuprodmedia.blob.core.windows.net/pim-perfion-files/product-assets/HV2052113232S/en-GB-brochure.pdf), page 2, lists other size-13 hub options and DIN keyways | The brochure does not establish a Ø22.3 mm / 5 mm-key hub option. Confirm the exact supplied hub/key/retention drawing; do not assume interchangeability |
 | Mounting pattern | Motor drawing: **four M8 holes on Ø148 mm** circle; brake size-13 family drawing: **three M6 mounts on Ø112 mm** circle | Patterns do not match. A properly designed stationary reaction flange/support is required; the motor face is not automatically a suitable brake friction surface |
 | Brake envelope | Size-13 family: **Ø130 mm** body, **Ø135 mm** outer envelope, axial body dimension **g = 53.1 mm**; C-version adjustment projection **p = 3.5 mm**, up to **9.5 mm** | Space is needed beyond the body for options, hub/retention, adjustment and service. Obtain exact SKU drawing before layout release |
-| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; candidate CAD includes this shaft and the 126 mm body. Body + placeholder stages/carrier total **186 mm** against the 180 mm drum width | Already **6 mm beyond** the drum before brake/support/service needs. The shaft shares schematic stage space; this is not a designed coupling or validated axial stack |
+| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; candidate CAD includes this shaft and the 126 mm body. Revised body/stages/carrier stack is **194 mm** including four 2 mm gaps inside the 200 mm drum | **6 mm axial remainder**, not enough for the 53.1 mm brake body. The shaft shares schematic sun-bore space; brake/support/service integration remains open |
 
 **Integration directions to investigate, not fabrication instructions:** Ask
 Precima/BJ-Gear about a manufacturer-approved hub matching the actual motor
@@ -322,20 +322,22 @@ diameter may differ from 350 mm, so the ratio and speed remain provisional.
 #### CAD package envelope
 
 The motor body uses the manufacturer-listed 206 mm diameter × 126 mm length.
-In the updated **180 mm track/drum-width candidate study**, its outboard face
-is at Z = +90 mm and its mounting face at Z = -36 mm. The Ø22.3 mm shaft
-projects 53 mm inward to Z = -89 mm, with a schematic 5 x 43 mm keyway.
+In the revised **200 mm track/drum-width candidate study**, its outboard face
+is at Z = +100 mm and its mounting face at Z = -26 mm. The Ø22.3 mm shaft
+projects 53 mm inward to Z = -79 mm, with a schematic 5 x 43 mm keyway.
 Four nominal M8 openings on the published Ø148 mm circle are visible on
 the mounting face; 10 mm blind depth, 45° clocking and 5 mm keyway end offset
 are visualization assumptions, not drilling/fabrication specifications.
 
-The three stage envelopes remain 18 mm each, extending inward from the mounting
-face. Their schematic sun bores clear the displayed shaft; no real stage shafts,
-couplings or ratios between shaft segments are designed. Body + stages total
-180 mm; the final 6 mm carrier extends the stack to **186 mm**, already
-**6 mm beyond the drum's inboard edge**. The shaft overlaps schematic stage
-space rather than adding 53 mm in series. No brake, bearing support, reaction
-plate or service space is included. A visual-only 3 mm gear module
+The three stage envelopes remain 18 mm each, at Z = -46 to -28, -66 to -48
+and -86 to -68 mm. Four 2 mm axial gaps separate the body/stages/output carrier.
+Their schematic sun bores leave 1 mm radial clearance around the displayed
+shaft; no real stage shafts, couplings or interstage connections are designed.
+The final 6 mm carrier is at Z = -94 to -88 mm, leaving **6 mm inside the
+drum's inboard edge**, rather than the old 6 mm overhang. The total stack is
+**194 mm**. The shaft overlaps schematic stage space rather than adding
+53 mm in series. No brake, bearing support, reaction plate or service space
+is included; 6 mm is not sufficient for the selected brake body. A visual-only 3 mm gear module
 produces ring/sun/planet pitch diameters of 216/72/72 mm for the first two
 stages and 150/48/51 mm for the last stage. To see the planets in the model,
 view from the final-carrier side (negative Z); the outboard view prioritizes the
@@ -865,9 +867,12 @@ keyway; the selected brake is 19H7. Mounting patterns also differ, and the
 brake body alone exceeds the CAD study's nominal 14 mm axial remainder.
 Manufacturer-approved hub/support integration and repackaging are required;
 the €159 variant is not qualified as a bolt-on motor accessory.
-**CAD follow-up, 2026-10-29:** The 14 mm figure above belongs to the former
-200 mm-width study. The current 180 mm candidate already has **6 mm axial
-overhang** before adding the brake; see the [current package envelope](propulsion.md#cad-package-envelope).
+**CAD follow-up, 2026-10-29:** The original 200 mm-width study left 14 mm;
+the intervening 180 mm candidate had 6 mm axial overhang. The revised
+200 mm candidate now reserves four 2 mm gaps, leaving **6 mm axial remainder**
+before brake/support/service needs. The motor/reducer/carrier overhang is
+cleared, but the brake still cannot be added to that remainder; see the
+[current package envelope](propulsion.md#cad-package-envelope).
 The [20 Nm static screen](propulsion.md#precima-fdb-13-c-holding-brake-candidate)
 is favorable at ideal 66:1, but does not qualify dynamic stopping, transmission
 capacity or slope safety. No purchase, modification, energizing or field test

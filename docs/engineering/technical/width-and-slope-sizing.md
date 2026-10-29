@@ -14,8 +14,8 @@ inputs, not approved limits; this screen establishes no safe width, slope, or sp
 
 | Part / question | Current screening result | Open the calculation | Return to the component |
 | --- | --- | --- | --- |
-| Will the budget battery fit the pod? | The new 420 × 320 × 260 mm pack consumes the old model's vertical margin; no complete fit is established and CAD still uses the former Elker envelope | [Minimum width](width-and-slope-sizing.md#minimum-width-and-packaging) · [Battery clearance](modules/04-battery-and-charging/batteries.md#provisional-battery-clearance) | [Pack price/data](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
-| Does the track fit the proposed drum layout? | The 2,592 mm pitch loop is an unverified code interpretation; 350 mm is a flexible physical-drum-OD study placeholder, not confirmed pitch diameter or a requirement | [Track loop and CAD assumptions](modules/01-structure-and-running-gear/running-gear.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
+| Will the budget battery fit the pod? | The 504 × 268 × 233 mm listing body clears the revised candidate CAD; a 288 mm outboard-offset tray still needs a complete two-pod/transport and restraint layout | [Minimum width](width-and-slope-sizing.md#minimum-width-and-packaging) · [Battery clearance](modules/04-battery-and-charging/batteries.md#provisional-battery-clearance) | [Pack price/data](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) · [Pod fit](modules/04-battery-and-charging/batteries.md#battery-to-pod-fit) |
+| Does the track fit the proposed drum layout? | The candidate CAD closes a 2,880 mm assumed 40-link loop over three circles; baseline 2,592 mm and candidate code interpretations remain unconfirmed. The 350 mm physical drum OD remains flexible, not a confirmed pitch diameter | [Track loop and CAD assumptions](modules/01-structure-and-running-gear/running-gear.md#track-length-check) | [Drum engagement](modules/01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Motor/drum mounting](modules/02-drive-train/propulsion.md#motor-to-track-mounting) |
 | What torque does the slope screen require? | At assumed 175 mm radius: gravity-only **165.5 Nm/track** for 300 kg mower-only / 40° and **100.0 Nm/track** for the 450 kg bot-and-trailer combination / 15°; not design ratings | [Climb torque](width-and-slope-sizing.md#climb-torque) · [Reduced-speed power](width-and-slope-sizing.md#effect-of-accepting-reduced-speed) | [Motor choices and ratings](modules/02-drive-train/propulsion.md#parts-at-a-glance) · [Reduction study](modules/02-drive-train/propulsion.md#speed-and-ratio-screen) |
 | Does wider mean safe on a cross-slope? | No approved angle; CG, effective support, traction and dynamic effects remain unresolved | [Tipping screen](width-and-slope-sizing.md#lateral-static-tipping-screen) · [Slip requirement](width-and-slope-sizing.md#slip-requirement) | [Width holding](modules/03-width-adjustment/width-adjustment.md#width-holding-and-stopping) · [Tilt/interlock requirements](modules/06-safety-controls-and-sensors/safety-controls.md#ps30-tilt-sensing-and-interlocks) |
 
@@ -82,6 +82,25 @@ Determine the actual minimum from a layout of **both complete pods**, spine,
 scissor/lock/screw swept envelopes, guards, and moving harness. Keep body width,
 outside-track width, track centre spacing, and inner clearance as separate
 dimensions. No width-specific safe slope is currently known.
+
+**Revised single-pod CAD screen, 2026-10-29:** the 200 mm track carries a
+288 mm-wide proposed tray with its inboard edge aligned to the track and an
+88 mm outboard overhang. Two mirrored trays therefore need **576 mm plus the
+central clear gap**, before guards and restraint clearances. For a 1,000 mm
+deck, the arithmetic ceiling on that gap is 424 mm; equivalently, outside-track
+width must not exceed 824 mm before those excluded parts. This is not a
+demonstrated transport configuration. The approximately 1.18 m single-pod
+length does not prove the fitted mower/spine fits a 2 m deck.
+
+The battery body bottom rises from Y = 100 to 150 mm versus the clashing CAD,
+raising its body CG 50 mm; its center moves 44 mm outboard. The 40-link track
+candidate adds 24 kg per pair versus the initial 180 mm candidate, or 8 kg
+versus the 200 x 72 x 36 baseline reference. Recalculate full-machine CG,
+support footprint, frame loads and transport payload with actual parts; no
+safe slope follows from the resolved geometric clashes. Lower wheel diameter,
+the flexible 350 mm drive OD and the 66:1 kinematic study are unchanged, so
+this layout does not itself justify changing the provisional torque/speed
+screen. A confirmed pitch diameter is still required.
 
 **Continue with the part:** [Pack price and specifications](modules/04-battery-and-charging/batteries.md#48-v--approximately-2-kw-per-drive) ·
 [Enclosure and restraints](modules/04-battery-and-charging/batteries.md#ps19-battery-enclosures-and-restraints).

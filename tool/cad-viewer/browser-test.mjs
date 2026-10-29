@@ -117,7 +117,7 @@ try {
   await page.goto(`${origin}/?doc=docs%2Fdoes-not-exist.md`);
   await page.waitForSelector('#error:not([hidden])');
   assert.match(await page.locator('#error').textContent(), /404: File not found/);
-  console.log('Browser checks passed: thumbnails, mesh raycast, all 15 routes, history, rapid navigation, errors and mobile layout');
+  console.log(`Browser checks passed: thumbnails, mesh raycast, all ${loadConfig().components.length} routes, history, rapid navigation, errors and mobile layout`);
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

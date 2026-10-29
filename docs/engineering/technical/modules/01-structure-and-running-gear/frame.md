@@ -23,8 +23,11 @@ not released. Start with the physical part, then follow its attachment.
 **3D study:** The carrier plate below is a visual placeholder, not a released
 weldment or mounting drawing. Click it in the [local CAD reader](../../cad/README.md)
 to select the plate; clicking its mesh opens the frame requirements here.
-Its retained 90-100 mm vertical placement intersects the updated 120 mm
-lower rollers; see the [candidate fit holds](../../cad/README.md#modeled-dimensions-and-limits).
+The revised 524 x 288 x 10 mm tray sits at Y = 140-150 mm, leaving 10 mm
+above the unchanged 120 mm lower wheels. It has 10 mm battery-edge margins
+and puts its extra width outboard, not into the central adjustment space.
+Supports, restraint and shock-load paths remain undesigned; see the
+[candidate fit margins](../../cad/README.md#modeled-dimensions-and-limits).
 
 [![3D pod carrier plate](../../../presentation/viewer/previews/pod-carrier.png)](../../../presentation/viewer/index.html?component=pod-carrier)
 

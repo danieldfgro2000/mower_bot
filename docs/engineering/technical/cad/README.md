@@ -7,37 +7,65 @@ technical section. Click a **3D thumbnail** in either view to select and frame
 that component. No hosting or publishing is required.
 
 **Status:** Unqualified sourcing-candidate fit study, not fabrication geometry
-or authorization to build. It represents the 180 mm track, paired 120 mm printed
+or authorization to build. It represents the 200 x 72 x 40 track, paired 120 mm printed
 roller concept, paired 200 mm idler candidate, HPM5000B interfaces and current
-DC HOUSE body envelope. **It does not fit as assembled.** The existing carrier
-placement is retained so the clashes remain visible. The BOM baseline is not
-changed by this study; brake and upper tensioner remain unmodeled.
+DC HOUSE body envelope. **The represented solid clashes are cleared**, using a
+raised upper return and revised battery tray. This is not a complete supported
+machine: brake, shafts, structural mounts and spring hardware remain unmodeled.
+The BOM baseline is not changed by this candidate study.
 
 ## Modeled dimensions and limits
 
 | Component | Relevant detail | Evidence / remaining assumption |
 | --- | --- | --- |
-| Track | 180 mm width, 72 mm pitch, 37 guide/tread positions; unequal-radius loop with sloping return | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
-| Drive drum | Flexible 350 mm OD, 180 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 40 mm guide channel are placeholders |
-| Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 150 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
-| Lower rollers | Two 120 x 50 mm wheels per assembly; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearing envelopes per wheel; 140 mm total width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 40 mm guide gap and 1 mm bearing recess are study values, not print tolerances |
+| Track | 200 mm width, 72 mm pitch, 40 guide/tread positions; three-circle path, 2,880 mm nominal loop | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
+| Drive drum | Flexible 350 mm OD, 200 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 50 mm guide channel are placeholders |
+| Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 160 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
+| Lower rollers | Four paired assemblies, unchanged 120 x 50 mm wheels; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 50 mm tread-face guide gap and 1 mm bearing recess are study values, not print tolerances |
+| Upper roller | One paired 120 x 50 mm assembly at X = 200, Y = 515 mm; 150 mm pair width | [Return/tensioner proposal](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept). Printed capacity and spring/fork hardware unqualified |
 | Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
 | Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
+| Tray / battery position | 524 x 288 x 10 mm plate at Y = 140-150 mm; battery X = 35, Z = 44 mm, bottom Y = 150 mm | Custom proposal; 10 mm body-edge margins. Tray inboard edge matches the track at Z = -100 mm; extra width goes outboard |
 
-With the assumed pitch path, end-wheel horizontal spacing is **862.1 mm**.
-The continuous inner return surface crosses the battery's upper front corner by
-**90.1 mm**; the assumed guide-tip envelope increases that interference to
-**110.4 mm**. The lower roller tops sit **40 mm above the retained carrier
-underside**, intersecting its 90-100 mm height band and the battery base.
-The 126 mm motor body + three 18 mm stages + 6 mm carrier total **186 mm**,
-exceeding the 180 mm drum width by **6 mm** before brake/support/service needs.
-The shaft occupies part of the schematic reducer volume, not an additional
-53 mm in series; this is not a designed coupling.
+Drive and idler axes are at X = -440 and +419.356 mm: **859.356 mm spacing**.
+The exact three-circle external tangents and wrap arcs close the nominal loop
+to within 0.02 mm; guide positions follow actual segment lengths, not an
+equal-wheel approximation. The belt-body longitudinal envelope is approximately
+**1,174 mm**, before tread projections. Overall track height is about **617 mm**.
 
-OpenSCAD echoes these **FIT HOLD** values. Negative battery clearance remains a
-visible clash, not a passed fit check. Repositioning the battery/carrier or
-redesigning the running gear is a separate layout decision. Guide-lug sweeps,
-tensioner travel, installation clearance and load capacity still require review.
+| Clearance / change | Revised result | Provisional requirement |
+| --- | ---: | --- |
+| Battery to front / rear continuous guide-tip return envelopes | 40.1 / 36.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
+| Conservative return clearance after both allowances | **21.0 mm minimum** | 20 mm; assumptions need actual track data |
+| Upper wheel to battery, including 10 mm downward sweep | 62 mm | 20 mm |
+| Lower rollers to tray / battery | 10 / 20 mm | 10 / 20 mm |
+| Adjacent lower rollers | 28.1 mm | 10 mm |
+| Battery to drive / idler physical envelopes | 48.0 / 38.3 mm | 20 mm |
+| Guide lateral gap, each side | 13 mm at lower/upper wheels and drum; 8 mm at idler hubs | 5 mm |
+| Motor + stages + carrier | 194 mm inside 200 mm drum; **6 mm inboard remainder** | 5 mm; excludes brake/supports |
+
+The axial stack includes 2 mm between the motor body and first stage, between
+stages, and before the 6 mm output carrier. The 53 mm shaft shares the sun-bore
+space; it is not added in series or a designed coupling. Schematic gear
+engagement, wheel/belt running contact, battery/tray contact and the
+carrier/drum connection are intentional interfaces, not forbidden clashes.
+
+**Clearance-only tensioner envelope:** checks cover an upper-wheel axis range
+Y = 505-525 mm and a separate 5 mm return deflection/tolerance reserve. The
+commercial belt is modeled at its nominal 40-link length only. With fixed
+end axes, tangent-path lengths at those sweep extremes are about 2,868.6 and
+2,891.5 mm. Thus ±10 mm is **not demonstrated usable spring travel**: belt
+elasticity/slack, idler setup, fork/preload, stops and tension loads must be
+established before a working tensioner can be released. No commercial belt was
+stretched or a new loop length invented to claim nominal fit.
+
+The outboard battery-body extraction prism clears represented running gear;
+terminals, restraints, handles, supports, guards and the rest of the machine
+are excluded. The battery bottom rises from 100 to 150 mm versus the previous
+clashing study, raising its body CG 50 mm. The outboard offset and track mass
+change require a new complete-machine mass/CG and transport assessment; see
+the [width screen](../width-and-slope-sizing.md#minimum-width-and-packaging).
+No printed-wheel load rating or safe slope is inferred from clearance.
 
 ## Open the local viewer
 
@@ -145,3 +173,20 @@ The updated mesh tests check actual material/void probes at motor mounting
 holes and keyway, paired-wheel guide gaps, shaft bores, bearing recesses, track
 lugs and treads, plus candidate battery/idler bounds. All five geometry tests
 then passed. These checks cover represented features, not supplier conformity.
+
+**Clash-resolution test-first update (2026-10-29):**
+`node --test tool/cad-viewer/export.test.mjs` initially failed six assertions:
+the old 180 mm/37-link geometry, narrow guide passage, old tray, axial overhang
+and actual payload/track intersection. A further conservative 35 mm nominal
+return-margin assertion failed before the upper axis was raised to Y = 515 mm.
+Seven geometry tests then passed. Independent tangent/arc calculations from
+exported mesh centers check 40-link closure and return clearances at 1 mm
+steps through the provisional sweep; nominal margins also reserve the full
+10 mm motion plus 5 mm deflection. Boolean intersections test payload/tray,
+outboard body extraction, shaft/sun passage and track/guide material with a
+0.01 mm³ float32-STL contact tolerance and a nonempty positive control.
+This resolves the represented clashes only; it does not qualify missing mounts,
+brake integration, printed capacity, tensioner mechanics or a complete vehicle.
+Broader validation passed 12 CAD contract/geometry tests, all 16 browser component
+routes and 42 BOM/presentation/reference tests. All 16 component exports and
+13 generated documents were refreshed and freshness-checked.

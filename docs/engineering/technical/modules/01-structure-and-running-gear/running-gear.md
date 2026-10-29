@@ -22,9 +22,11 @@ matched profiles, bearings, clearances, and load ratings remain unqualified.
 
 **3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md)
 to select the part; clicking its mesh opens the corresponding section here.
-The candidate study shows the 180 mm track, paired 120 mm printed-wheel concept
-and paired 200 mm bought idler candidate. Guide dimensions are schematic;
-battery/carrier clashes are unresolved. Upper rollers/tensioners are not modeled.
+The revised candidate study shows the accepted 200 x 72 x 40 track, unchanged
+paired 120 mm lower wheels, a raised 120 mm upper pair and 200 mm bought idler
+pair. Battery/tray clashes are cleared with provisional margins. Guide
+dimensions are schematic; spring/fork hardware and support load paths remain
+unmodeled and unqualified.
 
 | Track | Drive drum | Idler | Lower rollers |
 | --- | --- | --- | --- |
@@ -33,6 +35,8 @@ battery/carrier clashes are unresolved. Upper rollers/tensioners are not modeled
 Other individual rollers: [3D roller 2](../../../presentation/viewer/index.html?component=lower-roller-2) ·
 [3D roller 3](../../../presentation/viewer/index.html?component=lower-roller-3) ·
 [3D roller 4](../../../presentation/viewer/index.html?component=lower-roller-4).
+
+[![3D upper return roller](../../../presentation/viewer/previews/upper-roller.png)](../../../presentation/viewer/index.html?component=upper-roller)
 
 **Further detail:** [Prices found](running-gear.md#prices-found-tracks-rollers-and-idlers) ·
 [Track length check](running-gear.md#track-length-check) ·
@@ -115,26 +119,39 @@ geometry, track pitch line and wrap determine the envelope.
 
 ### Pod-fit CAD assumptions
 
-The [editable candidate study](../../cad/module-01-track-pod-fit.scad) uses the
-180 x 72 x 37 sourcing candidate, interpreting the code as width, pitch and
-link count (2,664 mm assumed pitch loop). The drive drum remains a flexible
+The [editable candidate study](../../cad/module-01-track-pod-fit.scad) now uses the
+owner-accepted 200 x 72 x 40 candidate, interpreting the code as width, pitch and
+link count (2,880 mm assumed pitch loop). The drive drum remains a flexible
 **350 mm OD placeholder**; the idler now shows two Interwheel 200 mm wheels,
 each 50 mm tread / 60 mm hub with 20 mm bore. This is a candidate representation,
 not selection or qualification of that idler.
 
 Four lower assemblies each have two 120 x 50 mm printed wheels with an 8 mm
-tread and two 6004 bearing envelopes per wheel. A **40 mm tread-face guide
-gap** gives a 140 mm lower-pair width and 150 mm idler hub envelope.
+tread and two 6004 bearing envelopes per wheel. A **50 mm tread-face guide
+gap** gives a 150 mm lower/upper-pair width and 160 mm idler hub envelope.
+The idler hubs leave 40 mm clear, giving 8 mm each side of the assumed
+24 mm guide. All wheel diameters and bearing dimensions are retained.
 The illustrative guide lugs are 24 mm wide, 24 mm long and 20 mm high, one per
 assumed pitch; these are **not supplier dimensions**. Confirm lug and rolling-path
 dimensions before using any groove, spacer, bearing fit or printed geometry.
 
-With the assumed 20 mm belt and mid-thickness pitch line, unequal end wheels
-give **862.1 mm horizontal axis spacing** and a sloping upper return. The
-current 504 x 268 x 233 mm battery and retained carrier placement clash with
-that return and the larger lower rollers. See the [CAD dimensions and fit
-holds](../../cad/README.md#modeled-dimensions-and-limits). The model deliberately
-does not hide these conflicts or change the baseline cost allowances.
+With the assumed 20 mm belt and mid-thickness pitch line, the raised upper pair
+at X = 200, Y = 515 mm gives **859.356 mm horizontal end-axis spacing**.
+Drive X stays -440 mm; the idler is at X = +419.356 mm. The actual three-circle
+tangents and arcs close the 40-link loop. The 504 x 268 x 233 mm battery
+is at X = 35, Z = 44 mm with bottom Y = 150 mm; its tray underside is Y = 140 mm,
+10 mm above the lower wheels. Nominal guide-tip clearances are 40.1 / 36.0 mm
+normal to the front/rear return runs. Reserving 10 mm for motion and 5 mm for
+deflection/tolerances leaves at least **21.0 mm** versus a provisional 20 mm
+running requirement. See the [CAD dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits)
+for mesh checks, extraction, transverse fit and remaining holds.
+
+This is a candidate study, not a purchase/baseline change. The recorded
+200 x 72 x 40 pair costs EUR221.84 including listed Italian VAT, **EUR51.92
+more than the 180 x 72 x 37 pair**, and its listed mass adds 24 kg per pair
+versus that initial candidate (8 kg versus the 200 x 72 x 36 baseline reference).
+The already-planned upper pair completes the existing 20-wheel quantity;
+no extra wheels or changed BOM allowances are implied.
 
 ### Low-profile packaging investigation
 
@@ -143,7 +160,9 @@ U-shaped supports (more rollers are acceptable), a lower tray/main track frame,
 longer tracks and larger idlers before moving the battery to a side bay.
 Place the battery toward one transverse side, not centered, to reduce intrusion
 into the width-adjustment space. These are investigation directions, not a
-replacement component selection; **the current SCAD remains unchanged**.
+replacement component selection. **Historical investigation:** the revised
+SCAD below retains 120 mm lower wheels, rather than adopting the small-wheel
+screens.
 
 **First screen:** Neither smaller lower rollers alone nor a longer belt alone
 raises the current low front return enough. A higher return path is also needed.
@@ -163,8 +182,8 @@ assume K/Y suffixes describe interchangeable internal profiles.
 
 **Owner clarification, 2026-10-29:** The 200 x 72 x 40 is a valid candidate;
 180 mm width is not a constraint. Its assumed nominal loop is 2,880 mm.
-Acceptance is for evaluation, not a purchase or replacement of the current
-180 x 72 x 37 CAD representation or baseline allowance. Check the wider belt
+Acceptance is for evaluation, not a purchase or replacement of the
+baseline allowance. The current CAD now evaluates this candidate. Check the wider belt
 against the drum, guides, roller tread positions, tray, pod/scissor width and
 removal path; internal guide and engagement geometry remain unknown.
 
@@ -187,7 +206,7 @@ with the existing 8 mm tread, its 64 mm core leaves 11 mm radially around a
 42 mm bearing seat. Printed capacity and actual lug clearance remain unknown.
 At 4 km/h, 30/80/120 mm wheels turn approximately **707/265/177 rpm**.
 
-**Promising numerical layout, not yet CAD-validated:** retain the flexible
+**Historical numerical layout, superseded by the 120 mm-wheel CAD above:** retain the flexible
 350 mm drive study, 200 mm front idler and 120 mm upper roller. Use a
 40-link belt, put the upper roller axis at Y = 400 mm above the lower
 pitch tangent, and investigate 80 mm lower rollers with U supports.
@@ -209,23 +228,27 @@ Investigate six lower assemblies per track rather than four: this adds brackets
 and bearings, so less filament alone does not establish a lower total cost.
 No larger-idler purchase is recommended without a public price and exact fit.
 
-**Transverse placement:** align the tray's inboard edge with the track's
+**Historical transverse example (180 mm track):** align the tray's inboard edge with the track's
 inboard edge and put the extra battery width outboard. For example, a provisional
 288 mm tray with 10 mm body-edge margins puts the 268 mm battery center 54 mm
 outboard of the 180 mm track center. This leaves no tray overhang into the
 central adjustment space, but increases pod body width and shifts pod CG.
 Both-pod/scissor/transport and removal clearances still need checking against
 the [1 m deck constraint](../../width-and-slope-sizing.md#minimum-width-and-packaging).
-The motor/reducer/carrier axial interference remains a separate item to resolve.
+The revised 200 mm drum now contains the 194 mm schematic motor/reducer/carrier
+stack with a 6 mm axial remainder; brake/support integration is still open.
 
 ### Tensioner and idler interfaces
 
 The selected concept spring-loads the **upper-return support rollers**, pushing
 them outward against the upper run to tension the track. Their number/spacing,
-spring setting, travel, stops, loads, and motion envelope remain undefined and
-are not represented in the model or clearance figures below. Check that motion
-against the battery, carrier, guards, and outboard extraction path before
-treating the packaging as viable.
+spring setting, usable travel, stops and loads remain undefined. One raised
+roller pair is represented; its provisional ±10 mm clearance envelope is checked
+against the battery, but is not a usable-travel claim. With the end axes locked,
+the ideal tangent-loop length changes by approximately -11.4 / +11.5 mm at
+the extremes, so belt compliance/slack and idler setup still need definition.
+Fork, spring, axle supports and guards must also clear the outboard extraction
+path before treating the full packaging as viable.
 See the [roller and spring-tensioner concept](running-gear.md#ps02-sprockets-rollers-and-tensioners)
 for the required mechanical definition.
 
@@ -289,10 +312,13 @@ against the battery, carrier, guards and battery-removal path.
 
 #### Lower support rollers
 
-Four support rollers per track, evenly spaced along
-the lower run, as selected for this study. Diameter, width, material, axle/bearing
-interfaces and load capacity remain unselected; the layout is not a load or clearance
-validation. See the [pod-fit sketch](../../cad/module-01-track-pod-fit.scad).
+Four support assemblies per track, evenly spaced along the lower run, remain
+in the study: paired 120 x 50 mm PC/TPU wheels with two 6004 bearings per wheel.
+The revised spacing leaves 28.1 mm between neighboring wheel envelopes and
+10 mm to the tray. Diameter has not been reduced to obtain fit. Axles,
+supports, actual track contact area, load sharing and printed-wheel capacity
+remain unqualified; extra assemblies alone would not prove equal loading.
+See the [pod-fit sketch](../../cad/module-01-track-pod-fit.scad).
 
 **Continue:** [Roller allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) ·
 [Axle/bearing mounting](running-gear.md#ps03-axles-bearings-and-track-guides) ·
@@ -324,6 +350,16 @@ qualified fork. Confirm the fork's available travel, spring/preload behavior,
 side-load capacity, sealing, stops, retention and service method against the
 track loads. The [Cohidrex idler lead](running-gear.md#s26-cohidrex-idler-wheel-family) is listed for Trabber
 tracks and is not confirmed to fit S01.
+
+**Current return-route CAD proposal:** paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm.
+This reuses the already-planned upper assembly, not an additional purchase.
+Its approximately 74.7° track deflection gives a nominal reaction about
+**1.21 times belt tension** under equal-tension assumptions, not merely return
+belt weight. The printed wheel, axle, fork and frame mount are not load-rated.
+The ±10 mm modeled clearance envelope does not establish actual spring travel;
+see [tensioner and idler interfaces](running-gear.md#tensioner-and-idler-interfaces).
+An exact supported fork/spring assembly must be selected and checked before
+this route is buildable.
 
 **Continue:** [Tensioner allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) ·
 [Spring/roller clearance to the battery](running-gear.md#tensioner-and-idler-interfaces) ·
@@ -451,8 +487,10 @@ Guide-lug dimensions are not published for either track.
 **Owner selection, 2026-10-29:** PowerTrack 180 x 72 x 37 is the track
 sourcing choice for the bearing-wheel route. The baseline still describes
 the 200 mm track until width sizing, qualified fit and the RUN-001 allowance
-are updated together. The CAD now visualizes the 180 mm candidate separately;
-its unresolved clashes do not qualify that change for the baseline.
+are updated together. The CAD first visualized that 180 mm candidate, which
+clashed with the battery/tray. The later clash-resolution study evaluates the
+owner-accepted 200 x 72 x 40 instead, without changing this sourcing history
+or the costed baseline.
 
 
 [↑ Back to document overview](running-gear.md#tracks-and-running-gear)

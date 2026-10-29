@@ -25,8 +25,9 @@ None is qualified for the mower; electrical, packaging and delivery holds remain
 **3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md);
 clicking the corresponding mesh returns to the fit/clearance section here.
 The battery now uses the DC HOUSE listing's **504 x 268 x 233 mm body**, not
-the historical Elker envelope. The sloping track return clashes with it;
-terminals/restraints are not modeled. The arrow is not verified removal access.
+the historical Elker envelope. The revised return and tray clear the body
+with provisional margins; terminals/restraints are not modeled. Outboard
+body-only extraction is checked, not complete installed-battery removal.
 
 | DC HOUSE listing envelope | Removal-direction annotation |
 | --- | --- |
@@ -282,21 +283,27 @@ The [recommended pack](batteries.md#48-v--approximately-2-kw-per-drive)
 is 504 × 268 × 233 mm and 44.9 kg; no complete pod fit is established.
 The updated CAD represents that listing body, with length along X, height along
 Y and width along Z. It does **not** establish actual supplied-revision
-dimensions: S30 still records conflicting supplier material. The smaller
-200 mm candidate idler now slopes the return down into the battery envelope.
-The continuous inner belt surface crosses the upper front corner by **90.1 mm**;
-the assumed guide-tip sweep increases that to **110.4 mm** interference.
-These are geometric fit holds, before terminals, enclosure or service space.
+dimensions: S30 still records conflicting supplier material. The revised
+200 x 72 x 40 track study retains the 200 mm idler and 120 mm lower wheels,
+but raises the upper return and tray. The battery bottom is now Y = 150 mm,
+top Y = 383 mm, with center X = 35 and Z = 44 mm outboard. The return guide-tip
+envelope clears the body by 40.1 / 36.0 mm normal to its front/rear runs.
+A conservative 10 mm motion allowance plus 5 mm deflection/tolerance reserve
+leaves **21.0 mm minimum**, versus a provisional 20 mm running requirement.
+The body and tray no longer intersect modeled running gear.
 The [minimum-width calculation](../../width-and-slope-sizing.md#minimum-width-and-packaging)
-checks lateral packaging; the
+records the lateral consequences; the
 [battery-clearance calculation](batteries.md#provisional-battery-clearance)
 checks the illustrative track path and carrier. Neither is a released layout.
 
 Also reconcile the [spring-tensioner sweep](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept),
 restraint/load path, terminal protection, ventilation/drainage, cable clearance,
 and outboard removal path. Update the mass/CG budget for the 89.8 kg pair;
-the former 72 kg pair is not the current configuration. The body overhangs the
-180 mm track width by 44 mm per side; that is not proven usable chassis width.
+the former 72 kg pair is not the current configuration. The tray's inboard edge
+matches the 200 mm track's inboard edge; the battery has 10 mm edge margins
+on the 288 mm tray. The tray extends 88 mm outboard beyond the track.
+The battery body CG is 50 mm higher and 44 mm outboard versus the former
+centered/clashing representation; no complete-machine CG or stability is proven.
 
 **Continue:** [Enclosure/retention costs](batteries.md#0402-battery-enclosures-restraints-and-insulation) ·
 [Pod frame](../01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments) ·
@@ -313,15 +320,26 @@ unverified track-code interpretation and placeholder geometry; neither proves
 fit. Substituting DC HOUSE height alone in that old layout gave **27 mm
 arithmetic margin**. Neither figure applies to the current unequal-wheel CAD.
 
-**Current candidate study (2026-10-29):** the 180 x 72 x 37 track code implies
+**Superseded clashing study (2026-10-29):** the 180 x 72 x 37 track code implied
 a 2,664 mm assumed pitch loop, solved at **862.1 mm horizontal end-axis spacing**
 with 350/200 mm drive/idler ODs. The battery bottom remains at Y = 100 mm
 and its top at Y = 333 mm. At its front upper corner the sloping inner return
 is Y = **242.9 mm**, or **222.6 mm** for the assumed guide-tip envelope:
-clearance is **-90.1 / -110.4 mm**, respectively. The 120 mm lower roller
+clearance was **-90.1 / -110.4 mm**, respectively. The 120 mm lower roller
 tops also reach Y = 130 mm, intersecting the retained 90-100 mm carrier and
-the battery base. Do not relocate or resize parts silently to claim fit;
-a revised carrier/battery/running-gear layout is required.
+the battery base.
+
+**Revised candidate study (2026-10-29):** the 200 x 72 x 40 nominal 2,880 mm
+loop now follows exact drive/idler/upper-roller tangents, at 859.356 mm end-axis
+spacing. A 524 x 288 x 10 mm tray at Y = 140-150 mm gives the unchanged lower
+wheels 10 mm clearance and the battery base 20 mm. The upper wheel axis is
+Y = 515 mm. Nominal guide-tip clearances and movement reserves are recorded
+above; a 400 mm outboard body-extraction sweep has no solid intersection with
+represented running gear. Terminals, cables, handles, supports, restraints,
+spring hardware and full-machine removal still need dimensioned checks.
+The ±10 mm upper-wheel clearance screen is not proof of usable spring travel
+with a fixed-length belt and locked end axes. These are geometric improvements,
+not pack conformity or enclosure/vehicle qualification.
 
 The CAD guide records [modeled dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits).
 The old 72 kg pair is not the current **89.8 kg** body mass, before restraints.

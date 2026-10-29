@@ -3,7 +3,7 @@
 
  Unqualified sourcing-candidate fit study, not a fabrication model or release.
  Owners: running-gear.md S34/S37/S38, propulsion.md S24, batteries.md S30.
- Track: 180x72x37 code interpreted as width/pitch/links; belt mid-thickness
+ Track: 200x72x40 code interpreted as width/pitch/links; belt mid-thickness
  is an assumed pitch line. Guide lugs and tread blocks are schematic, not a
  supplier profile. The 350 mm drive OD remains flexible; teeth are undefined.
  Idler: two Interwheel 161.540 candidate envelopes (200 OD, 50 tread, 60 hub).
@@ -15,9 +15,10 @@
  Battery: DC HOUSE listing body 504x268x233; terminals/cables/restraints
  are excluded because their positions/envelopes are not established.
  Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
- bearing supports, coupling or brake installation. Upper tensioner unmodeled.
- Carrier placement is deliberately retained to expose clashes with the larger
- lower rollers and the sloped return run; see FIT HOLD echoes and CAD README.
+ bearing supports, coupling or brake installation. Raised upper roller is a
+ proposed return route, not a qualified spring tensioner. Its +/-10 mm clearance
+ envelope is not proof of usable travel with the idler locked.
+ Battery and tray are offset outboard; see clearance echoes and CAD README.
 
  Axes: X = track length, Y = vertical, Z = outboard/track width.
 */
@@ -30,12 +31,12 @@ viewer_components = [
     "track", "drive-drum", "idler", "motor",
     "planetary-1", "planetary-2", "planetary-3", "output-carrier",
     "lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4",
-    "pod-carrier", "battery", "removal-arrow"
+    "upper-roller", "pod-carrier", "battery", "removal-arrow"
 ];
 
-track_width = 180;
+track_width = 200;
 track_pitch = 72;
-track_links = 37;
+track_links = 40;
 nominal_pitch_loop = track_pitch * track_links;
 
 roller_outer_diameter = 350; // Flexible physical-OD study placeholder, not a requirement.
@@ -47,7 +48,7 @@ roller_width = track_width; // Drum axial envelope, not a selected matched sproc
 idler_outer_diameter = 200; // S37 candidate, not an approved fit.
 wheel_tread_width = 50;
 idler_hub_width = 60;
-guide_gap_placeholder = 40; // Between tread faces; actual track lugs unpublished.
+guide_gap_placeholder = 50; // Leaves 40 between idler hubs; actual lugs unpublished.
 guide_lug_width_placeholder = 24;
 guide_lug_height_placeholder = 20;
 guide_lug_length_placeholder = 24;
@@ -56,10 +57,9 @@ wheel_axis_diameter = 20;
 drive_drum_wall_placeholder = 10;
 drive_drum_inner_diameter =
     roller_outer_diameter - 2 * drive_drum_wall_placeholder;
-frame_gap = 80; // User target: lower belt inner face to carrier underside.
 carrier_thickness = 10; // Illustrative only.
-carrier_length = 650; // Illustrative only.
-carrier_width = track_width; // Illustrative only.
+carrier_edge_margin = 10;
+roller_carrier_clearance = 10;
 
 motor_body_diameter = 206; // HPM5000B manufacturer family envelope, S24.
 motor_body_length = 126; // HPM5000B manufacturer family envelope, S24.
@@ -78,6 +78,8 @@ planetary_ring_teeth = [72, 72, 50];
 planetary_planet_teeth = [24, 24, 17];
 planetary_module_placeholder = 3;
 planetary_stage_width_placeholder = 18;
+planetary_axial_gap_placeholder = 2;
+output_carrier_thickness = 6;
 planetary_total_ratio =
     (1 + planetary_ring_teeth[0] / planetary_sun_teeth[0])
     * (1 + planetary_ring_teeth[1] / planetary_sun_teeth[1])
@@ -90,6 +92,8 @@ roller_speed_study_kmh =
 
 lower_support_roller_count = 4; // User-selected study layout per track.
 lower_support_roller_diameter = 120; // Owner-selected S38 concept, not qualified.
+upper_support_roller_diameter = 120;
+upper_roller_center = [200, 515];
 printed_tread_thickness = 8;
 bearing_outer_diameter = 42;
 bearing_width = 12;
@@ -98,40 +102,66 @@ bearing_face_recess_placeholder = 1;
 battery_length = 504; // S30 listing; supplied revision has conflicting dimensions.
 battery_width = 268;
 battery_height = 233;
+battery_center_x = 35;
+carrier_length = battery_length + 2 * carrier_edge_margin;
+carrier_width = battery_width + 2 * carrier_edge_margin;
+carrier_center_z = (carrier_width - track_width) / 2;
 
 roller_radius = track_path_diameter / 2;
 idler_path_radius = (idler_outer_diameter + belt_thickness) / 2;
-radius_difference = roller_radius - idler_path_radius;
-// Both lower tangencies lie at Y=0; the upper tangent slopes to the small idler.
+upper_path_radius = (upper_support_roller_diameter + belt_thickness) / 2;
+drive_center = [-440, roller_radius];
+path_radii = [roller_radius, idler_path_radius, upper_path_radius];
+function path_centers(spacing) =
+    [drive_center, [drive_center[0] + spacing, idler_path_radius], upper_roller_center];
+function sum_values(values, i = 0) =
+    i == len(values) ? 0 : values[i] + sum_values(values, i + 1);
+function tangent_normal(i, spacing) =
+    let(centers = path_centers(spacing),
+        j = (i + 1) % 3,
+        delta = centers[j] - centers[i],
+        distance = norm(delta),
+        k = (path_radii[i] - path_radii[j]) / distance,
+        q = sqrt(1 - k * k))
+    [delta[0] * k + delta[1] * q, delta[1] * k - delta[0] * q] / distance;
+function normal_angle(i, spacing) =
+    let(n = tangent_normal(i, spacing)) atan2(n[1], n[0]);
+function edge_length(i, spacing) =
+    let(centers = path_centers(spacing), j = (i + 1) % 3)
+    sqrt(pow(norm(centers[j] - centers[i]), 2) - pow(path_radii[i] - path_radii[j], 2));
+function arc_angle(i, spacing) =
+    (normal_angle(i, spacing) - normal_angle((i + 2) % 3, spacing) + 360) % 360;
 function loop_length(spacing) =
-    2 * spacing + PI * (roller_radius + idler_path_radius)
-    + 2 * radius_difference * atan(radius_difference / spacing) * PI / 180;
+    sum_values([for (i = [0 : 2])
+        edge_length(i, spacing) + path_radii[i] * arc_angle(i, spacing) * PI / 180]);
 function solve_spacing(low, high, iterations = 40) =
     iterations == 0 ? (low + high) / 2 :
     let(mid = (low + high) / 2)
     loop_length(mid) > nominal_pitch_loop
         ? solve_spacing(low, mid, iterations - 1)
         : solve_spacing(mid, high, iterations - 1);
-roller_center_spacing = solve_spacing(abs(radius_difference) + 1, nominal_pitch_loop / 2);
-upper_normal_angle = 90 - 2 * atan(radius_difference / roller_center_spacing);
-idler_wrap_angle = 180 - 2 * atan(radius_difference / roller_center_spacing);
-idler_arc_length = idler_path_radius * idler_wrap_angle * PI / 180;
-drive_center = [-roller_center_spacing / 2, roller_radius];
-idler_center = [roller_center_spacing / 2, idler_path_radius];
-upper_normal = [cos(upper_normal_angle), sin(upper_normal_angle)];
-upper_idler_tangent = idler_center + idler_path_radius * upper_normal;
-upper_drive_tangent = drive_center + roller_radius * upper_normal;
+spacing_low = upper_roller_center[0] - drive_center[0] + upper_path_radius + 10;
+assert(loop_length(spacing_low) < nominal_pitch_loop
+       && loop_length(nominal_pitch_loop / 2) > nominal_pitch_loop,
+       "Track loop does not bracket the proposed three-wheel layout");
+roller_center_spacing = solve_spacing(spacing_low, nominal_pitch_loop / 2);
+idler_center = path_centers(roller_center_spacing)[1];
 loop_envelope_length = roller_center_spacing + roller_radius + idler_path_radius + belt_thickness;
 lower_belt_inner_face_y = belt_thickness / 2;
-carrier_underside_y = lower_belt_inner_face_y + frame_gap;
+carrier_underside_y =
+    lower_belt_inner_face_y + lower_support_roller_diameter + roller_carrier_clearance;
 battery_bottom_y = carrier_underside_y + carrier_thickness;
-function return_inner_y(x, lug_height = 0) =
-    (drive_center * upper_normal + roller_radius
-     - belt_thickness / 2 - lug_height - x * upper_normal[0]) / upper_normal[1];
-upper_belt_inner_face_y = return_inner_y(battery_length / 2);
-remaining_vertical_clearance =
-    upper_belt_inner_face_y - battery_bottom_y - battery_height;
-straight_run_margin_total = roller_center_spacing - battery_length;
+function return_guide_clearance(edge) =
+    let(n = tangent_normal(edge, roller_center_spacing),
+        c = path_centers(roller_center_spacing)[edge],
+        corner = [battery_center_x + (n[0] > 0 ? 1 : -1) * battery_length / 2,
+                  battery_bottom_y + battery_height])
+    c * n + path_radii[edge] - belt_thickness / 2
+        - guide_lug_height_placeholder - corner * n;
+axial_stack_length = motor_body_length
+    + planetary_stage_count * planetary_stage_width_placeholder
+    + (planetary_stage_count + 1) * planetary_axial_gap_placeholder
+    + output_carrier_thickness;
 
 echo("Assumed nominal pitch-loop length (mm): ", nominal_pitch_loop);
 echo("Study main driven roller physical outside diameter (mm): ",
@@ -157,39 +187,46 @@ echo("Drive-sprocket tooth profile and motor coupling are not modeled.");
 echo("Four paired lower roller assemblies: 120 OD x 50 per wheel; capacity unqualified.");
 echo("Study roller centre spacing (mm): ", roller_center_spacing);
 echo("Study pitch envelope length (mm): ", loop_envelope_length);
-echo("Study straight-run margin around battery (mm): ", straight_run_margin_total);
-echo("Vertical clearance above battery before service clearance (mm): ",
-     remaining_vertical_clearance);
-echo("FIT HOLD: battery to return guide tips (mm; negative is interference): ",
-     return_inner_y(battery_length / 2, guide_lug_height_placeholder)
-         - battery_bottom_y - battery_height);
-echo("FIT HOLD: roller top above retained carrier underside (mm): ",
-     lower_belt_inner_face_y + lower_support_roller_diameter - carrier_underside_y);
-echo("FIT HOLD: motor/stages/carrier axial overhang beyond drum (mm): ",
-     motor_body_length + planetary_stage_count * planetary_stage_width_placeholder
-         + 6 - roller_width);
+echo("Nominal three-circle pitch-loop closure error (mm): ",
+     loop_length(roller_center_spacing) - nominal_pitch_loop);
+echo("Battery to front/rear return guide-tip envelopes, normal gaps (mm): ",
+     return_guide_clearance(1), return_guide_clearance(2));
+echo("Lower roller to tray underside gap (mm): ", roller_carrier_clearance);
+echo("Motor/stages/carrier stack and inboard drum remainder (mm): ",
+     axial_stack_length, roller_width - axial_stack_length);
+echo("Upper roller centre and provisional clearance-only vertical sweep (mm): ",
+     upper_roller_center, " +/-10; spring loads/travel not qualified");
+echo("Battery bottom and outboard centre (mm): ", battery_bottom_y, carrier_center_z);
+assert(min(return_guide_clearance(1), return_guide_clearance(2)) >= 35,
+       "Return clearance below 20 mm running, 5 mm deflection and 10 mm motion reserve");
+assert(roller_width - axial_stack_length >= 5, "Reducer exceeds axial study envelope");
 
 module capsule_2d(offset) {
     hull() {
-        translate(drive_center) circle(r = roller_radius + offset);
-        translate(idler_center) circle(r = idler_path_radius + offset);
+        for (i = [0 : 2])
+            translate(path_centers(roller_center_spacing)[i])
+                circle(r = path_radii[i] + offset);
     }
 }
 
 // Position and outward-normal angle at distance s around the assumed pitch loop.
-function track_frame(s) =
-    s < roller_center_spacing
-        ? [drive_center + [s, -roller_radius], -90] :
-    s < roller_center_spacing + idler_arc_length
-        ? let(a = -90 + (s - roller_center_spacing) / idler_path_radius * 180 / PI)
-          [idler_center + idler_path_radius * [cos(a), sin(a)], a] :
-    s < 2 * roller_center_spacing + idler_arc_length
-        ? [upper_idler_tangent + (upper_drive_tangent - upper_idler_tangent)
-             * ((s - roller_center_spacing - idler_arc_length) / roller_center_spacing),
-           upper_normal_angle] :
-    let(a = upper_normal_angle
-        + (s - 2 * roller_center_spacing - idler_arc_length) / roller_radius * 180 / PI)
-    [drive_center + roller_radius * [cos(a), sin(a)], a];
+function segment_length(segment) =
+    segment % 2 == 0 ? edge_length(segment / 2, roller_center_spacing) :
+    let(i = (floor(segment / 2) + 1) % 3)
+    path_radii[i] * arc_angle(i, roller_center_spacing) * PI / 180;
+function track_frame(s, segment = 0) =
+    s > segment_length(segment) && segment < 5
+        ? track_frame(s - segment_length(segment), segment + 1) :
+    let(i = floor(segment / 2), j = (i + 1) % 3,
+        centers = path_centers(roller_center_spacing),
+        n = tangent_normal(i, roller_center_spacing),
+        a = normal_angle(i, roller_center_spacing))
+    segment % 2 == 0
+        ? [centers[i] + path_radii[i] * n
+            + (centers[j] + path_radii[j] * n - centers[i] - path_radii[i] * n)
+                * s / segment_length(segment), a] :
+    let(angle = a + s / path_radii[j] * 180 / PI)
+    [centers[j] + path_radii[j] * [cos(angle), sin(angle)], angle];
 
 module track_loop() {
     linear_extrude(height = track_width, center = true)
@@ -302,7 +339,8 @@ module planetary_stage(x, stage_index) {
     ring_envelope_diameter = ring_pitch_diameter + 2 * module_size;
     stage_z = motor_inboard_face_z
         - planetary_stage_width_placeholder / 2
-        - stage_index * planetary_stage_width_placeholder;
+        - planetary_axial_gap_placeholder
+        - stage_index * (planetary_stage_width_placeholder + planetary_axial_gap_placeholder);
 
     // Pitch-circle cylinders visualize tooth counts; they are not gear teeth.
     translate([x, roller_radius, stage_z]) {
@@ -350,10 +388,11 @@ module final_carrier_to_drum(x) {
         * planetary_module_placeholder / 2;
     output_z = motor_inboard_face_z
         - planetary_stage_width_placeholder * planetary_stage_count
-        - 3;
+        - planetary_axial_gap_placeholder * (planetary_stage_count + 1)
+        - output_carrier_thickness / 2;
     translate([x, roller_radius, output_z])
         color([0.72, 0.43, 0.12, 0.95])
-            linear_extrude(height = 6, center = true)
+            linear_extrude(height = output_carrier_thickness, center = true)
                 for (angle = [0 : 120 : 240]) {
                     hull() {
                         circle(d = 14);
@@ -369,7 +408,7 @@ module final_carrier_to_drum(x) {
 module lower_support_roller(i) {
     drive_margin = roller_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
     idler_margin = idler_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
-    x = -roller_center_spacing / 2 + drive_margin
+    x = drive_center[0] + drive_margin
         + i * (roller_center_spacing - drive_margin - idler_margin)
             / (lower_support_roller_count - 1);
     translate([
@@ -382,23 +421,27 @@ module lower_support_roller(i) {
 }
 
 module pod_carrier() {
-    translate([-carrier_length / 2, carrier_underside_y, -carrier_width / 2])
+    translate([battery_center_x - carrier_length / 2,
+               carrier_underside_y, carrier_center_z - carrier_width / 2])
         color([0.3, 0.45, 0.6])
             cube([carrier_length, carrier_thickness, carrier_width]);
 }
 
 module battery_envelope() {
-    translate([-battery_length / 2, battery_bottom_y, -battery_width / 2])
+    translate([battery_center_x - battery_length / 2,
+               battery_bottom_y, carrier_center_z - battery_width / 2])
         color([0.9, 0.55, 0.12, 0.8])
             cube([battery_length, battery_height, battery_width]);
 }
 
 module removal_arrow() {
     // Annotation only, not a physical component.
-    translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 5])
+    translate([battery_center_x, battery_bottom_y + battery_height / 2,
+               carrier_center_z + battery_width / 2 + 5])
         color([0.1, 0.45, 0.85])
             cylinder(h = 95, d = 5);
-    translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 100])
+    translate([battery_center_x, battery_bottom_y + battery_height / 2,
+               carrier_center_z + battery_width / 2 + 100])
         color([0.1, 0.45, 0.85])
             cylinder(h = 18, d1 = 16, d2 = 0);
 }
@@ -406,17 +449,21 @@ module removal_arrow() {
 module pod_component(id) {
     if (id == "track")
         color([0.12, 0.12, 0.14, 0.65]) track_loop();
-    else if (id == "drive-drum") main_driven_roller(-roller_center_spacing / 2);
-    else if (id == "idler") idler_placeholder(roller_center_spacing / 2);
-    else if (id == "motor") hpm5000b_motor_envelope(-roller_center_spacing / 2);
-    else if (id == "output-carrier") final_carrier_to_drum(-roller_center_spacing / 2);
+    else if (id == "drive-drum") main_driven_roller(drive_center[0]);
+    else if (id == "idler") idler_placeholder(idler_center[0]);
+    else if (id == "motor") hpm5000b_motor_envelope(drive_center[0]);
+    else if (id == "output-carrier") final_carrier_to_drum(drive_center[0]);
+    else if (id == "upper-roller")
+        translate([upper_roller_center[0], upper_roller_center[1], 0])
+            color([0.22, 0.55, 0.34, 0.9])
+                wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
     else if (id == "pod-carrier") pod_carrier();
     else if (id == "battery") battery_envelope();
     else if (id == "removal-arrow") removal_arrow();
     else {
         for (stage = [0 : planetary_stage_count - 1])
             if (id == str("planetary-", stage + 1))
-                planetary_stage(-roller_center_spacing / 2, stage);
+                planetary_stage(drive_center[0], stage);
         for (i = [0 : lower_support_roller_count - 1])
             if (id == str("lower-roller-", i + 1))
                 lower_support_roller(i);

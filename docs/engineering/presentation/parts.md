@@ -5,17 +5,17 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="track"></a>
 
-### Rubber track (200x72x40 candidate; 180x72x37 fit study)
+### Rubber track (200x72x40 candidate fit study)
 
-**Status:** Owner-accepted candidate; compatibility and fit remain open.
+**Status:** Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified.
 
-[![Rubber track (200x72x40 candidate; 180x72x37 fit study)](viewer/previews/track.png)](viewer/index.html?component=track&mode=presentation)
+[![Rubber track (200x72x40 candidate fit study)](viewer/previews/track.png)](viewer/index.html?component=track&mode=presentation)
 | | |
 | --- | --- |
 | Candidate dimensions | 200 × 72 × 40 (listed size) |
 | Listed price | €119.27 each; €110.92 each at 2+ (incl. listed Italian VAT) |
 
-**Read more:** [Rubber track (200x72x40 candidate; 180x72x37 fit study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions) · [PowerTrack product 2055](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates)
+**Read more:** [Rubber track (200x72x40 candidate fit study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions) · [PowerTrack product 2055](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates)
 
 <a id="drive-drum"></a>
 
@@ -147,22 +147,35 @@ interfaces and release holds, follow the linked technical detail.
 
 **Read more:** [Lower roller 4 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
 
+<a id="upper-roller"></a>
+
+### Raised upper roller (paired 120x50 study)
+
+**Status:** Raised return-route proposal; spring loads, usable travel and printed-wheel capacity unqualified.
+
+[![Raised upper roller (paired 120x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
+| | |
+| --- | --- |
+| Return wheel concept | Paired 120 × 50 mm PC/TPU wheels; axis Y = 515 mm |
+
+**Read more:** [Raised upper roller (paired 120x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept)
+
 <a id="pod-carrier"></a>
 
-### Pod carrier plate (placeholder)
+### Battery tray (524x288x10 proposed plate)
 
 **Status:** See technical scope; this is a study element.
 
-[![Pod carrier plate (placeholder)](viewer/previews/pod-carrier.png)](viewer/index.html?component=pod-carrier&mode=presentation)
+[![Battery tray (524x288x10 proposed plate)](viewer/previews/pod-carrier.png)](viewer/index.html?component=pod-carrier&mode=presentation)
 
 
-**Read more:** [Pod carrier plate (placeholder) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments)
+**Read more:** [Battery tray (524x288x10 proposed plate) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments)
 
 <a id="battery"></a>
 
 ### DC HOUSE battery (504x268x233 listing envelope)
 
-**Status:** Conditional budget candidate; technical, delivery and fit holds remain.
+**Status:** Listing body clears the revised CAD. Supplied dimensions, terminals, restraints and complete vehicle fit remain on hold.
 
 [![DC HOUSE battery (504x268x233 listing envelope)](viewer/previews/battery.png)](viewer/index.html?component=battery&mode=presentation)
 | | |

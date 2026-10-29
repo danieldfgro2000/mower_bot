@@ -432,8 +432,11 @@ The [priced options and budget recommendation](docs/engineering/technical/module
 use the **DC HOUSE 100 Ah / 18 A charger bundle** as conditional first choice
 and estimating reference, not a released purchase or proven fit. Its published
 pair mass is 89.8 kg, versus 72 kg for the former Elker pair; the mass/CG and
-pod layout need revision. The old CAD has not been resized. The higher-voltage
-comparison remains retired from the active BOM.
+pod layout need revision. The candidate CAD now represents the listing body
+and clears it using a raised return and revised tray; terminals, restraints,
+complete-machine packaging and mass/CG remain unqualified. See the
+[CAD fit limits](docs/engineering/technical/cad/README.md#modeled-dimensions-and-limits).
+The higher-voltage comparison remains retired from the active BOM.
 
 For the 100 Ah baseline, nominal energy is 10.24 kWh; the retained 80%
 usable-energy assumption gives 8.192 kWh before operational reserve, cold and

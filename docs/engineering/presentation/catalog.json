@@ -2,7 +2,7 @@
   "components": [
     {
       "id": "track",
-      "status": "Owner-accepted candidate; compatibility and fit remain open.",
+      "status": "Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified.",
       "facts": [
         {
           "label": "Candidate dimensions",
@@ -103,6 +103,23 @@
       ]
     },
     {
+      "id": "upper-roller",
+      "status": "Raised return-route proposal; spring loads, usable travel and printed-wheel capacity unqualified.",
+      "facts": [
+        {
+          "label": "Return wheel concept",
+          "value": "Paired 120 × 50 mm PC/TPU wheels; axis Y = 515 mm",
+          "evidence": "paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
+          "quotes": ["paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm"]
+        }
+      ]
+    },
+    {
       "id": "motor",
       "status": "Main cost/study candidate; exact configuration and duty unqualified.",
       "facts": [
@@ -141,7 +158,7 @@
     },
     {
       "id": "battery",
-      "status": "Conditional budget candidate; technical, delivery and fit holds remain.",
+      "status": "Listing body clears the revised CAD. Supplied dimensions, terminals, restraints and complete vehicle fit remain on hold.",
       "facts": [
         {
           "label": "Pack envelope",
