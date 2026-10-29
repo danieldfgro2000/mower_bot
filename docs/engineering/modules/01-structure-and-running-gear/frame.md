@@ -23,6 +23,8 @@ not released. Start with the physical part, then follow its attachment.
 **3D study:** The carrier plate below is a visual placeholder, not a released
 weldment or mounting drawing. Click it in the [local CAD reader](../../cad/README.md)
 to select the plate; clicking its mesh opens the frame requirements here.
+Its retained 90-100 mm vertical placement intersects the updated 120 mm
+lower rollers; see the [candidate fit holds](../../cad/README.md#modeled-dimensions-and-limits).
 
 [![3D pod carrier plate](../../cad/viewer/previews/pod-carrier.png)](../../cad/viewer/index.html?component=pod-carrier)
 

@@ -5,11 +5,38 @@ sections side by side in a local browser. Click a component in the 3D view to
 open its documentation; click a **3D thumbnail** in the rendered documentation
 to select and frame that component. No hosting or publishing is required.
 
-**Status:** Concept visualization only. These are the existing study envelopes,
-not fabrication models, verified fit, or authorization to build. The CAD still
-uses the historical 200 mm track, 350 mm end rollers, 80 mm support rollers and
-battery envelope. It does **not** implement the current 180 mm track preference,
-120 mm printed-wheel choice, holding brake or upper tensioner.
+**Status:** Unqualified sourcing-candidate fit study, not fabrication geometry
+or authorization to build. It represents the 180 mm track, paired 120 mm printed
+roller concept, paired 200 mm idler candidate, HPM5000B interfaces and current
+DC HOUSE body envelope. **It does not fit as assembled.** The existing carrier
+placement is retained so the clashes remain visible. The BOM baseline is not
+changed by this study; brake and upper tensioner remain unmodeled.
+
+## Modeled dimensions and limits
+
+| Component | Relevant detail | Evidence / remaining assumption |
+| --- | --- | --- |
+| Track | 180 mm width, 72 mm pitch, 37 guide/tread positions; unequal-radius loop with sloping return | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
+| Drive drum | Flexible 350 mm OD, 180 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 40 mm guide channel are placeholders |
+| Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 150 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
+| Lower rollers | Two 120 x 50 mm wheels per assembly; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearing envelopes per wheel; 140 mm total width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 40 mm guide gap and 1 mm bearing recess are study values, not print tolerances |
+| Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
+| Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
+
+With the assumed pitch path, end-wheel horizontal spacing is **862.1 mm**.
+The continuous inner return surface crosses the battery's upper front corner by
+**90.1 mm**; the assumed guide-tip envelope increases that interference to
+**110.4 mm**. The lower roller tops sit **40 mm above the retained carrier
+underside**, intersecting its 90-100 mm height band and the battery base.
+The 126 mm motor body + three 18 mm stages + 6 mm carrier total **186 mm**,
+exceeding the 180 mm drum width by **6 mm** before brake/support/service needs.
+The shaft occupies part of the schematic reducer volume, not an additional
+53 mm in series; this is not a designed coupling.
+
+OpenSCAD echoes these **FIT HOLD** values. Negative battery clearance remains a
+visible clash, not a passed fit check. Repositioning the battery/carrier or
+redesigning the running gear is a separate layout decision. Guide-lug sweeps,
+tensioner travel, installation clearance and load capacity still require review.
 
 ## Open the local viewer
 
@@ -46,6 +73,8 @@ The same thumbnail route is available beside the motor in its owning scope.
 - Use **Component** for enclosed parts; **Isolate selection** or component
   visibility controls remove occluding parts. **Fit view** frames the selection;
   **Reset assembly** restores all geometry.
+- To inspect motor mounting holes and the shaft keyway, isolate the motor and
+  orbit to its shaft-side (negative Z) face; the default outboard view hides them.
 - **Selected STL** downloads just that component in the original assembly
   coordinates, in millimetres. Planetary pitch-circle studies are grouped by
   stage; the four lower rollers are separate exports. The removal arrow is
@@ -94,7 +123,7 @@ exported the entire 1105 x 390 x 387 mm assembly when asked for the motor,
 instead of the 206 x 206 x 126 mm body. These tests cover scoped navigation,
 file-serving boundaries and isolated export in assembly coordinates.
 
-**Validation (2026-10-29):** All six contract/export tests pass, including the
+**Initial viewer validation (2026-10-29, before candidate geometry):** Six contract/export tests passed, including the
 unchanged assembly envelope and unknown-selector rejection. The browser check
 passes thumbnail-to-model navigation, motor mesh raycasting, all 15 documentation
 routes, section scrolling, bookmarks, Back/Forward, missing-document errors and
@@ -102,3 +131,11 @@ narrow layout. A delayed-document regression first restored the obsolete motor
 URL after selecting the track; it now preserves the latest navigation. Export
 freshness, JavaScript syntax, linked-cost freshness and engineering references
 also pass. These software checks do not qualify physical geometry or operation.
+
+**Candidate geometry test-first update (2026-10-29):**
+`node --test tool/cad-viewer/export.test.mjs` first failed on the old 126 mm
+motor-only envelope, 80 mm solid rollers, 200 mm track and 350 mm solid idler.
+The updated mesh tests check actual material/void probes at motor mounting
+holes and keyway, paired-wheel guide gaps, shaft bores, bearing recesses, track
+lugs and treads, plus candidate battery/idler bounds. All five geometry tests
+then passed. These checks cover represented features, not supplier conformity.

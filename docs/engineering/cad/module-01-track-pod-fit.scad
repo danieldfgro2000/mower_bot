@@ -1,28 +1,23 @@
 /*
  Module 01 single-pod fit study; millimetres.
 
- Concept only: not a dimensional drawing, fit proof, fabrication model, or
- release for purchase/build. S01 identifies the listing as 200x72x36 but does
- not define that code or provide a dimensional drawing. The code interpretation,
- belt thickness and pitch-line offset, battery envelope, and carrier are
- assumptions requiring supplier/engineering confirmation. The 350 mm physical
- roller outside diameter is a flexible starting placeholder, not a required
- dimension. The speed screen temporarily treats it as the effective rolling
- diameter; the track pitch-line diameter is unknown. The HPM5000B body is modeled at the
- manufacturer's 206 mm diameter x 126 mm length;
- the published envelope does not include a selected gearbox. The motor is
- coaxial with the drive drum and extends inward from its outboard face. Three
- fixed-ring planetary stages are shown at a 66:1 study ratio; pitch circles
- use a visual-only 3 mm module and the 18 mm stage widths are placeholders.
- View from the final-carrier side (negative Z) to inspect the planetary stages;
- the outboard view exposes the motor package.
- Tooth profiles, carrier supports, bearings, shaft interfaces, strength and
- clearances are not designed. The upper-return support
- rollers are intended to push outward against the upper run on spring-loaded
- mounts to tension the track, but their location, movement, spring setting,
- travel and loads are not modeled. Four lower support rollers per track are
- shown evenly spaced as selected for this study; their size and load capacity
- are visual placeholders, not selected dimensions or verified clearances.
+ Unqualified sourcing-candidate fit study, not a fabrication model or release.
+ Owners: running-gear.md S34/S37/S38, propulsion.md S24, batteries.md S30.
+ Track: 180x72x37 code interpreted as width/pitch/links; belt mid-thickness
+ is an assumed pitch line. Guide lugs and tread blocks are schematic, not a
+ supplier profile. The 350 mm drive OD remains flexible; teeth are undefined.
+ Idler: two Interwheel 161.540 candidate envelopes (200 OD, 50 tread, 60 hub).
+ Lower rollers: paired 120 mm PC/TPU study wheels, 50 wide, 8 mm tread,
+ two 6004 envelopes each. Guide gap and lug dimensions require measurement.
+ Motor: HPM5000B 206x126 body, 22.3x53 shaft, 5x43 keyway and four M8
+ openings on 148 PCD from GD-JS-03000001; hole depth, keyway axial offset
+ and clocking are illustrative. No thread, thermal or structural detail.
+ Battery: DC HOUSE listing body 504x268x233; terminals/cables/restraints
+ are excluded because their positions/envelopes are not established.
+ Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
+ bearing supports, coupling or brake installation. Upper tensioner unmodeled.
+ Carrier placement is deliberately retained to expose clashes with the larger
+ lower rollers and the sloped return run; see FIT HOLD echoes and CAD README.
 
  Axes: X = track length, Y = vertical, Z = outboard/track width.
 */
@@ -38,9 +33,9 @@ viewer_components = [
     "pod-carrier", "battery", "removal-arrow"
 ];
 
-track_width = 200;
+track_width = 180;
 track_pitch = 72;
-track_links = 36;
+track_links = 37;
 nominal_pitch_loop = track_pitch * track_links;
 
 roller_outer_diameter = 350; // Flexible physical-OD study placeholder, not a requirement.
@@ -48,9 +43,16 @@ effective_rolling_diameter_placeholder = 350; // Track pitch-line diameter is un
 belt_thickness = 20; // Illustrative only; S01 does not publish this dimension.
 track_path_diameter = roller_outer_diameter + belt_thickness;
 // Simplified path estimate: assumes the modelled track path is at belt mid-thickness.
-roller_width = track_width; // Placeholder; the matched roller width is unknown.
-// Equal end-roller diameters are assumed solely for this conceptual path sketch.
-// The idler is not a selected part; see docs/engineering/bom/sources.md#s26.
+roller_width = track_width; // Drum axial envelope, not a selected matched sprocket.
+idler_outer_diameter = 200; // S37 candidate, not an approved fit.
+wheel_tread_width = 50;
+idler_hub_width = 60;
+guide_gap_placeholder = 40; // Between tread faces; actual track lugs unpublished.
+guide_lug_width_placeholder = 24;
+guide_lug_height_placeholder = 20;
+guide_lug_length_placeholder = 24;
+tread_bar_height_placeholder = 6;
+wheel_axis_diameter = 20;
 drive_drum_wall_placeholder = 10;
 drive_drum_inner_diameter =
     roller_outer_diameter - 2 * drive_drum_wall_placeholder;
@@ -61,6 +63,14 @@ carrier_width = track_width; // Illustrative only.
 
 motor_body_diameter = 206; // HPM5000B manufacturer family envelope, S24.
 motor_body_length = 126; // HPM5000B manufacturer family envelope, S24.
+motor_shaft_diameter = 22.3;
+motor_shaft_length = 53;
+motor_key_width = 5;
+motor_key_length = 43;
+motor_key_seat_height = 19; // Drawing cross-section, not a 19 mm shaft.
+motor_mount_pcd = 148;
+motor_mount_nominal_diameter = 8; // Nominal M8 opening, not tapping drill size.
+motor_mount_depth_placeholder = 10;
 motor_speed_study_rpm = 4000; // S23 listing value; exact variant unverified.
 planetary_stage_count = 3;
 planetary_sun_teeth = [24, 24, 16];
@@ -73,27 +83,52 @@ planetary_total_ratio =
     * (1 + planetary_ring_teeth[1] / planetary_sun_teeth[1])
     * (1 + planetary_ring_teeth[2] / planetary_sun_teeth[2]);
 motor_inboard_face_z = track_width / 2 - motor_body_length;
-motor_center_z = track_width / 2 - motor_body_length / 2;
 planetary_output_rpm = motor_speed_study_rpm / planetary_total_ratio;
 roller_speed_study_kmh =
     PI * effective_rolling_diameter_placeholder / 1000
     * planetary_output_rpm * 60 / 1000;
 
 lower_support_roller_count = 4; // User-selected study layout per track.
-lower_support_roller_placeholder_diameter = 80; // Visual placeholder only.
-lower_support_roller_placeholder_width = 140; // Visual placeholder only.
+lower_support_roller_diameter = 120; // Owner-selected S38 concept, not qualified.
+printed_tread_thickness = 8;
+bearing_outer_diameter = 42;
+bearing_width = 12;
+bearing_face_recess_placeholder = 1;
 
-battery_length = 522;
-battery_width = 269;
-battery_height = 217;
+battery_length = 504; // S30 listing; supplied revision has conflicting dimensions.
+battery_width = 268;
+battery_height = 233;
 
 roller_radius = track_path_diameter / 2;
-roller_center_spacing = (nominal_pitch_loop - 2 * PI * roller_radius) / 2;
-loop_envelope_length = roller_center_spacing + track_path_diameter;
+idler_path_radius = (idler_outer_diameter + belt_thickness) / 2;
+radius_difference = roller_radius - idler_path_radius;
+// Both lower tangencies lie at Y=0; the upper tangent slopes to the small idler.
+function loop_length(spacing) =
+    2 * spacing + PI * (roller_radius + idler_path_radius)
+    + 2 * radius_difference * atan(radius_difference / spacing) * PI / 180;
+function solve_spacing(low, high, iterations = 40) =
+    iterations == 0 ? (low + high) / 2 :
+    let(mid = (low + high) / 2)
+    loop_length(mid) > nominal_pitch_loop
+        ? solve_spacing(low, mid, iterations - 1)
+        : solve_spacing(mid, high, iterations - 1);
+roller_center_spacing = solve_spacing(abs(radius_difference) + 1, nominal_pitch_loop / 2);
+upper_normal_angle = 90 - 2 * atan(radius_difference / roller_center_spacing);
+idler_wrap_angle = 180 - 2 * atan(radius_difference / roller_center_spacing);
+idler_arc_length = idler_path_radius * idler_wrap_angle * PI / 180;
+drive_center = [-roller_center_spacing / 2, roller_radius];
+idler_center = [roller_center_spacing / 2, idler_path_radius];
+upper_normal = [cos(upper_normal_angle), sin(upper_normal_angle)];
+upper_idler_tangent = idler_center + idler_path_radius * upper_normal;
+upper_drive_tangent = drive_center + roller_radius * upper_normal;
+loop_envelope_length = roller_center_spacing + roller_radius + idler_path_radius + belt_thickness;
 lower_belt_inner_face_y = belt_thickness / 2;
 carrier_underside_y = lower_belt_inner_face_y + frame_gap;
 battery_bottom_y = carrier_underside_y + carrier_thickness;
-upper_belt_inner_face_y = track_path_diameter - belt_thickness / 2;
+function return_inner_y(x, lug_height = 0) =
+    (drive_center * upper_normal + roller_radius
+     - belt_thickness / 2 - lug_height - x * upper_normal[0]) / upper_normal[1];
+upper_belt_inner_face_y = return_inner_y(battery_length / 2);
 remaining_vertical_clearance =
     upper_belt_inner_face_y - battery_bottom_y - battery_height;
 straight_run_margin_total = roller_center_spacing - battery_length;
@@ -101,7 +136,7 @@ straight_run_margin_total = roller_center_spacing - battery_length;
 echo("Assumed nominal pitch-loop length (mm): ", nominal_pitch_loop);
 echo("Study main driven roller physical outside diameter (mm): ",
      roller_outer_diameter);
-echo("Idler shown at same study diameter for loop geometry only; no part selected.");
+echo("Idler candidate diameter (mm): ", idler_outer_diameter);
 echo("Estimated track-path diameter (mm): ", track_path_diameter);
 echo("HPM5000B published motor body envelope (diameter x length mm): ",
      motor_body_diameter, " x ", motor_body_length);
@@ -119,28 +154,60 @@ echo("Study surface speed at assumed effective diameter (km/h): ",
      roller_speed_study_kmh);
 echo("Planetary module/stage extents and drum wall are visual placeholders only.");
 echo("Drive-sprocket tooth profile and motor coupling are not modeled.");
-echo("Four lower support rollers per track shown; size and capacity are placeholders.");
+echo("Four paired lower roller assemblies: 120 OD x 50 per wheel; capacity unqualified.");
 echo("Study roller centre spacing (mm): ", roller_center_spacing);
 echo("Study pitch envelope length (mm): ", loop_envelope_length);
 echo("Study straight-run margin around battery (mm): ", straight_run_margin_total);
 echo("Vertical clearance above battery before service clearance (mm): ",
      remaining_vertical_clearance);
+echo("FIT HOLD: battery to return guide tips (mm; negative is interference): ",
+     return_inner_y(battery_length / 2, guide_lug_height_placeholder)
+         - battery_bottom_y - battery_height);
+echo("FIT HOLD: roller top above retained carrier underside (mm): ",
+     lower_belt_inner_face_y + lower_support_roller_diameter - carrier_underside_y);
+echo("FIT HOLD: motor/stages/carrier axial overhang beyond drum (mm): ",
+     motor_body_length + planetary_stage_count * planetary_stage_width_placeholder
+         + 6 - roller_width);
 
-module capsule_2d(radius) {
+module capsule_2d(offset) {
     hull() {
-        translate([-roller_center_spacing / 2, roller_radius])
-            circle(r = radius);
-        translate([roller_center_spacing / 2, roller_radius])
-            circle(r = radius);
+        translate(drive_center) circle(r = roller_radius + offset);
+        translate(idler_center) circle(r = idler_path_radius + offset);
     }
 }
+
+// Position and outward-normal angle at distance s around the assumed pitch loop.
+function track_frame(s) =
+    s < roller_center_spacing
+        ? [drive_center + [s, -roller_radius], -90] :
+    s < roller_center_spacing + idler_arc_length
+        ? let(a = -90 + (s - roller_center_spacing) / idler_path_radius * 180 / PI)
+          [idler_center + idler_path_radius * [cos(a), sin(a)], a] :
+    s < 2 * roller_center_spacing + idler_arc_length
+        ? [upper_idler_tangent + (upper_drive_tangent - upper_idler_tangent)
+             * ((s - roller_center_spacing - idler_arc_length) / roller_center_spacing),
+           upper_normal_angle] :
+    let(a = upper_normal_angle
+        + (s - 2 * roller_center_spacing - idler_arc_length) / roller_radius * 180 / PI)
+    [drive_center + roller_radius * [cos(a), sin(a)], a];
 
 module track_loop() {
     linear_extrude(height = track_width, center = true)
         difference() {
-            capsule_2d(roller_radius + belt_thickness / 2);
-            capsule_2d(roller_radius - belt_thickness / 2);
+            capsule_2d(belt_thickness / 2);
+            capsule_2d(-belt_thickness / 2);
         }
+    for (i = [0 : track_links - 1]) {
+        frame = track_frame(i * track_pitch);
+        translate([frame[0][0], frame[0][1], 0])
+            rotate([0, 0, frame[1]]) {
+                translate([-belt_thickness / 2 - guide_lug_height_placeholder / 2 + 0.5, 0, 0])
+                    cube([guide_lug_height_placeholder + 1,
+                          guide_lug_length_placeholder, guide_lug_width_placeholder], center = true);
+                translate([belt_thickness / 2 + tread_bar_height_placeholder / 2 - 0.5, 0, 0])
+                    cube([tread_bar_height_placeholder + 1, 22, track_width], center = true);
+            }
+    }
 }
 
 module main_driven_roller(x) {
@@ -155,20 +222,72 @@ module main_driven_roller(x) {
                     h = roller_width + 1,
                     center = true
                 );
+                // Central relief leaves two running bands; engagement teeth remain undefined.
+                cylinder(d = roller_outer_diameter + 2, h = guide_gap_placeholder, center = true);
             }
 }
 
+module bearing_wheel(diameter, hub_width, printed = false) {
+    core_diameter = diameter - (printed ? 2 * printed_tread_thickness : 0);
+    difference() {
+        union() {
+            cylinder(d = core_diameter, h = wheel_tread_width, center = true);
+            if (printed)
+                color([0.15, 0.16, 0.18])
+                    difference() {
+                        cylinder(d = diameter, h = wheel_tread_width - 2, center = true);
+                        cylinder(d = core_diameter - 1, h = wheel_tread_width + 1, center = true);
+                    }
+            if (hub_width > wheel_tread_width)
+                cylinder(d = 60, h = hub_width, center = true);
+        }
+        cylinder(d = wheel_axis_diameter, h = hub_width + 2, center = true);
+        if (printed)
+            for (side = [-1, 1])
+                translate([0, 0, side * (hub_width / 2 - (bearing_width + 1) / 2)])
+                    cylinder(d = bearing_outer_diameter, h = bearing_width + 1.02, center = true);
+    }
+    if (printed)
+        for (side = [-1, 1])
+            translate([0, 0, side * (hub_width / 2 - bearing_face_recess_placeholder - bearing_width / 2)])
+                color([0.55, 0.57, 0.6])
+                    difference() {
+                        cylinder(d = bearing_outer_diameter, h = bearing_width, center = true);
+                        cylinder(d = wheel_axis_diameter, h = bearing_width + 1, center = true);
+                    }
+}
+
+module wheel_pair(diameter, hub_width, printed = false) {
+    for (side = [-1, 1])
+        translate([0, 0, side * (guide_gap_placeholder + wheel_tread_width) / 2])
+            bearing_wheel(diameter, hub_width, printed);
+}
+
 module idler_placeholder(x) {
-    translate([x, roller_radius, 0])
+    translate([x, idler_path_radius, 0])
         color([0.25, 0.25, 0.28, 0.65])
-            cylinder(d = roller_outer_diameter, h = roller_width, center = true);
+            wheel_pair(idler_outer_diameter, idler_hub_width);
 }
 
 module hpm5000b_motor_envelope(x) {
-    // Published body envelope only; shaft and mounting details are unknown.
-    translate([x, roller_radius, motor_center_z])
-        color([0.15, 0.35, 0.72, 0.48])
-            cylinder(d = motor_body_diameter, h = motor_body_length, center = true);
+    translate([x, roller_radius, motor_inboard_face_z]) {
+        color([0.15, 0.35, 0.72, 0.8])
+            difference() {
+                cylinder(d = motor_body_diameter, h = motor_body_length);
+                for (a = [45 : 90 : 315])
+                    translate([motor_mount_pcd / 2 * cos(a), motor_mount_pcd / 2 * sin(a), -0.1])
+                        cylinder(d = motor_mount_nominal_diameter, h = motor_mount_depth_placeholder + 0.1);
+            }
+        color([0.55, 0.57, 0.6])
+            difference() {
+                translate([0, 0, -motor_shaft_length])
+                    cylinder(d = motor_shaft_diameter, h = motor_shaft_length + 0.1);
+                translate([-motor_key_width / 2,
+                           motor_key_seat_height - motor_shaft_diameter / 2,
+                           -motor_shaft_length + 5])
+                    cube([motor_key_width, motor_shaft_diameter, motor_key_length]);
+            }
+    }
 }
 
 module planetary_stage(x, stage_index) {
@@ -202,11 +321,11 @@ module planetary_stage(x, stage_index) {
             }
 
         color([0.82, 0.68, 0.25, 0.95])
-            cylinder(
-                d = sun_pitch_diameter,
-                h = planetary_stage_width_placeholder,
-                center = true
-            );
+            difference() {
+                cylinder(d = sun_pitch_diameter, h = planetary_stage_width_placeholder, center = true);
+                // Visual shaft passage only; coupling and supported stage shafts are undesigned.
+                cylinder(d = motor_shaft_diameter + 2, h = planetary_stage_width_placeholder + 1, center = true);
+            }
 
         for (angle = [0 : 120 : 240]) {
             translate([
@@ -247,25 +366,19 @@ module final_carrier_to_drum(x) {
                 }
 }
 
-module lower_support_rollers() {
-    for (i = [0 : lower_support_roller_count - 1])
-        lower_support_roller(i);
-}
-
 module lower_support_roller(i) {
-    x = -roller_center_spacing / 4
-        + i * roller_center_spacing / (2 * (lower_support_roller_count - 1));
+    drive_margin = roller_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
+    idler_margin = idler_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
+    x = -roller_center_spacing / 2 + drive_margin
+        + i * (roller_center_spacing - drive_margin - idler_margin)
+            / (lower_support_roller_count - 1);
     translate([
         x,
-        belt_thickness / 2 + lower_support_roller_placeholder_diameter / 2,
+        belt_thickness / 2 + lower_support_roller_diameter / 2,
         0
     ])
         color([0.22, 0.55, 0.34, 0.9])
-            cylinder(
-                d = lower_support_roller_placeholder_diameter,
-                h = lower_support_roller_placeholder_width,
-                center = true
-            );
+            wheel_pair(lower_support_roller_diameter, wheel_tread_width, true);
 }
 
 module pod_carrier() {

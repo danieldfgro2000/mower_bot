@@ -22,8 +22,9 @@ matched profiles, bearings, clearances, and load ratings remain unqualified.
 
 **3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md)
 to select the part; clicking its mesh opens the corresponding section here.
-These are unchanged study envelopes, **not** the sourced 180 mm track or selected
-120 mm printed-wheel design. Upper rollers/tensioners are not modeled.
+The candidate study shows the 180 mm track, paired 120 mm printed-wheel concept
+and paired 200 mm bought idler candidate. Guide dimensions are schematic;
+battery/carrier clashes are unresolved. Upper rollers/tensioners are not modeled.
 
 | Track | Drive drum | Idler | Lower rollers |
 | --- | --- | --- | --- |
@@ -113,17 +114,26 @@ geometry, track pitch line and wrap determine the envelope.
 
 ### Pod-fit CAD assumptions
 
-The [editable pod-fit concept](../../cad/module-01-track-pod-fit.scad) still uses a
-**350 mm physical roller outside-diameter placeholder**, not an owner-selected
-dimension. It also retains the listing-code interpretation and former Elker
-battery envelope, not the new budget pack.
-With the illustrative 20 mm belt
-thickness, its simplified model estimates a 370 mm track-path diameter by
-placing the path at the belt mid-thickness. This offset is an assumption, not
-the supplier's confirmed pitch-line position. The belt and carrier thicknesses
-are also assumptions. The model is not a dimensional drawing or evidence that
-the battery fits; obtain the supplier track drawing and confirm the complete
-carrier, guard, and extraction clearances first.
+The [editable candidate study](../../cad/module-01-track-pod-fit.scad) uses the
+180 x 72 x 37 sourcing candidate, interpreting the code as width, pitch and
+link count (2,664 mm assumed pitch loop). The drive drum remains a flexible
+**350 mm OD placeholder**; the idler now shows two Interwheel 200 mm wheels,
+each 50 mm tread / 60 mm hub with 20 mm bore. This is a candidate representation,
+not selection or qualification of that idler.
+
+Four lower assemblies each have two 120 x 50 mm printed wheels with an 8 mm
+tread and two 6004 bearing envelopes per wheel. A **40 mm tread-face guide
+gap** gives a 140 mm lower-pair width and 150 mm idler hub envelope.
+The illustrative guide lugs are 24 mm wide, 24 mm long and 20 mm high, one per
+assumed pitch; these are **not supplier dimensions**. Confirm lug and rolling-path
+dimensions before using any groove, spacer, bearing fit or printed geometry.
+
+With the assumed 20 mm belt and mid-thickness pitch line, unequal end wheels
+give **862.1 mm horizontal axis spacing** and a sloping upper return. The
+current 504 x 268 x 233 mm battery and retained carrier placement clash with
+that return and the larger lower rollers. See the [CAD dimensions and fit
+holds](../../cad/README.md#modeled-dimensions-and-limits). The model deliberately
+does not hide these conflicts or change the baseline cost allowances.
 
 ### Tensioner and idler interfaces
 
@@ -357,8 +367,9 @@ Guide-lug dimensions are not published for either track.
 
 **Owner selection, 2026-10-29:** PowerTrack 180 x 72 x 37 is the track
 sourcing choice for the bearing-wheel route. The baseline still describes
-the 200 mm track until width sizing, CAD fit and the RUN-001 allowance are
-updated together.
+the 200 mm track until width sizing, qualified fit and the RUN-001 allowance
+are updated together. The CAD now visualizes the 180 mm candidate separately;
+its unresolved clashes do not qualify that change for the baseline.
 
 
 [↑ Back to document overview](running-gear.md#tracks-and-running-gear)

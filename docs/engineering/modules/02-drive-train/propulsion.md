@@ -266,7 +266,7 @@ not be mistaken for a 19 mm shaft.
 | Brake hub | Exact purchased reference is **19H7**; [FDB family brochure](https://sabjgearweuprodmedia.blob.core.windows.net/pim-perfion-files/product-assets/HV2052113232S/en-GB-brochure.pdf), page 2, lists other size-13 hub options and DIN keyways | The brochure does not establish a Ø22.3 mm / 5 mm-key hub option. Confirm the exact supplied hub/key/retention drawing; do not assume interchangeability |
 | Mounting pattern | Motor drawing: **four M8 holes on Ø148 mm** circle; brake size-13 family drawing: **three M6 mounts on Ø112 mm** circle | Patterns do not match. A properly designed stationary reaction flange/support is required; the motor face is not automatically a suitable brake friction surface |
 | Brake envelope | Size-13 family: **Ø130 mm** body, **Ø135 mm** outer envelope, axial body dimension **g = 53.1 mm**; C-version adjustment projection **p = 3.5 mm**, up to **9.5 mm** | Space is needed beyond the body for options, hub/retention, adjustment and service. Obtain exact SKU drawing before layout release |
-| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; existing CAD uses the 126 mm body only and has just **14 mm nominal remainder** after placeholder stages/carrier | The brake body alone exceeds that remainder. No validated axial stack fits the existing study; shaft, reducer and brake may share some axial space only after detailed design |
+| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; candidate CAD includes this shaft and the 126 mm body. Body + placeholder stages/carrier total **186 mm** against the 180 mm drum width | Already **6 mm beyond** the drum before brake/support/service needs. The shaft shares schematic stage space; this is not a designed coupling or validated axial stack |
 
 **Integration directions to investigate, not fabrication instructions:** Ask
 Precima/BJ-Gear about a manufacturer-approved hub matching the actual motor
@@ -321,18 +321,26 @@ diameter may differ from 350 mm, so the ratio and speed remain provisional.
 
 #### CAD package envelope
 
-The motor body uses the manufacturer-listed 206 mm
-diameter × 126 mm length. In the 200 mm track-width study, the body starts at
-the roller's outboard face and extends 126 mm inward. The three stage envelopes
-are shown at 18 mm each, giving a nominal 180 mm motor-plus-stage stack and
-20 mm remaining to the assumed roller-width boundary before the final carrier.
-The carrier adds 6 mm axially, leaving 14 mm nominal for any other structures
-and clearances; this is not a fit allowance. A visual-only 3 mm gear module
+The motor body uses the manufacturer-listed 206 mm diameter × 126 mm length.
+In the updated **180 mm track/drum-width candidate study**, its outboard face
+is at Z = +90 mm and its mounting face at Z = -36 mm. The Ø22.3 mm shaft
+projects 53 mm inward to Z = -89 mm, with a schematic 5 x 43 mm keyway.
+Four nominal M8 openings on the published Ø148 mm circle are visible on
+the mounting face; 10 mm blind depth, 45° clocking and 5 mm keyway end offset
+are visualization assumptions, not drilling/fabrication specifications.
+
+The three stage envelopes remain 18 mm each, extending inward from the mounting
+face. Their schematic sun bores clear the displayed shaft; no real stage shafts,
+couplings or ratios between shaft segments are designed. Body + stages total
+180 mm; the final 6 mm carrier extends the stack to **186 mm**, already
+**6 mm beyond the drum's inboard edge**. The shaft overlaps schematic stage
+space rather than adding 53 mm in series. No brake, bearing support, reaction
+plate or service space is included. A visual-only 3 mm gear module
 produces ring/sun/planet pitch diameters of 216/72/72 mm for the first two
 stages and 150/48/51 mm for the last stage. To see the planets in the model,
 view from the final-carrier side (negative Z); the outboard view prioritizes the
-motor package. The sketch does not model actual tooth profiles, face widths,
-shafts, carriers' structural sections, fixed-ring supports, bearings, seals or
+motor package. The sketch does not model actual tooth profiles, designed face widths,
+reducer shafts, carriers' structural sections, fixed-ring supports, bearings, seals or
 assembly clearances. The 10 mm drum wall used to show its hollow interior is
 also a placeholder; none of these envelopes proves the gearbox fits or carries
 the required load.
@@ -412,7 +420,7 @@ or track-engagement profile in this package.
 
 | Attachment or load path | What the study defines | Open the next detail |
 | --- | --- | --- |
-| Motor housing to pod structure | Motor body coaxial with the drum; attachment face, bracket and cooling clearance are not defined | [Motor and reducer mounting plates](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
+| Motor housing to pod structure | Published four-M8 / Ø148 mm pattern shown on the shaft face; bracket, thread depths, reaction load path and cooling clearance are not designed | [Motor and reducer mounting plates](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
 | Motor shaft through reduction to drum | Three planetary stages; final carrier drives the drum | [Ratio and tooth-count study](propulsion.md#speed-and-ratio-screen) · [Carrier/package envelope](propulsion.md#cad-package-envelope) |
 | Stationary ring gears to pod | Rings remain fixed while the carrier/drum rotates; supports and reaction-load attachments are not designed | [Frame definition](../01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments) |
 | Drum to track | 350 mm physical drum OD is a flexible study placeholder, not a required size or confirmed track pitch geometry | [Drum/sprocket engagement](../01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Track profile](../01-structure-and-running-gear/running-gear.md#ps01-rubber-tracks) |
@@ -444,8 +452,9 @@ reference; its custom reduction and brake installation are still unpriced.
 
 The [published motor body](propulsion.md#hpm5000b-ratings-and-sourcing-limits)
 is modeled at 206 mm diameter × 126 mm length and 11 kg air-cooled. The
-[new drawing/fit screen](propulsion.md#fdb-13-c-to-hpm5000b-fitment) adds shaft
-and mounting dimensions not yet represented in CAD. Cooling clearance and
+[drawing/fit screen](propulsion.md#fdb-13-c-to-hpm5000b-fitment) supplies the shaft
+and mounting dimensions now represented in CAD. Clocking, hole depth and
+keyway axial offset remain illustrative. Cooling clearance and
 actual gearbox dimensions remain unresolved. See the [package envelope](propulsion.md#cad-package-envelope)
 for the placeholder stage, carrier, and drum dimensions; none establishes fit.
 
@@ -856,6 +865,9 @@ keyway; the selected brake is 19H7. Mounting patterns also differ, and the
 brake body alone exceeds the CAD study's nominal 14 mm axial remainder.
 Manufacturer-approved hub/support integration and repackaging are required;
 the €159 variant is not qualified as a bolt-on motor accessory.
+**CAD follow-up, 2026-10-29:** The 14 mm figure above belongs to the former
+200 mm-width study. The current 180 mm candidate already has **6 mm axial
+overhang** before adding the brake; see the [current package envelope](propulsion.md#cad-package-envelope).
 The [20 Nm static screen](propulsion.md#precima-fdb-13-c-holding-brake-candidate)
 is favorable at ideal 66:1, but does not qualify dynamic stopping, transmission
 capacity or slope safety. No purchase, modification, energizing or field test

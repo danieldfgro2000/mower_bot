@@ -1,11 +1,11 @@
 {
   "source": "docs/engineering/cad/module-01-track-pod-fit.scad",
   "defaultDocument": "docs/engineering/cad/README.md",
-  "notice": "Concept envelopes only, not fabrication models or verified fit. The CAD still uses historical track, roller and battery placeholders; it does not represent every current sourced component.",
+  "notice": "Unqualified candidate fit study, not fabrication geometry. Battery/return-run and roller/carrier clashes are intentional visible holds; drum teeth, brake, tensioner and structural mounts remain undesigned.",
   "components": [
     {
       "id": "track",
-      "label": "Rubber track (200 mm study)",
+      "label": "Rubber track (180x72x37 candidate; schematic guides)",
       "color": "#303038",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions"
     },
@@ -17,13 +17,13 @@
     },
     {
       "id": "idler",
-      "label": "Idler (study envelope)",
+      "label": "Idler (paired 200x50 wheels; candidate)",
       "color": "#626270",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#tensioner-and-idler-interfaces"
     },
     {
       "id": "motor",
-      "label": "HPM5000B motor body",
+      "label": "HPM5000B (body, shaft and mounting pattern)",
       "color": "#2659b8",
       "document": "docs/engineering/modules/02-drive-train/propulsion.md#hpm5000b-main-motor-candidate"
     },
@@ -53,25 +53,25 @@
     },
     {
       "id": "lower-roller-1",
-      "label": "Lower roller 1 (80 mm placeholder)",
+      "label": "Lower roller 1 (paired 120x50 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers"
     },
     {
       "id": "lower-roller-2",
-      "label": "Lower roller 2 (80 mm placeholder)",
+      "label": "Lower roller 2 (paired 120x50 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers"
     },
     {
       "id": "lower-roller-3",
-      "label": "Lower roller 3 (80 mm placeholder)",
+      "label": "Lower roller 3 (paired 120x50 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers"
     },
     {
       "id": "lower-roller-4",
-      "label": "Lower roller 4 (80 mm placeholder)",
+      "label": "Lower roller 4 (paired 120x50 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers"
     },
@@ -83,7 +83,7 @@
     },
     {
       "id": "battery",
-      "label": "Battery (historical envelope)",
+      "label": "DC HOUSE battery (504x268x233 listing envelope)",
       "color": "#e68c1f",
       "document": "docs/engineering/modules/04-battery-and-charging/batteries.md#provisional-battery-clearance"
     },

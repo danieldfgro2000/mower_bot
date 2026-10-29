@@ -29,8 +29,9 @@ purchase, fabrication or operation**.
 - **Open items:** custom reduction and brake installation are unpriced, and
   release holds remain open in the
   [build and procurement checklist](chassis-build-requirements.md).
-- **CAD status:** the 3D fit study uses historical dimensions and does not yet
-  model every current choice; see the [CAD guide](cad/README.md).
+- **CAD status:** the current candidate fit study includes track guides, paired
+  rollers, motor interfaces and the DC HOUSE body. It exposes battery/track and
+  carrier/roller clashes, not a viable assembled layout; see the [CAD guide](cad/README.md).
 
 ## 3D CAD viewer
 

@@ -24,12 +24,13 @@ None is qualified for the mower; electrical, packaging and delivery holds remain
 
 **3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md);
 clicking the corresponding mesh returns to the fit/clearance section here.
-The battery is the **historical** study envelope, not the current DC HOUSE
-bundle. The arrow shows an intended removal direction, not verified access.
+The battery now uses the DC HOUSE listing's **504 x 268 x 233 mm body**, not
+the historical Elker envelope. The sloping track return clashes with it;
+terminals/restraints are not modeled. The arrow is not verified removal access.
 
-| Historical battery envelope | Removal-direction annotation |
+| DC HOUSE listing envelope | Removal-direction annotation |
 | --- | --- |
-| [![3D historical battery](../../cad/viewer/previews/battery.png)](../../cad/viewer/index.html?component=battery) | [![3D removal arrow](../../cad/viewer/previews/removal-arrow.png)](../../cad/viewer/index.html?component=removal-arrow) |
+| [![3D DC HOUSE battery](../../cad/viewer/previews/battery.png)](../../cad/viewer/index.html?component=battery) | [![3D removal arrow](../../cad/viewer/previews/removal-arrow.png)](../../cad/viewer/index.html?component=removal-arrow) |
 
 **Further detail:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Release requirements](batteries.md#specification-and-inspection-requirements) ·
@@ -228,8 +229,8 @@ was 51.2 V / 100 Ah, **522 × 269 × 217 mm and 36 kg**, with 100 A maximum
 discharge and unresolved vehicle/regen duty. Its €1,019.90 displayed price
 plus the former conditional tax reserve produced €1,234.08 per pack.
 It no longer supplies the active budget or current-pack dimensions.
-The existing CAD and clearance examples still use that historical envelope;
-they have not been redesigned for the recommended pack.
+The CAD now uses the DC HOUSE listing body instead. Historical clearance
+arithmetic is retained below only for comparison, not as the current fit result.
 
 [↑ Back to document overview](batteries.md#batteries-enclosures-and-charging)
 
@@ -279,10 +280,13 @@ containment or fire-containment assumption
 
 The [recommended pack](batteries.md#48-v--approximately-2-kw-per-drive)
 is 504 × 268 × 233 mm and 44.9 kg; no complete pod fit is established.
-The old CAD envelope was 522 × 269 × 217 mm and 36 kg. Its nominal 43 mm
-vertical margin is reduced by the new pack's additional 16 mm height to
-**27 mm arithmetic margin**, before installation, guarding or tensioner
-clearance. This is a packaging hold, not proven fit in the unchanged study.
+The updated CAD represents that listing body, with length along X, height along
+Y and width along Z. It does **not** establish actual supplied-revision
+dimensions: S30 still records conflicting supplier material. The smaller
+200 mm candidate idler now slopes the return down into the battery envelope.
+The continuous inner belt surface crosses the upper front corner by **90.1 mm**;
+the assumed guide-tip sweep increases that to **110.4 mm** interference.
+These are geometric fit holds, before terminals, enclosure or service space.
 The [minimum-width calculation](../../width-and-slope-sizing.md#minimum-width-and-packaging)
 checks lateral packaging; the
 [battery-clearance calculation](batteries.md#provisional-battery-clearance)
@@ -291,8 +295,8 @@ checks the illustrative track path and carrier. Neither is a released layout.
 Also reconcile the [spring-tensioner sweep](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept),
 restraint/load path, terminal protection, ventilation/drainage, cable clearance,
 and outboard removal path. Update the mass/CG budget for the 89.8 kg pair;
-the former 72 kg pair is not the current configuration. Do not silently
-substitute new battery dimensions into the old CAD or infer a usable width.
+the former 72 kg pair is not the current configuration. The body overhangs the
+180 mm track width by 44 mm per side; that is not proven usable chassis width.
 
 **Continue:** [Enclosure/retention costs](batteries.md#0402-battery-enclosures-restraints-and-insulation) ·
 [Pod frame](../01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments) ·
@@ -300,18 +304,27 @@ substitute new battery dimensions into the old CAD or infer a usable width.
 
 #### Provisional battery clearance
 
-For the **historical Elker envelope**, with the model's assumed 20 mm belt,
+For the **historical Elker envelope and equal 350 mm end wheels**, with the assumed 20 mm belt,
 80 mm frame gap, and 10 mm carrier, only
 **43 mm** remains above the 217 mm pack before installation or service
-clearance. The assumed 2,592 mm pitch loop leaves about **193 mm total** along
+clearance. The former assumed 2,592 mm pitch loop left about **193 mm total** along
 the straight run around a centered 522 mm pack. Both margins depend on the
 unverified track-code interpretation and placeholder geometry; neither proves
-fit. The current DC HOUSE pack is 16 mm taller, leaving **27 mm nominal
-arithmetic vertical margin**, not qualified installation or tensioner clearance.
-Its listed body is 18 mm shorter and 1 mm narrower, but heavier. Check the
-complete carrier, track return and tensioner envelope before claiming fit.
-The CAD has not been changed and the old 72 kg pair is not the current
-89.8 kg battery mass.
+fit. Substituting DC HOUSE height alone in that old layout gave **27 mm
+arithmetic margin**. Neither figure applies to the current unequal-wheel CAD.
+
+**Current candidate study (2026-10-29):** the 180 x 72 x 37 track code implies
+a 2,664 mm assumed pitch loop, solved at **862.1 mm horizontal end-axis spacing**
+with 350/200 mm drive/idler ODs. The battery bottom remains at Y = 100 mm
+and its top at Y = 333 mm. At its front upper corner the sloping inner return
+is Y = **242.9 mm**, or **222.6 mm** for the assumed guide-tip envelope:
+clearance is **-90.1 / -110.4 mm**, respectively. The 120 mm lower roller
+tops also reach Y = 130 mm, intersecting the retained 90-100 mm carrier and
+the battery base. Do not relocate or resize parts silently to claim fit;
+a revised carrier/battery/running-gear layout is required.
+
+The CAD guide records [modeled dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits).
+The old 72 kg pair is not the current **89.8 kg** body mass, before restraints.
 
 **Continue with the part:** [Battery-to-pod fit](batteries.md#battery-to-pod-fit) ·
 [Spring tensioner](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) ·
