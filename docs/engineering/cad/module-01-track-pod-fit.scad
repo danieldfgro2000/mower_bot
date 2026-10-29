@@ -29,6 +29,15 @@
 
 $fn = 64;
 
+// Used by the local documentation viewer; assembly remains the native default.
+viewer_component = "assembly";
+viewer_components = [
+    "track", "drive-drum", "idler", "motor",
+    "planetary-1", "planetary-2", "planetary-3", "output-carrier",
+    "lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4",
+    "pod-carrier", "battery", "removal-arrow"
+];
+
 track_width = 200;
 track_pitch = 72;
 track_links = 36;
@@ -239,50 +248,72 @@ module final_carrier_to_drum(x) {
 }
 
 module lower_support_rollers() {
-    for (i = [0 : lower_support_roller_count - 1]) {
-        x = -roller_center_spacing / 4
-            + i * roller_center_spacing / (2 * (lower_support_roller_count - 1));
-        translate([
-            x,
-            belt_thickness / 2 + lower_support_roller_placeholder_diameter / 2,
-            0
-        ])
-            color([0.22, 0.55, 0.34, 0.9])
-                cylinder(
-                    d = lower_support_roller_placeholder_diameter,
-                    h = lower_support_roller_placeholder_width,
-                    center = true
-                );
+    for (i = [0 : lower_support_roller_count - 1])
+        lower_support_roller(i);
+}
+
+module lower_support_roller(i) {
+    x = -roller_center_spacing / 4
+        + i * roller_center_spacing / (2 * (lower_support_roller_count - 1));
+    translate([
+        x,
+        belt_thickness / 2 + lower_support_roller_placeholder_diameter / 2,
+        0
+    ])
+        color([0.22, 0.55, 0.34, 0.9])
+            cylinder(
+                d = lower_support_roller_placeholder_diameter,
+                h = lower_support_roller_placeholder_width,
+                center = true
+            );
+}
+
+module pod_carrier() {
+    translate([-carrier_length / 2, carrier_underside_y, -carrier_width / 2])
+        color([0.3, 0.45, 0.6])
+            cube([carrier_length, carrier_thickness, carrier_width]);
+}
+
+module battery_envelope() {
+    translate([-battery_length / 2, battery_bottom_y, -battery_width / 2])
+        color([0.9, 0.55, 0.12, 0.8])
+            cube([battery_length, battery_height, battery_width]);
+}
+
+module removal_arrow() {
+    // Annotation only, not a physical component.
+    translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 5])
+        color([0.1, 0.45, 0.85])
+            cylinder(h = 95, d = 5);
+    translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 100])
+        color([0.1, 0.45, 0.85])
+            cylinder(h = 18, d1 = 16, d2 = 0);
+}
+
+module pod_component(id) {
+    if (id == "track")
+        color([0.12, 0.12, 0.14, 0.65]) track_loop();
+    else if (id == "drive-drum") main_driven_roller(-roller_center_spacing / 2);
+    else if (id == "idler") idler_placeholder(roller_center_spacing / 2);
+    else if (id == "motor") hpm5000b_motor_envelope(-roller_center_spacing / 2);
+    else if (id == "output-carrier") final_carrier_to_drum(-roller_center_spacing / 2);
+    else if (id == "pod-carrier") pod_carrier();
+    else if (id == "battery") battery_envelope();
+    else if (id == "removal-arrow") removal_arrow();
+    else {
+        for (stage = [0 : planetary_stage_count - 1])
+            if (id == str("planetary-", stage + 1))
+                planetary_stage(-roller_center_spacing / 2, stage);
+        for (i = [0 : lower_support_roller_count - 1])
+            if (id == str("lower-roller-", i + 1))
+                lower_support_roller(i);
     }
 }
 
-color([0.12, 0.12, 0.14, 0.65])
-    track_loop();
-
-main_driven_roller(-roller_center_spacing / 2);
-idler_placeholder(roller_center_spacing / 2);
-hpm5000b_motor_envelope(-roller_center_spacing / 2);
-for (stage = [0 : planetary_stage_count - 1])
-    planetary_stage(-roller_center_spacing / 2, stage);
-final_carrier_to_drum(-roller_center_spacing / 2);
-lower_support_rollers();
-
-translate([-carrier_length / 2,
-           carrier_underside_y,
-           -carrier_width / 2])
-    color([0.3, 0.45, 0.6])
-        cube([carrier_length, carrier_thickness, carrier_width]);
-
-translate([-battery_length / 2,
-           battery_bottom_y,
-           -battery_width / 2])
-    color([0.9, 0.55, 0.12, 0.8])
-        cube([battery_length, battery_height, battery_width]);
-
-// Arrow indicates the proposed outboard battery-removal direction only.
-translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 5])
-    color([0.1, 0.45, 0.85])
-        cylinder(h = 95, d = 5);
-translate([0, battery_bottom_y + battery_height / 2, battery_width / 2 + 100])
-    color([0.1, 0.45, 0.85])
-        cylinder(h = 18, d1 = 16, d2 = 0);
+assert(viewer_component == "assembly"
+       || len([for (id = viewer_components) if (id == viewer_component) id]) == 1,
+       str("Unknown viewer component: ", viewer_component));
+if (viewer_component == "assembly")
+    for (id = viewer_components) pod_component(id);
+else
+    pod_component(viewer_component);

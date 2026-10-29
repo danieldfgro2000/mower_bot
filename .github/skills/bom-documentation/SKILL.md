@@ -19,6 +19,10 @@ fabricating, uploading, energizing or operating the machine.
 For non-BOM documentation, maintain its authoritative owner and inbound links;
 do not restructure unrelated documents or run BOM generation unnecessarily.
 
+When a change touches `docs/engineering/cad/`, a CAD-targeted heading or a
+3D study table, also follow the
+[CAD documentation sync skill](../cad-documentation-sync/SKILL.md).
+
 ## BOM ownership
 
 - `docs/engineering/bom/chassis-bom.csv`: authoritative baseline quantities,

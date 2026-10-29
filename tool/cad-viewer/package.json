@@ -1,0 +1,21 @@
+{
+  "name": "mowerbot-cad-viewer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "export": "node export.mjs",
+    "check": "node sync.mjs --check",
+    "sync": "node sync.mjs",
+    "start": "node server.mjs",
+    "test": "cd ../.. && node --test tool/cad-viewer/*.test.mjs",
+    "test:browser": "node browser-test.mjs"
+  },
+  "dependencies": {
+    "marked": "18.0.7",
+    "marked-gfm-heading-id": "4.1.4",
+    "three": "0.185.0"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}

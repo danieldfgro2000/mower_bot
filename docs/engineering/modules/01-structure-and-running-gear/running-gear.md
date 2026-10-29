@@ -20,6 +20,19 @@ matched profiles, bearings, clearances, and load ratings remain unqualified.
 | Front idler | Bearing-wheel route preferred; priced excavator alternative also recorded; neither fit qualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Idler allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Supplier limitations](running-gear.md#s37-bearing-wheel-roller-and-idler-candidates) | [Track compatibility](running-gear.md#ps01-rubber-tracks) |
 | [Axles, bearings and guides](running-gear.md#ps03-axles-bearings-and-track-guides) | Sizes, fits and retained assembly open | [Support costs](running-gear.md#0103-track-axles-bearings-guides-and-scrapers) · [Required data](running-gear.md#ps03-axles-bearings-and-track-guides) | [Pod frame](frame.md#ps04-frame-stock-and-weldments) |
 
+**3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md)
+to select the part; clicking its mesh opens the corresponding section here.
+These are unchanged study envelopes, **not** the sourced 180 mm track or selected
+120 mm printed-wheel design. Upper rollers/tensioners are not modeled.
+
+| Track | Drive drum | Idler | Lower rollers |
+| --- | --- | --- | --- |
+| [![3D track](../../cad/viewer/previews/track.png)](../../cad/viewer/index.html?component=track) | [![3D drum](../../cad/viewer/previews/drive-drum.png)](../../cad/viewer/index.html?component=drive-drum) | [![3D idler](../../cad/viewer/previews/idler.png)](../../cad/viewer/index.html?component=idler) | [![3D lower roller](../../cad/viewer/previews/lower-roller-1.png)](../../cad/viewer/index.html?component=lower-roller-1) |
+
+Other individual rollers: [3D roller 2](../../cad/viewer/index.html?component=lower-roller-2) ·
+[3D roller 3](../../cad/viewer/index.html?component=lower-roller-3) ·
+[3D roller 4](../../cad/viewer/index.html?component=lower-roller-4).
+
 **Further detail:** [Prices found](running-gear.md#prices-found-tracks-rollers-and-idlers) ·
 [Track length check](running-gear.md#track-length-check) ·
 [Release requirements](running-gear.md#specification-and-inspection-requirements) ·

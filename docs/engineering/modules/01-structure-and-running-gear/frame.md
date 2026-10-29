@@ -20,6 +20,12 @@ not released. Start with the physical part, then follow its attachment.
 | [Guards and fastening](frame.md#ps07-guards-and-edge-protection) | Guard geometry and joint schedule open | [Finishing costs](frame.md#0106-guards-fasteners-coatings-and-labels) · [Guards](frame.md#ps07-guards-and-edge-protection) · [Fasteners/coatings](frame.md#ps08-fasteners-coatings-and-labels) | [Moving screw guard](../03-width-adjustment/width-adjustment.md#ps13-width-harness-and-screw-guard) |
 | [Lifting and recovery points](frame.md#ps32-installed-lifting-and-recovery-points) | Installed points; no certified lifting capacity established | [Point costs](frame.md#0107-installed-lifting-and-recovery-points) · [Load-path requirements](frame.md#ps32-installed-lifting-and-recovery-points) | [Loose straps and service supports](../07-workshop-and-support/workshop.md#ps33-transport-straps-and-service-supports) |
 
+**3D study:** The carrier plate below is a visual placeholder, not a released
+weldment or mounting drawing. Click it in the [local CAD reader](../../cad/README.md)
+to select the plate; clicking its mesh opens the frame requirements here.
+
+[![3D pod carrier plate](../../cad/viewer/previews/pod-carrier.png)](../../cad/viewer/index.html?component=pod-carrier)
+
 **Further detail:** [Release requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
 [Itemized costs](frame.md#detailed-module-costs) ·

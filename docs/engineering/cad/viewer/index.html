@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>MowerBot CAD and documentation</title>
+  <link rel="stylesheet" href="/viewer/style.css">
+  <script type="importmap">
+    {"imports":{"three":"/vendor/three/build/three.module.js","three/addons/":"/vendor/three/examples/jsm/"}}
+  </script>
+</head>
+<body>
+  <header>
+    <strong>MowerBot <span>CAD + documentation</span></strong>
+    <a href="/?doc=docs%2Fengineering%2Fcad%2FREADME.md">Viewer guide</a>
+    <a id="source" href="#" download>Editable SCAD</a>
+    <a id="export" href="#" download>Selected STL</a>
+  </header>
+  <p id="notice" role="note">Loading concept information...</p>
+  <p id="error" role="alert" hidden></p>
+  <main>
+    <section class="model-pane" aria-label="Interactive CAD assembly">
+      <div class="toolbar">
+        <label>Component <select id="component"><option value="">Entire assembly</option></select></label>
+        <label><input id="isolate" type="checkbox"> Isolate selection</label>
+        <button id="fit" type="button">Fit view</button>
+        <button id="assembly" type="button">Reset assembly</button>
+      </div>
+      <div id="viewport" tabindex="0" aria-label="3D model: drag to orbit, scroll to zoom, click a part for documentation"></div>
+      <p class="hint">Drag: orbit &middot; Scroll: zoom &middot; Right drag: pan &middot;
+        Click a part: documentation. Use the list or hide outer parts to reach enclosed components.</p>
+      <details>
+        <summary>Component visibility</summary>
+        <div id="visibility"></div>
+      </details>
+      <p id="selection" role="status">Loading separate component models...</p>
+    </section>
+    <section class="document-pane" aria-label="Rendered engineering documentation">
+      <div class="document-toolbar">
+        <span id="document-path"></span>
+        <a id="markdown-source" href="#">Markdown source</a>
+      </div>
+      <article id="document" tabindex="0" aria-label="Document content"></article>
+    </section>
+  </main>
+  <script type="module" src="/viewer/app.js"></script>
+</body>
+</html>

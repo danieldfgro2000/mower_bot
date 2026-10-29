@@ -20,6 +20,18 @@ remain **unpriced**; the lower total is not a complete-drive saving.
 | [Reduction, drive hub and bearings](propulsion.md#motor-to-track-mounting) | Custom in-drum reduction unpriced; only generic hardware allowances retained | [Hardware costs](propulsion.md#0204-output-hubs-shafts-and-bearings) · [Reduction data](propulsion.md#ps17-reduction-and-transmission-hardware) | [Track engagement](../01-structure-and-running-gear/running-gear.md#drive-drum-study) · [Mounting plates](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) |
 | [Precima FDB 13 C](propulsion.md#precima-fdb-13-c-holding-brake-candidate) | 48 V / 20 Nm / 19H7 holding candidate; not direct-fit | [Supplier price and data](propulsion.md#precima-fdb-13-c-holding-brake-candidate) · [Brake requirements](propulsion.md#ps15-mechanical-brakes) | [HPM5000B fitment](propulsion.md#fdb-13-c-to-hpm5000b-fitment) · [Independent stop](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 
+**3D study:** These thumbnails select components in the
+[local CAD reader](../../cad/README.md); selecting a mesh opens its owning
+section here. The motor is the body envelope only; reduction stages are pitch
+circles, not designed gears. The holding brake and controller are not modeled.
+
+| Motor body | Planetary study | Output carrier |
+| --- | --- | --- |
+| [![3D HPM5000B](../../cad/viewer/previews/motor.png)](../../cad/viewer/index.html?component=motor) | [![3D planetary stage](../../cad/viewer/previews/planetary-1.png)](../../cad/viewer/index.html?component=planetary-1) | [![3D output carrier](../../cad/viewer/previews/output-carrier.png)](../../cad/viewer/index.html?component=output-carrier) |
+
+Separate reduction exports: [3D stage 2](../../cad/viewer/index.html?component=planetary-2) ·
+[3D stage 3](../../cad/viewer/index.html?component=planetary-3).
+
 **Further detail:** [Drive studies](propulsion.md#drive-alternatives) ·
 [Mounting interfaces](propulsion.md#motor-to-track-mounting) ·
 [Compatibility and duty](propulsion.md#compatibility-and-duty-limitations) ·

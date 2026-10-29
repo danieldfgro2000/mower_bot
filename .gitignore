@@ -47,3 +47,6 @@ app.*.map.json
 
 # BOM documentation parser dependencies
 /.github/skills/bom-documentation/node_modules/
+
+# Local engineering CAD viewer dependencies
+/tool/cad-viewer/node_modules/

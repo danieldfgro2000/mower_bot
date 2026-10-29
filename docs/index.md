@@ -8,6 +8,9 @@ narrowest applicable scope below.
 
 ## Chassis engineering reading path
 
+New here? Start at the [Engineering overview](engineering/README.md): a short
+summary plus 3D viewer start/stop commands.
+
 1. Start with the [Chassis BOM](engineering/bom/chassis-bom.md) for what is in the
    estimate, or jump straight to its [component routes](engineering/bom/chassis-bom.md#bom-by-scope).
 2. Choose a part in **Parts at a glance**, then open its price, specifications,
@@ -45,7 +48,9 @@ the required route between a part's cost, data, and fit.
 | App implementation review and proposed module/package improvements | [App improvement plan](flutter/implementation-improvement-plan.md) |
 | ESP32/Mega ownership, wire/storage contracts, build prerequisites | [Firmware development](firmware/development.md) |
 | Chassis cost summary and active 48 V baseline | [Chassis BOM](engineering/bom/chassis-bom.md) · [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Cost ledger](engineering/bom/chassis-bom.csv) |
+| Engineering starting point, summary and 3D viewer start/stop | [Engineering overview](engineering/README.md) |
 | Numbered engineering modules and their technical scopes | [Module directory](engineering/modules/README.md) |
+| Clickable CAD components and rendered engineering documentation | [Local 3D reader](engineering/cad/README.md) · [CAD documentation sync skill](../.github/skills/cad-documentation-sync/SKILL.md) |
 | Module cost tables and detailed requirements | [BOM Cost Breakdown](engineering/cost-breakdown.md) · [Drive train](engineering/modules/02-drive-train/propulsion.md) · [Batteries and charging](engineering/modules/04-battery-and-charging/batteries.md) · [Cables](engineering/modules/05-power-cables-and-electronics/cables-connectors.md) · [Power distribution](engineering/modules/05-power-cables-and-electronics/power-distribution.md) · [Safety controls](engineering/modules/06-safety-controls-and-sensors/safety-controls.md) |
 | Scoped BOM: running gear, propulsion, frame, width adjustment, batteries, wiring, electronics and workshop | [Scope directory in Chassis BOM](engineering/bom/chassis-bom.md#bom-by-scope) |
 | Drawings, supplier evidence and inspections still required before purchase/build | [Chassis Build and Procurement Checklist](engineering/chassis-build-requirements.md) |

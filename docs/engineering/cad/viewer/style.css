@@ -1,0 +1,38 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #233346; background: #f4f6f9; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header { display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; padding: 1rem; background: #172a3d; color: white; }
+header strong { margin-right: auto; }
+header strong span { font-weight: normal; color: #c4d6e8; }
+header a { color: #d3e7ff; }
+a { color: #135ba4; }
+#notice { margin: 0; padding: .65rem 1rem; background: #fff0c8; font-size: .85rem; }
+#error { margin: 0; padding: 1rem; background: #ffd9d9; color: #861b1b; white-space: pre-wrap; }
+main { display: grid; grid-template-columns: minmax(360px, 48%) minmax(0, 1fr); height: calc(100dvh - 130px); }
+.model-pane { display: flex; flex-direction: column; min-height: 0; padding: .75rem; border-right: 1px solid #cad4de; }
+.toolbar { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+.toolbar label { font-size: .85rem; }
+button, select { font: inherit; padding: .35rem; max-width: 100%; }
+#component { max-width: 260px; }
+#viewport { flex: 1; min-height: 240px; position: relative; }
+canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.hint, #selection { margin: .4rem 0; font-size: .8rem; }
+details { font-size: .85rem; }
+#visibility { max-height: 160px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; padding: .5rem 0; }
+.document-pane { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: white; }
+.document-toolbar { display: flex; gap: .5rem; justify-content: space-between; padding: .5rem 1rem; font-size: .75rem; background: #e8eef5; overflow-wrap: anywhere; }
+article { padding: 1rem 1.5rem 4rem; overflow: auto; scroll-behavior: auto; line-height: 1.6; }
+article h1 { font-size: 1.8rem; }
+article h2, article h3, article h4 { line-height: 1.3; margin-top: 1.8rem; }
+article img { max-width: 100%; height: auto; }
+article table { display: block; overflow-x: auto; border-collapse: collapse; font-size: .85rem; }
+article th, article td { border: 1px solid #cad4de; padding: .45rem .6rem; min-width: 110px; }
+article th { background: #edf2f7; }
+article pre { overflow-x: auto; background: #f0f3f6; padding: .8rem; }
+article :target { background: #fff0c8; }
+@media (max-width: 850px) {
+  main { display: flex; flex-direction: column; height: auto; }
+  .model-pane { height: 65dvh; min-height: 450px; border-right: 0; }
+  .document-pane { height: 80dvh; }
+  header { gap: .7rem; font-size: .85rem; }
+}

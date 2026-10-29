@@ -22,6 +22,15 @@ None is qualified for the mower; electrical, packaging and delivery holds remain
 | [Battery enclosure and restraints](batteries.md#ps19-battery-enclosures-and-restraints) | Separate allowance; containment design open | [Enclosure costs](batteries.md#0402-battery-enclosures-restraints-and-insulation) · [Mechanical requirements](batteries.md#ps19-battery-enclosures-and-restraints) | [Pod, track and tensioner clearance](batteries.md#battery-to-pod-fit) |
 | [Charger and charge connector](batteries.md#ps20-charging-and-charge-interlocks) | 18 A chargers included in pack budget; interfaces unqualified | [Chargers](batteries.md#0403-matched-battery-chargers) · [Connectors/interlock harness](batteries.md#0404-charge-connectors-fuse-holders-and-interlock-harness) · [Charge requirements](batteries.md#ps20-charging-and-charge-interlocks) | [Motion-inhibit/stop interface](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) |
 
+**3D study:** Click a thumbnail in the [local CAD reader](../../cad/README.md);
+clicking the corresponding mesh returns to the fit/clearance section here.
+The battery is the **historical** study envelope, not the current DC HOUSE
+bundle. The arrow shows an intended removal direction, not verified access.
+
+| Historical battery envelope | Removal-direction annotation |
+| --- | --- |
+| [![3D historical battery](../../cad/viewer/previews/battery.png)](../../cad/viewer/index.html?component=battery) | [![3D removal arrow](../../cad/viewer/previews/removal-arrow.png)](../../cad/viewer/index.html?component=removal-arrow) |
+
 **Further detail:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Release requirements](batteries.md#specification-and-inspection-requirements) ·
 [Sourcing](batteries.md#sourcing) · [Interfaces](batteries.md#interfaces-with-other-scopes) ·

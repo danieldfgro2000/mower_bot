@@ -25,6 +25,7 @@ scope. This router does not replace repository guardrails or the BOM skill.
 | Trace a component from price/data to physical integration | [Component reading paths](updating-linked-costs.md#component-reading-paths) | [Motor-to-track interface example](../modules/02-drive-train/propulsion.md#motor-to-track-mounting); the adjoining scopes own their attachment details |
 | Review requirements or release holds | [Named requirement families](../chassis-build-requirements.md#2-confirm-item-family-specifications) | [Purchase/build holds](../chassis-build-requirements.md#5-close-release-hold-points) |
 | Improve document navigation | [Component-first reading paths](updating-linked-costs.md#component-reading-paths) | Part scan tables and local price/specification/connection links; generated headings follow the [module map](cost-modules.csv) |
+| Change CAD geometry, 3D components or their documentation targets | [CAD documentation sync skill](../../../.github/skills/cad-documentation-sync/SKILL.md) | [SCAD source](../cad/module-01-track-pod-fit.scad) and [component map](../cad/viewer/components.json) |
 | Validate generated costs and document references | [Cost regeneration](updating-linked-costs.md#regenerate-and-verify) | [Reference checks](updating-linked-costs.md#reference-checks) |
 
 [↑ Back to document overview](agent-index.md#engineering-bom-agent-index)
