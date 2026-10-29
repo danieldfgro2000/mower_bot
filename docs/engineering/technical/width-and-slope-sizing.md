@@ -86,8 +86,12 @@ dimensions. No width-specific safe slope is currently known.
 **Revised single-pod CAD screen, 2026-10-29:** the 200 mm track carries a
 288 mm-wide proposed tray with its inboard edge aligned to the track and an
 88 mm outboard overhang. Two mirrored trays therefore need **576 mm plus the
-central clear gap**, before guards and restraint clearances. For a 1,000 mm
-deck, the arithmetic ceiling on that gap is 424 mm; equivalently, outside-track
+inner-track gap**, before guards and restraint clearances. The new
+[fixed upper-support mast](modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+projects 16 mm inward on each pod: usable structural clearance between the
+mirrored masts is **inner-track gap minus 32 mm**. For a 1,000 mm deck,
+the arithmetic ceiling on the inner-track gap is 424 mm, leaving at most
+**392 mm between those masts**; equivalently, outside-track
 width must not exceed 824 mm before those excluded parts. This is not a
 demonstrated transport configuration. The approximately 1.18 m single-pod
 length does not prove the fitted mower/spine fits a 2 m deck.

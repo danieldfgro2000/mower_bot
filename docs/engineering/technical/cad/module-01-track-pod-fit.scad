@@ -15,9 +15,10 @@
  Battery: DC HOUSE listing body 504x268x233; terminals/cables/restraints
  are excluded because their positions/envelopes are not established.
  Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
- bearing supports, coupling or brake installation. Raised upper roller is a
- proposed return route, not a qualified spring tensioner. Its +/-10 mm clearance
- envelope is not proof of usable travel with the idler locked.
+ interstage bearing supports, coupling or brake installation. U supports, tray
+ frame, motor reaction plate and fixed upper mast are custom proposals.
+ Front idler now has a spring/guide carriage with +/-15 mm geometric stops;
+ spring rate, preload, fatigue and actual belt compliance remain unqualified.
  Battery and tray are offset outboard; see clearance echoes and CAD README.
 
  Axes: X = track length, Y = vertical, Z = outboard/track width.
@@ -31,7 +32,9 @@ viewer_components = [
     "track", "drive-drum", "idler", "motor",
     "planetary-1", "planetary-2", "planetary-3", "output-carrier",
     "lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4",
-    "upper-roller", "pod-carrier", "battery", "removal-arrow"
+    "upper-roller", "pod-carrier", "battery", "removal-arrow",
+    "lower-roller-supports", "pod-frame", "motor-mount",
+    "idler-carriage", "idler-spring", "upper-roller-support"
 ];
 
 track_width = 200;
@@ -71,6 +74,8 @@ motor_key_seat_height = 19; // Drawing cross-section, not a 19 mm shaft.
 motor_mount_pcd = 148;
 motor_mount_nominal_diameter = 8; // Nominal M8 opening, not tapping drill size.
 motor_mount_depth_placeholder = 10;
+motor_reaction_thickness = 12;
+motor_reaction_diameter = 250;
 motor_speed_study_rpm = 4000; // S23 listing value; exact variant unverified.
 planetary_stage_count = 3;
 planetary_sun_teeth = [24, 24, 16];
@@ -84,7 +89,8 @@ planetary_total_ratio =
     (1 + planetary_ring_teeth[0] / planetary_sun_teeth[0])
     * (1 + planetary_ring_teeth[1] / planetary_sun_teeth[1])
     * (1 + planetary_ring_teeth[2] / planetary_sun_teeth[2]);
-motor_inboard_face_z = track_width / 2 - motor_body_length;
+motor_outboard_face_z = track_width / 2 + motor_reaction_thickness;
+motor_inboard_face_z = motor_outboard_face_z - motor_body_length;
 planetary_output_rpm = motor_speed_study_rpm / planetary_total_ratio;
 roller_speed_study_kmh =
     PI * effective_rolling_diameter_placeholder / 1000
@@ -98,6 +104,17 @@ printed_tread_thickness = 8;
 bearing_outer_diameter = 42;
 bearing_width = 12;
 bearing_face_recess_placeholder = 1;
+support_plate_thickness = 6;
+support_side_gap = 5;
+idler_clearance_stroke = 15; // Geometric stops, not qualified working travel.
+idler_guide_z = 104;
+idler_guide_y = 120;
+idler_guide_diameter = 10;
+idler_slider_bore = 11;
+spring_fixed_face_x = 233;
+spring_wire_diameter = 4;
+spring_mean_radius = 16;
+spring_active_turns = 6;
 
 battery_length = 504; // S30 listing; supplied revision has conflicting dimensions.
 battery_width = 268;
@@ -159,9 +176,11 @@ function return_guide_clearance(edge) =
     c * n + path_radii[edge] - belt_thickness / 2
         - guide_lug_height_placeholder - corner * n;
 axial_stack_length = motor_body_length
+    + motor_reaction_thickness
     + planetary_stage_count * planetary_stage_width_placeholder
     + (planetary_stage_count + 1) * planetary_axial_gap_placeholder
     + output_carrier_thickness;
+inboard_axial_remainder = motor_outboard_face_z - axial_stack_length + roller_width / 2;
 
 echo("Assumed nominal pitch-loop length (mm): ", nominal_pitch_loop);
 echo("Study main driven roller physical outside diameter (mm): ",
@@ -193,13 +212,19 @@ echo("Battery to front/rear return guide-tip envelopes, normal gaps (mm): ",
      return_guide_clearance(1), return_guide_clearance(2));
 echo("Lower roller to tray underside gap (mm): ", roller_carrier_clearance);
 echo("Motor/stages/carrier stack and inboard drum remainder (mm): ",
-     axial_stack_length, roller_width - axial_stack_length);
-echo("Upper roller centre and provisional clearance-only vertical sweep (mm): ",
-     upper_roller_center, " +/-10; spring loads/travel not qualified");
+     axial_stack_length, inboard_axial_remainder);
+echo("Motor body outboard overhang for reaction flange (mm): ", motor_reaction_thickness);
+echo("Fixed upper roller centre (mm): ", upper_roller_center);
+echo("Idler geometric stop positions (mm from nominal): ",
+     -idler_clearance_stroke, idler_clearance_stroke);
+echo("Spring seat separation at nominal/min/max stroke (mm): ",
+     idler_center[0] - 114 - spring_fixed_face_x,
+     idler_center[0] - 114 - spring_fixed_face_x - idler_clearance_stroke,
+     idler_center[0] - 114 - spring_fixed_face_x + idler_clearance_stroke);
 echo("Battery bottom and outboard centre (mm): ", battery_bottom_y, carrier_center_z);
 assert(min(return_guide_clearance(1), return_guide_clearance(2)) >= 35,
        "Return clearance below 20 mm running, 5 mm deflection and 10 mm motion reserve");
-assert(roller_width - axial_stack_length >= 5, "Reducer exceeds axial study envelope");
+assert(inboard_axial_remainder >= 5, "Reducer exceeds inboard study envelope");
 
 module capsule_2d(offset) {
     hull() {
@@ -338,6 +363,7 @@ module planetary_stage(x, stage_index) {
     planet_orbit_radius = (sun_pitch_diameter + planet_pitch_diameter) / 2;
     ring_envelope_diameter = ring_pitch_diameter + 2 * module_size;
     stage_z = motor_inboard_face_z
+        - motor_reaction_thickness
         - planetary_stage_width_placeholder / 2
         - planetary_axial_gap_placeholder
         - stage_index * (planetary_stage_width_placeholder + planetary_axial_gap_placeholder);
@@ -387,6 +413,7 @@ module final_carrier_to_drum(x) {
         (planetary_sun_teeth[2] + planetary_planet_teeth[2])
         * planetary_module_placeholder / 2;
     output_z = motor_inboard_face_z
+        - motor_reaction_thickness
         - planetary_stage_width_placeholder * planetary_stage_count
         - planetary_axial_gap_placeholder * (planetary_stage_count + 1)
         - output_carrier_thickness / 2;
@@ -405,14 +432,15 @@ module final_carrier_to_drum(x) {
                 }
 }
 
-module lower_support_roller(i) {
-    drive_margin = roller_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
-    idler_margin = idler_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10;
-    x = drive_center[0] + drive_margin
+function lower_roller_x(i) =
+    let(drive_margin = roller_outer_diameter / 2 + lower_support_roller_diameter / 2 + 10,
+        idler_margin = idler_outer_diameter / 2 + lower_support_roller_diameter / 2 + 25)
+    drive_center[0] + drive_margin
         + i * (roller_center_spacing - drive_margin - idler_margin)
             / (lower_support_roller_count - 1);
+module lower_support_roller(i) {
     translate([
-        x,
+        lower_roller_x(i),
         belt_thickness / 2 + lower_support_roller_diameter / 2,
         0
     ])
@@ -425,6 +453,171 @@ module pod_carrier() {
                carrier_underside_y, carrier_center_z - carrier_width / 2])
         color([0.3, 0.45, 0.6])
             cube([carrier_length, carrier_thickness, carrier_width]);
+}
+
+module x_cylinder(diameter, length) {
+    rotate([0, 90, 0]) cylinder(d = diameter, h = length);
+}
+
+module wheel_axle(x, y, collar_z = 88) {
+    translate([x, y, 0])
+        color([0.6, 0.62, 0.65]) {
+            cylinder(d = wheel_axis_diameter, h = 184, center = true);
+            for (side = [-1, 1])
+                translate([0, 0, side * collar_z])
+                    cylinder(d = 28, h = 3, center = true);
+        }
+}
+
+module roller_u_support(x, y, upper = false) {
+    bridge_y = upper ? 440 : 134;
+    bottom_y = upper ? bridge_y : y - 16;
+    top_y = upper ? y + 16 : bridge_y + support_plate_thickness;
+    cheek_z = wheel_tread_width + guide_gap_placeholder / 2 + support_side_gap;
+    color([0.48, 0.52, 0.58])
+        difference() {
+            union() {
+                for (side = [-1, 1])
+                    translate([x - 18, bottom_y,
+                               side > 0 ? cheek_z : -cheek_z - support_plate_thickness])
+                        cube([36, top_y - bottom_y, support_plate_thickness]);
+                translate([x - 18, bridge_y, upper ? -86 : -100])
+                    cube([36, support_plate_thickness, upper ? 172 : 200]);
+            }
+            translate([x, y, 0])
+                cylinder(d = wheel_axis_diameter + 0.5, h = 210, center = true);
+        }
+    wheel_axle(x, y);
+}
+
+module lower_roller_supports() {
+    for (i = [0 : lower_support_roller_count - 1])
+        roller_u_support(lower_roller_x(i),
+                         lower_belt_inner_face_y + lower_support_roller_diameter / 2);
+}
+
+module motor_reaction_mount() {
+    face = motor_inboard_face_z - motor_reaction_thickness;
+    translate([drive_center[0], drive_center[1], face])
+        color([0.48, 0.52, 0.58])
+            difference() {
+                cylinder(d = motor_reaction_diameter, h = motor_reaction_thickness);
+                translate([0, 0, -0.1]) cylinder(d = 26, h = motor_reaction_thickness + 0.2);
+                for (angle = [45 : 90 : 315])
+                    translate([motor_mount_pcd / 2 * cos(angle),
+                               motor_mount_pcd / 2 * sin(angle), -0.1]) {
+                        cylinder(d = 9, h = motor_reaction_thickness + 0.2);
+                        cylinder(d = 14, h = 8.1);
+                    }
+            }
+}
+
+module pod_frame() {
+    tray_rear = battery_center_x - carrier_length / 2;
+    color([0.3, 0.45, 0.6]) {
+        for (dy = [-40, 40])
+            hull() {
+                translate([drive_center[0] + 110, drive_center[1] + dy, -21])
+                    cube([20, 20, 8], center = true);
+                translate([battery_center_x - battery_length / 2 - 10,
+                           carrier_underside_y + 5, -21])
+                    cube([20, 10, 8], center = true);
+            }
+        for (side = [-1, 1]) {
+            rail_z = side > 0 ? 90 : -100;
+            translate([tray_rear, 110, rail_z])
+                cube([idler_center[0] - 140 - tray_rear, 30, 10]);
+            translate([idler_center[0] - 145, 137, rail_z])
+                cube([212, 13, 10]);
+            for (dx = [-67, 55])
+                difference() {
+                    translate([idler_center[0] + dx, 112, side * idler_guide_z - 8])
+                        cube([12, 38, 16]);
+                    translate([idler_center[0] + dx - 0.1, idler_guide_y, side * idler_guide_z])
+                        x_cylinder(idler_guide_diameter, 12.2);
+                }
+            translate([idler_center[0] - 60, idler_guide_y, side * idler_guide_z])
+                x_cylinder(idler_guide_diameter, 120);
+            for (dx = [-24 - idler_clearance_stroke - 4, 24 + idler_clearance_stroke])
+                translate([idler_center[0] + dx, idler_guide_y, side * idler_guide_z])
+                    x_cylinder(20, 4);
+        }
+        translate([spring_fixed_face_x - 8, 134, -100]) cube([8, 6, 200]);
+    }
+}
+
+module upper_roller_support() {
+    roller_u_support(upper_roller_center[0], upper_roller_center[1], true);
+    color([0.3, 0.45, 0.6]) {
+        translate([185, 140, -116]) cube([30, 306, 10]);
+        hull() {
+            translate([100, 146, -111]) cube([16, 16, 10], center = true);
+            translate([200, 438, -111]) cube([16, 16, 10], center = true);
+        }
+        translate([90, 134, -116]) cube([130, 12, 22]);
+        translate([182, 440, -116]) cube([36, 6, 36]);
+    }
+}
+
+module idler_carriage(offset = 0) {
+    x = idler_center[0] + offset;
+    color([0.48, 0.52, 0.58])
+        difference() {
+            union() {
+                translate([x - 111, 94, -91]) cube([6, 32, 182]);
+                translate([x - 114, idler_path_radius, 0]) x_cylinder(40, 3);
+                for (side = [-1, 1]) {
+                    translate([x - 111, 94, side > 0 ? 85 : -91])
+                        cube([127, 38, 6]);
+                    translate([x - 24, 126, side > 0 ? 85 : -idler_guide_z])
+                        cube([48, 6, idler_guide_z - 85]);
+                    translate([x - 24, idler_guide_y, side * idler_guide_z])
+                        x_cylinder(22, 48);
+                }
+            }
+            translate([x, idler_path_radius, 0])
+                cylinder(d = wheel_axis_diameter + 0.5, h = 240, center = true);
+            for (side = [-1, 1])
+                translate([x - 25, idler_guide_y, side * idler_guide_z])
+                    x_cylinder(idler_slider_bore, 50);
+            translate([x - 115, idler_path_radius, 0]) x_cylinder(14, 14);
+        }
+    wheel_axle(x, idler_path_radius, 82);
+}
+
+module idler_reaction() {
+    color([0.3, 0.45, 0.6])
+        translate([spring_fixed_face_x - 8, 90, -20]) cube([8, 52, 40]);
+    color([0.6, 0.62, 0.65])
+        translate([spring_fixed_face_x - 18, idler_path_radius, 0]) x_cylinder(12, 120);
+}
+
+function spring_point(t, length) =
+    [spring_fixed_face_x + spring_wire_diameter / 2
+        + (length - spring_wire_diameter) * t,
+     idler_path_radius + spring_mean_radius * cos(360 * spring_active_turns * t),
+     spring_mean_radius * sin(360 * spring_active_turns * t)];
+
+module idler_spring(offset = 0) {
+    length = idler_center[0] + offset - 114 - spring_fixed_face_x;
+    assert(length > 8 * spring_wire_diameter + 5, "Spring below schematic solid-height reserve");
+    idler_reaction();
+    color([0.7, 0.3, 0.12]) {
+        for (i = [0 : 143])
+            hull() {
+                translate(spring_point(i / 144, length))
+                    sphere(d = spring_wire_diameter, $fn = 8);
+                translate(spring_point((i + 1) / 144, length))
+                    sphere(d = spring_wire_diameter, $fn = 8);
+            }
+        for (x = [spring_fixed_face_x + spring_wire_diameter / 2,
+                  spring_fixed_face_x + length - spring_wire_diameter / 2])
+            translate([x, idler_path_radius, 0])
+                rotate([0, 90, 0])
+                    rotate_extrude($fn = 32)
+                        translate([spring_mean_radius, 0])
+                            circle(d = spring_wire_diameter, $fn = 8);
+    }
 }
 
 module battery_envelope() {
@@ -458,6 +651,12 @@ module pod_component(id) {
             color([0.22, 0.55, 0.34, 0.9])
                 wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
     else if (id == "pod-carrier") pod_carrier();
+    else if (id == "pod-frame") pod_frame();
+    else if (id == "motor-mount") motor_reaction_mount();
+    else if (id == "lower-roller-supports") lower_roller_supports();
+    else if (id == "upper-roller-support") upper_roller_support();
+    else if (id == "idler-carriage") idler_carriage();
+    else if (id == "idler-spring") idler_spring();
     else if (id == "battery") battery_envelope();
     else if (id == "removal-arrow") removal_arrow();
     else {

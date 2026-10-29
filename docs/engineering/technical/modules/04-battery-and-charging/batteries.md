@@ -296,7 +296,7 @@ records the lateral consequences; the
 [battery-clearance calculation](batteries.md#provisional-battery-clearance)
 checks the illustrative track path and carrier. Neither is a released layout.
 
-Also reconcile the [spring-tensioner sweep](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept),
+Also reconcile the [sliding-idler spring stroke](../01-structure-and-running-gear/running-gear.md#spring-tensioner-concept),
 restraint/load path, terminal protection, ventilation/drainage, cable clearance,
 and outboard removal path. Update the mass/CG budget for the 89.8 kg pair;
 the former 72 kg pair is not the current configuration. The tray's inboard edge
@@ -335,10 +335,14 @@ spacing. A 524 x 288 x 10 mm tray at Y = 140-150 mm gives the unchanged lower
 wheels 10 mm clearance and the battery base 20 mm. The upper wheel axis is
 Y = 515 mm. Nominal guide-tip clearances and movement reserves are recorded
 above; a 400 mm outboard body-extraction sweep has no solid intersection with
-represented running gear. Terminals, cables, handles, supports, restraints,
-spring hardware and full-machine removal still need dimensioned checks.
-The ±10 mm upper-wheel clearance screen is not proof of usable spring travel
-with a fixed-length belt and locked end axes. These are geometric improvements,
+represented running gear and the new U supports, tray-frame extensions,
+fixed upper mast and idler spring/carriage. The upper roller is now fixed;
+the idler moves longitudinally through a proposed +/-15 mm geometric stroke.
+The inboard mast is 16 mm from the battery body's inboard face and does not
+cross its outboard removal path. Terminals, cables, handles, restraints,
+guards and full-machine removal still need dimensioned checks. Neither the
+fixed-length nominal belt nor clearance-only carriage movement demonstrates
+usable tensioning travel, spring rate or preload. These are geometric improvements,
 not pack conformity or enclosure/vehicle qualification.
 
 The CAD guide records [modeled dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits).

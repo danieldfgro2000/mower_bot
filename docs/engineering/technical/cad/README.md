@@ -10,8 +10,10 @@ that component. No hosting or publishing is required.
 or authorization to build. It represents the 200 x 72 x 40 track, paired 120 mm printed
 roller concept, paired 200 mm idler candidate, HPM5000B interfaces and current
 DC HOUSE body envelope. **The represented solid clashes are cleared**, using a
-raised upper return and revised battery tray. This is not a complete supported
-machine: brake, shafts, structural mounts and spring hardware remain unmodeled.
+raised fixed upper return and revised battery tray. U supports/axles, connected
+tray frame, motor reaction plate and a spring-loaded sliding front idler are
+now represented custom proposals. This is not a complete qualified machine:
+brake, reducer supports, joints and actual spring specification remain open.
 The BOM baseline is not changed by this candidate study.
 
 ## Modeled dimensions and limits
@@ -22,10 +24,13 @@ The BOM baseline is not changed by this candidate study.
 | Drive drum | Flexible 350 mm OD, 200 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 50 mm guide channel are placeholders |
 | Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 160 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
 | Lower rollers | Four paired assemblies, unchanged 120 x 50 mm wheels; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 50 mm tread-face guide gap and 1 mm bearing recess are study values, not print tolerances |
-| Upper roller | One paired 120 x 50 mm assembly at X = 200, Y = 515 mm; 150 mm pair width | [Return/tensioner proposal](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept). Printed capacity and spring/fork hardware unqualified |
+| Upper roller / support | Fixed paired 120 x 50 mm assembly at X = 200, Y = 515 mm; 6 mm U cheeks, 20 mm axle and bridge below wheels; inboard mast to Z = -116 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). Capacity/joints unqualified; mast takes 16 mm of central space per pod |
 | Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
 | Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
 | Tray / battery position | 524 x 288 x 10 mm plate at Y = 140-150 mm; battery X = 35, Z = 44 mm, bottom Y = 150 mm | Custom proposal; 10 mm body-edge margins. Tray inboard edge matches the track at Z = -100 mm; extra width goes outboard |
+| Lower U supports | Four pairs of 6 mm cheeks, 20 mm axles, 6 mm top bridges at Y = 134-140 mm | [Support details](../modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers); 5 mm tire-side and 4 mm bridge/tread gaps; bearing fits, retention and loads unqualified |
+| Tray frame / motor plate | Rear arms through drum relief, stepped side rails to front guide blocks; 250 mm OD x 12 mm motor plate, 148 mm mounting PCD | [Frame proposal](../modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal); motor moves 12 mm outboard, reducer positions unchanged; fixed-ring and brake mounts still absent |
+| Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 72.356 mm nominal seat gap, 57.356-87.356 mm geometric range; no rate/preload or selected commercial spring |
 
 Drive and idler axes are at X = -440 and +419.356 mm: **859.356 mm spacing**.
 The exact three-circle external tangents and wrap arcs close the nominal loop
@@ -37,31 +42,40 @@ equal-wheel approximation. The belt-body longitudinal envelope is approximately
 | --- | ---: | --- |
 | Battery to front / rear continuous guide-tip return envelopes | 40.1 / 36.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
 | Conservative return clearance after both allowances | **21.0 mm minimum** | 20 mm; assumptions need actual track data |
-| Upper wheel to battery, including 10 mm downward sweep | 62 mm | 20 mm |
+| Fixed upper wheel to battery | 72 mm | 20 mm |
 | Lower rollers to tray / battery | 10 / 20 mm | 10 / 20 mm |
-| Adjacent lower rollers | 28.1 mm | 10 mm |
+| Adjacent lower rollers | 23.1 mm; last axle 15 mm rearward for idler yoke | 10 mm |
 | Battery to drive / idler physical envelopes | 48.0 / 38.3 mm | 20 mm |
 | Guide lateral gap, each side | 13 mm at lower/upper wheels and drum; 8 mm at idler hubs | 5 mm |
-| Motor + stages + carrier | 194 mm inside 200 mm drum; **6 mm inboard remainder** | 5 mm; excludes brake/supports |
+| Motor + reaction plate + stages + carrier | 206 mm stack; 12 mm outboard projection, **6 mm inboard remainder** | 5 mm; excludes brake/reducer supports |
+| U bridges to lower / upper wheels | 4 / 9 mm | 3 / 5 mm provisional running gaps |
+| Front stepped rails to moving yoke | 5 mm vertical | 5 mm provisional; checked through +/-15 mm X stroke |
+| Guide rod to sleeve bore | 0.5 mm radial | Study clearance only; not a selected sliding-bearing fit |
 
-The axial stack includes 2 mm between the motor body and first stage, between
+The axial stack includes 2 mm between the motor reaction plate and first stage, between
 stages, and before the 6 mm output carrier. The 53 mm shaft shares the sun-bore
 space; it is not added in series or a designed coupling. Schematic gear
 engagement, wheel/belt running contact, battery/tray contact and the
 carrier/drum connection are intentional interfaces, not forbidden clashes.
 
-**Clearance-only tensioner envelope:** checks cover an upper-wheel axis range
-Y = 505-525 mm and a separate 5 mm return deflection/tolerance reserve. The
-commercial belt is modeled at its nominal 40-link length only. With fixed
-end axes, tangent-path lengths at those sweep extremes are about 2,868.6 and
-2,891.5 mm. Thus ±10 mm is **not demonstrated usable spring travel**: belt
-elasticity/slack, idler setup, fork/preload, stops and tension loads must be
-established before a working tensioner can be released. No commercial belt was
-stretched or a new loop length invented to claim nominal fit.
+**Clearance-only tensioner envelope:** the upper axis is now fixed and the
+front idler slides +/-15 mm in X. At 1 mm intervals, actual yoke/wheel meshes
+clear the fixed frame, reaction rod, neighboring wheels and mast; the spring
+and moving seat also clear at both extremes and nominal position. Nominal
+return margins retain the conservative 10 mm motion + 5 mm deflection reserve;
+recalculated return tangents through the idler sweep leave at least 25 mm,
+including the 5 mm deflection reserve. Guide end blocks and separate stop
+collars are represented, but stop fixings and spring characteristics are not.
+The commercial belt is modeled at its nominal 40-link length only. Moving
+the idler changes the ideal tangent-loop length, so +/-15 mm is **not
+demonstrated usable spring travel**. Belt elasticity/slack, setup, spring
+rate/preload and tension loads must be established before release. No
+commercial belt was stretched or purchasable loop length invented to claim fit.
 
-The outboard battery-body extraction prism clears represented running gear;
-terminals, restraints, handles, supports, guards and the rest of the machine
-are excluded. The battery bottom rises from 100 to 150 mm versus the previous
+The outboard battery-body extraction prism clears represented running gear,
+frame, U supports, mast and spring/carriage; terminals, restraints, handles,
+guards and the rest of the machine are excluded. The battery bottom rises
+from 100 to 150 mm versus the previous
 clashing study, raising its body CG 50 mm. The outboard offset and track mass
 change require a new complete-machine mass/CG and transport assessment; see
 the [width screen](../width-and-slope-sizing.md#minimum-width-and-packaging).
@@ -190,3 +204,17 @@ brake integration, printed capacity, tensioner mechanics or a complete vehicle.
 Broader validation passed 12 CAD contract/geometry tests, all 16 browser component
 routes and 42 BOM/presentation/reference tests. All 16 component exports and
 13 generated documents were refreshed and freshness-checked.
+
+**Structural supports test-first update (2026-10-29):**
+`node --test tool/cad-viewer/export.test.mjs` first passed the seven existing
+geometry checks. New regressions then failed on the motor's missing 12 mm
+reaction-plate offset and four absent structural exports, before SCAD edits.
+The first implementation exposed real rear-arm/extraction and rail/yoke-sweep
+intersections; shortening the arm attachment and raising the front rails
+resolved them without changing purchased-part dimensions. All 12 geometry
+tests now pass, including nonempty exports, material/void probes, positive
+fixed-frame connection volumes, nominal running clearance, extraction, and
+31 moving-idler positions. Mesh checks use the same explicit 64-facet
+tessellation and 0.01 mm³ float32 contact tolerance. The six added selectable
+groups bring the viewer to 22 components. These are geometric results, not
+strength, spring-rate, fatigue or complete-vehicle qualification.

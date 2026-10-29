@@ -16,7 +16,7 @@ matched profiles, bearings, clearances, and load ratings remain unqualified.
 | [Rubber track](running-gear.md#ps01-rubber-tracks) | PowerTrack `180×72×37` initial sourcing preference; `200×72×40` owner-accepted candidate for the longer-loop study; `200×72×36` remains the unchanged baseline study reference | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Baseline allowance](running-gear.md#0101-rubber-tracks) · [Track requirements](running-gear.md#ps01-rubber-tracks) | [Drive drum engagement](running-gear.md#drive-drum-study) |
 | [Drive drum / sprocket](running-gear.md#drive-drum-study) | 350 mm physical OD is a flexible study placeholder; tooth/profile match open | [Baseline sprocket/hub allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Drum study](running-gear.md#drive-drum-study) | [Motor-to-track mounting](../02-drive-train/propulsion.md#motor-to-track-mounting) |
 | [Lower support rollers](running-gear.md#lower-support-rollers) | Bearing-wheel route; printed 120 mm PC/TPU wheels owner-selected, Interwheel 160 mm fallback; four assemblies per track in the study; fit and capacity unqualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Roller allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Roller definition](running-gear.md#lower-support-rollers) | [Axles and bearings](running-gear.md#ps03-axles-bearings-and-track-guides) |
-| [Upper rollers and spring tensioner](running-gear.md#spring-tensioner-concept) | Motorcycle-fork/spring concept; no qualified fork selected | [Roller/tensioner allowances](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Travel/load requirements](running-gear.md#ps02-sprockets-rollers-and-tensioners) | [Battery and carrier clearance](running-gear.md#tensioner-and-idler-interfaces) |
+| [Fixed upper rollers and spring idler](running-gear.md#spring-tensioner-concept) | Owner-selected sliding front-idler spring + fixed upper roller; custom supports modeled, loads unqualified | [Roller/tensioner allowances](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Travel/load requirements](running-gear.md#ps02-sprockets-rollers-and-tensioners) | [Battery and carrier clearance](running-gear.md#tensioner-and-idler-interfaces) |
 | Front idler | Bearing-wheel route preferred; priced excavator alternative also recorded; neither fit qualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Idler allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Supplier limitations](running-gear.md#s37-bearing-wheel-roller-and-idler-candidates) | [Track compatibility](running-gear.md#ps01-rubber-tracks) |
 | [Axles, bearings and guides](running-gear.md#ps03-axles-bearings-and-track-guides) | Sizes, fits and retained assembly open | [Support costs](running-gear.md#0103-track-axles-bearings-guides-and-scrapers) · [Required data](running-gear.md#ps03-axles-bearings-and-track-guides) | [Pod frame](frame.md#ps04-frame-stock-and-weldments) |
 
@@ -25,8 +25,9 @@ to select the part; clicking its mesh opens the corresponding section here.
 The revised candidate study shows the accepted 200 x 72 x 40 track, unchanged
 paired 120 mm lower wheels, a raised 120 mm upper pair and 200 mm bought idler
 pair. Battery/tray clashes are cleared with provisional margins. Guide
-dimensions are schematic; spring/fork hardware and support load paths remain
-unmodeled and unqualified.
+dimensions are schematic. U supports, axles, a fixed upper mast and sliding
+spring-idler hardware are now modeled custom proposals; their loads, joints
+and durability remain unqualified.
 
 | Track | Drive drum | Idler | Lower rollers |
 | --- | --- | --- | --- |
@@ -37,6 +38,10 @@ Other individual rollers: [3D roller 2](../../../presentation/viewer/index.html?
 [3D roller 4](../../../presentation/viewer/index.html?component=lower-roller-4).
 
 [![3D upper return roller](../../../presentation/viewer/previews/upper-roller.png)](../../../presentation/viewer/index.html?component=upper-roller)
+
+| Lower U supports | Fixed upper support | Sliding idler carriage | Idler spring / reaction |
+| --- | --- | --- | --- |
+| [![3D lower U supports](../../../presentation/viewer/previews/lower-roller-supports.png)](../../../presentation/viewer/index.html?component=lower-roller-supports) | [![3D upper support](../../../presentation/viewer/previews/upper-roller-support.png)](../../../presentation/viewer/index.html?component=upper-roller-support) | [![3D sliding idler carriage](../../../presentation/viewer/previews/idler-carriage.png)](../../../presentation/viewer/index.html?component=idler-carriage) | [![3D idler spring](../../../presentation/viewer/previews/idler-spring.png)](../../../presentation/viewer/index.html?component=idler-spring) |
 
 **Further detail:** [Prices found](running-gear.md#prices-found-tracks-rollers-and-idlers) ·
 [Track length check](running-gear.md#track-length-check) ·
@@ -235,20 +240,25 @@ outboard of the 180 mm track center. This leaves no tray overhang into the
 central adjustment space, but increases pod body width and shifts pod CG.
 Both-pod/scissor/transport and removal clearances still need checking against
 the [1 m deck constraint](../../width-and-slope-sizing.md#minimum-width-and-packaging).
-The revised 200 mm drum now contains the 194 mm schematic motor/reducer/carrier
-stack with a 6 mm axial remainder; brake/support integration is still open.
+The revised 200 mm drum retains a 6 mm inboard axial remainder. The current
+206 mm motor/flange/reducer/carrier stack projects 12 mm outboard for the new
+reaction plate; brake and reducer-bearing integration are still open.
 
 ### Tensioner and idler interfaces
 
-The selected concept spring-loads the **upper-return support rollers**, pushing
-them outward against the upper run to tension the track. Their number/spacing,
-spring setting, usable travel, stops and loads remain undefined. One raised
-roller pair is represented; its provisional ±10 mm clearance envelope is checked
-against the battery, but is not a usable-travel claim. With the end axes locked,
-the ideal tangent-loop length changes by approximately -11.4 / +11.5 mm at
-the extremes, so belt compliance/slack and idler setup still need definition.
-Fork, spring, axle supports and guards must also clear the outboard extraction
-path before treating the full packaging as viable.
+**Owner-selected revision, 2026-10-29:** use a **spring-loaded sliding front
+idler and a fixed upper roller**. This supersedes the earlier spring-upper /
+motorcycle-fork direction. The front idler keeps its 200 mm bought-wheel
+envelopes and nominal axis at X = 419.356, Y = 110 mm. Its proposed yoke runs on
+two longitudinal guides, with +/-15 mm geometric stop positions; the upper
+axis remains fixed at X = 200, Y = 515 mm.
+
+The nominal belt stays at 2,880 mm. The ideal tangent path changes when the
+idler moves; the modeled 30 mm carriage stroke is not proof of usable travel
+for that commercial belt. Wear/slack/compliance, initial setup, preload,
+force limits and retention must be established. The body-only battery
+extraction prism clears the represented supports and spring hardware.
+Terminals, restraints, guards and complete-machine removal remain unchecked.
 See the [roller and spring-tensioner concept](running-gear.md#ps02-sprockets-rollers-and-tensioners)
 for the required mechanical definition.
 
@@ -256,6 +266,19 @@ The [Cohidrex idler-wheel family](running-gear.md#s26-cohidrex-idler-wheel-famil
 is described for Trabber tracks, with no dimensions or confirmed compatibility
 for the [PowerTrack track](running-gear.md#s01-powertrack-rubber-tracks). The concept sketch marks the idler as unresolved and does not imply
 that this product fits.
+
+#### Sliding idler carriage
+
+**Custom proposal:** rear-facing U-yoke, 6 mm cheeks at Z = +/-85-91 mm,
+leaving 5 mm outside the bought hubs. A 6 mm rear crossbar is 5 mm behind
+the wheel envelope. The 20 mm axle has schematic retaining collars between
+the hubs and cheeks, avoiding the guide rods. Two 48 mm-long, 22 mm-OD
+sleeves have 11 mm bores around 10 mm longitudinal rods at Y = 120,
+Z = +/-104 mm: **0.5 mm radial clearance**, not a released bearing fit.
+The fixed guide end blocks remain 16 mm beyond the sleeve ends at maximum
+stroke; separate stop collars establish the +/-15 mm geometric limits.
+Cheek bores, lubrication/sealing, axial retention and stop fixings are not
+manufacturing definitions. See the [connected frame](frame.md#connected-pod-frame-proposal).
 
 
 ## Specification and inspection requirements
@@ -303,9 +326,9 @@ drawings; condition and batch; compatibility with the selected complete undercar
 
 **Required purchasing/manufacturing definition:** Sprocket tooth count/profile, pitch
 geometry, bore/key/hub; idler and roller diameters, flanges, axle interfaces and
-capacities. Owner-selected concept: spring-load the upper-return support rollers
-to push outward and tension the track. Define roller count/spacing, whether they
-move together or independently, contact profile and usable stroke, spring
+capacities. Owner-selected concept: spring-load the longitudinally sliding
+front idler and keep the upper return support fixed. Define contact profile
+and usable stroke, spring
 type/rate/preload, travel stops and retention, service method, track-tension
 measurement, and allowable track/bearing/frame loads. Verify the moving envelope
 against the battery, carrier, guards and battery-removal path.
@@ -314,9 +337,15 @@ against the battery, carrier, guards and battery-removal path.
 
 Four support assemblies per track, evenly spaced along the lower run, remain
 in the study: paired 120 x 50 mm PC/TPU wheels with two 6004 bearings per wheel.
-The revised spacing leaves 28.1 mm between neighboring wheel envelopes and
-10 mm to the tray. Diameter has not been reduced to obtain fit. Axles,
-supports, actual track contact area, load sharing and printed-wheel capacity
+The frontmost lower axle moves 15 mm rearward to clear the sliding idler yoke;
+equal center spacing becomes 143.119 mm, leaving **23.1 mm** between wheel
+envelopes. Each pair has a proposed U support: two 6 mm cheeks with 5 mm
+tire-side gaps, a 6 mm top bridge at Y = 134-140 mm, 4 mm above the wheel tops,
+and a 20 mm axle through the bearing bores. The center axle underside clears
+the assumed lower guide tips by 30 mm. Axle retention collars and 20.5 mm
+cheek bores are schematic; bearing fits, welds and tolerances are unreleased.
+The tray remains 10 mm above the wheels. Diameter has not been reduced to
+obtain fit. Actual track contact area, load sharing and printed-wheel capacity
 remain unqualified; extra assemblies alone would not prove equal loading.
 See the [pod-fit sketch](../../cad/module-01-track-pod-fit.scad).
 
@@ -343,23 +372,37 @@ That allowance is not a quote for a completed custom drum and in-drum gearbox.
 
 #### Spring tensioner concept
 
-Fabricate the spring take-up using motorcycle fork
-and spring hardware; mount each roller at the fork's normal wheel axle position
-and clamp the fork to the frame. This is a concept only, not a selected or
-qualified fork. Confirm the fork's available travel, spring/preload behavior,
-side-load capacity, sealing, stops, retention and service method against the
-track loads. The [Cohidrex idler lead](running-gear.md#s26-cohidrex-idler-wheel-family) is listed for Trabber
-tracks and is not confirmed to fit S01.
+**Current direction:** the front idler is the spring tensioner; the upper
+roller is fixed. The previous motorcycle-fork / spring-upper concept is
+historical, not the current modeled arrangement.
+
+**Custom spring proposal:** a compression coil along X at Y = 110, Z = 0 mm,
+between the fixed reaction face X = 233 mm and the moving yoke seat. The
+schematic spring is **36 mm OD, 4 mm wire, six active turns plus two end rings**,
+on a 12 mm guide rod through a 14 mm moving-seat aperture. Installed seat
+separation is 72.356 mm nominal, or **57.356-87.356 mm** over the geometric
++/-15 mm idler stroke. The shortest envelope exceeds the rough eight-wire
+solid-height screen of 32 mm; this is not a real spring specification.
+The 40 mm moving seat leaves 5 mm to the wheel tread faces, and the coil
+leaves 6 mm below the frame crossmember. Select a publicly priced spring only
+after tension, rate, preload, buckling, fatigue, corrosion, stops/retention
+and service-release energy are assessed. No new priced component or BOM
+quantity is implied. The [Cohidrex lead](running-gear.md#s26-cohidrex-idler-wheel-family)
+remains unqualified for S01.
+
+#### Fixed upper roller support
 
 **Current return-route CAD proposal:** paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm.
 This reuses the already-planned upper assembly, not an additional purchase.
 Its approximately 74.7° track deflection gives a nominal reaction about
 **1.21 times belt tension** under equal-tension assumptions, not merely return
-belt weight. The printed wheel, axle, fork and frame mount are not load-rated.
-The ±10 mm modeled clearance envelope does not establish actual spring travel;
-see [tensioner and idler interfaces](running-gear.md#tensioner-and-idler-interfaces).
-An exact supported fork/spring assembly must be selected and checked before
-this route is buildable.
+belt weight. A fixed U support has 6 mm cheeks with 5 mm wheel-side gaps,
+a 20 mm axle and a bridge below the wheels at Y = 440-446 mm, leaving
+**9 mm running clearance**. A 10 mm inboard mast and diagonal brace connect
+it to the tray/frame; its inner face is at Z = -116 mm, 6 mm outside the belt
+edge and 16 mm from the battery body. The upper support is not spring-loaded.
+Printed wheels, axle, support and joints are not load-rated. Its 16 mm inboard
+projection must be included in the two-pod/scissor layout.
 
 **Continue:** [Tensioner allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) ·
 [Spring/roller clearance to the battery](running-gear.md#tensioner-and-idler-interfaces) ·

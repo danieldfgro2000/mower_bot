@@ -30,8 +30,14 @@ production readiness are not claimed.
 | [Lower roller 2 (paired 120x50 PC/TPU study)](parts.md#lower-roller-2) | See technical scope; this is a study element. |
 | [Lower roller 3 (paired 120x50 PC/TPU study)](parts.md#lower-roller-3) | See technical scope; this is a study element. |
 | [Lower roller 4 (paired 120x50 PC/TPU study)](parts.md#lower-roller-4) | See technical scope; this is a study element. |
-| [Raised upper roller (paired 120x50 study)](parts.md#upper-roller) | Raised return-route proposal; spring loads, usable travel and printed-wheel capacity unqualified. |
+| [Fixed upper roller (paired 120x50 study)](parts.md#upper-roller) | Fixed raised return roller with U support and inboard mast; printed capacity and structural loads unqualified. |
 | [Battery tray (524x288x10 proposed plate)](parts.md#pod-carrier) | See technical scope; this is a study element. |
+| [Lower roller U supports and axles (proposal)](parts.md#lower-roller-supports) | Four proposed U supports; unchanged 120 mm wheels. Axle fits and structural capacity unqualified. |
+| [Connected motor-to-idler tray frame (proposal)](parts.md#pod-frame) | Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price. |
+| [Motor reaction plate (250x12 proposal)](parts.md#motor-mount) | Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified. |
+| [Sliding idler yoke and sleeves (proposal)](parts.md#idler-carriage) | Sliding front-idler proposal with geometric stops; usable belt travel and retained bearing fits unqualified. |
+| [Idler spring, guide and reaction seat (proposal)](parts.md#idler-spring) | Schematic compression spring, not a selected commercial part or qualified tension setting; no established price. |
+| [Fixed upper U support and inboard mast (proposal)](parts.md#upper-roller-support) | Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified. |
 | [DC HOUSE battery (504x268x233 listing envelope)](parts.md#battery) | Listing body clears the revised CAD. Supplied dimensions, terminals, restraints and complete vehicle fit remain on hold. |
 | [Battery removal arrow (annotation)](parts.md#removal-arrow) | See technical scope; this is a study element. |
 

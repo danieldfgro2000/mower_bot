@@ -14,22 +14,27 @@ not released. Start with the physical part, then follow its attachment.
 | Part to inspect | Current choice / status | Cost and specifications | Fit / next component |
 | --- | --- | --- | --- |
 | [Pod, scissor and spine stock](frame.md#ps04-frame-stock-and-weldments) | DIY weldments; stock quantities are not a cut list | [Stock costs](frame.md#0104-frame-stock-and-mounting-plates) · [Material/drawing requirements](frame.md#ps04-frame-stock-and-weldments) | [Motor mounting plates](frame.md#motor-and-reducer-mounting-plates) |
-| [Motor and reducer plates](frame.md#motor-and-reducer-mounting-plates) | Stock allowance only; no approved bracket or bolt pattern | [Plate stock in frame costs](frame.md#0104-frame-stock-and-mounting-plates) · [Mount definition](frame.md#motor-and-reducer-mounting-plates) | [Motor → reduction → track](../02-drive-train/propulsion.md#motor-to-track-mounting) |
+| [Motor and reducer plates](frame.md#motor-and-reducer-mounting-plates) | Proposed motor reaction plate and connected pod frame modeled; no released joints or reducer supports | [Plate stock in frame costs](frame.md#0104-frame-stock-and-mounting-plates) · [Mount definition](frame.md#motor-and-reducer-mounting-plates) | [Motor → reduction → track](../02-drive-train/propulsion.md#motor-to-track-mounting) |
 | [Scissor pivots](frame.md#ps05-scissor-pivots) | Fits, retention and loads open | [Pivot costs](frame.md#0105-scissor-pivots-locks-and-hard-stops) · [Pivot requirements](frame.md#ps05-scissor-pivots) | [Width screw and supports](../03-width-adjustment/width-adjustment.md#ps10-screw-drive-and-supports) |
 | [Width locks and hard stops](frame.md#ps06-width-holding-and-hard-stops) | Positive holding unresolved; worm-only proposal not accepted | [Lock/stop provision](frame.md#0105-scissor-pivots-locks-and-hard-stops) · [Holding requirements](frame.md#ps06-width-holding-and-hard-stops) | [Powered adjustment and stopping](../03-width-adjustment/width-adjustment.md#width-holding-and-stopping) |
 | [Guards and fastening](frame.md#ps07-guards-and-edge-protection) | Guard geometry and joint schedule open | [Finishing costs](frame.md#0106-guards-fasteners-coatings-and-labels) · [Guards](frame.md#ps07-guards-and-edge-protection) · [Fasteners/coatings](frame.md#ps08-fasteners-coatings-and-labels) | [Moving screw guard](../03-width-adjustment/width-adjustment.md#ps13-width-harness-and-screw-guard) |
 | [Lifting and recovery points](frame.md#ps32-installed-lifting-and-recovery-points) | Installed points; no certified lifting capacity established | [Point costs](frame.md#0107-installed-lifting-and-recovery-points) · [Load-path requirements](frame.md#ps32-installed-lifting-and-recovery-points) | [Loose straps and service supports](../07-workshop-and-support/workshop.md#ps33-transport-straps-and-service-supports) |
 
-**3D study:** The carrier plate below is a visual placeholder, not a released
-weldment or mounting drawing. Click it in the [local CAD reader](../../cad/README.md)
-to select the plate; clicking its mesh opens the frame requirements here.
+**3D study:** The tray and connected frame below are custom fit proposals, not
+released weldments or mounting drawings. Open them in the [local CAD reader](../../cad/README.md).
 The revised 524 x 288 x 10 mm tray sits at Y = 140-150 mm, leaving 10 mm
 above the unchanged 120 mm lower wheels. It has 10 mm battery-edge margins
 and puts its extra width outboard, not into the central adjustment space.
-Supports, restraint and shock-load paths remain undesigned; see the
+The frame now connects the motor reaction plate, tray, roller brackets and
+front-idler guides/reaction seat. Joint details, restraint, strength and
+shock-load capacity remain unqualified; see the
 [candidate fit margins](../../cad/README.md#modeled-dimensions-and-limits).
 
 [![3D pod carrier plate](../../../presentation/viewer/previews/pod-carrier.png)](../../../presentation/viewer/index.html?component=pod-carrier)
+
+| Connected tray frame | Motor reaction plate |
+| --- | --- |
+| [![3D pod frame](../../../presentation/viewer/previews/pod-frame.png)](../../../presentation/viewer/index.html?component=pod-frame) | [![3D motor reaction plate](../../../presentation/viewer/previews/motor-mount.png)](../../../presentation/viewer/index.html?component=motor-mount) |
 
 **Further detail:** [Release requirements](frame.md#specification-and-inspection-requirements) ·
 [Sourcing](frame.md#sourcing) · [Interfaces](frame.md#interfaces-with-other-scopes) ·
@@ -60,11 +65,44 @@ size/process/sequence, distortion limits, drainage and corrosion access
 reviewed weld procedure and required welder competence; dimensional and weld-inspection
 records against approved criteria
 
+#### Connected pod frame proposal
+
+**Custom CAD proposal, 2026-10-29:** retain the 524 x 288 x 10 mm tray and
+extend its structure from the stationary motor mount to the sliding front idler.
+Two diagonal 8 mm plates run in the drum's central relief at Z = -25 to -17 mm,
+ending at the tray's rear edge, below the battery removal prism. They connect
+to the motor flange, not the rotating drum shell.
+
+Longitudinal side rails occupy Z = 90-100 / -100 to -90 mm. Their rear portions
+run at Y = 110-140 mm; the front portions step up to Y = 137-150 mm, overlapping
+by 5 mm longitudinally and 3 mm vertically. This leaves **5 mm above the
+idler yoke** at its highest point and connects to the roller bridges and tray.
+Front guide blocks carry two 10 mm rods at Y = 120, Z = +/-104 mm. Proposed
+20 mm stop collars limit the 48 mm sleeves to +/-15 mm longitudinal movement.
+A transverse member at X = 225-233, Y = 134-140 mm joins the spring reaction
+seat to both rails, with 4 mm over the lower wheel tops.
+
+The [fixed upper support](running-gear.md#fixed-upper-roller-support) joins the
+tray/frame with an inboard mast; it extends **16 mm inside the track edge**.
+The [two-pod width screen](../../width-and-slope-sizing.md#minimum-width-and-packaging)
+includes that intrusion. Frame sections, welds/bolts, stop retention, torsion,
+motor reaction, skid-steer side loads, spring forces and fatigue require a
+released load assessment. Positive modeled connection volumes are not
+structural qualification. These additions are unpriced custom proposals
+beyond existing generic allowances; baseline quantities and totals are unchanged.
+
 #### Motor and reducer mounting plates
 
 **Current definition:** CHS-004 reserves mounting-plate stock, not a finished
-motor bracket. No plate thickness, hole pattern, fastener size, or released
-mounting-face drawing is established by its budgeted mass.
+motor bracket. Its budgeted mass does not establish a released mounting drawing.
+
+**Custom CAD proposal:** a 250 mm OD x 12 mm reaction plate on the motor's
+published front mounting face, with a 26 mm shaft aperture and four 9 mm
+clearance holes on the published 148 mm PCD. Proposed 14 mm head recesses are
+8 mm deep, leaving 4 mm of plate behind them. Hole clocking, fastener head
+geometry/length/engagement, tool access and strength still need qualification.
+The unchanged 206 x 126 mm motor body moves 12 mm outboard to make space;
+the reducer stages stay put. See the [axial package](../02-drive-train/propulsion.md#cad-package-envelope).
 
 For the [HPM5000B in-drum concept](../02-drive-train/propulsion.md#motor-to-track-mounting),
 the motor housing and stationary ring gears need defined attachment and load

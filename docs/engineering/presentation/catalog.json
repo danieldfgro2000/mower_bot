@@ -104,7 +104,7 @@
     },
     {
       "id": "upper-roller",
-      "status": "Raised return-route proposal; spring loads, usable travel and printed-wheel capacity unqualified.",
+      "status": "Fixed raised return roller with U support and inboard mast; printed capacity and structural loads unqualified.",
       "facts": [
         {
           "label": "Return wheel concept",
@@ -114,8 +114,110 @@
       ],
       "evidence": [
         {
-          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
           "quotes": ["paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 515 mm"]
+        }
+      ]
+    },
+    {
+      "id": "pod-frame",
+      "status": "Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price.",
+      "facts": [
+        {
+          "label": "Structural connection",
+          "value": "Motor reaction plate → battery tray → sliding idler guides",
+          "evidence": "extend its structure from the stationary motor mount to the sliding front idler."
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal",
+          "quotes": ["extend its structure from the stationary motor mount to the sliding front idler."]
+        }
+      ]
+    },
+    {
+      "id": "motor-mount",
+      "status": "Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified.",
+      "facts": [
+        {
+          "label": "Proposed plate",
+          "value": "250 mm OD × 12 mm; motor moves 12 mm outboard",
+          "evidence": "250 mm OD x 12 mm reaction plate"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates",
+          "quotes": ["250 mm OD x 12 mm reaction plate"]
+        }
+      ]
+    },
+    {
+      "id": "lower-roller-supports",
+      "status": "Four proposed U supports; unchanged 120 mm wheels. Axle fits and structural capacity unqualified.",
+      "facts": [
+        {
+          "label": "Support geometry",
+          "value": "6 mm cheeks; 20 mm axle; 4 mm bridge/tread gap",
+          "evidence": "4 mm above the wheel tops"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+          "quotes": ["4 mm above the wheel tops", "a 20 mm axle"]
+        }
+      ]
+    },
+    {
+      "id": "idler-carriage",
+      "status": "Sliding front-idler proposal with geometric stops; usable belt travel and retained bearing fits unqualified.",
+      "facts": [
+        {
+          "label": "Geometric stroke",
+          "value": "±15 mm longitudinal; two 10 mm guides",
+          "evidence": "+/-15 mm geometric limits"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage",
+          "quotes": ["+/-15 mm geometric limits", "10 mm longitudinal rods"]
+        }
+      ]
+    },
+    {
+      "id": "idler-spring",
+      "status": "Schematic compression spring, not a selected commercial part or qualified tension setting; no established price.",
+      "facts": [
+        {
+          "label": "Coil proposal",
+          "value": "36 mm OD, 4 mm wire; 72.356 mm nominal installed envelope",
+          "evidence": "36 mm OD, 4 mm wire, six active turns plus two end rings"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
+          "quotes": ["36 mm OD, 4 mm wire, six active turns plus two end rings", "72.356 mm nominal"]
+        }
+      ]
+    },
+    {
+      "id": "upper-roller-support",
+      "status": "Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified.",
+      "facts": [
+        {
+          "label": "Packaging",
+          "value": "9 mm wheel/bridge gap; 16 mm intrusion into central space",
+          "evidence": "9 mm running clearance"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
+          "quotes": ["9 mm running clearance", "16 mm inboard"]
         }
       ]
     },

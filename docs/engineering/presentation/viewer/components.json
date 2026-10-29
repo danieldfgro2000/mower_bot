@@ -2,7 +2,7 @@
   "source": "docs/engineering/technical/cad/module-01-track-pod-fit.scad",
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
-  "notice": "Unqualified 200x72x40 candidate fit study. Modeled battery/tray and running-gear clashes are cleared with provisional margins. Track profile, spring tensioner loads/travel, brake, shafts and structural mounts remain unqualified or unmodeled.",
+  "notice": "Unqualified 200x72x40 candidate fit study. Connected frame, U supports, fixed upper mast and sliding spring idler are modeled with provisional clearances. Track profile, structural loads/joints, spring rate/preload/travel, brake and reducer supports remain unqualified.",
   "components": [
     {
       "id": "track",
@@ -90,9 +90,9 @@
     },
     {
       "id": "upper-roller",
-      "label": "Raised upper roller (paired 120x50 study)",
+      "label": "Fixed upper roller (paired 120x50 study)",
       "color": "#388c57",
-      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
       "presentation": "docs/engineering/presentation/parts.md#upper-roller"
     },
     {
@@ -101,6 +101,48 @@
       "color": "#4d7399",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments",
       "presentation": "docs/engineering/presentation/parts.md#pod-carrier"
+    },
+    {
+      "id": "lower-roller-supports",
+      "label": "Lower roller U supports and axles (proposal)",
+      "color": "#7a8594",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
+      "presentation": "docs/engineering/presentation/parts.md#lower-roller-supports"
+    },
+    {
+      "id": "pod-frame",
+      "label": "Connected motor-to-idler tray frame (proposal)",
+      "color": "#4d7399",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal",
+      "presentation": "docs/engineering/presentation/parts.md#pod-frame"
+    },
+    {
+      "id": "motor-mount",
+      "label": "Motor reaction plate (250x12 proposal)",
+      "color": "#7a8594",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates",
+      "presentation": "docs/engineering/presentation/parts.md#motor-mount"
+    },
+    {
+      "id": "idler-carriage",
+      "label": "Sliding idler yoke and sleeves (proposal)",
+      "color": "#7a8594",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage",
+      "presentation": "docs/engineering/presentation/parts.md#idler-carriage"
+    },
+    {
+      "id": "idler-spring",
+      "label": "Idler spring, guide and reaction seat (proposal)",
+      "color": "#b34d1f",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept",
+      "presentation": "docs/engineering/presentation/parts.md#idler-spring"
+    },
+    {
+      "id": "upper-roller-support",
+      "label": "Fixed upper U support and inboard mast (proposal)",
+      "color": "#4d7399",
+      "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
+      "presentation": "docs/engineering/presentation/parts.md#upper-roller-support"
     },
     {
       "id": "battery",

@@ -149,16 +149,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="upper-roller"></a>
 
-### Raised upper roller (paired 120x50 study)
+### Fixed upper roller (paired 120x50 study)
 
-**Status:** Raised return-route proposal; spring loads, usable travel and printed-wheel capacity unqualified.
+**Status:** Fixed raised return roller with U support and inboard mast; printed capacity and structural loads unqualified.
 
-[![Raised upper roller (paired 120x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
+[![Fixed upper roller (paired 120x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
 | | |
 | --- | --- |
 | Return wheel concept | Paired 120 × 50 mm PC/TPU wheels; axis Y = 515 mm |
 
-**Read more:** [Raised upper roller (paired 120x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept)
+**Read more:** [Fixed upper roller (paired 120x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="pod-carrier"></a>
 
@@ -170,6 +170,84 @@ interfaces and release holds, follow the linked technical detail.
 
 
 **Read more:** [Battery tray (524x288x10 proposed plate) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#ps04-frame-stock-and-weldments)
+
+<a id="lower-roller-supports"></a>
+
+### Lower roller U supports and axles (proposal)
+
+**Status:** Four proposed U supports; unchanged 120 mm wheels. Axle fits and structural capacity unqualified.
+
+[![Lower roller U supports and axles (proposal)](viewer/previews/lower-roller-supports.png)](viewer/index.html?component=lower-roller-supports&mode=presentation)
+| | |
+| --- | --- |
+| Support geometry | 6 mm cheeks; 20 mm axle; 4 mm bridge/tread gap |
+
+**Read more:** [Lower roller U supports and axles (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
+
+<a id="pod-frame"></a>
+
+### Connected motor-to-idler tray frame (proposal)
+
+**Status:** Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price.
+
+[![Connected motor-to-idler tray frame (proposal)](viewer/previews/pod-frame.png)](viewer/index.html?component=pod-frame&mode=presentation)
+| | |
+| --- | --- |
+| Structural connection | Motor reaction plate → battery tray → sliding idler guides |
+
+**Read more:** [Connected motor-to-idler tray frame (proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal)
+
+<a id="motor-mount"></a>
+
+### Motor reaction plate (250x12 proposal)
+
+**Status:** Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified.
+
+[![Motor reaction plate (250x12 proposal)](viewer/previews/motor-mount.png)](viewer/index.html?component=motor-mount&mode=presentation)
+| | |
+| --- | --- |
+| Proposed plate | 250 mm OD × 12 mm; motor moves 12 mm outboard |
+
+**Read more:** [Motor reaction plate (250x12 proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
+
+<a id="idler-carriage"></a>
+
+### Sliding idler yoke and sleeves (proposal)
+
+**Status:** Sliding front-idler proposal with geometric stops; usable belt travel and retained bearing fits unqualified.
+
+[![Sliding idler yoke and sleeves (proposal)](viewer/previews/idler-carriage.png)](viewer/index.html?component=idler-carriage&mode=presentation)
+| | |
+| --- | --- |
+| Geometric stroke | ±15 mm longitudinal; two 10 mm guides |
+
+**Read more:** [Sliding idler yoke and sleeves (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage)
+
+<a id="idler-spring"></a>
+
+### Idler spring, guide and reaction seat (proposal)
+
+**Status:** Schematic compression spring, not a selected commercial part or qualified tension setting; no established price.
+
+[![Idler spring, guide and reaction seat (proposal)](viewer/previews/idler-spring.png)](viewer/index.html?component=idler-spring&mode=presentation)
+| | |
+| --- | --- |
+| Coil proposal | 36 mm OD, 4 mm wire; 72.356 mm nominal installed envelope |
+
+**Read more:** [Idler spring, guide and reaction seat (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept)
+
+<a id="upper-roller-support"></a>
+
+### Fixed upper U support and inboard mast (proposal)
+
+**Status:** Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified.
+
+[![Fixed upper U support and inboard mast (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
+| | |
+| --- | --- |
+| Packaging | 9 mm wheel/bridge gap; 16 mm intrusion into central space |
+
+**Read more:** [Fixed upper U support and inboard mast (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="battery"></a>
 

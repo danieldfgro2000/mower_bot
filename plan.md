@@ -209,6 +209,14 @@ Each pod is a complete drive module:
 
 This arrangement supports differential/skid steering, allows a failed pod to be serviced separately, and keeps high-current wiring short. It also creates important design work: track tension, side-load management, frame torsion, synchronised braking and safe behaviour if one pod loses communication.
 
+**2026-10-29 pod-fit direction:** use a spring-loaded sliding front idler and
+fixed upper return roller, superseding the spring-upper concept. The
+[running-gear study](docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#tensioner-and-idler-interfaces)
+and [connected tray frame](docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal)
+represent U supports, motor reaction plate and spring/carriage geometry.
+Their loads, spring specification, joints and complete-machine fit remain
+unqualified; no purchasing or fabrication decision follows from the model.
+
 ### 4.2 Variable-width scissor frame
 
 The scissor frame should allow the pod spacing to change for:
