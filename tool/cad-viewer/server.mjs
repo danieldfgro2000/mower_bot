@@ -10,6 +10,7 @@ import { renderDocument, resolveServedFile } from './core.mjs';
 const mime = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript',
   '.css': 'text/css', '.json': 'application/json', '.md': 'text/plain; charset=utf-8',
+  '.mjs': 'text/javascript',
   '.scad': 'text/plain; charset=utf-8', '.csv': 'text/plain; charset=utf-8',
   '.png': 'image/png', '.svg': 'image/svg+xml', '.stl': 'model/stl',
 };
@@ -42,7 +43,7 @@ export function createViewerServer() {
       }
       let file;
       if (url.pathname === '/') file = `${viewerDirectory}/index.html`;
-      else if (/^\/viewer\/(app\.js|scene\.js|style\.css)$/.test(url.pathname)) {
+      else if (/^\/viewer\/(app\.js|scene\.js|visibility-panel\.js|visibility\.mjs|style\.css)$/.test(url.pathname)) {
         file = `${viewerDirectory}/${path.basename(url.pathname)}`;
       } else if (url.pathname.startsWith('/models/')) {
         const id = url.pathname.slice('/models/'.length).replace(/\.stl$/, '');

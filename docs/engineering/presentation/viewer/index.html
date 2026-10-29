@@ -27,17 +27,26 @@
   <main>
     <section class="model-pane" aria-label="Interactive CAD assembly">
       <div class="toolbar">
-        <label>Component <select id="component"><option value="">Entire assembly</option></select></label>
+        <label>Inspect <select id="component"><option value="">No component inspected</option></select></label>
         <label><input id="isolate" type="checkbox"> Isolate selection</label>
-        <button id="fit" type="button">Fit view</button>
+        <button id="fit" type="button">Fit inspected</button>
+        <button id="fit-visible" type="button">Fit displayed</button>
         <button id="assembly" type="button">Reset assembly</button>
       </div>
       <div id="viewport" tabindex="0" aria-label="3D model: drag to orbit, scroll to zoom, click a part for documentation"></div>
       <p class="hint">Drag: orbit &middot; Scroll: zoom &middot; Right drag: pan &middot;
         Click a part: documentation. Use the list or hide outer parts to reach enclosed components.</p>
-      <details>
-        <summary>Component visibility</summary>
+      <details class="visibility-panel" open>
+        <summary>Modules and component visibility</summary>
+        <div class="visibility-toolbar">
+          <label>Find <input id="component-search" type="search" placeholder="Module or component"></label>
+          <button id="show-all" type="button">Show all</button>
+          <button id="hide-all" type="button">Hide all</button>
+        </div>
+        <p class="hint">Checkbox: display &middot; Part name: inspect &middot; Only: replace display.
+          Isolate is temporary; changing checkboxes exits isolation.</p>
         <div id="visibility"></div>
+        <p id="visibility-status" role="status" aria-live="polite"></p>
       </details>
       <p id="selection" role="status">Loading separate component models...</p>
     </section>

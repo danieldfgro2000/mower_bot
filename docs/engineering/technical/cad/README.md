@@ -113,9 +113,26 @@ The same thumbnail route is available beside the motor in its owning scope.
 
 - Drag to orbit, scroll to zoom, right-drag to pan.
 - Click a visible mesh to open its owning section without leaving the viewer.
-- Use **Component** for enclosed parts; **Isolate selection** or component
-  visibility controls remove occluding parts. **Fit view** frames the selection;
-  **Reset assembly** restores all geometry.
+- Use **Component** or a part name in the visibility tree to inspect its
+  documentation. Inspection and display are independent: inspecting a hidden
+  component does not silently replace or expand the displayed set.
+- **Modules and component visibility** groups the modeled parts under
+  **01 Structure and running gear**, **02 Drive train** and **04 Battery and
+  charging**, with nested subassemblies. Annotations are separate, not a
+  fabricated engineering module. Check any combination of modules,
+  subassemblies or individual parts; partial checkboxes indicate mixed
+  visibility. Group checkboxes always affect their whole subtree.
+- **Only** beside a module, subassembly or part replaces the displayed set
+  with that group or component. **Show all** and **Hide all** apply globally.
+  Search filters the tree by module/component name without changing geometry,
+  visibility or the scope of a group checkbox.
+- **Isolate selection** temporarily displays only the inspected part, including
+  a hidden part. Unchecking it restores the exact previous display set.
+  Editing a visibility checkbox, using **Only**, or showing/hiding all exits
+  temporary isolation. **Fit inspected** frames the visible inspected part;
+  **Fit displayed** frames all displayed geometry. Empty displays disable fit.
+  **Reset assembly** restores every part, clears the inspection/search and
+  exits isolation.
 - To inspect motor mounting holes and the shaft keyway, isolate the motor and
   orbit to its shaft-side (negative Z) face; the default outboard view hides them.
 - **Selected STL** downloads just that component in the original assembly
@@ -123,17 +140,35 @@ The same thumbnail route is available beside the motor in its owning scope.
   stage; the four lower rollers are separate exports. The removal arrow is
   explicitly an annotation, not a physical part.
 - Markdown links keep their scope and fragment in the reader. Presentation and
-  engineering modes persist in the URL, and Browser Back/Forward restore the
-  document/selection; the address can be bookmarked.
+  engineering modes, inspected part, custom visibility and temporary isolation
+  persist in the URL. Reload and Browser Back/Forward restore them; the address
+  can be bookmarked. A missing `visible` parameter means all components;
+  `visible=` explicitly means none. Unknown visibility IDs are reported as
+  errors, not silently discarded.
 
 The [component map](../../presentation/viewer/components.json) owns each
-selectable ID, label, technical target and generated presentation target.
+selectable ID, label, technical target and generated presentation target,
+plus the module/subassembly hierarchy. Every modeled component must occur
+exactly once in the hierarchy; startup rejects unknown, duplicate or ungrouped
+components. These display groups do not change BOM cost ownership or quantities.
 The [presentation catalog](../../presentation/catalog.json) owns concise
 pitch facts, which are checked against technical evidence during generation.
 The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
 components have no invented mesh.
 
 ## Refresh and verify
+
+**Grouped visibility test-first update (2026-10-29):**
+`node --test tool/cad-viewer/visibility.test.mjs` first failed because the
+module hierarchy was absent; `npm run test:browser --prefix tool/cad-viewer`
+then failed on the missing module visibility control. After implementation,
+a delayed-document regression exposed a visibility edit losing the inspected
+component from browser history; URL state now follows the active inspection
+even while documentation is loading. Twenty viewer tests and the browser
+workflows pass, including module/subassembly/part combinations, partial
+checkboxes, only/show/hide actions, search, empty displays, isolation restore,
+reload, Back/Forward, invalid display parameters and narrow layout. Geometry
+and BOM quantities are unchanged by this UI feature.
 
 After changing SCAD geometry, the component map, pitch facts, a targeted
 documentation heading or a 3D study table, follow the

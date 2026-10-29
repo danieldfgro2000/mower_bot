@@ -1,4 +1,6 @@
 import { createScene } from './scene.js';
+import { createVisibilityPanel } from './visibility-panel.js';
+import { readDisplay, writeDisplay, displayedIds } from './visibility.mjs';
 
 const byId = id => document.getElementById(id);
 function showError(error) {
@@ -21,18 +23,39 @@ async function start() {
   let currentMode = 'presentation';
   let documentRequest = 0;
   let navigationRequest = 0;
-  const visibilityInputs = new Map();
+  let currentUrl = new URL(location.href);
   const parts = new Map(config.components.map(part => [part.id, part]));
+  const ids = [...parts.keys()];
+  let display = { visible: new Set(ids), isolated: false };
   for (const part of config.components) {
     byId('component').add(new Option(part.label, part.id));
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.checked = true;
-    input.addEventListener('change', () => scene.visibility(part.id, input.checked));
-    label.append(input, document.createTextNode(` ${part.label}`));
-    byId('visibility').append(label);
-    visibilityInputs.set(part.id, input);
+  }
+  const panel = createVisibilityPanel(byId('visibility'), config.groups, parts,
+    visible => changeDisplay({ visible, isolated: false }),
+    id => { selectPart(id).catch(showError); });
+
+  function applyDisplay() {
+    const selected = byId('component').value;
+    const shown = displayedIds(ids, display, selected);
+    panel.update(display.visible, selected);
+    byId('isolate').checked = display.isolated;
+    byId('visibility-status').textContent = `${shown.length} of ${ids.length} displayed`
+      + (display.isolated && selected ? ' (temporary isolation)' : '');
+    byId('fit-visible').disabled = shown.length === 0;
+    byId('fit').disabled = !selected || !shown.includes(selected);
+    byId('selection').textContent = selected ? parts.get(selected).label
+      + (shown.includes(selected) ? '' : ' (hidden; use Isolate selection to inspect)')
+      : 'No component inspected';
+    scene.display(shown);
+  }
+
+  function changeDisplay(next) {
+    ++navigationRequest;
+    display = next;
+    applyDisplay();
+    const url = writeDisplay(currentUrl, display, ids);
+    currentUrl = url;
+    history.pushState(null, '', url.pathname + url.search + url.hash);
   }
 
   async function showDocument(target, hash = '') {
@@ -61,9 +84,9 @@ async function start() {
   function setSelection(id, focus) {
     if (id && !parts.has(id)) throw new Error(`Unknown component: ${id}`);
     byId('component').value = id;
-    if (id) visibilityInputs.get(id).checked = true;
-    scene.select(id, focus);
-    byId('selection').textContent = id ? parts.get(id).label : 'Entire concept assembly';
+    scene.select(id);
+    applyDisplay();
+    if (focus) scene.fit();
     byId('export').hidden = !id;
     if (id) byId('export').href = `/models/${id}.stl`;
   }
@@ -78,7 +101,9 @@ async function start() {
       ? 'engineering' : 'presentation';
     byId('mode').value = currentMode;
     const id = url.searchParams.get('component') || '';
+    display = readDisplay(url, ids);
     setSelection(id, true);
+    currentUrl = new URL(url);
     const target = url.searchParams.get('doc') || (id
       ? parts.get(id)[currentMode === 'presentation' ? 'presentation' : 'document']
       : currentMode === 'presentation' ? config.defaultPresentation : config.defaultDocument);
@@ -91,7 +116,7 @@ async function start() {
     const url = new URL('/', location.origin);
     if (id) url.searchParams.set('component', id);
     url.searchParams.set('mode', currentMode);
-    await navigate(url);
+    await navigate(writeDisplay(url, display, ids));
   }
 
   scene = await createScene(byId('viewport'), config.components,
@@ -100,23 +125,27 @@ async function start() {
     selectPart(event.target.value).catch(showError);
   });
   byId('mode').addEventListener('change', event => {
-    const url = new URL(location.href);
+    const url = new URL(currentUrl);
     url.searchParams.delete('doc');
     url.searchParams.set('mode', event.target.value);
     navigate(url).catch(showError);
   });
-  byId('isolate').addEventListener('change', event => scene.isolate(event.target.checked));
+  byId('isolate').addEventListener('change', event =>
+    changeDisplay({ ...display, isolated: event.target.checked }));
   byId('fit').addEventListener('click', () => scene.fit());
+  byId('fit-visible').addEventListener('click', () => scene.fit(true));
+  byId('show-all').addEventListener('click', () =>
+    changeDisplay({ visible: new Set(ids), isolated: false }));
+  byId('hide-all').addEventListener('click', () =>
+    changeDisplay({ visible: new Set(), isolated: false }));
+  byId('component-search').addEventListener('input', event => panel.search(event.target.value));
   byId('assembly').addEventListener('click', () => {
-    byId('isolate').checked = false;
-    scene.isolate(false);
-    for (const [id, input] of visibilityInputs) {
-      input.checked = true;
-      scene.visibility(id, true);
-    }
+    display = { visible: new Set(ids), isolated: false };
+    byId('component-search').value = '';
+    panel.search('');
     selectPart('').catch(showError);
   });
-  byId('document').addEventListener('click', event => {
+  document.addEventListener('click', event => {
     const link = event.target.closest('a');
     if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button) return;
     const url = new URL(link.href);
@@ -136,7 +165,7 @@ async function start() {
       if (url.searchParams.has('doc') && byId('component').value) {
         url.searchParams.set('component', byId('component').value);
       }
-      navigate(url).catch(showError);
+      navigate(writeDisplay(url, display, ids)).catch(showError);
     }
   });
   window.addEventListener('popstate', () => navigate(new URL(location.href), false).catch(showError));

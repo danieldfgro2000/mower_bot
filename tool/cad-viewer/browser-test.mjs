@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { chromium } from 'playwright';
 import { createViewerServer } from './server.mjs';
 import { loadConfig } from './assets.mjs';
+import { checkVisibility } from './visibility-browser.mjs';
 
 const server = createViewerServer();
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -104,6 +105,8 @@ try {
   assert.equal(await page.locator('#component').inputValue(), 'track');
   await page.unroute('**/api/document?path=*propulsion.md');
 
+  await checkVisibility(page, origin, loadConfig());
+
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForFunction(() => document.documentElement.scrollWidth <= innerWidth);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -114,10 +117,16 @@ try {
   await page.goto(`${origin}/?component=does-not-exist`);
   await page.waitForSelector('#error:not([hidden])');
   assert.match(await page.locator('#error').textContent(), /Unknown component/);
+  await page.goto(`${origin}/?visible=does-not-exist`);
+  await page.waitForSelector('#error:not([hidden])');
+  assert.match(await page.locator('#error').textContent(), /Unknown visible component/);
+  await page.goto(`${origin}/?isolate=no`);
+  await page.waitForSelector('#error:not([hidden])');
+  assert.match(await page.locator('#error').textContent(), /Invalid isolate/);
   await page.goto(`${origin}/?doc=docs%2Fdoes-not-exist.md`);
   await page.waitForSelector('#error:not([hidden])');
   assert.match(await page.locator('#error').textContent(), /404: File not found/);
-  console.log(`Browser checks passed: thumbnails, mesh raycast, all ${loadConfig().components.length} routes, history, rapid navigation, errors and mobile layout`);
+  console.log(`Browser checks passed: grouped visibility, isolation restore, display bookmarks/history, thumbnails, mesh raycast, all ${loadConfig().components.length} routes, rapid navigation, errors and mobile layout`);
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

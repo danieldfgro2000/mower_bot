@@ -3,6 +3,35 @@
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
   "notice": "Unqualified 200x72x40 candidate fit study. Connected frame, U supports, fixed upper mast and sliding spring idler are modeled with provisional clearances. Track profile, structural loads/joints, spring rate/preload/travel, brake and reducer supports remain unqualified.",
+  "groups": [
+    {
+      "id": "structure-and-running-gear",
+      "label": "01 Structure and running gear",
+      "children": [
+        { "id": "frame", "label": "Tray, frame and motor mount", "components": ["pod-carrier", "pod-frame", "motor-mount"] },
+        { "id": "track-and-drum", "label": "Track and drive drum", "components": ["track", "drive-drum"] },
+        { "id": "lower-rollers", "label": "Lower rollers and U supports", "components": ["lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4", "lower-roller-supports"] },
+        { "id": "idler-tensioner", "label": "Front idler and spring tensioner", "components": ["idler", "idler-carriage", "idler-spring"] },
+        { "id": "upper-return", "label": "Fixed upper return and support", "components": ["upper-roller", "upper-roller-support"] }
+      ]
+    },
+    {
+      "id": "drive-train",
+      "label": "02 Drive train",
+      "children": [
+        { "id": "traction-motor", "label": "Traction motor", "components": ["motor"] },
+        { "id": "reducer", "label": "Planetary reducer and output", "components": ["planetary-1", "planetary-2", "planetary-3", "output-carrier"] }
+      ]
+    },
+    {
+      "id": "battery-and-charging",
+      "label": "04 Battery and charging",
+      "children": [
+        { "id": "battery-pack", "label": "Battery body", "components": ["battery"] }
+      ]
+    },
+    { "id": "annotations", "label": "Annotations (not physical parts)", "components": ["removal-arrow"] }
+  ],
   "components": [
     {
       "id": "track",

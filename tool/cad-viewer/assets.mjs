@@ -3,6 +3,7 @@ import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDocumentPath, renderDocument } from './core.mjs';
+import { validateGroups } from '../../docs/engineering/presentation/viewer/visibility.mjs';
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const viewerDirectory = 'docs/engineering/presentation/viewer';
@@ -33,6 +34,7 @@ export function loadConfig() {
     }
     ids.add(component.id);
   }
+  validateGroups(config.groups, config.components);
   const source = readRepositoryFile(config.source).toString();
   const selectors = source.match(/viewer_components\s*=\s*\[([\s\S]*?)\]/)?.[1]
     .match(/"[^"]+"/g)?.map(value => JSON.parse(value));

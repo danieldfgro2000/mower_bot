@@ -25,27 +25,27 @@ export async function createScene(container, components, onSelect) {
       transparent: true, opacity: .7, side: THREE.DoubleSide,
     }));
     mesh.userData.id = component.id;
-    mesh.userData.enabled = true;
     scene.add(mesh);
     meshes.set(component.id, mesh);
   }));
   let selected = '';
-  let isolated = false;
+  let displayed = new Set(components.map(part => part.id));
   const render = () => renderer.render(scene, camera);
   function update() {
     for (const [id, mesh] of meshes) {
-      mesh.visible = mesh.userData.enabled && (!isolated || !selected || id === selected);
+      mesh.visible = displayed.has(id);
       mesh.material.opacity = selected ? (id === selected ? 1 : .16) : .7;
       mesh.material.depthWrite = !selected || id === selected;
       mesh.material.emissive.set(id === selected ? '#21374b' : '#000000');
     }
     renderer.domElement.dataset.selected = selected;
+    renderer.domElement.dataset.visible = JSON.stringify([...meshes.keys()].filter(id => meshes.get(id).visible));
     render();
   }
-  function fit() {
+  function fit(allVisible = false) {
     const box = new THREE.Box3();
     for (const [id, mesh] of meshes) {
-      if (mesh.visible && (!selected || id === selected)) box.expandByObject(mesh);
+      if (mesh.visible && (allVisible || !selected || id === selected)) box.expandByObject(mesh);
     }
     if (box.isEmpty()) return;
     const center = box.getCenter(new THREE.Vector3());
@@ -85,14 +85,11 @@ export async function createScene(container, components, onSelect) {
   });
   fit();
   return {
-    select(id, focus = false) {
+    select(id) {
       selected = id;
-      if (id) meshes.get(id).userData.enabled = true;
       update();
-      if (focus) fit();
     },
-    isolate(value) { isolated = value; update(); },
-    visibility(id, value) { meshes.get(id).userData.enabled = value; update(); },
+    display(ids) { displayed = new Set(ids); update(); },
     fit,
     dispose() {
       observer.disconnect();
