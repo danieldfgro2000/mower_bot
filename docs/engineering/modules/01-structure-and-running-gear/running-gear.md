@@ -13,7 +13,7 @@ matched profiles, bearings, clearances, and load ratings remain unqualified.
 
 | Part to inspect | Current choice / status | Cost and specifications | Fit / next component |
 | --- | --- | --- | --- |
-| [Rubber track](running-gear.md#ps01-rubber-tracks) | PowerTrack `180×72×37` sourcing preference; `200×72×36` remains the unchanged baseline study reference | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Baseline allowance](running-gear.md#0101-rubber-tracks) · [Track requirements](running-gear.md#ps01-rubber-tracks) | [Drive drum engagement](running-gear.md#drive-drum-study) |
+| [Rubber track](running-gear.md#ps01-rubber-tracks) | PowerTrack `180×72×37` initial sourcing preference; `200×72×40` owner-accepted candidate for the longer-loop study; `200×72×36` remains the unchanged baseline study reference | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Baseline allowance](running-gear.md#0101-rubber-tracks) · [Track requirements](running-gear.md#ps01-rubber-tracks) | [Drive drum engagement](running-gear.md#drive-drum-study) |
 | [Drive drum / sprocket](running-gear.md#drive-drum-study) | 350 mm physical OD is a flexible study placeholder; tooth/profile match open | [Baseline sprocket/hub allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Drum study](running-gear.md#drive-drum-study) | [Motor-to-track mounting](../02-drive-train/propulsion.md#motor-to-track-mounting) |
 | [Lower support rollers](running-gear.md#lower-support-rollers) | Bearing-wheel route; printed 120 mm PC/TPU wheels owner-selected, Interwheel 160 mm fallback; four assemblies per track in the study; fit and capacity unqualified | [Found prices](running-gear.md#prices-found-tracks-rollers-and-idlers) · [Roller allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Roller definition](running-gear.md#lower-support-rollers) | [Axles and bearings](running-gear.md#ps03-axles-bearings-and-track-guides) |
 | [Upper rollers and spring tensioner](running-gear.md#spring-tensioner-concept) | Motorcycle-fork/spring concept; no qualified fork selected | [Roller/tensioner allowances](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) · [Travel/load requirements](running-gear.md#ps02-sprockets-rollers-and-tensioners) | [Battery and carrier clearance](running-gear.md#tensioner-and-idler-interfaces) |
@@ -58,6 +58,7 @@ dimensions, including drum diameter, remain flexible.
 | Part / supplier | Price per purchased piece | Pair / assembly price | Price basis |
 | --- | ---: | ---: | --- |
 | **Track: PowerTrack 180 x 72 x 37**, sourcing preference ([buy / price](https://www.powertrack.it/en/powertrack-rubber-tracks/2001-rubber-tracks-for-miniexcavators-180x72x37-0793596791918.html)) | **EUR91.35** | **EUR169.92 for two tracks**, after 7% pair discount | Includes 22% Italian VAT; pair is EUR139.28 net |
+| **Track candidate: PowerTrack 200 x 72 x 40**, owner-accepted for evaluation ([buy / price](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html)) | **EUR119.27** | **EUR221.84 for two tracks**, at EUR110.92 each | Includes 22% Italian VAT; listed in stock; Romanian delivery/VAT unconfirmed |
 | Track alternative: PowerTrack 200 x 72 x 36 ([buy / price](https://www.powertrack.it/en/powertrack-rubber-tracks/2023-Rubber-tracks-for-miniexcavators-200x72x36-0793596792038.html)) | **EUR138.52** | **EUR257.64 for two tracks**, after 7% pair discount | Includes 22% Italian VAT; pair is EUR211.18 net |
 | **Roller wheel: Interwheel 161.535**, 160 mm PU, 20 mm bore ([buy / price](https://www.interwheel.eu/en/stainless-steel-pu-wheel-160-mm-450-kg.html)) | **EUR22.88** | **EUR45.76 per two-wheel roller** | Excludes VAT, shaft, spacers and bracket |
 | **Idler wheel: Interwheel 161.540**, 200 mm PU, 20 mm bore ([buy / price](https://www.interwheel.eu/en/stainless-steel-pu-wheel-200-mm-500-kg.html)) | **EUR26.55** | **EUR53.10 per two-wheel idler** | Excludes VAT, shaft, spacers and bracket |
@@ -134,6 +135,88 @@ current 504 x 268 x 233 mm battery and retained carrier placement clash with
 that return and the larger lower rollers. See the [CAD dimensions and fit
 holds](../../cad/README.md#modeled-dimensions-and-limits). The model deliberately
 does not hide these conflicts or change the baseline cost allowances.
+
+### Low-profile packaging investigation
+
+**Owner brief, 2026-10-29:** Investigate approximately 30 mm-OD rollers on
+U-shaped supports (more rollers are acceptable), a lower tray/main track frame,
+longer tracks and larger idlers before moving the battery to a side bay.
+Place the battery toward one transverse side, not centered, to reduce intrusion
+into the width-adjustment space. These are investigation directions, not a
+replacement component selection; **the current SCAD remains unchanged**.
+
+**First screen:** Neither smaller lower rollers alone nor a longer belt alone
+raises the current low front return enough. A higher return path is also needed.
+Before buying a large custom idler, investigate using the already-planned upper
+roller to route the return above the battery.
+
+| Candidate | Public price each | Pair at listed quantity tier | Status / difference from 37-link pair |
+| --- | ---: | ---: | --- |
+| [180 x 72 x 37](running-gear.md#s34-powertrack-180-x-72-x-37-candidate), current reference | EUR91.35 | EUR169.92 | Listed in stock |
+| [180 x 72 x 40](running-gear.md#s39-longer-powertrack-belt-candidates) | **EUR131.96** | **EUR245.44** | Listed in stock; **+EUR75.52**; nominal loop +216 mm, listed pair mass +4 kg |
+| [200 x 72 x 40](running-gear.md#s39-longer-powertrack-belt-candidates), owner-accepted candidate | **EUR119.27** | **EUR221.84** | Listed in stock; **+EUR51.92**; nominal loop +216 mm, width +20 mm; EUR23.60 less per pair than 180 x 72 x 40 |
+| [180 x 72 x 41K](running-gear.md#s39-longer-powertrack-belt-candidates) | EUR138.30 | EUR257.24 | Preorder; +EUR87.32; K guide/profile compatibility unconfirmed |
+| [180 x 72 x 43Y](running-gear.md#s39-longer-powertrack-belt-candidates) | EUR175.09 | EUR325.66 | Listed in stock; +EUR155.74; Y guide/profile compatibility unconfirmed |
+
+These are public guest-page prices, not Romanian delivered prices. Do not
+assume K/Y suffixes describe interchangeable internal profiles.
+
+**Owner clarification, 2026-10-29:** The 200 x 72 x 40 is a valid candidate;
+180 mm width is not a constraint. Its assumed nominal loop is 2,880 mm.
+Acceptance is for evaluation, not a purchase or replacement of the current
+180 x 72 x 37 CAD representation or baseline allowance. Check the wider belt
+against the drum, guides, roller tread positions, tray, pod/scissor width and
+removal path; internal guide and engagement geometry remain unknown.
+
+**Roller clarification, 2026-10-29:** Different bearings and short-axle
+supports are acceptable, but concentrated loading on smaller rollers is the
+owner's concern. The 30/80 mm screens below are historical investigations,
+not an accepted diameter reduction. Continue from the 120 mm printed-wheel
+concept, evaluating contact loading and load sharing before reducing diameter;
+extra rollers alone do not prove equal load distribution.
+
+**Small roller limit:** No supplier minimum diameter or guide-lug dimensions
+were found for this track. A 30 mm wheel cannot contain the current 42 mm-OD
+6004 bearings. Independent short axles in individual U supports could avoid a
+shaft crossing the guide channel, but need different bearings, tread/core
+sections, fork clearance and load checks. A common shaft still needs
+`wheel radius >= lug height + shaft radius + clearance`; the illustrative
+20 mm lugs, 20 mm shaft and 5 mm gap imply **70 mm minimum OD**, not a
+manufacturer recommendation. **80 mm is a practical study starting point**:
+with the existing 8 mm tread, its 64 mm core leaves 11 mm radially around a
+42 mm bearing seat. Printed capacity and actual lug clearance remain unknown.
+At 4 km/h, 30/80/120 mm wheels turn approximately **707/265/177 rpm**.
+
+**Promising numerical layout, not yet CAD-validated:** retain the flexible
+350 mm drive study, 200 mm front idler and 120 mm upper roller. Use a
+40-link belt, put the upper roller axis at Y = 400 mm above the lower
+pitch tangent, and investigate 80 mm lower rollers with U supports.
+An analytic three-circle tangent/arc calculation gives **858.8 mm horizontal
+end-axis spacing** and battery X = **+17.6 mm**, with 20 mm conservative
+rear end-wheel clearance. A 10 mm running gap above the lower wheels and a
+10 mm tray put the battery bottom at Y = **110 mm** and top at **343 mm**.
+The continuous assumed guide-tip envelope clears the worst upper battery
+corner by **20.4 mm normal to the return**. This assumes a 20 mm belt and
+20 mm lugs, and excludes tensioner movement, tolerances and service space;
+it is not a complete clash check.
+
+The raised upper roller introduces roughly 90 degrees of belt deflection,
+so its reaction is about **1.4 times belt tension**, not just return-belt
+weight. Its printed wheels, axle, fork and frame mount require load evaluation;
+the existing 200 mm bought-wheel route is a separately priced fallback.
+The higher return also increases the overall envelope to about 0.49 m.
+Investigate six lower assemblies per track rather than four: this adds brackets
+and bearings, so less filament alone does not establish a lower total cost.
+No larger-idler purchase is recommended without a public price and exact fit.
+
+**Transverse placement:** align the tray's inboard edge with the track's
+inboard edge and put the extra battery width outboard. For example, a provisional
+288 mm tray with 10 mm body-edge margins puts the 268 mm battery center 54 mm
+outboard of the 180 mm track center. This leaves no tray overhang into the
+central adjustment space, but increases pod body width and shifts pod CG.
+Both-pod/scissor/transport and removal clearances still need checking against
+the [1 m deck constraint](../../width-and-slope-sizing.md#minimum-width-and-packaging).
+The motor/reducer/carrier axial interference remains a separate item to resolve.
 
 ### Tensioner and idler interfaces
 
@@ -772,5 +855,30 @@ grit wear of the TPU tread, tread-to-core bonding and bearing-seat loosening.
 These are untested. The mass and print-time figures are geometric estimates.
 
 **Engineering detail:** [Running-gear interfaces and inspection](running-gear.md#ps02-sprockets-rollers-and-tensioners).
+
+### S39: Longer PowerTrack belt candidates
+
+**Source / source type:** Public PowerTrack product pages and structured
+product/offer data, checked 2026-10-29. Investigation alternatives, not selected
+or included in baseline sums.
+
+| Exact listing | Guest price each | Each at quantity 2+ | Listed availability | Listed mass each |
+| --- | ---: | ---: | --- | ---: |
+| [180 x 72 x 40, product 1956](https://www.powertrack.it/en/powertrack-rubber-tracks/1956-Rubber-tracks-for-miniexcavators-180x72x40-0793596791970.html) | EUR131.96 | EUR122.72 | In stock | 26 kg |
+| [200 x 72 x 40, product 2055](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html) | EUR119.27 | EUR110.92 | In stock | 36 kg |
+| [180 x 72 x 41K, product 2052](https://www.powertrack.it/en/powertrack-rubber-tracks/2052-Rubber-tracks-for-miniexcavators-180x72x41K-0793596791987.html) | EUR138.30 | EUR128.62 | Preorder | 37 kg |
+| [180 x 72 x 43Y, product 2128](https://www.powertrack.it/en/powertrack-rubber-tracks/2128-Rubber-tracks-for-miniexcavators-180x72x43Y-0793596791994.html) | EUR175.09 | EUR162.83 | In stock | 37 kg |
+
+**Limits:** Prices/availability are supplier observations, not stock or delivery
+guarantees. Destination VAT and Romanian freight were not established in this
+check. Published offers do not establish lug height/width, minimum roller OD,
+bend radius or matching drive teeth; K/Y variants must not be substituted by
+code length alone. The owner accepts the 200 x 72 x 40 as a candidate for
+evaluation; it is EUR23.60 cheaper per pair than the 180 x 72 x 40 at the
+listed two-piece tier, but 10 kg heavier per track on the supplier's listed
+figures. Neither is purchased or fit-qualified. The supplier's pricing
+rationale is unverified; prices must not be extrapolated from link count.
+
+**Engineering detail:** [Low-profile packaging investigation](running-gear.md#low-profile-packaging-investigation).
 
 [↑ Back to document overview](running-gear.md#tracks-and-running-gear)
