@@ -1,10 +1,10 @@
-import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import {
-  root, viewerDirectory, outputDirectory, readRepositoryFile,
+  root, viewerDirectory, outputDirectory,
   loadConfig, digest, inputDigest, assertFresh,
 } from './assets.mjs';
+import { render, inParallel } from './scad.mjs';
 
 try {
   const config = loadConfig();
@@ -14,35 +14,25 @@ try {
   } else {
     mkdirSync(path.join(root, outputDirectory), { recursive: true });
     mkdirSync(path.join(root, viewerDirectory, 'previews'), { recursive: true });
+    const jobs = config.components.flatMap(({ id }) => [
+      [`${outputDirectory}/${id}.stl`, 'stl', id],
+      [`${viewerDirectory}/previews/${id}.png`, 'png', id],
+    ]);
+    const started = Date.now();
     const files = {};
-    for (const component of config.components) {
-      const stl = `${outputDirectory}/${component.id}.stl`;
-      const png = `${viewerDirectory}/previews/${component.id}.png`;
-      for (const [file, options] of [
-        [stl, ['--export-format', 'binstl']],
-        [png, ['--imgsize=240,160', '--viewall', '--autocenter',
-          '--projection=ortho', '--render', '--colorscheme=Tomorrow']],
-      ]) {
-        const result = spawnSync(process.env.OPENSCAD || 'openscad', [
-          ...options, '-o', file,
-          '-D', `viewer_component="${component.id}"`, config.source,
-        ], { cwd: root, encoding: 'utf8', stdio: 'pipe' });
-        if (result.error) throw result.error;
-        const output = result.stdout + result.stderr;
-        if (result.status !== 0 || /\b(ERROR|WARNING):/.test(output)) {
-          throw new Error(`OpenSCAD failed for ${component.id} (${file}):\n${output}`);
-        }
-        const data = readRepositoryFile(file);
-        if (!data.length) throw new Error(`Empty export: ${file}`);
-        files[file] = digest(data);
-      }
-      console.log(`Exported ${component.id}`);
-    }
+    await inParallel(jobs, async ([file, kind, component]) => {
+      const data = await render(config.source, kind, { component });
+      if (!data?.length) throw new Error(`Empty export: ${file}`);
+      writeFileSync(path.join(root, file), data);
+      files[file] = digest(data);
+    });
+    const ordered = Object.fromEntries(jobs.map(([file]) => [file, files[file]]));
     writeFileSync(path.join(root, outputDirectory, 'state.json'), JSON.stringify({
-      input: inputDigest(config), files,
+      input: inputDigest(config), files: ordered,
     }, null, 2) + '\n');
     assertFresh(config);
-    console.log('CAD components and linked thumbnails exported');
+    console.log(`CAD components and linked thumbnails exported: ${config.components.length} `
+      + `components in ${((Date.now() - started) / 1000).toFixed(1)} s`);
   }
 } catch (error) {
   console.error(error.stderr?.toString() || error.message);

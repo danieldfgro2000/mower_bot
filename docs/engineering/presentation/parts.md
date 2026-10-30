@@ -126,6 +126,32 @@ interfaces and release holds, follow the linked technical detail.
 
 **Read more:** [E-stop main contactor (placeholder envelope) technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
+<a id="estop-button"></a>
+
+### Emergency stop operator (outboard, beside controller)
+
+**Status:** E-stop operator envelope only; operator part, enclosure rating and coil wiring are HOLD.
+
+[![Emergency stop operator (outboard, beside controller)](viewer/previews/estop-button.png)](viewer/index.html?component=estop-button&mode=presentation)
+| | |
+| --- | --- |
+| Placement | Outboard of the track beside the controller; head pressed downward, parallel to the track side |
+
+**Read more:** [Emergency stop operator (outboard, beside controller) technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
+
+<a id="estop-mount"></a>
+
+### E-stop bracket and track finger guard
+
+**Status:** Study bracket and finger guard tied to the fixed controller support; material and fixings are HOLD.
+
+[![E-stop bracket and track finger guard](viewer/previews/estop-mount.png)](viewer/index.html?component=estop-mount&mode=presentation)
+| | |
+| --- | --- |
+| Guard | Vertical plate between operator and belt, rising above the track top run |
+
+**Read more:** [E-stop bracket and track finger guard technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
+
 <a id="battery-harness"></a>
 
 ### Battery leads: terminals to contactor and controller (fixed, bolted)

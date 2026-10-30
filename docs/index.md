@@ -34,3 +34,9 @@ not qualification or purchase approval.
 There is no Firebase/backend, OTA deployment, or PlatformIO workflow configured
 in this repository. Do not infer one from unrelated projects or installed skills.
 Do not create empty documentation scopes for unimplemented features.
+
+## Developer tools
+
+[Agent Work Timer](agents/agent-work-timer.md) is a local JetBrains plugin with
+explicit task boundaries, timestamped phases and IDE activity reports. It does
+not automatically observe Copilot lifecycle events or internal reasoning.

@@ -84,6 +84,44 @@
       ]
     },
     {
+      "id": "estop-button",
+      "status": "E-stop operator envelope only; operator part, enclosure rating and coil wiring are HOLD.",
+      "facts": [
+        {
+          "label": "Placement",
+          "value": "Outboard of the track beside the controller; head pressed downward, parallel to the track side",
+          "evidence": "pressed downward,\nparallel to the track side"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors",
+          "quotes": [
+            "outboard of the track, beside the controller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "estop-mount",
+      "status": "Study bracket and finger guard tied to the fixed controller support; material and fixings are HOLD.",
+      "facts": [
+        {
+          "label": "Guard",
+          "value": "Vertical plate between operator and belt, rising above the track top run",
+          "evidence": "rises above the\ntrack top run"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors",
+          "quotes": [
+            "A vertical finger guard between the operator and the track"
+          ]
+        }
+      ]
+    },
+    {
       "id": "slide-fixed",
       "status": "Single flat-mounted Accuride guide under the tray; carries the tray only during extraction. Flat rating (about 27.2 kg) is below the 44.9 kg pack, so the guide rating is HOLD. Excluded from baseline costs.",
       "facts": [

@@ -206,6 +206,50 @@ pitch facts, which are checked against technical evidence during generation.
 The [SCAD source](module-01-track-pod-fit.scad) owns all geometry. Unmodeled
 components have no invented mesh.
 
+**Source layout:** [`module-01-track-pod-fit.scad`](module-01-track-pod-fit.scad)
+is the entry point. It holds only the viewer component list and the
+dispatcher. The geometry is split into subsystem files under
+`module-01-track-pod/`:
+
+- `parameters.scad`
+- `frame.scad`
+- `running-gear.scad`
+- `idler-tensioner.scad`
+- `drive-train.scad`
+- `battery-cassette.scad`
+- `electrical.scad`
+
+Edit the subsystem file that owns the geometry you are changing. Put a value
+in `parameters.scad` only when more than one subsystem uses it.
+
+The OpenSCAD runner (`tool/cad-viewer/scad.mjs`) caches STL, PNG and probe
+results under a key built from the OpenSCAD version and every SCAD source
+file:
+
+- **Any geometry edit** invalidates the whole cache. The exports then re-run
+  in parallel worker processes.
+- **Unchanged geometry** reuses cached results. This covers re-runs and edits
+  that only touch the component map or the tests. An unchanged tree
+  re-exports in about 0.5 s.
+- **Disable the cache** with `CAD_CACHE=0`.
+
+The fit tests are split by subsystem into `tool/cad-viewer/fit-*.test.mjs`,
+with shared probes in `cad-test-helpers.mjs`. `npm test` runs these files in
+parallel. To iterate on one subsystem, run its file alone, for example
+`node --test tool/cad-viewer/fit-battery-cassette.test.mjs`. Before handoff,
+run the full `npm test --prefix tool/cad-viewer`. Earlier evidence entries
+cite `export.test.mjs`; its tests now live in the matching `fit-*.test.mjs`
+files.
+
+`fit-estop.test.mjs` checks two things, written before the geometry.
+First, the E-stop operator is outboard of the track (at least 30 mm), beside
+the controller (within 60 mm) and stands proud on top. Its finger guard
+rises above the track top, blocks straight reach lines to the belt and is tied
+to the fixed controller support. It clears every other component and the
+battery lift path. Second, the named cable paths (`battery_positive_path_a/b`,
+`battery_negative_path`, `motor_phase_path(i)`) stay within length budgets
+set at the current shortest routes.
+
 ## Refresh and verify
 
 **Loaded battery cassette test-first update (2026-10-29):**

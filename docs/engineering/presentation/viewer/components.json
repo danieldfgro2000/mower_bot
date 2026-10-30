@@ -48,7 +48,7 @@
       "id": "drive-train",
       "label": "02 Drive train",
       "children": [
-        { "id": "traction-motor", "label": "Traction motor and controller", "components": ["motor", "controller", "controller-support", "main-contactor"] },
+        { "id": "traction-motor", "label": "Traction motor and controller", "components": ["motor", "controller", "controller-support", "main-contactor", "estop-button", "estop-mount"] },
         { "id": "reducer", "label": "Planetary reducer and output", "components": ["planetary-1", "planetary-2", "planetary-3", "output-carrier"] }
       ]
     },
@@ -74,6 +74,8 @@
     { "id": "controller", "label": "EZ-A48500 on fixed frame support (published case envelope)", "color": "#333943", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller" },
     { "id": "controller-support", "label": "Fixed controller and contactor support (frame-mounted)", "color": "#4d7399", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller-support" },
     { "id": "main-contactor", "label": "E-stop main contactor (placeholder envelope)", "color": "#5a3b6e", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#main-contactor" },
+    { "id": "estop-button", "label": "Emergency stop operator (outboard, beside controller)", "color": "#e0c020", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#estop-button" },
+    { "id": "estop-mount", "label": "E-stop bracket and track finger guard", "color": "#4d7399", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#estop-mount" },
     { "id": "battery-harness", "label": "Battery leads: terminals to contactor and controller (fixed, bolted)", "color": "#c04535", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#battery-harness" },
     { "id": "motor-harness", "label": "Motor phase leads direct to controller (fixed)", "color": "#458359", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness" },
     {

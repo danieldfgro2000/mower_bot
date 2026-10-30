@@ -65,9 +65,24 @@ export function digest(data) {
   return createHash('sha256').update(data).digest('hex');
 }
 
+/** Entry SCAD file plus every file it includes or uses, repository-relative. */
+export function scadSources(entry) {
+  const files = [];
+  const visit = file => {
+    if (files.includes(file)) return;
+    files.push(file);
+    for (const [, target] of readRepositoryFile(file).toString()
+      .matchAll(/^\s*(?:include|use)\s*<([^>]+)>/gm)) {
+      visit(path.posix.join(path.posix.dirname(file), target));
+    }
+  };
+  visit(entry);
+  return files;
+}
+
 export function inputDigest(config) {
   return digest(Buffer.concat([
-    readRepositoryFile(config.source),
+    ...scadSources(config.source).map(file => readRepositoryFile(file)),
     readRepositoryFile(`${viewerDirectory}/components.json`),
     readRepositoryFile('tool/cad-viewer/export.mjs'),
   ]));

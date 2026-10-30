@@ -121,6 +121,18 @@ unpinning and sliding the tray. Phase leads stay connected. Never break phase le
 or while the motor can turn, because back-EMF can energize them. Do not drill
 or cut a harness from these coordinates.
 
+**Cable length is a high-priority design constraint.** Battery and motor
+power leads take the shortest route that still clears the track side
+silhouette, the tray slide and the battery lift path. The fit study holds
+them to length budgets (P+ about 490 mm via the contactor, P- about 530 mm,
+phases about 670/740/810 mm); any layout change that lengthens them must be
+justified. The phase leads are the longest because the controller cannot sit
+lower or further toward the motor: the track top run descends toward the
+drum, and the controller must stay under it and above the open tray. The
+E-stop operator is beside the controller (see
+[PS21](power-distribution.md#ps21-main-fuses-disconnects-and-contactors)), so
+its low-current coil loop, not the power leads, is the run that grows.
+
 The cable tubes are routing/space reservations, **not direct unfused wiring
 instructions**. The required main fuse, contactor rating, coil supply and
 precharge belong to [power distribution](power-distribution.md#ps21-main-fuses-disconnects-and-contactors);

@@ -28,6 +28,8 @@ production readiness are not claimed.
 | [EZ-A48500 on fixed frame support (published case envelope)](parts.md#controller) | Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation. |
 | [Fixed controller and contactor support (frame-mounted)](parts.md#controller-support) | See technical scope; this is a study element. |
 | [E-stop main contactor (placeholder envelope)](parts.md#main-contactor) | E-stop-controlled main contactor envelope only; rating, precharge, coil supply and part selection are HOLD. |
+| [Emergency stop operator (outboard, beside controller)](parts.md#estop-button) | E-stop operator envelope only; operator part, enclosure rating and coil wiring are HOLD. |
+| [E-stop bracket and track finger guard](parts.md#estop-mount) | Study bracket and finger guard tied to the fixed controller support; material and fixings are HOLD. |
 | [Battery leads: terminals to contactor and controller (fixed, bolted)](parts.md#battery-harness) | See technical scope; this is a study element. |
 | [Motor phase leads direct to controller (fixed)](parts.md#motor-harness) | See technical scope; this is a study element. |
 | [Rubber track (200x72x40 candidate fit study)](parts.md#track) | Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified. |

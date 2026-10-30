@@ -48,6 +48,15 @@ on the fixed controller support, between pack B+ and controller B+. One E-stop
 opens it so both packs disconnect. The envelope is not a selected part;
 ratings, precharge, coil supply and feedback remain HOLD.
 
+**E-stop operator placement:** the fit study places the E-stop operator
+outboard of the track, beside the controller, on an arm from the fixed
+controller support. The red mushroom head is on top and is pressed downward,
+parallel to the track side, so the pressing hand never moves toward the belt.
+A vertical finger guard between the operator and the track rises above the
+track top run. The operator stays inboard of the extracted battery lift path.
+Its coil loop opens the main contactor; wiring, enclosure rating and the
+operator part are HOLD.
+
 **Required purchasing/manufacturing definition:** Fuse time-current curve, DC breaking
 capacity and fault coordination; holder/disconnect DC ratings; contactor
 make/break/duty/coil ratings at full bus voltage and current; feedback and suppression

@@ -44,6 +44,9 @@ must preserve that selection while switching between the two document targets.
 1. **Classify the change**:
    - *Geometry or component dimensions*: run the fit-adjustment loop below,
      edit dependent SCAD geometry and documentation, then regenerate exports.
+     Edit the owning subsystem file under `module-01-track-pod/` (see the CAD
+     README "Source layout"); iterate with its `fit-*.test.mjs`, then run the
+     full suite.
    - *Component added, removed or renamed*: change the SCAD list, dispatcher
      and component map together; add, remove or rename its generated
      presentation target and 3D study thumbnail in the owning module page.
@@ -150,6 +153,26 @@ If no feasible solution exists within those boundaries, report the attempted
 adjustments, remaining interference and exact decision/data needed; do not
 hide it or claim fit. Geometric clearance remains a study result, not structural
 qualification or authorization to manufacture.
+
+## Design priorities for operator controls and power cables
+
+Apply these owner guidelines whenever a layout change touches the E-stop,
+controller, battery, motor or their harnesses:
+
+- **E-stop reach:** the operator must be quickly actionable from outside the
+  track, beside the controller. Press it in a direction parallel to the track
+  side or away from it, never toward the belt. Keep it outboard of the track
+  width, guard it from the track (a guard that rises above the track top
+  run), mount it on fixed structure and keep it clear of the battery
+  extraction and lift path.
+- **Short power cables (high priority):** route battery and motor power
+  leads by the shortest path that still clears the track silhouette, tray
+  slide and lift path. Prefer moving low-current wiring (E-stop coil loop,
+  signals) over lengthening power leads.
+- **Enforce, don't eyeball:** keep these rules in `fit-estop.test.mjs`
+  (placement, guard reach-line probes and cable-length budgets from named
+  path functions). If a change legitimately lengthens a cable, update its
+  budget and state the reason in the module docs.
 
 ## Handoff
 

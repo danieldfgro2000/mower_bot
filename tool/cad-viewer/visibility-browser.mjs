@@ -12,7 +12,7 @@ export async function checkVisibility(page, origin, config) {
   await page.locator('#hide-all').click();
   assert.deepEqual(await visible(), []);
   await moduleBox('drive-train').check();
-  const drive = ['motor', 'controller', 'controller-support', 'main-contactor', 'planetary-1', 'planetary-2', 'planetary-3', 'output-carrier'].sort();
+  const drive = ['motor', 'controller', 'controller-support', 'main-contactor', 'estop-button', 'estop-mount', 'planetary-1', 'planetary-2', 'planetary-3', 'output-carrier'].sort();
   assert.deepEqual(await visible(), drive);
   await moduleBox('battery-and-charging').check();
   const battery = ['battery', 'battery-hold-down', 'battery-tray', 'slide-fixed', 'slide-middle',
