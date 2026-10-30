@@ -33,13 +33,16 @@ export async function checkAnimation(page, origin, config) {
 
   await page.locator('#animation-progress').fill('100');
   close(await pose(), expected(0.1));
-  assert.equal((await pose())['tray-lock-pin'][1], 45, 'pin is withdrawn before the tray moves');
+  assert.equal((await pose())['tray-lock-pin'][1], -35, 'pin is withdrawn downward before the tray moves');
   assert.equal((await pose()).battery, undefined, 'cassette is still seated while unlocking');
   await page.locator('#animation-progress').fill('500');
   close(await pose(), expected(0.5));
   assert.equal((await pose())['slide-middle'][2], (await pose()).battery[2] / 2,
     'middle guide stage has half the tray travel');
-  assert.equal((await pose())['motor-harness'], undefined, 'motor-side disconnect remains stationary');
+  for (const id of ['controller', 'controller-support', 'main-contactor', 'battery-harness',
+    'motor-harness']) {
+    assert.equal((await pose())[id], undefined, `${id} stays on the frame; leads were unbolted at the battery`);
+  }
   await page.waitForFunction(() => new URL(location.href).searchParams.get('t') === '0.5');
   await page.reload();
   await ready();

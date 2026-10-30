@@ -2,14 +2,14 @@
   "source": "docs/engineering/technical/cad/module-01-track-pod-fit.scad",
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
-  "notice": "Unqualified candidate fit study. Battery box/controller slide on vertical ball guides: isolate power, disconnect motor/sensor harness and release pin before extraction. Terminal offsets, cooling, slide fixings, restraint and full-machine stability remain HOLD; no fabrication or electrical qualification.",
+  "notice": "Unqualified candidate fit study. Open battery tray (no box) rests on fixed seats and is extracted on one flat telescopic guide beneath it; the controller, E-stop main contactor and all leads stay on a fixed frame support. Key off, open the E-stop contactor, verify 0 V, unbolt the battery leads at the terminals and release the tray-level pin before extraction. Terminal offsets, contactor rating, guide rating, seat-to-guide transfer, restraint and full-machine stability remain HOLD; no fabrication or electrical qualification.",
   "animations": [
     {
       "id": "battery-removal",
-      "label": "Battery cassette (disconnect, unlock, extract, lock)",
+      "label": "Battery cassette (unbolt leads, unlock, extract, lock)",
       "durationMs": 4000,
       "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#battery-to-pod-fit",
-      "components": ["battery", "removal-arrow", "battery-box", "battery-tray", "controller", "battery-harness", "controller-harness", "slide-inner", "tray-lock-strike"],
+      "components": ["battery", "removal-arrow", "battery-tray", "battery-hold-down", "slide-inner", "tray-lock-strike"],
       "keyframes": [
         { "at": 0, "offset": [0, 0, 0] },
         { "at": 0.1, "offset": [0, 0, 0] },
@@ -25,8 +25,8 @@
         ],
         "tray-lock-pin": [
           { "at": 0, "offset": [0, 0, 0] },
-          { "at": 0.1, "offset": [0, 45, 0] },
-          { "at": 0.9, "offset": [0, 45, 0] },
+          { "at": 0.1, "offset": [0, -35, 0] },
+          { "at": 0.9, "offset": [0, -35, 0] },
           { "at": 1, "offset": [0, 0, 0] }
         ]
       }
@@ -48,7 +48,7 @@
       "id": "drive-train",
       "label": "02 Drive train",
       "children": [
-        { "id": "traction-motor", "label": "Traction motor and controller", "components": ["motor", "controller"] },
+        { "id": "traction-motor", "label": "Traction motor and controller", "components": ["motor", "controller", "controller-support", "main-contactor"] },
         { "id": "reducer", "label": "Planetary reducer and output", "components": ["planetary-1", "planetary-2", "planetary-3", "output-carrier"] }
       ]
     },
@@ -56,25 +56,26 @@
       "id": "battery-and-charging",
       "label": "04 Battery and charging",
       "children": [
-        { "id": "battery-pack", "label": "Battery, box and moving tray", "components": ["battery", "battery-box", "battery-tray"] },
-        { "id": "battery-guides", "label": "Ball guides and two-position lock", "components": ["slide-fixed", "slide-middle", "slide-inner", "tray-lock-pin", "tray-lock-strike"] }
+        { "id": "battery-pack", "label": "Battery, hold-down and moving tray", "components": ["battery", "battery-hold-down", "battery-tray"] },
+        { "id": "battery-guides", "label": "Flat ball guide and tray-level lock", "components": ["slide-fixed", "slide-middle", "slide-inner", "tray-lock-pin", "tray-lock-strike"] }
       ]
     },
-    { "id": "power-harnesses", "label": "05 Power harness routing (provisional)", "components": ["battery-harness", "controller-harness", "motor-harness"] },
+    { "id": "power-harnesses", "label": "05 Power harness routing (provisional)", "components": ["battery-harness", "motor-harness"] },
     { "id": "annotations", "label": "Annotations (not physical parts)", "components": ["removal-arrow"] }
   ],
   "components": [
-    { "id": "battery-box", "label": "Battery box and controller standoffs (3 mm proposal)", "color": "#78929c", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#battery-box" },
-    { "id": "battery-tray", "label": "Moving battery tray (8 mm steel proposal)", "color": "#526779", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#battery-tray" },
-    { "id": "slide-fixed", "label": "Fixed ball-guide stages and frame towers", "color": "#4c5c6e", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-fixed" },
-    { "id": "slide-middle", "label": "Intermediate ball-guide stages (half travel)", "color": "#8f969e", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-middle" },
-    { "id": "slide-inner", "label": "Inner ball-guide stages and tray brackets", "color": "#a7adb3", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-inner" },
+    { "id": "battery-tray", "label": "Open moving battery tray (8 mm steel proposal)", "color": "#526779", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#battery-tray" },
+    { "id": "battery-hold-down", "label": "Battery hold-down straps (3 mm proposal)", "color": "#9eadb8", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#battery-hold-down" },
+    { "id": "slide-fixed", "label": "Fixed flat ball-guide stage and pin bracket", "color": "#4c5c6e", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-fixed" },
+    { "id": "slide-middle", "label": "Intermediate ball-guide stage (half travel)", "color": "#8f969e", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-middle" },
+    { "id": "slide-inner", "label": "Inner ball-guide stage and float pad", "color": "#a7adb3", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-inner" },
     { "id": "tray-lock-pin", "label": "Tray locking pin (work / extract)", "color": "#d99b37", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#tray-lock-pin" },
-    { "id": "tray-lock-strike", "label": "Moving locking strip (two 12.5 mm bores)", "color": "#a57438", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#tray-lock-strike" },
-    { "id": "controller", "label": "EZ-A48500 on protected-width battery roof (published case envelope)", "color": "#333943", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller" },
-    { "id": "battery-harness", "label": "Battery to controller (protected routing proposal)", "color": "#c04535", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#battery-harness" },
-    { "id": "controller-harness", "label": "Controller phase leads / moving disconnect half", "color": "#ad963b", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#controller-harness" },
-    { "id": "motor-harness", "label": "Motor phase leads / fixed disconnect half", "color": "#458359", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness" },
+    { "id": "tray-lock-strike", "label": "Tray-level locking strip (two 12.5 mm bores)", "color": "#a57438", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#tray-lock-strike" },
+    { "id": "controller", "label": "EZ-A48500 on fixed frame support (published case envelope)", "color": "#333943", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller" },
+    { "id": "controller-support", "label": "Fixed controller and contactor support (frame-mounted)", "color": "#4d7399", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller-support" },
+    { "id": "main-contactor", "label": "E-stop main contactor (placeholder envelope)", "color": "#5a3b6e", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#main-contactor" },
+    { "id": "battery-harness", "label": "Battery leads: terminals to contactor and controller (fixed, bolted)", "color": "#c04535", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#battery-harness" },
+    { "id": "motor-harness", "label": "Motor phase leads direct to controller (fixed)", "color": "#458359", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness" },
     {
       "id": "track",
       "label": "Rubber track (200x72x40 candidate fit study)",

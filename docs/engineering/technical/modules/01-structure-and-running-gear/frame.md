@@ -25,8 +25,9 @@ released weldments or mounting drawings. Open them in the [local CAD reader](../
 The fixed 524 x 288 x 10 mm carrier sits at Y = 140-150 mm, leaving 10 mm
 above the unchanged 120 mm lower wheels. It is locally relieved for the
 idler's complete geometric stroke. The new
-[8 mm moving tray and boxed cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
-sit above it; outboard guide towers transfer the extended load into this frame.
+[8 mm open moving tray](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+rests on it in WORK; a single flat guide under the tray carries the extended
+load into notched frame rails.
 The frame now connects the motor reaction plate, tray, roller brackets and
 front-idler guides/reaction seat. Joint details, restraint, strength and
 shock-load capacity remain unqualified; see the
@@ -88,11 +89,12 @@ A transverse member at X = 225-233, Y = 134-140 mm joins the spring reaction
 seat to both rails, with 4 mm over the lower wheel tops.
 
 The [cassette guides](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
-mount on proposed 6 mm towers outboard of the belt (Z = 120-205 mm), with
-low ties into the carrier. Vertical guide sections sit at Y = 285-361.2 mm;
-rear and front stages are mirrored so the tray brackets attach to the
-inner sections without crossing the fixed ones. The pin's moving bridge
-passes at Y = 365 mm, 3.8 mm above the guide top and fixed tower.
+are now one flat 76.2 mm guide under the tray at X = -26.1 to +50.1 mm,
+between the middle lower-roller columns. Its fixed stage bears on the side
+rails, which are notched above Y = 129.9 mm over that width, and the carrier
+has a matching slot; the guide keeps at least 5 mm to the lower rollers and
+U supports. A bracket under the tray's rear corner (X = -255 to -225 mm)
+guides the lock pin up into a strip on the tray edge, at tray level.
 Guide mounting holes, welds and end-stop details remain open. The 85 kg /
 1.5 g extraction screen is **not** a frame or joint capacity proof.
 

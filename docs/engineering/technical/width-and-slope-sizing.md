@@ -83,12 +83,12 @@ scissor/lock/screw swept envelopes, guards, and moving harness. Keep body width,
 outside-track width, track centre spacing, and inner clearance as separate
 dimensions. No width-specific safe slope is currently known.
 
-**Current boxed-cassette CAD screen, 2026-10-29:** the 200 mm track carries a
+**Current open-tray cassette CAD screen, 2026-10-30:** the 200 mm track carries a
 288 mm-wide tray, with its inboard edge aligned to the track and an 88 mm
 outboard overhang. Tray-only arithmetic was 576 mm plus inner-track gap,
 but **is no longer the complete represented envelope**. After moving the
-controller onto the roof and bringing its harnesses inside the box's lateral
-envelope, the fixed guide towers now set Z = **205 mm** outboard,
+controller onto a fixed support and routing its harnesses inside the track
+silhouette, the fixed flat guide and locking strip now set Z = **205 mm** outboard,
 versus the track's -100 to +100 mm. Thus two mirrored pods need at least
 **610 mm plus the inner-track gap**, before guards, restraints and tolerance
 (previous exposed-controller study: 836 mm plus gap).

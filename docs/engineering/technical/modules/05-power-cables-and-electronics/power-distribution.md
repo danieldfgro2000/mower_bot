@@ -42,6 +42,12 @@ completed tests. Cost-ledger ranges are inclusive.
 [Cable/fuse coordination](cables-connectors.md#ps23-high-current-harness) ·
 [Stop-chain feedback](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control).
 
+**Battery cassette packaging:** the [pod fit study](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
+reserves a 45 x 70 x 70 mm placeholder for the high-current main contactor
+on the fixed controller support, between pack B+ and controller B+. One E-stop
+opens it so both packs disconnect. The envelope is not a selected part;
+ratings, precharge, coil supply and feedback remain HOLD.
+
 **Required purchasing/manufacturing definition:** Fuse time-current curve, DC breaking
 capacity and fault coordination; holder/disconnect DC ratings; contactor
 make/break/duty/coil ratings at full bus voltage and current; feedback and suppression

@@ -26,24 +26,25 @@ None is qualified for the mower; electrical, packaging and delivery holds remain
 clicking the corresponding mesh returns to the fit/clearance section here.
 The battery now uses the DC HOUSE listing's **504 x 268 x 233 mm body**, not
 the historical Elker envelope. The revised return and tray clear the body
-with provisional margins; a sliding enclosure/tray and provisional harness
+with provisional margins; an open sliding tray and provisional harness
 routes are now modeled, but terminal datums and restraints remain unqualified. Outboard
 the cassette sweep is checked, not a released battery-handling procedure.
 [Play the battery removal animation](../../../presentation/viewer/index.html?animation=battery-removal):
-the viewer withdraws the pin, slides the box/tray/controller 305 mm outboard
-on telescopic guides and reengages the pin.
+the viewer withdraws the tray-level pin, slides the open tray and battery
+305 mm outboard on one flat telescopic guide and reengages the pin. The
+controller, contactor and cables stay fixed; unbolt the battery leads first.
 
 | DC HOUSE listing envelope | Removal-direction annotation |
 | --- | --- |
 | [![3D DC HOUSE battery](../../../presentation/viewer/previews/battery.png)](../../../presentation/viewer/index.html?component=battery) | [![3D removal arrow](../../../presentation/viewer/previews/removal-arrow.png)](../../../presentation/viewer/index.html?component=removal-arrow) |
 
-| Enclosure | Moving tray | Fixed guides / towers | Middle stages |
+| Open tray | Hold-down straps | Flat guide (fixed) | Middle stage |
 | --- | --- | --- | --- |
-| [![Box](../../../presentation/viewer/previews/battery-box.png)](../../../presentation/viewer/index.html?component=battery-box) | [![Tray](../../../presentation/viewer/previews/battery-tray.png)](../../../presentation/viewer/index.html?component=battery-tray) | [![Fixed guides](../../../presentation/viewer/previews/slide-fixed.png)](../../../presentation/viewer/index.html?component=slide-fixed) | [![Middle guides](../../../presentation/viewer/previews/slide-middle.png)](../../../presentation/viewer/index.html?component=slide-middle) |
+| [![Tray](../../../presentation/viewer/previews/battery-tray.png)](../../../presentation/viewer/index.html?component=battery-tray) | [![Hold-down](../../../presentation/viewer/previews/battery-hold-down.png)](../../../presentation/viewer/index.html?component=battery-hold-down) | [![Fixed guide](../../../presentation/viewer/previews/slide-fixed.png)](../../../presentation/viewer/index.html?component=slide-fixed) | [![Middle guide](../../../presentation/viewer/previews/slide-middle.png)](../../../presentation/viewer/index.html?component=slide-middle) |
 
-| Inner stages / brackets | Lock pin | Two-position locking strip |
+| Inner stage | Lock pin | Tray-level locking strip |
 | --- | --- | --- |
-| [![Inner guides](../../../presentation/viewer/previews/slide-inner.png)](../../../presentation/viewer/index.html?component=slide-inner) | [![Lock pin](../../../presentation/viewer/previews/tray-lock-pin.png)](../../../presentation/viewer/index.html?component=tray-lock-pin) | [![Lock strip](../../../presentation/viewer/previews/tray-lock-strike.png)](../../../presentation/viewer/index.html?component=tray-lock-strike) |
+| [![Inner guide](../../../presentation/viewer/previews/slide-inner.png)](../../../presentation/viewer/index.html?component=slide-inner) | [![Lock pin](../../../presentation/viewer/previews/tray-lock-pin.png)](../../../presentation/viewer/index.html?component=tray-lock-pin) | [![Lock strip](../../../presentation/viewer/previews/tray-lock-strike.png)](../../../presentation/viewer/index.html?component=tray-lock-strike) |
 
 **Further detail:** [Battery alternatives](batteries.md#battery-alternatives) ·
 [Release requirements](batteries.md#specification-and-inspection-requirements) ·
@@ -291,52 +292,64 @@ containment or fire-containment assumption
 
 #### Sliding battery cassette
 
-**Owner direction, 2026-10-29:** the battery sits in a box on a bearing-guided
-tray. The controller travels on top of the box, inside its lateral envelope,
-after the preferred protected motor/battery gap failed the fit assessment;
-disconnect the motor and sensor harnesses before extraction, rather than
-dragging a live service loop. This is a custom fit proposal, not a released
-battery drawer.
+**Owner direction, 2026-10-30:** the battery box is removed. The battery sits
+on an open tray with hold-down straps. One flat telescopic guide sits under
+the tray, and the lock is at tray level. Battery leads bolt directly to the
+pack terminals with no extra connector, and unbolting them is the first
+removal step. A high-current main contactor sits between each pack and its
+controller; one E-stop disconnects both packs. Motor phase leads run directly from the motor to the
+controller, with no connector. The controller and contactor stay on a fixed
+frame support. This is a custom fit proposal, not a released battery drawer.
 
-| Moving assembly | Geometry / evidence |
+| Item | Geometry / evidence |
 | --- | --- |
-| Battery | Existing S30 body, 504 x 268 x 233 mm, **44.9 kg**; bottom raised from Y = 150 to **158 mm** |
-| Load tray | **8 mm S235 steel proposal**, 550 x 288 mm main plate plus a 6 x 60 mm side mounting tab; Y = 150-158 mm, front relieved around the idler's full stroke |
-| Box | **3 mm steel proposal**, outer X = -247 to +295, Z = -95 to +183, Y = 158-399 mm; rear roof slopes from Y = 375 to 399 mm to clear the return run. The tray forms its bottom; rear alcove reserves 30 mm beside the short-end terminals |
-| Ball guides | Two vertically mounted **305 x 76.2 x 19.1 mm** telescopic guides, based on the priced [Accuride DZ9301-0012U-E reference (S40)](batteries.md#s40-accuride-battery-extraction-guides). Three nested sections are simplified; actual raceways, balls, fixings and tolerances are not reverse-engineered |
-| Extraction | **305 mm outboard**, not the previous unsupported 400 mm body-only animation. Middle stages move 152.5 mm; inner stages carry the tray. The battery ends 115 mm outside the track edge, still supported |
-| Positive lock | Proposed **12 mm pin / two 12.5 mm bores**, 305 mm apart in a moving strip. Fixed pin guide engages at WORK and EXTRACT; withdraw 45 mm before travel, then reengage at the end. Pin arrests translation; slides and frame carry the vertical load |
-| Controller | [EZ-A48500 drawing envelope and position assessment](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), 200 x 164 x 70.47 mm; flat on 12 mm roof standoffs at X = -35 to +165, Z = -82 to +82, base Y = 411 mm. A 5 mm expanded sweep clears all fixed components. Rear guide restored to X = -276.5 mm; exposed end-wall extensions removed |
+| Battery | Existing S30 body, 504 x 268 x 233 mm, **44.9 kg**, X = -217 to +287, Y = 158-391 mm, Z = -90 to +178 |
+| Load tray | **8 mm S235 steel proposal**, open, Y = 150-158 mm. In WORK it rests on the fixed carrier seats (Y = 140-150 mm), not on the guide |
+| Hold-down | Proposed **two 30 mm hold-down straps** at X = -120 and +160 mm, 3 mm over the pack top, with legs bolted to the tray. Section, fasteners and pack load path are HOLD |
+| Flat guide | One **305 x 76.2 x 19.1 mm** telescopic guide mounted flat under the tray, X = -26.1 to +50.1 mm, between the middle lower-roller columns, on notched frame rails. Based on the priced [Accuride DZ9301-0012U-E reference (S40)](batteries.md#s40-accuride-battery-extraction-guides); raceways, balls and fixings are simplified. The inner-stage pads float 0.9-1.1 mm below the tray in WORK and pick it up when it leaves the seats |
+| Extraction | **305 mm outboard**. The middle stage moves 152.5 mm; the inner stage carries the tray |
+| Positive lock | Proposed **12 mm pin / two 12.5 mm bores**, 305 mm apart in a strip on the tray edge at tray level (Y = 158-166 mm). The fixed bracket under the tray guides the pin upward into the strip; withdraw 35 mm down before travel, then reengage at the end. The pin arrests translation; the seats and guide carry the vertical load |
+| Controller and contactor (fixed) | [EZ-A48500 envelope and fixed support](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), base Y = 411 mm. A 45 x 70 x 70 mm [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) sits on a shelf of the same support, inboard of the drive drum. The moving cassette sweep clears both |
+
+**Connection order:** battery + -> main fuse -> E-stop-controlled main
+contactor -> controller B+; battery - -> controller B-. Controller U/V/W ->
+motor U/V/W directly. The E-stop chain opens the main contactor coil, so
+one E-stop disconnects both packs. Contactor rating, precharge, coil supply and the main
+fuse remain on hold under [PS21](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors).
+
+**Removal sequence:** key off; press the E-stop so the contactor opens;
+verify absence of voltage; unbolt the B- lug, then the B+ lug, at the battery
+terminals and fit terminal boots; withdraw the tray pin 35 mm; slide the tray
+out 305 mm and re-pin at EXTRACT. Reassemble in reverse order: B+ before B-,
+torque the lugs and refit the boots before releasing the E-stop.
 
 **Conservative load screen, not structural qualification:** use **85 kg**
-for battery, modeled steel, controller and moving hardware. The test verifies
-that 44.9 kg plus modeled steel volume at 7,850 kg/m3, a 3 kg controller
-allowance and 5 kg harness/hardware reserve remains below 85 kg. A central
-point load of **1.5 g = 1,250.8 N**, across a conservative 550 mm span of
-288 x 8 mm steel plate with E = 200 GPa, gives **56.0 MPa** bending stress
-and **1.76 mm** deflection. Screening limits are 117.5 MPa (235/2) and 2 mm.
-This only screens the main plate, not its tab, local notch stresses, joints,
-rail brackets or shock/fatigue. Extension adds up to **381.5 Nm** at this
-load relative to the seated load position; the pin must not be used as a
-cantilever support. The manufacturer's 272 kg/pair bench rating is not a
-rough-terrain or rollover rating.
+for battery, modeled steel (tray, hold-down, inner stage and strip) and
+moving hardware. The test verifies that 44.9 kg plus modeled steel volume at
+7,850 kg/m3 and a 5 kg harness/hardware reserve remains below 85 kg. When
+extracted, the tray cantilevers in X from the single 76.2 mm guide. A
+conservative **1.5 g** factored load spread uniformly over 504 mm and applied
+over the full 236.9 mm overhang of 288 x 8 mm plate (E = 200 GPa) gives about
+**22.7 MPa** and **0.4 mm**. Screening limits are 117.5 MPa (235/2) and 2 mm.
+This only screens the plate, not seats, joints, guide brackets or
+shock/fatigue. The single flat guide's catalog rating (about **27.2 kg**) is
+below the 44.9 kg pack, so the guide selection is HOLD. The pin must not be
+used as a cantilever support.
 
-**Release holds:** independently review fasteners/welds, guide spacing and
-parallelism, bracket moment capacity, mechanical end stops, positive pin
-retention/engagement indication, battery restraints, removable lid retention,
-terminal boots, drainage/corrosion, cooling and full-machine stability. The
-roof is represented in the box export, not animated separately; the roof-mounted
-controller and its connections must be made safe and supported before removing
-the retained lid fastenings for any subsequent lifting of the battery. Guide
-end travel is schematic, not a released stop design. Service must be on a
-stable supported chassis with the implement stopped and energy isolated;
-disconnect only after the specified discharge/absence-of-voltage procedure.
-Do not operate propulsion with the cassette unseated. No interlock is
-implemented in firmware by this geometry change.
+**Is the box needed?** No. Without it, [PS19](batteries.md#ps19-battery-enclosures-and-restraints)
+restraint and protection functions must be met separately: hold-down
+straps, terminal boots and covers, and debris, water and impact protection.
+These remain HOLD. Release holds also include fasteners and welds, seat to
+guide load transfer, guide rating and bracket moment capacity, mechanical end
+stops, pin retention and engagement indication, drainage and corrosion,
+cooling and full-machine stability. Service must be on a stable supported
+chassis with the implement stopped and energy isolated. Do not operate
+propulsion with the cassette unseated. No interlock is implemented in
+firmware by this geometry change.
 
-**Budget exposure, excluded from baseline:** S40 is EUR119.19 net per pair,
-EUR238.38 net for the two pods, before delivery/destination VAT. Custom steel,
-pin, brackets, protection and connectors need an itemized price/cut list;
+**Budget exposure, excluded from baseline:** S40 is EUR119.19 net per pair;
+one pair covers both pods (one flat guide each), before delivery/destination VAT. Custom steel,
+pin, brackets, hold-downs and protection need an itemized price/cut list;
 the existing enclosure allowance is not asserted to cover this proposal.
 No quote request or purchase is required or authorized.
 
@@ -400,9 +413,9 @@ wheels 10 mm clearance; the added 8 mm moving tray puts the battery base
 28 mm above those wheels. The upper wheel axis is now **Y = 535 mm**.
 Nominal guide-tip clearances and movement reserves are recorded above.
 The [cassette](batteries.md#sliding-battery-cassette) replaces the old
-body-only slide; its enclosure sweep clears fixed running gear with a
+body-only slide; its open tray and battery sweep clears fixed running gear with a
 provisional **5 mm minimum geometric margin**. This is not a demonstrated
-dynamic margin for the boxed cassette. The upper roller is fixed;
+dynamic margin for the cassette. The upper roller is fixed;
 the idler moves longitudinally through a proposed +/-15 mm geometric stroke.
 The inboard mast does not cross the removal path. Photographed battery terminal
 faces and the controller drawing inform the [harness proposal](../05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness);
@@ -751,7 +764,8 @@ dispatch, not immediate warehouse stock or a confirmed Romania quote.
 **Checked 2026-10-29, candidate only:** [RS Ireland 188-6905](https://ie.rs-online.com/web/p/drawer-runners/1886905),
 manufacturer part **DZ9301-0012U-E**, displays **EUR119.19 excluding VAT /
 EUR146.60 including Irish VAT per pair**, one pair minimum, listed in stock.
-Two pods need two pairs: EUR238.38 net, before destination VAT and delivery.
+With one flat guide per pod, two pods need one pair: EUR119.19 net, before
+destination VAT and delivery.
 EU storefront does not establish EU dispatch location or Romanian stock.
 This is a publicly priced offer, not a quote-only lead or a purchase.
 
@@ -762,8 +776,9 @@ and 272 kg/pair for this length under its vertical-mount, 610 mm-wide-drawer /
 confirm the supplied drawing and stroke before machining lock bores. Datasheet
 installation side space is rail thickness plus 0.2-0.5 mm. The manufacturer's
 single-slide weight is 1.4 kg; the manufacturer sells singly, whereas this RS
-offer is explicitly a pair. Flat mounting reduces the rating by 80% and is
-**not** the modeled orientation. Do not equate retailer cycle descriptions or
+offer is explicitly a pair. Flat mounting reduces the rating by 80%, to about
+**27.2 kg for one guide**. That is the modeled orientation, and it is below
+the 44.9 kg pack, so the guide rating is HOLD. Do not equate retailer cycle descriptions or
 the catalog load with vehicle shock/fatigue capacity.
 
 **Cost boundary:** an extra extraction-guide candidate, excluded from current

@@ -363,9 +363,14 @@ test('configured battery removal animation sweeps clear of fixed running gear', 
   assert.ok(animation, 'the viewer animation path is the clash-checked path');
   const annotations = new Set(groupComponents(config.groups.find(group => group.id === 'annotations')));
   const moving = animation.components.filter(id => !annotations.has(id));
-  assert.ok(moving.includes('battery') && moving.includes('battery-tray')
-    && moving.includes('battery-box') && moving.includes('controller'),
-  'the supported service cassette moves together');
+  for (const id of ['battery', 'battery-tray', 'battery-hold-down', 'slide-inner', 'tray-lock-strike']) {
+    assert.ok(moving.includes(id), `${id} moves with the supported service cassette`);
+  }
+  for (const id of ['controller', 'controller-support', 'main-contactor', 'battery-harness',
+    'motor-harness']) {
+    assert.ok(!moving.includes(id) && !Object.hasOwn(animation.tracks ?? {}, id),
+      `${id} stays on the pod frame; battery lugs are unbolted at the terminals before removal`);
+  }
   const battery = boundsFor('battery');
   // The hull of two poses is the exact linear sweep only for a convex body.
   assert.ok(Math.abs(solidVolume('battery_envelope();')
@@ -387,124 +392,201 @@ test('configured battery removal animation sweeps clear of fixed running gear', 
     'extraction clears the track while remaining supported on the slides');
 });
 
-test('battery service cassette has a real enclosure, supported tray and two locking positions', () => {
+test('open battery cassette uses one flat under-tray guide, fixed seats and a tray-level lock', () => {
   const config = JSON.parse(readFileSync('docs/engineering/presentation/viewer/components.json'));
-  const required = ['battery-box', 'battery-tray', 'slide-fixed', 'slide-middle', 'slide-inner',
-    'tray-lock-pin', 'tray-lock-strike', 'controller', 'battery-harness', 'motor-harness',
-    'controller-harness'];
-  for (const id of required) assert.ok(config.components.some(part => part.id === id), `${id} is selectable`);
-  const tray = boundsFor('battery-tray');
+  const ids = config.components.map(part => part.id);
+  for (const id of ['battery-box', 'battery-lid', 'battery-feed', 'controller-harness']) {
+    assert.ok(!ids.includes(id), `${id} removed: open tray, direct terminal and direct phase wiring`);
+  }
+  const required = ['battery-tray', 'battery-hold-down', 'slide-fixed', 'slide-middle', 'slide-inner',
+    'tray-lock-pin', 'tray-lock-strike', 'controller', 'controller-support', 'main-contactor',
+    'battery-harness', 'motor-harness'];
+  for (const id of required) assert.ok(ids.includes(id), `${id} is selectable`);
+  const tray = boundsFor('battery-tray'), battery = boundsFor('battery'), seat = boundsFor('pod-carrier');
   assert.equal(tray.size[1], 8, 'loaded tray is 8 mm steel, not an arbitrary thin skin');
-  const battery = boundsFor('battery');
-  assert.equal(battery.min[1], tray.max[1], 'battery load is carried by the moving tray');
-  const box = boundsFor('battery-box');
-  assert.equal(contains(box, center(battery)), false, 'enclosure is hollow');
-  assert.equal(solidVolume('intersection() { battery_envelope(); battery_box(); }'), 0);
+  assert.equal(battery.min[1], tray.max[1], 'battery bears on the tray');
+  assert.equal(tray.min[1], seat.max[1], 'in WORK the tray rests on the fixed carrier seat');
+  const above = 'translate([-1000, 150, -1000]) cube(2000);';
+  for (const stage of [0, 1, 2]) {
+    assert.equal(solidVolume(`intersection() { slide_stage(${stage}); ${above} }`), 0,
+      `guide stage ${stage} lies wholly beneath the tray underside`);
+  }
+  for (const region of ['translate([-1000, -1000, -1000]) cube([970, 2000, 2000]);',
+    'translate([55, -1000, -1000]) cube([2000, 2000, 2000]);']) {
+    assert.equal(solidVolume(`intersection() { union() { slide_stage(0); slide_stage(1); slide_stage(2); } ${region} }`), 0,
+      'a single flat 76.2 mm guide sits between the middle lower-roller columns');
+  }
+  assert.equal(solidVolume('intersection() { slide_stage(2); battery_service_tray(); }'), 0);
+  assert.equal(solidVolume('intersection() { translate([0, 0.9, 0]) slide_stage(2); battery_service_tray(); }'), 0,
+    'working load stays on the fixed seat: inner-stage pads float at least 0.9 mm');
+  assert.ok(solidVolume('intersection() { translate([0, 1.1, 0]) slide_stage(2); battery_service_tray(); }') > 1,
+    'inner-stage pads pick up the tray within 1 mm once it leaves the seat');
+  const lower = [1, 2, 3, 4].map(i => `pod_component("lower-roller-${i}");`).join('\n');
+  for (const stage of [0, 1, 2]) {
+    assert.equal(solidVolume(`intersection() {
+      translate([0, -5, 0]) slide_stage(${stage}, ${stage * 152.5});
+      union() { ${lower} lower_roller_supports(); }
+    }`), 0, `guide stage ${stage} keeps at least 5 mm to the lower rollers and U supports`);
+  }
+  assert.ok(solidVolume('intersection() { slide_stage(0); pod_frame(); }') <= 0.01,
+    'fixed guide seats on, not inside, the frame rails');
+  assert.ok(solidVolume('intersection() { translate([0, -1, 0]) slide_stage(0); pod_frame(); }') > 1,
+    'fixed guide bears on the notched frame rails');
+  const holdDown = boundsFor('battery-hold-down');
+  assert.ok(holdDown.max[1] - battery.max[1] <= 3.01, 'hold-down strap is a thin top restraint');
+  assert.ok(solidVolume('intersection() { battery_envelope(); battery_hold_down(); }') <= 0.01);
+  assert.ok(solidVolume('intersection() { translate([0, 1, 0]) battery_envelope(); battery_hold_down(); }') > 1,
+    'hold-down bears on the battery top');
+  assert.ok(solidVolume('intersection() { battery_hold_down(); translate([0, 1, 0]) battery_service_tray(); }') > 1,
+    'hold-down legs land on the moving tray');
+  const strike = boundsFor('tray-lock-strike'), pin = boundsFor('tray-lock-pin');
+  assert.ok(strike.min[1] >= tray.min[1] && strike.max[1] <= tray.max[1] + 8,
+    'locking strip is at tray level, not on a tower');
+  assert.ok(pin.min[1] < tray.min[1] && pin.max[1] < battery.min[1] + 20,
+    'pin engages the tray-level strip from below');
   const movingSteelVolume = solidVolume(`union() {
-    battery_service_tray(); battery_box(); controller_standoffs(); slide_stage(2); battery_lock_strike();
+    battery_service_tray(); battery_hold_down(); slide_stage(2); battery_lock_strike();
   }`);
-  assert.ok(44.9 + movingSteelVolume * 7.85e-6 + 3 + 5 < 85,
-    '85 kg screen exceeds modeled steel + battery + 3 kg controller + 5 kg harness/hardware reserve');
+  assert.ok(44.9 + movingSteelVolume * 7.85e-6 + 5 < 85,
+    '85 kg screen exceeds modeled steel + battery + 5 kg battery-lead/hardware reserve');
   for (const travel of [0, 305]) {
     assert.ok(solidVolume(`intersection() {
-      battery_lock_pin(); translate([0,0,${travel}]) battery_lock_strike();
+      battery_lock_pin(); translate([0,0,${travel}]) union() { battery_lock_strike(); battery_service_tray(); }
     }`) <= 0.01, `pin passes through the ${travel === 0 ? 'work' : 'extract'} bore`);
   }
   assert.ok(solidVolume(`intersection() {
     battery_lock_pin(); translate([0,0,150]) battery_lock_strike();
   }`) > 1, 'positive control: pin cannot engage halfway through travel');
-  // Conservative central point load across the unsupported X span, not a UDL.
-  const mass = 85, load = mass * 9.81 * 1.5, span = 550, thickness = tray.size[1];
+  // Extracted, the tray cantilevers both ways in X from the 76.2 mm guide.
+  // Conservative: the whole factored load as a UDL over the longer battery overhang.
+  const mass = 85, load = mass * 9.81 * 1.5, thickness = tray.size[1];
+  const overhang = 287 - 50.1, w = load / 504;
   const inertia = tray.size[2] * thickness ** 3 / 12;
-  const stress = load * span / 4 * (thickness / 2) / inertia;
-  const deflection = load * span ** 3 / (48 * 200000 * inertia);
+  const stress = w * overhang ** 2 / 2 * (thickness / 2) / inertia;
+  const deflection = w * overhang ** 4 / (8 * 200000 * inertia);
   assert.ok(stress < 235 / 2, `S235 screening stress ${stress} MPa < 117.5 MPa`);
   assert.ok(deflection < 2, `service-load screen ${deflection} mm < 2 mm`);
 });
 
-test('controller uses the protected roof fallback and service cassette clears fixed gear', () => {
+test('controller and E-stop contactor stay on a fixed support and the cassette clears fixed gear', () => {
   const controller = boundsFor('controller');
   assert.deepEqual(controller.size, [200, 70, 164],
     'published 70.47 mm overall depth already includes terminal projections');
   assert.ok(Math.abs(controller.max[1] - controller.min[1] - 70.47) < 0.001,
     'controller is not oversized by adding pads beyond its published envelope');
-  assert.equal(controller.min[1], 411, '12 mm standoffs above the 399 mm box roof');
+  assert.equal(controller.min[1], 411, 'fixed 6 mm support plate sits above the battery and hold-down');
   assert.deepEqual([controller.min[0], controller.max[0]], [-35, 165],
-    'roof position clears the rear return and the fixed upper roller');
-  for (const id of ['controller', 'battery-harness', 'controller-harness', 'motor-harness']) {
+    'position clears the rear return and the fixed upper roller');
+  assert.ok(solidVolume('intersection() { traction_controller(); controller_support(); }') <= 0.01,
+    'controller sits on, not inside, its support');
+  assert.ok(solidVolume(`intersection() {
+    translate([0, -1, 0]) traction_controller(); controller_support();
+  }`) > 1, 'controller mounting face bears on the fixed support');
+  assert.ok(solidVolume('intersection() { main_contactor(); controller_support(); }') <= 0.01,
+    'contactor sits on, not inside, its bracket');
+  assert.ok(solidVolume('intersection() { translate([0, -1, 0]) main_contactor(); controller_support(); }') > 1,
+    'contactor is carried by the fixed controller support');
+  for (const frame of ['upper_roller_support()', 'pod_frame()']) {
+    assert.ok(solidVolume(`intersection() { controller_support(); ${frame}; }`) > 1,
+      `controller support is tied to ${frame}, not to the moving cassette`);
+  }
+  for (const id of ['controller', 'main-contactor', 'battery-harness', 'motor-harness']) {
     const mesh = boundsFor(id);
-    assert.ok(mesh.min[2] >= -95 && mesh.max[2] <= 183,
-      `${id} stays inside the battery-box lateral envelope, not the exposed outer side`);
+    assert.ok(mesh.min[2] >= -125 && mesh.max[2] <= 183,
+      `${id} stays inside the pod envelope, not on the exposed outer side`);
   }
   assert.equal(solidVolume('intersection() { traction_controller(); hpm5000b_motor_envelope(-440); }'), 0,
     'the controller terminal side has no solid interference with the motor envelope');
-  assert.ok(solidVolume('intersection() { traction_controller(); battery_box(); }') <= 0.01,
-    'roof standoffs terminate at the controller mounting face');
   const config = JSON.parse(readFileSync('docs/engineering/presentation/viewer/components.json'));
   const animation = config.animations.find(item => item.id === 'battery-removal');
   const physical = config.components.filter(part => part.id !== 'removal-arrow')
     .map(part => boundsFor(part.id));
   assert.equal(Math.max(...physical.map(mesh => mesh.max[2])), 205,
-    'guide towers, not exposed controller hardware, set the seated outboard envelope');
+    'the fixed guide and strip, not exposed hardware, set the seated outboard envelope');
   assert.equal(Math.min(...physical.map(mesh => mesh.min[2])), -125,
     'protected routing does not consume extra central-frame space');
   const fixed = config.components.map(part => part.id).filter(id =>
     !animation.components.includes(id) && !Object.hasOwn(animation.tracks, id));
   const parts = fixed.map(id => `pod_component("${id}");`).join('\n');
-  const runningGear = fixed.filter(id => !['slide-fixed', 'pod-carrier', 'tray-lock-pin'].includes(id))
+  const runningGear = fixed.filter(id => !['slide-fixed', 'tray-lock-pin'].includes(id))
     .map(id => `pod_component("${id}");`).join('\n');
-  for (const id of ['battery-box', 'battery-tray', 'controller', 'battery-harness', 'controller-harness']) {
-    const sweep = id.endsWith('harness')
-      ? `${id === 'battery-harness' ? 'battery_power_harness' : 'controller_motor_harness'}(305);`
-      : `hull() { pod_component("${id}"); translate([0,0,305]) pod_component("${id}"); }`;
+  for (const id of ['battery-tray', 'battery-hold-down', 'tray-lock-strike']) {
     assert.ok(solidVolume(`intersection() {
-      ${sweep}
+      hull() { pod_component("${id}"); translate([0,0,305]) pod_component("${id}"); }
       union() { ${parts} }
     }`) <= 0.01, `${id} complete linear sweep clears actual fixed gear`);
   }
   assert.ok(solidVolume(`intersection() {
-    minkowski() {
-      hull() { traction_controller(); translate([0,0,305]) traction_controller(); }
-      sphere(r=5.1, $fn=32);
-    }
+    hull() { translate([0,0,305]) battery_envelope(); translate([0,300,305]) battery_envelope(); }
     union() { ${parts} }
-  }`) <= 0.01, 'controller sweep retains at least 5 mm to all fixed components');
+  }`) <= 0.01, 'with the hold-down released the extracted battery lifts vertically clear');
+  const clearanceFixed = fixed.filter(id => !['battery-harness', 'pod-carrier'].includes(id))
+    .map(id => `pod_component("${id}");`).join('\n');
   assert.ok(solidVolume(`intersection() {
     minkowski() {
-      hull() { battery_box(); translate([0,0,305]) battery_box(); }
+      union() {
+        hull() { battery_envelope(); translate([0,0,305]) battery_envelope(); }
+        hull() { battery_hold_down(); translate([0,0,305]) battery_hold_down(); }
+      }
       // Circumscribe the required 5 mm ball: an inscribed low-poly sphere
       // at radius 5 would under-test clearance between its vertices.
       sphere(r=5.1, $fn=32);
     }
-    union() { ${parts}
+    union() { ${clearanceFixed}
       for (t=[-15,15]) translate([t,0,0]) pod_component("idler");
       for (t=[-15,15]) idler_carriage(t);
     }
-  }`) <= 0.01, 'enclosure sweep retains at least a provisional 5 mm fixed-gear margin');
+  }`) <= 0.01, 'battery and hold-down sweep retain a provisional 5 mm fixed-gear margin');
   assert.ok(solidVolume(`intersection() {
     battery_service_mounts(); union() { ${runningGear.replace('pod_component("pod-frame");', '')} }
-  }`) <= 0.01, 'fixed slide towers do not cut through running gear');
+  }`) <= 0.01, 'fixed pin guide does not cut through running gear');
   for (const stage of [0, 1, 2]) {
     assert.ok(solidVolume(`intersection() {
       slide_stage(${stage}, ${stage * 152.5});
       union() { ${runningGear} }
-    }`) <= 0.01, `guide stage ${stage} and moving brackets clear actual running gear throughout travel`);
+    }`) <= 0.01, `guide stage ${stage} clears running gear, seat and frame throughout travel`);
   }
 });
 
-test('harnesses reach the proposed terminal faces without crossing the box or each other', () => {
-  for (const id of ['battery-harness', 'controller-harness', 'motor-harness']) {
-    for (const body of ['battery_box()', 'battery_envelope()', 'traction_controller()',
-      'hpm5000b_motor_envelope(-440)']) {
+test('battery leads bolt directly to terminals via the contactor; phases run direct inside the track silhouette', () => {
+  for (const id of ['battery-harness', 'motor-harness']) {
+    for (const body of ['battery_envelope()', 'battery_hold_down()', 'battery_service_tray()',
+      'traction_controller()', 'controller_support()', 'main_contactor()', 'hpm5000b_motor_envelope(-440)']) {
       const overlap = solidVolume(`intersection() { pod_component("${id}"); ${body}; }`);
-      assert.ok(overlap <= 0.01,
-        `${id} passes through glands / lands at faces instead of cutting through ${body} (overlap ${overlap})`);
+      assert.ok(overlap <= 0.01, `${id} lands at faces instead of cutting through ${body} (overlap ${overlap})`);
     }
+    assert.ok(solidVolume(`intersection() {
+      pod_component("${id}"); translate([0, 1, 0]) traction_controller();
+    }`) > 1, `${id} lands directly on the controller terminals`);
+    assert.ok(solidVolume(`intersection() {
+      pod_component("${id}");
+      hull() { battery_envelope(); translate([0, 0, 305]) battery_envelope(); }
+    }`) <= 0.01, `stationary ${id} stays out of the battery extraction path`);
   }
-  assert.ok(solidVolume(`intersection() { battery_power_harness(); controller_motor_harness(); }`) <= 0.01,
-    'battery polarity routing is separated from phase routing');
-  assert.ok(solidVolume(`intersection() { motor_power_harness(); controller_motor_harness(); }`) <= 0.01,
-    'isolated service connector halves are separated');
+  assert.ok(solidVolume(`intersection() {
+    battery_power_harness(); translate([1, 0, 0]) main_contactor();
+  }`) > 1, 'battery positive is switched by the E-stop contactor');
+  assert.ok(solidVolume(`intersection() {
+    battery_power_harness(); translate([-1, 0, 0]) battery_envelope();
+  }`) > 1, 'ring lugs land directly on the battery terminal face, no service connector');
+  assert.ok(solidVolume(`intersection() {
+    motor_power_harness(); translate([0, 0, 1]) hpm5000b_motor_envelope(-440);
+  }`) > 1, 'phase leads land directly on the motor terminal face');
+  assert.ok(solidVolume(`difference() {
+    motor_power_harness();
+    linear_extrude(height = 2000, center = true) capsule_2d(10);
+  }`) <= 0.01, 'phase leads do not protrude beyond the track side silhouette');
+  // Grown battery leads (5.5 mm radius margin over low-poly cables) must not touch any phase lead.
+  assert.ok(solidVolume(`intersection() {
+    battery_power_harness(grow = 5.5); motor_power_harness();
+  }`) <= 0.01, 'battery leads keep at least 5 mm to every phase lead');
+  const plan = body => `linear_extrude(10) projection() rotate([-90, 0, 0]) intersection() {
+    ${body} translate([-1000, 399.5, -1000]) cube(2000);
+  }`;
+  assert.ok(solidVolume(`intersection() {
+    ${plan('battery_power_harness();')}
+    ${plan('motor_power_harness();')}
+  }`) <= 0.01, 'above the battery, battery leads and phase leads never cross in plan');
 });
 
 test('telescopic stages and locking strip travel without crossing their stationary mounts', () => {
@@ -512,22 +594,20 @@ test('telescopic stages and locking strip travel without crossing their stationa
   const animation = config.animations.find(item => item.id === 'battery-removal');
   for (const id of ['slide-middle', 'slide-inner', 'tray-lock-strike']) {
     const end = poseAt({ keyframes: animation.tracks?.[id] ?? animation.keyframes }, 1);
-    // Extruding each Z-aligned stage primitive is exact; a hull of BOTH rails
-    // would fill the empty space between them and invent a collision.
     const sweep = id === 'tray-lock-strike'
       ? `hull() { pod_component("${id}"); translate([${end}]) pod_component("${id}"); }`
       : `slide_stage(${id === 'slide-middle' ? 1 : 2}, ${end[2]});`;
     assert.ok(solidVolume(`intersection() {
       ${sweep}
       pod_component("slide-fixed");
-    }`) <= 0.01, `${id} clears the fixed rail and towers for its entire travel`);
+    }`) <= 0.01, `${id} clears the fixed rail and pin guide for its entire travel`);
   }
   for (const t of [0, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 1]) {
     const pin = poseAt({ keyframes: animation.tracks['tray-lock-pin'] }, t);
     const tray = poseAt(animation, t);
     assert.ok(solidVolume(`intersection() {
       translate([${pin}]) battery_lock_pin();
-      translate([${tray}]) battery_lock_strike();
+      translate([${tray}]) union() { battery_lock_strike(); battery_service_tray(); }
     }`) <= 0.01, `pin is withdrawn or aligned with a lock bore at progress ${t}`);
   }
 });

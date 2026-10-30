@@ -216,12 +216,13 @@ and [connected tray frame](docs/engineering/technical/modules/01-structure-and-r
 represent U supports, motor reaction plate and spring/carriage geometry.
 Their loads, spring specification, joints and complete-machine fit remain
 unqualified; no purchasing or fabrication decision follows from the model.
-The [boxed battery cassette proposal](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
-adds a loaded extraction tray, telescopic ball guides and positive WORK /
-EXTRACT pin positions. The controller moves on the box roof, inside its lateral
-envelope; the preferred protected motor/battery gap conflicts with the current
-drum/return geometry. Isolate and disconnect
-motor/sensor harnesses before movement. This service concept does not authorize
+The [open battery cassette proposal](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+adds an open extraction tray with hold-downs, one flat telescopic guide under
+the tray and positive tray-level WORK / EXTRACT pin positions. The controller
+and an E-stop-controlled main contactor stay on a fixed frame support; one
+E-stop disconnects both packs. Battery leads bolt directly to the terminals
+and phase leads run directly to the motor. Open the E-stop, verify absence of
+voltage and unbolt the battery leads before movement. This service concept does not authorize
 operation or demonstrate the 1 m transport layout, dynamic capacity or stability.
 
 ### 4.2 Variable-width scissor frame

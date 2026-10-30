@@ -33,9 +33,9 @@ envelope; its terminal centers are approximate. The holding brake is not modeled
 Separate reduction exports: [3D stage 2](../../../presentation/viewer/index.html?component=planetary-2) ·
 [3D stage 3](../../../presentation/viewer/index.html?component=planetary-3).
 
-| EZ-A48500 on battery roof, within box width |
-| --- |
-| [![3D controller](../../../presentation/viewer/previews/controller.png)](../../../presentation/viewer/index.html?component=controller) |
+| EZ-A48500 above the open battery tray | Fixed controller and contactor support |
+| --- | --- |
+| [![3D controller](../../../presentation/viewer/previews/controller.png)](../../../presentation/viewer/index.html?component=controller) | [![3D controller support](../../../presentation/viewer/previews/controller-support.png)](../../../presentation/viewer/index.html?component=controller-support) |
 
 **Further detail:** [Drive studies](propulsion.md#drive-alternatives) ·
 [Mounting interfaces](propulsion.md#motor-to-track-mounting) ·
@@ -172,9 +172,18 @@ envelope and **180 x 150.50 mm** mounting centers with **four 7 mm holes**.
 The model retains these dimensions, using a simplified base/cover and five
 power-terminal pads in the drawn **B+, U, V, W, B-** order. Pad center offsets
 are approximated from the drawing; they are not dimensioned manufacturer
-datums. The [battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
-carries the controller flat above its roof on **12 mm standoffs**, rather
-than on the exposed outer side. The preferred protected motor/battery gap was
+datums. A **fixed frame-mounted support**, separate from the
+[battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette),
+holds the controller flat above the open battery tray, rather than on the
+exposed outer side. The support is a 20 x 10 mm post at X = -180 to -160,
+Z = -116 to -106 mm from the frame rail, a 6 mm longitudinal plate tied
+into the upper-roller mast, and two 6 mm cross bars under the mounting holes
+at Y = 405-411 mm. A 6 mm shelf at Y = 314-320 mm, X = -300 to -245 mm,
+carries the [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
+inboard of the drive drum. The controller, contactor and all power leads stay
+stationary while the battery, hold-down and tray slide out; only the battery
+lugs are unbolted. Phase leads run directly from the motor to U/V/W with no
+connector. The preferred protected motor/battery gap was
 assessed first: moving the previous end mount inboard intersects the drive
 drum, while raising it encounters the return track. The top fallback retains
 the current battery, motor and commercial 40-link belt dimensions.
@@ -182,12 +191,12 @@ Controller X = **-35 to +165**, Z = **-82 to +82**, mounting plane Y = **411 mm*
 the simplified cover ends at Y = 471.47 and the provisional pads at
 Y = 481.47 mm. The manufacturer's 70.47 mm overall depth includes the
 terminal projections; they are not added on top of that envelope.
-Its complete extraction sweep retains at least a provisional **5 mm** to
-all fixed modeled components. The rear guide returns to X = -276.5 mm;
-the former outboard mounting extensions are removed. Standoffs and roof
-attachments remain proposals, not a qualified load path or impact guard.
+The moving battery, tray and hold-down sweep retains at least a provisional
+**5 mm** to the fixed controller, support, contactor and all other fixed
+modeled components. The support section, joints and vibration isolation remain
+proposals, not a qualified load path or impact guard.
 The reduced lateral exposure does not protect against overhead strikes.
-Standoffs do not establish cooling: provide a reviewed
+The support does not establish cooling: provide a reviewed
 heat-spreader/thermal path and cable bend/boot clearance before release.
 
 The [harness routing study](../05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)

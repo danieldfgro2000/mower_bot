@@ -18,17 +18,18 @@ production readiness are not claimed.
 
 | Component | Current presentation status |
 | --- | --- |
-| [Battery box and controller standoffs (3 mm proposal)](parts.md#battery-box) | 3 mm steel enclosure proposal with rear terminal alcove and shaped roof; restraints, lid retention and protection remain HOLD. |
-| [Moving battery tray (8 mm steel proposal)](parts.md#battery-tray) | Custom 8 mm steel tray proposal. Plate load screen is not qualification of brackets, joints or service stability. |
-| [Fixed ball-guide stages and frame towers](parts.md#slide-fixed) | Accuride envelope / custom mount study; catalog capacity is not a mower shock or fatigue rating. Excluded from baseline costs. |
-| [Intermediate ball-guide stages (half travel)](parts.md#slide-middle) | See technical scope; this is a study element. |
-| [Inner ball-guide stages and tray brackets](parts.md#slide-inner) | See technical scope; this is a study element. |
-| [Tray locking pin (work / extract)](parts.md#tray-lock-pin) | Two-position positive pin proposal; retention, end stops and engagement indication are not released. |
-| [Moving locking strip (two 12.5 mm bores)](parts.md#tray-lock-strike) | See technical scope; this is a study element. |
-| [EZ-A48500 on protected-width battery roof (published case envelope)](parts.md#controller) | Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation. |
-| [Battery to controller (protected routing proposal)](parts.md#battery-harness) | See technical scope; this is a study element. |
-| [Controller phase leads / moving disconnect half](parts.md#controller-harness) | See technical scope; this is a study element. |
-| [Motor phase leads / fixed disconnect half](parts.md#motor-harness) | See technical scope; this is a study element. |
+| [Open moving battery tray (8 mm steel proposal)](parts.md#battery-tray) | Custom 8 mm open steel tray proposal on fixed seats; the battery box is removed. Plate load screen is not qualification of seats, brackets, joints or service stability. |
+| [Battery hold-down straps (3 mm proposal)](parts.md#battery-hold-down) | Two over-pack straps bolted to the tray proposal; strap section, fasteners and pack load path are HOLD. |
+| [Fixed flat ball-guide stage and pin bracket](parts.md#slide-fixed) | Single flat-mounted Accuride guide under the tray; carries the tray only during extraction. Flat rating (about 27.2 kg) is below the 44.9 kg pack, so the guide rating is HOLD. Excluded from baseline costs. |
+| [Intermediate ball-guide stage (half travel)](parts.md#slide-middle) | See technical scope; this is a study element. |
+| [Inner ball-guide stage and float pad](parts.md#slide-inner) | See technical scope; this is a study element. |
+| [Tray locking pin (work / extract)](parts.md#tray-lock-pin) | Tray-level two-position positive pin proposal; retention, end stops and engagement indication are not released. |
+| [Tray-level locking strip (two 12.5 mm bores)](parts.md#tray-lock-strike) | See technical scope; this is a study element. |
+| [EZ-A48500 on fixed frame support (published case envelope)](parts.md#controller) | Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation. |
+| [Fixed controller and contactor support (frame-mounted)](parts.md#controller-support) | See technical scope; this is a study element. |
+| [E-stop main contactor (placeholder envelope)](parts.md#main-contactor) | E-stop-controlled main contactor envelope only; rating, precharge, coil supply and part selection are HOLD. |
+| [Battery leads: terminals to contactor and controller (fixed, bolted)](parts.md#battery-harness) | See technical scope; this is a study element. |
+| [Motor phase leads direct to controller (fixed)](parts.md#motor-harness) | See technical scope; this is a study element. |
 | [Rubber track (200x72x40 candidate fit study)](parts.md#track) | Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified. |
 | [Drive drum (350 mm placeholder)](parts.md#drive-drum) | See technical scope; this is a study element. |
 | [Idler (paired 200x50 wheels; candidate)](parts.md#idler) | Priced wheel candidate; track profile and load fit unverified. |

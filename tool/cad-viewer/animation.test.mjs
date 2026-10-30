@@ -18,8 +18,12 @@ test('battery removal is a validated keyframed animation of the battery and its 
   const config = loadConfig();
   const animation = config.animations.find(item => item.id === 'battery-removal');
   assert.ok(animation, 'battery removal animation is configured');
-  for (const id of ['battery', 'battery-tray', 'battery-box', 'controller', 'removal-arrow']) {
+  for (const id of ['battery', 'battery-tray', 'battery-hold-down', 'removal-arrow']) {
     assert.ok(animation.components.includes(id), `${id} follows the service cassette`);
+  }
+  for (const id of ['controller', 'controller-support', 'main-contactor', 'battery-harness',
+    'motor-harness']) {
+    assert.ok(!animation.components.includes(id), `${id} stays fixed to the pod frame`);
   }
   assert.ok(animation.tracks['tray-lock-pin'], 'pin releases before sliding and reengages at the stop');
   assert.ok(animation.tracks['slide-middle'], 'telescopic middle stages move at half stroke');

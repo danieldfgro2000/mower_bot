@@ -3,137 +3,150 @@
 **Concise, generated component cards.** For assumptions, requirements,
 interfaces and release holds, follow the linked technical detail.
 
-<a id="battery-box"></a>
-
-### Battery box and controller standoffs (3 mm proposal)
-
-**Status:** 3 mm steel enclosure proposal with rear terminal alcove and shaped roof; restraints, lid retention and protection remain HOLD.
-
-[![Battery box and controller standoffs (3 mm proposal)](viewer/previews/battery-box.png)](viewer/index.html?component=battery-box&mode=presentation)
-| | |
-| --- | --- |
-| Outer study envelope | 542 × 278 × 241 mm; roof locally sloped |
-
-**Read more:** [Battery box and controller standoffs (3 mm proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
-
 <a id="battery-tray"></a>
 
-### Moving battery tray (8 mm steel proposal)
+### Open moving battery tray (8 mm steel proposal)
 
-**Status:** Custom 8 mm steel tray proposal. Plate load screen is not qualification of brackets, joints or service stability.
+**Status:** Custom 8 mm open steel tray proposal on fixed seats; the battery box is removed. Plate load screen is not qualification of seats, brackets, joints or service stability.
 
-[![Moving battery tray (8 mm steel proposal)](viewer/previews/battery-tray.png)](viewer/index.html?component=battery-tray&mode=presentation)
+[![Open moving battery tray (8 mm steel proposal)](viewer/previews/battery-tray.png)](viewer/index.html?component=battery-tray&mode=presentation)
 | | |
 | --- | --- |
 | Tray / load screen | 8 mm S235; 85 kg at 1.5 g; 305 mm extraction |
 
-**Read more:** [Moving battery tray (8 mm steel proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+**Read more:** [Open moving battery tray (8 mm steel proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+
+<a id="battery-hold-down"></a>
+
+### Battery hold-down straps (3 mm proposal)
+
+**Status:** Two over-pack straps bolted to the tray proposal; strap section, fasteners and pack load path are HOLD.
+
+[![Battery hold-down straps (3 mm proposal)](viewer/previews/battery-hold-down.png)](viewer/index.html?component=battery-hold-down&mode=presentation)
+| | |
+| --- | --- |
+| Restraint | Two 30 mm straps over the pack, bolted to the tray |
+
+**Read more:** [Battery hold-down straps (3 mm proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="slide-fixed"></a>
 
-### Fixed ball-guide stages and frame towers
+### Fixed flat ball-guide stage and pin bracket
 
-**Status:** Accuride envelope / custom mount study; catalog capacity is not a mower shock or fatigue rating. Excluded from baseline costs.
+**Status:** Single flat-mounted Accuride guide under the tray; carries the tray only during extraction. Flat rating (about 27.2 kg) is below the 44.9 kg pack, so the guide rating is HOLD. Excluded from baseline costs.
 
-[![Fixed ball-guide stages and frame towers](viewer/previews/slide-fixed.png)](viewer/index.html?component=slide-fixed&mode=presentation)
+[![Fixed flat ball-guide stage and pin bracket](viewer/previews/slide-fixed.png)](viewer/index.html?component=slide-fixed&mode=presentation)
 | | |
 | --- | --- |
-| Guide | 305 mm travel; 76.2 × 19.1 mm section, vertical mounting |
-| Public price | €119.19 net per pair; €238.38 net for two pods |
+| Guide | 305 mm travel; one 76.2 × 19.1 mm guide, flat under the tray |
+| Public price | €119.19 net per pair; one pair covers two pods (one flat guide each) |
 
-**Read more:** [Fixed ball-guide stages and frame towers technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [RS Ireland priced pair](https://ie.rs-online.com/web/p/drawer-runners/1886905) · [Accuride datasheet](https://hs-europe.accuride.com/hubfs/Datasheets/9301U-E_en.pdf) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#s40-accuride-battery-extraction-guides)
+**Read more:** [Fixed flat ball-guide stage and pin bracket technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [RS Ireland priced pair](https://ie.rs-online.com/web/p/drawer-runners/1886905) · [Accuride datasheet](https://hs-europe.accuride.com/hubfs/Datasheets/9301U-E_en.pdf) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#s40-accuride-battery-extraction-guides)
 
 <a id="slide-middle"></a>
 
-### Intermediate ball-guide stages (half travel)
+### Intermediate ball-guide stage (half travel)
 
 **Status:** See technical scope; this is a study element.
 
-[![Intermediate ball-guide stages (half travel)](viewer/previews/slide-middle.png)](viewer/index.html?component=slide-middle&mode=presentation)
+[![Intermediate ball-guide stage (half travel)](viewer/previews/slide-middle.png)](viewer/index.html?component=slide-middle&mode=presentation)
 
 
-**Read more:** [Intermediate ball-guide stages (half travel) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+**Read more:** [Intermediate ball-guide stage (half travel) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="slide-inner"></a>
 
-### Inner ball-guide stages and tray brackets
+### Inner ball-guide stage and float pad
 
 **Status:** See technical scope; this is a study element.
 
-[![Inner ball-guide stages and tray brackets](viewer/previews/slide-inner.png)](viewer/index.html?component=slide-inner&mode=presentation)
+[![Inner ball-guide stage and float pad](viewer/previews/slide-inner.png)](viewer/index.html?component=slide-inner&mode=presentation)
 
 
-**Read more:** [Inner ball-guide stages and tray brackets technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+**Read more:** [Inner ball-guide stage and float pad technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="tray-lock-pin"></a>
 
 ### Tray locking pin (work / extract)
 
-**Status:** Two-position positive pin proposal; retention, end stops and engagement indication are not released.
+**Status:** Tray-level two-position positive pin proposal; retention, end stops and engagement indication are not released.
 
 [![Tray locking pin (work / extract)](viewer/previews/tray-lock-pin.png)](viewer/index.html?component=tray-lock-pin&mode=presentation)
 | | |
 | --- | --- |
-| WORK / EXTRACT | 12 mm pin; 12.5 mm bores, 305 mm apart; 45 mm release |
+| WORK / EXTRACT | 12 mm pin; 12.5 mm bores, 305 mm apart; 35 mm release |
 
 **Read more:** [Tray locking pin (work / extract) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="tray-lock-strike"></a>
 
-### Moving locking strip (two 12.5 mm bores)
+### Tray-level locking strip (two 12.5 mm bores)
 
 **Status:** See technical scope; this is a study element.
 
-[![Moving locking strip (two 12.5 mm bores)](viewer/previews/tray-lock-strike.png)](viewer/index.html?component=tray-lock-strike&mode=presentation)
+[![Tray-level locking strip (two 12.5 mm bores)](viewer/previews/tray-lock-strike.png)](viewer/index.html?component=tray-lock-strike&mode=presentation)
 
 
-**Read more:** [Moving locking strip (two 12.5 mm bores) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+**Read more:** [Tray-level locking strip (two 12.5 mm bores) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="controller"></a>
 
-### EZ-A48500 on protected-width battery roof (published case envelope)
+### EZ-A48500 on fixed frame support (published case envelope)
 
 **Status:** Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.
 
-[![EZ-A48500 on protected-width battery roof (published case envelope)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
+[![EZ-A48500 on fixed frame support (published case envelope)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
 | | |
 | --- | --- |
-| Drawing envelope | 200 × 164 × 70.47 mm; roof-mounted within battery-box width |
+| Drawing envelope | 200 × 164 × 70.47 mm; fixed frame support above the open battery tray |
 
-**Read more:** [EZ-A48500 on protected-width battery roof (published case envelope) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+**Read more:** [EZ-A48500 on fixed frame support (published case envelope) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+
+<a id="controller-support"></a>
+
+### Fixed controller and contactor support (frame-mounted)
+
+**Status:** See technical scope; this is a study element.
+
+[![Fixed controller and contactor support (frame-mounted)](viewer/previews/controller-support.png)](viewer/index.html?component=controller-support&mode=presentation)
+
+
+**Read more:** [Fixed controller and contactor support (frame-mounted) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+
+<a id="main-contactor"></a>
+
+### E-stop main contactor (placeholder envelope)
+
+**Status:** E-stop-controlled main contactor envelope only; rating, precharge, coil supply and part selection are HOLD.
+
+[![E-stop main contactor (placeholder envelope)](viewer/previews/main-contactor.png)](viewer/index.html?component=main-contactor&mode=presentation)
+| | |
+| --- | --- |
+| Function | Between pack and controller B+; one E-stop disconnects both packs |
+
+**Read more:** [E-stop main contactor (placeholder envelope) technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="battery-harness"></a>
 
-### Battery to controller (protected routing proposal)
+### Battery leads: terminals to contactor and controller (fixed, bolted)
 
 **Status:** See technical scope; this is a study element.
 
-[![Battery to controller (protected routing proposal)](viewer/previews/battery-harness.png)](viewer/index.html?component=battery-harness&mode=presentation)
+[![Battery leads: terminals to contactor and controller (fixed, bolted)](viewer/previews/battery-harness.png)](viewer/index.html?component=battery-harness&mode=presentation)
 
 
-**Read more:** [Battery to controller (protected routing proposal) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
-
-<a id="controller-harness"></a>
-
-### Controller phase leads / moving disconnect half
-
-**Status:** See technical scope; this is a study element.
-
-[![Controller phase leads / moving disconnect half](viewer/previews/controller-harness.png)](viewer/index.html?component=controller-harness&mode=presentation)
-
-
-**Read more:** [Controller phase leads / moving disconnect half technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+**Read more:** [Battery leads: terminals to contactor and controller (fixed, bolted) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
 
 <a id="motor-harness"></a>
 
-### Motor phase leads / fixed disconnect half
+### Motor phase leads direct to controller (fixed)
 
 **Status:** See technical scope; this is a study element.
 
-[![Motor phase leads / fixed disconnect half](viewer/previews/motor-harness.png)](viewer/index.html?component=motor-harness&mode=presentation)
+[![Motor phase leads direct to controller (fixed)](viewer/previews/motor-harness.png)](viewer/index.html?component=motor-harness&mode=presentation)
 
 
-**Read more:** [Motor phase leads / fixed disconnect half technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+**Read more:** [Motor phase leads direct to controller (fixed) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
 
 <a id="track"></a>
 
