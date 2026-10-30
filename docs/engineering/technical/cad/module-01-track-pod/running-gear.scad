@@ -50,10 +50,8 @@ module track_loop() {
 }
 
 module main_driven_roller(x) {
-    // Hollow drum envelope exposes the internal reduction concept.
-    // Outer teeth and drum wall thickness are not selected.
     translate([x, roller_radius, 0])
-        color([0.72, 0.43, 0.12, 0.85])
+        color([0.72, 0.43, 0.12, 0.85]) {
             difference() {
                 cylinder(d = roller_outer_diameter, h = roller_width, center = true);
                 cylinder(
@@ -61,9 +59,22 @@ module main_driven_roller(x) {
                     h = roller_width + 1,
                     center = true
                 );
-                // Central relief leaves two running bands; engagement teeth remain undefined.
+                // Running bands flank the illustrative central engagement row.
                 cylinder(d = roller_outer_diameter + 2, h = guide_gap_placeholder, center = true);
             }
+            difference() {
+                union() {
+                    cylinder(r = 154, h = 36, center = true);
+                    for (z = [-26, 18])
+                        translate([0, 0, z]) cylinder(r = 170, h = 8);
+                    // Sixteen schematic teeth phase between the nominal wrapped guides.
+                    for (tooth = [0 : 15])
+                        rotate([0, 0, normal_angle(0, roller_center_spacing) + (tooth + 0.5) * 360 / 16])
+                            translate([148, -9, -18]) cube([26.4, 18, 36]);
+                }
+                cylinder(r = 150.2, h = 54, center = true);
+            }
+        }
 }
 
 module bearing_wheel(diameter, hub_width, printed = false) {

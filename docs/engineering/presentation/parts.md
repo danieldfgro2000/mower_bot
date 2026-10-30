@@ -91,27 +91,27 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="controller"></a>
 
-### EZ-A48500 on fixed frame support (published case envelope)
+### EZ-A48500 on the fixed electrical plate (published case envelope)
 
 **Status:** Published A-series envelope; terminal offsets, thermal path and exact supplied revision require confirmation.
 
-[![EZ-A48500 on fixed frame support (published case envelope)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
+[![EZ-A48500 on the fixed electrical plate (published case envelope)](viewer/previews/controller.png)](viewer/index.html?component=controller&mode=presentation)
 | | |
 | --- | --- |
 | Drawing envelope | 200 × 164 × 70.47 mm; fixed frame support above the open battery tray |
 
-**Read more:** [EZ-A48500 on fixed frame support (published case envelope) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+**Read more:** [EZ-A48500 on the fixed electrical plate (published case envelope) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate) · [Golden Motor manual, A-series drawing](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf) · [Technical evidence](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
 
 <a id="controller-support"></a>
 
-### Fixed controller and contactor support (frame-mounted)
+### Electrical plate: controller, contactor and E-stop (6 mm, on masts and posts)
 
 **Status:** See technical scope; this is a study element.
 
-[![Fixed controller and contactor support (frame-mounted)](viewer/previews/controller-support.png)](viewer/index.html?component=controller-support&mode=presentation)
+[![Electrical plate: controller, contactor and E-stop (6 mm, on masts and posts)](viewer/previews/controller-support.png)](viewer/index.html?component=controller-support&mode=presentation)
 
 
-**Read more:** [Fixed controller and contactor support (frame-mounted) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
+**Read more:** [Electrical plate: controller, contactor and E-stop (6 mm, on masts and posts) technical detail](../technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate)
 
 <a id="main-contactor"></a>
 
@@ -141,16 +141,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="estop-mount"></a>
 
-### E-stop bracket and track finger guard
+### Track finger guard tab on the electrical plate
 
-**Status:** Study bracket and finger guard tied to the fixed controller support; material and fixings are HOLD.
+**Status:** Study finger-guard tab bolted to the fixed electrical plate; material and fixings are HOLD.
 
-[![E-stop bracket and track finger guard](viewer/previews/estop-mount.png)](viewer/index.html?component=estop-mount&mode=presentation)
+[![Track finger guard tab on the electrical plate](viewer/previews/estop-mount.png)](viewer/index.html?component=estop-mount&mode=presentation)
 | | |
 | --- | --- |
 | Guard | Vertical plate between operator and belt, rising above the track top run |
 
-**Read more:** [E-stop bracket and track finger guard technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
+**Read more:** [Track finger guard tab on the electrical plate technical detail](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) · [Technical evidence](../technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
 
 <a id="battery-harness"></a>
 
@@ -165,14 +165,25 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="motor-harness"></a>
 
-### Motor phase leads direct to controller (fixed)
+### Motor phase leads direct to controller (fixed, clamped route)
 
 **Status:** See technical scope; this is a study element.
 
-[![Motor phase leads direct to controller (fixed)](viewer/previews/motor-harness.png)](viewer/index.html?component=motor-harness&mode=presentation)
+[![Motor phase leads direct to controller (fixed, clamped route)](viewer/previews/motor-harness.png)](viewer/index.html?component=motor-harness&mode=presentation)
 
 
-**Read more:** [Motor phase leads direct to controller (fixed) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+**Read more:** [Motor phase leads direct to controller (fixed, clamped route) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+
+<a id="motor-harness-supports"></a>
+
+### Phase cable cleats, plate grommet and riser clamps (proposal)
+
+**Status:** See technical scope; this is a study element.
+
+[![Phase cable cleats, plate grommet and riser clamps (proposal)](viewer/previews/motor-harness-supports.png)](viewer/index.html?component=motor-harness-supports&mode=presentation)
+
+
+**Read more:** [Phase cable cleats, plate grommet and riser clamps (proposal) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
 
 <a id="track"></a>
 
@@ -190,14 +201,14 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="drive-drum"></a>
 
-### Drive drum (350 mm placeholder)
+### Drive drum with 16 illustrative traction teeth (350 mm study)
 
 **Status:** See technical scope; this is a study element.
 
-[![Drive drum (350 mm placeholder)](viewer/previews/drive-drum.png)](viewer/index.html?component=drive-drum&mode=presentation)
+[![Drive drum with 16 illustrative traction teeth (350 mm study)](viewer/previews/drive-drum.png)](viewer/index.html?component=drive-drum&mode=presentation)
 
 
-**Read more:** [Drive drum (350 mm placeholder) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study)
+**Read more:** [Drive drum with 16 illustrative traction teeth (350 mm study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study)
 
 <a id="idler"></a>
 
@@ -229,36 +240,36 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="planetary-1"></a>
 
-### Planetary stage 1 (pitch circles)
+### Planetary stage 1 (24/72/24 schematic teeth)
 
 **Status:** See technical scope; this is a study element.
 
-[![Planetary stage 1 (pitch circles)](viewer/previews/planetary-1.png)](viewer/index.html?component=planetary-1&mode=presentation)
+[![Planetary stage 1 (24/72/24 schematic teeth)](viewer/previews/planetary-1.png)](viewer/index.html?component=planetary-1&mode=presentation)
 
 
-**Read more:** [Planetary stage 1 (pitch circles) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
+**Read more:** [Planetary stage 1 (24/72/24 schematic teeth) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 
 <a id="planetary-2"></a>
 
-### Planetary stage 2 (pitch circles)
+### Planetary stage 2 (24/72/24 schematic teeth)
 
 **Status:** See technical scope; this is a study element.
 
-[![Planetary stage 2 (pitch circles)](viewer/previews/planetary-2.png)](viewer/index.html?component=planetary-2&mode=presentation)
+[![Planetary stage 2 (24/72/24 schematic teeth)](viewer/previews/planetary-2.png)](viewer/index.html?component=planetary-2&mode=presentation)
 
 
-**Read more:** [Planetary stage 2 (pitch circles) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
+**Read more:** [Planetary stage 2 (24/72/24 schematic teeth) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 
 <a id="planetary-3"></a>
 
-### Planetary stage 3 (pitch circles)
+### Planetary stage 3 (16/50/17 schematic teeth)
 
 **Status:** See technical scope; this is a study element.
 
-[![Planetary stage 3 (pitch circles)](viewer/previews/planetary-3.png)](viewer/index.html?component=planetary-3&mode=presentation)
+[![Planetary stage 3 (16/50/17 schematic teeth)](viewer/previews/planetary-3.png)](viewer/index.html?component=planetary-3&mode=presentation)
 
 
-**Read more:** [Planetary stage 3 (pitch circles) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
+**Read more:** [Planetary stage 3 (16/50/17 schematic teeth) technical detail](../technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study)
 
 <a id="output-carrier"></a>
 
@@ -322,7 +333,7 @@ interfaces and release holds, follow the linked technical detail.
 
 ### Front fixed upper roller (paired 70x50 study)
 
-**Status:** Front fixed return roller at the 70 mm minimum, with U support and inboard mast; printed capacity, bend radius and structural loads unqualified.
+**Status:** Front fixed return roller at the 70 mm minimum, with U support held by an inboard mast and outboard post; printed capacity, bend radius and structural loads unqualified.
 
 [![Front fixed upper roller (paired 70x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
 | | |
@@ -371,16 +382,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="pod-frame"></a>
 
-### Connected motor-to-idler tray frame (proposal)
+### Four-point motor cradle and connected pod frame (proposal)
 
 **Status:** Reinforced custom frame proposal; local beam screens only. Joints and complete two-pod fit unqualified; no separately established price.
 
-[![Connected motor-to-idler tray frame (proposal)](viewer/previews/pod-frame.png)](viewer/index.html?component=pod-frame&mode=presentation)
+[![Four-point motor cradle and connected pod frame (proposal)](viewer/previews/pod-frame.png)](viewer/index.html?component=pod-frame&mode=presentation)
 | | |
 | --- | --- |
-| Structural connection | Motor reaction plate → battery tray → sliding idler guides |
+| Structural connection | Four motor reaction supports → fixed carrier/frame → idler guides |
 
-**Read more:** [Connected motor-to-idler tray frame (proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal)
+**Read more:** [Four-point motor cradle and connected pod frame (proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal)
 
 <a id="motor-mount"></a>
 
@@ -423,16 +434,17 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="upper-roller-support"></a>
 
-### Fixed upper U supports and inboard masts (proposal)
+### Upper U supports with straight posts on fixed carrier wings (proposal)
 
-**Status:** Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified.
+**Status:** Fixed U support and axle, held by a braced inboard mast and an outboard crosshead/post on fixed carrier wings; loads and joints unqualified.
 
-[![Fixed upper U supports and inboard masts (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
+[![Upper U supports with straight posts on fixed carrier wings (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
 | | |
 | --- | --- |
 | Packaging | 29 mm wheel/bridge gap; 16 mm intrusion into central space |
+| Second support | 25 × 25 mm posts and 12 mm notched flat crossheads on fixed carrier wings; about 4.37 kg per pod before support overlaps |
 
-**Read more:** [Fixed upper U supports and inboard masts (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+**Read more:** [Upper U supports with straight posts on fixed carrier wings (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="battery"></a>
 

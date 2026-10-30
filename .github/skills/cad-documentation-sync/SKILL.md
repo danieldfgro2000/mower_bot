@@ -116,7 +116,12 @@ must preserve that selection while switching between the two document targets.
 4. **Adjust, recalculate and iterate.** Reposition components or revise custom
    carrier geometry, axle spacing, roller width/diameter, idler diameter or
    track size where those remain flexible. Start with the smallest practical
-   change, but do not preserve a placeholder at the expense of fit. Never
+   change, but do not preserve a placeholder at the expense of fit.
+   For structural members, always use the simplest geometry that carries the
+   load and can be manufactured easily: few straight members cut from standard
+   stock, square cuts, the fewest welds and bolted joints, and joints that tools
+   can reach. Use offsets, doglegs or angled pieces only when clearance needs
+   them, and state why in the module docs. Never
    alter a catalog part's geometry to pretend it is still the same product:
    use a real alternative under the existing listed-price sourcing policy.
    A different commercial belt must have a supported width/pitch and integer
@@ -139,6 +144,10 @@ must preserve that selection while switching between the two document targets.
    motion, sweep each convex cable segment separately. Pose samples are only
    an approximate screen unless their union is proven to contain the continuous
    sweep; overlap alone is insufficient.
+   Prove each structural joint by intersecting the new member with the mating
+   component's own geometry, not with cubes copied from the implementation.
+   Members must not land on, or sit over, moving parts (for example a sliding
+   carriage) anywhere in their full stroke.
 7. **Synchronize the result.** Update parameter relationships, SCAD, component
    map, thumbnails, owning module dimensions, fit notes and affected cost
    evidence together, then run the workflow's sync and verification steps.

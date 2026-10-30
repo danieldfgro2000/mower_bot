@@ -70,14 +70,27 @@ records against approved criteria
 
 #### Connected pod frame proposal
 
-**Revised custom CAD proposal:** retain the 524 x 288 x 10 mm fixed carrier and
+**Revised custom CAD proposal:** retain the 524 x 288 x 10 mm fixed carrier core and
 extend its structure from the stationary motor mount to the sliding front idler.
-Two solid 24 x 24 mm axial posts run from the rear of the motor reaction plate
-at Z = -26 mm to the outboard braces at Z = +118 mm, 80 mm apart vertically
-and 120 mm ahead of the motor axis. Triangulated braces outside the track join
-them to a 20 x 20 mm rear crossmember at X = -241 to -221 mm. The crossmember
-ties into both 10 mm side rails and the fixed carrier; it is not attached to
-the rotating drum. The rear rails now run from Y = 90 to 140 mm, with 39.9 mm
+Two fixed 10 mm side wings extend the carrier to X = -300 and +350 mm:
+the rear wing is X = -300 to -195, Z = 128-188 mm; the front is
+X = 245-350, Z = 148-188 mm. The resulting 650 x 288 mm bounding envelope
+is not a full rectangular plate. Both wings stay at Y = 140-150 mm.
+They carry the new upper-roller posts; **the removable battery tray is unchanged**.
+The wings avoid the drum and idler rather than extending a solid plate through them.
+
+Four solid **25 x 25 mm** axial motor supports occupy X = -572.5 to -547.5
+and -332.5 to -307.5 mm, with centers at Y = 145 and 225 mm.
+They run from the plate envelope at Z = -26 mm to Z = 153 mm, giving
+240 mm horizontal and 80 mm vertical spacing. Each intersects the actual
+290 mm motor plate over its full **625 mm²** footprint, not a narrow rim sliver.
+Two straight outboard rails and two straight cross-ties at Z = 128-153 mm
+form a rectangular cradle. Its forward tie at X = -300 to -275 mm seats
+on the rear fixed carrier wing, giving 700 mm² total cradle/carrier overlap.
+No support attaches to the rotating drum. Four supports are separate reaction
+paths, not proof of equal load sharing or redundant capacity after a joint fails.
+The existing 20 x 20 mm rear crossmember at X = -241 to -221 mm joins
+both 10 mm side rails and the fixed carrier. The rear rails run from Y = 90 to 140 mm, with 39.9 mm
 of depth left under the slide notch. The carrier remains locally relieved for
 the idler's geometric stroke.
 
@@ -102,19 +115,34 @@ Guide mounting holes, welds and end-stop details remain open. The 85 kg /
 1.5 g extraction screen is **not** a frame or joint capacity proof.
 
 The [fixed upper supports](running-gear.md#fixed-upper-roller-support) extend
-16 mm inside the track edge, but the new front rail extends **41 mm** inside.
+16 mm inside the track edge and are held outboard by notched flat crossheads
+and straight posts on the fixed carrier wings, independent of the idler carriage.
+The front rail, however, extends **41 mm** inside.
 The [two-pod width screen](../../width-and-slope-sizing.md#minimum-width-and-packaging)
 includes the more restrictive intrusion. Positive modeled connection volumes
 are not welds or structural qualification.
 
+**Manufacturing review:** the motor dogleg/hulled braces are replaced by
+square-cut 25 mm solid bars. Each new roller support uses one 25 mm square
+post and one 12 mm flat crosshead with a single square belt-clearance relief;
+the carrier wings are rectangular 10 mm plate. The inboard mast diagonals
+are retained to brace the tall thin masts; front guide webs/caps retain their
+idler-stroke clearance and the slide notch remains necessary. Lower U supports,
+the existing motor plate is unchanged. This simplifies
+the added load paths, not a released weldment: weld access/size, plate-to-bar
+joint preparation, distortion control, fatigue and actual stock supply need review.
+Solid-bar results must not be used to justify substituting hollow tube.
+
 At an assumed steel density of 7,850 kg/m³, the rendered solid pod frame is
-about **14.38 kg per pod**, excluding the carrier and other supports; both
-frames alone are about **28.75 kg** versus the 30 kg CHS-001 generic tube-stock
-allowance. This is not a tube cut list or evidence that the allowance covers
+about **19.39 kg per pod**, excluding the carrier and other supports; both
+frames alone are about **38.79 kg**, exceeding the 30 kg CHS-001 generic tube-stock
+allowance by **8.79 kg**. This is not a tube cut list or evidence that the allowance covers
 the actual material. Each modeled motor plate is about **8.16 kg**; two are
 about **16.32 kg**, exceeding the 12 kg CHS-004 plate-stock allowance by at
 least **4.32 kg** before reducer plates and cutting waste. The modeled union
-of frame and motor plate is about **22.39 kg per pod**. These are unpriced
+of frame and motor plate is about **27.24 kg per pod**. The fixed carrier with
+wings is about **10.54 kg** and the complete upper supports about **9.19 kg**
+per pod, outside that union. These are unpriced
 candidate exposures, not approved BOM changes; actual stock, additional parts
 and fabrication costs require a new cut list and estimate.
 
@@ -130,7 +158,9 @@ The command fails if a screened case exceeds either limit.
 
 The motor case combines the supplier's unverified **45 Nm peak claim x 2**
 with an 11 kg motor at 2 g. It includes the 120 mm post offset, an assumed
-mid-body CG 79 mm from the plate's rear face, and the full 144 mm post span.
+mid-body CG 79 mm from the plate's rear face, and the full 179 mm post span.
+It conservatively assigns the whole synthetic motor load to the forward pair;
+the added rear pair receives no capacity credit in this two-post calculation.
 Each post receives 1,448.7 N transverse, 107.9 N vertical and 213.1 N axial.
 For the pod cases, the plan's provisional 300 kg machine mass is split equally
 between two pods and multiplied by 2 g: 2,943 N per pod. The notched rail
@@ -144,7 +174,7 @@ conservatively. These loads are study assumptions, not measured maxima.
 
 | Idealized local case | Combined stress | Tip / midspan deflection | Provisional screen |
 | --- | ---: | ---: | --- |
-| One motor post | 97.9 MPa | 0.261 mm | Pass |
+| One motor post | 107.5 MPa | 0.427 mm | Pass |
 | Notched rear rail | 30.0 MPa | 0.012 mm | Pass |
 | Rear crossmember | 105.3 MPa | 0.158 mm | Pass |
 | One front idler rail, including eccentricity | 72.5 MPa | 0.332 mm | Pass |
@@ -158,6 +188,14 @@ They do not determine actual track tension, reducer fixed-ring reaction
 loads, scissor/spine attachments, complete-frame stiffness or vehicle
 stability. Analyze and independently validate the complete load paths and
 joint details before any fabrication or use; all release holds remain.
+
+**Regression evidence:** `fit-structural-frame.test.mjs` first failed for the
+missing rear motor seats and absent continuous carrier-supported crossheads.
+The replacement checks actual plate intersections at all four seats, complete
+post/crosshead material, full post footprints on the fixed carrier, the idler
+stroke and 5 mm service/harness/running clearances. `fit-drive-teeth.test.mjs`
+first failed because the suns were cylinders and the drum had no central teeth.
+These are geometry regressions, not validation of welds or load capacity.
 
 #### Motor and reducer mounting plates
 

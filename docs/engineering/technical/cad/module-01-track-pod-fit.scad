@@ -5,7 +5,8 @@
  Owners: running-gear.md S34/S37/S38, propulsion.md S24, batteries.md S30.
  Track: 200x72x40 code interpreted as width/pitch/links; belt mid-thickness
  is an assumed pitch line. Guide lugs and tread blocks are schematic, not a
- supplier profile. The 350 mm drive OD remains flexible; teeth are undefined.
+ supplier profile. The 350 mm drive OD remains flexible; 16 central drive
+ teeth are illustrative, not a matched track sprocket.
  Idler: two Interwheel 161.540 candidate envelopes (200 OD, 50 tread, 60 hub).
  Lower rollers: paired 120 mm PC/TPU study wheels, 50 wide, 8 mm tread,
  two 6004 envelopes each. Guide gap and lug dimensions require measurement.
@@ -20,7 +21,7 @@
  transfer HOLD). Tray-level two-position pin. Battery leads bolt directly to the
  terminals and run via a placeholder E-stop contactor to the controller; motor
  phases run directly to the controller. Terminal offsets remain assumptions.
- Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
+ Three 66:1 planetary stages have trapezoidal illustrative teeth; no qualified tooth profiles,
  interstage bearing supports, coupling or brake installation. U supports, tray
  frame, motor reaction plate and two fixed upper masts are custom proposals.
  Front idler now has a spring/guide carriage with +/-15 mm geometric stops;
@@ -44,7 +45,7 @@ viewer_components = [
     "battery-tray", "battery-base-clamps", "slide-fixed", "slide-middle", "slide-inner",
     "tray-lock-pin", "tray-lock-strike", "controller", "controller-support", "main-contactor",
     "estop-button", "estop-mount",
-    "battery-harness", "motor-harness"
+    "battery-harness", "motor-harness", "motor-harness-supports"
 ];
 
 // Part files share one global scope; parameters must be included first.
@@ -93,6 +94,7 @@ module pod_component(id) {
     else if (id == "controller") traction_controller();
     else if (id == "battery-harness") battery_power_harness();
     else if (id == "motor-harness") motor_power_harness();
+    else if (id == "motor-harness-supports") motor_harness_supports();
     else if (id == "removal-arrow") removal_arrow();
     else {
         for (stage = [0 : planetary_stage_count - 1])

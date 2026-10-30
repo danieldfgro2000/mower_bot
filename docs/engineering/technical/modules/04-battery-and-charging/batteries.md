@@ -302,8 +302,8 @@ terminals with no extra connector, and unbolting them is the first removal
 step after establishing a safe state. A high-current main contactor sits
 between each pack and its controller; one E-stop disconnects both packs
 in the proposed control scheme. Motor phase leads run directly from the motor
-to the controller, with no connector. The controller and contactor stay on
-a fixed frame support. This is a custom fit proposal, not a released battery drawer.
+to the controller, with no connector, and are clamped to fixed structure.
+The controller, contactor and E-stop stay on one fixed electrical plate. This is a custom fit proposal, not a released battery drawer.
 
 | Item | Geometry / evidence |
 | --- | --- |
@@ -313,7 +313,7 @@ a fixed frame support. This is a custom fit proposal, not a released battery dra
 | Flat guide | One **305 x 76.2 x 19.1 mm** telescopic guide mounted flat under the tray, X = -26.1 to +50.1 mm, between the middle lower-roller columns, on notched frame rails. Based on the priced [Accuride DZ9301-0012U-E reference (S40)](batteries.md#s40-accuride-battery-extraction-guides); raceways, balls and fixings are simplified. The inner-stage pads float 0.9-1.1 mm below the tray in WORK and pick it up when it leaves the seats |
 | Extraction | **305 mm outboard**. The middle stage moves 152.5 mm; the inner stage carries the tray |
 | Positive lock | Proposed **12 mm pin / two 12.5 mm bores**, 305 mm apart in a strip on the tray edge at tray level (Y = 158-166 mm). The fixed bracket under the tray guides the pin upward into the strip; withdraw 35 mm down before travel, then reengage at the end. The pin arrests translation; the seats and guide carry the vertical load |
-| Controller and contactor (fixed) | [EZ-A48500 envelope and fixed support](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), centered above the pack with base Y = 411 mm. A 45 x 70 x 70 mm [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) sits on the same support beside it. The moving cassette sweep clears both |
+| Controller and contactor (fixed) | [EZ-A48500 envelope and fixed electrical plate](../02-drive-train/propulsion.md#ez-a48500-controller-candidate), centered above the pack with base Y = 411 mm. A 45 x 70 x 70 mm [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors) sits on the same support beside it. The moving cassette sweep clears both |
 
 The supplier pictures show apparent base protrusions on the short sides; the
 owner reports mounting holes at their edges, but those holes are not visible

@@ -96,7 +96,7 @@ test('four-circle 40-link path and two minimum upper returns clear the battery t
 
 test('tray, roller spacing, guide passage and reducer stack retain positive margins', () => {
   const tray = boundsFor('pod-carrier'), battery = boundsFor('battery');
-  assert.deepEqual(tray.size, [524, 10, 288]);
+  assert.deepEqual(tray.size, [650, 10, 288], 'fixed side wings extend the original carrier, not the sliding tray');
   assert.equal(tray.min[2], -100, 'no tray overhang into the inboard adjustment space');
   assert.equal(battery.min[2] - tray.min[2], 10);
   assert.equal(tray.max[2] - battery.max[2], 10);

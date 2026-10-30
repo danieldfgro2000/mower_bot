@@ -130,8 +130,26 @@ contactor_stud_z = -35;
 estop_min = [130, 0, 135];
 estop_size = [65, 60, 65];
 estop_guard_z = 105;
+// One flat electrical plate (controller, contactor, E-stop) on masts and posts.
+electrical_plate_y = 411; // Top face; 6 mm plate below it.
+electrical_plate_thickness = 6;
+// XZ outline: front notch clears the track and battery leads; tab reaches the front post.
+electrical_plate_outline = [[-300, -116], [262, -116], [262, -50], [245, -50],
+                            [245, 145], [350, 145], [350, 200], [-300, 200]];
+electrical_plate_slot = [-270, -231, 104, 148]; // X min/max, Z min/max phase grommet.
 // Shared phase riser behind the centered controller.
 harness_riser_x = controller_origin[0] - 16;
+// Phase route and cleat stations (U, V, W lanes; 12 mm leads at >= 17.5 mm pitch).
+phase_lane_y = [336, 318, 300];
+phase_post_x = -320;
+phase_post_lane_z = 114;
+phase_columns = [[-260, 114], [-241.5, 114], [-250.75, 138]]; // Grommet X, Z.
+phase_plate_lane_y = 418;
+phase_plate_lane_z = [90, 114, 138];
+phase_riser_clip_y = 296;
+phase_post_cleat_x = -287.5;
+phase_bridge_clip_x = -162;
+phase_riser_clamp_y = 472;
 battery_terminal_y = 348; // Photo-based short-face landing, not a released stud datum.
 battery_terminal_x = battery_center_x + battery_length / 2 + 18;
 // The 180-degree upright rotation reverses both the terminal end and their Z positions.

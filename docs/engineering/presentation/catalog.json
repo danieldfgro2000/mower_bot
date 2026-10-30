@@ -104,7 +104,7 @@
     },
     {
       "id": "estop-mount",
-      "status": "Study bracket and finger guard tied to the fixed controller support; material and fixings are HOLD.",
+      "status": "Study finger-guard tab bolted to the fixed electrical plate; material and fixings are HOLD.",
       "facts": [
         {
           "label": "Guard",
@@ -280,7 +280,7 @@
     },
     {
       "id": "upper-roller",
-      "status": "Front fixed return roller at the 70 mm minimum, with U support and inboard mast; printed capacity, bend radius and structural loads unqualified.",
+      "status": "Front fixed return roller at the 70 mm minimum, with U support held by an inboard mast and outboard post; printed capacity, bend radius and structural loads unqualified.",
       "facts": [
         {
           "label": "Return wheel concept",
@@ -328,7 +328,7 @@
       "facts": [
         {
           "label": "Structural connection",
-          "value": "Motor reaction plate → battery tray → sliding idler guides",
+          "value": "Four motor reaction supports → fixed carrier/frame → idler guides",
           "evidence": "extend its structure from the stationary motor mount to the sliding front idler."
         }
       ],
@@ -422,12 +422,17 @@
     },
     {
       "id": "upper-roller-support",
-      "status": "Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified.",
+      "status": "Fixed U support and axle, held by a braced inboard mast and an outboard crosshead/post on fixed carrier wings; loads and joints unqualified.",
       "facts": [
         {
           "label": "Packaging",
           "value": "29 mm wheel/bridge gap; 16 mm intrusion into central space",
           "evidence": "29 mm running clearance"
+        },
+        {
+          "label": "Second support",
+          "value": "25 × 25 mm posts and 12 mm notched flat crossheads on fixed carrier wings; about 4.37 kg per pod before support overlaps",
+          "evidence": "Battery service is therefore unchanged and needs no extra unbolting step."
         }
       ],
       "evidence": [
@@ -435,7 +440,8 @@
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
           "quotes": [
             "29 mm running clearance",
-            "16 mm inboard"
+            "16 mm inboard",
+            "Battery service is therefore unchanged and needs no extra unbolting step."
           ]
         }
       ]

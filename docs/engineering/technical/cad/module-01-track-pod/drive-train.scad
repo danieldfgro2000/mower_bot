@@ -23,6 +23,16 @@ module hpm5000b_motor_envelope(x) {
     }
 }
 
+// Trapezoidal teeth communicate count and topology, not a cuttable involute profile.
+module study_gear_profile(teeth, pitch_radius, root_radius, tip_radius) {
+    polygon([for (tooth = [0 : teeth - 1])
+        for (point = [[-0.5, root_radius], [-0.36, root_radius],
+                      [-0.23, pitch_radius], [-0.10, tip_radius],
+                      [0.10, tip_radius], [0.23, pitch_radius], [0.36, root_radius]])
+            let(a = (tooth + point[0]) * 360 / teeth)
+            [point[1] * cos(a), point[1] * sin(a)]]);
+}
+
 module planetary_stage(x, stage_index) {
     sun_teeth = planetary_sun_teeth[stage_index];
     ring_teeth = planetary_ring_teeth[stage_index];
@@ -39,7 +49,6 @@ module planetary_stage(x, stage_index) {
         - planetary_axial_gap_placeholder
         - stage_index * (planetary_stage_width_placeholder + planetary_axial_gap_placeholder);
 
-    // Pitch-circle cylinders visualize tooth counts; they are not gear teeth.
     translate([x, roller_radius, stage_z]) {
         color([0.38, 0.4, 0.43, 0.9])
             difference() {
@@ -48,16 +57,19 @@ module planetary_stage(x, stage_index) {
                     h = planetary_stage_width_placeholder,
                     center = true
                 );
-                cylinder(
-                    d = ring_pitch_diameter - 2 * module_size,
-                    h = planetary_stage_width_placeholder + 1,
-                    center = true
-                );
+                linear_extrude(height = planetary_stage_width_placeholder + 1, center = true)
+                    rotate(planet_teeth % 2 == 0 ? 180 / ring_teeth : 0)
+                        study_gear_profile(ring_teeth, ring_pitch_diameter / 2,
+                            ring_pitch_diameter / 2 - module_size,
+                            ring_pitch_diameter / 2 + 1.25 * module_size);
             }
 
         color([0.82, 0.68, 0.25, 0.95])
             difference() {
-                cylinder(d = sun_pitch_diameter, h = planetary_stage_width_placeholder, center = true);
+                linear_extrude(height = planetary_stage_width_placeholder, center = true)
+                    study_gear_profile(sun_teeth, sun_pitch_diameter / 2,
+                        sun_pitch_diameter / 2 - 1.25 * module_size,
+                        sun_pitch_diameter / 2 + module_size);
                 // Visual shaft passage only; coupling and supported stage shafts are undesigned.
                 cylinder(d = motor_shaft_diameter + 2, h = planetary_stage_width_placeholder + 1, center = true);
             }
@@ -69,11 +81,14 @@ module planetary_stage(x, stage_index) {
                 0
             ])
                 color([0.2, 0.58, 0.42, 0.95])
-                    cylinder(
-                        d = planet_pitch_diameter,
-                        h = planetary_stage_width_placeholder,
-                        center = true
-                    );
+                    difference() {
+                        linear_extrude(height = planetary_stage_width_placeholder, center = true)
+                            rotate(angle * (1 + sun_teeth / planet_teeth) + 180 + 180 / planet_teeth)
+                                study_gear_profile(planet_teeth, planet_pitch_diameter / 2,
+                                    planet_pitch_diameter / 2 - 1.25 * module_size,
+                                    planet_pitch_diameter / 2 + module_size);
+                        cylinder(d = 10, h = planetary_stage_width_placeholder + 1, center = true);
+                    }
         }
     }
 }

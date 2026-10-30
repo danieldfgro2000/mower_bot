@@ -370,6 +370,20 @@ shows one possible reduction layout only;
 [PowerTrack track engagement geometry](running-gear.md#s01-powertrack-rubber-tracks) and the
 drum's sprocket profile remain unverified.
 
+**Illustrative engagement update:** the same 350 mm OD / 200 mm-wide drum
+now has a central row of **16 discrete schematic teeth**, a hollow root ring
+and two side webs joining it to both running bands. The row occupies
+Z = -18 to +18 mm; side webs occupy Z = -26 to -18 and +18 to +26 mm.
+The root bore is 300.4 mm, clearing the 290 mm stationary motor plate by
+5.2 mm radially and the four motor posts by more than 5 mm.
+Teeth are phased between the displayed nominal wrapped guide lugs; this
+is a static no-intersection illustration, **not a matched sprocket design**.
+The 16-tooth count, rectangular tooth flanks, 308 mm root OD, shell/web
+thicknesses and guide engagement are custom visualization assumptions.
+In particular, 16 pitches of 72 mm do not establish compatibility with the
+assumed 370 mm belt mid-line diameter. Actual drive windows, pitch-line
+location, flank profile, tension-dependent meshing and output bearings remain HOLD.
+
 **Part links:** [Motor price and specifications](../02-drive-train/propulsion.md#hpm5000b-main-motor-candidate) ·
 [Motor-to-drum attachment](../02-drive-train/propulsion.md#motor-to-track-mounting) ·
 [Output shaft/bearings](../02-drive-train/propulsion.md#ps16-output-shafts-and-bearings) ·
@@ -411,8 +425,32 @@ data and a load assessment exist. Each fixed U support has 6 mm cheeks with
 Y = 440-446 mm, leaving **29 mm running clearance** and 84 mm to the battery.
 A 10 mm inboard mast and diagonal brace connect each support to the tray/frame;
 the rear brace is mirrored to land ahead of its mast. Inner faces are at
-Z = -116 mm, 6 mm outside the belt edge and 16 mm from the battery body. The
-supports are not spring-loaded. Printed wheels, axles, supports and joints are
+Z = -116 mm, 6 mm outside the belt edge and 16 mm from the battery body.
+**Second (outboard) support:** each U bridge now laps directly onto one
+12 mm-thick horizontal crosshead at Y = 440-452 mm, joined to a straight
+25 x 25 mm post on an extended **fixed carrier seat**, not the moving tray,
+idler arm or motor brace. The front post is X = 325-350, Z = 154-179 mm;
+the rear is X = -300 to -275, Z = 128-153 mm. Both run from Y = 140 to
+452 mm and each has a full 625 mm² foot on the fixed 10 mm carrier wing.
+The front crosshead spans X = 245-350, Z = 74-179 mm; the rear spans
+X = -300 to -177, Z = 74-153 mm. Each is a single flat plate with one
+square corner relief: outside its U-cheek attachment it starts at Z = 106 mm
+to clear the sloping track. Its root overlaps the actual bridge at
+Z = 74-86 mm and the actual +Z cheek at Z = 80-86 mm, rather than a
+separate pad floating above them. This is a material load-path model, not a
+specified weld or proof of resistance to a roller overload.
+The posts sit outside the cassette X span and outside the idler carriage's
+plan-view sweep; neither relies on the sliding arm. The fit tests keep at least
+5 mm from these members to the battery/tray/clamp extraction sweep, the
+idler-carriage stroke (also in plan view), the
+battery and motor harnesses, the controller and E-stop, and the running gear.
+Battery service is therefore unchanged and needs no extra unbolting step.
+The two outboard post/crosshead solids total about **4.37 kg per pod**
+(before their overlaps with the existing supports, at 7,850 kg/m³).
+They stay within the existing Z = 205 mm outboard envelope, but buckling,
+carrier-wing bending, joints and the bridge's
+load share are unchecked; the track tension is not yet known.
+The supports are not spring-loaded. Printed wheels, axles, supports and joints are
 not load-rated. The 16 mm inboard projection must be included in the
 two-pod/scissor layout.
 

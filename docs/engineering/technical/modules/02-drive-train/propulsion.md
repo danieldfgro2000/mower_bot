@@ -33,7 +33,7 @@ envelope; its terminal centers are approximate. The holding brake is not modeled
 Separate reduction exports: [3D stage 2](../../../presentation/viewer/index.html?component=planetary-2) ·
 [3D stage 3](../../../presentation/viewer/index.html?component=planetary-3).
 
-| EZ-A48500 above the open battery tray | Fixed controller and contactor support |
+| EZ-A48500 above the open battery tray | Fixed electrical plate (controller, contactor, E-stop) |
 | --- | --- |
 | [![3D controller](../../../presentation/viewer/previews/controller.png)](../../../presentation/viewer/index.html?component=controller) | [![3D controller support](../../../presentation/viewer/previews/controller-support.png)](../../../presentation/viewer/index.html?component=controller-support) |
 
@@ -180,12 +180,14 @@ terminal row running across the pod. The support is a
 20 x 10 mm post at X = -160 to -140, Z = -116 to -106 mm from the frame rail,
 a 6 mm longitudinal rail at X = -210 to +160 tied into the rear upper-roller
 mast, and cross bars under the controller and E-stop at Y = 405-411 mm.
-A 6 mm shelf at X = 140-185, Z = -70 to 0, Y = 405-411 mm
-carries the [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
+One 6 mm aluminium electrical plate at Y = 405-411 mm, bolted to
+both inboard masts and both outboard upper-roller posts, carries the
+controller, the E-stop and, at X = 140-185, Z = -70 to 0 mm, the [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
 beside the controller. The controller, contactor and all power leads stay
 stationary while the battery, base-clamp concepts and tray slide out; only the battery
 lugs are unbolted. Phase leads run directly from the motor to U/V/W with no
-connector. The preferred protected motor/battery gap was
+connector, clamped along the motor rail, rear post and plate
+([routing](../05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)). The preferred protected motor/battery gap was
 assessed first: moving the previous end mount inboard intersects the drive
 drum, while raising it encounters the return track. The top fallback retains
 the current battery, motor and commercial 40-link belt dimensions.
@@ -396,7 +398,11 @@ selected brake body. A visual-only 3 mm gear module
 produces ring/sun/planet pitch diameters of 216/72/72 mm for the first two
 stages and 150/48/51 mm for the last stage. To see the planets in the model,
 view from the final-carrier side (negative Z); the outboard view prioritizes the
-motor package. The sketch does not model actual tooth profiles, designed face widths,
+motor package. Suns, three planets and internally toothed rings now use
+visible trapezoidal schematic teeth at those same tooth counts, with illustrative
+10 mm planet bores. These are not involute manufacturing profiles or a verified
+meshing/backlash model; the 66:1 kinematic study and all package dimensions
+remain unchanged. The sketch does not model actual tooth profiles, designed face widths,
 reducer shafts, carriers' structural sections, fixed-ring supports, bearings, seals or
 assembly clearances. The 10 mm drum wall used to show its hollow interior is
 also a placeholder; none of these envelopes proves the gearbox fits or carries

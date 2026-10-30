@@ -123,5 +123,7 @@ test('invalid input is rejected and geometry is read from the actual SCAD design
     forceX: 0, forceY: 0, torqueNmm: Infinity, span: 100, width: 20, height: 20, modulus: 200000,
   }), /torqueNmm/i);
   const actual = readFrameGeometry();
-  for (const [key, value] of Object.entries(geometry)) near(actual[key], value, 0.001);
+  const revised = { ...geometry, post_width_mm: 25, post_height_mm: 25, post_span_mm: 179 };
+  for (const [key, value] of Object.entries(revised)) near(actual[key], value, 0.001);
+  assert.equal(evaluateFrameStudy(actual).passed, true, 'revised actual geometry passes the local screen');
 });

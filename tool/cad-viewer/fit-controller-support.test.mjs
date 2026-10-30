@@ -10,6 +10,9 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
   assert.ok(Math.abs(controller.max[1] - controller.min[1] - 70.47) < 0.001,
     'controller is not oversized by adding pads beyond its published envelope');
   assert.equal(controller.min[1], 411, 'fixed 6 mm support plate sits above the battery');
+  const plate = boundsFor('controller-support');
+  assert.deepEqual([plate.min[1], plate.max[1]], [405, 411],
+    'one flat 6 mm electrical plate carries the controller, contactor and E-stop');
   const battery = boundsFor('battery');
   for (const axis of [0, 2]) {
     assert.ok(Math.abs((controller.min[axis] + controller.max[axis]
@@ -26,7 +29,13 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
   const clearanceFixed = fixed.filter(id => !['battery-harness', 'pod-carrier'].includes(id))
     .map(id => `pod_component("${id}");`).join('\n');
   const sweeps = ['battery-tray', 'tray-lock-strike'];
-  const frames = ['upper_roller_support()', 'pod_frame()'];
+  // Plate joints: rear and front inboard masts, rear and front outboard posts.
+  const joints = {
+    'rear mast': [[-215, 400, -120], [40, 15, 20]],
+    'front mast': [[225, 400, -120], [40, 15, 20]],
+    'rear post': [[-305, 400, 123], [35, 15, 35]],
+    'front post': [[320, 400, 149], [35, 15, 35]],
+  };
   const stages = [0, 1, 2];
   const volume = await solidVolumes({
     seated: 'intersection() { traction_controller(); controller_support(); }',
@@ -35,8 +44,13 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
   }`,
     contactorSeated: 'intersection() { main_contactor(); controller_support(); }',
     contactorBearing: 'intersection() { translate([0, -1, 0]) main_contactor(); controller_support(); }',
-    ...Object.fromEntries(frames.map(frame => [frame,
-      `intersection() { controller_support(); ${frame}; }`])),
+    estopSeated: 'intersection() { estop_button(); controller_support(); }',
+    estopBearing: 'intersection() { translate([0, -1, 0]) estop_button(); controller_support(); }',
+    ...Object.fromEntries(Object.entries(joints).map(([name, [at, size]]) => [name,
+      `intersection() { controller_support(); upper_roller_support();
+        translate([${at}]) cube([${size}]); }`])),
+    cassetteTie: `intersection() { controller_support(); union() {
+      battery_service_tray(); pod_carrier(); slide_stage(0); } }`,
     motor: 'intersection() { traction_controller(); hpm5000b_motor_envelope(-440); }',
     ...Object.fromEntries(sweeps.map(id => [id, `intersection() {
       hull() { pod_component("${id}"); translate([0,0,305]) pod_component("${id}"); }
@@ -75,10 +89,12 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
     'contactor sits on, not inside, its bracket');
   assert.ok(volume.contactorBearing > 1,
     'contactor is carried by the fixed controller support');
-  for (const frame of frames) {
-    assert.ok(volume[frame] > 1,
-      `controller support is tied to ${frame}, not to the moving cassette`);
+  assert.ok(volume.estopSeated <= 0.01, 'E-stop enclosure sits on, not inside, the plate');
+  assert.ok(volume.estopBearing > 1, 'E-stop enclosure is carried by the same plate');
+  for (const name of Object.keys(joints)) {
+    assert.ok(volume[name] > 500, `electrical plate overlaps the ${name} for a bolted joint (${volume[name]} mm3)`);
   }
+  assert.ok(volume.cassetteTie <= 0.01, 'electrical plate is not tied to the tray or cassette');
   for (const id of ['controller', 'main-contactor', 'battery-harness', 'motor-harness']) {
     const mesh = boundsFor(id);
     assert.ok(mesh.min[2] >= -125 && mesh.max[2] <= 183,

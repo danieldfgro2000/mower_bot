@@ -24,14 +24,21 @@ inner guide move. Battery leads bolt directly to the pack terminals with no
 extra connector. The **red P+ lead** runs on the inboard side through the
 E-stop-controlled main contactor to controller B+; the **black P- lead** runs
 direct to B-. Both remain one selectable harness in the viewer. Phase leads run
-directly from the motor to U/V/W in staggered-height lanes around the drum
-and stay inside the track side silhouette. Battery and phase leads never cross in plan
-above the battery. These are not impact guards, bend-radius or support
-designs.
+directly from the motor to U/V/W with no connector. They rise beside the motor,
+run inboard along the upper motor-cradle rail and the rear outboard post, pass
+through a grommet in the fixed electrical plate, run along its top and rise on
+a riser clamp to the controller. Five supports per phase (rail clip, post
+cleat, plate grommet, plate bridge and riser clamp) leave no free span above
+200 mm, including the lug ends, so no lead hangs in the air. The phases stay
+inside the track side silhouette, at least 5 mm from each other and from
+running gear, and never cross the battery leads in plan above the battery.
+The measured phase lengths are about 774, 717 and 712 mm. The 200 mm span,
+the cleat material and the vibration rating are provisional HOLD values.
+These are not impact guards or bend-radius designs.
 
-| Battery leads via contactor | Motor phase leads (direct) |
-| --- | --- |
-| [![Battery harness](../../../presentation/viewer/previews/battery-harness.png)](../../../presentation/viewer/index.html?component=battery-harness) | [![Motor harness](../../../presentation/viewer/previews/motor-harness.png)](../../../presentation/viewer/index.html?component=motor-harness) |
+| Battery leads via contactor | Motor phase leads (direct) | Phase-lead supports |
+| --- | --- | --- |
+| [![Battery harness](../../../presentation/viewer/previews/battery-harness.png)](../../../presentation/viewer/index.html?component=battery-harness) | [![Motor harness](../../../presentation/viewer/previews/motor-harness.png)](../../../presentation/viewer/index.html?component=motor-harness) | [![Motor harness supports](../../../presentation/viewer/previews/motor-harness-supports.png)](../../../presentation/viewer/index.html?component=motor-harness-supports) |
 
 **Further detail:** [Release requirements](cables-connectors.md#specification-and-inspection-requirements) ·
 [Sourcing](cables-connectors.md#sourcing) ·
@@ -102,7 +109,7 @@ verify polarity under a qualified electrical procedure; cable color and the
 illustrative positions are not proof of the supplied hardware's polarity.
 From the P+ lug
 the red lead rises to a 45 x 70 x 70 mm **main contactor envelope** at
-X = 140-185, Y = 411-481, Z = -70 to 0 mm on the fixed support. The
+X = 140-185, Y = 411-481, Z = -70 to 0 mm on the fixed electrical plate. The
 assumed top studs and their order are placeholders, not selected hardware.
 Its output feeds B+ at X = 53, Z = -31 mm; P- feeds B- at X = 53,
 Z = 121 mm. The terminal approach centerline is Y = 487.47 mm. Fixed leads

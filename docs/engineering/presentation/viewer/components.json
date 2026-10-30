@@ -2,7 +2,7 @@
   "source": "docs/engineering/technical/cad/module-01-track-pod-fit.scad",
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
-  "notice": "Unqualified candidate fit study. The upright battery is rotated 180 degrees; the controller is centered above it on a fixed support. Four slotted-jaw/hand-knob concepts move with the open tray, but the pack flange, grip, captive hardware and secondary locks are unmodeled and do not yet secure the battery. After rated isolation and verification, unbolt the battery leads first, then unlock and extract the tray. The animation does not release the clamps or lift the pack. Terminal offsets, contactor rating, guide rating, seat-to-guide transfer, restraint and stability remain HOLD; no fabrication or electrical qualification.",
+  "notice": "Unqualified candidate fit study. The upright battery is rotated 180 degrees; the controller is centered above it on a fixed electrical plate. Four slotted-jaw/hand-knob concepts move with the open tray, but the pack flange, grip, captive hardware and secondary locks are unmodeled and do not yet secure the battery. After rated isolation and verification, unbolt the battery leads first, then unlock and extract the tray. The animation does not release the clamps or lift the pack. Terminal offsets, contactor rating, guide rating, seat-to-guide transfer, restraint and stability remain HOLD; no fabrication or electrical qualification.",
   "animations": [
     {
       "id": "battery-removal",
@@ -60,7 +60,7 @@
         { "id": "battery-guides", "label": "Flat ball guide and tray-level lock", "components": ["slide-fixed", "slide-middle", "slide-inner", "tray-lock-pin", "tray-lock-strike"] }
       ]
     },
-    { "id": "power-harnesses", "label": "05 Power harness routing (provisional)", "components": ["battery-harness", "motor-harness"] },
+    { "id": "power-harnesses", "label": "05 Power harness routing (provisional)", "components": ["battery-harness", "motor-harness", "motor-harness-supports"] },
     { "id": "annotations", "label": "Annotations (not physical parts)", "components": ["removal-arrow"] }
   ],
   "components": [
@@ -71,11 +71,11 @@
     { "id": "slide-inner", "label": "Inner ball-guide stage and float pad", "color": "#a7adb3", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#slide-inner" },
     { "id": "tray-lock-pin", "label": "Tray locking pin (work / extract)", "color": "#d99b37", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#tray-lock-pin" },
     { "id": "tray-lock-strike", "label": "Tray-level locking strip (two 12.5 mm bores)", "color": "#a57438", "document": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette", "presentation": "docs/engineering/presentation/parts.md#tray-lock-strike" },
-    { "id": "controller", "label": "EZ-A48500 on fixed frame support (published case envelope)", "color": "#333943", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller" },
-    { "id": "controller-support", "label": "Fixed controller and contactor support (frame-mounted)", "color": "#4d7399", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller-support" },
+    { "id": "controller", "label": "EZ-A48500 on the fixed electrical plate (published case envelope)", "color": "#333943", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller" },
+    { "id": "controller-support", "label": "Electrical plate: controller, contactor and E-stop (6 mm, on masts and posts)", "color": "#4d7399", "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate", "presentation": "docs/engineering/presentation/parts.md#controller-support" },
     { "id": "main-contactor", "label": "E-stop main contactor (placeholder envelope)", "color": "#5a3b6e", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#main-contactor" },
     { "id": "estop-button", "label": "Emergency stop operator (outboard, beside controller)", "color": "#e0c020", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#estop-button" },
-    { "id": "estop-mount", "label": "E-stop bracket and track finger guard", "color": "#4d7399", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#estop-mount" },
+    { "id": "estop-mount", "label": "Track finger guard tab on the electrical plate", "color": "#4d7399", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors", "presentation": "docs/engineering/presentation/parts.md#estop-mount" },
     {
       "id": "battery-harness",
       "label": "Battery leads: red P+ via contactor, black P- direct (fixed, bolted)",
@@ -87,7 +87,8 @@
       "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness",
       "presentation": "docs/engineering/presentation/parts.md#battery-harness"
     },
-    { "id": "motor-harness", "label": "Motor phase leads direct to controller (fixed)", "color": "#458359", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness" },
+    { "id": "motor-harness", "label": "Motor phase leads direct to controller (fixed, clamped route)", "color": "#458359", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness" },
+    { "id": "motor-harness-supports", "label": "Phase cable cleats, plate grommet and riser clamps (proposal)", "color": "#26272a", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness-supports" },
     {
       "id": "track",
       "label": "Rubber track (200x72x40 candidate fit study)",
@@ -97,7 +98,7 @@
     },
     {
       "id": "drive-drum",
-      "label": "Drive drum (350 mm placeholder)",
+      "label": "Drive drum with 16 illustrative traction teeth (350 mm study)",
       "color": "#b86e1f",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study",
       "presentation": "docs/engineering/presentation/parts.md#drive-drum"
@@ -118,21 +119,21 @@
     },
     {
       "id": "planetary-1",
-      "label": "Planetary stage 1 (pitch circles)",
+      "label": "Planetary stage 1 (24/72/24 schematic teeth)",
       "color": "#39946b",
       "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
       "presentation": "docs/engineering/presentation/parts.md#planetary-1"
     },
     {
       "id": "planetary-2",
-      "label": "Planetary stage 2 (pitch circles)",
+      "label": "Planetary stage 2 (24/72/24 schematic teeth)",
       "color": "#438b79",
       "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
       "presentation": "docs/engineering/presentation/parts.md#planetary-2"
     },
     {
       "id": "planetary-3",
-      "label": "Planetary stage 3 (pitch circles)",
+      "label": "Planetary stage 3 (16/50/17 schematic teeth)",
       "color": "#527c80",
       "document": "docs/engineering/technical/modules/02-drive-train/propulsion.md#hpm5000b-planetary-in-drum-study",
       "presentation": "docs/engineering/presentation/parts.md#planetary-3"
@@ -202,7 +203,7 @@
     },
     {
       "id": "pod-frame",
-      "label": "Connected motor-to-idler tray frame (proposal)",
+      "label": "Four-point motor cradle and connected pod frame (proposal)",
       "color": "#4d7399",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal",
       "presentation": "docs/engineering/presentation/parts.md#pod-frame"
@@ -230,7 +231,7 @@
     },
     {
       "id": "upper-roller-support",
-      "label": "Fixed upper U supports and inboard masts (proposal)",
+      "label": "Upper U supports with straight posts on fixed carrier wings (proposal)",
       "color": "#4d7399",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
       "presentation": "docs/engineering/presentation/parts.md#upper-roller-support"

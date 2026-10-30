@@ -44,15 +44,15 @@ completed tests. Cost-ledger ranges are inclusive.
 
 **Battery cassette packaging:** the [pod fit study](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
 reserves a 45 x 70 x 70 mm placeholder for the high-current main contactor
-on the fixed controller support, between pack B+ and controller B+. One E-stop
+on the fixed electrical plate, between pack B+ and controller B+. One E-stop
 is intended to command the main contactor of each pack open. The E-stop and
 contactors are not a substitute for a rated service disconnect and verified
 isolation. The envelope is not a selected part;
 ratings, precharge, coil supply and feedback remain HOLD.
 
 **E-stop operator placement:** the fit study places the E-stop operator
-outboard of the track, beside the controller, on an arm from the fixed
-controller support. The red mushroom head is on top and is pressed downward,
+outboard of the track, beside the controller, directly on the fixed
+electrical plate. The red mushroom head is on top and is pressed downward,
 parallel to the track side, so the pressing hand never moves toward the belt.
 A vertical finger guard between the operator and the track rises above the
 track top run. The operator stays inboard of the extracted battery lift path.

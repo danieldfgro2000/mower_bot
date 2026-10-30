@@ -9,12 +9,11 @@ frame_rear_x = battery_center_x - carrier_length / 2 - 14;
 frame_crossmember_width = 20;
 frame_crossmember_bottom_y = 130;
 frame_crossmember_height = 20;
-motor_brace_size = 24;
+motor_brace_size = 25;
 motor_brace_x_offset = 120;
 motor_brace_y_offset = 40;
-motor_brace_outer_z = track_width / 2 + 6;
-motor_brace_depth = 12;
-motor_brace_knee_x = battery_center_x - battery_length / 2 - 53;
+motor_brace_outer_z = 128;
+motor_brace_depth = 25;
 front_rail_width = 20;
 front_rail_height = 65;
 front_rail_inner_z = idler_guide_z + 17;
@@ -50,9 +49,14 @@ function frame_structural_study() = [
 module pod_carrier() {
     color([0.3, 0.45, 0.6])
         difference() {
-            translate([battery_center_x - carrier_length / 2,
-                       carrier_underside_y, carrier_center_z - carrier_width / 2])
-                cube([carrier_length, carrier_thickness, carrier_width]);
+            union() {
+                translate([battery_center_x - carrier_length / 2,
+                           carrier_underside_y, carrier_center_z - carrier_width / 2])
+                    cube([carrier_length, carrier_thickness, carrier_width]);
+                // Fixed side wings, not additions to the removable battery tray.
+                translate([-300, carrier_underside_y, 128]) cube([105, carrier_thickness, 60]);
+                translate([245, carrier_underside_y, 148]) cube([105, carrier_thickness, 40]);
+            }
             translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
                 cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
             // Slot for the flat guide; the two remaining plates are the fixed seats.
@@ -105,25 +109,22 @@ module lower_roller_supports() {
 module motor_frame_braces() {
     post_face_z = motor_inboard_face_z - motor_reaction_thickness;
     for (dy = [-motor_brace_y_offset, motor_brace_y_offset]) {
-        translate([drive_center[0] + motor_brace_x_offset - motor_brace_size / 2,
-                   drive_center[1] + dy - motor_brace_size / 2, post_face_z])
-            cube([motor_brace_size, motor_brace_size,
-                  motor_brace_outer_z + motor_brace_depth - post_face_z]);
-        hull() {
-            translate([drive_center[0] + motor_brace_x_offset, drive_center[1] + dy,
-                       motor_brace_outer_z + motor_brace_depth / 2])
-                cube([motor_brace_size, motor_brace_size, motor_brace_depth], center = true);
-            translate([motor_brace_knee_x, 140, motor_brace_outer_z + motor_brace_depth / 2])
-                cube([20, 10, motor_brace_depth], center = true);
-        }
-        hull() {
-            translate([motor_brace_knee_x, 140, motor_brace_outer_z + motor_brace_depth / 2])
-                cube([20, 10, motor_brace_depth], center = true);
-            translate([frame_rear_x + frame_crossmember_width / 2, 140,
-                       motor_brace_outer_z + motor_brace_depth / 2])
-                cube([20, 10, motor_brace_depth], center = true);
-        }
+        for (side = [-1, 1])
+            translate([drive_center[0] + side * motor_brace_x_offset - motor_brace_size / 2,
+                       drive_center[1] + dy - motor_brace_size / 2, post_face_z])
+                cube([motor_brace_size, motor_brace_size,
+                      motor_brace_outer_z + motor_brace_depth - post_face_z]);
+        translate([drive_center[0] - motor_brace_x_offset - motor_brace_size / 2,
+                   drive_center[1] + dy - motor_brace_size / 2, motor_brace_outer_z])
+            cube([-272 - (drive_center[0] - motor_brace_x_offset - motor_brace_size / 2),
+                  motor_brace_size, motor_brace_depth]);
     }
+    // Two straight cross-ties close the cradle; the forward tie seats on the carrier wing.
+    for (x = [drive_center[0] - motor_brace_x_offset - motor_brace_size / 2, -300])
+        translate([x, drive_center[1] - motor_brace_y_offset - motor_brace_size / 2,
+                   motor_brace_outer_z])
+            cube([motor_brace_size, 2 * motor_brace_y_offset + motor_brace_size,
+                  motor_brace_depth]);
 }
 
 module front_rail_reinforcement(side) {
@@ -190,7 +191,25 @@ module upper_roller_mast(x, y, flip = false) {
         }
 }
 
+module upper_roller_outboard_support(x, y, flip, post_x, post_z) {
+    color([0.3, 0.45, 0.6]) {
+        arm_from = flip ? post_x : x;
+        arm_to = flip ? x + 18 : post_x + 25;
+        // A single square relief in this flat plate clears the adjacent sloping belt.
+        difference() {
+            translate([arm_from, y - 70, 74])
+                cube([arm_to - arm_from, 12, post_z + 25 - 74]);
+            translate([flip ? arm_from - 1 : x + 18, y - 71, 73])
+                cube([flip ? x - 18 - arm_from + 1 : arm_to - x - 17, 14, 33]);
+        }
+        translate([post_x, carrier_underside_y, post_z])
+            cube([25, y - 58 - carrier_underside_y, 25]);
+    }
+}
+
 module upper_roller_support() {
     upper_roller_mast(upper_roller_center[0], upper_roller_center[1]);
     upper_roller_mast(upper_roller_2_center[0], upper_roller_2_center[1], true);
+    upper_roller_outboard_support(upper_roller_center[0], upper_roller_center[1], false, 325, 154);
+    upper_roller_outboard_support(upper_roller_2_center[0], upper_roller_2_center[1], true, -300, 128);
 }
