@@ -2,6 +2,51 @@
 // Included by ../module-01-track-pod-fit.scad; not a standalone model.
 // Shares its global parameters (parameters.scad); millimetres.
 
+frame_rail_bottom_y = 90;
+frame_rail_thickness = 10;
+frame_rail_inner_z = 90;
+frame_rear_x = battery_center_x - carrier_length / 2 - 14;
+frame_crossmember_width = 20;
+frame_crossmember_bottom_y = 130;
+frame_crossmember_height = 20;
+motor_brace_size = 24;
+motor_brace_x_offset = 120;
+motor_brace_y_offset = 40;
+motor_brace_outer_z = track_width / 2 + 6;
+motor_brace_depth = 12;
+motor_brace_knee_x = battery_center_x - battery_length / 2 - 53;
+front_rail_width = 20;
+front_rail_height = 65;
+front_rail_inner_z = idler_guide_z + 17;
+front_rail_outer_z = front_rail_inner_z + front_rail_width;
+front_rail_start_x = idler_center[0] - 200;
+front_rail_root_x = idler_center[0] - 145;
+front_rail_end_x = idler_center[0] + 67;
+
+function frame_structural_study() = [
+    ["post_width_mm", motor_brace_size],
+    ["post_height_mm", motor_brace_size],
+    ["post_span_mm", motor_brace_outer_z + motor_brace_depth
+        - (motor_inboard_face_z - motor_reaction_thickness)],
+    ["post_spacing_mm", 2 * motor_brace_y_offset],
+    ["post_offset_mm", motor_brace_x_offset],
+    ["motor_cg_from_post_root_mm", motor_body_length / 2 + motor_reaction_thickness],
+    ["rail_width_mm", frame_rail_thickness],
+    ["rail_height_mm", slide_bottom_y - frame_rail_bottom_y],
+    ["rail_span_mm", max([for (i = [0 : lower_support_roller_count - 2])
+        lower_roller_x(i + 1) - lower_roller_x(i)])],
+    ["cross_width_mm", frame_crossmember_width],
+    ["cross_height_mm", frame_crossmember_height],
+    ["cross_span_mm", 2 * frame_rail_inner_z + frame_rail_thickness],
+    ["front_width_mm", front_rail_width],
+    ["front_height_mm", front_rail_height],
+    ["front_span_mm", front_rail_end_x - front_rail_root_x],
+    ["front_guide_offset_mm", front_rail_inner_z + front_rail_width / 2 - idler_guide_z],
+    ["plate_net_thickness_mm", motor_reaction_thickness - 8],
+    ["motor_pcd_mm", motor_mount_pcd],
+    ["motor_bolt_mm", motor_mount_nominal_diameter]
+];
+
 module pod_carrier() {
     color([0.3, 0.45, 0.6])
         difference() {
@@ -57,30 +102,61 @@ module lower_roller_supports() {
                          lower_belt_inner_face_y + lower_support_roller_diameter / 2);
 }
 
+module motor_frame_braces() {
+    post_face_z = motor_inboard_face_z - motor_reaction_thickness;
+    for (dy = [-motor_brace_y_offset, motor_brace_y_offset]) {
+        translate([drive_center[0] + motor_brace_x_offset - motor_brace_size / 2,
+                   drive_center[1] + dy - motor_brace_size / 2, post_face_z])
+            cube([motor_brace_size, motor_brace_size,
+                  motor_brace_outer_z + motor_brace_depth - post_face_z]);
+        hull() {
+            translate([drive_center[0] + motor_brace_x_offset, drive_center[1] + dy,
+                       motor_brace_outer_z + motor_brace_depth / 2])
+                cube([motor_brace_size, motor_brace_size, motor_brace_depth], center = true);
+            translate([motor_brace_knee_x, 140, motor_brace_outer_z + motor_brace_depth / 2])
+                cube([20, 10, motor_brace_depth], center = true);
+        }
+        hull() {
+            translate([motor_brace_knee_x, 140, motor_brace_outer_z + motor_brace_depth / 2])
+                cube([20, 10, motor_brace_depth], center = true);
+            translate([frame_rear_x + frame_crossmember_width / 2, 140,
+                       motor_brace_outer_z + motor_brace_depth / 2])
+                cube([20, 10, motor_brace_depth], center = true);
+        }
+    }
+}
+
+module front_rail_reinforcement(side) {
+    outer_web_z = side > 0 ? front_rail_inner_z : -front_rail_outer_z;
+    anchor_z = side > 0 ? frame_rail_inner_z : -front_rail_outer_z;
+    anchor_width = front_rail_outer_z - frame_rail_inner_z;
+    translate([front_rail_start_x, 150 - front_rail_height, outer_web_z])
+        cube([front_rail_end_x - front_rail_start_x, front_rail_height, front_rail_width]);
+    translate([front_rail_start_x, 138, anchor_z])
+        cube([front_rail_end_x - front_rail_start_x, 12, anchor_width]);
+    translate([front_rail_start_x, 90, anchor_z])
+        cube([front_rail_root_x - front_rail_start_x, 50, anchor_width]);
+}
+
 module pod_frame() {
-    tray_rear = battery_center_x - carrier_length / 2;
     color([0.3, 0.45, 0.6]) {
-        for (dy = [-40, 40])
-            hull() {
-                translate([drive_center[0] + 110, drive_center[1] + dy, -21])
-                    cube([20, 20, 8], center = true);
-                translate([battery_center_x - battery_length / 2 - 50,
-                           carrier_underside_y + 5, -21])
-                    cube([20, 10, 8], center = true);
-            }
-        translate([battery_center_x - battery_length / 2 - 50, 140, -25])
-            cube([50, 10, 8]);
+        motor_frame_braces();
+        translate([frame_rear_x, frame_crossmember_bottom_y, -100])
+            cube([frame_crossmember_width, frame_crossmember_height,
+                  motor_brace_outer_z + motor_brace_depth + 100]);
         for (side = [-1, 1]) {
-            rail_z = side > 0 ? 90 : -100;
+            rail_z = side > 0 ? frame_rail_inner_z : -frame_rail_inner_z - frame_rail_thickness;
+            front_rail_reinforcement(side);
             difference() {
-                translate([tray_rear, 110, rail_z])
-                    cube([idler_center[0] - 140 - tray_rear, 30, 10]);
+                translate([frame_rear_x, frame_rail_bottom_y, rail_z])
+                    cube([idler_center[0] - 140 - frame_rear_x,
+                          140 - frame_rail_bottom_y, frame_rail_thickness]);
                 // Notch: the fixed guide stage bears on the rails at Y = 129.9.
                 translate([slide_slot[0], slide_bottom_y, rail_z - 1])
-                    cube([slide_slot[1] - slide_slot[0], 20, 12]);
+                    cube([slide_slot[1] - slide_slot[0], 20, frame_rail_thickness + 2]);
             }
-            translate([idler_center[0] - 145, 137, rail_z])
-                cube([212, 13, 10]);
+            translate([idler_center[0] - 145, 138, rail_z])
+                cube([212, 12, 10]);
             for (dx = [-67, 55])
                 difference() {
                     translate([idler_center[0] + dx, 112, side * idler_guide_z - 8])

@@ -247,7 +247,7 @@ central adjustment space, but increases pod body width and shifts pod CG.
 Both-pod/scissor/transport and removal clearances still need checking against
 the [1 m deck constraint](../../width-and-slope-sizing.md#minimum-width-and-packaging).
 The revised 200 mm drum retains a 6 mm inboard axial remainder. The current
-206 mm motor/flange/reducer/carrier stack projects 12 mm outboard for the new
+210 mm motor/flange/reducer/carrier stack projects 16 mm outboard for the new
 reaction plate; brake and reducer-bearing integration are still open.
 
 ### Tensioner and idler interfaces
@@ -344,7 +344,7 @@ against the battery, carrier, guards and battery-removal path.
 Four support assemblies per track, evenly spaced along the lower run, remain
 in the study: paired 120 x 50 mm PC/TPU wheels with two 6004 bearings per wheel.
 The frontmost lower axle moves 15 mm rearward to clear the sliding idler yoke;
-equal center spacing becomes 143.119 mm, leaving **23.1 mm** between wheel
+equal center spacing becomes 140.103 mm, leaving **20.1 mm** between wheel
 envelopes. Each pair has a proposed U support: two 6 mm cheeks with 5 mm
 tire-side gaps, a 6 mm top bridge at Y = 134-140 mm, 4 mm above the wheel tops,
 and a 20 mm axle through the bearing bores. The center axle underside clears

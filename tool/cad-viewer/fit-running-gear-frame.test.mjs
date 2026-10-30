@@ -7,7 +7,7 @@ test('motor includes the published shaft envelope and four mounting openings', (
   const { min, max, size } = motor;
   assert.deepEqual(size, [206, 206, 179]);
   assert.ok(max[0] < 0, 'motor remains at the drive end, not recentered for export');
-  assert.equal(Math.round(max[2]), 112, '12 mm reaction plate moves the unchanged motor body outboard');
+  assert.equal(Math.round(max[2]), 116, '16 mm reaction plate moves the unchanged motor body outboard');
   const x = (min[0] + max[0]) / 2, y = (min[1] + max[1]) / 2;
   const face = max[2] - 126;
   for (const angle of [45, 135, 225, 315]) {
@@ -168,7 +168,7 @@ test('four U brackets carry real axle envelopes without occupying tread or guide
 
 test('motor reaction flange uses the published holes and clears the shaft and reducer', () => {
   const mount = boundsFor('motor-mount'), motor = boundsFor('motor');
-  assert.deepEqual(mount.size, [250, 250, 12]);
+  assert.deepEqual(mount.size, [290, 290, 16]);
   assert.equal(mount.max[2], motor.max[2] - 126, 'flange is on the motor mounting face');
   assert.equal(mount.min[2] - boundsFor('planetary-1').max[2], 2, 'reducer gap retained');
   const [x, y] = center(motor);
@@ -177,7 +177,8 @@ test('motor reaction flange uses the published holes and clears the shaft and re
     const dx = 74 * Math.cos(angle * Math.PI / 180), dy = 74 * Math.sin(angle * Math.PI / 180);
     assert.equal(contains(mount, [x + dx, y + dy, -15]), false, 'aligned 9 mm clearance hole');
     assert.equal(contains(mount, [x + dx + 6, y + dy, -24]), false, 'head recess, not buried hardware');
-    assert.equal(contains(mount, [x + dx + 6, y + dy, -15]), true, 'material behind counterbore');
+    assert.equal(contains(mount, [x + dx + 6, y + dy, -19]), false, '8 mm head recess');
+    assert.equal(contains(mount, [x + dx + 6, y + dy, -17]), true, '8 mm material behind counterbore');
   }
 });
 

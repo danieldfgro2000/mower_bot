@@ -39,8 +39,8 @@ motor_key_seat_height = 19; // Drawing cross-section, not a 19 mm shaft.
 motor_mount_pcd = 148;
 motor_mount_nominal_diameter = 8; // Nominal M8 opening, not tapping drill size.
 motor_mount_depth_placeholder = 10;
-motor_reaction_thickness = 12;
-motor_reaction_diameter = 250;
+motor_reaction_thickness = 16;
+motor_reaction_diameter = 290;
 motor_speed_study_rpm = 4000; // S23 listing value; exact variant unverified.
 planetary_stage_count = 3;
 planetary_sun_teeth = [24, 24, 16];
@@ -136,7 +136,7 @@ battery_terminal_y = 348; // Photo-based short-face landing, not a released stud
 battery_terminal_x = battery_center_x + battery_length / 2 + 18;
 // The 180-degree upright rotation reverses both the terminal end and their Z positions.
 battery_terminal_z = [for (z = [-35, 123]) 2 * carrier_center_z - z]; // P- / P+.
-motor_landing = [-440, 265, 118]; // 12 mm cable envelope tangent to assumed Z=112 motor face.
+motor_landing = [-440, 265, motor_outboard_face_z + 6]; // Cable envelope tangent to the assumed motor face.
 
 roller_radius = track_path_diameter / 2;
 idler_path_radius = (idler_outer_diameter + belt_thickness) / 2;

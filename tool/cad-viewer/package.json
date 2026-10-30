@@ -8,6 +8,7 @@
     "sync": "node sync.mjs",
     "start": "node server.mjs",
     "test": "cd ../.. && node --test tool/cad-viewer/*.test.mjs",
+    "stress": "cd ../.. && node --test tool/cad-viewer/fit-structural-frame.test.mjs tool/cad-viewer/structural-screen.test.mjs && node tool/cad-viewer/structural-screen.mjs",
     "test:browser": "node browser-test.mjs"
   },
   "dependencies": {

@@ -48,8 +48,8 @@ production readiness are not claimed.
 | [Rear fixed upper roller (paired 70x50 study)](parts.md#upper-roller-2) | Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified. |
 | [Battery tray (524x288x10 proposed plate)](parts.md#pod-carrier) | See technical scope; this is a study element. |
 | [Lower roller U supports and axles (proposal)](parts.md#lower-roller-supports) | Four proposed U supports; unchanged 120 mm wheels. Axle fits and structural capacity unqualified. |
-| [Connected motor-to-idler tray frame (proposal)](parts.md#pod-frame) | Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price. |
-| [Motor reaction plate (250x12 proposal)](parts.md#motor-mount) | Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified. |
+| [Connected motor-to-idler tray frame (proposal)](parts.md#pod-frame) | Reinforced custom frame proposal; local beam screens only. Joints and complete two-pod fit unqualified; no separately established price. |
+| [Motor reaction plate (290x16 proposal)](parts.md#motor-mount) | Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified. |
 | [Sliding idler yoke and sleeves (proposal)](parts.md#idler-carriage) | Sliding front-idler proposal with geometric stops; usable belt travel and retained bearing fits unqualified. |
 | [Idler spring, guide and reaction seat (proposal)](parts.md#idler-spring) | Schematic compression spring, not a selected commercial part or qualified tension setting; no established price. |
 | [Fixed upper U supports and inboard masts (proposal)](parts.md#upper-roller-support) | Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified. |

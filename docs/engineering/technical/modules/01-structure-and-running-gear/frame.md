@@ -70,23 +70,26 @@ records against approved criteria
 
 #### Connected pod frame proposal
 
-**Custom CAD proposal, 2026-10-29:** retain the 524 x 288 x 10 mm fixed carrier and
+**Revised custom CAD proposal:** retain the 524 x 288 x 10 mm fixed carrier and
 extend its structure from the stationary motor mount to the sliding front idler.
-Two diagonal 8 mm plates run in the drum's central relief at Z = -25 to -17 mm,
-ending 40 mm further rearward than the former arms; a 50 x 10 x 8 mm low tie
-then joins the carrier below the moving cassette. This clears its enlarged
-terminal alcove without disconnecting the frame. They connect to the motor
-flange, not the rotating drum shell. The carrier front is locally relieved
-5 mm beyond the idler's worst-case wheel envelope.
+Two solid 24 x 24 mm axial posts run from the rear of the motor reaction plate
+at Z = -26 mm to the outboard braces at Z = +118 mm, 80 mm apart vertically
+and 120 mm ahead of the motor axis. Triangulated braces outside the track join
+them to a 20 x 20 mm rear crossmember at X = -241 to -221 mm. The crossmember
+ties into both 10 mm side rails and the fixed carrier; it is not attached to
+the rotating drum. The rear rails now run from Y = 90 to 140 mm, with 39.9 mm
+of depth left under the slide notch. The carrier remains locally relieved for
+the idler's geometric stroke.
 
-Longitudinal side rails occupy Z = 90-100 / -100 to -90 mm. Their rear portions
-run at Y = 110-140 mm; the front portions step up to Y = 137-150 mm, overlapping
-by 5 mm longitudinally and 3 mm vertically. This leaves **5 mm above the
-idler yoke** at its highest point and connects to the roller bridges and tray.
-Front guide blocks carry two 10 mm rods at Y = 120, Z = +/-104 mm. Proposed
-20 mm stop collars limit the 48 mm sleeves to +/-15 mm longitudinal movement.
-A transverse member at X = 225-233, Y = 134-140 mm joins the spring reaction
-seat to both rails, with 4 mm over the lower wheel tops.
+The front guide supports no longer depend on a 13 x 10 mm stepped rail and
+5 x 3 mm overlap. Each side has a solid **20 x 65 mm** web from approximately
+X = 210.3 to 477.3 mm, at Z = 121-141 mm or -141 to -121 mm. A 12 mm top
+cap joins the guide blocks to this web; a 55 mm-long deep rear anchor connects
+it to the existing rail and roller bridge. The cap starts at Y = 138 mm, 6 mm
+above the highest yoke. Front guide blocks still carry the 10 mm rods at
+Y = 120, Z = +/-104 mm; proposed 20 mm stop collars limit the 48 mm sleeves
+to +/-15 mm. A transverse member at X = 225-233, Y = 134-140 mm joins the
+spring reaction seat to both rails, with 4 mm over the lower wheel tops.
 
 The [cassette guides](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
 are now one flat 76.2 mm guide under the tray at X = -26.1 to +50.1 mm,
@@ -98,27 +101,77 @@ guides the lock pin up into a strip on the tray edge, at tray level.
 Guide mounting holes, welds and end-stop details remain open. The 85 kg /
 1.5 g extraction screen is **not** a frame or joint capacity proof.
 
-The two [fixed upper supports](running-gear.md#fixed-upper-roller-support) join the
-tray/frame with inboard masts; each extends **16 mm inside the track edge**.
+The [fixed upper supports](running-gear.md#fixed-upper-roller-support) extend
+16 mm inside the track edge, but the new front rail extends **41 mm** inside.
 The [two-pod width screen](../../width-and-slope-sizing.md#minimum-width-and-packaging)
-includes that intrusion. Frame sections, welds/bolts, stop retention, torsion,
-motor reaction, skid-steer side loads, spring forces and fatigue require a
-released load assessment. Positive modeled connection volumes are not
-structural qualification. These additions are unpriced custom proposals
-beyond existing generic allowances; baseline quantities and totals are unchanged.
+includes the more restrictive intrusion. Positive modeled connection volumes
+are not welds or structural qualification.
+
+At an assumed steel density of 7,850 kg/m³, the rendered solid pod frame is
+about **14.38 kg per pod**, excluding the carrier and other supports; both
+frames alone are about **28.75 kg** versus the 30 kg CHS-001 generic tube-stock
+allowance. This is not a tube cut list or evidence that the allowance covers
+the actual material. Each modeled motor plate is about **8.16 kg**; two are
+about **16.32 kg**, exceeding the 12 kg CHS-004 plate-stock allowance by at
+least **4.32 kg** before reducer plates and cutting waste. The modeled union
+of frame and motor plate is about **22.39 kg per pod**. These are unpriced
+candidate exposures, not approved BOM changes; actual stock, additional parts
+and fabrication costs require a new cut list and estimate.
+
+#### Local structural load screen
+
+Run `npm run stress --prefix tool/cad-viewer` from the repository root. It
+reads the member dimensions from the SCAD model, verifies the material and
+clearance probes, and applies simplified elastic beam calculations. It is
+an **analytical local screening tool, not finite-element analysis or a physical
+stress test**. For assumed solid S235 steel, it uses E = 200,000 MPa, Poisson
+ratio 0.3, yield = 235 MPa and provisional limits of **117.5 MPa** and **1 mm**.
+The command fails if a screened case exceeds either limit.
+
+The motor case combines the supplier's unverified **45 Nm peak claim x 2**
+with an 11 kg motor at 2 g. It includes the 120 mm post offset, an assumed
+mid-body CG 79 mm from the plate's rear face, and the full 144 mm post span.
+Each post receives 1,448.7 N transverse, 107.9 N vertical and 213.1 N axial.
+For the pod cases, the plan's provisional 300 kg machine mass is split equally
+between two pods and multiplied by 2 g: 2,943 N per pod. The notched rail
+receives 75% of this synthetic load; the crossmember receives all of it at
+midspan. The front case applies **2,943 N vertical and 2,943 N axial
+simultaneously** to one ideal fixed-end rail, at the guide's 27 mm offset.
+It includes eccentric bending and torsion; solid-rectangle torsion coefficients
+0.20 for shear and 0.14 for the torsion constant bound the idealized
+[rectangular-bar calculation](https://amesweb.info/Torsion/Torsion-Rectangular-Sections-Calculator.aspx)
+conservatively. These loads are study assumptions, not measured maxima.
+
+| Idealized local case | Combined stress | Tip / midspan deflection | Provisional screen |
+| --- | ---: | ---: | --- |
+| One motor post | 97.9 MPa | 0.261 mm | Pass |
+| Notched rear rail | 30.0 MPa | 0.012 mm | Pass |
+| Rear crossmember | 105.3 MPa | 0.158 mm | Pass |
+| One front idler rail, including eccentricity | 72.5 MPa | 0.332 mm | Pass |
+
+Ideal four-bolt **average** plate-bearing pressure is 5.6 MPa and is
+informational only. The calculations assume ideal supports and load transfer;
+they do not establish plate bending, bolt/thread strength, welds, local
+stress concentrations, guide rods, axle/bearings, buckling or fatigue.
+They do not determine actual track tension, reducer fixed-ring reaction
+(which can greatly exceed motor torque), braking, impacts, lateral skid
+loads, scissor/spine attachments, complete-frame stiffness or vehicle
+stability. Analyze and independently validate the complete load paths and
+joint details before any fabrication or use; all release holds remain.
 
 #### Motor and reducer mounting plates
 
 **Current definition:** CHS-004 reserves mounting-plate stock, not a finished
 motor bracket. Its budgeted mass does not establish a released mounting drawing.
 
-**Custom CAD proposal:** a 250 mm OD x 12 mm reaction plate on the motor's
+**Custom CAD proposal:** a 290 mm OD x 16 mm reaction plate on the motor's
 published front mounting face, with a 26 mm shaft aperture and four 9 mm
 clearance holes on the published 148 mm PCD. Proposed 14 mm head recesses are
-8 mm deep, leaving 4 mm of plate behind them. Hole clocking, fastener head
+8 mm deep, leaving 8 mm of plate behind them. Hole clocking, fastener head
 geometry/length/engagement, tool access and strength still need qualification.
-The unchanged 206 x 126 mm motor body moves 12 mm outboard to make space;
-the reducer stages stay put. See the [axial package](../02-drive-train/propulsion.md#cad-package-envelope).
+The unchanged 206 x 126 mm motor body moves 16 mm outboard relative to the
+no-plate reference, 4 mm farther than the previous proposal; the reducer stages
+stay put. See the [axial package](../02-drive-train/propulsion.md#cad-package-envelope).
 
 For the [HPM5000B in-drum concept](../02-drive-train/propulsion.md#motor-to-track-mounting),
 the motor housing and stationary ring gears need defined attachment and load

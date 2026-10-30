@@ -40,7 +40,7 @@ The BOM baseline is not changed by this candidate study.
 | Battery service cassette | Open 8 mm steel tray (no box) with four removable slotted-jaw/hand-knob concepts on fixed seats; one flat 305 mm telescopic guide under the tray; tray-level 12 mm pin and two 12.5 mm bores | [Geometry, 85 kg load screen and S40 price](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette). The pack's base flange, clamp grip, threads and lock are unmodeled; the concepts are **not a verified restraint**. The single flat guide rating (about 27.2 kg) is below the pack, so guide, seat transfer and joints remain HOLD |
 | Controller / contactor / harness | EZ-A48500 A-series 200 x 164 x 70.47 mm overall, centered on a fixed frame support above the tray; its terminal row runs across the pod at X = 53; X = -47 to +117, Z = -56 to +144, base Y = 411 mm. A 45 x 70 x 70 mm contactor placeholder shares the support | [Position assessment/drawing evidence](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate), [terminal/harness assumptions](../modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness). Battery lugs bolt directly to the terminals; P+ is switched by the E-stop contactor; phases run directly to the motor inside the track side silhouette, with no connectors; exact battery offsets / motor cable exit unverified |
 | Lower U supports | Four pairs of 6 mm cheeks, 20 mm axles, 6 mm top bridges at Y = 134-140 mm | [Support details](../modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers); 5 mm tire-side and 4 mm bridge/tread gaps; bearing fits, retention and loads unqualified |
-| Tray frame / motor plate | Rear arms through drum relief, stepped side rails to front guide blocks; 250 mm OD x 12 mm motor plate, 148 mm mounting PCD | [Frame proposal](../modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal); motor moves 12 mm outboard, reducer positions unchanged; fixed-ring and brake mounts still absent |
+| Tray frame / motor plate | Two 24 x 24 mm motor posts, triangulated outboard braces, deeper rear rails and 20 x 65 mm front webs; 290 mm OD x 16 mm motor plate, 148 mm mounting PCD | [Frame proposal and local stress screens](../modules/01-structure-and-running-gear/frame.md#local-structural-load-screen); motor moves 16 mm outboard relative to the no-plate reference, reducer positions unchanged; joints, fixed-ring and brake mounts still absent |
 | Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 57.036 mm nominal seat gap, 42.036-72.036 mm geometric range; no rate/preload or selected commercial spring |
 
 Drive and idler axes are at X = -440 and +410.308 mm: **850.308 mm spacing**.
@@ -58,9 +58,10 @@ equal-wheel approximation. The belt-body longitudinal envelope is approximately
 | Adjacent lower rollers | At least 10 mm; locations recalculate with the idler | 10 mm |
 | Battery to drive / idler physical envelopes | At least 20 mm | 20 mm |
 | Guide lateral gap, each side | 13 mm at lower/upper wheels and drum; 8 mm at idler hubs | 5 mm |
-| Motor + reaction plate + stages + carrier | 206 mm stack; 12 mm outboard projection, **6 mm inboard remainder** | 5 mm; excludes brake/reducer supports |
+| Motor + reaction plate + stages + carrier | 210 mm stack; 16 mm outboard projection, **6 mm inboard remainder** | 5 mm; excludes brake/reducer supports |
 | U bridges to lower / upper wheels | 4 / 29 mm | 3 / 5 mm provisional running gaps |
-| Front stepped rails to moving yoke | 5 mm vertical | 5 mm provisional; checked through +/-15 mm X stroke |
+| Reinforced front rail caps / outer webs to moving yoke / sleeves | 6 mm vertical / lateral; at least 5 mm to the continuous carriage sweep and nominal track envelope | 5 mm provisional; guide rod/sleeve contact is intentional, track deflection and load unqualified |
+| Motor posts / plate to motor, drum, track, lower wheel and phase leads | At least 5 mm to represented envelopes | 5 mm provisional; actual hardware and deformation unmodeled |
 | Guide rod to sleeve bore | 0.5 mm radial | Study clearance only; not a selected sliding-bearing fit |
 | Battery and individual base-clamp sweeps to fixed gear, controller, contactor and frame | At least 5 mm, checked by expanded solid sweeps | Provisional geometry screen only; real flange and dynamic cassette allowance not qualified |
 | Tray sweep to full +/-15 mm idler/yoke stroke | At least 5 mm, checked by expanded conservative envelopes | Idler stroke is geometric, not proven usable tensioning travel |
@@ -101,8 +102,8 @@ X = 53 mm. The phases use staggered-height lanes past the drive drum and
 climb behind the battery; the pack leads approach from the rotated +X terminal
 end. Battery and phase leads do not cross in plan above the battery.
 Power harnesses, controller and
-contactor stay inside Z = -125 to +183 mm; the fixed flat guide and locking
-strip set the physical envelope at Z = -125 to +205 mm. Top mounting needs
+contactor stay inside Z = -125 to +183 mm; the reinforced front rail and fixed
+flat guide set the physical envelope at Z = -141 to +205 mm. Top mounting needs
 reviewed support joints, cooling and overhead protection; the battery carries
 no controller load.
 The battery bottom rises
@@ -258,6 +259,12 @@ run the full `npm test --prefix tool/cad-viewer`. Earlier evidence entries
 cite `export.test.mjs`; its tests now live in the matching `fit-*.test.mjs`
 files.
 
+Run `npm run stress --prefix tool/cad-viewer` for the CAD-backed local
+structural and clearance screens. It reports assumed loads, stresses and
+deflections and exits nonzero when a case fails. The
+[load cases, mass exposure and exclusions](../modules/01-structure-and-running-gear/frame.md#local-structural-load-screen)
+are part of the result; a passing screen is not frame or machine qualification.
+
 `fit-estop.test.mjs` checks two things, written before the geometry.
 First, the E-stop operator is outboard of the track (at least 30 mm), beside
 the controller (within 60 mm) and stands proud on top. Its finger guard
@@ -276,6 +283,18 @@ P+ 320 mm, P- 320 mm, 700 mm per phase and 2,060 mm for all three phases.
 Modeled routes are about P+ 314, P- 312 and U/V/W 679/681/692 mm.
 
 ## Refresh and verify
+
+**Frame reinforcement test-first update:** new material and load regressions
+first failed on the old slender motor supports, front rails and missing
+eccentric load case. The first 5 mm front-clearance probe also exposed a
+yoke-to-cap clearance of only 5 mm, so the cap was raised to 6 mm. A convex
+hull of the complete carriage between the stroke extremes, expanded by 5.1 mm,
+conservatively covers its continuous translation against the added front rails.
+The nominal track check separately bounds the side belt/treads and central lugs.
+These geometric
+checks do not cover belt deformation, tolerance stack-up or guide-bearing fit.
+The [local beam screens](../modules/01-structure-and-running-gear/frame.md#local-structural-load-screen)
+are analytical comparisons, not FEA or physical testing.
 
 **Centered controller and battery base-clamp test-first update (2026-10-30):**
 The cassette, controller and harness checks first failed on the old straps,
@@ -330,8 +349,9 @@ envelope. A second red assertion exposed an extra 10 mm pad allowance beyond
 the published overall depth; this was corrected to 70.47 mm including pads,
 and the short-end probes were repeated with that actual depth.
 The focused roof/sweep and harness regressions then passed after roof mounting,
-guide restoration and route separation. They enforce the box-width limit on
-controller and harnesses, the 205/-125 mm seated pod side limits, a 5 mm
+guide restoration and route separation. At that time they enforced the
+205/-125 mm seated pod side limits (the reinforced rail now reaches -141 mm),
+the box-width limit on controller and harnesses, a 5 mm
 expanded controller sweep against all fixed components, and unchanged
 enclosure/guide/load screens. Moving cables use exact sweeps of individual
 convex capsule segments, not a hull across disconnected branches or a

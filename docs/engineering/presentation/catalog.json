@@ -324,7 +324,7 @@
     },
     {
       "id": "pod-frame",
-      "status": "Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price.",
+      "status": "Reinforced custom frame proposal; local beam screens only. Joints and complete two-pod fit unqualified; no separately established price.",
       "facts": [
         {
           "label": "Structural connection",
@@ -347,15 +347,15 @@
       "facts": [
         {
           "label": "Proposed plate",
-          "value": "250 mm OD × 12 mm; motor moves 12 mm outboard",
-          "evidence": "250 mm OD x 12 mm reaction plate"
+          "value": "290 mm OD × 16 mm; motor moves 16 mm outboard",
+          "evidence": "290 mm OD x 16 mm reaction plate"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates",
           "quotes": [
-            "250 mm OD x 12 mm reaction plate"
+            "290 mm OD x 16 mm reaction plate"
           ]
         }
       ]

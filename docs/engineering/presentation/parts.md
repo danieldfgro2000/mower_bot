@@ -373,7 +373,7 @@ interfaces and release holds, follow the linked technical detail.
 
 ### Connected motor-to-idler tray frame (proposal)
 
-**Status:** Connected custom frame proposal; strength, joints and complete two-pod fit unqualified. No separately established price.
+**Status:** Reinforced custom frame proposal; local beam screens only. Joints and complete two-pod fit unqualified; no separately established price.
 
 [![Connected motor-to-idler tray frame (proposal)](viewer/previews/pod-frame.png)](viewer/index.html?component=pod-frame&mode=presentation)
 | | |
@@ -384,16 +384,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="motor-mount"></a>
 
-### Motor reaction plate (250x12 proposal)
+### Motor reaction plate (290x16 proposal)
 
 **Status:** Custom reaction-plate proposal on the published motor pattern; fasteners and loads unqualified.
 
-[![Motor reaction plate (250x12 proposal)](viewer/previews/motor-mount.png)](viewer/index.html?component=motor-mount&mode=presentation)
+[![Motor reaction plate (290x16 proposal)](viewer/previews/motor-mount.png)](viewer/index.html?component=motor-mount&mode=presentation)
 | | |
 | --- | --- |
-| Proposed plate | 250 mm OD × 12 mm; motor moves 12 mm outboard |
+| Proposed plate | 290 mm OD × 16 mm; motor moves 16 mm outboard |
 
-**Read more:** [Motor reaction plate (250x12 proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
+**Read more:** [Motor reaction plate (290x16 proposal) technical detail](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates) · [Technical evidence](../technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
 
 <a id="idler-carriage"></a>
 

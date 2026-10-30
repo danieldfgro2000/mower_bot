@@ -209,7 +209,7 @@
     },
     {
       "id": "motor-mount",
-      "label": "Motor reaction plate (250x12 proposal)",
+      "label": "Motor reaction plate (290x16 proposal)",
       "color": "#7a8594",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates",
       "presentation": "docs/engineering/presentation/parts.md#motor-mount"

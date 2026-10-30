@@ -313,7 +313,7 @@ not be mistaken for a 19 mm shaft.
 | Brake hub | Exact purchased reference is **19H7**; [FDB family brochure](https://sabjgearweuprodmedia.blob.core.windows.net/pim-perfion-files/product-assets/HV2052113232S/en-GB-brochure.pdf), page 2, lists other size-13 hub options and DIN keyways | The brochure does not establish a Ø22.3 mm / 5 mm-key hub option. Confirm the exact supplied hub/key/retention drawing; do not assume interchangeability |
 | Mounting pattern | Motor drawing: **four M8 holes on Ø148 mm** circle; brake size-13 family drawing: **three M6 mounts on Ø112 mm** circle | Patterns do not match. A properly designed stationary reaction flange/support is required; the motor face is not automatically a suitable brake friction surface |
 | Brake envelope | Size-13 family: **Ø130 mm** body, **Ø135 mm** outer envelope, axial body dimension **g = 53.1 mm**; C-version adjustment projection **p = 3.5 mm**, up to **9.5 mm** | Space is needed beyond the body for options, hub/retention, adjustment and service. Obtain exact SKU drawing before layout release |
-| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; candidate CAD includes this shaft and the 126 mm body. Body/reaction-plate/stages/carrier stack is **206 mm** including four 2 mm gaps, with 12 mm outboard projection beyond the 200 mm drum | **6 mm inboard axial remainder**, not enough for the 53.1 mm brake body. The shaft shares schematic sun-bore space; brake/reducer-support/service integration remains open |
+| Combined axial fit | Motor drawing: **179 mm overall**, including 53 mm projection; candidate CAD includes this shaft and the 126 mm body. Body/reaction-plate/stages/carrier stack is **210 mm** including four 2 mm gaps, with 16 mm outboard projection beyond the 200 mm drum | **6 mm inboard axial remainder**, not enough for the 53.1 mm brake body. The shaft shares schematic sun-bore space; brake/reducer-support/service integration remains open |
 
 **Integration directions to investigate, not fabrication instructions:** Ask
 Precima/BJ-Gear about a manufacturer-approved hub matching the actual motor
@@ -370,10 +370,11 @@ diameter may differ from 350 mm, so the ratio and speed remain provisional.
 
 The motor body uses the manufacturer-listed 206 mm diameter × 126 mm length.
 In the revised **200 mm track/drum-width candidate study**, its outboard face
-is now at Z = +112 mm and its mounting face at Z = -14 mm, moved 12 mm
-outboard without changing the bought motor dimensions. A proposed 12 mm
-reaction flange occupies Z = -26 to -14 mm and connects to the tray frame.
-The Ø22.3 mm shaft projects 53 mm inward to Z = -67 mm, with a schematic
+is now at Z = +116 mm and its mounting face at Z = -10 mm, moved 16 mm
+outboard relative to the no-plate reference without changing the bought motor
+dimensions. A proposed 16 mm reaction flange occupies Z = -26 to -10 mm and
+connects to the tray frame.
+The Ø22.3 mm shaft projects 53 mm inward to Z = -63 mm, with a schematic
 5 x 43 mm keyway.
 Four nominal M8 openings on the published Ø148 mm circle are visible on
 the mounting face; 10 mm blind depth, 45° clocking and 5 mm keyway end offset
@@ -386,9 +387,9 @@ Their schematic sun bores leave 1 mm radial clearance around the displayed
 shaft; no real stage shafts, couplings or interstage connections are designed.
 The final 6 mm carrier is at Z = -94 to -88 mm, leaving **6 mm inside the
 drum's inboard edge**, rather than the old 6 mm overhang. The total stack is
-**206 mm**, with 12 mm outboard projection. The shaft overlaps schematic
+**210 mm**, with 16 mm outboard projection. The shaft overlaps schematic
 stage space rather than adding 53 mm in series. The
-[250 mm reaction plate](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
+[290 mm reaction plate](../01-structure-and-running-gear/frame.md#motor-and-reducer-mounting-plates)
 uses the published front mounting pattern; no brake, reducer bearing support
 or service space is included. The 6 mm remainder is not sufficient for the
 selected brake body. A visual-only 3 mm gear module

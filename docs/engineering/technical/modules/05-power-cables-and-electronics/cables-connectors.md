@@ -109,7 +109,7 @@ Z = 121 mm. The terminal approach centerline is Y = 487.47 mm. Fixed leads
 clear the moving battery, tray and base-clamp sweep through 305 mm extraction.
 
 Yellow/green/blue phase envelopes leave the provisional motor landing at
-X = -440, Y = 265, Z = 118 mm; the three provisional landings are spaced
+X = -440, Y = 265, Z = 122 mm; the three provisional landings are spaced
 18 mm along X. They climb in lanes at Y = 340/320/300 mm, pass outboard of
 the drive drum, then turn inboard and rise behind the pack directly to
 U/V/W, with no connector. Power tubes keep at least 5 mm to the modeled
@@ -136,7 +136,10 @@ or cut a harness from these coordinates.
 power leads take the shortest route that still clears the track side
 silhouette, the tray slide and the battery lift path. The fit study holds
 them to length budgets (P+ about 332 mm via the contactor, P- about 320 mm,
-phases about 656/612/583 mm; centerline lengths only). Compared with the prior
+phases about 656.3/612.2/583.6 mm; centerline lengths only). The thicker
+reaction plate moves the motor landing 4 mm outboard; the existing
+660/615/585 mm individual and 1,855 mm total phase budgets still apply.
+Compared with the prior
 off-center layout, P+ grows about 18 mm to pass the upper roller and support
 after the battery rotation; P- grows about 8 mm to reach the centered controller
 without clipping its cover. The combined phases are about 201 mm shorter.
