@@ -1,0 +1,19 @@
+<idea-plugin>
+    <id>dev.mowerbot.agent-work-timer</id>
+    <name>Agent Work Timer</name>
+    <version>0.1.0</version>
+    <vendor>MowerBot contributors</vendor>
+    <description><![CDATA[
+        Local task timing with explicit Start/Complete boundaries, timestamped phases,
+        document edit counts, IDE run durations and overlap-aware bottleneck reports.
+        No automatic Copilot lifecycle integration, network calls or content logging.
+    ]]></description>
+    <idea-version since-build="262"/>
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="dev.mowerbot.timer.TimingService"/>
+        <toolWindow id="Agent Work Timer" anchor="right"
+                    factoryClass="dev.mowerbot.timer.TimingToolWindow"/>
+        <notificationGroup id="Agent Work Timer" displayType="BALLOON"/>
+    </extensions>
+</idea-plugin>
