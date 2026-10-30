@@ -14,14 +14,17 @@ try {
   } else {
     mkdirSync(path.join(root, outputDirectory), { recursive: true });
     mkdirSync(path.join(root, viewerDirectory, 'previews'), { recursive: true });
-    const jobs = config.components.flatMap(({ id }) => [
-      [`${outputDirectory}/${id}.stl`, 'stl', id],
-      [`${viewerDirectory}/previews/${id}.png`, 'png', id],
+    const jobs = config.components.flatMap(({ id, renderParts = [] }) => [
+      [`${outputDirectory}/${id}.stl`, 'stl', { component: id }],
+      [`${viewerDirectory}/previews/${id}.png`, 'png', { component: id }],
+      ...renderParts.map(part => [
+        `${outputDirectory}/${part.id}.stl`, 'stl', { body: `${part.module}();` },
+      ]),
     ]);
     const started = Date.now();
     const files = {};
-    await inParallel(jobs, async ([file, kind, component]) => {
-      const data = await render(config.source, kind, { component });
+    await inParallel(jobs, async ([file, kind, target]) => {
+      const data = await render(config.source, kind, target);
       if (!data?.length) throw new Error(`Empty export: ${file}`);
       writeFileSync(path.join(root, file), data);
       files[file] = digest(data);

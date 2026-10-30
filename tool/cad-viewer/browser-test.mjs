@@ -74,6 +74,59 @@ try {
       `${component.id} scrolls to the target section`);
   }
 
+  // The logical battery harness retains one selection but visibly renders both polarities.
+  await page.goto(`${origin}/?visible=battery-harness`);
+  await page.waitForSelector('#viewport[data-ready="true"]');
+  const inspectWirePixels = async () => page.evaluate(async png => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${png}`;
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, image.width, image.height).data;
+    let red = 0, black = 0, redPoint, blackPoint;
+    const colorAt = (x, y) => {
+      const i = (y * image.width + x) * 4;
+      return [pixels[i], pixels[i + 1], pixels[i + 2]];
+    };
+    const isRed = ([r, g, b]) => r > 110 && r > g * 1.5 && r > b * 1.5;
+    const isBlack = rgb => Math.max(...rgb) < 120 && Math.max(...rgb) - Math.min(...rgb) < 15;
+    for (let i = 0; i < pixels.length; i += 4) {
+      const [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]];
+      const x = (i / 4) % image.width, y = Math.floor(i / 4 / image.width);
+      const redPixel = isRed([r, g, b]), blackPixel = isBlack([r, g, b]);
+      if (redPixel) red++;
+      if (blackPixel) black++;
+      if (x < 2 || y < 2 || x >= image.width - 2 || y >= image.height - 2) continue;
+      const interior = predicate => [[0, 0], [-2, 0], [2, 0], [0, -2], [0, 2]]
+        .every(([dx, dy]) => predicate(colorAt(x + dx, y + dy)));
+      if (redPixel && !redPoint && interior(isRed)) redPoint = [x, y];
+      if (blackPixel && !blackPoint && interior(isBlack)) blackPoint = [x, y];
+    }
+    return { red, black, redPoint, blackPoint, width: image.width, height: image.height };
+  }, (await page.locator('#viewport canvas').screenshot()).toString('base64'));
+  const wirePixels = await inspectWirePixels();
+  assert.ok(wirePixels.red > 20, `battery positive is visibly red (${wirePixels.red} pixels)`);
+  assert.ok(wirePixels.black > 20, `battery negative is visibly black (${wirePixels.black} pixels)`);
+  const wireCanvas = await page.locator('#viewport canvas').boundingBox();
+  for (const [label, point] of [['red', wirePixels.redPoint], ['black', wirePixels.blackPoint]]) {
+    assert.ok(point, `${label} lead has a clickable interior`);
+    await page.mouse.click(wireCanvas.x + point[0] * wireCanvas.width / wirePixels.width,
+      wireCanvas.y + point[1] * wireCanvas.height / wirePixels.height);
+    await page.waitForFunction(() => document.querySelector('canvas').dataset.selected === 'battery-harness');
+    await page.waitForFunction(() => new URL(location.href).searchParams.get('component') === 'battery-harness');
+    await page.goto(`${origin}/?visible=battery-harness`);
+    await page.waitForSelector('#viewport[data-ready="true"]');
+  }
+  await page.goto(`${origin}/?component=battery-harness&isolate=1`);
+  await page.waitForSelector('#viewport[data-ready="true"]');
+  const selectedWires = await inspectWirePixels();
+  assert.ok(selectedWires.red > 20, `selected battery positive stays red (${selectedWires.red} pixels)`);
+  assert.ok(selectedWires.black > 20, `selected battery negative stays black (${selectedWires.black} pixels)`);
+
   // Reload/bookmark, Back/Forward, invalid selection, missing docs and narrow layout.
   await page.goto(`${origin}/?component=motor`);
   await page.waitForSelector('#viewport[data-ready="true"]');

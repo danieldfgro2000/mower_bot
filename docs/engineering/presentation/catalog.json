@@ -46,20 +46,20 @@
       ]
     },
     {
-      "id": "battery-hold-down",
-      "status": "Two over-pack straps bolted to the tray proposal; strap section, fasteners and pack load path are HOLD.",
+      "id": "battery-base-clamps",
+      "status": "Slotted-jaw and hand-knob concepts only; actual flange grip, captive hardware, locking and restraint loads are unverified.",
       "facts": [
         {
-          "label": "Restraint",
-          "value": "Two 30 mm straps over the pack, bolted to the tray",
-          "evidence": "two 30 mm hold-down straps"
+          "label": "Restraint concept",
+          "value": "Four removable slotted jaws and hand knobs, two at each battery short end; no over-pack straps",
+          "evidence": "Four removable base-clamp concepts, two at each short end"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette",
           "quotes": [
-            "two 30 mm hold-down straps"
+            "Four removable base-clamp concepts, two at each short end"
           ]
         }
       ]
@@ -250,8 +250,8 @@
         },
         {
           "label": "Material estimate",
-          "value": "€182.45 net for 20 wheels at recorded sale prices",
-          "evidence": "PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45**"
+          "value": "€190.79 net for 24 wheels (16 × 120 mm, 8 × 70 mm) at recorded sale prices",
+          "evidence": "PC/TPU, 16 x 120 mm + 8 x 70 mm (current CAD), 3DJake | 127.92 | 62.87 | **190.79**"
         }
       ],
       "evidence": [
@@ -259,7 +259,7 @@
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed",
           "quotes": [
             "Owner selection, 2026-10-29:** 120 mm",
-            "PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45**"
+            "PC/TPU, 16 x 120 mm + 8 x 70 mm (current CAD), 3DJake | 127.92 | 62.87 | **190.79**"
           ]
         }
       ],
@@ -280,19 +280,44 @@
     },
     {
       "id": "upper-roller",
-      "status": "Fixed raised return roller with U support and inboard mast; printed capacity and structural loads unqualified.",
+      "status": "Front fixed return roller at the 70 mm minimum, with U support and inboard mast; printed capacity, bend radius and structural loads unqualified.",
       "facts": [
         {
           "label": "Return wheel concept",
-          "value": "Paired 120 × 50 mm PC/TPU wheels; axis Y = 535 mm",
-          "evidence": "paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm"
+          "value": "Paired 70 × 50 mm PC/TPU wheels; front axis X = 245, Y = 510 mm",
+          "evidence": "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
           "quotes": [
-            "paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm"
+            "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "upper-roller-2",
+      "status": "Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified.",
+      "facts": [
+        {
+          "label": "Return wheel concept",
+          "value": "Paired 70 × 50 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm",
+          "evidence": "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
+        },
+        {
+          "label": "Track wrap",
+          "value": "About 32.9°, nominal reaction about 0.57 × belt tension",
+          "evidence": "Wrap angles are about 58.9° (front) and 32.9° (rear)"
+        }
+      ],
+      "evidence": [
+        {
+          "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
+          "quotes": [
+            "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm",
+            "Wrap angles are about 58.9° (front) and 32.9° (rear)"
           ]
         }
       ]

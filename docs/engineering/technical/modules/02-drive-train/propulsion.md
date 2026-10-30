@@ -175,25 +175,28 @@ are approximated from the drawing; they are not dimensioned manufacturer
 datums. A **fixed frame-mounted support**, separate from the
 [battery cassette](../04-battery-and-charging/batteries.md#sliding-battery-cassette),
 holds the controller flat above the open battery tray, rather than on the
-exposed outer side. The support is a 20 x 10 mm post at X = -180 to -160,
-Z = -116 to -106 mm from the frame rail, a 6 mm longitudinal plate tied
-into the upper-roller mast, and two 6 mm cross bars under the mounting holes
-at Y = 405-411 mm. A 6 mm shelf at Y = 314-320 mm, X = -300 to -245 mm,
+exposed outer side. It is centered over the battery in X and Z, with its
+terminal row running across the pod. The support is a
+20 x 10 mm post at X = -160 to -140, Z = -116 to -106 mm from the frame rail,
+a 6 mm longitudinal rail at X = -210 to +160 tied into the rear upper-roller
+mast, and cross bars under the controller and E-stop at Y = 405-411 mm.
+A 6 mm shelf at X = 140-185, Z = -70 to 0, Y = 405-411 mm
 carries the [main contactor envelope](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors)
-inboard of the drive drum. The controller, contactor and all power leads stay
-stationary while the battery, hold-down and tray slide out; only the battery
+beside the controller. The controller, contactor and all power leads stay
+stationary while the battery, base-clamp concepts and tray slide out; only the battery
 lugs are unbolted. Phase leads run directly from the motor to U/V/W with no
 connector. The preferred protected motor/battery gap was
 assessed first: moving the previous end mount inboard intersects the drive
 drum, while raising it encounters the return track. The top fallback retains
 the current battery, motor and commercial 40-link belt dimensions.
-Controller X = **-35 to +165**, Z = **-82 to +82**, mounting plane Y = **411 mm**;
+Controller X = **-47 to +117**, Z = **-56 to +144**, mounting plane Y = **411 mm**;
 the simplified cover ends at Y = 471.47 and the provisional pads at
 Y = 481.47 mm. The manufacturer's 70.47 mm overall depth includes the
 terminal projections; they are not added on top of that envelope.
-The moving battery, tray and hold-down sweep retains at least a provisional
-**5 mm** to the fixed controller, support, contactor and all other fixed
-modeled components. The support section, joints and vibration isolation remain
+The moving battery and individual clamp sweeps retain at least a provisional
+**5 mm** to the fixed controller, support, contactor and modeled fixed gear;
+the tray sweep also retains 5 mm to the full idler stroke. The support section,
+joints and vibration isolation remain
 proposals, not a qualified load path or impact guard.
 The reduced lateral exposure does not protect against overhead strikes.
 The support does not establish cooling: provide a reviewed

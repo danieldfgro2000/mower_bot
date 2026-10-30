@@ -63,8 +63,11 @@ roller_speed_study_kmh =
 
 lower_support_roller_count = 4; // User-selected study layout per track.
 lower_support_roller_diameter = 120; // Owner-selected S38 concept, not qualified.
-upper_support_roller_diameter = 120;
-upper_roller_center = [200, 535];
+// Minimum printed upper wheel: 20 mm lug + 10 mm shaft radius + 5 mm gap; load and
+// belt bend radius HOLD. Front return roller and a second roller above the battery.
+upper_support_roller_diameter = 70;
+upper_roller_center = [245, 510];
+upper_roller_2_center = [-195, 510];
 printed_tread_thickness = 8;
 bearing_outer_diameter = 42;
 bearing_width = 12;
@@ -85,9 +88,16 @@ battery_length = 504; // S30 listing; supplied revision has conflicting dimensio
 battery_width = 268;
 battery_height = 233;
 battery_center_x = 35;
+carrier_length = battery_length + 2 * carrier_edge_margin;
+carrier_width = battery_width + 2 * carrier_edge_margin;
+carrier_center_z = (carrier_width - track_width) / 2;
 service_stroke = 305; // Accuride DZ9301-0012U-E supplier SL/TR.
 service_tray_thickness = 8; // Proposed S235 steel; see conservative load screen.
-service_mass_screen_kg = 85; // Battery, tray, hold-down, inner guide, strip and hardware.
+service_mass_screen_kg = 85; // Battery, tray, inner guide, strip and hardware.
+// Four custom removable clamp concepts; pack flange geometry and holding load are unknown.
+battery_clamp_x = [battery_center_x - battery_length / 2 - 11,
+                   battery_center_x + battery_length / 2 + 11];
+battery_clamp_z = [carrier_center_z - 34, carrier_center_z + 96];
 // Single flat Accuride DZ9301-class guide under the tray, between roller columns 2 and 3.
 slide_length = 305;
 slide_width = 76.2;
@@ -98,46 +108,52 @@ slide_min_z = -100;
 slide_slot = [slide_center_x - 40, slide_center_x + 40]; // Carrier slot / rail notch.
 lock_pin_x = -243; // Tray-level pin, behind the battery terminal face.
 lock_pin_z = 190;
-// Placeholder E-stop main contactor envelope; rating, feedback and precharge HOLD.
-contactor_min = [-295, 320, -100];
-contactor_size = [45, 70, 70];
-contactor_stud_y = [330, 375]; // Battery P+ in / controller B+ out.
-contactor_stud_z = -45;
-// E-stop enclosure envelope (X, Z footprint on the platform; Y fixed by the support).
-estop_min = [135, 0, 130];
-estop_size = [65, 60, 65];
-estop_guard_z = 110;
-// Protected roof fallback: the inboard short-end position crosses the drum/return.
-controller_origin = [-35, 411, 82];
+// Flat on the roof, with the drawing's 164 mm side along X and 200 mm across Z.
 controller_length = 200;
 controller_height = 164;
 controller_depth = 70.47;
+controller_origin = [battery_center_x - controller_height / 2, 411,
+                     carrier_center_z - controller_length / 2];
 // B+, U, V, W, B- order from the A-series drawing; local centers are approximate.
 controller_terminal_offset = [25, 51, 100, 151, 177];
-controller_terminal_x = [for (offset = controller_terminal_offset)
-    controller_origin[0] + offset];
+controller_terminal_x = controller_origin[0] + 100;
+controller_terminal_z = [for (offset = controller_terminal_offset)
+    controller_origin[2] + offset];
 controller_terminal_face_y = controller_origin[1] + controller_depth;
 controller_harness_y = controller_terminal_face_y + 6;
-controller_terminal_z = controller_origin[2] - 100;
-battery_terminal_y = 348; // Photo-based rear-face landing, not a released stud datum.
-battery_terminal_z = [-35, 123]; // P- / P+; verify exact supplied battery.
+// Placeholder E-stop main contactor; top studs, rating and precharge are unverified.
+contactor_min = [140, 411, -70];
+contactor_size = [45, 70, 70];
+contactor_stud_x = [175, 150]; // Battery P+ in / controller B+ out.
+contactor_stud_z = -35;
+// E-stop enclosure envelope (X, Z footprint on the platform; Y fixed by the support).
+estop_min = [130, 0, 135];
+estop_size = [65, 60, 65];
+estop_guard_z = 105;
+// Shared phase riser behind the centered controller.
+harness_riser_x = controller_origin[0] - 16;
+battery_terminal_y = 348; // Photo-based short-face landing, not a released stud datum.
+battery_terminal_x = battery_center_x + battery_length / 2 + 18;
+// The 180-degree upright rotation reverses both the terminal end and their Z positions.
+battery_terminal_z = [for (z = [-35, 123]) 2 * carrier_center_z - z]; // P- / P+.
 motor_landing = [-440, 265, 118]; // 12 mm cable envelope tangent to assumed Z=112 motor face.
-carrier_length = battery_length + 2 * carrier_edge_margin;
-carrier_width = battery_width + 2 * carrier_edge_margin;
-carrier_center_z = (carrier_width - track_width) / 2;
 
 roller_radius = track_path_diameter / 2;
 idler_path_radius = (idler_outer_diameter + belt_thickness) / 2;
 upper_path_radius = (upper_support_roller_diameter + belt_thickness) / 2;
 drive_center = [-440, roller_radius];
-path_radii = [roller_radius, idler_path_radius, upper_path_radius];
+// Loop order: drive, idler, front upper, rear upper. Edges: 0 bottom, 1 front
+// return, 2 top, 3 rear return.
+path_radii = [roller_radius, idler_path_radius, upper_path_radius, upper_path_radius];
+path_count = len(path_radii);
 function path_centers(spacing) =
-    [drive_center, [drive_center[0] + spacing, idler_path_radius], upper_roller_center];
+    [drive_center, [drive_center[0] + spacing, idler_path_radius],
+     upper_roller_center, upper_roller_2_center];
 function sum_values(values, i = 0) =
     i == len(values) ? 0 : values[i] + sum_values(values, i + 1);
 function tangent_normal(i, spacing) =
     let(centers = path_centers(spacing),
-        j = (i + 1) % 3,
+        j = (i + 1) % path_count,
         delta = centers[j] - centers[i],
         distance = norm(delta),
         k = (path_radii[i] - path_radii[j]) / distance,
@@ -146,12 +162,13 @@ function tangent_normal(i, spacing) =
 function normal_angle(i, spacing) =
     let(n = tangent_normal(i, spacing)) atan2(n[1], n[0]);
 function edge_length(i, spacing) =
-    let(centers = path_centers(spacing), j = (i + 1) % 3)
+    let(centers = path_centers(spacing), j = (i + 1) % path_count)
     sqrt(pow(norm(centers[j] - centers[i]), 2) - pow(path_radii[i] - path_radii[j], 2));
 function arc_angle(i, spacing) =
-    (normal_angle(i, spacing) - normal_angle((i + 2) % 3, spacing) + 360) % 360;
+    (normal_angle(i, spacing) - normal_angle((i + path_count - 1) % path_count, spacing)
+        + 360) % 360;
 function loop_length(spacing) =
-    sum_values([for (i = [0 : 2])
+    sum_values([for (i = [0 : path_count - 1])
         edge_length(i, spacing) + path_radii[i] * arc_angle(i, spacing) * PI / 180]);
 function solve_spacing(low, high, iterations = 40) =
     iterations == 0 ? (low + high) / 2 :
@@ -162,7 +179,7 @@ function solve_spacing(low, high, iterations = 40) =
 spacing_low = upper_roller_center[0] - drive_center[0] + upper_path_radius + 10;
 assert(loop_length(spacing_low) < nominal_pitch_loop
        && loop_length(nominal_pitch_loop / 2) > nominal_pitch_loop,
-       "Track loop does not bracket the proposed three-wheel layout");
+       "Track loop does not bracket the proposed four-wheel layout");
 roller_center_spacing = solve_spacing(spacing_low, nominal_pitch_loop / 2);
 idler_center = path_centers(roller_center_spacing)[1];
 loop_envelope_length = roller_center_spacing + roller_radius + idler_path_radius + belt_thickness;
@@ -208,15 +225,15 @@ echo("Drive-sprocket tooth profile and motor coupling are not modeled.");
 echo("Four paired lower roller assemblies: 120 OD x 50 per wheel; capacity unqualified.");
 echo("Study roller centre spacing (mm): ", roller_center_spacing);
 echo("Study pitch envelope length (mm): ", loop_envelope_length);
-echo("Nominal three-circle pitch-loop closure error (mm): ",
+echo("Nominal four-circle pitch-loop closure error (mm): ",
      loop_length(roller_center_spacing) - nominal_pitch_loop);
 echo("Battery to front/rear return guide-tip envelopes, normal gaps (mm): ",
-     return_guide_clearance(1), return_guide_clearance(2));
+     return_guide_clearance(1), return_guide_clearance(3));
 echo("Lower roller to tray underside gap (mm): ", roller_carrier_clearance);
 echo("Motor/stages/carrier stack and inboard drum remainder (mm): ",
      axial_stack_length, inboard_axial_remainder);
 echo("Motor body outboard overhang for reaction flange (mm): ", motor_reaction_thickness);
-echo("Fixed upper roller centre (mm): ", upper_roller_center);
+echo("Fixed upper roller centres, front/rear (mm): ", upper_roller_center, upper_roller_2_center);
 echo("Idler geometric stop positions (mm from nominal): ",
      -idler_clearance_stroke, idler_clearance_stroke);
 echo("Spring seat separation at nominal/min/max stroke (mm): ",
@@ -224,6 +241,6 @@ echo("Spring seat separation at nominal/min/max stroke (mm): ",
      idler_center[0] - 114 - spring_fixed_face_x - idler_clearance_stroke,
      idler_center[0] - 114 - spring_fixed_face_x + idler_clearance_stroke);
 echo("Battery bottom and outboard centre (mm): ", battery_bottom_y, carrier_center_z);
-assert(min(return_guide_clearance(1), return_guide_clearance(2)) >= 35,
+assert(min(return_guide_clearance(1), return_guide_clearance(3)) >= 35,
        "Return clearance below 20 mm running, 5 mm deflection and 10 mm motion reserve");
 assert(inboard_axial_remainder >= 5, "Reducer exceeds inboard study envelope");

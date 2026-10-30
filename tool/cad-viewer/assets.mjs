@@ -16,6 +16,31 @@ export function readRepositoryFile(relative) {
   return readFileSync(resolved);
 }
 
+export function validateRenderParts(components) {
+  const modelIds = new Set(components.map(part => part.id));
+  for (const component of components) {
+    if (component.renderParts === undefined) continue;
+    if (!Array.isArray(component.renderParts) || component.renderParts.length === 0) {
+      throw new Error(`Invalid render parts: ${component.id}`);
+    }
+    for (const part of component.renderParts) {
+      if (!part || typeof part.id !== 'string' || !/^[a-z][a-z0-9-]*$/.test(part.id)
+          || modelIds.has(part.id) || typeof part.module !== 'string'
+          || !/^[a-z][a-z0-9_]*$/.test(part.module)
+          || typeof part.color !== 'string' || !/^#[a-f\d]{6}$/i.test(part.color)) {
+        throw new Error(`Invalid or duplicate render part: ${component.id}`);
+      }
+      modelIds.add(part.id);
+    }
+  }
+}
+
+export function modelIds(config) {
+  return config.components.flatMap(part => [
+    part.id, ...(part.renderParts ?? []).map(renderPart => renderPart.id),
+  ]);
+}
+
 export function loadConfig() {
   const config = JSON.parse(readRepositoryFile(`${viewerDirectory}/components.json`));
   if (!config.source.startsWith('docs/engineering/technical/cad/') || !config.source.endsWith('.scad')) {
@@ -35,6 +60,7 @@ export function loadConfig() {
     }
     ids.add(component.id);
   }
+  validateRenderParts(config.components);
   validateGroups(config.groups, config.components);
   validateAnimations(config.animations, config.components);
   const source = readRepositoryFile(config.source).toString();
@@ -96,9 +122,10 @@ export function assertFresh(config) {
   if (state.input !== inputDigest(config)) {
     throw new Error('CAD exports are stale. Run npm run export --prefix tool/cad-viewer');
   }
-  const expected = config.components.flatMap(part => [
-    `${outputDirectory}/${part.id}.stl`, `${viewerDirectory}/previews/${part.id}.png`,
-  ]);
+  const expected = [
+    ...modelIds(config).map(id => `${outputDirectory}/${id}.stl`),
+    ...config.components.map(part => `${viewerDirectory}/previews/${part.id}.png`),
+  ];
   if (Object.keys(state.files).length !== expected.length) throw new Error('Incomplete CAD exports');
   for (const file of expected) {
     if (state.files[file] !== digest(readRepositoryFile(file))) {

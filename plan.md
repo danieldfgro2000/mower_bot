@@ -217,12 +217,16 @@ represent U supports, motor reaction plate and spring/carriage geometry.
 Their loads, spring specification, joints and complete-machine fit remain
 unqualified; no purchasing or fabrication decision follows from the model.
 The [open battery cassette proposal](docs/engineering/technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
-adds an open extraction tray with hold-downs, one flat telescopic guide under
-the tray and positive tray-level WORK / EXTRACT pin positions. The controller
+adds an open extraction tray with removable base-clamp concepts instead of
+over-pack straps, one flat telescopic guide under the tray and positive
+tray-level WORK / EXTRACT pin positions. Slotted jaws and hand knobs are
+concepts only; the flange, actual engagement, captive hardware and secondary
+lock remain unmodeled and unqualified. The controller
 and an E-stop-controlled main contactor stay on a fixed frame support; one
 E-stop disconnects both packs. Battery leads bolt directly to the terminals
-and phase leads run directly to the motor. Open the E-stop, verify absence of
-voltage and unbolt the battery leads before movement. This service concept does not authorize
+and phase leads run directly to the motor. Establish rated service isolation,
+verify absence of hazardous voltage and unbolt the battery leads before movement;
+an E-stop alone is not isolation. This service concept does not authorize
 operation or demonstrate the 1 m transport layout, dynamic capacity or stability.
 
 ### 4.2 Variable-width scissor frame

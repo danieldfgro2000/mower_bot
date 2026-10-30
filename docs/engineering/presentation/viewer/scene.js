@@ -18,15 +18,20 @@ export async function createScene(container, components, onSelect) {
   const meshes = new Map();
   const loader = new STLLoader();
   await Promise.all(components.map(async component => {
-    const geometry = await loader.loadAsync(`/models/${component.id}.stl`);
-    geometry.computeVertexNormals();
-    const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({
-      color: component.color, roughness: .65, metalness: .15,
-      transparent: true, opacity: .7, side: THREE.DoubleSide,
+    const group = new THREE.Group();
+    group.userData.preserveColors = !!component.renderParts;
+    await Promise.all((component.renderParts ?? [component]).map(async part => {
+      const geometry = await loader.loadAsync(`/models/${part.id}.stl`);
+      geometry.computeVertexNormals();
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({
+        color: part.color, roughness: .65, metalness: .15,
+        transparent: true, opacity: .7, side: THREE.DoubleSide,
+      }));
+      mesh.userData.id = component.id;
+      group.add(mesh);
     }));
-    mesh.userData.id = component.id;
-    scene.add(mesh);
-    meshes.set(component.id, mesh);
+    scene.add(group);
+    meshes.set(component.id, group);
   }));
   let selected = '';
   let displayed = new Set(components.map(part => part.id));
@@ -36,11 +41,15 @@ export async function createScene(container, components, onSelect) {
     renderer.render(scene, camera);
   };
   function update() {
-    for (const [id, mesh] of meshes) {
-      mesh.visible = displayed.has(id);
-      mesh.material.opacity = selected ? (id === selected ? 1 : .16) : .7;
-      mesh.material.depthWrite = !selected || id === selected;
-      mesh.material.emissive.set(id === selected ? '#21374b' : '#000000');
+    for (const [id, group] of meshes) {
+      group.visible = displayed.has(id);
+      group.traverse(mesh => {
+        if (!mesh.isMesh) return;
+        mesh.material.opacity = selected ? (id === selected ? 1 : .16) : .7;
+        mesh.material.depthWrite = !selected || id === selected;
+        mesh.material.emissive.set(id === selected && !group.userData.preserveColors
+          ? '#21374b' : '#000000');
+      });
     }
     renderer.domElement.dataset.selected = selected;
     renderer.domElement.dataset.visible = JSON.stringify([...meshes.keys()].filter(id => meshes.get(id).visible));
@@ -127,9 +136,12 @@ export async function createScene(container, components, onSelect) {
     dispose() {
       observer.disconnect();
       controls.dispose();
-      for (const mesh of meshes.values()) {
-        mesh.geometry.dispose();
-        mesh.material.dispose();
+      for (const group of meshes.values()) {
+        group.traverse(mesh => {
+          if (!mesh.isMesh) return;
+          mesh.geometry.dispose();
+          mesh.material.dispose();
+        });
       }
       renderer.dispose();
     },

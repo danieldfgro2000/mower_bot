@@ -46,7 +46,7 @@ test('track has the candidate width, discrete internal guides and external tread
   assert.equal(contains(drum, [driveX, drum.max[1] - 5, 0]), false, 'drum guide relief');
 });
 
-test('three-circle 40-link path and fixed upper return clear the battery through the idler envelope', () => {
+test('four-circle 40-link path and two minimum upper returns clear the battery through the idler envelope', () => {
   const idler = boundsFor('idler');
   assert.deepEqual(idler.size, [200, 200, 160]);
   const x = (idler.min[0] + idler.max[0]) / 2, y = (idler.min[1] + idler.max[1]) / 2;
@@ -54,14 +54,18 @@ test('three-circle 40-link path and fixed upper return clear the battery through
   const battery = boundsFor('battery');
   assert.deepEqual(battery.size, [504, 233, 268]);
   const drum = boundsFor('drive-drum');
-  const upper = boundsFor('upper-roller');
-  assert.deepEqual(upper.size, [120, 120, 150]);
+  const upper = boundsFor('upper-roller'), upperRear = boundsFor('upper-roller-2');
+  assert.deepEqual(upper.size, [70, 70, 150], 'minimum 70 mm upper roller');
+  assert.deepEqual(upperRear.size, [70, 70, 150], 'second minimum upper roller');
+  assert.ok(upperRear.max[0] < upper.min[0], 'rear upper roller is behind the front roller');
+  assert.ok(upperRear.min[0] < battery.max[0] && upperRear.max[0] > battery.min[0],
+    'second upper roller sits above the battery');
   const circles = [[...center(drum).slice(0, 2), 185], [x, y, 110],
-    [...center(upper).slice(0, 2), 70]];
+    [...center(upper).slice(0, 2), 45], [...center(upperRear).slice(0, 2), 45]];
   const nominal = pitchPath(circles);
   assert.ok(Math.abs(nominal.length - 72 * 40) < 0.02,
-    'actual three-circle nominal pitch path closes at 40 pitches');
-  for (const i of [1, 2]) {
+    'actual four-circle nominal pitch path closes at 40 pitches');
+  for (const i of [1, 3]) {
     const [nx, ny] = nominal.normals[i], [cx, cy, radius] = circles[i];
     const cornerX = nx > 0 ? battery.max[0] : battery.min[0];
     const gap = cx * nx + cy * ny + radius - cornerX * nx - battery.max[1] * ny - 30;
@@ -72,7 +76,7 @@ test('three-circle 40-link path and fixed upper return clear the battery through
     const swept = circles.map(circle => [...circle]);
     swept[1][0] += travel;
     const { normals } = pitchPath(swept);
-    for (const i of [1, 2]) {
+    for (const i of [1, 3]) {
       const [nx, ny] = normals[i], [cx, cy, radius] = swept[i];
       const cornerX = nx > 0 ? battery.max[0] : battery.min[0];
       const gap = cx * nx + cy * ny + radius - cornerX * nx
@@ -80,6 +84,7 @@ test('three-circle 40-link path and fixed upper return clear the battery through
       assert.ok(gap >= 25, `return at ${travel} mm: ${gap} >= 20 running + 5 deflection reserve`);
     }
   }
+  assert.ok(upperRear.min[1] - battery.max[1] >= 20, 'second upper wheel above battery');
   assert.ok(upper.min[1] - battery.max[1] >= 20, 'fixed upper wheel above battery');
   for (const wheel of [drum, idler]) {
     const [cx, cy] = center(wheel);
@@ -122,7 +127,7 @@ test('boolean meshes have no forbidden payload, extraction or track-guide inters
     'positive control proves imported geometry exists');
   const runningGear = ['track', 'drive-drum', 'idler', 'motor', 'planetary-1',
     'planetary-2', 'planetary-3', 'output-carrier', 'lower-roller-1', 'lower-roller-2',
-    'lower-roller-3', 'lower-roller-4', 'upper-roller'];
+    'lower-roller-3', 'lower-roller-4', 'upper-roller', 'upper-roller-2'];
   const parts = ids => ids.map(id => `pod_component("${id}");`).join('\n');
   // Coincident running contacts can leave float32 STL shells below 0.01 mm³.
   const numericalVolume = 0.01;
@@ -185,11 +190,14 @@ test('frame extensions form connected motor, tray, roller and tensioner reaction
     assert.ok(solidVolume(`intersection() { pod_component("pod-frame"); pod_component("${id}"); }`) > 1,
       `${id} has a physical fixed-frame connection, not a floating visual support`);
   }
-  const upper = boundsFor('upper-roller-support'), wheel = boundsFor('upper-roller');
-  assert.equal(contains(upper, [200, 443, 0]), true, 'upper U bridge below the wheel');
-  assert.equal(contains(upper, [200, 300, -111]), true, 'mast connects down to the tray frame');
-  assert.equal(contains(upper, center(wheel)), true, 'upper axle in fixed support');
-  assert.ok(wheel.min[1] - 446 >= 5, 'upper bridge running gap');
+  const upper = boundsFor('upper-roller-support');
+  for (const id of ['upper-roller', 'upper-roller-2']) {
+    const wheel = boundsFor(id), [wx] = center(wheel);
+    assert.equal(contains(upper, [wx, 443, 0]), true, `${id} U bridge below the wheel`);
+    assert.equal(contains(upper, [wx, 300, -111]), true, `${id} mast connects down to the tray frame`);
+    assert.equal(contains(upper, center(wheel)), true, `${id} axle in fixed support`);
+    assert.ok(wheel.min[1] - 446 >= 5, `${id} bridge running gap`);
+  }
   assert.equal(upper.min[2], -116, 'inboard mast overhang is explicit');
 });
 

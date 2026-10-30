@@ -98,8 +98,8 @@ guides the lock pin up into a strip on the tray edge, at tray level.
 Guide mounting holes, welds and end-stop details remain open. The 85 kg /
 1.5 g extraction screen is **not** a frame or joint capacity proof.
 
-The [fixed upper support](running-gear.md#fixed-upper-roller-support) joins the
-tray/frame with an inboard mast; it extends **16 mm inside the track edge**.
+The two [fixed upper supports](running-gear.md#fixed-upper-roller-support) join the
+tray/frame with inboard masts; each extends **16 mm inside the track edge**.
 The [two-pod width screen](../../width-and-slope-sizing.md#minimum-width-and-packaging)
 includes that intrusion. Frame sections, welds/bolts, stop retention, torsion,
 motor reaction, skid-steer side loads, spring forces and fatigue require a

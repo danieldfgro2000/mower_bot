@@ -39,7 +39,7 @@ test('new structure preserves nominal running clearance and outboard battery ext
   for (const id of ids) assert.ok(boundsFor(id).triangles.length > 0, `${id} is not empty`);
   const structure = ids.map(id => `pod_component("${id}");`).join('\n');
   const running = ['track', 'drive-drum', 'motor', 'planetary-1', 'planetary-2',
-    'planetary-3', 'output-carrier', 'idler', 'upper-roller',
+    'planetary-3', 'output-carrier', 'idler', 'upper-roller', 'upper-roller-2',
     ...[1, 2, 3, 4].map(i => `lower-roller-${i}`)]
     .map(id => `pod_component("${id}");`).join('\n');
   assert.ok(solidVolume(`intersection() {

@@ -12,15 +12,17 @@
  Motor: HPM5000B 206x126 body, 22.3x53 shaft, 5x43 keyway and four M8
  openings on 148 PCD from GD-JS-03000001; hole depth, keyway axial offset
  and clocking are illustrative. No thread, thermal or structural detail.
- Battery: DC HOUSE listing body 504x268x233 on an open 8 mm steel tray (no box)
- with hold-down straps. The tray rests on fixed seats; one flat telescopic ball
+ Battery: DC HOUSE listing body 504x268x233 on an open 8 mm steel tray (no box).
+ It is rotated 180 degrees upright; custom removable base-clamp envelopes are
+ shown, but the pack's flange and clamp locking interfaces are not modeled.
+ The tray rests on fixed seats; one flat telescopic ball
  guide beneath it carries it only during extraction (rating and seat-to-guide
  transfer HOLD). Tray-level two-position pin. Battery leads bolt directly to the
  terminals and run via a placeholder E-stop contactor to the controller; motor
  phases run directly to the controller. Terminal offsets remain assumptions.
  Three 66:1 planetary pitch-circle stages remain schematic; no tooth profiles,
  interstage bearing supports, coupling or brake installation. U supports, tray
- frame, motor reaction plate and fixed upper mast are custom proposals.
+ frame, motor reaction plate and two fixed upper masts are custom proposals.
  Front idler now has a spring/guide carriage with +/-15 mm geometric stops;
  spring rate, preload, fatigue and actual belt compliance remain unqualified.
  Battery and tray are offset outboard; see clearance echoes and CAD README.
@@ -36,10 +38,10 @@ viewer_components = [
     "track", "drive-drum", "idler", "motor",
     "planetary-1", "planetary-2", "planetary-3", "output-carrier",
     "lower-roller-1", "lower-roller-2", "lower-roller-3", "lower-roller-4",
-    "upper-roller", "pod-carrier", "battery", "removal-arrow",
+    "upper-roller", "upper-roller-2", "pod-carrier", "battery", "removal-arrow",
     "lower-roller-supports", "pod-frame", "motor-mount",
     "idler-carriage", "idler-spring", "upper-roller-support",
-    "battery-tray", "battery-hold-down", "slide-fixed", "slide-middle", "slide-inner",
+    "battery-tray", "battery-base-clamps", "slide-fixed", "slide-middle", "slide-inner",
     "tray-lock-pin", "tray-lock-strike", "controller", "controller-support", "main-contactor",
     "estop-button", "estop-mount",
     "battery-harness", "motor-harness"
@@ -65,6 +67,10 @@ module pod_component(id) {
         translate([upper_roller_center[0], upper_roller_center[1], 0])
             color([0.22, 0.55, 0.34, 0.9])
                 wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
+    else if (id == "upper-roller-2")
+        translate([upper_roller_2_center[0], upper_roller_2_center[1], 0])
+            color([0.22, 0.55, 0.34, 0.9])
+                wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
     else if (id == "pod-carrier") pod_carrier();
     else if (id == "pod-frame") pod_frame();
     else if (id == "motor-mount") motor_reaction_mount();
@@ -74,7 +80,7 @@ module pod_component(id) {
     else if (id == "idler-spring") idler_spring();
     else if (id == "battery") battery_envelope();
     else if (id == "battery-tray") battery_service_tray();
-    else if (id == "battery-hold-down") battery_hold_down();
+    else if (id == "battery-base-clamps") battery_base_clamps();
     else if (id == "controller-support") controller_support();
     else if (id == "main-contactor") main_contactor();
     else if (id == "estop-button") estop_button();

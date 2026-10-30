@@ -1,10 +1,11 @@
-// Module 01 track-pod fit study part: Battery envelope, open tray, hold-down, telescopic guide, tray lock and removal arrow.
+// Module 01 track-pod fit study part: Battery envelope, tray, base-clamp concepts, guide and lock.
 // Included by ../module-01-track-pod-fit.scad; not a standalone model.
 // Shares its global parameters (parameters.scad); millimetres.
 
 module battery_envelope() {
-    translate([battery_center_x - battery_length / 2,
-               battery_bottom_y, carrier_center_z - battery_width / 2])
+    translate([battery_center_x, battery_bottom_y, carrier_center_z])
+        rotate([0, 180, 0])
+        translate([-battery_length / 2, 0, -battery_width / 2])
         color([0.9, 0.55, 0.12, 0.8])
             cube([battery_length, battery_height, battery_width]);
 }
@@ -12,8 +13,14 @@ module battery_envelope() {
 module battery_service_tray() {
     color([0.38, 0.45, 0.52])
         difference() {
-            translate([-253, battery_bottom_y - service_tray_thickness, -100])
-                cube([550, service_tray_thickness, 288]);
+            union() {
+                translate([-253, battery_bottom_y - service_tray_thickness, -100])
+                    cube([550, service_tray_thickness, 288]);
+                for (z = battery_clamp_z)
+                    translate([battery_center_x + battery_length / 2,
+                               battery_bottom_y - service_tray_thickness, z - 9])
+                        cube([11, service_tray_thickness, 18]);
+            }
             translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
                 cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
             // Pin clearance notch at the WORK position.
@@ -22,15 +29,61 @@ module battery_service_tray() {
         }
 }
 
-module battery_hold_down() {
-    // Two 3 mm straps over the battery, bolted to the moving tray (restraint HOLD).
-    top = battery_bottom_y + battery_height;
-    color([0.62, 0.68, 0.72])
-        for (x = [-120, 160]) {
-            translate([x, top, -93]) cube([30, 3, 274]);
-            for (z = [-93, 178])
-                translate([x, battery_bottom_y, z]) cube([30, top + 3 - battery_bottom_y, 3]);
+module battery_base_stud(end, lane) {
+    x = battery_clamp_x[end];
+    z = battery_clamp_z[lane];
+    translate([x, battery_bottom_y + 3, z])
+        rotate([-90, 0, 0]) cylinder(d = 6, h = 20);
+}
+
+module battery_base_mount(end, lane) {
+    x = battery_clamp_x[end];
+    z = battery_clamp_z[lane];
+    translate([x - 3, battery_bottom_y, z - 7]) cube([6, 3, 14]);
+    battery_base_stud(end, lane);
+}
+
+module battery_base_jaw(end, lane) {
+    x = battery_clamp_x[end];
+    z = battery_clamp_z[lane];
+    difference() {
+        translate([end == 0 ? x - 5.5 : x - 9.5, battery_bottom_y + 6, z - 7])
+            cube([15, 4, 14]);
+        translate([x, battery_bottom_y + 5.9, z])
+            rotate([-90, 0, 0]) cylinder(d = 7, h = 4.2);
+        translate([end == 0 ? x : x - 10, battery_bottom_y + 5.9, z - 3.5])
+            cube([10, 4.2, 7]);
+    }
+}
+
+module battery_base_knob(end, lane) {
+    x = battery_clamp_x[end];
+    z = battery_clamp_z[lane];
+    difference() {
+        union() {
+            translate([x, battery_bottom_y + 10, z])
+                rotate([-90, 0, 0]) cylinder(d = 14, h = 4);
+            translate([x - 2, battery_bottom_y + 14, z - 10]) cube([4, 3, 20]);
         }
+        translate([x, battery_bottom_y + 9.9, z])
+            rotate([-90, 0, 0]) cylinder(d = 7, h = 7.2);
+    }
+}
+
+module battery_base_clamp(end, lane) {
+    // Custom slotted jaw and tool-free knob concept; the pack flange, threads,
+    // secondary lock and actual holding loads remain unmodeled and unqualified.
+    color([0.75, 0.48, 0.18]) {
+        battery_base_mount(end, lane);
+        battery_base_jaw(end, lane);
+        battery_base_knob(end, lane);
+    }
+}
+
+module battery_base_clamps() {
+    for (end = [0 : 1])
+        for (lane = [0 : 1])
+            battery_base_clamp(end, lane);
 }
 
 module battery_service_mounts() {

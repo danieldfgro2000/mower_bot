@@ -86,8 +86,9 @@ complete-undercarriage price.
 **Roller sourcing selection (owner-selected, 2026-10-29): 3D-printed
 120 mm roller wheels** with a PC core, TPU 95A tread and two bought 6004-2RS
 bearings each. Recommendation, not an owner decision: idlers stay bought
-until their tension load is known. 20 wheels cost about **EUR182.45 net** (3DJake sale filament,
-free delivery) or EUR214.45 at regular prices, excluding print time and an
+until their tension load is known. The current CAD needs 24 wheels (16 x 120 mm
+lower, 8 x 70 mm upper), about **EUR190.79 net** (3DJake sale filament, free
+delivery) or EUR222.79 at regular prices, excluding print time and an
 enclosure. The Interwheel 160 mm wheels above (EUR457.60 for 20) are the
 fallback if print time becomes a bottleneck. Printed wheels have no load
 rating; measure the track guide-lug height before printing the full set. See
@@ -140,14 +141,15 @@ The illustrative guide lugs are 24 mm wide, 24 mm long and 20 mm high, one per
 assumed pitch; these are **not supplier dimensions**. Confirm lug and rolling-path
 dimensions before using any groove, spacer, bearing fit or printed geometry.
 
-With the assumed 20 mm belt and mid-thickness pitch line, the raised upper pair
-at X = 200, Y = 535 mm gives **844.036 mm horizontal end-axis spacing**.
-Drive X stays -440 mm; the idler is at X = +404.036 mm. The actual three-circle
+With the assumed 20 mm belt and mid-thickness pitch line, two fixed 70 mm upper pairs
+at X = 245 and X = -195, both Y = 510 mm, give **850.308 mm horizontal
+end-axis spacing**. Drive X stays -440 mm; the idler is at X = +410.308 mm.
+The actual four-circle
 tangents and arcs close the 40-link loop. The 504 x 268 x 233 mm battery
 is at X = 35, Z = 44 mm with bottom Y = 158 mm; the fixed carrier underside is Y = 140 mm,
-10 mm above the lower wheels. Nominal body guide-tip clearances are 38.2 / 35.8 mm
+10 mm above the lower wheels. Nominal body guide-tip clearances are 40.5 / 103.0 mm
 normal to the front/rear return runs. Reserving 10 mm for motion and 5 mm for
-deflection/tolerances leaves at least **20.8 mm** versus a provisional 20 mm
+deflection/tolerances leaves at least **25.5 mm** versus a provisional 20 mm
 running requirement. See the [CAD dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits)
 for mesh checks, extraction, transverse fit and remaining holds.
 
@@ -199,6 +201,10 @@ not an accepted diameter reduction. Continue from the 120 mm printed-wheel
 concept, evaluating contact loading and load sharing before reducing diameter;
 extra rollers alone do not prove equal load distribution.
 
+**Upper roller revision, 2026-10-30 (owner request):** add a second fixed upper
+return roller above the battery and reduce both upper rollers to the minimum
+diameter. The lower 120 mm rollers are unchanged.
+
 **Small roller limit:** No supplier minimum diameter or guide-lug dimensions
 were found for this track. A 30 mm wheel cannot contain the current 42 mm-OD
 6004 bearings. Independent short axles in individual U supports could avoid a
@@ -249,9 +255,8 @@ reaction plate; brake and reducer-bearing integration are still open.
 **Owner-selected revision, 2026-10-29:** use a **spring-loaded sliding front
 idler and a fixed upper roller**. This supersedes the earlier spring-upper /
 motorcycle-fork direction. The front idler keeps its 200 mm bought-wheel
-envelopes and nominal axis at X = 404.036, Y = 110 mm. Its proposed yoke runs on
-two longitudinal guides, with +/-15 mm geometric stop positions; the upper
-axis remains fixed at X = 200, Y = 535 mm.
+envelopes and nominal axis at X = 410.308, Y = 110 mm. Its proposed yoke runs on
+two longitudinal guides, with +/-15 mm geometric stop positions; the two upper axes remain fixed at X = 245 and -195, Y = 510 mm.
 
 The nominal belt stays at 2,880 mm. The ideal tangent path changes when the
 idler moves; the modeled 30 mm carriage stroke is not proof of usable travel
@@ -393,17 +398,23 @@ remains unqualified for S01.
 
 #### Fixed upper roller support
 
-**Current return-route CAD proposal:** paired 120 x 50 mm PC/TPU wheels at X = 200, Y = 535 mm.
-This reuses the already-planned upper assembly, not an additional purchase.
-Its approximately 79.1° track deflection gives a nominal reaction about
-**1.27 times belt tension** under equal-tension assumptions, not merely return
-belt weight. A fixed U support has 6 mm cheeks with 5 mm wheel-side gaps,
-a 20 mm axle and a bridge below the wheels at Y = 440-446 mm, leaving
-**29 mm running clearance**. A 10 mm inboard mast and diagonal brace connect
-it to the tray/frame; its inner face is at Z = -116 mm, 6 mm outside the belt
-edge and 16 mm from the battery body. The upper support is not spring-loaded.
-Printed wheels, axle, support and joints are not load-rated. Its 16 mm inboard
-projection must be included in the two-pod/scissor layout.
+**Current return-route CAD proposal:**
+two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm,
+both at Y = 510 mm above the battery. 70 mm is the modeled minimum: an 8 mm TPU tread leaves a 54 mm
+core and only 6 mm of PC radially around the 42 mm-OD 6004 bearing seat.
+Wrap angles are about 58.9° (front) and 32.9° (rear), giving nominal reactions
+of about **0.98 and 0.57 times belt tension** under equal-tension assumptions.
+The small diameter raises contact stress and belt bending at both rollers;
+diameter, core wall and track minimum bend radius are a **HOLD** until track
+data and a load assessment exist. Each fixed U support has 6 mm cheeks with
+5 mm wheel-side gaps, a 20 mm axle and a bridge below the wheels at
+Y = 440-446 mm, leaving **29 mm running clearance** and 84 mm to the battery.
+A 10 mm inboard mast and diagonal brace connect each support to the tray/frame;
+the rear brace is mirrored to land ahead of its mast. Inner faces are at
+Z = -116 mm, 6 mm outside the belt edge and 16 mm from the battery body. The
+supports are not spring-loaded. Printed wheels, axles, supports and joints are
+not load-rated. The 16 mm inboard projection must be included in the
+two-pod/scissor layout.
 
 **Continue:** [Tensioner allowance](running-gear.md#0102-sprockets-idlers-rollers-and-tensioners) ·
 [Spring/roller clearance to the battery](running-gear.md#tensioner-and-idler-interfaces) ·
@@ -864,8 +875,8 @@ not independent evidence.
 product and shipping pages, checked 2026-10-29; owner-proposed cost-saving
 alternative, non-baseline and excluded from BOM sums.
 
-**Concept:** Print the 20 roller wheels (eight lower and two upper roller
-assemblies, paired as in [S37](running-gear.md#s37-bearing-wheel-roller-and-idler-candidates))
+**Concept:** Print the roller wheels (originally 20 for eight lower and two upper roller assemblies;
+see the current quantity below, paired as in [S37](running-gear.md#s37-bearing-wheel-roller-and-idler-candidates))
 on the owner's Prusa MK3S+. Owner-selected build (2026-10-29): polycarbonate
 (PC) core with two pressed-in 6004-2RS bearings (20 x 42 x 12 mm) and a
 TPU 95A outer tread. The owner also proposed printing idlers; this assessment
@@ -905,7 +916,17 @@ Sale prices shown; the regular price is in brackets.
 | --- | ---: | ---: | ---: | ---: |
 | PC/TPU, 160 mm, 3DJake | 211.87 | 54.53 | **266.40** | 319.40 |
 | PC/TPU, 120 mm, 3DJake | 127.92 | 54.53 | **182.45** | 214.45 |
+| PC/TPU, 16 x 120 mm + 8 x 70 mm (current CAD), 3DJake | 127.92 | 62.87 | **190.79** | 222.79 |
 | ASA/TPU, 160 mm, Prusa (8 x ASA 800 g at EUR24.79, 11 x TPU 500 g at EUR29.24 incl. VAT) | 429.72 | 54.53 | 484.25 + Prusa delivery | 613.88 |
+
+**Current CAD quantity, 2026-10-30 (assumption, not measured):** two upper
+pairs per pod at the 70 mm minimum give 24 wheels (16 x 120 mm lower,
+8 x 70 mm upper) and 48 bearings. Using the method above, a 70 mm wheel needs
+about 93 g TPU and 54 g PC (core treated as solid), so 24 wheels + 10% need
+about 3.8 kg TPU and 3.1 kg PC: still four spools of each. The eight extra
+bearings add EUR8.34 net. At roughly 69 g each (typical 6004 mass, not
+checked), 48 bearings exceed the listed 3 kg DHL tier; delivery cost is a
+**HOLD** until quoted.
 
 Lei converted at the ECB 2026-10-28 rate of 5.3508 RON per EUR. The
 [Prusament ASA](https://www.prusa3d.com/category/prusament-asa/) and

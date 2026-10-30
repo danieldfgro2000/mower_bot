@@ -98,15 +98,23 @@ module pod_frame() {
     }
 }
 
-module upper_roller_support() {
-    roller_u_support(upper_roller_center[0], upper_roller_center[1], true);
-    color([0.3, 0.45, 0.6]) {
-        translate([185, 140, -116]) cube([30, 306, 10]);
-        hull() {
-            translate([100, 146, -111]) cube([16, 16, 10], center = true);
-            translate([200, 438, -111]) cube([16, 16, 10], center = true);
+module upper_roller_mast(x, y, flip = false) {
+    // Inboard mast and diagonal from the tray frame rail; the rear copy is mirrored
+    // so its brace lands on the rail ahead of it.
+    roller_u_support(x, y, true);
+    color([0.3, 0.45, 0.6])
+        translate([x, 0, 0]) mirror([flip ? 1 : 0, 0, 0]) {
+            translate([-15, 140, -116]) cube([30, 306, 10]);
+            hull() {
+                translate([-100, 146, -111]) cube([16, 16, 10], center = true);
+                translate([0, 438, -111]) cube([16, 16, 10], center = true);
+            }
+            translate([-110, 134, -116]) cube([130, 12, 22]);
+            translate([-18, 440, -116]) cube([36, 6, 36]);
         }
-        translate([90, 134, -116]) cube([130, 12, 22]);
-        translate([182, 440, -116]) cube([36, 6, 36]);
-    }
+}
+
+module upper_roller_support() {
+    upper_roller_mast(upper_roller_center[0], upper_roller_center[1]);
+    upper_roller_mast(upper_roller_2_center[0], upper_roller_2_center[1], true);
 }

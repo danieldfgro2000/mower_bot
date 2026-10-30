@@ -15,7 +15,7 @@ export async function checkVisibility(page, origin, config) {
   const drive = ['motor', 'controller', 'controller-support', 'main-contactor', 'estop-button', 'estop-mount', 'planetary-1', 'planetary-2', 'planetary-3', 'output-carrier'].sort();
   assert.deepEqual(await visible(), drive);
   await moduleBox('battery-and-charging').check();
-  const battery = ['battery', 'battery-hold-down', 'battery-tray', 'slide-fixed', 'slide-middle',
+  const battery = ['battery', 'battery-tray', 'battery-base-clamps', 'slide-fixed', 'slide-middle',
     'slide-inner', 'tray-lock-pin', 'tray-lock-strike'];
   assert.deepEqual(await visible(), [...drive, ...battery].sort());
   await partBox('planetary-2').uncheck();

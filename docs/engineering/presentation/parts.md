@@ -16,18 +16,18 @@ interfaces and release holds, follow the linked technical detail.
 
 **Read more:** [Open moving battery tray (8 mm steel proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
-<a id="battery-hold-down"></a>
+<a id="battery-base-clamps"></a>
 
-### Battery hold-down straps (3 mm proposal)
+### Slotted battery-base clamp concepts (four, unqualified)
 
-**Status:** Two over-pack straps bolted to the tray proposal; strap section, fasteners and pack load path are HOLD.
+**Status:** Slotted-jaw and hand-knob concepts only; actual flange grip, captive hardware, locking and restraint loads are unverified.
 
-[![Battery hold-down straps (3 mm proposal)](viewer/previews/battery-hold-down.png)](viewer/index.html?component=battery-hold-down&mode=presentation)
+[![Slotted battery-base clamp concepts (four, unqualified)](viewer/previews/battery-base-clamps.png)](viewer/index.html?component=battery-base-clamps&mode=presentation)
 | | |
 | --- | --- |
-| Restraint | Two 30 mm straps over the pack, bolted to the tray |
+| Restraint concept | Four removable slotted jaws and hand knobs, two at each battery short end; no over-pack straps |
 
-**Read more:** [Battery hold-down straps (3 mm proposal) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
+**Read more:** [Slotted battery-base clamp concepts (four, unqualified) technical detail](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette) · [Technical evidence](../technical/modules/04-battery-and-charging/batteries.md#sliding-battery-cassette)
 
 <a id="slide-fixed"></a>
 
@@ -154,14 +154,14 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="battery-harness"></a>
 
-### Battery leads: terminals to contactor and controller (fixed, bolted)
+### Battery leads: red P+ via contactor, black P- direct (fixed, bolted)
 
 **Status:** See technical scope; this is a study element.
 
-[![Battery leads: terminals to contactor and controller (fixed, bolted)](viewer/previews/battery-harness.png)](viewer/index.html?component=battery-harness&mode=presentation)
+[![Battery leads: red P+ via contactor, black P- direct (fixed, bolted)](viewer/previews/battery-harness.png)](viewer/index.html?component=battery-harness&mode=presentation)
 
 
-**Read more:** [Battery leads: terminals to contactor and controller (fixed, bolted) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
+**Read more:** [Battery leads: red P+ via contactor, black P- direct (fixed, bolted) technical detail](../technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness)
 
 <a id="motor-harness"></a>
 
@@ -281,7 +281,7 @@ interfaces and release holds, follow the linked technical detail.
 | | |
 | --- | --- |
 | Wheel concept | 120 mm OD × 50 mm; PC core, TPU 95A tread |
-| Material estimate | €182.45 net for 20 wheels at recorded sale prices |
+| Material estimate | €190.79 net for 24 wheels (16 × 120 mm, 8 × 70 mm) at recorded sale prices |
 
 **Read more:** [Lower roller 1 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers) · [Elegoo PC filament](https://www.3djake.com/elegoo/pc-black-4) · [Elegoo TPU 95A filament](https://www.3djake.com/elegoo/tpu-95a-blue-2) · [6004-2RS bearings](https://www.kugellager-express.de/rillenkugellager-6004-2rs-20x42x12-mm) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed)
 
@@ -320,16 +320,30 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="upper-roller"></a>
 
-### Fixed upper roller (paired 120x50 study)
+### Front fixed upper roller (paired 70x50 study)
 
-**Status:** Fixed raised return roller with U support and inboard mast; printed capacity and structural loads unqualified.
+**Status:** Front fixed return roller at the 70 mm minimum, with U support and inboard mast; printed capacity, bend radius and structural loads unqualified.
 
-[![Fixed upper roller (paired 120x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
+[![Front fixed upper roller (paired 70x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
 | | |
 | --- | --- |
-| Return wheel concept | Paired 120 × 50 mm PC/TPU wheels; axis Y = 535 mm |
+| Return wheel concept | Paired 70 × 50 mm PC/TPU wheels; front axis X = 245, Y = 510 mm |
 
-**Read more:** [Fixed upper roller (paired 120x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+**Read more:** [Front fixed upper roller (paired 70x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+
+<a id="upper-roller-2"></a>
+
+### Rear fixed upper roller (paired 70x50 study)
+
+**Status:** Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified.
+
+[![Rear fixed upper roller (paired 70x50 study)](viewer/previews/upper-roller-2.png)](viewer/index.html?component=upper-roller-2&mode=presentation)
+| | |
+| --- | --- |
+| Return wheel concept | Paired 70 × 50 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm |
+| Track wrap | About 32.9°, nominal reaction about 0.57 × belt tension |
+
+**Read more:** [Rear fixed upper roller (paired 70x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="pod-carrier"></a>
 
@@ -409,16 +423,16 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="upper-roller-support"></a>
 
-### Fixed upper U support and inboard mast (proposal)
+### Fixed upper U supports and inboard masts (proposal)
 
 **Status:** Fixed U support, axle and braced inboard mast proposal; loads and joints unqualified.
 
-[![Fixed upper U support and inboard mast (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
+[![Fixed upper U supports and inboard masts (proposal)](viewer/previews/upper-roller-support.png)](viewer/index.html?component=upper-roller-support&mode=presentation)
 | | |
 | --- | --- |
 | Packaging | 29 mm wheel/bridge gap; 16 mm intrusion into central space |
 
-**Read more:** [Fixed upper U support and inboard mast (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+**Read more:** [Fixed upper U supports and inboard masts (proposal) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="battery"></a>
 

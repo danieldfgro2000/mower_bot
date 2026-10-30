@@ -3,7 +3,7 @@ import { readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  root, viewerDirectory, outputDirectory, loadConfig, assertFresh, readRepositoryFile,
+  root, viewerDirectory, outputDirectory, loadConfig, assertFresh, readRepositoryFile, modelIds,
 } from './assets.mjs';
 import { renderDocument, resolveServedFile } from './core.mjs';
 
@@ -18,6 +18,7 @@ const mime = {
 export function createViewerServer() {
   const config = loadConfig();
   assertFresh(config);
+  const models = new Set(modelIds(config));
   return createServer((request, response) => {
     const send = (status, data, type = 'text/plain; charset=utf-8') => {
       response.writeHead(status, {
@@ -47,7 +48,7 @@ export function createViewerServer() {
         file = `${viewerDirectory}/${path.basename(url.pathname)}`;
       } else if (url.pathname.startsWith('/models/')) {
         const id = url.pathname.slice('/models/'.length).replace(/\.stl$/, '');
-        if (!config.components.some(part => part.id === id) || !url.pathname.endsWith('.stl')) {
+        if (!models.has(id) || !url.pathname.endsWith('.stl')) {
           return send(404, 'Unknown model');
         }
         file = `${outputDirectory}/${id}.stl`;

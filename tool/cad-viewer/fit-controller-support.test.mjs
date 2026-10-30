@@ -5,13 +5,17 @@ import { boundsFor, solidVolumes } from './cad-test-helpers.mjs';
 
 test('controller and E-stop contactor stay on a fixed support and the cassette clears fixed gear', async () => {
   const controller = boundsFor('controller');
-  assert.deepEqual(controller.size, [200, 70, 164],
+  assert.deepEqual(controller.size, [164, 70, 200],
     'published 70.47 mm overall depth already includes terminal projections');
   assert.ok(Math.abs(controller.max[1] - controller.min[1] - 70.47) < 0.001,
     'controller is not oversized by adding pads beyond its published envelope');
-  assert.equal(controller.min[1], 411, 'fixed 6 mm support plate sits above the battery and hold-down');
-  assert.deepEqual([controller.min[0], controller.max[0]], [-35, 165],
-    'position clears the rear return and the fixed upper roller');
+  assert.equal(controller.min[1], 411, 'fixed 6 mm support plate sits above the battery');
+  const battery = boundsFor('battery');
+  for (const axis of [0, 2]) {
+    assert.ok(Math.abs((controller.min[axis] + controller.max[axis]
+      - battery.min[axis] - battery.max[axis]) / 2) <= 0.01,
+    `controller is centered over the battery on axis ${axis}`);
+  }
   const config = JSON.parse(readFileSync('docs/engineering/presentation/viewer/components.json'));
   const animation = config.animations.find(item => item.id === 'battery-removal');
   const fixed = config.components.map(part => part.id).filter(id =>
@@ -21,7 +25,7 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
     .map(id => `pod_component("${id}");`).join('\n');
   const clearanceFixed = fixed.filter(id => !['battery-harness', 'pod-carrier'].includes(id))
     .map(id => `pod_component("${id}");`).join('\n');
-  const sweeps = ['battery-tray', 'battery-hold-down', 'tray-lock-strike'];
+  const sweeps = ['battery-tray', 'tray-lock-strike'];
   const frames = ['upper_roller_support()', 'pod_frame()'];
   const stages = [0, 1, 2];
   const volume = await solidVolumes({
@@ -46,7 +50,6 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
     minkowski() {
       union() {
         hull() { battery_envelope(); translate([0,0,305]) battery_envelope(); }
-        hull() { battery_hold_down(); translate([0,0,305]) battery_hold_down(); }
       }
       // Circumscribe the required 5 mm ball: an inscribed low-poly sphere
       // at radius 5 would under-test clearance between its vertices.
@@ -93,9 +96,9 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
     assert.ok(volume[id] <= 0.01, `${id} complete linear sweep clears actual fixed gear`);
   }
   assert.ok(volume.lift <= 0.01,
-    'with the hold-down released the extracted battery lifts vertically clear');
+    'with its base fixings released the extracted battery lifts vertically clear');
   assert.ok(volume.margin <= 0.01,
-    'battery and hold-down sweep retain a provisional 5 mm fixed-gear margin');
+    'battery sweep retains a provisional 5 mm fixed-gear margin');
   assert.ok(volume.pinGuide <= 0.01, 'fixed pin guide does not cut through running gear');
   for (const stage of stages) {
     assert.ok(volume[`stage-${stage}`] <= 0.01,

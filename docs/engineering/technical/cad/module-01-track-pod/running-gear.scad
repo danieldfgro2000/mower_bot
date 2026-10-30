@@ -4,7 +4,7 @@
 
 module capsule_2d(offset) {
     hull() {
-        for (i = [0 : 2])
+        for (i = [0 : path_count - 1])
             translate(path_centers(roller_center_spacing)[i])
                 circle(r = path_radii[i] + offset);
     }
@@ -13,13 +13,13 @@ module capsule_2d(offset) {
 // Position and outward-normal angle at distance s around the assumed pitch loop.
 function segment_length(segment) =
     segment % 2 == 0 ? edge_length(segment / 2, roller_center_spacing) :
-    let(i = (floor(segment / 2) + 1) % 3)
+    let(i = (floor(segment / 2) + 1) % path_count)
     path_radii[i] * arc_angle(i, roller_center_spacing) * PI / 180;
 
 function track_frame(s, segment = 0) =
-    s > segment_length(segment) && segment < 5
+    s > segment_length(segment) && segment < 2 * path_count - 1
         ? track_frame(s - segment_length(segment), segment + 1) :
-    let(i = floor(segment / 2), j = (i + 1) % 3,
+    let(i = floor(segment / 2), j = (i + 1) % path_count,
         centers = path_centers(roller_center_spacing),
         n = tangent_normal(i, roller_center_spacing),
         a = normal_angle(i, roller_center_spacing))

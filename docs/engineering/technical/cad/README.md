@@ -9,15 +9,17 @@ that component. No hosting or publishing is required.
 **Status:** Unqualified sourcing-candidate fit study, not fabrication geometry
 or authorization to build. It represents the 200 x 72 x 40 track, paired 120 mm printed
 roller concept, paired 200 mm idler candidate, HPM5000B interfaces and current
-DC HOUSE body envelope. **The represented solid clashes are cleared**, using a
-raised fixed upper return and revised battery tray. U supports/axles, connected
+DC HOUSE body envelope. Represented payload and running-gear clearances are
+checked using a raised fixed upper return and revised battery tray, not a
+complete assembly clearance certificate. U supports/axles, connected
 tray frame, motor reaction plate and a spring-loaded sliding front idler are
 now represented custom proposals. This is not a complete qualified machine:
 brake, reducer supports, joints and actual spring specification remain open.
-The battery now sits on a proposed open tray with hold-down straps (no box),
+The upright battery is rotated 180 degrees on a proposed open tray with four
+removable base-clamp concepts (no box or over-pack straps),
 one flat telescopic guide under the tray and a tray-level two-position pin. An
 actual-size controller envelope and a main contactor placeholder sit on a
-fixed frame support above it, with direct, connector-free battery and phase
+fixed frame support centered above it, with direct, connector-free battery and phase
 harness routing. The preferred protected short-end position clashes
 with the current drum/return geometry. See the
 [cassette load/evidence boundary](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette).
@@ -27,30 +29,30 @@ The BOM baseline is not changed by this candidate study.
 
 | Component | Relevant detail | Evidence / remaining assumption |
 | --- | --- | --- |
-| Track | 200 mm width, 72 mm pitch, 40 guide/tread positions; three-circle path, 2,880 mm nominal loop | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
+| Track | 200 mm width, 72 mm pitch, 40 guide/tread positions; four-circle path, 2,880 mm nominal loop | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
 | Drive drum | Flexible 350 mm OD, 200 mm axial envelope, central guide relief and hollow running bands | No selected tooth profile or load path; 10 mm shell and 50 mm guide channel are placeholders |
 | Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 160 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
 | Lower rollers | Four paired assemblies, unchanged 120 x 50 mm wheels; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 50 mm tread-face guide gap and 1 mm bearing recess are study values, not print tolerances |
-| Upper roller / support | Fixed paired 120 x 50 mm assembly at X = 200, Y = 535 mm; 6 mm U cheeks, 20 mm axle and bridge below wheels; inboard mast to Z = -116 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). Capacity/joints unqualified; mast takes 16 mm of central space per pod |
+| Upper rollers / supports | Two fixed paired 70 x 50 mm assemblies (minimum around the 42 mm 6004 seat) at X = 245 and -195, Y = 510 mm; 6 mm U cheeks, 20 mm axles and bridges below wheels; inboard masts to Z = -116 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). Capacity/joints unqualified; 70 mm diameter and track bend radius HOLD; masts take 16 mm of central space per pod |
 | Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
 | Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
 | Carrier / battery position | Fixed 524 x 288 x 10 mm plate at Y = 140-150 mm, locally relieved for full idler stroke; battery X = 35, Z = 44 mm, bottom Y = 158 mm | Custom proposal; fixed carrier plus 8 mm moving tray. Inboard tray edge stays Z = -100 mm |
-| Battery service cassette | Open 8 mm steel tray (no box) with two hold-down straps on fixed seats; one flat 305 mm telescopic guide under the tray; tray-level 12 mm pin and two 12.5 mm bores | [Geometry, 85 kg load screen and S40 price](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette). Pin is not a vertical-load support; single flat guide rating (about 27.2 kg) is below the pack, so guide, seat transfer and joints remain HOLD |
-| Controller / contactor / harness | EZ-A48500 A-series 200 x 164 x 70.47 mm overall, on a fixed frame support above the open tray; X = -35 to +165, Z = -82 to +82, base Y = 411 mm; provisional pads stay within the published depth. 45 x 70 x 70 mm main contactor placeholder on a shelf of the same support | [Position assessment/drawing evidence](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate), [terminal/harness assumptions](../modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness). Battery lugs bolt directly to the terminals; P+ is switched by the E-stop contactor; phases run directly to the motor inside the track side silhouette, with no connectors; exact battery offsets / motor cable exit unverified |
+| Battery service cassette | Open 8 mm steel tray (no box) with four removable slotted-jaw/hand-knob concepts on fixed seats; one flat 305 mm telescopic guide under the tray; tray-level 12 mm pin and two 12.5 mm bores | [Geometry, 85 kg load screen and S40 price](../modules/04-battery-and-charging/batteries.md#sliding-battery-cassette). The pack's base flange, clamp grip, threads and lock are unmodeled; the concepts are **not a verified restraint**. The single flat guide rating (about 27.2 kg) is below the pack, so guide, seat transfer and joints remain HOLD |
+| Controller / contactor / harness | EZ-A48500 A-series 200 x 164 x 70.47 mm overall, centered on a fixed frame support above the tray; its terminal row runs across the pod at X = 53; X = -47 to +117, Z = -56 to +144, base Y = 411 mm. A 45 x 70 x 70 mm contactor placeholder shares the support | [Position assessment/drawing evidence](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate), [terminal/harness assumptions](../modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness). Battery lugs bolt directly to the terminals; P+ is switched by the E-stop contactor; phases run directly to the motor inside the track side silhouette, with no connectors; exact battery offsets / motor cable exit unverified |
 | Lower U supports | Four pairs of 6 mm cheeks, 20 mm axles, 6 mm top bridges at Y = 134-140 mm | [Support details](../modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers); 5 mm tire-side and 4 mm bridge/tread gaps; bearing fits, retention and loads unqualified |
 | Tray frame / motor plate | Rear arms through drum relief, stepped side rails to front guide blocks; 250 mm OD x 12 mm motor plate, 148 mm mounting PCD | [Frame proposal](../modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal); motor moves 12 mm outboard, reducer positions unchanged; fixed-ring and brake mounts still absent |
 | Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 57.036 mm nominal seat gap, 42.036-72.036 mm geometric range; no rate/preload or selected commercial spring |
 
-Drive and idler axes are at X = -440 and +404.036 mm: **844.036 mm spacing**.
-The exact three-circle external tangents and wrap arcs close the nominal loop
+Drive and idler axes are at X = -440 and +410.308 mm: **850.308 mm spacing**.
+The exact four-circle external tangents and wrap arcs close the nominal loop
 to within 0.02 mm; guide positions follow actual segment lengths, not an
 equal-wheel approximation. The belt-body longitudinal envelope is approximately
-**1,159 mm**, before tread projections. Overall track height is about **637 mm**.
+**1,165 mm**, before tread projections. Overall track height is about **587 mm**.
 
 | Clearance / change | Revised result | Provisional requirement |
 | --- | ---: | --- |
-| Battery to front / rear continuous guide-tip return envelopes | 38.2 / 35.8 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
-| Conservative return clearance after both allowances | **20.8 mm minimum** | 20 mm; assumptions need actual track data |
+| Battery to front / rear continuous guide-tip return envelopes | 40.5 / 103.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
+| Conservative return clearance after both allowances | **25.5 mm minimum** | 20 mm; assumptions need actual track data |
 | Fixed upper wheel to battery | 84 mm | 20 mm |
 | Lower rollers to fixed carrier / battery | 10 / 28 mm | 10 / 20 mm |
 | Adjacent lower rollers | At least 10 mm; locations recalculate with the idler | 10 mm |
@@ -60,7 +62,9 @@ equal-wheel approximation. The belt-body longitudinal envelope is approximately
 | U bridges to lower / upper wheels | 4 / 29 mm | 3 / 5 mm provisional running gaps |
 | Front stepped rails to moving yoke | 5 mm vertical | 5 mm provisional; checked through +/-15 mm X stroke |
 | Guide rod to sleeve bore | 0.5 mm radial | Study clearance only; not a selected sliding-bearing fit |
-| Battery and hold-down sweep to fixed gear, controller, contactor and frame | At least 5 mm, checked by expanded solid sweep | Provisional geometry screen only; dynamic cassette allowance not qualified |
+| Battery and individual base-clamp sweeps to fixed gear, controller, contactor and frame | At least 5 mm, checked by expanded solid sweeps | Provisional geometry screen only; real flange and dynamic cassette allowance not qualified |
+| Tray sweep to full +/-15 mm idler/yoke stroke | At least 5 mm, checked by expanded conservative envelopes | Idler stroke is geometric, not proven usable tensioning travel |
+| Power leads to upper wheels/support; phase-to-phase and phase-to-track/drum | At least 5 mm between represented cable envelopes and running gear | Provisional; actual motor exits, bends and insulation need confirmation |
 | Flat guide stages to lower rollers and U supports | At least 5 mm through travel | Provisional; rail profiles/fixings still require actual drawings |
 | Inner-stage pads to tray in WORK | 0.9-1.1 mm float; tray rests on fixed seats | Seat-to-guide load transfer is HOLD |
 
@@ -85,15 +89,18 @@ rate/preload and tension loads must be established before release. No
 commercial belt was stretched or purchasable loop length invented to claim fit.
 
 The 305 mm cassette extraction clears represented running gear and frame.
-The battery, open tray, hold-down, inner guide stage and locking strip move;
+The battery, open tray, base-clamp concepts, inner guide stage and locking strip move;
 the controller, its support, the main contactor and all power leads stay
 fixed. Pin withdrawal and middle-stage half travel are independent animation
 tracks. Remaining interfaces include rated restraints, signal harnesses,
 guards, exact terminal datums and the rest of the machine.
-The controller's case occupies X = -35 to +165 mm, Z = -82 to +82 mm and
-Y = 411-481.47 mm overall, including its provisional terminal pads.
-Battery leads use the inboard side and phase leads the outboard side, so
-they do not cross in plan above the battery. Power harnesses, controller and
+The controller's case occupies X = -47 to +117 mm, Z = -56 to +144 mm and
+Y = 411-481.47 mm overall, including its provisional terminal pads. It is
+centered over the battery so the B+, U, V, W, B- row runs across the pod at
+X = 53 mm. The phases use staggered-height lanes past the drive drum and
+climb behind the battery; the pack leads approach from the rotated +X terminal
+end. Battery and phase leads do not cross in plan above the battery.
+Power harnesses, controller and
 contactor stay inside Z = -125 to +183 mm; the fixed flat guide and locking
 strip set the physical envelope at Z = -125 to +205 mm. Top mounting needs
 reviewed support joints, cooling and overhead protection; the battery carries
@@ -160,9 +167,11 @@ The same thumbnail route is available beside the motor in its owning scope.
 - To inspect motor mounting holes and the shaft keyway, isolate the motor and
   orbit to its shaft-side (negative Z) face; the default outboard view hides them.
 - **Selected STL** downloads just that component in the original assembly
-  coordinates, in millimetres. Planetary pitch-circle studies are grouped by
-  stage; the four lower rollers are separate exports. The removal arrow is
-  explicitly an annotation, not a physical part.
+  coordinates, in millimetres. The battery harness is one selection with red
+  positive and black negative viewer meshes; its combined STL does not retain
+  those colors. Planetary pitch-circle studies are grouped by stage; the four
+  lower rollers are separate exports. The removal arrow is explicitly an
+  annotation, not a physical part.
 - **Animate** plays a configured motion. **Battery cassette** withdraws the
   tray-level pin 35 mm down, slides the open tray and battery 305 mm outboard
   with the middle guide at half travel, then reengages the pin. The battery
@@ -233,6 +242,14 @@ file:
   re-exports in about 0.5 s.
 - **Disable the cache** with `CAD_CACHE=0`.
 
+For a multicolored component, `components.json` can declare `renderParts`:
+each names a unique internal model ID, an OpenSCAD module and a color. The
+viewer groups those meshes under the original component for selection,
+visibility and animation; the component's own SCAD selector remains the union
+used for STL download and preview. The battery harness regression checks that
+its two rendered leads cover that union exactly. Internal model IDs are not
+new independently selectable components or thumbnail links.
+
 The fit tests are split by subsystem into `tool/cad-viewer/fit-*.test.mjs`,
 with shared probes in `cad-test-helpers.mjs`. `npm test` runs these files in
 parallel. To iterate on one subsystem, run its file alone, for example
@@ -250,7 +267,42 @@ battery lift path. Second, the named cable paths (`battery_positive_path_a/b`,
 `battery_negative_path`, `motor_phase_path(i)`) stay within length budgets
 set at the current shortest routes.
 
+**Rotated controller and second upper roller test-first update (2026-10-30; superseded controller position):**
+the frame, controller-support, E-stop and tensioner tests were changed first
+and failed against the three-circle, 120 mm upper-roller layout. They now
+require a four-circle loop with two 70 mm upper pairs, both connected to the
+frame; the rotated controller at X = -130 to +34 mm; and length budgets of
+P+ 320 mm, P- 320 mm, 700 mm per phase and 2,060 mm for all three phases.
+Modeled routes are about P+ 314, P- 312 and U/V/W 679/681/692 mm.
+
 ## Refresh and verify
+
+**Centered controller and battery base-clamp test-first update (2026-10-30):**
+The cassette, controller and harness checks first failed on the old straps,
+off-center controller and terminal end. Expanded lead checks exposed
+phase-to-phase, drum and upper-support conflicts and the battery lead against
+an upper wheel; the rerouted leads now clear these modeled parts by 5 mm.
+Four removable slotted jaws, studs and hand-knob envelopes follow the tray;
+each clamp has a 5 mm expanded sweep to fixed gear. At EXTRACT, the jaw can
+rise 5 mm and slide 14 mm outward below the loosened knob; the non-convex
+slotted sweep is checked without filling the slot. An illustrative 4 x 6 mm
+flange fixture can bear on the jaw and lift 300 mm past the remaining hardware;
+the actual flange and full-pack handling remain unverified. The full tray
+envelope clears the +/-15 mm idler stroke by 5 mm. Real battery grip, knob
+threads, captive hardware and a secondary lock remain unmodeled pending flange
+dimensions and load evidence. The centerline limits
+are P+ 335, P- 320, U/V/W 660/615/585 and combined phases 1,855 mm; modeled
+routes are approximately 332, 320 and 656/612/583 mm, respectively.
+
+**Battery polarity and viewer-color test-first update (2026-10-30):**
+the browser regression first failed because the single STL material rendered
+both battery leads red, with no black lead visible. The viewer now loads
+separately colored P+ and P- submeshes under the existing harness selection.
+The fit checks trace the assumed battery endpoints through the contactor to
+the B+ and B- ends of the manufacturer-drawn terminal row and retain 5 mm
+between the represented leads. The supplier photograph, exact supplied
+terminal positions and actual wiring remain unqualified; color is not a
+substitute for checking markings and polarity.
 
 **Loaded battery cassette test-first update (2026-10-29):**
 new export tests first failed on absent enclosure/tray/controller IDs, and
@@ -285,7 +337,7 @@ enclosure/guide/load screens. Moving cables use exact sweeps of individual
 convex capsule segments, not a hull across disconnected branches or a
 pose-sampling approximation. The complete unit/geometry suite passes 30 tests.
 
-**Open tray, flat guide and direct wiring test-first update:**
+**Open tray, flat guide and direct wiring test-first update (superseded strap concept):**
 The cassette, controller/contactor, harness, stage-travel and animation tests
 were changed first and failed (6 of 30) on the missing hold-down, contactor,
 flat guide and direct harnesses. They now require: no box, lid or connectors;
@@ -372,8 +424,9 @@ The generator checks presentation facts against their technical evidence.
 CAD sync checks that SCAD selectors, component map, both documentation modes
 and Markdown 3D links agree. Each component must have both document targets and
 a Markdown entry point; each linked thumbnail must open its own component. It
-re-exports only when stale: separate binary STL files and a freshness manifest
-go to ignored `build/cad-viewer/`, and thumbnails go to `viewer/previews/`. `npm run check`
+re-exports only when stale: separate binary STL files, including colored render
+parts, and a freshness manifest go to ignored `build/cad-viewer/`; thumbnails
+go to `viewer/previews/`. `npm run check`
 performs the same validation without writing. The server refuses stale or
 incomplete exports at startup. Restart it after a component-map or geometry
 change; nothing hot-reloads automatically.

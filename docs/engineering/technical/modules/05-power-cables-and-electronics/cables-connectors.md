@@ -19,12 +19,13 @@ parts, and routing remain unselected; quantities are not a harness cut list.
 | Charge and width-drive harnesses | Owned and budgeted in their respective scopes, not added here | [Charge harness](../04-battery-and-charging/batteries.md#ps20-charging-and-charge-interlocks) · [Width harness](../03-width-adjustment/width-adjustment.md#ps13-width-harness-and-screw-guard) | [Charge interlock](../06-safety-controls-and-sensors/safety-controls.md#ps28-independent-stopping-and-normal-control) · [Moving scissor mechanism](../01-structure-and-running-gear/frame.md#ps05-scissor-pivots) |
 
 **3D routing study:** simplified 12 mm cable envelopes, not selected conductor
-sizes. All harnesses are fixed; only the battery, open tray, hold-down and
+sizes. All harnesses are fixed; only the battery, open tray, base-clamp concepts and
 inner guide move. Battery leads bolt directly to the pack terminals with no
-extra connector. P+ runs on the inboard side through the E-stop-controlled
-main contactor to controller B+; P- runs direct to B-. Phase leads run
-directly from the motor to U/V/W in outboard lanes (Z = 118-154 mm) and stay
-inside the track side silhouette. Battery and phase leads never cross in plan
+extra connector. The **red P+ lead** runs on the inboard side through the
+E-stop-controlled main contactor to controller B+; the **black P- lead** runs
+direct to B-. Both remain one selectable harness in the viewer. Phase leads run
+directly from the motor to U/V/W in staggered-height lanes around the drum
+and stay inside the track side silhouette. Battery and phase leads never cross in plan
 above the battery. These are not impact guards, bend-radius or support
 designs.
 
@@ -84,26 +85,36 @@ normal control as designed
 
 **Routing proposal, not an electrical assembly drawing:** the
 [DC HOUSE S30](../04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle)
-offer photograph shows P- and P+ on the same short end beside a handle.
-The CAD orients that end toward negative X, with **provisional** landing
-Y = 348, Z = -35 / +123 mm. M8 is evidenced; exact centers, stud/boot
+offer photograph shows black P- and red P+ on the same short end beside a handle.
+After the upright 180-degree rotation the CAD orients that end toward +X,
+with **provisional** landings at X = 305, Y = 348, Z = +123 / -35 mm
+for P- / P+. M8 is evidenced; exact centers, stud/boot
 envelopes and torques are not. There is no battery box, gland or battery
 connector: ring lugs bolt directly to the pack studs, and unbolting them is
 the first removal step.
 
 The [controller manual](https://www.goldenmotor.com/controllers/EZkontrol%20Users%20Manual.pdf)
 establishes B+/U/V/W/B- order and the three motor-phase connections (PDF pages
-7 and 11); terminal centers in the model remain approximate. From the P+ lug
-the red lead rises at X = -235 mm to the input stud of a 45 x 70 x 70 mm
-**main contactor envelope** on the fixed controller support (Y = 330 mm). The
-output stud (Y = 375 mm) feeds controller B+ (X = -10) at the terminal
-approach centerline Y = 487.47 mm. The P- lead runs inboard at Z = -65 mm
-directly to B- (X = 142). Fixed leads clear the moving battery, tray and
-hold-down sweep through 305 mm extraction.
+7 and 11); terminal centers in the model remain approximate. The modeled
+P+ lands on B+ through the contactor and P- lands on B-. Before any actual
+connection, identify the supplied terminals by their markings and independently
+verify polarity under a qualified electrical procedure; cable color and the
+illustrative positions are not proof of the supplied hardware's polarity.
+From the P+ lug
+the red lead rises to a 45 x 70 x 70 mm **main contactor envelope** at
+X = 140-185, Y = 411-481, Z = -70 to 0 mm on the fixed support. The
+assumed top studs and their order are placeholders, not selected hardware.
+Its output feeds B+ at X = 53, Z = -31 mm; P- feeds B- at X = 53,
+Z = 121 mm. The terminal approach centerline is Y = 487.47 mm. Fixed leads
+clear the moving battery, tray and base-clamp sweep through 305 mm extraction.
 
 Yellow/green/blue phase envelopes leave the provisional motor landing at
-X = -440, Y = 265, Z = 118 mm and use Z = 118/136/154 mm lanes directly to
-U/V/W, with no connector. A 10 mm capsule grown around their side-view
+X = -440, Y = 265, Z = 118 mm; the three provisional landings are spaced
+18 mm along X. They climb in lanes at Y = 340/320/300 mm, pass outboard of
+the drive drum, then turn inboard and rise behind the pack directly to
+U/V/W, with no connector. Power tubes keep at least 5 mm to the modeled
+upper rollers and their support; individual phase tubes also keep 5 mm to
+each other, the drum and the track. A 10 mm capsule grown around their side-view
 projection stays inside the track side silhouette, so they do not protrude
 over the track. The motor endpoint is a **provisional outboard-face pigtail
 landing**, not an evidenced HPM terminal position.
@@ -113,22 +124,25 @@ contactor -> controller B+; battery - -> controller B-; controller U/V/W ->
 motor directly. The E-stop chain opens the high-current main contactor
 coil, so one E-stop disconnects both packs. Build: connect motor phases and Hall/sensor leads to the
 controller first, then control, KSI and contactor coil wiring, and the
-battery lugs last (B+ then B-), with the E-stop pressed. Battery removal
-starts from a safe state (key off, E-stop pressed, controller capacitors
-discharged, absence of voltage verified); the first removal step is then to
-unbolt B- and then B+ at the battery terminals and boot the lugs, before
-unpinning and sliding the tray. Phase leads stay connected. Never break phase leads while powered
+battery lugs last (B+ then B-), under a qualified isolation procedure.
+After establishing a safe state, the first battery-removal step is unbolting
+B- then B+ and separately insulating the live terminals and removed lugs,
+before unpinning and sliding the tray. E-stop/contactors alone do not provide
+service isolation. Phase leads stay connected. Never break phase leads while powered
 or while the motor can turn, because back-EMF can energize them. Do not drill
 or cut a harness from these coordinates.
 
 **Cable length is a high-priority design constraint.** Battery and motor
 power leads take the shortest route that still clears the track side
 silhouette, the tray slide and the battery lift path. The fit study holds
-them to length budgets (P+ about 490 mm via the contactor, P- about 530 mm,
-phases about 670/740/810 mm); any layout change that lengthens them must be
-justified. The phase leads are the longest because the controller cannot sit
-lower or further toward the motor: the track top run descends toward the
-drum, and the controller must stay under it and above the open tray. The
+them to length budgets (P+ about 332 mm via the contactor, P- about 320 mm,
+phases about 656/612/583 mm; centerline lengths only). Compared with the prior
+off-center layout, P+ grows about 18 mm to pass the upper roller and support
+after the battery rotation; P- grows about 8 mm to reach the centered controller
+without clipping its cover. The combined phases are about 201 mm shorter.
+The controller's terminal row spans the pod and the controller is centered
+over the battery at the owner's request. The phases must still climb from
+the motor face to the controller above the tray. The
 E-stop operator is beside the controller (see
 [PS21](power-distribution.md#ps21-main-fuses-disconnects-and-contactors)), so
 its low-current coil loop, not the power leads, is the run that grows.

@@ -50,10 +50,11 @@ test('E-stop is reachable from outboard, beside the controller, guarded from the
 
 test('battery and motor power cables stay within their shortest-route length budgets', async () => {
   const volume = await solidVolumes({
-    budget: `assert(path_length(battery_positive_path_a()) + path_length(battery_positive_path_b()) <= 495, "P+ too long");
-      assert(path_length(battery_negative_path()) <= 530, "P- too long");
-      phase_budget = [675, 745, 815];
-      for (i = [0 : 2]) assert(path_length(motor_phase_path(i)) <= phase_budget[i], "phase too long");
+    budget: `assert(path_length(battery_positive_path_a()) + path_length(battery_positive_path_b()) <= 335, "P+ too long");
+      assert(path_length(battery_negative_path()) <= 320, "P- too long");
+      for (i = [0 : 2]) assert(path_length(motor_phase_path(i)) <= [660, 615, 585][i], "phase too long");
+      assert(path_length(motor_phase_path(0)) + path_length(motor_phase_path(1))
+        + path_length(motor_phase_path(2)) <= 1855, "phase set too long");
       cube(1);`,
   });
   assert.ok(volume.budget > 0.9, 'length budget probe rendered');
