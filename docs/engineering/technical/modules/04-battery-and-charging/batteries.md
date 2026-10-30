@@ -317,10 +317,11 @@ motor U/V/W directly. The E-stop chain opens the main contactor coil, so
 one E-stop disconnects both packs. Contactor rating, precharge, coil supply and the main
 fuse remain on hold under [PS21](../05-power-cables-and-electronics/power-distribution.md#ps21-main-fuses-disconnects-and-contactors).
 
-**Removal sequence:** key off; press the E-stop so the contactor opens;
-verify absence of voltage; unbolt the B- lug, then the B+ lug, at the battery
-terminals and fit terminal boots; withdraw the tray pin 35 mm; slide the tray
-out 305 mm and re-pin at EXTRACT. Reassemble in reverse order: B+ before B-,
+**Removal sequence:** start only with the machine in a safe state (key off,
+E-stop pressed so the contactor is open, absence of voltage verified at the
+controller). Step 1: unbolt the B- lug, then the B+ lug, at the battery
+terminals and fit terminal boots. Step 2: withdraw the tray pin 35 mm.
+Step 3: slide the tray out 305 mm and re-pin at EXTRACT. Reassemble in reverse order: B+ before B-,
 torque the lugs and refit the boots before releasing the E-stop.
 
 **Conservative load screen, not structural qualification:** use **85 kg**

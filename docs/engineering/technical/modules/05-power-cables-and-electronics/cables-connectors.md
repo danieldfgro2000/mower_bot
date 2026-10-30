@@ -113,10 +113,11 @@ contactor -> controller B+; battery - -> controller B-; controller U/V/W ->
 motor directly. The E-stop chain opens the high-current main contactor
 coil, so one E-stop disconnects both packs. Build: connect motor phases and Hall/sensor leads to the
 controller first, then control, KSI and contactor coil wiring, and the
-battery lugs last (B+ then B-), with the E-stop pressed. Battery removal:
-key off, press the E-stop, wait for the controller capacitors to discharge,
-verify absence of voltage, then unbolt B- and then B+ at the battery and boot
-the lugs. Phase leads stay connected. Never break phase leads while powered
+battery lugs last (B+ then B-), with the E-stop pressed. Battery removal
+starts from a safe state (key off, E-stop pressed, controller capacitors
+discharged, absence of voltage verified); the first removal step is then to
+unbolt B- and then B+ at the battery terminals and boot the lugs, before
+unpinning and sliding the tray. Phase leads stay connected. Never break phase leads while powered
 or while the motor can turn, because back-EMF can energize them. Do not drill
 or cut a harness from these coordinates.
 

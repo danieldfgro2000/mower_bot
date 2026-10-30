@@ -2,7 +2,7 @@
   "source": "docs/engineering/technical/cad/module-01-track-pod-fit.scad",
   "defaultDocument": "docs/engineering/technical/cad/README.md",
   "defaultPresentation": "docs/engineering/presentation/README.md",
-  "notice": "Unqualified candidate fit study. Open battery tray (no box) rests on fixed seats and is extracted on one flat telescopic guide beneath it; the controller, E-stop main contactor and all leads stay on a fixed frame support. Key off, open the E-stop contactor, verify 0 V, unbolt the battery leads at the terminals and release the tray-level pin before extraction. Terminal offsets, contactor rating, guide rating, seat-to-guide transfer, restraint and full-machine stability remain HOLD; no fabrication or electrical qualification.",
+  "notice": "Unqualified candidate fit study. Open battery tray (no box) rests on fixed seats and is extracted on one flat telescopic guide beneath it; the controller, E-stop main contactor and all leads stay on a fixed frame support. With the machine safe (key off, E-stop contactor open, 0 V verified), the first removal step is unbolting the battery leads at the terminals; then release the tray-level pin and extract. Terminal offsets, contactor rating, guide rating, seat-to-guide transfer, restraint and full-machine stability remain HOLD; no fabrication or electrical qualification.",
   "animations": [
     {
       "id": "battery-removal",
