@@ -182,8 +182,13 @@
       "facts": [
         {
           "label": "Candidate dimensions",
-          "value": "200 × 72 × 40 (listed size)",
+          "value": "200 × 72 × 40 (listed size); roller type R2",
           "evidence": "200 x 72 x 40, product 2055"
+        },
+        {
+          "label": "Roller profile",
+          "value": "R2 twin guide horns; CAD profile scaled from an undimensioned image (HOLD)",
+          "evidence": "roller type `R2`"
         },
         {
           "label": "Listed price",
@@ -196,7 +201,8 @@
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates",
           "quotes": [
             "200 x 72 x 40, product 2055",
-            "EUR119.27 | EUR110.92"
+            "EUR119.27 | EUR110.92",
+            "roller type `R2`"
           ]
         }
       ],
@@ -245,7 +251,7 @@
       "facts": [
         {
           "label": "Wheel concept",
-          "value": "120 mm OD × 50 mm; PC core, TPU 95A tread",
+          "value": "120 mm OD × 40 mm; PC core, TPU 95A tread",
           "evidence": "Owner selection, 2026-10-29:** 120 mm"
         },
         {
@@ -284,15 +290,15 @@
       "facts": [
         {
           "label": "Return wheel concept",
-          "value": "Paired 70 × 50 mm PC/TPU wheels; front axis X = 245, Y = 510 mm",
-          "evidence": "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
+          "value": "Paired 70 × 40 mm PC/TPU wheels; front axis X = 245, Y = 510 mm",
+          "evidence": "two fixed pairs of 70 x 40 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
         }
       ],
       "evidence": [
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
           "quotes": [
-            "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
+            "two fixed pairs of 70 x 40 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
           ]
         }
       ]
@@ -303,8 +309,8 @@
       "facts": [
         {
           "label": "Return wheel concept",
-          "value": "Paired 70 × 50 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm",
-          "evidence": "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
+          "value": "Paired 70 × 40 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm",
+          "evidence": "two fixed pairs of 70 x 40 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm"
         },
         {
           "label": "Track wrap",
@@ -316,7 +322,7 @@
         {
           "target": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
           "quotes": [
-            "two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm",
+            "two fixed pairs of 70 x 40 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm",
             "Wrap angles are about 58.9° (front) and 32.9° (rear)"
           ]
         }

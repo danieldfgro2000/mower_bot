@@ -22,7 +22,7 @@ module battery_service_tray() {
                         cube([11, service_tray_thickness, 18]);
             }
             translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
-                cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
+                cylinder(d = idler_outer_diameter + 10, h = idler_cutout_height, center = true);
             // Pin clearance notch at the WORK position.
             translate([lock_pin_x, battery_bottom_y - service_tray_thickness - 1, lock_pin_z])
                 rotate([-90, 0, 0]) cylinder(d = 14, h = service_tray_thickness + 2);

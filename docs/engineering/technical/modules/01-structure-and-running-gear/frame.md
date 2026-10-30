@@ -96,13 +96,18 @@ the idler's geometric stroke.
 
 The front guide supports no longer depend on a 13 x 10 mm stepped rail and
 5 x 3 mm overlap. Each side has a solid **20 x 65 mm** web from approximately
-X = 210.3 to 477.3 mm, at Z = 121-141 mm or -141 to -121 mm. A 12 mm top
+X = 210.3 to 477.3 mm, at Z = 131-151 mm or -151 to -131 mm. A 12 mm top
 cap joins the guide blocks to this web; a 55 mm-long deep rear anchor connects
 it to the existing rail and roller bridge. The cap starts at Y = 138 mm, 6 mm
 above the highest yoke. Front guide blocks still carry the 10 mm rods at
-Y = 120, Z = +/-104 mm; proposed 20 mm stop collars limit the 48 mm sleeves
+Y = 120, Z = +/-114 mm; proposed 20 mm stop collars limit the 48 mm sleeves
 to +/-15 mm. A transverse member at X = 225-233, Y = 134-140 mm joins the
 spring reaction seat to both rails, with 4 mm over the lower wheel tops.
+The front rails sit 10 mm further outboard than in the earlier 50 mm-groove
+study because the R2 idler carriage is wider. A 70 mm-diameter relief, swept
+over the +/-15 mm stroke and within Z = +/-95 mm, is cut into the rail strip
+and front anchors around the 60 mm idler hubs. It leaves 5 mm radial and
+axial running clearance; the local section loss is not stress-checked.
 
 The [cassette guides](../04-battery-and-charging/batteries.md#sliding-battery-cassette)
 are now one flat 76.2 mm guide under the tray at X = -26.1 to +50.1 mm,

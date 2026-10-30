@@ -33,20 +33,20 @@ production readiness are not claimed.
 | [Battery leads: red P+ via contactor, black P- direct (fixed, bolted)](parts.md#battery-harness) | See technical scope; this is a study element. |
 | [Motor phase leads direct to controller (fixed, clamped route)](parts.md#motor-harness) | See technical scope; this is a study element. |
 | [Phase cable cleats, plate grommet and riser clamps (proposal)](parts.md#motor-harness-supports) | See technical scope; this is a study element. |
-| [Rubber track (200x72x40 candidate fit study)](parts.md#track) | Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified. |
-| [Drive drum with 16 illustrative traction teeth (350 mm study)](parts.md#drive-drum) | See technical scope; this is a study element. |
+| [Rubber track (200x72x40 R2 candidate fit study)](parts.md#track) | Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified. |
+| [Drive drum with 16 illustrative link-window teeth (350 mm study)](parts.md#drive-drum) | See technical scope; this is a study element. |
 | [Idler (paired 200x50 wheels; candidate)](parts.md#idler) | Priced wheel candidate; track profile and load fit unverified. |
 | [HPM5000B (body, shaft and mounting pattern)](parts.md#motor) | Main cost/study candidate; exact configuration and duty unqualified. |
 | [Planetary stage 1 (24/72/24 schematic teeth)](parts.md#planetary-1) | See technical scope; this is a study element. |
 | [Planetary stage 2 (24/72/24 schematic teeth)](parts.md#planetary-2) | See technical scope; this is a study element. |
 | [Planetary stage 3 (16/50/17 schematic teeth)](parts.md#planetary-3) | See technical scope; this is a study element. |
 | [Final carrier to drum (schematic)](parts.md#output-carrier) | See technical scope; this is a study element. |
-| [Lower roller 1 (paired 120x50 PC/TPU study)](parts.md#lower-roller-1) | Owner-selected printed concept; loading and durability unqualified. |
-| [Lower roller 2 (paired 120x50 PC/TPU study)](parts.md#lower-roller-2) | See technical scope; this is a study element. |
-| [Lower roller 3 (paired 120x50 PC/TPU study)](parts.md#lower-roller-3) | See technical scope; this is a study element. |
-| [Lower roller 4 (paired 120x50 PC/TPU study)](parts.md#lower-roller-4) | See technical scope; this is a study element. |
-| [Front fixed upper roller (paired 70x50 study)](parts.md#upper-roller) | Front fixed return roller at the 70 mm minimum, with U support held by an inboard mast and outboard post; printed capacity, bend radius and structural loads unqualified. |
-| [Rear fixed upper roller (paired 70x50 study)](parts.md#upper-roller-2) | Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified. |
+| [Lower roller 1 (paired 120x40 PC/TPU study)](parts.md#lower-roller-1) | Owner-selected printed concept; loading and durability unqualified. |
+| [Lower roller 2 (paired 120x40 PC/TPU study)](parts.md#lower-roller-2) | See technical scope; this is a study element. |
+| [Lower roller 3 (paired 120x40 PC/TPU study)](parts.md#lower-roller-3) | See technical scope; this is a study element. |
+| [Lower roller 4 (paired 120x40 PC/TPU study)](parts.md#lower-roller-4) | See technical scope; this is a study element. |
+| [Front fixed upper roller (paired 70x40 study)](parts.md#upper-roller) | Front fixed return roller at the 70 mm minimum, with U support held by an inboard mast and outboard post; printed capacity, bend radius and structural loads unqualified. |
+| [Rear fixed upper roller (paired 70x40 study)](parts.md#upper-roller-2) | Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified. |
 | [Battery tray (524x288x10 proposed plate)](parts.md#pod-carrier) | See technical scope; this is a study element. |
 | [Lower roller U supports and axles (proposal)](parts.md#lower-roller-supports) | Four proposed U supports; unchanged 120 mm wheels. Axle fits and structural capacity unqualified. |
 | [Four-point motor cradle and connected pod frame (proposal)](parts.md#pod-frame) | Reinforced custom frame proposal; local beam screens only. Joints and complete two-pod fit unqualified; no separately established price. |

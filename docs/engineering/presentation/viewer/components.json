@@ -91,14 +91,14 @@
     { "id": "motor-harness-supports", "label": "Phase cable cleats, plate grommet and riser clamps (proposal)", "color": "#26272a", "document": "docs/engineering/technical/modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness", "presentation": "docs/engineering/presentation/parts.md#motor-harness-supports" },
     {
       "id": "track",
-      "label": "Rubber track (200x72x40 candidate fit study)",
+      "label": "Rubber track (200x72x40 R2 candidate fit study)",
       "color": "#303038",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions",
       "presentation": "docs/engineering/presentation/parts.md#track"
     },
     {
       "id": "drive-drum",
-      "label": "Drive drum with 16 illustrative traction teeth (350 mm study)",
+      "label": "Drive drum with 16 illustrative link-window teeth (350 mm study)",
       "color": "#b86e1f",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study",
       "presentation": "docs/engineering/presentation/parts.md#drive-drum"
@@ -147,42 +147,42 @@
     },
     {
       "id": "lower-roller-1",
-      "label": "Lower roller 1 (paired 120x50 PC/TPU study)",
+      "label": "Lower roller 1 (paired 120x40 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
       "presentation": "docs/engineering/presentation/parts.md#lower-roller-1"
     },
     {
       "id": "lower-roller-2",
-      "label": "Lower roller 2 (paired 120x50 PC/TPU study)",
+      "label": "Lower roller 2 (paired 120x40 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
       "presentation": "docs/engineering/presentation/parts.md#lower-roller-2"
     },
     {
       "id": "lower-roller-3",
-      "label": "Lower roller 3 (paired 120x50 PC/TPU study)",
+      "label": "Lower roller 3 (paired 120x40 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
       "presentation": "docs/engineering/presentation/parts.md#lower-roller-3"
     },
     {
       "id": "lower-roller-4",
-      "label": "Lower roller 4 (paired 120x50 PC/TPU study)",
+      "label": "Lower roller 4 (paired 120x40 PC/TPU study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers",
       "presentation": "docs/engineering/presentation/parts.md#lower-roller-4"
     },
     {
       "id": "upper-roller",
-      "label": "Front fixed upper roller (paired 70x50 study)",
+      "label": "Front fixed upper roller (paired 70x40 study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
       "presentation": "docs/engineering/presentation/parts.md#upper-roller"
     },
     {
       "id": "upper-roller-2",
-      "label": "Rear fixed upper roller (paired 70x50 study)",
+      "label": "Rear fixed upper roller (paired 70x40 study)",
       "color": "#388c57",
       "document": "docs/engineering/technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support",
       "presentation": "docs/engineering/presentation/parts.md#upper-roller-2"

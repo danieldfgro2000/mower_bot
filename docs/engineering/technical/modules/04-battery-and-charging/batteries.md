@@ -392,10 +392,10 @@ dimensions: S30 still records conflicting supplier material. The revised
 200 x 72 x 40 track study retains the 200 mm idler and 120 mm lower wheels,
 but raises the upper return and adds the moving tray. The battery bottom is now Y = 158 mm,
 top Y = 391 mm, with center X = 35 and Z = 44 mm outboard. The pack's
-terminal end now faces +X; the controller is centered over the pack. The return guide-tip
-envelope clears the body by 40.5 / 103.0 mm normal to its front/rear runs.
+terminal end now faces +X; the controller is centered over the pack. The return R2 horn-tip
+envelope clears the body by 41.5 / 104.0 mm normal to its front/rear runs.
 A conservative 10 mm motion allowance plus 5 mm deflection/tolerance reserve
-leaves **25.5 mm minimum**, versus a provisional 20 mm running requirement.
+leaves **26.5 mm minimum**, versus a provisional 20 mm running requirement.
 The body and tray no longer intersect modeled running gear.
 The [minimum-width calculation](../../width-and-slope-sizing.md#minimum-width-and-packaging)
 records the lateral consequences; the

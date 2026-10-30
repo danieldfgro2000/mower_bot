@@ -106,7 +106,7 @@ test('controller and E-stop contactor stay on a fixed support and the cassette c
     .map(part => boundsFor(part.id));
   assert.equal(Math.max(...physical.map(mesh => mesh.max[2])), 205,
     'the fixed guide and strip, not exposed hardware, set the seated outboard envelope');
-  assert.equal(Math.min(...physical.map(mesh => mesh.min[2])), -141,
+  assert.equal(Math.min(...physical.map(mesh => mesh.min[2])), -151,
     'the reinforced front rail is the explicit inboard envelope');
   for (const id of sweeps) {
     assert.ok(volume[id] <= 0.01, `${id} complete linear sweep clears actual fixed gear`);

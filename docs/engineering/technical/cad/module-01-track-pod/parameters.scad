@@ -9,18 +9,32 @@ nominal_pitch_loop = track_pitch * track_links;
 
 roller_outer_diameter = 350; // Flexible physical-OD study placeholder, not a requirement.
 effective_rolling_diameter_placeholder = 350; // Track pitch-line diameter is unknown.
-belt_thickness = 20; // Illustrative only; S01 does not publish this dimension.
+// Illustrative carcass; the S39 R2 drawing scales to about 31.5 mm (measurement HOLD).
+belt_thickness = 20;
 track_path_diameter = roller_outer_diameter + belt_thickness;
 // Simplified path estimate: assumes the modelled track path is at belt mid-thickness.
 roller_width = track_width; // Drum axial envelope, not a selected matched sprocket.
 idler_outer_diameter = 200; // S37 candidate, not an approved fit.
-wheel_tread_width = 50;
+wheel_tread_width = 50; // S37 Interwheel catalog tread.
 idler_hub_width = 60;
-guide_gap_placeholder = 50; // Leaves 40 between idler hubs; actual lugs unpublished.
-guide_lug_width_placeholder = 24;
-guide_lug_height_placeholder = 20;
-guide_lug_length_placeholder = 24;
-tread_bar_height_placeholder = 6;
+// PowerTrack R2 roller profile (S39): two trapezoidal horns on each metal link and
+// rollers on the rubber outboard of them. Values are scaled from the undimensioned
+// supplier illustration to the 200 mm width; measurement HOLD before release.
+guide_gap_placeholder = 70; // R2 roller groove; 6 mm to each horn flank.
+horn_center_offset = 19.5;
+horn_height = 19; // Above the belt inner face.
+horn_base_width = 19;
+horn_tip_width = 6;
+horn_base_length = 30;
+horn_tip_length = 20;
+link_land_width = 20; // Link bridge between the horns, flush with the inner face.
+link_land_length = 30; // Leaves a 42 mm open sprocket window per pitch.
+track_inner_shoulder = [74, 3.5]; // Inner-face taper start |z| and drop at the edge.
+track_ground_chamfer = [15, 10]; // Ground-edge chamfer, axial x radial.
+tread_block_height = 6;
+tread_block_length = 36; // Staggered: outboard block on links, inboard between.
+tread_block_z = [12, 84];
+printed_wheel_tread_width = 40; // Printed lower/upper wheels inside the R2 groove.
 wheel_axis_diameter = 20;
 drive_drum_wall_placeholder = 10;
 drive_drum_inner_diameter =
@@ -75,7 +89,11 @@ bearing_face_recess_placeholder = 1;
 support_plate_thickness = 6;
 support_side_gap = 5;
 idler_clearance_stroke = 15; // Geometric stops, not qualified working travel.
-idler_guide_z = 104;
+idler_carriage_inner_z = 95; // 5 mm outside the 90 mm catalog idler hub face.
+idler_carriage_plate = 6;
+idler_guide_z = 114;
+idler_axle_length = 206;
+idler_cutout_height = 190; // Carrier/tray relief: 10 mm beyond each idler tread.
 idler_guide_y = 120;
 idler_guide_diameter = 10;
 idler_slider_bore = 11;
@@ -211,7 +229,7 @@ function return_guide_clearance(edge) =
         corner = [battery_center_x + (n[0] > 0 ? 1 : -1) * battery_length / 2,
                   battery_bottom_y + battery_height])
     c * n + path_radii[edge] - belt_thickness / 2
-        - guide_lug_height_placeholder - corner * n;
+        - horn_height - corner * n;
 axial_stack_length = motor_body_length
     + motor_reaction_thickness
     + planetary_stage_count * planetary_stage_width_placeholder
@@ -239,8 +257,10 @@ echo("Assumed effective rolling diameter for speed screen (mm): ",
 echo("Study surface speed at assumed effective diameter (km/h): ",
      roller_speed_study_kmh);
 echo("Planetary module/stage extents and drum wall are visual placeholders only.");
-echo("Drive-sprocket tooth profile and motor coupling are not modeled.");
-echo("Four paired lower roller assemblies: 120 OD x 50 per wheel; capacity unqualified.");
+echo("Drive teeth enter R2 link windows; tooth profile and motor coupling are not qualified.");
+echo("Four paired lower roller assemblies: 120 OD x 40 per wheel; capacity unqualified.");
+echo("R2 horn pair to roller/idler/drum flank gap (mm): ",
+     guide_gap_placeholder / 2 - horn_center_offset - horn_base_width / 2);
 echo("Study roller centre spacing (mm): ", roller_center_spacing);
 echo("Study pitch envelope length (mm): ", loop_envelope_length);
 echo("Nominal four-circle pitch-loop closure error (mm): ",
@@ -262,3 +282,5 @@ echo("Battery bottom and outboard centre (mm): ", battery_bottom_y, carrier_cent
 assert(min(return_guide_clearance(1), return_guide_clearance(3)) >= 35,
        "Return clearance below 20 mm running, 5 mm deflection and 10 mm motion reserve");
 assert(inboard_axial_remainder >= 5, "Reducer exceeds inboard study envelope");
+assert(guide_gap_placeholder / 2 - horn_center_offset - horn_base_width / 2 >= 5,
+       "R2 horn pair needs 5 mm to the roller groove flanks");

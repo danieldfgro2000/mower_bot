@@ -6,9 +6,9 @@ test('sliding idler and compression spring clear fixed structure through the pro
   const carriage = boundsFor('idler-carriage'), [x] = center(boundsFor('idler'));
   const frame = boundsFor('pod-frame');
   for (const side of [-1, 1]) {
-    assert.equal(contains(frame, [x, 120, side * 104]), true, 'supported longitudinal guide rod');
-    assert.equal(contains(carriage, [x, 120, side * 104]), false, 'slider bore clears the guide');
-    assert.equal(contains(carriage, [x, 129, side * 104]), true, 'sleeve surrounds the rod');
+    assert.equal(contains(frame, [x, 120, side * 114]), true, 'supported longitudinal guide rod');
+    assert.equal(contains(carriage, [x, 120, side * 114]), false, 'slider bore clears the guide');
+    assert.equal(contains(carriage, [x, 129, side * 114]), true, 'sleeve surrounds the rod');
   }
   const spring = boundsFor('idler-spring');
   assert.ok(spring.size[0] > 90, 'coil, guide rod and fixed reaction seat are represented');
@@ -30,6 +30,22 @@ test('sliding idler and compression spring clear fixed structure through the pro
       idler_spring(${travel});
       union() { idler_carriage(${travel}); translate([${travel}, 0, 0]) pod_component("idler"); }
     }`) <= 0.01, 'coil/guide pass through the carriage and seat without solid interference');
+  }
+});
+
+test('rotating idler hubs keep 5 mm running clearance from the fixed frame through the stroke', () => {
+  const idler = boundsFor('idler'), [x, y] = center(idler);
+  assert.equal(idler.size[2], 180, 'hub faces sit at |Z| = 90, flush with the inner rail plane');
+  const frame = boundsFor('pod-frame');
+  for (const side of [-1, 1]) {
+    assert.equal(contains(frame, [x, 141, side * 92]), false, 'hub relief in the rail strip');
+    assert.equal(contains(frame, [x, 141, side * 98]), true, 'strip keeps material behind the relief');
+  }
+  for (const travel of [-15, 0, 15]) {
+    assert.ok(solidVolume(`intersection() {
+      translate([${x + travel}, ${y}, 0]) cylinder(d = 70, h = 190, center = true, $fn = 64);
+      union() { pod_frame(); pod_carrier(); }
+    }`) <= 0.01, '5 mm radial and axial envelope around the 60 mm hub stays clear');
   }
 });
 

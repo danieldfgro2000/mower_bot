@@ -94,14 +94,14 @@ versus the track's -100 to +100 mm. Thus two mirrored pods need at least
 (previous exposed-controller study: 836 mm plus gap).
 The locking strip reaches Z = -125 mm, or **25 mm inboard per pod**. The
 [reinforced front rails](modules/01-structure-and-running-gear/frame.md#connected-pod-frame-proposal)
-now reach Z = -141 mm, or **41 mm inboard per pod**, more than the strip or
+now reach Z = -151 mm, or **51 mm inboard per pod**, more than the strip or
 the 16 mm upper-support mast. Usable conservative central clearance is
-**inner-track gap minus 82 mm**; at least an 82 mm gap is needed just to avoid
+**inner-track gap minus 102 mm**; at least a 102 mm gap is needed just to avoid
 the mirrored rail envelopes touching, before tolerances or a central frame.
-At that geometric bound, outside-track width is 482 mm and represented body
-width is 692 mm, neither a complete-machine minimum.
+At that geometric bound, outside-track width is 502 mm and represented body
+width is 712 mm, neither a complete-machine minimum.
 For a 1,000 mm deck, the arithmetic ceiling on the inner-track gap is
-**390 mm**, leaving at most **308 mm** between mirrored rail envelopes;
+**390 mm**, leaving at most **288 mm** between mirrored rail envelopes;
 outside-track width must be at most **790 mm** before excluded parts.
 No spine/scissor/mower fit within that remaining space is established:
 the 1 m transport layout remains **HOLD**, not a solved configuration.

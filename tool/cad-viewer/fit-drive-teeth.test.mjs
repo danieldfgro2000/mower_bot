@@ -36,11 +36,16 @@ test('planetary stages display the specified sun tooth counts rather than pitch 
 
 test('traction drum has sixteen discrete central teeth connected to both running bands', async () => {
   const drum = boundsFor('drive-drum');
-  assert.equal(lobesAt(drum, -440, 185, 0, 170, 720), 16);
+  assert.equal(lobesAt(drum, -440, 185, 0, 180, 720), 16);
+  const wrapped = (-90 + 12.5 * 360 / 16) * Math.PI / 180;
+  const tip = [-440 + 182 * Math.cos(wrapped), 185 + 182 * Math.sin(wrapped), 0];
+  assert.equal(contains(drum, tip), true, 'wrapped tooth reaches past the belt inner face');
+  assert.equal(contains(boundsFor('track'), tip), false, 'wrapped tooth sits in an open link window');
+  assert.equal(contains(drum, [tip[0], tip[1], 8]), false, 'tooth stays inside the horn-pair passage');
   const volumes = await solidVolumes({
     bandConnection: `intersection() {
       main_driven_roller(-440);
-      for (z = [-26, 25]) translate([-440,185,z])
+      for (z = [-40, 39]) translate([-440,185,z])
         difference() { cylinder(r = 170, h = 1); cylinder(r = 165, h = 1); }
     }`,
     track: 'intersection() { main_driven_roller(-440); track_loop(); }',
@@ -48,7 +53,7 @@ test('traction drum has sixteen discrete central teeth connected to both running
     supports: 'intersection() { main_driven_roller(-440); motor_frame_braces(); }',
   });
   assert.ok(volumes.bandConnection > 10000, 'toothed hub has side webs joined to both bands');
-  assert.ok(volumes.track <= 0.01, 'schematic teeth sit between nominal wrapped guide lugs');
+  assert.ok(volumes.track <= 0.01, 'teeth engage link windows and clear the R2 horns and lands');
   assert.ok(volumes.motor <= 0.01, 'central tooth root clears the motor body and shaft');
   assert.ok(volumes.supports <= 0.01, 'rotating hub and teeth clear all four stationary motor posts');
 });

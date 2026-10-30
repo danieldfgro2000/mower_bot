@@ -4,12 +4,15 @@
  Unqualified sourcing-candidate fit study, not a fabrication model or release.
  Owners: running-gear.md S34/S37/S38, propulsion.md S24, batteries.md S30.
  Track: 200x72x40 code interpreted as width/pitch/links; belt mid-thickness
- is an assumed pitch line. Guide lugs and tread blocks are schematic, not a
- supplier profile. The 350 mm drive OD remains flexible; 16 central drive
- teeth are illustrative, not a matched track sprocket.
+ is an assumed pitch line. Link profile follows the PowerTrack R2 roller
+ drawing: twin trapezoidal horns, centre lands with open sprocket windows and
+ staggered tread blocks, scaled from an undimensioned illustration (HOLD).
+ The 350 mm drive OD remains flexible; 16 central drive teeth enter the link
+ windows but are illustrative, not a matched track sprocket.
  Idler: two Interwheel 161.540 candidate envelopes (200 OD, 50 tread, 60 hub).
- Lower rollers: paired 120 mm PC/TPU study wheels, 50 wide, 8 mm tread,
- two 6004 envelopes each. Guide gap and lug dimensions require measurement.
+ Lower rollers: paired 120 mm PC/TPU study wheels, 40 wide, 8 mm tread,
+ two 6004 envelopes each, in the 70 mm R2 groove. Horn and groove dimensions
+ require measurement of the delivered track.
  Motor: HPM5000B 206x126 body, 22.3x53 shaft, 5x43 keyway and four M8
  openings on 148 PCD from GD-JS-03000001; hole depth, keyway axial offset
  and clocking are illustrative. No thread, thermal or structural detail.
@@ -67,11 +70,11 @@ module pod_component(id) {
     else if (id == "upper-roller")
         translate([upper_roller_center[0], upper_roller_center[1], 0])
             color([0.22, 0.55, 0.34, 0.9])
-                wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
+                wheel_pair(upper_support_roller_diameter, printed_wheel_tread_width, true);
     else if (id == "upper-roller-2")
         translate([upper_roller_2_center[0], upper_roller_2_center[1], 0])
             color([0.22, 0.55, 0.34, 0.9])
-                wheel_pair(upper_support_roller_diameter, wheel_tread_width, true);
+                wheel_pair(upper_support_roller_diameter, printed_wheel_tread_width, true);
     else if (id == "pod-carrier") pod_carrier();
     else if (id == "pod-frame") pod_frame();
     else if (id == "motor-mount") motor_reaction_mount();

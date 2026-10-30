@@ -91,7 +91,7 @@ lower, 8 x 70 mm upper), about **EUR190.79 net** (3DJake sale filament, free
 delivery) or EUR222.79 at regular prices, excluding print time and an
 enclosure. The Interwheel 160 mm wheels above (EUR457.60 for 20) are the
 fallback if print time becomes a bottleneck. Printed wheels have no load
-rating; measure the track guide-lug height before printing the full set. See
+rating; confirm the R2 guide-horn height and roller groove before printing the full set. See
 [S38](running-gear.md#s38-3d-printed-roller-wheels-owner-proposed).
 
 **Evidence and limitations:** [Track prices and discount](running-gear.md#powertrack-track-comparison) ·
@@ -132,14 +132,30 @@ link count (2,880 mm assumed pitch loop). The drive drum remains a flexible
 each 50 mm tread / 60 mm hub with 20 mm bore. This is a candidate representation,
 not selection or qualification of that idler.
 
-Four lower assemblies each have two 120 x 50 mm printed wheels with an 8 mm
-tread and two 6004 bearing envelopes per wheel. A **50 mm tread-face guide
-gap** gives a 150 mm lower/upper-pair width and 160 mm idler hub envelope.
-The idler hubs leave 40 mm clear, giving 8 mm each side of the assumed
-24 mm guide. All wheel diameters and bearing dimensions are retained.
-The illustrative guide lugs are 24 mm wide, 24 mm long and 20 mm high, one per
-assumed pitch; these are **not supplier dimensions**. Confirm lug and rolling-path
-dimensions before using any groove, spacer, bearing fit or printed geometry.
+PowerTrack lists roller type **R2** for this track
+([S39](running-gear.md#s39-longer-powertrack-belt-candidates)): each metal
+link carries two guide horns and the rollers run on the rubber outboard of
+both horns, not between them. The CAD therefore uses a **70 mm tread-face
+groove**. Four lower assemblies each have two 120 x 40 mm printed wheels with
+an 8 mm tread and two 6004 bearing envelopes per wheel; the 150 mm
+lower/upper-pair width is kept, so each printed wheel narrows from 50 to 40 mm.
+The Interwheel idler's 50 mm treads sit at Z = +/-60 mm (170 mm tread and
+180 mm hub envelopes); the hubs sit radially inside the horn tips. Each horn
+flank keeps **6 mm** to the wheel, idler-tread and drum-band faces (5 mm
+provisional). The catalogue idler treads reach Z = +/-85 mm, 11 mm past the
+start of the illustrative shoulder taper, so their effective contact width is
+HOLD. Wheel diameters and bearing dimensions are retained.
+
+The illustrative R2 profile is rounded from image-scale estimates and is
+**not supplier dimensions**: per 72 mm link, two trapezoidal horns at
+Z = +/-19.5 mm, 19 mm high, 19/6 mm wide and 30/20 mm long at base/tip; a
+20 x 30 mm metal link land between them, leaving a 42 mm-long open window per
+pitch in a 20 mm central channel; a 3.5 mm inner-face shoulder taper outboard
+of Z = +/-74 mm; a 15 x 10 mm ground-edge chamfer; and 36 mm-long, 6 mm-high
+tread blocks spanning 12-84 mm from the centreline, alternating sides each
+half pitch. The belt stays 20 mm thick, although the R2 image scales to about
+31.5 mm (HOLD). Confirm horn, groove and rolling-path dimensions before using
+any groove, spacer, bearing fit or printed geometry.
 
 With the assumed 20 mm belt and mid-thickness pitch line, two fixed 70 mm upper pairs
 at X = 245 and X = -195, both Y = 510 mm, give **850.308 mm horizontal
@@ -147,9 +163,9 @@ end-axis spacing**. Drive X stays -440 mm; the idler is at X = +410.308 mm.
 The actual four-circle
 tangents and arcs close the 40-link loop. The 504 x 268 x 233 mm battery
 is at X = 35, Z = 44 mm with bottom Y = 158 mm; the fixed carrier underside is Y = 140 mm,
-10 mm above the lower wheels. Nominal body guide-tip clearances are 40.5 / 103.0 mm
+10 mm above the lower wheels. Nominal body clearances to the 19 mm R2 horn tips are 41.5 / 104.0 mm
 normal to the front/rear return runs. Reserving 10 mm for motion and 5 mm for
-deflection/tolerances leaves at least **25.5 mm** versus a provisional 20 mm
+deflection/tolerances leaves at least **26.5 mm** versus a provisional 20 mm
 running requirement. See the [CAD dimensions and limits](../../cad/README.md#modeled-dimensions-and-limits)
 for mesh checks, extraction, transverse fit and remaining holds.
 
@@ -205,16 +221,16 @@ extra rollers alone do not prove equal load distribution.
 return roller above the battery and reduce both upper rollers to the minimum
 diameter. The lower 120 mm rollers are unchanged.
 
-**Small roller limit:** No supplier minimum diameter or guide-lug dimensions
-were found for this track. A 30 mm wheel cannot contain the current 42 mm-OD
+**Small roller limit:** No supplier minimum diameter or dimensioned guide-horn
+profile was found for this track; the R2 roller-type image is undimensioned. A 30 mm wheel cannot contain the current 42 mm-OD
 6004 bearings. Independent short axles in individual U supports could avoid a
 shaft crossing the guide channel, but need different bearings, tread/core
 sections, fork clearance and load checks. A common shaft still needs
-`wheel radius >= lug height + shaft radius + clearance`; the illustrative
-20 mm lugs, 20 mm shaft and 5 mm gap imply **70 mm minimum OD**, not a
-manufacturer recommendation. **80 mm is a practical study starting point**:
+`wheel radius >= horn height + shaft radius + clearance`; the illustrative
+19 mm R2 horns, 20 mm shaft and 5 mm gap imply **68 mm minimum OD**, not a
+manufacturer recommendation (the earlier 20 mm placeholder lugs gave 70 mm). **80 mm is a practical study starting point**:
 with the existing 8 mm tread, its 64 mm core leaves 11 mm radially around a
-42 mm bearing seat. Printed capacity and actual lug clearance remain unknown.
+42 mm bearing seat. Printed capacity and actual horn clearance remain unknown.
 At 4 km/h, 30/80/120 mm wheels turn approximately **707/265/177 rpm**.
 
 **Historical numerical layout, superseded by the 120 mm-wheel CAD above:** retain the flexible
@@ -275,12 +291,15 @@ that this product fits.
 
 #### Sliding idler carriage
 
-**Custom proposal:** rear-facing U-yoke, 6 mm cheeks at Z = +/-85-91 mm,
-leaving 5 mm outside the bought hubs. A 6 mm rear crossbar is 5 mm behind
-the wheel envelope. The 20 mm axle has schematic retaining collars between
-the hubs and cheeks, avoiding the guide rods. Two 48 mm-long, 22 mm-OD
+**Custom proposal:** rear-facing U-yoke, 6 mm cheeks at Z = +/-95-101 mm,
+leaving 5 mm outside the bought hubs at the R2 wheel spacing. A 6 mm rear
+crossbar is 5 mm behind the wheel envelope. The 206 mm-long, 20 mm axle has
+schematic retaining collars between the hubs and cheeks, avoiding the guide
+rods. Two 48 mm-long, 22 mm-OD
 sleeves have 11 mm bores around 10 mm longitudinal rods at Y = 120,
-Z = +/-104 mm: **0.5 mm radial clearance**, not a released bearing fit.
+Z = +/-114 mm: **0.5 mm radial clearance**, not a released bearing fit.
+The carrier and tray idler reliefs are 190 mm wide, and the frame has
+a swept hub relief keeping 5 mm running clearance.
 The fixed guide end blocks remain 16 mm beyond the sleeve ends at maximum
 stroke; separate stop collars establish the +/-15 mm geometric limits.
 Cheek bores, lubrication/sealing, axial retention and stop fixings are not
@@ -309,7 +328,8 @@ and complete-pod packaging, including the separate
 The current allowance does not quote a new size or qualify that requested mode.
 
 **Required purchasing/manufacturing definition:** Matched track MPN with
-confirmed width, pitch and link count; guide-lug profile, internal width,
+confirmed width, pitch and link count; roller type (R2 listed for the CAD
+candidate), guide-horn profile, roller-groove and internal width,
 sprocket engagement, load/speed/duty limits,
 compound, tension specification and replacement availability;
 [PowerTrack tracks (S01)](running-gear.md#s01-powertrack-rubber-tracks) and
@@ -342,13 +362,14 @@ against the battery, carrier, guards and battery-removal path.
 #### Lower support rollers
 
 Four support assemblies per track, evenly spaced along the lower run, remain
-in the study: paired 120 x 50 mm PC/TPU wheels with two 6004 bearings per wheel.
+in the study: paired 120 x 40 mm PC/TPU wheels with two 6004 bearings per wheel,
+running outboard of the R2 horns.
 The frontmost lower axle moves 15 mm rearward to clear the sliding idler yoke;
 equal center spacing becomes 140.103 mm, leaving **20.1 mm** between wheel
 envelopes. Each pair has a proposed U support: two 6 mm cheeks with 5 mm
 tire-side gaps, a 6 mm top bridge at Y = 134-140 mm, 4 mm above the wheel tops,
 and a 20 mm axle through the bearing bores. The center axle underside clears
-the assumed lower guide tips by 30 mm. Axle retention collars and 20.5 mm
+the assumed lower R2 horn tips by 31 mm. Axle retention collars and 20.5 mm
 cheek bores are schematic; bearing fits, welds and tolerances are unreleased.
 The tray remains 10 mm above the wheels. Diameter has not been reduced to
 obtain fit. Actual track contact area, load sharing and printed-wheel capacity
@@ -370,16 +391,22 @@ shows one possible reduction layout only;
 [PowerTrack track engagement geometry](running-gear.md#s01-powertrack-rubber-tracks) and the
 drum's sprocket profile remain unverified.
 
-**Illustrative engagement update:** the same 350 mm OD / 200 mm-wide drum
-now has a central row of **16 discrete schematic teeth**, a hollow root ring
-and two side webs joining it to both running bands. The row occupies
-Z = -18 to +18 mm; side webs occupy Z = -26 to -18 and +18 to +26 mm.
-The root bore is 300.4 mm, clearing the 290 mm stationary motor plate by
-5.2 mm radially and the four motor posts by more than 5 mm.
-Teeth are phased between the displayed nominal wrapped guide lugs; this
+**Illustrative R2 engagement update:** the same 350 mm OD / 200 mm-wide drum
+now has two running bands at 35-100 mm from the centreline, carrying the
+rubber outboard of the horn pair across a 70 mm groove. A hollow root ring
+(306 mm OD, within Z = +/-42 mm) runs 3 mm under the wrapped horn tips, and
+side webs at 34-42 mm from the centreline join it to both bands, at least
+5 mm from the horns. A 10 mm central disc (Z = -5 to +5 mm, 340 mm OD) carries
+**16 discrete schematic teeth**, each tapering from 20 mm long at r = 165 mm
+to 10 mm at the assumed r = 185 mm pitch line. The teeth stay 5 mm inside each
+horn's inner flank and enter the open 42 mm windows between the 30 mm metal
+link lands, about 7.6 mm from the nearest land; the disc rim is 5 mm under
+the lands. The root bore is 300.4 mm, clearing the 290 mm stationary motor
+plate by 5.2 mm radially and the four motor posts by more than 5 mm.
+Teeth are phased to the displayed nominal wrapped links; this
 is a static no-intersection illustration, **not a matched sprocket design**.
-The 16-tooth count, rectangular tooth flanks, 308 mm root OD, shell/web
-thicknesses and guide engagement are custom visualization assumptions.
+The 16-tooth count, trapezoidal tooth flanks, 306 mm root OD, shell/web
+thicknesses and window engagement are custom visualization assumptions.
 In particular, 16 pitches of 72 mm do not establish compatibility with the
 assumed 370 mm belt mid-line diameter. Actual drive windows, pitch-line
 location, flank profile, tension-dependent meshing and output bearings remain HOLD.
@@ -403,7 +430,7 @@ on a 12 mm guide rod through a 14 mm moving-seat aperture. Installed seat
 separation is 57.036 mm nominal, or **42.036-72.036 mm** over the geometric
 +/-15 mm idler stroke. The shortest envelope exceeds the rough eight-wire
 solid-height screen of 32 mm; this is not a real spring specification.
-The 40 mm moving seat leaves 5 mm to the wheel tread faces, and the coil
+The 40 mm moving seat leaves 15 mm to the wheel tread faces, and the coil
 leaves 6 mm below the frame crossmember. Select a publicly priced spring only
 after tension, rate, preload, buckling, fatigue, corrosion, stops/retention
 and service-release energy are assessed. No new priced component or BOM
@@ -413,8 +440,8 @@ remains unqualified for S01.
 #### Fixed upper roller support
 
 **Current return-route CAD proposal:**
-two fixed pairs of 70 x 50 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm,
-both at Y = 510 mm above the battery. 70 mm is the modeled minimum: an 8 mm TPU tread leaves a 54 mm
+two fixed pairs of 70 x 40 mm PC/TPU wheels, front at X = 245 mm and rear at X = -195 mm,
+both at Y = 510 mm above the battery. Their 20 mm axles clear the R2 horn tips by 6 mm. 70 mm is the modeled minimum: an 8 mm TPU tread leaves a 54 mm
 core and only 6 mm of PC radially around the 42 mm-OD 6004 bearing seat.
 Wrap angles are about 58.9° (front) and 32.9° (rear), giving nominal reactions
 of about **0.98 and 0.57 times belt tension** under equal-tension assumptions.
@@ -552,7 +579,7 @@ for the lower and upper rollers. The Interwheel 160 mm wheels from
 [S37](running-gear.md#s37-bearing-wheel-roller-and-idler-candidates) remain the
 fallback. Recommendation, not an owner decision: keep idlers as bought
 Interwheel 200 mm wheels until idler tension load is known. The 120 mm size
-still needs a guide-lug clearance check. This is a sourcing selection, not a
+still needs a guide-horn clearance check against the actual R2 profile. This is a sourcing selection, not a
 baseline change.
 
 #### PowerTrack track comparison
@@ -575,7 +602,10 @@ not include width-dependent engineering effects. The 200 mm track gives about
 11% more nominal contact width and about 10 mm more rolling-path width on each
 side of the guide lugs for wheel pairs; the
 180 mm track reduces outside-track width by 40 mm and saves 16 kg per pair.
-Guide-lug dimensions are not published for either track.
+Guide-lug dimensions are not published for either track. Both are listed as
+roller type `R1`, where the rollers run between the guide horns; the CAD
+candidate [200 x 72 x 40](running-gear.md#s39-longer-powertrack-belt-candidates)
+is listed as `R2`, so wheel and drum geometry does not transfer between them.
 
 **Owner selection, 2026-10-29:** PowerTrack 180 x 72 x 37 is the track
 sourcing choice for the bearing-wheel route. The baseline still describes
@@ -901,7 +931,8 @@ RUN-007 currently provides an axle/spacer allowance.
 **Evidence or limitation:** The wheels are rated for smooth industrial floors,
 not track interiors, mud, grit, or lateral guide loads. The track guide-lug
 width and rolling-path width must be measured before confirming that a
-50 mm wheel pair fits. Polyurethane heat build-up, debris, wear on the rubber
+50 mm wheel pair fits; for the R2 candidate the idler treads overhang the
+illustrative inner-face shoulder. Polyurethane heat build-up, debris, wear on the rubber
 track, and side loads require testing. Supplier stock and rating claims are
 not independent evidence.
 
@@ -924,7 +955,8 @@ may build one (not priced). Elegoo PC lists 260-290 C nozzle and 90-110 C bed,
 near the MK3S+ limits and prone to warping; Prusament PC Blend is the
 easier-printing fallback.
 
-**Material estimate (assumption, not measured):** 50 mm wide wheel, 8 mm TPU
+**Material estimate (assumption, not measured; the R2 CAD now uses 40 mm
+wheels, so this stays a conservative allowance):** 50 mm wide wheel, 8 mm TPU
 tread, 42 mm bearing bore and about 35% effective core fill, with 10% waste
 for 20 wheels:
 
@@ -935,9 +967,9 @@ for 20 wheels:
 
 **Owner selection, 2026-10-29:** 120 mm, which roughly halves material and
 print time versus 160 mm; the 160 mm Interwheel route remains the fallback
-if print time becomes a bottleneck. The minimum diameter depends on the unpublished track guide-lug
-height when a wheel pair shares one shaft, so measure the lug height before
-printing the full set.
+if print time becomes a bottleneck. The minimum diameter depends on the unpublished R2 guide-horn
+height when a wheel pair shares one shaft, so measure the horn height and
+roller groove before printing the full set.
 
 **Cheapest listed option, 3DJake (niceshops GmbH, Austria):** Romanian
 prices include 21% VAT; standard delivery to Romania is free from 470.34 lei.
@@ -1019,6 +1051,24 @@ evaluation; it is EUR23.60 cheaper per pair than the 180 x 72 x 40 at the
 listed two-piece tier, but 10 kg heavier per track on the supplier's listed
 figures. Neither is purchased or fit-qualified. The supplier's pricing
 rationale is unverified; prices must not be extrapolated from link count.
+
+**Roller-profile recheck, 2026-10-30 (product 2055):** the page lists
+roller type `R2`, `InStock`, and a net price of EUR97.76 (EUR119.27 with 22%
+Italian VAT). Its structured data also carries an `available_date` of
+2026-11-20, whose meaning is unconfirmed. The undimensioned
+[R2 roller-type image](https://s2.staticpowertrack.com/img/features/roller/en_R2-1200.jpg)
+shows two guide horns on each metal link, with the roller running on the
+rubber outboard of both horns. [S01](running-gear.md#s01-powertrack-rubber-tracks)
+and [S34](running-gear.md#s34-powertrack-180-x-72-x-37-candidate) are listed
+as `R1`, where the roller runs between the horns. Scaling the image to the
+200 mm width gives roughly: horn centres +/-19.3 mm, horn height 18.7 mm,
+base/tip width about 18.5/5 mm, rubber thickness about 31.5 mm, a roller
+about 101 mm wide with a groove about 70 mm wide at the face, 55 mm at its
+base and 22 mm deep, a 3.5 mm inner-face shoulder and a ground-edge chamfer
+about 15 x 20 mm. These are image-scale estimates, **not supplier
+dimensions**, and remain HOLD. The
+[pod-fit CAD](running-gear.md#pod-fit-cad-assumptions) rounds them into an
+illustrative profile but keeps a 20 mm belt and a 15 x 10 mm chamfer.
 
 **Engineering detail:** [Low-profile packaging investigation](running-gear.md#low-profile-packaging-investigation).
 

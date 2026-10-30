@@ -187,28 +187,29 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="track"></a>
 
-### Rubber track (200x72x40 candidate fit study)
+### Rubber track (200x72x40 R2 candidate fit study)
 
 **Status:** Current CAD candidate; modeled clashes cleared with provisional margins. Profile and load compatibility remain unqualified.
 
-[![Rubber track (200x72x40 candidate fit study)](viewer/previews/track.png)](viewer/index.html?component=track&mode=presentation)
+[![Rubber track (200x72x40 R2 candidate fit study)](viewer/previews/track.png)](viewer/index.html?component=track&mode=presentation)
 | | |
 | --- | --- |
-| Candidate dimensions | 200 × 72 × 40 (listed size) |
+| Candidate dimensions | 200 × 72 × 40 (listed size); roller type R2 |
+| Roller profile | R2 twin guide horns; CAD profile scaled from an undimensioned image (HOLD) |
 | Listed price | €119.27 each; €110.92 each at 2+ (incl. listed Italian VAT) |
 
-**Read more:** [Rubber track (200x72x40 candidate fit study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions) · [PowerTrack product 2055](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates)
+**Read more:** [Rubber track (200x72x40 R2 candidate fit study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions) · [PowerTrack product 2055](https://www.powertrack.it/en/powertrack-rubber-tracks/2055-Rubber-tracks-for-miniexcavators-200x72x40-0793596792076.html) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates)
 
 <a id="drive-drum"></a>
 
-### Drive drum with 16 illustrative traction teeth (350 mm study)
+### Drive drum with 16 illustrative link-window teeth (350 mm study)
 
 **Status:** See technical scope; this is a study element.
 
-[![Drive drum with 16 illustrative traction teeth (350 mm study)](viewer/previews/drive-drum.png)](viewer/index.html?component=drive-drum&mode=presentation)
+[![Drive drum with 16 illustrative link-window teeth (350 mm study)](viewer/previews/drive-drum.png)](viewer/index.html?component=drive-drum&mode=presentation)
 
 
-**Read more:** [Drive drum with 16 illustrative traction teeth (350 mm study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study)
+**Read more:** [Drive drum with 16 illustrative link-window teeth (350 mm study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#drive-drum-study)
 
 <a id="idler"></a>
 
@@ -284,77 +285,77 @@ interfaces and release holds, follow the linked technical detail.
 
 <a id="lower-roller-1"></a>
 
-### Lower roller 1 (paired 120x50 PC/TPU study)
+### Lower roller 1 (paired 120x40 PC/TPU study)
 
 **Status:** Owner-selected printed concept; loading and durability unqualified.
 
-[![Lower roller 1 (paired 120x50 PC/TPU study)](viewer/previews/lower-roller-1.png)](viewer/index.html?component=lower-roller-1&mode=presentation)
+[![Lower roller 1 (paired 120x40 PC/TPU study)](viewer/previews/lower-roller-1.png)](viewer/index.html?component=lower-roller-1&mode=presentation)
 | | |
 | --- | --- |
-| Wheel concept | 120 mm OD × 50 mm; PC core, TPU 95A tread |
+| Wheel concept | 120 mm OD × 40 mm; PC core, TPU 95A tread |
 | Material estimate | €190.79 net for 24 wheels (16 × 120 mm, 8 × 70 mm) at recorded sale prices |
 
-**Read more:** [Lower roller 1 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers) · [Elegoo PC filament](https://www.3djake.com/elegoo/pc-black-4) · [Elegoo TPU 95A filament](https://www.3djake.com/elegoo/tpu-95a-blue-2) · [6004-2RS bearings](https://www.kugellager-express.de/rillenkugellager-6004-2rs-20x42x12-mm) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed)
+**Read more:** [Lower roller 1 (paired 120x40 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers) · [Elegoo PC filament](https://www.3djake.com/elegoo/pc-black-4) · [Elegoo TPU 95A filament](https://www.3djake.com/elegoo/tpu-95a-blue-2) · [6004-2RS bearings](https://www.kugellager-express.de/rillenkugellager-6004-2rs-20x42x12-mm) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed)
 
 <a id="lower-roller-2"></a>
 
-### Lower roller 2 (paired 120x50 PC/TPU study)
+### Lower roller 2 (paired 120x40 PC/TPU study)
 
 **Status:** See technical scope; this is a study element.
 
-[![Lower roller 2 (paired 120x50 PC/TPU study)](viewer/previews/lower-roller-2.png)](viewer/index.html?component=lower-roller-2&mode=presentation)
+[![Lower roller 2 (paired 120x40 PC/TPU study)](viewer/previews/lower-roller-2.png)](viewer/index.html?component=lower-roller-2&mode=presentation)
 
 
-**Read more:** [Lower roller 2 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
+**Read more:** [Lower roller 2 (paired 120x40 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
 
 <a id="lower-roller-3"></a>
 
-### Lower roller 3 (paired 120x50 PC/TPU study)
+### Lower roller 3 (paired 120x40 PC/TPU study)
 
 **Status:** See technical scope; this is a study element.
 
-[![Lower roller 3 (paired 120x50 PC/TPU study)](viewer/previews/lower-roller-3.png)](viewer/index.html?component=lower-roller-3&mode=presentation)
+[![Lower roller 3 (paired 120x40 PC/TPU study)](viewer/previews/lower-roller-3.png)](viewer/index.html?component=lower-roller-3&mode=presentation)
 
 
-**Read more:** [Lower roller 3 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
+**Read more:** [Lower roller 3 (paired 120x40 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
 
 <a id="lower-roller-4"></a>
 
-### Lower roller 4 (paired 120x50 PC/TPU study)
+### Lower roller 4 (paired 120x40 PC/TPU study)
 
 **Status:** See technical scope; this is a study element.
 
-[![Lower roller 4 (paired 120x50 PC/TPU study)](viewer/previews/lower-roller-4.png)](viewer/index.html?component=lower-roller-4&mode=presentation)
+[![Lower roller 4 (paired 120x40 PC/TPU study)](viewer/previews/lower-roller-4.png)](viewer/index.html?component=lower-roller-4&mode=presentation)
 
 
-**Read more:** [Lower roller 4 (paired 120x50 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
+**Read more:** [Lower roller 4 (paired 120x40 PC/TPU study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers)
 
 <a id="upper-roller"></a>
 
-### Front fixed upper roller (paired 70x50 study)
+### Front fixed upper roller (paired 70x40 study)
 
 **Status:** Front fixed return roller at the 70 mm minimum, with U support held by an inboard mast and outboard post; printed capacity, bend radius and structural loads unqualified.
 
-[![Front fixed upper roller (paired 70x50 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
+[![Front fixed upper roller (paired 70x40 study)](viewer/previews/upper-roller.png)](viewer/index.html?component=upper-roller&mode=presentation)
 | | |
 | --- | --- |
-| Return wheel concept | Paired 70 × 50 mm PC/TPU wheels; front axis X = 245, Y = 510 mm |
+| Return wheel concept | Paired 70 × 40 mm PC/TPU wheels; front axis X = 245, Y = 510 mm |
 
-**Read more:** [Front fixed upper roller (paired 70x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+**Read more:** [Front fixed upper roller (paired 70x40 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="upper-roller-2"></a>
 
-### Rear fixed upper roller (paired 70x50 study)
+### Rear fixed upper roller (paired 70x40 study)
 
 **Status:** Rear fixed return roller above the battery at the 70 mm minimum; printed capacity, bend radius and structural loads unqualified.
 
-[![Rear fixed upper roller (paired 70x50 study)](viewer/previews/upper-roller-2.png)](viewer/index.html?component=upper-roller-2&mode=presentation)
+[![Rear fixed upper roller (paired 70x40 study)](viewer/previews/upper-roller-2.png)](viewer/index.html?component=upper-roller-2&mode=presentation)
 | | |
 | --- | --- |
-| Return wheel concept | Paired 70 × 50 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm |
+| Return wheel concept | Paired 70 × 40 mm PC/TPU wheels; rear axis X = -195, Y = 510 mm |
 | Track wrap | About 32.9°, nominal reaction about 0.57 × belt tension |
 
-**Read more:** [Rear fixed upper roller (paired 70x50 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
+**Read more:** [Rear fixed upper roller (paired 70x40 study) technical detail](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support) · [Technical evidence](../technical/modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support)
 
 <a id="pod-carrier"></a>
 

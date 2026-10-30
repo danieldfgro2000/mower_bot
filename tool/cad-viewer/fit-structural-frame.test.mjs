@@ -152,7 +152,7 @@ test('front idler rails have deep continuous sections anchored behind the carria
   const [idlerX] = center(boundsFor('idler'));
   const volumes = await solidVolumes({
     rails: `difference() {
-      for (z = [-140.5, 121.5])
+      for (z = [-150.5, 131.5])
         translate([${idlerX - 199.5}, 85.5, z]) cube([266, 64, 19]);
       pod_frame();
     }`,
@@ -183,9 +183,9 @@ test('front rails retain 5 mm to the complete idler carriage sweep and the track
           capsule_2d(23);
           capsule_2d(-15.1);
         }
-        linear_extrude(height = 34.2, center = true) difference() {
+        linear_extrude(height = 68.2, center = true) difference() {
           capsule_2d(23);
-          capsule_2d(-35.1);
+          capsule_2d(-34.1);
         }
       }
     }`,

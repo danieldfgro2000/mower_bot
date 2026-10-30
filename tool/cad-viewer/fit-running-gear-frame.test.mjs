@@ -28,27 +28,44 @@ test('120 mm printed rollers are paired around a guide channel, with bearing rec
   assert.ok(roller.max[0] < boundsFor('lower-roller-4').min[0]);
   const x = (roller.min[0] + roller.max[0]) / 2, y = (roller.min[1] + roller.max[1]) / 2;
   assert.equal(contains(roller, [x, y + 45, 0]), false, 'central guide channel stays open');
+  assert.equal(contains(roller, [x, y + 56, 34.9]), false, '70 mm R2 groove clears the horn pair');
+  assert.equal(contains(roller, [x, y + 50, 35.1]), true, '40 mm wheel core begins outside the groove');
   assert.equal(contains(roller, [x, y + 56, 45]), true, 'TPU tread at each wheel');
   assert.equal(contains(roller, [x, y, 45]), false, '20 mm shaft bore');
   assert.equal(contains(roller, [x, y + 15, 74.5]), false, 'bearing is recessed below outer face');
   assert.equal(contains(roller, [x, y + 15, 70]), true, '6004 bearing envelope');
 });
 
-test('track has the candidate width, discrete internal guides and external tread bars', () => {
+test('track follows the R2 profile: twin link horns, centre lands and staggered tread', () => {
   const track = boundsFor('track');
   assert.equal(track.size[2], 200);
   const drum = boundsFor('drive-drum');
   const driveX = (drum.min[0] + drum.max[0]) / 2;
-  assert.equal(contains(track, [driveX, 20, 0]), true, 'first internal guide lug');
-  assert.equal(contains(track, [driveX + 36, 20, 0]), false, 'space between 72 mm guide pitches');
-  assert.equal(contains(track, [driveX, 20, 30]), false, 'guides do not span belt width');
-  assert.equal(contains(track, [driveX, -13, 45]), true, 'external tread bar');
-  assert.equal(contains(drum, [driveX, drum.max[1] - 5, 0]), false, 'drum guide relief');
+  for (const side of [-1, 1]) {
+    assert.equal(contains(track, [driveX, 20, side * 19.5]), true, 'twin trapezoidal horn on the link');
+    assert.equal(contains(track, [driveX, 11, side * 28]), true, 'wide horn base');
+    assert.equal(contains(track, [driveX, 27, side * 25]), false, 'horn tapers towards its tip');
+    assert.equal(contains(track, [driveX + 36, 20, side * 19.5]), false, 'horns only at the 72 mm link pitch');
+    assert.equal(contains(track, [driveX, 20, side * 32]), false, 'horns do not span the belt width');
+    assert.equal(contains(track, [driveX, 0, side * 60]), true, 'rubber carcass beside the link');
+    assert.equal(contains(track, [driveX, -5, side * 85]), true, 'full-depth rubber inside the edge chamfer');
+    assert.equal(contains(track, [driveX, -5, side * 98]), false, 'ground-side edge chamfer');
+  }
+  assert.equal(contains(track, [driveX, 20, 0]), false, 'drive passage between the horn pair');
+  assert.equal(contains(track, [driveX, 5, 0]), true, 'metal link land between the horns');
+  assert.equal(contains(track, [driveX + 36, 5, 0]), false, 'sprocket window between links');
+  assert.equal(contains(track, [driveX, -5, 0]), false, 'open ground-side centre channel');
+  assert.equal(contains(track, [driveX, -13, 45]), true, 'outboard tread block on the link');
+  assert.equal(contains(track, [driveX, -13, -45]), false, 'tread blocks are staggered');
+  assert.equal(contains(track, [driveX + 36, -13, -45]), true, 'inboard tread block between links');
+  assert.equal(contains(track, [driveX + 36, -13, 45]), false, 'outboard gap between links');
+  assert.equal(contains(drum, [driveX, 185 + 160, 20]), false, 'drum horn passage');
+  assert.equal(contains(drum, [driveX, 185 + 170, 50]), true, 'drum running band');
 });
 
 test('four-circle 40-link path and two minimum upper returns clear the battery through the idler envelope', () => {
   const idler = boundsFor('idler');
-  assert.deepEqual(idler.size, [200, 200, 160]);
+  assert.deepEqual(idler.size, [200, 200, 180]);
   const x = (idler.min[0] + idler.max[0]) / 2, y = (idler.min[1] + idler.max[1]) / 2;
   assert.equal(contains(idler, [x, y + 70, 0]), false, 'idler guide channel');
   const battery = boundsFor('battery');
@@ -71,7 +88,8 @@ test('four-circle 40-link path and two minimum upper returns clear the battery t
     const gap = cx * nx + cy * ny + radius - cornerX * nx - battery.max[1] * ny - 30;
     assert.ok(gap >= 35, 'nominal gap reserves 10 mm motion + 5 deflection + 20 running');
   }
-  assert.equal(circles[0][1] - 185, y - 110, 'lower tangencies share the same plane');
+  // Drum teeth set its float32 STL bounds, so compare centres within mesh precision.
+  assert.ok(Math.abs(circles[0][1] - 185 - (y - 110)) < 1e-3, 'lower tangencies share the same plane');
   for (let travel = -15; travel <= 15; travel++) {
     const swept = circles.map(circle => [...circle]);
     swept[1][0] += travel;
@@ -118,8 +136,10 @@ test('tray, roller spacing, guide passage and reducer stack retain positive marg
     prior = current;
   }
   const idler = boundsFor('idler'), [x, y] = center(idler);
-  assert.equal(contains(idler, [x, y + 25, 19.9]), false, '40 mm clear hub gap around 24 mm guide');
-  assert.equal(contains(idler, [x, y + 25, 20.1]), true, 'hub begins outside the clear passage');
+  assert.equal(contains(idler, [x, y + 75, 34.9]), false, '70 mm tread gap around the 58 mm horn pair');
+  assert.equal(contains(idler, [x, y + 75, 35.1]), true, 'catalog 50 mm tread begins outside the gap');
+  assert.equal(contains(idler, [x, y + 25, 29.9]), false, '60 mm clear hub gap');
+  assert.equal(contains(idler, [x, y + 25, 30.1]), true, 'hub begins outside the clear passage');
 });
 
 test('boolean meshes have no forbidden payload, extraction or track-guide intersections', () => {
@@ -142,7 +162,7 @@ test('boolean meshes have no forbidden payload, extraction or track-guide inters
   assert.ok(solidVolume(`intersection() {
     pod_component("track");
     union() { ${parts(runningGear.filter(id => id !== 'track'))} }
-  }`) <= numericalVolume, 'guide lugs pass through wheels and drum without solid interference');
+  }`) <= numericalVolume, 'R2 horns, lands and tread clear wheels and drum without solid interference');
   assert.ok(solidVolume(`intersection() {
     pod_component("motor");
     union() { ${parts(['planetary-1', 'planetary-2', 'planetary-3', 'output-carrier'])} }

@@ -4,16 +4,18 @@
 
 module idler_carriage(offset = 0) {
     x = idler_center[0] + offset;
+    inner_z = idler_carriage_inner_z;
+    outer_z = inner_z + idler_carriage_plate;
     color([0.48, 0.52, 0.58])
         difference() {
             union() {
-                translate([x - 111, 94, -91]) cube([6, 32, 182]);
+                translate([x - 111, 94, -outer_z]) cube([6, 32, 2 * outer_z]);
                 translate([x - 114, idler_path_radius, 0]) x_cylinder(40, 3);
                 for (side = [-1, 1]) {
-                    translate([x - 111, 94, side > 0 ? 85 : -91])
-                        cube([127, 38, 6]);
-                    translate([x - 24, 126, side > 0 ? 85 : -idler_guide_z])
-                        cube([48, 6, idler_guide_z - 85]);
+                    translate([x - 111, 94, side > 0 ? inner_z : -outer_z])
+                        cube([127, 38, idler_carriage_plate]);
+                    translate([x - 24, 126, side > 0 ? inner_z : -idler_guide_z])
+                        cube([48, 6, idler_guide_z - inner_z]);
                     translate([x - 24, idler_guide_y, side * idler_guide_z])
                         x_cylinder(22, 48);
                 }
@@ -25,7 +27,7 @@ module idler_carriage(offset = 0) {
                     x_cylinder(idler_slider_bore, 50);
             translate([x - 115, idler_path_radius, 0]) x_cylinder(14, 14);
         }
-    wheel_axle(x, idler_path_radius, 82);
+    wheel_axle(x, idler_path_radius, inner_z - 3, idler_axle_length);
 }
 
 module idler_reaction() {

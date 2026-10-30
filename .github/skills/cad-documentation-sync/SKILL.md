@@ -46,7 +46,11 @@ must preserve that selection while switching between the two document targets.
      edit dependent SCAD geometry and documentation, then regenerate exports.
      Edit the owning subsystem file under `module-01-track-pod/` (see the CAD
      README "Source layout"); iterate with its `fit-*.test.mjs`, then run the
-     full suite.
+     full suite. Diff the SCAD echo output against `HEAD`, then search `docs/`
+     for each changed old value and update or date-qualify every current
+     claim; derived envelopes and clearances are repeated outside the owning
+     page (for example battery and width-sizing pages), and sync does not
+     detect stale numbers.
    - *Component added, removed or renamed*: change the SCAD list, dispatcher
      and component map together; add, remove or rename its generated
      presentation target and 3D study thumbnail in the owning module page.

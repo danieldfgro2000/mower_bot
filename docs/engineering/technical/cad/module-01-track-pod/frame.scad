@@ -58,7 +58,7 @@ module pod_carrier() {
                 translate([245, carrier_underside_y, 148]) cube([105, carrier_thickness, 40]);
             }
             translate([idler_center[0] - idler_clearance_stroke, idler_path_radius, 0])
-                cylinder(d = idler_outer_diameter + 10, h = 170, center = true);
+                cylinder(d = idler_outer_diameter + 10, h = idler_cutout_height, center = true);
             // Slot for the flat guide; the two remaining plates are the fixed seats.
             translate([slide_slot[0], carrier_underside_y - 1, -200])
                 cube([slide_slot[1] - slide_slot[0], carrier_thickness + 2, 400]);
@@ -69,10 +69,10 @@ module x_cylinder(diameter, length) {
     rotate([0, 90, 0]) cylinder(d = diameter, h = length);
 }
 
-module wheel_axle(x, y, collar_z = 88) {
+module wheel_axle(x, y, collar_z = 88, length = 184) {
     translate([x, y, 0])
         color([0.6, 0.62, 0.65]) {
-            cylinder(d = wheel_axis_diameter, h = 184, center = true);
+            cylinder(d = wheel_axis_diameter, h = length, center = true);
             for (side = [-1, 1])
                 translate([0, 0, side * collar_z])
                     cylinder(d = 28, h = 3, center = true);
@@ -83,7 +83,7 @@ module roller_u_support(x, y, upper = false) {
     bridge_y = upper ? 440 : 134;
     bottom_y = upper ? bridge_y : y - 16;
     top_y = upper ? y + 16 : bridge_y + support_plate_thickness;
-    cheek_z = wheel_tread_width + guide_gap_placeholder / 2 + support_side_gap;
+    cheek_z = printed_wheel_tread_width + guide_gap_placeholder / 2 + support_side_gap;
     color([0.48, 0.52, 0.58])
         difference() {
             union() {
@@ -139,7 +139,26 @@ module front_rail_reinforcement(side) {
         cube([front_rail_root_x - front_rail_start_x, 50, anchor_width]);
 }
 
+// Rotating idler hubs end flush with the inner rail plane (|Z| = 90); relieve the
+// strip and front anchors by 5 mm radially and axially over the full idler stroke.
+idler_hub_relief_diameter = 70;
+idler_hub_relief_height = guide_gap_placeholder + wheel_tread_width + idler_hub_width + 10;
+
+module idler_hub_relief() {
+    hull()
+        for (dx = [-idler_clearance_stroke, idler_clearance_stroke])
+            translate([idler_center[0] + dx, idler_path_radius, 0])
+                cylinder(d = idler_hub_relief_diameter, h = idler_hub_relief_height, center = true);
+}
+
 module pod_frame() {
+    difference() {
+        pod_frame_body();
+        idler_hub_relief();
+    }
+}
+
+module pod_frame_body() {
     color([0.3, 0.45, 0.6]) {
         motor_frame_braces();
         translate([frame_rear_x, frame_crossmember_bottom_y, -100])

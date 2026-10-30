@@ -29,11 +29,11 @@ The BOM baseline is not changed by this candidate study.
 
 | Component | Relevant detail | Evidence / remaining assumption |
 | --- | --- | --- |
-| Track | 200 mm width, 72 mm pitch, 40 guide/tread positions; four-circle path, 2,880 mm nominal loop | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions). Code interpretation and belt mid-thickness pitch line unconfirmed; 20 mm belt, 24 x 24 x 20 mm guide lugs and 6 mm tread height are schematic |
-| Drive drum | Flexible 350 mm OD, 200 mm axial envelope, 16 discrete illustrative central traction teeth, hollow root ring and side webs to both running bands | Static guide-lug passage only, not a matched sprocket; tooth count/flanks, 10 mm shell and 50 mm guide channel are placeholders |
-| Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; 160 mm total axial envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic |
-| Lower rollers | Four paired assemblies, unchanged 120 x 50 mm wheels; 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 50 mm tread-face guide gap and 1 mm bearing recess are study values, not print tolerances |
-| Upper rollers / supports | Two fixed paired 70 x 50 mm assemblies at X = 245 and -195, Y = 510 mm; 6 mm U cheeks, 20 mm axles and bridges; inboard masts to Z = -116 mm; outboard 25 mm square posts with 12 mm notched flat crossheads on fixed carrier wings, Z up to 179 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). No idler-arm or moving-tray landing; capacity, carrier-wing bending and joints unqualified; 70 mm diameter and track bend radius HOLD; masts take 16 mm of central space per pod |
+| Track | 200 mm width, 72 mm pitch, 40 links; listed roller type R2; four-circle path, 2,880 mm nominal loop. Per link: twin trapezoidal horns at Z = +/-19.5 mm (19 mm high, 19/6 x 30/20 mm base/tip), 20 x 30 mm metal land, 42 mm open window; 3.5 mm inner shoulder, 15 x 10 mm chamfer, staggered 36 mm tread blocks | [Track candidate](../modules/01-structure-and-running-gear/running-gear.md#pod-fit-cad-assumptions) / [R2 evidence](../modules/01-structure-and-running-gear/running-gear.md#s39-longer-powertrack-belt-candidates). Profile rounded from an undimensioned image; code interpretation and mid-thickness pitch line unconfirmed; 20 mm belt (image scales to about 31.5 mm) and 6 mm tread height are schematic |
+| Drive drum | Flexible 350 mm OD, 200 mm axial envelope; running bands outboard of a 70 mm groove; 306 mm OD root ring 3 mm under the horn tips; side webs; 16 trapezoidal 10 mm-wide teeth on a central disc entering the open link windows | Static R2 window passage only, not a matched sprocket; tooth count/flanks, 10 mm shell and groove are placeholders |
+| Idler | Two 200 mm OD wheels, each 50 mm tread / 60 mm hub, 20 mm bore; treads at Z = +/-60 mm outboard of the R2 horns; 170 mm tread / 180 mm hub envelope | [Interwheel 161.540 candidate](../modules/01-structure-and-running-gear/running-gear.md#s37-bearing-wheel-roller-and-idler-candidates), not an approved fit. Hub OD is schematic; treads overhang the illustrative shoulder taper by 11 mm |
+| Lower rollers | Four paired assemblies, 120 x 40 mm wheels (narrowed from 50 mm for R2); 8 mm TPU tread, PC core, two 20 x 42 x 12 mm bearings per wheel; 150 mm pair width | [Printed-wheel concept](../modules/01-structure-and-running-gear/running-gear.md#s38-3d-printed-roller-wheels-owner-proposed). 70 mm tread-face groove and 1 mm bearing recess are study values, not print tolerances |
+| Upper rollers / supports | Two fixed paired 70 x 40 mm assemblies at X = 245 and -195, Y = 510 mm; 6 mm U cheeks, 20 mm axles and bridges; inboard masts to Z = -116 mm; outboard 25 mm square posts with 12 mm notched flat crossheads on fixed carrier wings, Z up to 179 mm | [Fixed upper proposal](../modules/01-structure-and-running-gear/running-gear.md#fixed-upper-roller-support). No idler-arm or moving-tray landing; capacity, carrier-wing bending and joints unqualified; 70 mm diameter and track bend radius HOLD; masts take 16 mm of central space per pod |
 | Motor | 206 x 126 mm body, 22.3 mm shaft / 53 mm projection, 5 x 43 mm keyway, four nominal M8 openings on 148 mm PCD | [Drawing evidence](../modules/02-drive-train/propulsion.md#s24-golden-motor-hpm5000b-family-specification). Hole depth, clocking and keyway axial offset are illustrative; threads and cooling details omitted |
 | Battery | 504 x 268 x 233 mm body (length / transverse width / vertical height) | [DC HOUSE S30](../modules/04-battery-and-charging/batteries.md#s30-dc-house-100-ah-charger-bundle). Listing dimensions conflict with other supplier material; terminals, cables, handles and restraints need measured envelopes |
 | Carrier / battery position | Fixed 524 x 288 x 10 mm core plus two rectangular side wings: 650 x 288 mm overall envelope, not a full rectangle; Y = 140-150 mm; battery X = 35, Z = 44 mm, bottom Y = 158 mm | Custom proposal; wings carry fixed roller posts, not the unchanged 8 mm moving tray. Inboard tray edge stays Z = -100 mm |
@@ -41,7 +41,7 @@ The BOM baseline is not changed by this candidate study.
 | Controller / contactor / harness | EZ-A48500 A-series 200 x 164 x 70.47 mm overall, centered on a fixed frame support above the tray; its terminal row runs across the pod at X = 53; X = -47 to +117, Z = -56 to +144, base Y = 411 mm. A 45 x 70 x 70 mm contactor placeholder shares the support | [Position assessment/drawing evidence](../modules/02-drive-train/propulsion.md#ez-a48500-controller-candidate), [terminal/harness assumptions](../modules/05-power-cables-and-electronics/cables-connectors.md#battery-cassette-harness). Battery lugs bolt directly to the terminals; P+ is switched by the E-stop contactor; phases run directly to the motor inside the track side silhouette, with no connectors; exact battery offsets / motor cable exit unverified |
 | Lower U supports | Four pairs of 6 mm cheeks, 20 mm axles, 6 mm top bridges at Y = 134-140 mm | [Support details](../modules/01-structure-and-running-gear/running-gear.md#lower-support-rollers); 5 mm tire-side and 4 mm bridge/tread gaps; bearing fits, retention and loads unqualified |
 | Tray frame / motor plate | Four 25 x 25 mm motor supports on 240 x 80 mm centers; straight rectangular outboard cradle on the rear fixed carrier wing; deeper rear rails and 20 x 65 mm front webs; 290 mm OD x 16 mm motor plate, 148 mm mounting PCD | [Frame proposal and local stress screens](../modules/01-structure-and-running-gear/frame.md#local-structural-load-screen); each plate seat has 625 mm² modeled overlap. Motor/reducer positions unchanged; joints, fixed-ring and brake mounts still undesigned |
-| Idler carriage / spring | 6 mm yoke, two 10 mm guide rods / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 57.036 mm nominal seat gap, 42.036-72.036 mm geometric range; no rate/preload or selected commercial spring |
+| Idler carriage / spring | 6 mm yoke with cheeks at Z = +/-95-101 mm, 206 mm axle, two 10 mm guide rods at Z = +/-114 mm / 11 mm sleeve bores, +/-15 mm stop positions; 36 mm OD coil / 4 mm wire, six active turns + two end rings | [Carriage](../modules/01-structure-and-running-gear/running-gear.md#sliding-idler-carriage) / [spring](../modules/01-structure-and-running-gear/running-gear.md#spring-tensioner-concept); 57.036 mm nominal seat gap, 42.036-72.036 mm geometric range; no rate/preload or selected commercial spring |
 
 Drive and idler axes are at X = -440 and +410.308 mm: **850.308 mm spacing**.
 The exact four-circle external tangents and wrap arcs close the nominal loop
@@ -51,19 +51,22 @@ equal-wheel approximation. The belt-body longitudinal envelope is approximately
 
 | Clearance / change | Revised result | Provisional requirement |
 | --- | ---: | --- |
-| Battery to front / rear continuous guide-tip return envelopes | 40.5 / 103.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
-| Conservative return clearance after both allowances | **25.5 mm minimum** | 20 mm; assumptions need actual track data |
+| Battery to front / rear continuous horn-tip return envelopes | 41.5 / 104.0 mm normal to the runs | 35 mm nominal = 20 running + 10 motion allowance + 5 deflection/tolerance reserve |
+| Conservative return clearance after both allowances | **26.5 mm minimum** | 20 mm; assumptions need actual track data |
 | Fixed upper wheel to battery | 84 mm | 20 mm |
 | Lower rollers to fixed carrier / battery | 10 / 28 mm | 10 / 20 mm |
 | Adjacent lower rollers | At least 10 mm; locations recalculate with the idler | 10 mm |
 | Battery to drive / idler physical envelopes | At least 20 mm | 20 mm |
-| Guide lateral gap, each side | 13 mm at lower/upper wheels and drum; 8 mm at idler hubs | 5 mm |
+| R2 horn lateral gap, each side | 6 mm to lower/upper wheels, idler treads and drum bands; 5 mm to drum webs and teeth | 5 mm |
+| Common axles to R2 horn tips | 31 mm lower; 6 mm upper | 5 mm provisional |
+| Drum root ring / central disc to wrapped horn tips / link lands | 3 / 5 mm radial | No running requirement set: the wrap co-rotates; belt deflection and actual horn height are HOLD |
+| Rotating idler hubs to frame strip / front anchors | 5 mm radial and axial through the +/-15 mm stroke (swept relief) | 5 mm provisional |
 | Motor + reaction plate + stages + carrier | 210 mm stack; 16 mm outboard projection, **6 mm inboard remainder** | 5 mm; excludes brake/reducer supports |
 | U bridges to lower / upper wheels | 4 / 29 mm | 3 / 5 mm provisional running gaps |
 | Reinforced front rail caps / outer webs to moving yoke / sleeves | 6 mm vertical / lateral; at least 5 mm to the continuous carriage sweep and nominal track envelope | 5 mm provisional; guide rod/sleeve contact is intentional, track deflection and load unqualified |
 | Motor posts / plate to motor, drum, track, lower wheel and phase leads | At least 5 mm to represented envelopes | 5 mm provisional; actual hardware and deformation unmodeled |
 | Roller outboard posts/crossheads to cassette extraction, idler stroke, harnesses and running gear | At least 5 mm; full 625 mm² post feet on fixed carrier wings, direct crosshead/U-bridge overlap | 5 mm provisional; geometric load paths are not weld or carrier-wing capacity evidence |
-| Illustrative sprocket root bore to stationary motor plate / posts | 5.2 mm radial to plate; more than 5 mm to posts | 5 mm provisional; guide-lug engagement is a separate, unqualified intentional interface |
+| Illustrative sprocket root bore to stationary motor plate / posts | 5.2 mm radial to plate; more than 5 mm to posts | 5 mm provisional; R2 window engagement is a separate, unqualified intentional interface |
 | Guide rod to sleeve bore | 0.5 mm radial | Study clearance only; not a selected sliding-bearing fit |
 | Battery and individual base-clamp sweeps to fixed gear, controller, contactor and frame | At least 5 mm, checked by expanded solid sweeps | Provisional geometry screen only; real flange and dynamic cassette allowance not qualified |
 | Tray sweep to full +/-15 mm idler/yoke stroke | At least 5 mm, checked by expanded conservative envelopes | Idler stroke is geometric, not proven usable tensioning travel |
@@ -106,7 +109,7 @@ climb behind the battery; the pack leads approach from the rotated +X terminal
 end. Battery and phase leads do not cross in plan above the battery.
 Power harnesses, controller and
 contactor stay inside Z = -125 to +183 mm; the reinforced front rail and fixed
-flat guide set the physical envelope at Z = -141 to +205 mm. Top mounting needs
+flat guide set the physical envelope at Z = -151 to +205 mm. Top mounting needs
 reviewed support joints, cooling and overhead protection; the battery carries
 no controller load.
 The battery bottom rises
@@ -279,6 +282,17 @@ cable paths (`battery_positive_path_a/b`, `battery_negative_path`,
 raised to 780, 722 and 717 mm (2,215 mm total) because the phases now follow
 fixed structure so they can be clamped.
 
+**R2 track profile test-first update (2026-10-30):** the running-gear,
+drive-teeth, tensioner, controller-support and frame tests were changed first
+and failed on the single-lug track, 50 mm wheels and old drum. They now
+require twin R2 horns with an open window per link, 40 mm printed wheels
+outboard of a 70 mm groove, idler treads at Z = +/-60 mm, 16 drum teeth inside
+the link windows clear of horns and lands, and a 5 mm swept idler-hub
+clearance to the frame. That last test was added after the wider idler
+touched the rail strip with zero volume. The widened carriage moved the front
+rails to Z = 131-151 mm. The profile is image-scaled and HOLD; these checks
+do not confirm supplier geometry or meshing.
+
 **Electrical plate and phase-lead supports test-first update:**
 `fit-controller-support`, `fit-estop` and the new
 `fit-motor-harness-supports` tests were changed first and failed. They now
@@ -366,7 +380,7 @@ the published overall depth; this was corrected to 70.47 mm including pads,
 and the short-end probes were repeated with that actual depth.
 The focused roof/sweep and harness regressions then passed after roof mounting,
 guide restoration and route separation. At that time they enforced the
-205/-125 mm seated pod side limits (the reinforced rail now reaches -141 mm),
+205/-125 mm seated pod side limits (the reinforced rail now reaches -151 mm),
 the box-width limit on controller and harnesses, a 5 mm
 expanded controller sweep against all fixed components, and unchanged
 enclosure/guide/load screens. Moving cables use exact sweeps of individual
